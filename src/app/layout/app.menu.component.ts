@@ -14,18 +14,42 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
         this.model = [
+
+            /*Sample Menus*/
+
+             /*If you want Menu with lable copy this entire block in between flower brackets
+             {
+                label: 'Home',
+                items: [
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['home'] },
+                    /*if u want to add single copy this line and pase change router link 
+                    { label: 'Empty', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] }
+                ]
+            },
+            /* If you want Sub Manu Copy this block between flower brackets, Label you need to add sub menu title in items u
+                  need to add submenu items in icon section you can add icon for that sub menu  
+                {
+                    label: 'Forms',
+                    icon: 'pi pi-fw pi-user',
+                    items: [
+                        { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
+                        { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
+                        { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
+                        { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'] },
+                        { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] },
+                    ]
+                },
+
+            */
             {
                 label: 'Home',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['home'] },
+                    /*if u want to add single copy this line and pase change router link */
                     { label: 'Empty', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] }
+                   
                 ]
             },
-          
-           
-            
-
-          
             {
                 label: 'Demo',
                 icon: 'pi pi-fw pi-briefcase',
