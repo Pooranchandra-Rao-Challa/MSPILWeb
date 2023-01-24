@@ -45,11 +45,29 @@ export class AppMenuComponent implements OnInit {
                 label: 'Home',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['home'] },
+                    { label: 'Login', icon: 'pi pi-fw pi-check-square', routerLink: ['login'] },
                     /*if u want to add single copy this line and pase change router link */
-                    { label: 'Empty', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty'] }
+                    {
+                        label: 'Masters',
+                        icon: 'pi pi-fw pi-user',
+                        items: [
+                            { 
+                                label: 'Geo Masters', 
+                                icon: 'pi pi-fw pi-id-card', 
+                                items: [
+                                    { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'] },
+                                    
+                                ]
+                               
+                            },
+                          
+                        ]
+                    },
                    
                 ]
             },
+
+
             {
                 label: 'Demo',
                 icon: 'pi pi-fw pi-briefcase',
@@ -86,6 +104,7 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-exclamation-circle',
                         routerLink: ['/notfound']
                     },
+                    { label: 'demoui', icon: 'pi pi-fw pi-tablet', routerLink: ['/demoui/dashboard'] },
                     
                 ]
             },

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('./account/login.module').then(m => m.LoginModule) },
-  { path: 'login', loadChildren: () => import('./account/login.module').then(m => m.LoginModule) },
+  { path: '', loadChildren: () => import('./demo/components/auth/login/login-routing.module').then(m => m.LoginRoutingModule) },
   {
       path: '', component: AppLayoutComponent,
       children: [
@@ -15,9 +13,7 @@ const routes: Routes = [
           { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
           { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
           { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
-          { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
-          { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
-          
+          { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) }
       ]
   },
   { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
