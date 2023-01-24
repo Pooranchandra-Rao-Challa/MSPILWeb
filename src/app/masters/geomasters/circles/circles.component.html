@@ -1,5 +1,5 @@
 	<div class="col-12">
-		<div class="card">            
+		<div class="card">
             <p-dialog header="Cicle" [(visible)]="display">
                 <div class="flex flex-column align-items-center justify-content-center">                            
                     <div class="grid" >
@@ -63,16 +63,17 @@
                         </div>
              
         
-            </p-dialog>        
+            </p-dialog>
+        
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <h4>Districts</h4>
+                    <h4>Circle</h4>
                            </ng-template>
                 <ng-template pTemplate="right">
-                    <button pButton pRipple label="New District" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="display = true"></button>
+                    <button pButton pRipple label="New Circle" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="display = true"></button>
                 </ng-template>
             </p-toolbar>
-            
+
 			<p-table #dt1 [value]="customers1" dataKey="id"  [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
 				<ng-template pTemplate="caption">
 					<div class="flex justify-content-between flex-column sm:flex-row">

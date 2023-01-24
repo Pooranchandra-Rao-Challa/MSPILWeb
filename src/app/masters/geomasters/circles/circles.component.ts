@@ -9,11 +9,11 @@ import { SortEvent } from 'primeng/api';
 
 
 @Component({
-  selector: 'app-district',
-  templateUrl: './district.component.html',
+  selector: 'app-circles',
+  templateUrl: './circles.component.html',
   providers: [MessageService, ConfirmationService]
 })
-export class DistrictComponent implements OnInit {
+export class CirclesComponent implements OnInit {
 
   cities:any=[];
   selectedDrop: any;

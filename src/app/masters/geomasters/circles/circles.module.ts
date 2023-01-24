@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DistrictRoutingModule } from './district-routing.module';
+import { CirclesRoutingModule } from './circles-routing.module';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,7 +17,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
-import { DistrictComponent } from './district.component';
+import { CirclesComponent } from './circles.component';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
 import { InputMaskModule } from "primeng/inputmask";
@@ -30,10 +30,10 @@ import {ToolbarModule} from 'primeng/toolbar';
 
 
 @NgModule({
-  declarations: [DistrictComponent],
+  declarations: [CirclesComponent],
   imports: [
     CommonModule,
-    DistrictRoutingModule,
+    CirclesRoutingModule,
     FormsModule,
 		TableModule,
 		RatingModule,
@@ -60,4 +60,4 @@ import {ToolbarModule} from 'primeng/toolbar';
 	
   ]
 })
-export class DistirctsModule { }
+export class CirclesModule { }
