@@ -7,6 +7,9 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 const routes: Routes = [
   { path: '', loadChildren: () => import('./account/login.module').then(m => m.LoginModule) },
   { path: 'login', loadChildren: () => import('./account/login.module').then(m => m.LoginModule) },
+
+
+  // The below code is for templae documented code to be removed while deployments
   {
       path: '', component: AppLayoutComponent,
       children: [
@@ -17,7 +20,7 @@ const routes: Routes = [
           { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
           { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
           { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
-          
+
       ]
   },
   { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },

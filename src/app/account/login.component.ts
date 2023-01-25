@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { LayoutService } from '../layout/service/app.layout.service';
+import { LoginModel } from '../_models/account/account.model';
+import { AccountService } from '../_services/account.service';
 // import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
@@ -20,5 +22,11 @@ export class LoginComponent {
 
     password!: string;
 
-    constructor(public layoutService: LayoutService) { }
+    loginModel: LoginModel = {};
+
+    constructor(public layoutService: LayoutService,
+      private accountService: AccountService) { }
+
+
+
 }
