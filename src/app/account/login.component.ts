@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { Component } from '@angular/core';
 import { LayoutService } from '../layout/service/app.layout.service';
 import { LoginModel } from '../_models/account/account.model';
@@ -27,6 +28,11 @@ export class LoginComponent {
     constructor(public layoutService: LayoutService,
       private accountService: AccountService) { }
 
+    public Login(){
+      this.accountService.Authenticate(this.loginModel).subscribe(resp =>{
+        console.log(resp);
 
+      });
+    }
 
 }
