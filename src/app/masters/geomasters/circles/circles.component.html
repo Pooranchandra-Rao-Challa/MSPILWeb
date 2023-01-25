@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </p-dialog>
-        
+
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <h4>Circles</h4>
@@ -81,7 +81,7 @@
                         <th pSortableColumn="id" style="width:200px">Id<p-sortIcon field="id"></p-sortIcon></th>
                         <th pSortableColumn="country.name" style="width:200px">Country <p-sortIcon field="cpuntry.name"></p-sortIcon></th>
                         <th pSortableColumn="date" style="width:200px"style="width:200px">Date <p-sortIcon field="date"></p-sortIcon></th>
-                        
+
                         <th  pSortableColumn="representative.name" style="width:200px"> <p-sortIcon field="represtative.name"></p-sortIcon>Representative</th>
                         <th  pSortableColumn="balance" style="width:200px" pFrozenColumn alignFrozen="right"> <p-sortIcon field="balance"></p-sortIcon>Balance</th>
                     </tr>
@@ -94,14 +94,14 @@
                             <span class="image-text ml-2">{{customer.country.name}}</span>
                         </td>
                         <td style="width:200px">{{customer.date}}</td>
-                        
+
                         <td style="width:200px">
                             <span class="image-text ml-2">{{customer.representative.name}}</span>
                         </td>
                         <td style="width:200px" pFrozenColumn  class="font-bold" alignFrozen="right">{{formatCurrency(customer.balance)}}</td>
                     </tr>
                 </ng-template>
-				
+
 
 
 
