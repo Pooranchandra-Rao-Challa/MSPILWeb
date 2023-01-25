@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 
 import { Injectable } from "@angular/core";
 import { ApiHttpService } from "./api.http.service";
@@ -9,31 +10,21 @@ import { BehaviorSubject, map, Observable, observeOn, throwError } from "rxjs";
 @Injectable({ providedIn: 'root' })
 export class AccountService extends ApiHttpService{
   private respSubject?: BehaviorSubject<ResponseModel>;
-    constructor(http: HttpClient) {
-      super(http);
+    constructor(http: HttpClient,router: Router) {
+      super(http,router);
     }
 
     public Authenticate(data:LoginModel): Observable<any>{
+      console.log(data);
+
      return this.post<ResponseModel>(LOGIN_URI,data).pipe(
         map(resp =>{
           console.log(resp);
           localStorage.setItem("respModel",JSON.stringify(resp as ResponseModel))
           this.respSubject = new BehaviorSubject<ResponseModel>(resp as ResponseModel);
-
-
           //return resp;
-          return new Observable((observe) =>{
-            observe.next("Valid")
-          })
+          return this.respSubject.asObservable()
         }),
-        // (response: Response) => {
-        //   //const data : SomeType = response.json() as SomeType;
-        //   // Does something on data.data
-
-        //   // return the modified data:
-        //   return data.data; // assuming SomeType has a data properties. Following OP post
-        // }
-
       )
     }
 

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LayoutService } from '../layout/service/app.layout.service';
 import { LoginModel } from '../_models/account/account.model';
 import { AccountService } from '../_services/account.service';
+import { Router } from '@angular/router';
 // import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
@@ -21,22 +22,26 @@ import { AccountService } from '../_services/account.service';
 export class LoginComponent {
 
     valCheck: string[] = ['remember'];
-
-    password!: string;
     loginForm: any;
     submitted= false;
 
     ngOnInit() {
         this.loginForm = new FormGroup({
-            'login': new FormControl('', Validators.required),
-            'password': new FormControl('', Validators.required)
+            'UserName': new FormControl('', Validators.required),
+            'Password': new FormControl('', Validators.required)
         });
     }
 
     onSubmit() {
         this.submitted = true;
-        alert(JSON.stringify(this.loginForm.value));
+        this.accountService.Authenticate(this.loginForm.value as LoginModel)
+        .subscribe(
+          (resp) => this.router.navigate(['dashboard']),
+          (error) => console.error(error),
+        );
     }
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService,
+      private router: Router,
+      private accountService: AccountService) { }
 }

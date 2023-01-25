@@ -1,7 +1,7 @@
 	<div class="col-12">
 		<div class="card">
             <p-dialog header="Cicle" [(visible)]="display">
-                <div class="flex flex-column align-items-center justify-content-center">                            
+                <div class="flex flex-column align-items-center justify-content-center">
                     <div class="grid" >
                         <div class="col-12">
                             <div class="col-12 p-fluid">
@@ -29,10 +29,10 @@
                                         </div>
                                     </div>
                                     <br>
-                                   
+
                                     <div class="col-6" >
                                         <div class="field">
-                                        
+
                                         </div>
                                         <div class="field">
                                             <label htmlFor="name1">Circle Code:</label>
@@ -43,28 +43,28 @@
                                             <input pInputText id="email1" type="text" />
                                         </div>
                                         <label htmlFor="name1">Is Active?:</label><br><br>
-                                        &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>   
+                                        &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>
                                     </div>
-            
-            
+
+
                                     <div class="flex ">
                                         <button pButton pRipple type="button" label="Success" class="p-button-raised p-button-success"></button>
-                                    
+
                                     </div>
-                                  
-                                    
-                                    
-                                   
+
+
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                         </div>
-             
-        
+
+
             </p-dialog>
-        
+
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <h4>Circle</h4>
@@ -91,28 +91,28 @@
                         <th pSortableColumn="id" style="width:200px">Id<p-sortIcon field="id"></p-sortIcon></th>
                         <th pSortableColumn="country.name" style="width:200px">Country <p-sortIcon field="cpuntry.name"></p-sortIcon></th>
                         <th pSortableColumn="date" style="width:200px"style="width:200px">Date <p-sortIcon field="date"></p-sortIcon></th>
-                        
+
                         <th  pSortableColumn="representative.name" style="width:200px"> <p-sortIcon field="represtative.name"></p-sortIcon>Representative</th>
                         <th  pSortableColumn="balance" style="width:200px" pFrozenColumn alignFrozen="right"> <p-sortIcon field="balance"></p-sortIcon>Balance</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-customer>
                     <tr>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+
                         <td style="width:200px" >{{customer.name}}</td>
                         <td style="width:200px" >{{customer.id}}</td>
                         <td style="width:200px">
                             <span class="image-text ml-2">{{customer.country.name}}</span>
                         </td>
                         <td style="width:200px">{{customer.date}}</td>
-                        
+
                         <td style="width:200px">
                             <span class="image-text ml-2">{{customer.representative.name}}</span>
                         </td>
                         <td style="width:200px" pFrozenColumn  class="font-bold" alignFrozen="right">{{formatCurrency(customer.balance)}}</td>
                     </tr>
                 </ng-template>
-				
+
 
 
 
