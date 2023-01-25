@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
     imports: [RouterModule.forChild([
         { path: 'districts', data: { breadcrumb: 'Districts' }, loadChildren: () => import('./districts/district.module').then(m => m.DistirctsModule) },
         { path: 'circle', data: { breadcrumb: 'Districts' }, loadChildren: () => import('./circles/circles.module').then(m => m.CirclesModule) },
-        
+
     ])],
     exports: [RouterModule]
 })

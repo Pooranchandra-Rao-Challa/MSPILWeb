@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LayoutService } from '../layout/service/app.layout.service';
+import { LoginModel } from '../_models/account/account.model';
+import { AccountService } from '../_services/account.service';
 // import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({

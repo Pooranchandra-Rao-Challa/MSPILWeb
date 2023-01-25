@@ -13,6 +13,8 @@ import { IconService } from './demo/service/icon.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+// application servicex
+import { AccountService } from 'src/app/_services/account.service';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { PhotoService } from './demo/service/photo.service';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        PhotoService, ProductService,
+        // Application services,
+        AccountService
     ],
     bootstrap: [AppComponent]
 })
