@@ -1,5 +1,6 @@
 import { Subject } from 'rxjs';
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LayoutService } from '../layout/service/app.layout.service';
 import { LoginModel } from '../_models/account/account.model';
 import { AccountService } from '../_services/account.service';
@@ -22,17 +23,20 @@ export class LoginComponent {
     valCheck: string[] = ['remember'];
 
     password!: string;
+    loginForm: any;
+    submitted= false;
 
-    loginModel: LoginModel = {};
-
-    constructor(public layoutService: LayoutService,
-      private accountService: AccountService) { }
-
-    public Login(){
-      this.accountService.Authenticate(this.loginModel).subscribe(resp =>{
-        console.log(resp);
-
-      });
+    ngOnInit() {
+        this.loginForm = new FormGroup({
+            'login': new FormControl('', Validators.required),
+            'password': new FormControl('', Validators.required)
+        });
     }
 
+    onSubmit() {
+        this.submitted = true;
+        alert(JSON.stringify(this.loginForm.value));
+    }
+
+    constructor(public layoutService: LayoutService) { }
 }
