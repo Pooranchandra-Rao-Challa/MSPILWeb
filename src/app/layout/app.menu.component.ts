@@ -44,7 +44,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['home'] },
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['dashboard'] },
                     { label: 'Login', icon: 'pi pi-fw pi-check-square', routerLink: ['login'] },
                     /*if u want to add single copy this line and pase change router link */
                     {
@@ -56,6 +56,7 @@ export class AppMenuComponent implements OnInit {
                                 icon: 'pi pi-fw pi-id-card', 
                                 items: [
                                     { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'] },
+                                    { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'] },
                                     
                                 ]
                                
@@ -68,13 +69,23 @@ export class AppMenuComponent implements OnInit {
             },
 
 
+
+
+
+
+
+
+
+
+            // This is for demo UI Dont Use This 
+
             {
                 label: 'Demo',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
                   
                     {
-                        label: 'Forms',
+                        label: 'ui',
                         icon: 'pi pi-fw pi-user',
                         items: [
                             { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
@@ -82,32 +93,33 @@ export class AppMenuComponent implements OnInit {
                             { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
                             { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'] },
                             { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] },
+                            { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
+                            { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
+                            { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
+                            { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/utilities/icons'] },
+                            { label: 'demoui', icon: 'pi pi-fw pi-tablet', routerLink: ['/demoui/dashboard'] },
+                            { label: 'Tables', icon: 'pi pi-fw pi-table', items: [                             
+                                    { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
+                                   
+                                ]
+                            },
+                            
+                            {
+                                
+                                label: 'Not Found',
+                                icon: 'pi pi-fw pi-exclamation-circle',
+                                routerLink: ['/notfound']
+                            },
+                            
                         ]
                     },
-                    {
-                        label: 'Tables',
-                        icon: 'pi pi-fw pi-table',
-                        items: [
-                           
-                            { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
-                           
-                        ]
-                    },
-                    
-                    { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
-                    { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
-                    { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
-                    { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/utilities/icons'] },
-                    {
-                        
-                        label: 'Not Found',
-                        icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/notfound']
-                    },
-                    { label: 'demoui', icon: 'pi pi-fw pi-tablet', routerLink: ['/demoui/dashboard'] },
+                   // This is for demo UI Dont Use This 
+
                     
                 ]
             },
+
+
            
         ];
     }
