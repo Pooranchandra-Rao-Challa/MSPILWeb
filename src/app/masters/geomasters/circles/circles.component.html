@@ -98,6 +98,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-customer>
                     <tr>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
                         <td style="width:200px" >{{customer.name}}</td>
                         <td style="width:200px" >{{customer.id}}</td>
                         <td style="width:200px">
