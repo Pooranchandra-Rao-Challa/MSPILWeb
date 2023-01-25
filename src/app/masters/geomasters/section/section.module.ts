@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { CirclesRoutingModule } from './circles-routing.module';
+import { SectionRoutingModule } from './section-routing.module';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,7 +16,6 @@ import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
-import { CirclesComponent } from './circles.component';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
 import { InputMaskModule } from "primeng/inputmask";
@@ -26,38 +24,39 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputSwitchModule } from 'primeng/inputswitch';
 import {ToolbarModule} from 'primeng/toolbar';
+import { SectionComponent } from './section.component';
 
 
 
 @NgModule({
-  declarations: [CirclesComponent],
+  declarations: [SectionComponent],
   imports: [
     CommonModule,
-    CirclesRoutingModule,
-    FormsModule,
-	TableModule,
-	RatingModule,
-	ButtonModule,
-	SliderModule,
-	InputTextModule,
-	ToggleButtonModule,
-	RippleModule,
-	MultiSelectModule,
-	DropdownModule,
-	ProgressBarModule,
-	ToastModule,
-	DialogModule,
-	ToolbarModule,
-	ContextMenuModule,
-	CalendarModule,
+    SectionRoutingModule,
+    TableModule,
+		RatingModule,
+		ButtonModule,
+		SliderModule,
+		InputTextModule,
+		ToggleButtonModule,
+		RippleModule,
+		MultiSelectModule,
+		DropdownModule,
+		ProgressBarModule,
+		ToastModule,
+		DialogModule,
+		ToolbarModule,
+		ContextMenuModule,
+		CalendarModule,
     AutoCompleteModule,
     ChipsModule,
     InputMaskModule,
     InputNumberModule,
     CascadeSelectModule,
     InputTextareaModule,
-    InputSwitchModule
-	
+    InputSwitchModule,
+    FormsModule
+
   ]
 })
-export class CirclesModule { }
+export class SectionModule { }

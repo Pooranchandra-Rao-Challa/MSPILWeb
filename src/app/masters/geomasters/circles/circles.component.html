@@ -1,6 +1,6 @@
 	<div class="col-12">
 		<div class="card">
-            <p-dialog header="Cicle" [(visible)]="display">
+            <p-dialog header="Circle" [(visible)]="display"[breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
                 <div class="flex flex-column align-items-center justify-content-center">                            
                     <div class="grid" >
                         <div class="col-12">
@@ -24,16 +24,14 @@
                                             <input pInputText id="city1" type="text" />
                                         </div>
                                         <div class="field">
-                                            <label htmlFor="city1">Address:</label>
-                                            <textarea rows="5" cols="30" placeholder="Your Message" pInputTextarea></textarea>
+                                            <label htmlFor="name1">Is Active?:</label><br><br>
+                                        &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>   
                                         </div>
+                                        
                                     </div>
-                                    <br>
+                                 
                                    
                                     <div class="col-6" >
-                                        <div class="field">
-                                        
-                                        </div>
                                         <div class="field">
                                             <label htmlFor="name1">Circle Code:</label>
                                             <input pInputText id="name1" type="text" />
@@ -42,32 +40,24 @@
                                             <label htmlFor="email1">Incharge PhoneNo:</label>
                                             <input pInputText id="email1" type="text" />
                                         </div>
-                                        <label htmlFor="name1">Is Active?:</label><br><br>
-                                        &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>   
+                                        <div class="field">
+                                            <label htmlFor="city1">Address:</label>
+                                            <textarea rows="5" cols="30" placeholder="Your Message" pInputTextarea></textarea>
+                                        </div>
                                     </div>
-            
-            
-                                    <div class="flex ">
-                                        <button pButton pRipple type="button" label="Success" class="p-button-raised p-button-success"></button>
-                                    
+                                    <div class="col-12 ">
+                                        <button pButton pRipple type="button" label="Add Circle" class="p-button-raised p-button-success"></button>
                                     </div>
-                                  
-                                    
-                                    
-                                   
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                        </div>
-             
-        
+                </div>
             </p-dialog>
         
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
-                    <h4>Circle</h4>
+                    <h4>Circles</h4>
                            </ng-template>
                 <ng-template pTemplate="right">
                     <button pButton pRipple label="New Circle" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="display = true"></button>
@@ -98,7 +88,6 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-customer>
                     <tr>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
                         <td style="width:200px" >{{customer.name}}</td>
                         <td style="width:200px" >{{customer.id}}</td>
                         <td style="width:200px">

@@ -1,19 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef  } from '@angular/core';
 import { Customer, Representative } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Product } from 'src/app/demo/api/product';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
-
-
 @Component({
-  selector: 'app-district',
-  templateUrl: './district.component.html',
-  providers: [MessageService, ConfirmationService]
+  selector: 'app-divisions',
+  templateUrl: './divisions.component.html',
+  styleUrls: ['./divisions.component.scss']
 })
-export class DistrictComponent implements OnInit {
+export class DivisionsComponent implements OnInit {
 
   cities:any=[];
   selectedDrop: any;
@@ -140,8 +137,5 @@ export class DistrictComponent implements OnInit {
     valSwitch: boolean = true;
     
 
-  
-       
+
 }
-
-

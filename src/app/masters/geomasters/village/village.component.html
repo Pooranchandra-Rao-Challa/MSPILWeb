@@ -1,0 +1,219 @@
+<div class="col-12">
+    <div class="card">
+        <p-dialog header="Village" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
+            <div class="flex flex-column align-items-center justify-content-center">     
+                
+                <div class="container">
+                    <div class="grid p-fluid" >
+
+                        <div class="field col-12 md:col-3">
+                           <label htmlFor="age1">Division:</label>
+                           <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a Division" [showClear]="true"></p-dropdown>             
+                       </div>
+                        
+
+                       <div class="field col-12 md:col-3">
+                        <label htmlFor="age1">Circle:</label>
+                        <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a Circle" [showClear]="true"></p-dropdown>             
+                    </div>
+                     
+
+                    <div class="field col-12 md:col-3">
+                        <label htmlFor="age1">Section:</label>
+                        <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a Section" [showClear]="true"></p-dropdown>             
+                    </div>
+                        
+                        <div class="field col-12 md:col-3">
+                            <label for="integeronly">Target</label>
+                            <p-inputNumber inputId="integeronly">
+                            </p-inputNumber>
+                        </div>
+                        
+                        <div class="field col-12 md:col-3">
+                            <label htmlFor="age1">District:</label>
+                            <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a District:" [showClear]="true"></p-dropdown>             
+                        </div>
+         
+                       <div class="field col-12 md:col-3">
+                            <label for="integeronly">Mandal:</label>
+                            <p-inputNumber inputId="integeronly" >
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-8 md:col-3">
+                            <label htmlFor="city1">Address:</label>
+                            <textarea rows="5" cols="30" placeholder="Your Message" pInputTextarea></textarea>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Target:</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>                      
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Code:</label>
+                            <p-inputNumber inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="withoutgrouping">Name:</label>
+                            <p-inputNumber mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="minmaxfraction">Incharge Name:</label>
+                            <p-inputNumber  inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="minmax">Incharge Phone No.:</label>
+                            <p-inputNumber  inputId="minmax" inputId="minmax" mode="decimal" [min]="0" [max]="100">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Distance:</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Diverted Distance:</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div> 
+
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">No Of EB Services:</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">TPT Rate(₹):</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Cultivatable Area(Acres):</label>
+                            <p-inputNumber inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Total Geographic Area(Acres):</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Irrigation Area(In Peek Summer):</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-user">Dry Area(Acres):</label>
+                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+
+
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-us">Suitable Area for Cane(Acres):</label>
+                            <p-inputNumber  inputId="locale-us" mode="decimal" locale="en-US" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-german">Not Suitable:</label>
+                            <p-inputNumber  inputId="locale-german" mode="decimal" locale="de-DE" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="locale-indian">Ord:</label>
+                            <p-inputNumber  inputId="locale-indian" mode="decimal" locale="en-IN" [minFractionDigits]="2">
+                            </p-inputNumber>
+                        </div>
+
+                        
+                        <div class="field col-12 md:col-3 ">
+                            <div class="col-2">
+                                <label  htmlFor="name1">Is Active?:</label><br>
+                                <p-inputSwitch [(ngModel)]="valSwitch" ></p-inputSwitch>
+                            </div>                 
+                        </div>
+                        <div class="field col-12 ">
+                            <div class="col-2">
+                                <button pButton pRipple type="button"  label="Success" class="p-button-raised p-button-success"></button>
+                            </div>                         
+                        </div>                       
+                    </div>
+
+                </div>
+
+
+            </div>
+        </p-dialog>
+    
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <h4>Villages</h4>
+                       </ng-template>
+            <ng-template pTemplate="right">
+                <button pButton pRipple label="New Village" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="display = true"></button>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table #dt1 [value]="customers1" dataKey="id"  [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left mb-2">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
+                    </span>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name" style="width:200px"><p-sortIcon field="name"></p-sortIcon>Division</th>
+                    <th pSortableColumn="id" style="width:200px">Circle<p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="country.name" style="width:200px">Section Id <p-sortIcon field="cpuntry.name"></p-sortIcon></th>
+                    <th pSortableColumn="date" style="width:200px"style="width:200px">District <p-sortIcon field="date"></p-sortIcon></th>
+                    <th pSortableColumn="id" style="width:200px">Circle<p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="balance" style="width:200px" pFrozenColumn alignFrozen="right"> <p-sortIcon field="balance"></p-sortIcon>Address</th>
+                    
+                   
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td style="width:200px" >{{customer.name}}</td>
+                    <td style="width:200px" >{{customer.id}}</td>
+                    <td style="width:200px">
+                        <span class="image-text ml-2">{{customer.country.name}}</span>
+                    </td>
+                    <td style="width:200px">{{customer.date}}</td>
+                    
+                    <td style="width:200px">
+                        <span class="image-text ml-2">{{customer.representative.name}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn  class="font-bold" alignFrozen="right">{{formatCurrency(customer.balance)}}</td>
+                </tr>
+            </ng-template>
+            
+
+
+
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No customers found.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Loading customers data. Please wait.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>

@@ -1,43 +1,42 @@
 <div class="col-12">
     <div class="card">
-        <p-dialog header="Districts" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
+        <p-dialog header="Mandal" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
                 <div class="grid">
                     <div class="col-12 ">
                         <div class="p-fluid p-formgrid grid">
                             <div class="col-12 ">
-                                <label>Code:</label>
+                                <label>Code:</label>&nbsp;
                                 <input pInputText id="code" type="text">
                             </div>
-                            <div class="col-12">
-                                <label>Name:</label>
+                            <div class="col-12 ">
+                                <label>Name:</label>&nbsp;
                                 <input pInputText id="name" type="text">
                             </div>
-                            <div class="col-12" >
-                                <label>State:</label>
+                            <div class=" col-12 ">
+                                <label>State:</label>&nbsp;
                                 <p-dropdown [options]="dropdownItems" optionLabel="name"></p-dropdown>
                             </div>
                             <div class=" col-12 ">
                                 <label>Is Active?:</label><br>
-                                &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>
+                                &nbsp;<p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>
                             </div>
-                            <div class="col-12">
-                                <button pButton pRipple type="button" label="Add District"
+                            <div class=" col-12 ">
+                                <button pButton pRipple type="button" label="Success"
                                     class="p-button-raised p-button-success"></button>
                             </div>
                         </div>
                        
-                        
                     </div>
                 </div>
             </div>
         </p-dialog>
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
-                <h4>Districts</h4>
+                <h4>Mandals</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="New District" icon="pi pi-plus" class="p-button-success p-mr-2"
+                <button pButton pRipple label="New Mandals" icon="pi pi-plus" class="p-button-success p-mr-2"
                     (click)="display = true"></button>
             </ng-template>
         </p-toolbar>

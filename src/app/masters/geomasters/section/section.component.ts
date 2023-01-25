@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component,OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Customer, Representative } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Product } from 'src/app/demo/api/product';
@@ -7,14 +7,13 @@ import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
 
-
 @Component({
-  selector: 'app-district',
-  templateUrl: './district.component.html',
+  selector: 'app-section',
+  templateUrl: './section.component.html',
+  styleUrls: ['./section.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class DistrictComponent implements OnInit {
-
+export class SectionComponent implements OnInit {
   cities:any=[];
   selectedDrop: any;
 
@@ -57,7 +56,8 @@ export class DistrictComponent implements OnInit {
     @ViewChild('filter') filter!: ElementRef;
 
     
-    constructor( private customerService: CustomerService, private productService: ProductService) {
+
+    constructor(private customerService: CustomerService, private productService: ProductService) {
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -67,7 +67,7 @@ export class DistrictComponent implements OnInit {
     ];
      }
 
-
+   
 
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
@@ -83,13 +83,6 @@ export class DistrictComponent implements OnInit {
 
         
     }
-
-    dropdownItems = [
-        { name: '',  },
-        { name: 'Telengana', code: 'Telengana' },
-        { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
-    ];
-
     customSort(event: SortEvent) {
        
     }
@@ -138,10 +131,4 @@ export class DistrictComponent implements OnInit {
 
 
     valSwitch: boolean = true;
-    
-
-  
-       
 }
-
-

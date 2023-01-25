@@ -7,13 +7,13 @@ import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
 
-
 @Component({
-  selector: 'app-district',
-  templateUrl: './district.component.html',
+  selector: 'app-village',
+  templateUrl: './village.component.html',
+  styleUrls: ['./village.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class DistrictComponent implements OnInit {
+export class VillageComponent implements OnInit {
 
   cities:any=[];
   selectedDrop: any;
@@ -57,7 +57,8 @@ export class DistrictComponent implements OnInit {
     @ViewChild('filter') filter!: ElementRef;
 
     
-    constructor( private customerService: CustomerService, private productService: ProductService) {
+
+    constructor(private customerService: CustomerService, private productService: ProductService) {
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -67,7 +68,7 @@ export class DistrictComponent implements OnInit {
     ];
      }
 
-
+   
 
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
@@ -83,13 +84,6 @@ export class DistrictComponent implements OnInit {
 
         
     }
-
-    dropdownItems = [
-        { name: '',  },
-        { name: 'Telengana', code: 'Telengana' },
-        { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
-    ];
-
     customSort(event: SortEvent) {
        
     }
@@ -138,10 +132,6 @@ export class DistrictComponent implements OnInit {
 
 
     valSwitch: boolean = true;
+
     
-
-  
-       
 }
-
-

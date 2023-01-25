@@ -1,20 +1,17 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { Customer, Representative } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Product } from 'src/app/demo/api/product';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
-
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
-  selector: 'app-district',
-  templateUrl: './district.component.html',
-  providers: [MessageService, ConfirmationService]
+  selector: 'app-state',
+  templateUrl: './state.component.html',
+  styleUrls: ['./state.component.scss']
 })
-export class DistrictComponent implements OnInit {
-
+export class StateComponent implements OnInit {
   cities:any=[];
   selectedDrop: any;
 
@@ -56,8 +53,14 @@ export class DistrictComponent implements OnInit {
 
     @ViewChild('filter') filter!: ElementRef;
 
-    
-    constructor( private customerService: CustomerService, private productService: ProductService) {
+    state:FormGroup
+    constructor(private formbuilder:FormBuilder , private customerService: CustomerService, private productService: ProductService) {
+        this.state=this.formbuilder.group({
+            code:['',(Validators.required)],
+            name:['',(Validators.required)],
+            active:true
+          });
+          
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -67,7 +70,9 @@ export class DistrictComponent implements OnInit {
     ];
      }
 
-
+     get f (){
+        return this.state.controls;  
+      }
 
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
@@ -141,7 +146,4 @@ export class DistrictComponent implements OnInit {
     
 
   
-       
 }
-
-
