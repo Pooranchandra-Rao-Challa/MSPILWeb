@@ -9,6 +9,6 @@ import { GET_DISTRICTS_URI } from "./api.uri.service";
 export class GeoMasterService extends ApiHttpService {
 
   public GetDistricts(){
-    return this.get<DistrictViewDto>(GET_DISTRICTS_URI);
+    return this.get<DistrictViewDto[]>(GET_DISTRICTS_URI);
   }
 }

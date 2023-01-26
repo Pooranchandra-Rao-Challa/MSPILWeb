@@ -29,6 +29,8 @@ export class ApiHttpService {
         })
       );
   }
+
+
   public getWithId<T>(uri: string,id: any, options?: any) {
     return this.http.get<T>(URI_ENDPOINT_WITH_ID(uri,id), options)
       .pipe(
