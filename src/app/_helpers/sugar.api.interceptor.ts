@@ -3,13 +3,9 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, throwError } from 'rxjs';
-//import { filter, finalize, switchMap, take } from 'rxjs/operators';
-
 
 @Injectable()
 export class SugarAPIInterceptor implements HttpInterceptor {
-  private refreshTokenInProgress = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private jwtService: JWTService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
