@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CirclesRoutingModule } from './circles-routing.module';
+import { MandalRoutingModule } from './mandal-routing.module';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,8 +16,7 @@ import { RatingModule } from 'primeng/rating';
 import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
-import { FormsModule } from '@angular/forms';
-import { CirclesComponent } from './circles.component';
+import { FormsModule,  } from '@angular/forms';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
 import { InputMaskModule } from "primeng/inputmask";
@@ -26,30 +25,29 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputSwitchModule } from 'primeng/inputswitch';
 import {ToolbarModule} from 'primeng/toolbar';
-
-
+import { MandalComponent } from './mandal.component';
 
 @NgModule({
-  declarations: [CirclesComponent],
+  declarations: [MandalComponent],
   imports: [
     CommonModule,
-    CirclesRoutingModule,
+    MandalRoutingModule,
     FormsModule,
-	TableModule,
-	RatingModule,
-	ButtonModule,
-	SliderModule,
-	InputTextModule,
-	ToggleButtonModule,
-	RippleModule,
-	MultiSelectModule,
-	DropdownModule,
-	ProgressBarModule,
-	ToastModule,
-	DialogModule,
-	ToolbarModule,
-	ContextMenuModule,
-	CalendarModule,
+		TableModule,
+		RatingModule,
+		ButtonModule,
+		SliderModule,
+		InputTextModule,
+		ToggleButtonModule,
+		RippleModule,
+		MultiSelectModule,
+		DropdownModule,
+		ProgressBarModule,
+		ToastModule,
+		DialogModule,
+		ToolbarModule,
+		ContextMenuModule,
+		CalendarModule,
     AutoCompleteModule,
     ChipsModule,
     InputMaskModule,
@@ -57,7 +55,6 @@ import {ToolbarModule} from 'primeng/toolbar';
     CascadeSelectModule,
     InputTextareaModule,
     InputSwitchModule
-	
   ]
 })
-export class CirclesModule { }
+export class MandalModule { }
