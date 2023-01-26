@@ -43,19 +43,19 @@ export class ApiHttpService {
       );
   }
   public post<T>(uri: string, data: any, options?: any) {
-    return this.http.post<T>(URI_ENDPOINT(uri), data, options)
-      .pipe(
-        catchError(error => {
-          let errorMsg: string;
-          if (error.error instanceof ErrorEvent) {
-            errorMsg = `Error: ${error.error.message}`;
-          } else {
-            errorMsg = this.getServerErrorMessage(error);
-          }
-          this.router.navigate(["error"])// Add Redirect to default page
-          return throwError(errorMsg);
-        })
-      );
+    return this.http.post<T>(URI_ENDPOINT(uri), data, options);
+      // .pipe(
+      //   catchError(error => {
+      //     let errorMsg: string;
+      //     if (error.error instanceof ErrorEvent) {
+      //       errorMsg = `Error: ${error.error.message}`;
+      //     } else {
+      //       errorMsg = this.getServerErrorMessage(error);
+      //     }
+      //     this.router.navigate(["error"])// Add Redirect to default page
+      //     return throwError(errorMsg);
+      //   })
+      // );
   }
   public put<T>(uri: string, data: any, options?: any) {
     return this.http.put(URI_ENDPOINT(uri), data, options);

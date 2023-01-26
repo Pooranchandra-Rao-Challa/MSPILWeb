@@ -41,6 +41,10 @@ export class LoginComponent {
         );
     }
 
+    public logOut(){
+      this.router.navigate(["/"])
+    }
+
     constructor(public layoutService: LayoutService,
       private router: Router,
       private accountService: AccountService) { }

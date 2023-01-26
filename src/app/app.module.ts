@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { ProductService } from './demo/service/product.service';
@@ -13,8 +15,10 @@ import { IconService } from './demo/service/icon.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+
 // application servicex
 import { AccountService } from 'src/app/_services/account.service';
+import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
 
 
 @NgModule({
@@ -28,6 +32,7 @@ import { AccountService } from 'src/app/_services/account.service';
         BrowserAnimationsModule
     ],
     providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService,
