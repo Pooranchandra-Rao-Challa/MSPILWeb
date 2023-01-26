@@ -1,3 +1,4 @@
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -20,10 +21,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor( public layoutService: LayoutService) {
+    constructor( public layoutService: LayoutService,geoMasterService: GeoMasterService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
+        geoMasterService.GetDistricts().subscribe((resp)=>{ console.log(resp);})
+
     }
 
     ngOnInit() {

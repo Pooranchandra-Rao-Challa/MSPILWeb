@@ -1,9 +1,11 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { URI_ENDPOINT, URI_ENDPOINT_WITH_ID } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
-
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 @Injectable()
 export class ApiHttpService {
 
@@ -43,19 +45,19 @@ export class ApiHttpService {
       );
   }
   public post<T>(uri: string, data: any, options?: any) {
-    return this.http.post<T>(URI_ENDPOINT(uri), data, options);
-      // .pipe(
-      //   catchError(error => {
-      //     let errorMsg: string;
-      //     if (error.error instanceof ErrorEvent) {
-      //       errorMsg = `Error: ${error.error.message}`;
-      //     } else {
-      //       errorMsg = this.getServerErrorMessage(error);
-      //     }
-      //     this.router.navigate(["error"])// Add Redirect to default page
-      //     return throwError(errorMsg);
-      //   })
-      // );
+    return this.http.post<T>(URI_ENDPOINT(uri), data, options)
+      .pipe(
+        catchError(error => {
+          let errorMsg: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMsg = `Error: ${error.error.message}`;
+          } else {
+            errorMsg = this.getServerErrorMessage(error);
+          }
+          this.router.navigate(["error"])// Add Redirect to default page
+          return throwError(errorMsg);
+        })
+      );
   }
   public put<T>(uri: string, data: any, options?: any) {
     return this.http.put(URI_ENDPOINT(uri), data, options);
@@ -79,6 +81,10 @@ export class ApiHttpService {
       }
 
     }
+  }
+  public ClearStorage(){
+    localStorage.removeItem("respModel");
+    this.router.navigate(["/"])
   }
 }
 

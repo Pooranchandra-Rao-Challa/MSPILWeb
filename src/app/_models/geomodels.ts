@@ -1,6 +1,13 @@
 export interface DistrictViewDto{
-  DistrictId: number;
-  DistrictName: string;
+  districtId: number;
+  districtName: string;
+  districtCode: string;
+  stateId: string;
+  stateName: string;
+  updatedAt: Date;
+  createdAt:Date;
+  updatedBy:string;
+  createdBy:string;
 }
 
 
