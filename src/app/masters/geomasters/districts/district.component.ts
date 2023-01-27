@@ -9,7 +9,7 @@ import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DistrictViewDto,DistrictDto, StateDto } from 'src/app/_models/geomodels';
+import { DistrictViewDto, DistrictDto, StateDto } from 'src/app/_models/geomodels';
 
 
 @Component({
@@ -19,7 +19,7 @@ import { DistrictViewDto,DistrictDto, StateDto } from 'src/app/_models/geomodels
 })
 export class DistrictComponent implements OnInit {
 
-  cities:any=[];
+  cities: any = [];
   selectedDrop: any;
 
 
@@ -30,7 +30,7 @@ export class DistrictComponent implements OnInit {
 
   display: boolean = false;
 
-  districts: DistrictViewDto[]=[];
+  districts: DistrictViewDto[] = [];
 
   district: DistrictDto = new DistrictDto();
 
@@ -39,144 +39,149 @@ export class DistrictComponent implements OnInit {
 
   customers1: Customer[] = [];
 
-    customers2: Customer[] = [];
+  customers2: Customer[] = [];
 
-    customers3: Customer[] = [];
+  customers3: Customer[] = [];
 
-    selectedCustomers1: Customer[] = [];
+  selectedCustomers1: Customer[] = [];
 
-    selectedCustomer: Customer = {};
+  selectedCustomer: Customer = {};
 
-    representatives: Representative[] = [];
+  representatives: Representative[] = [];
 
-    statuses: any[] = [];
+  statuses: any[] = [];
 
-    products: Product[] = [];
+  products: Product[] = [];
 
-    // cols: any[];
+  // cols: any[];
 
-    rowGroupMetadata: any;
+  rowGroupMetadata: any;
 
-    activityValues: number[] = [0, 100];
+  activityValues: number[] = [0, 100];
 
-    isExpanded: boolean = false;
+  isExpanded: boolean = false;
 
-    idFrozen: boolean = false;
+  idFrozen: boolean = false;
 
-    loading: boolean = true;
+  loading: boolean = true;
 
 
-    @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('filter') filter!: ElementRef;
 
-    fbdistricts!:FormGroup;
+  fbdistricts!: FormGroup;
 
-    constructor(private formbuilder:FormBuilder, private customerService: CustomerService,
-      private geoMasterService: GeoMasterService,, private commonService: CommonService,  private productService: ProductService) {
-      this.cities = [
-        { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
-        { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-        { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-        { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-        { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
+  constructor(private formbuilder: FormBuilder, private customerService: CustomerService,
+    private geoMasterService: GeoMasterService, private commonService: CommonService,
+    private productService: ProductService) {
+    this.cities = [
+      { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
+      { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
+      { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
+      { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
+      { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
     ];
-     }
+  }
 
-  InitDistrict(){
+  InitDistrict() {
     this.district = new DistrictDto();
     this.display = true;
   }
 
+  get FormControls(){
+    return this.fbdistricts.controls;
+  }
+
   ngOnInit() {
 
-    this.geoMasterService.GetDistricts().subscribe((resp)=>{
+    this.geoMasterService.GetDistricts().subscribe((resp) => {
       this.districts = resp as unknown as DistrictViewDto[]
     })
 
-    this.commonService.GetStates().subscribe((resp)=>{
+    this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]
     })
     this.customerService.getCustomersLarge().then(customers => {
       this.customers1 = customers;
       this.loading = false;
 
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
+      // @ts-ignore
+      this.customers1.forEach(customer => customer.date = new Date(customer.date));
+    });
 
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
+    this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
 
-        this.fbdistricts=this.formbuilder.group({
-            code:['',(Validators.required)],
-            name:['',(Validators.required)],
-            state:['',(Validators.required)],
-            active:true
-          });
+    this.fbdistricts = this.formbuilder.group({
+      code: ['', (Validators.required)],
+      name: ['', (Validators.required)],
+      state: ['', (Validators.required)],
+      active: true
+    });
 
+  }
+  onSubmit() {
+    if (this.fbdistricts.valid) {
+      console.log(this.fbdistricts.value);
     }
-    onSubmit(){
-        if(this.fbdistricts.valid){
-            console.log(this.fbdistricts.value);
-            }
-            else{
-                // alert("please fill the fields")
-                 this.fbdistricts.markAllAsTouched();
-            }
+    else {
+      // alert("please fill the fields")
+      this.fbdistricts.markAllAsTouched();
     }
+  }
 
-    dropdownItems = [
-        {  name:'' },
-        { name: 'Telengana', code: 'Telengana' },
-        { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
-    ];
+  dropdownItems = [
+    { name: '' },
+    { name: 'Telengana', code: 'Telengana' },
+    { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
+  ];
 
-    customSort(event: SortEvent) {
+  customSort(event: SortEvent) {
 
-    }
-    onSort() {
-        this.updateRowGroupMetaData();
-    }
+  }
+  onSort() {
+    this.updateRowGroupMetaData();
+  }
 
-    updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
+  updateRowGroupMetaData() {
+    this.rowGroupMetadata = {};
 
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
+    if (this.customers3) {
+      for (let i = 0; i < this.customers3.length; i++) {
+        const rowData = this.customers3[i];
+        const representativeName = rowData?.representative?.name || '';
 
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
+        if (i === 0) {
+          this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
         }
+        else {
+          const previousRowData = this.customers3[i - 1];
+          const previousRowGroup = previousRowData?.representative?.name;
+          if (representativeName === previousRowGroup) {
+            this.rowGroupMetadata[representativeName].size++;
+          }
+          else {
+            this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
+          }
+        }
+      }
     }
+  }
 
 
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
+  formatCurrency(value: number) {
+    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  }
 
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-    }
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
 
-    clear(table: Table) {
-        table.clear();
-        this.filter.nativeElement.value = '';
-    }
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
 
 
-    valSwitch: boolean = true;
+  valSwitch: boolean = true;
 
 
 

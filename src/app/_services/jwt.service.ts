@@ -45,4 +45,9 @@ export class JWTService {
     if(!jwt || jwt == "")  return {};
     return JSON.parse(jwt.Permissions)
   }
+
+  public get GivenName(): string{
+    const jwt = this.DecodedJWT;
+    return jwt.GivenName;
+  }
 }
