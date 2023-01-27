@@ -15,7 +15,7 @@ export class SugarAPIInterceptor implements HttpInterceptor {
     if (isLoggedIn && isApiUrl) {
       const req = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.jwtService.JWTToken}`,
+          Authorization: `${this.jwtService.JWTToken}`,
           'Content-Type': 'application/json'
         }
       });
