@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="col-12">
                                     <label>State:<sup class="p-error">*</sup></label>
-                                    <p-dropdown [options]="dropdownItems" optionLabel="name" formControlName="state"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['state'].touched && FormControls['state'].errors }"></p-dropdown>
+                                    <p-dropdown [options]="states" optionLabel="name" formControlName="state"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['state'].touched && FormControls['state'].errors }"></p-dropdown>
                                     <span *ngIf="FormControls['state'].touched && FormControls['state'].invalid" >
                                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['state'].errors?.['required']">Please Select State.</div>
 
@@ -55,13 +55,13 @@
                 <h4>Districts</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="New District" icon="pi pi-plus" class="p-button-success p-mr-2"
+                <button *ngIf="jwtService.Permissions.CanCreateDistrict" pButton pRipple label="New District" icon="pi pi-plus" class="p-button-success p-mr-2"
                     (click)="InitDistrict();"></button>
             </ng-template>
         </p-toolbar>
 
         <!-- table -->
-        <p-table #dt1 [value]="customers1" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+        <p-table #dt1 [value]="districts" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
             [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
             [rowsPerPageOptions]="[10,25,50]">
@@ -79,40 +79,44 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="name" style="width:200px">
-                        <p-sortIcon field="name"></p-sortIcon>Name
+                  <th pSortableColumn="districtId" style="width:100px">
+                    <p-sortIcon field="districtId"></p-sortIcon>District Id
+                  </th>
+                    <th pSortableColumn="districtName" style="width:200px">
+                        <p-sortIcon field="districtName"></p-sortIcon>District Name
                     </th>
-                    <th pSortableColumn="id" style="width:200px">Id<p-sortIcon field="id"></p-sortIcon>
+                    <th pSortableColumn="districtCode" style="width:100px">District Code<p-sortIcon field="id"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="country.name" style="width:200px">Country <p-sortIcon field="cpuntry.name">
+                    <th pSortableColumn="stateName" style="width:200px">State Name <p-sortIcon field="cpuntry.name">
                         </p-sortIcon>
                     </th>
-                    <th pSortableColumn="date" style="width:200px" style="width:200px">Date <p-sortIcon field="date">
+                    <th pSortableColumn="createAt" style="width:200px" style="width:200px">Create At<p-sortIcon field="date">
                         </p-sortIcon>
                     </th>
 
-                    <th pSortableColumn="representative.name" style="width:200px">
-                        <p-sortIcon field="represtative.name"></p-sortIcon>Representative
+                    <th pSortableColumn="createdBy" style="width:200px">
+                        <p-sortIcon field="createdBy"></p-sortIcon>Created By
                     </th>
-                    <th pSortableColumn="balance" style="width:200px" pFrozenColumn alignFrozen="right">
-                        <p-sortIcon field="balance"></p-sortIcon>Balance
+                    <th pSortableColumn="updatedBy" style="width:200px" pFrozenColumn alignFrozen="right">
+                        <p-sortIcon field="updatedBy"></p-sortIcon>Updated By
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-customer>
+            <ng-template pTemplate="body" let-distict>
                 <tr>
-                    <td style="width:200px">{{customer.name}}</td>
-                    <td style="width:200px">{{customer.id}}</td>
+                  <td style="width:100px">{{distict.districtId}}</td>
+                    <td style="width:200px">{{distict.districtName}}</td>
+                    <td style="width:100px">{{distict.districtCode}}</td>
                     <td style="width:200px">
-                        <span class="image-text ml-2">{{customer.country.name}}</span>
+                        <span class="image-text ml-2">{{distict.stateName}}</span>
                     </td>
-                    <td style="width:200px">{{customer.date}}</td>
+                    <td style="width:200px">{{distict.createdAt}}</td>
 
                     <td style="width:200px">
-                        <span class="image-text ml-2">{{customer.representative.name}}</span>
+                        <span class="image-text ml-2">{{distict.createdBy}}</span>
                     </td>
                     <td style="width:200px" pFrozenColumn class="font-bold" alignFrozen="right">
-                        {{formatCurrency(customer.balance)}}</td>
+                        {{formatCurrency(distict.updatedBy)}}</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">

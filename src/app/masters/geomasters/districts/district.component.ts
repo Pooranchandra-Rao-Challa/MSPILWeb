@@ -1,3 +1,4 @@
+import { JWTService } from 'src/app/_services/jwt.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -72,6 +73,7 @@ export class DistrictComponent implements OnInit {
 
   constructor(private formbuilder: FormBuilder, private customerService: CustomerService,
     private geoMasterService: GeoMasterService, private commonService: CommonService,
+    public jwtService: JWTService,
     private productService: ProductService) {
     this.cities = [
       { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
