@@ -16,7 +16,7 @@ import { RatingModule } from 'primeng/rating';
 import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
-import { FormsModule,  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
 import { InputMaskModule } from "primeng/inputmask";
@@ -54,7 +54,8 @@ import { MandalComponent } from './mandal.component';
     InputNumberModule,
     CascadeSelectModule,
     InputTextareaModule,
-    InputSwitchModule
+    InputSwitchModule,
+	ReactiveFormsModule
   ]
 })
 export class MandalModule { }

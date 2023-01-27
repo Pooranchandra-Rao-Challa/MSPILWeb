@@ -15,7 +15,7 @@ import { RatingModule } from 'primeng/rating';
 import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
 import { InputMaskModule } from "primeng/inputmask";
@@ -25,6 +25,9 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputSwitchModule } from 'primeng/inputswitch';
 import {ToolbarModule} from 'primeng/toolbar';
 import { SectionComponent } from './section.component';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+
 
 
 
@@ -55,7 +58,11 @@ import { SectionComponent } from './section.component';
     CascadeSelectModule,
     InputTextareaModule,
     InputSwitchModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MessageModule,
+    MessagesModule,
+   
 
   ]
 })

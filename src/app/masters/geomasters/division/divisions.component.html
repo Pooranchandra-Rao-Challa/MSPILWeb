@@ -1,59 +1,89 @@
-
 <div class="col-12">
     <div class="card">
-        <p-dialog header="Divisions" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
-            <div class="flex flex-column align-items-center justify-content-center">
-                <div class="grid" >
-                    <div class="col-12">
-                        <div class="col-12 p-fluid">
-                            <div class="grid">
-                                <div class="col-6">
-                                    <div class="field">
-                                        <label>Code:</label>
-                                        <input pInputText id="gender1" type="text">
-                                    </div>
-                                    <div class="field">
-                                        <label>Incharge Name:</label>
-                                        <input pInputText id="address1" type="text" >
-                                    </div>
-                                    <div class="field">
-                                        <label>Order:</label>
-                                        <input pInputText id="city1" type="text" >
-                                    </div>
-                                    <div class="field">
-                                        <label>Is Active?:</label><br>
-                                    &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>   
-                                    </div>
-                                   
-                                </div>
 
-                                <div class="col-6" >
+        <!-- <dialog> -->
+        <p-dialog header="Divisions" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            [style]="{width: '40vw'}">
+            <div class="flex flex-column align-items-center justify-content-center">
+                <form [formGroup]="divisions"  (ngSubmit)="onSubmit()">
+                    <div class="grid">
+                        <div class="col-12">
+                            <div class="col-12 p-fluid">
+                               
+                                <div class="grid">
+                                    <div class="col-6">
+
                                         <div class="field">
-                                        <label>Name:</label>
-                                        <input pInputText id="name1" type="text" />
+                                            <label>Code:<sup class="p-error">*</sup></label>
+                                            <input pInputText  type="text" formControlName="code"  [ngClass]="{ 'is-invalid  ng-dirty': f['code'].touched && f['code'].errors }">
+                                            <span *ngIf="f['code'].touched && f['code'].invalid" >
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="f['code'].errors?.['required']">Please Enter Code.</div>
+                                                </span>
+                                        </div>
+
+                                        <div class="field">
+                                            <label>Incharge Name:</label>
+                                            <input pInputText  type="text" formControlName="iname"  >  
+                                            <!-- <span *ngIf="f['iname'].touched && f['iname'].invalid" >
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="f['iname'].errors?.['required']">Please Enter Code.</div>
+                                                </span>   -->
+                                        </div>
+                                        <div class="field">
+                                            <label>Order:<sup class="p-error">*</sup></label>
+                                            <input pInputText  type="text" formControlName="order"  [ngClass]="{ 'is-invalid ng-dirty': f['order'].touched && f['order'].errors }">
+                                            <span *ngIf="f['order'].touched && f['order'].invalid" >
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="f['order'].errors?.['required']">Please Enter Order.</div>
+                                                </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Is Active?:<sup class="p-error">*</sup></label><br>
+                                            &nbsp; <p-inputSwitch formControlName="active"></p-inputSwitch>
+                                        </div>
+
                                     </div>
-                                    <div class="field">
-                                        <label>Incharge PhoneNo:</label>
-                                        <input pInputText id="email1" type="text" />
+
+                                    <div class="col-6">
+                                        <div class="field">
+                                            <label>Name:<sup class="p-error">*</sup></label>
+                                            <input pInputText  type="text" formControlName="name"  [ngClass]="{ 'is-invalid ng-dirty': f['name'].touched && f['name'].errors }">
+                                            <span *ngIf="f['name'].touched && f['name'].invalid" >
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="f['name'].errors?.['required']">Please Enter Name.</div>
+                                                </span>
+                                        </div>
+                                        <div class="field">
+                                            <label>Incharge PhoneNo:<sup class="p-error">*</sup></label>
+                                            <input pInputText  type="text"  formControlName="phno"  [ngClass]="{ 'is-invalid ng-dirty': f['phno'].touched && f['phno'].errors }">
+                                            <!-- <span *ngIf="f['phno'].touched && f['phno'].invalid" >
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="f['phno'].errors?.['required']">Please Enter Name.</div>
+                                                </span> -->
+                                        </div>
+                                        <div class="field">
+                                            <label>Address:<sup class="p-error">*</sup></label>
+                                            <textarea rows="5" cols="30" placeholder="Your Message"
+                                                pInputTextarea  formControlName="address" [ngClass]="{ 'is-invalid ng-dirty': f['address'].touched && f['address'].errors }" ></textarea>
+                                                <span *ngIf="f['address'].touched && f['address'].invalid" >
+                                                    <div class="ng-invalid ng-touched p-error" *ngIf="f['address'].errors?.['required']">Please Enter Address .</div>
+                                                    </span>
+                                                </div>
                                     </div>
-                                    <div class="field">
-                                        <label>Address:</label>
-                                        <textarea rows="5" cols="30" placeholder="Your Message" pInputTextarea></textarea>
+                                    <div class="col-12">
+                                        <button pButton pRipple type="submit" label="Add Division" 
+                                            class="p-button-raised p-button-success"></button>
+
                                     </div>
-                                    
                                 </div>
-                                <div class="col-12">
-                                    <button pButton pRipple type="button" label="Add Division" class="p-button-raised p-button-success"></button>
-                                
-                                </div>    
+                            
                             </div>
                         </div>
+                   
                     </div>
-                </div>
+                    
+                </form>
             </div>
         </p-dialog>
 
 
+        <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <h4>Divisions</h4>
@@ -63,6 +93,9 @@
                     (click)="display = true"></button>
             </ng-template>
         </p-toolbar>
+
+
+        <!-- table -->
         <p-table #dt1 [value]="customers1" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
             [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"

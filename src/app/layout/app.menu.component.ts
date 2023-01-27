@@ -45,7 +45,6 @@ export class AppMenuComponent implements OnInit {
                 label: 'Home',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['dashboard'] },
-                    { label: 'Login', icon: 'pi pi-fw pi-check-square', routerLink: ['login'] },
                     /*if u want to add single copy this line and pase change router link */
                     {
                         label: 'Masters',
@@ -61,7 +60,7 @@ export class AppMenuComponent implements OnInit {
                                     { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'] },
                                     { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'] },
                                     { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'] },
-                                    { label: 'Sate', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'] },
+                                    { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'] },
                                     
                                     
                                 ]

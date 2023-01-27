@@ -5,27 +5,51 @@
                     <div class="grid" >
                         <div class="col-12">
                             <div class="col-12 p-fluid">
+
+                                <form [formGroup]="circleForm  " (ngSubmit)="onSubmit()">
                                 <div class="grid">
                                     <div class="col-6">
                                         <div class="field">
-                                            <label htmlFor="age1">Division:</label>
-                                            <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a City" [showClear]="true"></p-dropdown>
+                                            <label htmlFor="division">Division:<sup class="p-error">*</sup> </label>
+                                            <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" formControlName="division"  for placeholder="Select a City" [showClear]="true"></p-dropdown>
+
+                                            <div *ngIf="f['division'].invalid &&  f['division'].touched" class="error-message p-error">
+                                                Division is required
+                                              </div>
                                         </div>
                                         <div class="field">
-                                            <label htmlFor="gender1">Circle Name:</label>
-                                            <input pInputText id="gender1" type="text" />
+                                            <label htmlFor="circleName">Circle Name:<sup class="p-error">*</sup></label>
+                                            <input pInputText id="circleName" formControlName="circleName" type="text" />
+
+                                            <div *ngIf="f['circleName'].invalid &&  f['circleName'].touched" class="error-message p-error">
+                                                Circle Name  is required
+                                              </div>
+
                                         </div>
                                         <div class="field">
-                                            <label htmlFor="address1">Incharge Name:</label>
-                                            <input pInputText id="address1" type="text" />
+                                            <label htmlFor="inchargeName">Incharge Name:</label>
+                                            <input pInputText id="inchargeName"  formControlName="inchargeName" type="text" />
+
+                                            <div *ngIf="f['inchargeName'].invalid &&  f['inchargeName'].touched" class="error-message p-error">
+                                                Circle Name  is required
+                                              </div>
+                                            
                                         </div>
                                         <div class="field">
-                                            <label htmlFor="city1">Order:</label>
-                                            <input pInputText id="city1" type="text" />
+                                            <label htmlFor="order">Order:<sup class="p-error">*</sup></label>
+                                            <input pInputText id="order" formControlName="order" type="text" />
+                                            <div *ngIf="f['order'].invalid &&  f['order'].touched" class="error-message p-error">
+                                                Circle Name  is required
+                                              </div>
+                                            
                                         </div>
                                         <div class="field">
-                                            <label htmlFor="name1">Is Active?:</label><br><br>
-                                        &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>   
+                                            <label htmlFor="isActive">Is Active?:<sup class="p-error">*</sup></label><br><br>
+                                        &nbsp; <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>   
+
+                                        <div *ngIf="f['isActive'].invalid &&  f['isActive'].touched" class="error-message p-error">
+                                            Circle Name  is required
+                                          </div>
                                         </div>
                                         
                                     </div>
@@ -33,23 +57,36 @@
                                    
                                     <div class="col-6" >
                                         <div class="field">
-                                            <label htmlFor="name1">Circle Code:</label>
-                                            <input pInputText id="name1" type="text" />
+                                            <label htmlFor="circleCode">Circle Code:<sup class="p-error">*</sup></label>
+                                            <input pInputText id="circleCode" formControlName="circleCode" type="text" />
+
+                                            <div *ngIf="f['circleCode'].invalid &&  f['circleCode'].touched" class="error-message p-error">
+                                                Circle Name  is required
+                                              </div>
                                         </div>
                                         <div class="field">
-                                            <label htmlFor="email1">Incharge PhoneNo:</label>
-                                            <input pInputText id="email1" type="text" />
+                                            <label htmlFor="inchargePhoneNo">Incharge PhoneNo:</label>
+                                            <input pInputText id="inchargePhoneNo" formControlName="inchargePhoneNo" type="text" />
+
+                                            <div *ngIf="f['inchargePhoneNo'].invalid &&  f['inchargePhoneNo'].touched" class="error-message p-error">
+                                                Circle Name  is required
+                                              </div>
                                         </div>
                                         <div class="field">
-                                            <label htmlFor="city1">Address:</label>
-                                            <textarea rows="5" cols="30" placeholder="Your Message" pInputTextarea></textarea>
+                                            <label htmlFor="address">Address:<sup class="p-error">*</sup></label>
+                                            <textarea rows="5" cols="30" formControlName="address" placeholder="Your Message" pInputTextarea></textarea>
+                                            <div *ngIf="f['address'].invalid &&  f['address'].touched" class="error-message p-error">
+                                                Circle Name  is required
+                                              </div>
                                         </div>
                                     </div>
                                     <div class="col-12 ">
-                                        <button pButton pRipple type="button" label="Add Circle" class="p-button-raised p-button-success"></button>
+                                        <button pButton pRipple type="submit" label="Add Circle" class="p-button-raised p-button-success"></button>
                                     </div>
                                 </div>
-                            </div>
+                            
+                            </form>
+                        </div>
                         </div>
                     </div>
                 </div>
