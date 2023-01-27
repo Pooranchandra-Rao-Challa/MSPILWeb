@@ -1,4 +1,4 @@
-
+import { CommonService } from 'src/app/_services/common.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Customer, Representative } from 'src/app/demo/api/customer';
@@ -8,7 +8,7 @@ import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
-import { DistrictViewDto } from 'src/app/_models/geomodels';
+import { DistrictViewDto,DistrictDto, StateDto } from 'src/app/_models/geomodels';
 
 
 @Component({
@@ -25,9 +25,16 @@ export class DistrictComponent implements OnInit {
     this.display = false;
   }
 
+
   display: boolean = false;
 
   districts: DistrictViewDto[]=[];
+
+  district: DistrictDto = new DistrictDto();
+
+  states: StateDto[] = []
+
+
   customers1: Customer[] = [];
 
   customers2: Customer[] = [];
@@ -61,7 +68,7 @@ export class DistrictComponent implements OnInit {
 
 
   constructor(private customerService: CustomerService, private productService: ProductService,
-    private geoMasterService: GeoMasterService) {
+    private geoMasterService: GeoMasterService, private commonService: CommonService) {
 
     this.cities = [
       { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
@@ -72,15 +79,19 @@ export class DistrictComponent implements OnInit {
     ];
   }
 
-
+  InitDistrict(){
+    this.district = new DistrictDto();
+    this.display = true;
+  }
 
   ngOnInit() {
 
     this.geoMasterService.GetDistricts().subscribe((resp)=>{
       this.districts = resp as unknown as DistrictViewDto[]
+    })
 
-      console.log(this.districts);
-
+    this.commonService.GetStates().subscribe((resp)=>{
+      this.states = resp as unknown as StateDto[]
     })
     this.customerService.getCustomersLarge().then(customers => {
       this.customers1 = customers;

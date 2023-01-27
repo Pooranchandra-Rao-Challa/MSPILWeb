@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-12" >
                                 <label>State:</label>
-                                <p-dropdown [options]="dropdownItems" optionLabel="name"></p-dropdown>
+                                <p-dropdown [options]="states" optionLabel="name"></p-dropdown>
                             </div>
                             <div class=" col-12 ">
                                 <label>Is Active?:</label><br>
@@ -38,7 +38,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New District" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    (click)="display = true"></button>
+                    (click)="InitDistrict();"></button>
             </ng-template>
         </p-toolbar>
         <p-table #dt1 [value]="districts" dataKey="districtId" [rows]="10" [loading]="loading" [rowHover]="true"

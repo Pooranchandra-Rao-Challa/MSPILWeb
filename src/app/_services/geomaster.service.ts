@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { DistrictViewDto } from "../_models/geomodels";
 import { ApiHttpService } from "./api.http.service";
@@ -10,5 +9,9 @@ export class GeoMasterService extends ApiHttpService {
 
   public GetDistricts(){
     return this.get<DistrictViewDto[]>(GET_DISTRICTS_URI);
+  }
+
+  public CreateDistrict(){
+
   }
 }
