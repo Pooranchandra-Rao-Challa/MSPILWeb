@@ -6,6 +6,7 @@ import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class CirclesComponent implements OnInit {
 
   cities:any=[];
   selectedDrop: any;
+  
 
   showDialog() {
     this.display = false;
@@ -56,9 +58,9 @@ export class CirclesComponent implements OnInit {
 
     @ViewChild('filter') filter!: ElementRef;
 
-    
+    circleForm!: FormGroup;
 
-    constructor(private customerService: CustomerService, private productService: ProductService) {
+    constructor(private customerService: CustomerService, private productService: ProductService,private formbuilder:FormBuilder) {
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -67,8 +69,6 @@ export class CirclesComponent implements OnInit {
         { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
     ];
      }
-
-   
 
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
@@ -81,9 +81,44 @@ export class CirclesComponent implements OnInit {
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
       
-
         
+        this.circleForm = this.formbuilder.group({
+            division: ['', Validators.required],
+            circleName: ['', Validators.required],
+            inchargeName: ['', Validators.required],
+            order: ['', Validators.required],
+            isActive: [this.valSwitch, Validators.required],
+            circleCode: ['', Validators.required],
+            inchargePhoneNo: ['', Validators.required],
+            address: ['', Validators.required]
+        });
+
+
+
+
+
+
     }
+
+
+    onSubmit() {
+        if (this.circleForm.valid) {
+            console.log(this.circleForm.value)
+            alert("adedd")
+          // submit the form
+        } else {
+          this.circleForm.markAllAsTouched();
+        }
+      }
+
+
+ get f(){
+       return this.circleForm.controls
+     }
+
+
+
+
     customSort(event: SortEvent) {
        
     }

@@ -16,7 +16,7 @@ import { RatingModule } from 'primeng/rating';
 import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
-import { FormsModule,  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 import { DistrictComponent } from './district.component';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
@@ -55,8 +55,8 @@ import {ToolbarModule} from 'primeng/toolbar';
     InputNumberModule,
     CascadeSelectModule,
     InputTextareaModule,
-    InputSwitchModule
-	
+    InputSwitchModule,
+	ReactiveFormsModule
   ]
 })
 export class DistirctsModule { }

@@ -5,6 +5,7 @@ import { Product } from 'src/app/demo/api/product';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-divisions',
   templateUrl: './divisions.component.html',
@@ -14,6 +15,7 @@ export class DivisionsComponent implements OnInit {
 
   cities:any=[];
   selectedDrop: any;
+   
 
   showDialog() {
     this.display = false;
@@ -53,8 +55,8 @@ export class DivisionsComponent implements OnInit {
 
     @ViewChild('filter') filter!: ElementRef;
 
-    
-    constructor( private customerService: CustomerService, private productService: ProductService) {
+    divisions!:FormGroup
+    constructor(private  formbuilder:FormBuilder, private customerService: CustomerService, private productService: ProductService) {
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -64,8 +66,10 @@ export class DivisionsComponent implements OnInit {
     ];
      }
 
-
-
+     get f (){
+        return this.divisions.controls;  
+      }
+   
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
             this.customers1 = customers;
@@ -77,8 +81,25 @@ export class DivisionsComponent implements OnInit {
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
       
-
+        this.divisions=this.formbuilder.group({
+            code:['',(Validators.required)],
+            iname:['',],
+            order:['',(Validators.required)],
+            name:['',(Validators.required)],
+            phno:['',],
+            address:['',(Validators.required)],
+            active:true
+          });
         
+    }
+    onSubmit(){
+        if(this.divisions.valid){
+            console.log(this.divisions.value);
+            }
+            else{
+                // alert("please fill the fields")
+                 this.divisions.markAllAsTouched();
+            }
     }
 
     dropdownItems = [
@@ -136,6 +157,6 @@ export class DivisionsComponent implements OnInit {
 
     valSwitch: boolean = true;
     
-
+    
 
 }

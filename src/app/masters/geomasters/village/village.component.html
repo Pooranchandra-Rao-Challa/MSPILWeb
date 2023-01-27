@@ -2,145 +2,224 @@
     <div class="card">
         <p-dialog header="Village" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
             <div class="flex flex-column align-items-center justify-content-center">     
-                
+                <form [formGroup]="villageform  " (ngSubmit)="onSubmit()">
                 <div class="container">
                     <div class="grid p-fluid" >
 
                         <div class="field col-12 md:col-3">
-                           <label htmlFor="age1">Division:</label>
-                           <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a Division" [showClear]="true"></p-dropdown>             
-                       </div>
+                           <label htmlFor="division"> Division:<sup class="p-error">*</sup></label>
+                           <p-dropdown [options]="cities" formControlName="division" [(ngModel)]="selectedDrop" placeholder="Select a Division" [showClear]="true"></p-dropdown>             
+                           <div *ngIf="f['division'].invalid &&  f['division'].touched" class="error-message p-error">
+                            Division is required
+                          </div>
+                        </div>
                         
 
                        <div class="field col-12 md:col-3">
-                        <label htmlFor="age1">Circle:</label>
-                        <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a Circle" [showClear]="true"></p-dropdown>             
+                        <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
+                        <p-dropdown [options]="cities" formControlName="circle" [(ngModel)]="selectedDrop" placeholder="Select a Circle" [showClear]="true"></p-dropdown>             
+                       
+                        <div *ngIf="f['circle'].invalid &&  f['circle'].touched" class="error-message p-error">
+                            Circle required
+                          </div>
                     </div>
                      
 
                     <div class="field col-12 md:col-3">
-                        <label htmlFor="age1">Section:</label>
-                        <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a Section" [showClear]="true"></p-dropdown>             
+                        <label htmlFor="section">Section:<sup class="p-error">*</sup></label>
+                        <p-dropdown [options]="cities" formControlName="section" [(ngModel)]="selectedDrop" placeholder="Select a Section" [showClear]="true"></p-dropdown>             
+                    
+                        <div *ngIf="f['section'].invalid &&  f['section'].touched" class="error-message p-error">
+                            Section required
+                          </div>
                     </div>
                         
                         <div class="field col-12 md:col-3">
-                            <label for="integeronly">Target</label>
-                            <p-inputNumber inputId="integeronly">
+                            <label for="target">Target</label>
+                            <p-inputNumber formControlName="target" inputId="target">
                             </p-inputNumber>
+
                         </div>
                         
                         <div class="field col-12 md:col-3">
-                            <label htmlFor="age1">District:</label>
-                            <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" placeholder="Select a District:" [showClear]="true"></p-dropdown>             
+                            <label htmlFor="district">District:c</label>
+                            
+                            <p-dropdown [options]="cities" formControlName="district" [(ngModel)]="selectedDrop" placeholder="Select a District:" [showClear]="true"></p-dropdown>             
+                       
+                            <div *ngIf="f['district'].invalid &&  f['district'].touched" class="error-message p-error">
+                                District required
+                              </div>
                         </div>
          
                        <div class="field col-12 md:col-3">
-                            <label for="integeronly">Mandal:</label>
-                            <p-inputNumber inputId="integeronly" >
+                            <label for="mandal">Mandal:<sup class="p-error">*</sup></label>
+                            <p-inputNumber formControlName="mandal" inputId="mandal" >
                             </p-inputNumber>
+
+                            <div *ngIf="f['mandal'].invalid &&  f['mandal'].touched" class="error-message p-error">
+                                Mandal required
+                              </div>
                         </div>
                         <div class="field col-8 md:col-3">
-                            <label htmlFor="city1">Address:</label>
-                            <textarea rows="5" cols="30" placeholder="Your Message" pInputTextarea></textarea>
+                            <label htmlFor="address">Address:</label>
+                            <textarea rows="5" cols="30" formControlName="address" placeholder="Your Message" pInputTextarea></textarea>
+
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">Target:</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            <label for="PinCode">PinCode:</label>
+                            <p-inputNumber  inputId="PinCode"  formControlName="PinCode">
                             </p-inputNumber>
+
+                           
                         </div>                      
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">Code:</label>
-                            <p-inputNumber inputId="locale-user" [minFractionDigits]="2">
+                            <label for="code">Code:<sup class="p-error">*</sup></label>
+                            <p-inputNumber inputId="code" formControlName="code" >
+                            </p-inputNumber>
+
+                            <div *ngIf="f['code'].invalid &&  f['code'].touched" class="error-message p-error">
+                                Code required
+                              </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label htmlFor="name">Name:<sup class="p-error">*</sup></label>
+                          <input pInputText id="name" formControlName="name" type="text" />
+
+                          <div *ngIf="f['name'].invalid &&  f['name'].touched" class="error-message p-error">
+                            Name required
+                          </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="inchargeName">Incharge Name:</label>
+                            <input pInputText id="circleName" formControlName="inchargeName" type="text" />
+
+                            
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="inchargePhoneNo">Incharge Phone No.:</label>
+                            <p-inputNumber  inputId="inchargePhoneNo" formControlName="inchargePhoneNo" inputId="minmax" mode="decimal" [min]="0" [max]="100">
                             </p-inputNumber>
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="withoutgrouping">Name:</label>
-                            <p-inputNumber mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                            <label for="distance">Distance:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="distance" formControlName="distance" [minFractionDigits]="2">
                             </p-inputNumber>
+
+                            <div *ngIf="f['distance'].invalid &&  f['distance'].touched" class="error-message p-error">
+                                Distance required
+                              </div>
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="minmaxfraction">Incharge Name:</label>
-                            <p-inputNumber  inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5">
+                            <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="divertedDistance"  formControlName="divertedDistance" [minFractionDigits]="2">
                             </p-inputNumber>
-                        </div>
-                        <div class="field col-12 md:col-3">
-                            <label for="minmax">Incharge Phone No.:</label>
-                            <p-inputNumber  inputId="minmax" inputId="minmax" mode="decimal" [min]="0" [max]="100">
-                            </p-inputNumber>
-                        </div>
-                        <div class="field col-12 md:col-3">
-                            <label for="locale-user">Distance:</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
-                            </p-inputNumber>
-                        </div>
-                        <div class="field col-12 md:col-3">
-                            <label for="locale-user">Diverted Distance:</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
-                            </p-inputNumber>
+
+                            <div *ngIf="f['divertedDistance'].invalid &&  f['divertedDistance'].touched" class="error-message p-error">
+                                Diverted Distance required
+                              </div>
                         </div> 
 
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">No Of EB Services:</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            <label for="noOfEBServices">No Of EB Services:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="noOfEBServices" formControlName="noOfEBServices" [minFractionDigits]="2">
                             </p-inputNumber>
+                            <div *ngIf="f['noOfEBServices'].invalid &&  f['noOfEBServices'].touched" class="error-message p-error">
+                                No Of EB Services is  required
+                              </div>
                         </div>
 
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">TPT Rate(₹):</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            <label for="TPTRate">TPT Rate(₹):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="TPTRate" formControlName="TPTRate" [minFractionDigits]="2">
                             </p-inputNumber>
+
+                            <div *ngIf="f['TPTRate'].invalid &&  f['TPTRate'].touched" class="error-message p-error">
+                                TPT Rate is  required
+                              </div>
                         </div>
 
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">Cultivatable Area(Acres):</label>
-                            <p-inputNumber inputId="locale-user" [minFractionDigits]="2">
+                            <label for="cultivatableArea">Cultivatable Area(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber inputId="cultivatableArea" formControlName="cultivatableArea" [minFractionDigits]="2">
                             </p-inputNumber>
+                            <div *ngIf="f['cultivatableArea'].invalid &&  f['cultivatableArea'].touched" class="error-message p-error">
+                                Cultivatable Area is  required
+                              </div>
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">Total Geographic Area(Acres):</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            <label for="totalGeographicArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="totalGeographicArea" formControlName="totalGeographicArea" [minFractionDigits]="2">
                             </p-inputNumber>
+
+                            <div *ngIf="f['totalGeographicArea'].invalid &&  f['totalGeographicArea'].touched" class="error-message p-error">
+                                Total Geographic Area is  required
+                              </div>
                         </div>
 
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">Irrigation Area(In Peek Summer):</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            <label for="irrigationArea">Irrigation Area(In Peek Summer):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2">
                             </p-inputNumber>
+
+                            <div *ngIf="f['irrigationArea'].invalid &&  f['irrigationArea'].touched" class="error-message p-error">
+                                Irrigation Area is  required
+                              </div>
                         </div>
 
                         <div class="field col-12 md:col-3">
-                            <label for="locale-user">Dry Area(Acres):</label>
-                            <p-inputNumber  inputId="locale-user" [minFractionDigits]="2">
+                            <label for="dryArea">Dry Area(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2">
                             </p-inputNumber>
+
+                            <div *ngIf="f['dryArea'].invalid &&  f['dryArea'].touched" class="error-message p-error">
+                                Dry Area is  required
+                              </div>
                         </div>
 
 
                         <div class="field col-12 md:col-3">
-                            <label for="locale-us">Suitable Area for Cane(Acres):</label>
-                            <p-inputNumber  inputId="locale-us" mode="decimal" locale="en-US" [minFractionDigits]="2">
+                            <label for="suitableAreaforCane">Suitable Area for Cane(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="suitableAreaforCane" formControlName="suitableAreaforCane" mode="decimal" locale="en-US" [minFractionDigits]="2">
                             </p-inputNumber>
+
+                            <div *ngIf="f['suitableAreaforCane'].invalid &&  f['suitableAreaforCane'].touched" class="error-message p-error">
+                                Suitable Area for Cane is  required
+                              </div>
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="locale-german">Not Suitable:</label>
-                            <p-inputNumber  inputId="locale-german" mode="decimal" locale="de-DE" [minFractionDigits]="2">
+                            <label for="notSuitable">Not Suitable:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="notSuitable" formControlName="notSuitable" mode="decimal" locale="de-DE" [minFractionDigits]="2">
                             </p-inputNumber>
+
+                            <div *ngIf="f['notSuitable'].invalid &&  f['notSuitable'].touched" class="error-message p-error">
+                                Not Suitable is  requiredF
+                              </div>
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="locale-indian">Ord:</label>
-                            <p-inputNumber  inputId="locale-indian" mode="decimal" locale="en-IN" [minFractionDigits]="2">
+                            <label for="ord">Ord:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="locale-indian" formControlName="ord" mode="decimal" locale="en-IN" [minFractionDigits]="2">
                             </p-inputNumber>
+                             <div *ngIf="f['ord'].invalid &&  f['ord'].touched" class="error-message p-error">
+                                Ord is  required
+                              </div>
                         </div>
 
                         
                         <div class="field col-12 md:col-3 ">
                             <div class="col-2">
-                                <label  htmlFor="name1">Is Active?:</label><br>
-                                <p-inputSwitch [(ngModel)]="valSwitch" ></p-inputSwitch>
+                                <label  htmlFor="isActive">Is Active?:<sup class="p-error">*</sup></label><br>
+                                <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+
+                                <div *ngIf="f['isActive'].invalid &&  f['isActive'].touched" class="error-message p-error">
+                                    Ord is  required
+                                  </div>
+
+                                
                             </div>                 
                         </div>
                         <div class="field col-12 ">
                             <div class="col-2">
-                                <button pButton pRipple type="button"  label="Success" class="p-button-raised p-button-success"></button>
+                                <button pButton pRipple type="submit"  label="Success" class="p-button-raised p-button-success"></button>
                             </div>                         
                         </div>                       
                     </div>
@@ -148,7 +227,8 @@
                 </div>
 
 
-            </div>
+            </form> 
+        </div>
         </p-dialog>
     
         <p-toolbar styleClass="p-mb-4">

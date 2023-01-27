@@ -5,6 +5,7 @@ import { Product } from 'src/app/demo/api/product';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-mandal',
   templateUrl: './mandal.component.html',
@@ -14,6 +15,7 @@ export class MandalComponent implements OnInit {
   cities:any=[];
   selectedDrop: any;
   filter: any;
+  
 
   showDialog() {
     this.display = false;
@@ -49,13 +51,9 @@ export class MandalComponent implements OnInit {
     idFrozen: boolean = false;
 
     loading: boolean = true;
-    
-
-   
-
-    
-
-    constructor(private customerService: CustomerService, private productService: ProductService) {
+     
+  mandals!:FormGroup
+    constructor(private formbuilder:FormBuilder  ,private customerService: CustomerService, private productService: ProductService) {
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -65,7 +63,9 @@ export class MandalComponent implements OnInit {
     ];
      }
 
-   
+     get f (){
+        return this. mandals.controls;  
+      }
 
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
@@ -78,8 +78,23 @@ export class MandalComponent implements OnInit {
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
       
+        this. mandals=this.formbuilder.group({
+            code:['',(Validators.required)],
 
+            name:['',(Validators.required)],
+            state:['',(Validators.required)],
+            active:true
+          });
         
+    }
+    onSubmit(){
+       if(this.mandals.valid){
+        console.log(this.mandals.value);
+        }
+        else{
+            // alert("please fill the fields")
+             this.mandals.markAllAsTouched();
+        }
     }
     customSort(event: SortEvent) {
        

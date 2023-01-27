@@ -1,31 +1,33 @@
 <div class="col-12">
     <div class="card">
+
+        <!-- dialog -->
         <p-dialog header="State" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
-                <form [formGroup]="state">
+                <form [formGroup]="state"  (ngSubmit)="onSubmit()">
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">
                                 <div class="col-12">
-                                    <label>Code:</label>
-                                    <input pInputText type="text" formControlName="code" >
+                                    <label>Code:<sup class="p-error">*</sup></label>
+                                    <input pInputText type="text" formControlName="code"  [ngClass]="{ 'is-invalid ng-dirty': f['code'].touched && f['code'].errors }" >
                                     <span *ngIf="f['code'].touched && f['code'].invalid" >
                                         <div class="ng-invalid ng-touched p-error" *ngIf="f['code'].errors?.['required']">Please Enter Code.</div>
                                         </span>
                                 </div>
                                 <div class="col-12">
-                                    <label> Name:</label>
-                                    <input pInputText id="address1" type="text" formControlName="name">
+                                    <label> Name:<sup class="p-error">*</sup></label>
+                                    <input pInputText id="address1" type="text" formControlName="name" [ngClass]="{ 'is-invalid ng-dirty': f['name'].touched && f['name'].errors }">
                                     <span *ngIf="f['name'].touched && f['name'].invalid" >
                                         <div class="ng-invalid ng-touched p-error" *ngIf="f['name'].errors?.['required']">Please Enter Name.</div>
                                         </span>
                                 </div>
                                 <div class="col-12">
-                                    <label htmlFor="name1">Is Active?:</label><br>
+                                    <label>Is Active?:<sup class="p-error">*</sup></label><br>
                                     &nbsp; <p-inputSwitch formControlName="active"></p-inputSwitch>
                                 </div>
-                                <div class="mt-2">
-                                    <button pButton pRipple type="button" label="Success"
+                                <div class="col-12 mt-2">
+                                    <button pButton pRipple type="submit" label="Add State"
                                         class="p-button-raised p-button-success"></button>
                                 </div>
                             </div>
@@ -36,7 +38,7 @@
 
         </p-dialog>
 
-
+       <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <h4>States</h4>
@@ -46,6 +48,8 @@
                     (click)="display = true"></button>
             </ng-template>
         </p-toolbar>
+
+        <!-- table -->
         <p-table #dt1 [value]="customers1" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
             [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"

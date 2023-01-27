@@ -6,6 +6,7 @@ import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-village',
@@ -58,7 +59,12 @@ export class VillageComponent implements OnInit {
 
     
 
-    constructor(private customerService: CustomerService, private productService: ProductService) {
+    constructor(private customerService: CustomerService,
+              private productService: ProductService,
+              private formbuilder:FormBuilder) {
+
+
+
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -68,8 +74,8 @@ export class VillageComponent implements OnInit {
     ];
      }
 
-   
-
+     valSwitch:boolean = false;
+     villageform!: FormGroup;
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
             this.customers1 = customers;
@@ -81,6 +87,36 @@ export class VillageComponent implements OnInit {
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
       
+
+        this.villageform = this.formbuilder.group({
+            division: ['', Validators.required],
+            circle: ['', Validators.required],
+            section: ['', Validators.required],
+            target: ['', Validators.required],
+            district: ['', Validators.required],
+            mandal: ['', Validators.required],
+            address: ['', Validators.required],
+            PinCode:['', Validators.required],
+            code: ['', Validators.required],
+            name: ['', Validators.required],
+            inchargeName: ['',],
+            inchargePhoneNo: ['',],
+            distance: ['', Validators.required],
+            divertedDistance: ['', Validators.required],
+            noOfEBServices: ['', Validators.required],
+            TPTRate: ['', Validators.required],
+            circleCode: ['', Validators.required],
+            cultivatableArea: ['', Validators.required],
+            totalGeographicArea: ['', Validators.required],
+            irrigationArea: ['', Validators.required],
+            dryArea: ['', Validators.required],
+            suitableAreaforCane: ['', Validators.required],
+            notSuitable: ['', Validators.required],
+            ord: ['', Validators.required],
+            isActive: [ Validators.required],
+        });
+
+
 
         
     }
@@ -130,8 +166,20 @@ export class VillageComponent implements OnInit {
         this.filter.nativeElement.value = '';
     }
 
+ 
 
-    valSwitch: boolean = true;
+
+
+    onSubmit(){
+        console.log(this.villageform.value)
+    }
+
+    get f(){
+        return this.villageform.controls
+      }
+
+
+    
 
     
 }

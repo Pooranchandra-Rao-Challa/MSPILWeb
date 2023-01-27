@@ -1,36 +1,50 @@
 <div class="col-12">
     <div class="card">
+        <!-- dailog box -->
         <p-dialog header="Mandal" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
+                <form [formGroup]="mandals" (ngSubmit)="onSubmit()">
                 <div class="grid">
                     <div class="col-12 ">
                         <div class="p-fluid p-formgrid grid">
                             <div class="col-12 ">
-                                <label>Code:</label>&nbsp;
-                                <input pInputText id="code" type="text">
+                                <label>Code:<sup class="p-error">*</sup></label>&nbsp;
+                                <input pInputText id="code" type="text" formControlName="code" [ngClass]="{ 'is-invalid ng-dirty': f['code'].touched && f['code'].errors }">
+                                <span *ngIf="f['code'].touched && f['code'].invalid" >
+                                    <div class="ng-invalid ng-touched p-error" *ngIf="f['code'].errors?.['required']">Please Enter Code.</div>
+                                    </span>
                             </div>
                             <div class="col-12 ">
-                                <label>Name:</label>&nbsp;
-                                <input pInputText id="name" type="text">
+                                <label>Name:<sup class="p-error">*</sup></label>&nbsp;
+                                <input pInputText id="name" type="text" formControlName="name" [ngClass]="{ 'is-invalid  ng-dirty': f['name'].touched && f['name'].errors }">
+                                <span *ngIf="f['name'].touched && f['name'].invalid" >
+                                    <div class="ng-invalid ng-touched p-error" *ngIf="f['name'].errors?.['required']">Please Enter Name.</div>
+                                    </span>
                             </div>
                             <div class=" col-12 ">
-                                <label>State:</label>&nbsp;
-                                <p-dropdown [options]="dropdownItems" optionLabel="name"></p-dropdown>
+                                <label>State:<sup class="p-error">*</sup></label>&nbsp;
+                                <p-dropdown [options]="dropdownItems" optionLabel="name" formControlName="state" [ngClass]="{ 'is-invalid  ng-dirty': f['state'].touched && f['state'].errors }"></p-dropdown>
+                                <span *ngIf="f['state'].touched && f['state'].invalid" >
+                                    <div class="ng-invalid ng-touched p-error" *ngIf="f['state'].errors?.['required']">Please Select State.</div>
+                                    </span>
                             </div>
                             <div class=" col-12 ">
-                                <label>Is Active?:</label><br>
-                                &nbsp;<p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>
+                                <label>Is Active?:<sup class="p-error">*</sup></label><br>
+                                &nbsp;<p-inputSwitch formControlName="active"></p-inputSwitch>
                             </div>
                             <div class=" col-12 ">
-                                <button pButton pRipple type="button" label="Success"
+                                <button pButton pRipple type="submit" label="Success"
                                     class="p-button-raised p-button-success"></button>
                             </div>
                         </div>
                        
                     </div>
                 </div>
+                </form>
             </div>
         </p-dialog>
+
+        <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <h4>Mandals</h4>
@@ -40,6 +54,8 @@
                     (click)="display = true"></button>
             </ng-template>
         </p-toolbar>
+
+        <!-- table -->
         <p-table #dt1 [value]="customers1" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
             [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"

@@ -1,35 +1,55 @@
 <div class="col-12">
     <div class="card">
-        <p-dialog header="Districts" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
+        <!-- dialog box -->
+        <p-dialog header="Districts" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
-                <div class="grid">
-                    <div class="col-12 ">
-                        <div class="p-fluid p-formgrid grid">
-                            <div class="col-12 ">
-                                <label>Code:</label>
-                                <input pInputText id="code" type="text">
+                <form [formGroup]="districts" (ngSubmit)="onSubmit()">
+                    <div class="grid">
+                        <div class="col-12 ">
+                            <div class="p-fluid p-formgrid grid">
+                                <div class="col-12 ">
+                                    <label>Code:<sup class="p-error">*</sup></label>
+                                    <input pInputText id="code" type="text" formControlName="code" [ngClass]="{ 'is-invalid ng-dirty': f['code'].touched && f['code'].errors }">
+                                    <span *ngIf="f['code'].touched && f['code'].invalid" >
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="f['code'].errors?.['required']">Please Enter Code.</div>
+                                        </span>
+                                </div>
+                                <div class="col-12">
+                                    <label>Name:<sup class="p-error">*</sup></label>
+                                    <input pInputText id="name" type="text" formControlName="name"  [ngClass]="{ 'is-invalid ng-dirty': f['name'].touched && f['name'].errors }">
+                                    <span *ngIf="f['name'].touched && f['name'].invalid" >
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="f['name'].errors?.['required']">Please Enter Name.</div>
+
+                                        </span>
+                                </div>
+                                <div class="col-12">
+                                    <label>State:<sup class="p-error">*</sup></label>
+                                    <p-dropdown [options]="dropdownItems" optionLabel="name" formControlName="state"  [ngClass]="{ 'is-invalid ng-dirty': f['state'].touched && f['state'].errors }"></p-dropdown>
+                                    <span *ngIf="f['state'].touched && f['state'].invalid" >
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="f['state'].errors?.['required']">Please Select State.</div>
+
+                                        </span>
+                                </div>
+                                <div class=" col-12 ">
+                                    <label>Is Active?:<sup class="p-error">*</sup></label><br>
+                                    &nbsp; <p-inputSwitch formControlName="active" ></p-inputSwitch>
+                                </div>
+                                <div class="col-12">
+                                    <button pButton pRipple type="submit" label="Add District"
+                                        class="p-button-raised p-button-success"></button>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <label>Name:</label>
-                                <input pInputText id="name" type="text">
-                            </div>
-                            <div class="col-12" >
-                                <label>State:</label>
-                                <p-dropdown [options]="states" optionLabel="name"></p-dropdown>
-                            </div>
-                            <div class=" col-12 ">
-                                <label>Is Active?:</label><br>
-                                &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch>
-                            </div>
-                            <div class="col-12">
-                                <button pButton pRipple type="button" label="Add District"
-                                    class="p-button-raised p-button-success"></button>
-                            </div>
+
+
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </p-dialog>
+
+
+        <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <h4>Districts</h4>
@@ -39,9 +59,11 @@
                     (click)="InitDistrict();"></button>
             </ng-template>
         </p-toolbar>
-        <p-table #dt1 [value]="districts" dataKey="districtId" [rows]="10" [loading]="loading" [rowHover]="true"
+
+        <!-- table -->
+        <p-table #dt1 [value]="customers1" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
-            [globalFilterFields]="['districtCode','districtName','stateName','createdBy']" responsiveLayout="scroll"
+            [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
             [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
@@ -57,55 +79,50 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="districtCode" style="width:100px">
-                    <p-sortIcon field="districtCode"></p-sortIcon>District Code
-                  </th>
-
-                    <th pSortableColumn="districtName" style="width:200px">
-                        <p-sortIcon field="districtName"></p-sortIcon>District Name
+                    <th pSortableColumn="name" style="width:200px">
+                        <p-sortIcon field="name"></p-sortIcon>Name
                     </th>
-                    <th pSortableColumn="distictId" style="width:100px">Distict Id<p-sortIcon field="distictId"></p-sortIcon>
+                    <th pSortableColumn="id" style="width:200px">Id<p-sortIcon field="id"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="stateName" style="width:200px">Country <p-sortIcon field="stateName">
+                    <th pSortableColumn="country.name" style="width:200px">Country <p-sortIcon field="cpuntry.name">
                         </p-sortIcon>
                     </th>
-                    <th pSortableColumn="createdAt" style="width:200px" style="width:200px">Date <p-sortIcon field="createdAt">
+                    <th pSortableColumn="date" style="width:200px" style="width:200px">Date <p-sortIcon field="date">
                         </p-sortIcon>
                     </th>
 
-                    <th pSortableColumn="createdBy" style="width:200px">
-                        <p-sortIcon field="createdBy"></p-sortIcon>Representative
+                    <th pSortableColumn="representative.name" style="width:200px">
+                        <p-sortIcon field="represtative.name"></p-sortIcon>Representative
                     </th>
-                    <th pSortableColumn="updatedBy" style="width:200px" pFrozenColumn alignFrozen="right">
-                        <p-sortIcon field="updatedBy"></p-sortIcon>Balance
+                    <th pSortableColumn="balance" style="width:200px" pFrozenColumn alignFrozen="right">
+                        <p-sortIcon field="balance"></p-sortIcon>Balance
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-district>
+            <ng-template pTemplate="body" let-customer>
                 <tr>
-                    <td style="width:100px">{{district.districtCode}}</td>
-                    <td style="width:200px">{{district.districtName}}</td>
-                    <td style="width:100px">{{district.distictId}}</td>
+                    <td style="width:200px">{{customer.name}}</td>
+                    <td style="width:200px">{{customer.id}}</td>
                     <td style="width:200px">
-                        <span class="image-text ml-2">{{district.stateName}}</span>
+                        <span class="image-text ml-2">{{customer.country.name}}</span>
                     </td>
-                    <td style="width:200px">{{district.createdAt}}</td>
+                    <td style="width:200px">{{customer.date}}</td>
 
                     <td style="width:200px">
-                        <span class="image-text ml-2">{{district.createdBy}}</span>
+                        <span class="image-text ml-2">{{customer.representative.name}}</span>
                     </td>
                     <td style="width:200px" pFrozenColumn class="font-bold" alignFrozen="right">
-                        {{formatCurrency(district.updatedBy)}}</td>
+                        {{formatCurrency(customer.balance)}}</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="8">No districts found.</td>
+                    <td colspan="8">No customers found.</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="loadingbody">
                 <tr>
-                    <td colspan="8">Loading districts data. Please wait.</td>
+                    <td colspan="8">Loading customers data. Please wait.</td>
                 </tr>
             </ng-template>
         </p-table>

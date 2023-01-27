@@ -4,8 +4,13 @@ import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Product } from 'src/app/demo/api/product';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, Message } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Messages } from 'primeng/messages';
+
+
 
 @Component({
   selector: 'app-section',
@@ -14,6 +19,9 @@ import { SortEvent } from 'primeng/api';
   providers: [MessageService, ConfirmationService]
 })
 export class SectionComponent implements OnInit {
+
+    private apiUrl = 'https://your-api-endpoint.com';
+
   cities:any=[];
   selectedDrop: any;
 
@@ -57,7 +65,13 @@ export class SectionComponent implements OnInit {
 
     
 
-    constructor(private customerService: CustomerService, private productService: ProductService) {
+    constructor(private customerService: CustomerService,
+         private productService: ProductService,
+         private http: HttpClient,
+         private formbuilder:FormBuilder,
+         private service: MessageService
+         
+         ) {
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -67,9 +81,15 @@ export class SectionComponent implements OnInit {
     ];
      }
 
+
+
    
 
-    ngOnInit() {
+     form!:FormGroup;
+
+
+
+    ngOnInit(): void {
         this.customerService.getCustomersLarge().then(customers => {
             this.customers1 = customers;
             this.loading = false;
@@ -79,10 +99,47 @@ export class SectionComponent implements OnInit {
         });
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-      
+
+        this.form = this.formbuilder.group({
+            division: ['', Validators.required],
+            sectionCode: ['', Validators.required],
+            inchargeName: ['', Validators.required],
+            order: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+            address: ['', Validators.required],
+            circle: ['', Validators.required],
+            sectionName: ['', Validators.required],
+            inchargePhoneNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+            isActive: [this.valSwitch, Validators.required],
+          });
+        }
+   
+     
+   
+ get f(){
+  return this.form.controls
+}
+
+
 
         
-    }
+
+   
+
+
+
+      onSubmit() {
+        if (this.form.valid) {
+            console.log(this.form.value);
+            
+          // submit the form
+        } else {
+          this.form.markAllAsTouched();
+        }
+      }
+
+
+
+
     customSort(event: SortEvent) {
        
     }
@@ -132,3 +189,4 @@ export class SectionComponent implements OnInit {
 
     valSwitch: boolean = true;
 }
+
