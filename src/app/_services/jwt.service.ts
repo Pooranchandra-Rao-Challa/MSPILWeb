@@ -29,7 +29,6 @@ export class JWTService {
   }
 
   public get IsLoggedIn():boolean{
-    console.log(this.DecodedJWT);
     return true && this.DecodedJWT != undefined;
   }
 

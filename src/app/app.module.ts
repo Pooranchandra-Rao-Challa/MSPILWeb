@@ -19,6 +19,7 @@ import { PhotoService } from './demo/service/photo.service';
 // application servicex
 import { AccountService } from 'src/app/_services/account.service';
 import { CommonService } from 'src/app/_services/common.service';
+import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
@@ -40,7 +41,7 @@ import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService,
         // Application services,
-        AccountService, JWTService, GeoMasterService,CommonService
+        AccountService, JWTService, GeoMasterService,CommonService,BillMasterService
     ],
     bootstrap: [AppComponent]
 })
