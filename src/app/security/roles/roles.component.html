@@ -1,0 +1,111 @@
+<div class="col-12">
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Roles</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New Role" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="showDialog()"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt1 [value]="roles" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
+      [globalFilterFields]="globalFilters" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th pSortableColumn="Code">Code<p-sortIcon field="Code"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Name">Name<p-sortIcon field="Name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="IsActive">Is Active <p-sortIcon field="IsActive"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CreatedDate">Created Date <p-sortIcon field="CreatedDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CreatedBy">Created By User <p-sortIcon field="CreatedBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="UpdatedDate" pFrozenColumn alignFrozen="right">Updated Date <p-sortIcon
+              field="UpdatedDate">
+            </p-sortIcon>
+          </th>
+          <th pSortableColumn="UpdatedBy" pFrozenColumn alignFrozen="right">Updated By User<p-sortIcon
+              field="UpdatedBy">
+            </p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-role>
+        <tr>
+          <td style="text-align: center;"><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+              (click)="showDialog()"></button></td>
+          <td>{{role.Code}}</td>
+          <td>{{role.Name}}</td>
+          <td>{{role.IsActive}}</td>
+          <td>{{role.CreatedDate}}</td>
+          <td>{{role.CreatedBy}}</td>
+          <td>{{role.UpdatedDate}}</td>
+          <td>{{role.UpdatedBy}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No roles found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="8">Loading roles data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
+    <p-dialog header="Role" [(visible)]="dialog" [modal]="true" showEffect="fade">
+      <div class="flex flex-column align-items-center justify-content-center">
+        <div class="grid">
+          <div class="col-12">
+            <div class="col-12 p-fluid">
+              <div class="grid">
+                <div class="col-6">
+                  <div class="field">
+                    <label htmlFor="code">Code:</label>
+                    <input pInputText id="code" type="text" />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="field">
+                    <label htmlFor="name">Name:</label>
+                    <input pInputText id="name" type="text" />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="field">
+                    <label htmlFor="active">IsActive:</label>
+                    <br>
+                    <p-inputSwitch id="active"></p-inputSwitch>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"></button>
+      </ng-template>
+    </p-dialog>
+  </div>
+</div>

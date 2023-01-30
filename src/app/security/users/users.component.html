@@ -1,0 +1,210 @@
+<div class="col-12">
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Users</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New User" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="showDialog()"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt1 [value]="users" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
+      [globalFilterFields]="globalFilters" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <!-- <th></th> -->
+          <th pSortableColumn="UserId" style="width:100px">User Id<p-sortIcon field="UserId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="UserName" style="width:100px">User Name<p-sortIcon field="UserName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="FirstName" style="width:100px">First Name<p-sortIcon field="FirstName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="LastName" style="width:100px">Last Name<p-sortIcon field="LastName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="EmailId" style="width:100px">Email Id<p-sortIcon field="EmailId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="MobileNo" style="width:100px">Mobile Number<p-sortIcon field="MobileNo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Role" style="width:100px">Role<p-sortIcon field="Role"></p-sortIcon>
+          </th>
+          <th pSortableColumn="IMEINo" style="width:100px">IMEI No<p-sortIcon field="IMEINo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="IPAddress" style="width:100px">IP Address<p-sortIcon field="IPAddress"></p-sortIcon>
+          </th>
+          <th pSortableColumn="IPRestriction" style="width:100px">IP Restriction<p-sortIcon field="IPRestriction">
+            </p-sortIcon>
+          </th>
+          <th pSortableColumn="IsAdminGate" style="width:100px">Is AdminGate<p-sortIcon field="IsAdminGate">
+            </p-sortIcon>
+          </th>
+
+          <th pSortableColumn="IsGross" style="width:100px">Is Gross<p-sortIcon field="IsGross"></p-sortIcon>
+          </th>
+          <th pSortableColumn="IsTare" style="width:100px">Is Tare<p-sortIcon field="IsTare"></p-sortIcon>
+          </th>
+          <th pSortableColumn="IsDumpYard" style="width:100px">Is Dump Yard<p-sortIcon field="IsDumpYard"></p-sortIcon>
+          </th>
+          <th pSortableColumn="IsActive" style="width:100px">Is Active<p-sortIcon field="IsActive"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CreatedDate" style="width:100px">Created Date<p-sortIcon field="CreatedDate">
+            </p-sortIcon>
+          </th>
+          <th pSortableColumn="UpdatedDate" style="width:100px">Updated Date<p-sortIcon field="UpdatedDate">
+            </p-sortIcon>
+          </th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <!-- <td><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+              (click)="showDialog()"></button></td> -->
+          <td>{{user.UserId}}</td>
+          <td>{{user.UserName}}</td>
+          <td>{{user.FirstName}}</td>
+          <td>{{user.LastName}}</td>
+          <td>{{user.EmailId}}</td>
+          <td>{{user.MobileNo}}</td>
+          <td>{{user.Role}}</td>
+          <td>{{user.IMEINo}}</td>
+          <td>{{user.IPAddress}}</td>
+          <td>{{user.IPRestriction}}</td>
+          <td>{{user.IsAdminGate}}</td>
+          <td>{{user.IsGross}}</td>
+          <td>{{user.IsTare}}</td>
+          <td>{{user.IsDumpYard}}</td>
+          <td>{{user.IsActive}}</td>
+          <td>{{user.CreatedDate}}</td>
+          <td>{{user.UpdatedDate}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No users found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="8">Loading users data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
+    <p-dialog header="User" [(visible)]="dialog" [modal]="true" showEffect="fade" [style]="{width: '60vw'}"
+      [breakpoints]="{'960px': '90vw'}">
+      <ng-template pTemplate="content">
+        <div class="flex flex-column align-items-center justify-content-center">
+          <p-tabView orientation="left">
+            <p-tabPanel header="User Info" class="line-height-3 m-0">
+              <div class="grid">
+                <div class="col-12 p-fluid">
+                  <h5>User Details</h5>
+                  <div class="grid">
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="username">User Name:</label>
+                      <input pInputText id="username" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="password">Password:</label>
+                      <input pInputText id="password" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="firstname">First Name:</label>
+                      <input pInputText id="firstname" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="lastname">Last Name:</label>
+                      <input pInputText id="lastname" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="emailid">Email Id:</label>
+                      <input pInputText id="emailid" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="mobileno">Mobile Number:</label>
+                      <input pInputText id="mobileno" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="emailid">Role:</label>
+                      <input pInputText id="emailid" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="emailid">IP Address:</label>
+                      <input pInputText id="emailid" type="text" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label htmlFor="imeino">IMEI No:</label>
+                      <input pInputText id="imeino" type="text" />
+                    </div>
+                  </div>
+                  <h5>User Rights</h5>
+                  <div class="grid md:flex">
+                    <div class="col-12 md:col-3 xl:col-2">
+                      <label>IP Restriction:</label>
+                      <br>
+                      <p-inputSwitch></p-inputSwitch>
+                    </div>
+                    <div class="col-12 md:col-3 xl:col-2">
+                      <label>Is AdminGate:</label>
+                      <br>
+                      <p-inputSwitch></p-inputSwitch>
+                    </div>
+                    <div class="col-12 md:col-3 xl:col-2">
+                      <label>Is Gross:</label>
+                      <br>
+                      <p-inputSwitch></p-inputSwitch>
+                    </div>
+                    <div class="col-12 md:col-3 xl:col-2">
+                      <label>Is Tare:</label>
+                      <br>
+                      <p-inputSwitch></p-inputSwitch>
+                    </div>
+                    <div class="col-12 md:col-3 xl:col-2">
+                      <label>Is DumpYard:</label>
+                      <br>
+                      <p-inputSwitch></p-inputSwitch>
+                    </div>
+                    <div class="col-12 md:col-3 xl:col-2">
+                      <label>Is Active?:</label>
+                      <br>
+                      <p-inputSwitch></p-inputSwitch>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="User Sections" class="line-height-3 m-0">
+              <div class="grid formgrid">
+                <div class="col-12 md:col-3" *ngFor="let user of userSections">
+                  <div class="field-checkbox">
+                    <p-checkbox name="group1" value="New York"></p-checkbox>
+                    <label for="ny">{{user.section}}</label>
+                  </div>
+                </div>
+              </div>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"></button>
+      </ng-template>
+    </p-dialog>
+  </div>
+</div>
+

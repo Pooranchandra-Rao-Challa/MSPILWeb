@@ -33,6 +33,7 @@ const routes: Routes = [
           { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
           { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
           { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
+          { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
 
       ]
   },
