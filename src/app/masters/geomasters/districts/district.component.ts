@@ -28,11 +28,11 @@ export class DistrictComponent implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
     private customerService: CustomerService,
-    private geoMasterService: GeoMasterService, 
+    private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
     private productService: ProductService) {
-   
+
   }
   InitDistrict() {
     this.district = new DistrictDto();
@@ -58,21 +58,30 @@ export class DistrictComponent implements OnInit {
     this.fbdistricts = this.formbuilder.group({
       code: ['', (Validators.required)],
       name: ['', (Validators.required)],
-      state: ['', (Validators.required)],
-      active: true
+      stateId: ['', (Validators.required)],
+      isActive: true
     });
 
+  }
+  onClose(){
+    //this.fbdistricts.
   }
   onSubmit() {
     if (this.fbdistricts.valid) {
       console.log(this.fbdistricts.value);
+      this.geoMasterService.CreateDistrict(this.fbdistricts.value).subscribe((resp)=>{
+        //resp.type.toString() == 200
+        console.log(resp);
+
+      });
+      // success save.
     }
     else {
       // alert("please fill the fields")
       this.fbdistricts.markAllAsTouched();
     }
   }
- 
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
