@@ -1,0 +1,299 @@
+<div class="col-12">
+    <div class="card">
+        <p-dialog header="Village" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
+            <div class="flex flex-column align-items-center justify-content-center">     
+                <form [formGroup]="villageform  " (ngSubmit)="onSubmit()">
+                <div class="container">
+                    <div class="grid p-fluid" >
+
+                        <div class="field col-12 md:col-3">
+                           <label htmlFor="division"> Division:<sup class="p-error">*</sup></label>
+                           <p-dropdown [options]="cities" formControlName="division" [(ngModel)]="selectedDrop" placeholder="Select a Division" [showClear]="true"></p-dropdown>             
+                           <div *ngIf="f['division'].invalid &&  f['division'].touched" class="error-message p-error">
+                            Division is required
+                          </div>
+                        </div>
+                        
+
+                       <div class="field col-12 md:col-3">
+                        <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
+                        <p-dropdown [options]="cities" formControlName="circle" [(ngModel)]="selectedDrop" placeholder="Select a Circle" [showClear]="true"></p-dropdown>             
+                       
+                        <div *ngIf="f['circle'].invalid &&  f['circle'].touched" class="error-message p-error">
+                            Circle required
+                          </div>
+                    </div>
+                     
+
+                    <div class="field col-12 md:col-3">
+                        <label htmlFor="section">Section:<sup class="p-error">*</sup></label>
+                        <p-dropdown [options]="cities" formControlName="section" [(ngModel)]="selectedDrop" placeholder="Select a Section" [showClear]="true"></p-dropdown>             
+                    
+                        <div *ngIf="f['section'].invalid &&  f['section'].touched" class="error-message p-error">
+                            Section required
+                          </div>
+                    </div>
+                        
+                        <div class="field col-12 md:col-3">
+                            <label for="target">Target</label>
+                            <p-inputNumber formControlName="target" inputId="target">
+                            </p-inputNumber>
+
+                        </div>
+                        
+                        <div class="field col-12 md:col-3">
+                            <label htmlFor="district">District:c</label>
+                            
+                            <p-dropdown [options]="cities" formControlName="district" [(ngModel)]="selectedDrop" placeholder="Select a District:" [showClear]="true"></p-dropdown>             
+                       
+                            <div *ngIf="f['district'].invalid &&  f['district'].touched" class="error-message p-error">
+                                District required
+                              </div>
+                        </div>
+         
+                       <div class="field col-12 md:col-3">
+                            <label for="mandal">Mandal:<sup class="p-error">*</sup></label>
+                            <p-inputNumber formControlName="mandal" inputId="mandal" >
+                            </p-inputNumber>
+
+                            <div *ngIf="f['mandal'].invalid &&  f['mandal'].touched" class="error-message p-error">
+                                Mandal required
+                              </div>
+                        </div>
+                        <div class="field col-8 md:col-3">
+                            <label htmlFor="address">Address:</label>
+                            <textarea rows="5" cols="30" formControlName="address" placeholder="Your Message" pInputTextarea></textarea>
+
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="PinCode">PinCode:</label>
+                            <p-inputNumber  inputId="PinCode"  formControlName="PinCode">
+                            </p-inputNumber>
+
+                           
+                        </div>                      
+                        <div class="field col-12 md:col-3">
+                            <label for="code">Code:<sup class="p-error">*</sup></label>
+                            <p-inputNumber inputId="code" formControlName="code" >
+                            </p-inputNumber>
+
+                            <div *ngIf="f['code'].invalid &&  f['code'].touched" class="error-message p-error">
+                                Code required
+                              </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label htmlFor="name">Name:<sup class="p-error">*</sup></label>
+                          <input pInputText id="name" formControlName="name" type="text" />
+
+                          <div *ngIf="f['name'].invalid &&  f['name'].touched" class="error-message p-error">
+                            Name required
+                          </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="inchargeName">Incharge Name:</label>
+                            <input pInputText id="circleName" formControlName="inchargeName" type="text" />
+
+                            
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="inchargePhoneNo">Incharge Phone No.:</label>
+                            <p-inputNumber  inputId="inchargePhoneNo" formControlName="inchargePhoneNo" inputId="minmax" mode="decimal" [min]="0" [max]="100">
+                            </p-inputNumber>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="distance">Distance:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="distance" formControlName="distance" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['distance'].invalid &&  f['distance'].touched" class="error-message p-error">
+                                Distance required
+                              </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="divertedDistance"  formControlName="divertedDistance" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['divertedDistance'].invalid &&  f['divertedDistance'].touched" class="error-message p-error">
+                                Diverted Distance required
+                              </div>
+                        </div> 
+
+                        <div class="field col-12 md:col-3">
+                            <label for="noOfEBServices">No Of EB Services:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="noOfEBServices" formControlName="noOfEBServices" [minFractionDigits]="2">
+                            </p-inputNumber>
+                            <div *ngIf="f['noOfEBServices'].invalid &&  f['noOfEBServices'].touched" class="error-message p-error">
+                                No Of EB Services is  required
+                              </div>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="TPTRate">TPT Rate(₹):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="TPTRate" formControlName="TPTRate" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['TPTRate'].invalid &&  f['TPTRate'].touched" class="error-message p-error">
+                                TPT Rate is  required
+                              </div>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="cultivatableArea">Cultivatable Area(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber inputId="cultivatableArea" formControlName="cultivatableArea" [minFractionDigits]="2">
+                            </p-inputNumber>
+                            <div *ngIf="f['cultivatableArea'].invalid &&  f['cultivatableArea'].touched" class="error-message p-error">
+                                Cultivatable Area is  required
+                              </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="totalGeographicArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="totalGeographicArea" formControlName="totalGeographicArea" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['totalGeographicArea'].invalid &&  f['totalGeographicArea'].touched" class="error-message p-error">
+                                Total Geographic Area is  required
+                              </div>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="irrigationArea">Irrigation Area(In Peek Summer):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['irrigationArea'].invalid &&  f['irrigationArea'].touched" class="error-message p-error">
+                                Irrigation Area is  required
+                              </div>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="dryArea">Dry Area(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['dryArea'].invalid &&  f['dryArea'].touched" class="error-message p-error">
+                                Dry Area is  required
+                              </div>
+                        </div>
+
+
+                        <div class="field col-12 md:col-3">
+                            <label for="suitableAreaforCane">Suitable Area for Cane(Acres):<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="suitableAreaforCane" formControlName="suitableAreaforCane" mode="decimal" locale="en-US" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['suitableAreaforCane'].invalid &&  f['suitableAreaforCane'].touched" class="error-message p-error">
+                                Suitable Area for Cane is  required
+                              </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="notSuitable">Not Suitable:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="notSuitable" formControlName="notSuitable" mode="decimal" locale="de-DE" [minFractionDigits]="2">
+                            </p-inputNumber>
+
+                            <div *ngIf="f['notSuitable'].invalid &&  f['notSuitable'].touched" class="error-message p-error">
+                                Not Suitable is  requiredF
+                              </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="ord">Ord:<sup class="p-error">*</sup></label>
+                            <p-inputNumber  inputId="locale-indian" formControlName="ord" mode="decimal" locale="en-IN" [minFractionDigits]="2">
+                            </p-inputNumber>
+                             <div *ngIf="f['ord'].invalid &&  f['ord'].touched" class="error-message p-error">
+                                Ord is  required
+                              </div>
+                        </div>
+
+                        
+                        <div class="field col-12 md:col-3 ">
+                            <div class="col-2">
+                                <label  htmlFor="isActive">Is Active?:<sup class="p-error">*</sup></label><br>
+                                <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+
+                                <div *ngIf="f['isActive'].invalid &&  f['isActive'].touched" class="error-message p-error">
+                                    Ord is  required
+                                  </div>
+
+                                
+                            </div>                 
+                        </div>
+                        <div class="field col-12 ">
+                            <div class="col-2">
+                                <button pButton pRipple type="submit"  label="Success" class="p-button-raised p-button-success"></button>
+                            </div>                         
+                        </div>                       
+                    </div>
+
+                </div>
+
+
+            </form> 
+        </div>
+        </p-dialog>
+    
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <h4>Villages</h4>
+                       </ng-template>
+            <ng-template pTemplate="right">
+                <button pButton pRipple label="New Village" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="display = true"></button>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table #dt1 [value]="customers1" dataKey="id"  [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left mb-2">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
+                    </span>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name" style="width:200px"><p-sortIcon field="name"></p-sortIcon>Division</th>
+                    <th pSortableColumn="id" style="width:200px">Circle<p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="country.name" style="width:200px">Section Id <p-sortIcon field="cpuntry.name"></p-sortIcon></th>
+                    <th pSortableColumn="date" style="width:200px"style="width:200px">District <p-sortIcon field="date"></p-sortIcon></th>
+                    <th pSortableColumn="id" style="width:200px">Circle<p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="balance" style="width:200px" pFrozenColumn alignFrozen="right"> <p-sortIcon field="balance"></p-sortIcon>Address</th>
+                    
+                   
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td style="width:200px" >{{customer.name}}</td>
+                    <td style="width:200px" >{{customer.id}}</td>
+                    <td style="width:200px">
+                        <span class="image-text ml-2">{{customer.country.name}}</span>
+                    </td>
+                    <td style="width:200px">{{customer.date}}</td>
+                    
+                    <td style="width:200px">
+                        <span class="image-text ml-2">{{customer.representative.name}}</span>
+                    </td>
+                    <td style="width:200px" pFrozenColumn  class="font-bold" alignFrozen="right">{{formatCurrency(customer.balance)}}</td>
+                </tr>
+            </ng-template>
+            
+
+
+
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No customers found.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8">Loading customers data. Please wait.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>

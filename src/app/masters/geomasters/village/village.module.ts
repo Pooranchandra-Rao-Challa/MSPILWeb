@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CirclesRoutingModule } from './circles-routing.module';
+import { VillageRoutingModule } from './village-routing.module';
+import { VillageComponent } from './village.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,7 +18,6 @@ import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CirclesComponent } from './circles.component';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ChipsModule } from "primeng/chips";
 import { InputMaskModule } from "primeng/inputmask";
@@ -30,12 +30,11 @@ import {ToolbarModule} from 'primeng/toolbar';
 
 
 @NgModule({
-  declarations: [CirclesComponent],
+  declarations: [VillageComponent],
   imports: [
     CommonModule,
-    CirclesRoutingModule,
-    FormsModule,
-	TableModule,
+    VillageRoutingModule,
+    TableModule,
 	RatingModule,
 	ButtonModule,
 	SliderModule,
@@ -56,9 +55,8 @@ import {ToolbarModule} from 'primeng/toolbar';
     InputNumberModule,
     CascadeSelectModule,
     InputTextareaModule,
-    InputSwitchModule,
+    InputSwitchModule,FormsModule,
 	ReactiveFormsModule
-	
   ]
 })
-export class CirclesModule { }
+export class VillageModule { }

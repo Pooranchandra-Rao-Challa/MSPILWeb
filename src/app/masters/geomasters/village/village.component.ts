@@ -8,17 +8,16 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-circles',
-  templateUrl: './circles.component.html',
+  selector: 'app-village',
+  templateUrl: './village.component.html',
+  styleUrls: ['./village.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class CirclesComponent implements OnInit {
+export class VillageComponent implements OnInit {
 
   cities:any=[];
   selectedDrop: any;
-  
 
   showDialog() {
     this.display = false;
@@ -58,9 +57,14 @@ export class CirclesComponent implements OnInit {
 
     @ViewChild('filter') filter!: ElementRef;
 
-    circleForm!: FormGroup;
+    
 
-    constructor(private customerService: CustomerService, private productService: ProductService,private formbuilder:FormBuilder) {
+    constructor(private customerService: CustomerService,
+              private productService: ProductService,
+              private formbuilder:FormBuilder) {
+
+
+
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -70,6 +74,8 @@ export class CirclesComponent implements OnInit {
     ];
      }
 
+     valSwitch:boolean = false;
+     villageform!: FormGroup;
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
             this.customers1 = customers;
@@ -81,44 +87,39 @@ export class CirclesComponent implements OnInit {
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
       
-        
-        this.circleForm = this.formbuilder.group({
+
+        this.villageform = this.formbuilder.group({
             division: ['', Validators.required],
-            circleName: ['', Validators.required],
-            inchargeName: ['', Validators.required],
-            order: ['', Validators.required],
-            isActive: [this.valSwitch, Validators.required],
+            circle: ['', Validators.required],
+            section: ['', Validators.required],
+            target: ['', Validators.required],
+            district: ['', Validators.required],
+            mandal: ['', Validators.required],
+            address: ['', Validators.required],
+            PinCode:['', Validators.required],
+            code: ['', Validators.required],
+            name: ['', Validators.required],
+            inchargeName: ['',],
+            inchargePhoneNo: ['',],
+            distance: ['', Validators.required],
+            divertedDistance: ['', Validators.required],
+            noOfEBServices: ['', Validators.required],
+            TPTRate: ['', Validators.required],
             circleCode: ['', Validators.required],
-            inchargePhoneNo: ['', Validators.required],
-            address: ['', Validators.required]
+            cultivatableArea: ['', Validators.required],
+            totalGeographicArea: ['', Validators.required],
+            irrigationArea: ['', Validators.required],
+            dryArea: ['', Validators.required],
+            suitableAreaforCane: ['', Validators.required],
+            notSuitable: ['', Validators.required],
+            ord: ['', Validators.required],
+            isActive: [ Validators.required],
         });
 
 
 
-
-
-
+        
     }
-
-
-    onSubmit() {
-        if (this.circleForm.valid) {
-            console.log(this.circleForm.value)
-            alert("adedd")
-          // submit the form
-        } else {
-          this.circleForm.markAllAsTouched();
-        }
-      }
-
-
- get f(){
-       return this.circleForm.controls
-     }
-
-
-
-
     customSort(event: SortEvent) {
        
     }
@@ -165,12 +166,20 @@ export class CirclesComponent implements OnInit {
         this.filter.nativeElement.value = '';
     }
 
+ 
 
-    valSwitch: boolean = true;
+
+
+    onSubmit(){
+        console.log(this.villageform.value)
+    }
+
+    get f(){
+        return this.villageform.controls
+      }
+
+
     
 
-  
-       
+    
 }
-
-

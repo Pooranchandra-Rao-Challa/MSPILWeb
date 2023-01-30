@@ -1,24 +1,29 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component,OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Customer, Representative } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Product } from 'src/app/demo/api/product';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, Message } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Messages } from 'primeng/messages';
+
 
 
 @Component({
-  selector: 'app-circles',
-  templateUrl: './circles.component.html',
+  selector: 'app-section',
+  templateUrl: './section.component.html',
+  styleUrls: ['./section.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class CirclesComponent implements OnInit {
+export class SectionComponent implements OnInit {
+
+    private apiUrl = 'https://your-api-endpoint.com';
 
   cities:any=[];
   selectedDrop: any;
-  
 
   showDialog() {
     this.display = false;
@@ -58,9 +63,15 @@ export class CirclesComponent implements OnInit {
 
     @ViewChild('filter') filter!: ElementRef;
 
-    circleForm!: FormGroup;
+    
 
-    constructor(private customerService: CustomerService, private productService: ProductService,private formbuilder:FormBuilder) {
+    constructor(private customerService: CustomerService,
+         private productService: ProductService,
+         private http: HttpClient,
+         private formbuilder:FormBuilder,
+         private service: MessageService
+         
+         ) {
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -70,7 +81,15 @@ export class CirclesComponent implements OnInit {
     ];
      }
 
-    ngOnInit() {
+
+
+   
+
+     form!:FormGroup;
+
+
+
+    ngOnInit(): void {
         this.customerService.getCustomersLarge().then(customers => {
             this.customers1 = customers;
             this.loading = false;
@@ -80,41 +99,43 @@ export class CirclesComponent implements OnInit {
         });
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-      
-        
-        this.circleForm = this.formbuilder.group({
+
+        this.form = this.formbuilder.group({
             division: ['', Validators.required],
-            circleName: ['', Validators.required],
+            sectionCode: ['', Validators.required],
             inchargeName: ['', Validators.required],
-            order: ['', Validators.required],
+            order: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+            address: ['', Validators.required],
+            circle: ['', Validators.required],
+            sectionName: ['', Validators.required],
+            inchargePhoneNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
             isActive: [this.valSwitch, Validators.required],
-            circleCode: ['', Validators.required],
-            inchargePhoneNo: ['', Validators.required],
-            address: ['', Validators.required]
-        });
+          });
+        }
+   
+     
+   
+ get f(){
+  return this.form.controls
+}
 
 
 
+        
+
+   
 
 
 
-    }
-
-
-    onSubmit() {
-        if (this.circleForm.valid) {
-            console.log(this.circleForm.value)
-            alert("adedd")
+      onSubmit() {
+        if (this.form.valid) {
+            console.log(this.form.value);
+            
           // submit the form
         } else {
-          this.circleForm.markAllAsTouched();
+          this.form.markAllAsTouched();
         }
       }
-
-
- get f(){
-       return this.circleForm.controls
-     }
 
 
 
@@ -167,10 +188,5 @@ export class CirclesComponent implements OnInit {
 
 
     valSwitch: boolean = true;
-    
-
-  
-       
 }
-
 

@@ -4,6 +4,6 @@ export class LoginModel{
 }
 
 export class ResponseModel{
-  AccessToken?: string;
-  RefreshToken?: string;
+  accessToken?: string;
+  refreshToken?: string;
 }

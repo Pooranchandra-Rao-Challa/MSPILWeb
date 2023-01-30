@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CirclesComponent } from './circles.component';
+import { StateComponent } from './state.component';
 
-describe('CirclesComponent', () => {
-  let component: CirclesComponent;
-  let fixture: ComponentFixture<CirclesComponent>;
+describe('StateComponent', () => {
+  let component: StateComponent;
+  let fixture: ComponentFixture<StateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CirclesComponent ]
+      declarations: [ StateComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CirclesComponent);
+    fixture = TestBed.createComponent(StateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

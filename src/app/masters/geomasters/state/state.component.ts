@@ -1,24 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { Customer, Representative } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Product } from 'src/app/demo/api/product';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
 import { SortEvent } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-
 @Component({
-  selector: 'app-circles',
-  templateUrl: './circles.component.html',
-  providers: [MessageService, ConfirmationService]
+  selector: 'app-state',
+  templateUrl: './state.component.html',
+  styleUrls: ['./state.component.scss']
 })
-export class CirclesComponent implements OnInit {
-
+export class StateComponent implements OnInit {
   cities:any=[];
   selectedDrop: any;
-  
 
   showDialog() {
     this.display = false;
@@ -55,12 +50,13 @@ export class CirclesComponent implements OnInit {
 
     loading: boolean = true;
     
-
+    // active:boolean=true
     @ViewChild('filter') filter!: ElementRef;
 
-    circleForm!: FormGroup;
-
-    constructor(private customerService: CustomerService, private productService: ProductService,private formbuilder:FormBuilder) {
+    state!: FormGroup;
+    constructor(private formbuilder:FormBuilder , private customerService: CustomerService, private productService: ProductService) {
+      
+          
       this.cities = [
         { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
         { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
@@ -69,6 +65,10 @@ export class CirclesComponent implements OnInit {
         { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
     ];
      }
+
+     get f (){
+        return this.state.controls;  
+      }
 
     ngOnInit() {
         this.customerService.getCustomersLarge().then(customers => {
@@ -81,43 +81,30 @@ export class CirclesComponent implements OnInit {
         
         this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
       
+        this.state=this.formbuilder.group({
+            code:['',(Validators.required)],
+            name:['',(Validators.required)],
+        //    active:[this.active,(Validators.required)],
+            active:true
+          });
         
-        this.circleForm = this.formbuilder.group({
-            division: ['', Validators.required],
-            circleName: ['', Validators.required],
-            inchargeName: ['', Validators.required],
-            order: ['', Validators.required],
-            isActive: [this.valSwitch, Validators.required],
-            circleCode: ['', Validators.required],
-            inchargePhoneNo: ['', Validators.required],
-            address: ['', Validators.required]
-        });
-
-
-
-
-
-
     }
 
-
-    onSubmit() {
-        if (this.circleForm.valid) {
-            console.log(this.circleForm.value)
-            alert("adedd")
-          // submit the form
-        } else {
-          this.circleForm.markAllAsTouched();
+    onSubmit(){
+        if(this.state.valid){
+        console.log(this.state.value);
         }
-      }
+        else{
+            // alert("please fill the fields")
+             this.state.markAllAsTouched();
+        }
+    }
 
-
- get f(){
-       return this.circleForm.controls
-     }
-
-
-
+    dropdownItems = [
+        { name: '',  },
+        { name: 'Telengana', code: 'Telengana' },
+        { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
+    ];
 
     customSort(event: SortEvent) {
        
@@ -170,7 +157,4 @@ export class CirclesComponent implements OnInit {
     
 
   
-       
 }
-
-

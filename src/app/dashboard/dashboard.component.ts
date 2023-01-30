@@ -1,3 +1,4 @@
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -12,7 +13,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     items!: MenuItem[];
 
-    products!: Product[];
+   // products!: Product[];
 
     chartData: any;
 
@@ -20,15 +21,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
+    constructor( public layoutService: LayoutService,geoMasterService: GeoMasterService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
+        geoMasterService.GetDistricts().subscribe((resp)=>{ console.log(resp);})
+
     }
 
     ngOnInit() {
         this.initChart();
-        this.productService.getProductsSmall().then(data => this.products = data);
+       // this.productService.getProductsSmall().then(data => this.products = data);
 
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
