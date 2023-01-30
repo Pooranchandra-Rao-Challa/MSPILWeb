@@ -4,7 +4,7 @@ import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CirclesViewDto, DistrictDto, DistrictViewDto, StateDto } from 'src/app/_models/geomodels';
+import { DistrictDto, DistrictViewDto, StateDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
@@ -39,13 +39,13 @@ export class DistrictComponent implements OnInit {
     this.display = true;
   }
 
-  get FormControls(){
+  get FormControls() {
     return this.fbdistricts.controls;
   }
 
   ngOnInit() {
 
-   this.initDistricts();
+    this.initDistricts();
 
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]
@@ -61,18 +61,18 @@ export class DistrictComponent implements OnInit {
     });
 
   }
-  initDistricts(){
+  initDistricts() {
     this.geoMasterService.GetDistricts().subscribe((resp) => {
       this.districts = resp as unknown as DistrictViewDto[]
     })
   }
-  onClose(){
+  onClose() {
     this.fbdistricts.reset();
   }
   onSubmit() {
     if (this.fbdistricts.valid) {
       console.log(this.fbdistricts.value);
-      this.geoMasterService.CreateDistrict(this.fbdistricts.value).subscribe((resp)=>{
+      this.geoMasterService.CreateDistrict(this.fbdistricts.value).subscribe((resp) => {
         //console.log(resp);
         this.initDistricts();
         this.onClose();
