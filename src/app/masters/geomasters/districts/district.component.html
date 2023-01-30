@@ -5,6 +5,7 @@
             [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">
+                    {{this.fbdistricts.value | json}}
                     <div class="grid">
                         <div class="col-12 ">
                             <div class="p-fluid p-formgrid grid">
@@ -25,7 +26,7 @@
                                 </div>
                                 <div class="col-12">
                                     <label>State:<sup class="p-error">*</sup></label>
-                                    <p-dropdown [options]="states" optionLabel="name" formControlName="state"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['state'].touched && FormControls['state'].errors }"></p-dropdown>
+                                    <p-dropdown [options]="states" optionLabel="name" formControlName="state"  optionValue="code" [ngClass]="{ 'is-invalid ng-dirty': FormControls['state'].touched && FormControls['state'].errors }"></p-dropdown>
                                     <span *ngIf="FormControls['state'].touched && FormControls['state'].invalid" >
                                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['state'].errors?.['required']">Please Select State.</div>
 
@@ -115,8 +116,9 @@
                     <td style="width:200px">
                         <span class="image-text ml-2">{{distict.createdBy}}</span>
                     </td>
-                    <td style="width:200px" pFrozenColumn class="font-bold" alignFrozen="right">
-                        {{formatCurrency(distict.updatedBy)}}</td>
+                    <td style="width:200px" pFrozenColumn  alignFrozen="right">
+                        {{distict.updatedBy}}
+                        </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">

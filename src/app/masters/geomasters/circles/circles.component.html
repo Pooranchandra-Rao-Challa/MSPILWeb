@@ -11,7 +11,7 @@
                                     <div class="col-6">
                                         <div class="field">
                                             <label htmlFor="division">Division:<sup class="p-error">*</sup> </label>
-                                            <p-dropdown [options]="cities" [(ngModel)]="selectedDrop" formControlName="division"  for placeholder="Select a City" [showClear]="true"></p-dropdown>
+                                            <p-dropdown [options]="cities"  formControlName="division"  for placeholder="Select a City" [showClear]="true"></p-dropdown>
 
                                             <div *ngIf="f['division'].invalid &&  f['division'].touched" class="error-message p-error">
                                                 Division is required
@@ -91,7 +91,6 @@
                     </div>
                 </div>
             </p-dialog>
-
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <h4>Circles</h4>
@@ -100,42 +99,53 @@
                     <button pButton pRipple label="New Circle" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="display = true"></button>
                 </ng-template>
             </p-toolbar>
-
-			<p-table #dt1 [value]="customers1" dataKey="id"  [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+			<p-table #dt1 [value]="circles" dataKey="id"  [rows]="10" sortMode="multiple" [loading]="loading" 
+            [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true" 
+            [globalFilterFields]="['circleId','circleName']" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
 				<ng-template pTemplate="caption">
 					<div class="flex justify-content-between flex-column sm:flex-row">
-						<button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+						<!-- <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button> -->
 						<span class="p-input-icon-left mb-2">
 							<i class="pi pi-search"></i>
 							<input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
 						</span>
 					</div>
 				</ng-template>
-
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="name" style="width:200px"><p-sortIcon field="name"></p-sortIcon>Name</th>
-                        <th pSortableColumn="id" style="width:200px">Id<p-sortIcon field="id"></p-sortIcon></th>
-                        <th pSortableColumn="country.name" style="width:200px">Country <p-sortIcon field="cpuntry.name"></p-sortIcon></th>
-                        <th pSortableColumn="date" style="width:200px"style="width:200px">Date <p-sortIcon field="date"></p-sortIcon></th>
-
-                        <th  pSortableColumn="representative.name" style="width:200px"> <p-sortIcon field="represtative.name"></p-sortIcon>Representative</th>
-                        <th  pSortableColumn="balance" style="width:200px" pFrozenColumn alignFrozen="right"> <p-sortIcon field="balance"></p-sortIcon>Balance</th>
+                        <th  pSortableColumn="circleId" style="width:auto"><p-sortIcon field="circleId"></p-sortIcon>Circle ID</th>
+                        <th  pSortableColumn="circleCode" style="width:auto">Circle Code<p-sortIcon field="circleCode"></p-sortIcon> </th>
+                        <th  pSortableColumn="circleName" style="width:auto">Circle Name <p-sortIcon field="circleName"></p-sortIcon></th>
+                        <th  pSortableColumn="divisionId" style="width:auto">Divison ID <p-sortIcon field="divisionId"></p-sortIcon></th>
+                        <th  pSortableColumn="divisionName" style="width:auto">Division Name <p-sortIcon field="divisionName"></p-sortIcon></th>
+                        <th  pSortableColumn="inchargeName" style="width:auto">Incharge Name <p-sortIcon field="inchargeName"></p-sortIcon></th>
+                        <th  pSortableColumn="inchargePhoneNo" style="width:auto">Incharge Phone Number <p-sortIcon field="inchargePhoneNo"></p-sortIcon></th>
+                        <th  pSortableColumn="address" style="width:auto">Address <p-sortIcon field="address"></p-sortIcon></th>
+                        <th  pSortableColumn="listingOrder" style="width:auto">Listng Order <p-sortIcon field="listingOrder"></p-sortIcon></th>
+                        <th  pSortableColumn="isActive" style="width:auto">Is Active <p-sortIcon field="isActive"></p-sortIcon></th>
+                        <th  pSortableColumn="updatedAt" style="width:auto">Updated At <p-sortIcon field="updatedAt"></p-sortIcon></th>
+                        <th  pSortableColumn="createdAt" style="width:auto">Created At <p-sortIcon field="createdAt"></p-sortIcon></th>
+                        <th  pSortableColumn="updatedBy" style="width:auto">Upadated By <p-sortIcon field="updatedBy"></p-sortIcon></th>
+                        <th  pSortableColumn="createdBy" style="width:auto">Created By <p-sortIcon field="createdBy"></p-sortIcon></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-customer>
+                <ng-template pTemplate="body" let-circles>
                     <tr>
-                        <td style="width:200px" >{{customer.name}}</td>
-                        <td style="width:200px" >{{customer.id}}</td>
-                        <td style="width:200px">
-                            <span class="image-text ml-2">{{customer.country.name}}</span>
-                        </td>
-                        <td style="width:200px">{{customer.date}}</td>
-
-                        <td style="width:200px">
-                            <span class="image-text ml-2">{{customer.representative.name}}</span>
-                        </td>
-                        <td style="width:200px" pFrozenColumn  class="font-bold" alignFrozen="right">{{formatCurrency(customer.balance)}}</td>
+                        <td style="width:auto" >{{circles.circleId}}</td>
+                        <td style="width:auto" >{{circles.circleCode}}</td>
+                        <td style="width:auto" >{{circles.circleName}}</td>
+                        <td style="width:auto" >{{circles.divisionId}}</td>
+                        <td style="width:auto" >{{circles.divisionName}}</td>
+                        <td style="width:auto" >{{circles.inchargeName}}</td>
+                        <td style="width:auto" >{{circles.inchargePhoneNo}}</td>
+                        <td style="width:auto" >{{circles.address}}</td>
+                        <td style="width:auto" >{{circles.listingOrder}}</td>
+                        <td style="width:auto" >{{circles.isActive}}</td>
+                        <td style="width:auto" >{{circles.updatedAt}}</td>
+                        <td style="width:auto" >{{circles.createdAt}}</td>
+                        <td style="width:auto" >{{circles.updatedBy}}</td>
+                        <td style="width:auto" >{{circles.createdBy}}</td>
+                       
                     </tr>
                 </ng-template>
 
