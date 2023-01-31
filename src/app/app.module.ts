@@ -23,6 +23,7 @@ import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
+import { SecurityService } from './_services/security.service';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService,
         // Application services,
-        AccountService, JWTService, GeoMasterService,CommonService,BillMasterService
+        AccountService, JWTService, GeoMasterService,CommonService,BillMasterService, SecurityService
     ],
     bootstrap: [AppComponent]
 })
