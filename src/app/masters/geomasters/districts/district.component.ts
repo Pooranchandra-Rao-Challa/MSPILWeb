@@ -43,13 +43,13 @@ export class DistrictComponent implements OnInit {
     this.display = true;
   }
 
-  get FormControls(){
+  get FormControls() {
     return this.fbdistricts.controls;
   }
 
   ngOnInit() {
 
-   this.initDistricts();
+    this.initDistricts();
 
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]
@@ -66,7 +66,7 @@ export class DistrictComponent implements OnInit {
     
 
   }
-  initDistricts(){
+  initDistricts() {
     this.geoMasterService.GetDistricts().subscribe((resp) => {
       this.districts = resp as unknown as DistrictViewDto[]
     })
@@ -94,7 +94,7 @@ export class DistrictComponent implements OnInit {
   onSubmit() {
     if (this.fbdistricts.valid) {
       console.log(this.fbdistricts.value);
-      this.geoMasterService.CreateDistrict(this.fbdistricts.value).subscribe((resp)=>{
+      this.geoMasterService.CreateDistrict(this.fbdistricts.value).subscribe((resp) => {
         //console.log(resp);
         this.initDistricts();
         this.onClose();
