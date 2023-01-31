@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { UsersViewDto } from 'src/app/_models/security';
-import { SecurityService } from 'src/app/_services/security.service';
 
 @Component({
   selector: 'app-users',
@@ -19,7 +18,7 @@ export class UsersComponent implements OnInit {
   userSections: { section: string; }[];
   userForm!: FormGroup;
 
-  constructor(private formbuilder: FormBuilder, private securityService: SecurityService) {
+  constructor(private formbuilder: FormBuilder) {
     this.users = [
       { UserId: '123456', UserName: 'sai1', FirstName: 'fsas', LastName: 'bdfbd', EmailId: 'Acc1', MobileNo: '46454574', Role: 1, IMEINo: 1, IPAddress: 'hyd', IPRestriction: true, IsAdminGate: false, IsGross: false, IsTare: false, IsDumpYard: false, IsActive: false, CreatedDate: "26/01/2023", UpdatedDate: "26/01/2023" },
       { UserId: '123', UserName: 'kiran1', FirstName: 'vs', LastName: 'dfbbfbf', EmailId: 'accont1', MobileNo: '654656', Role: 2, IMEINo: 2, IPAddress: 'hyd', IPRestriction: false, IsAdminGate: true, IsGross: false, IsTare: false, IsDumpYard: false, IsActive: false, CreatedDate: "26/01/2023", UpdatedDate: "26/01/2023" },
@@ -60,12 +59,6 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.securityService.GetUsers().subscribe((resp) => {
-      this.usersList = resp as unknown as UsersViewDto[];
-      console.log(this.usersList);
-    });
-
     this.userForm = this.formbuilder.group({
       userName: ['', (Validators.required)],
       password: ['', (Validators.required)],
