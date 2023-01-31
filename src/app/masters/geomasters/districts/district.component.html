@@ -1,8 +1,9 @@
 <div class="col-12">
     <div class="card">
         <!-- dialog box -->
-        <p-dialog header="Districts" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-            [style]="{width: '40vw'}">
+        <p-dialog header="Districts" [(visible)]="display"
+        [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            [style]="{width: '40vw'}" (onHide)="onClose()">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">
                     <div class="grid">
@@ -25,15 +26,15 @@
                                 </div>
                                 <div class="col-12">
                                     <label>State:<sup class="p-error">*</sup></label>
-                                    <p-dropdown [options]="states" optionLabel="name" formControlName="state"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['state'].touched && FormControls['state'].errors }"></p-dropdown>
-                                    <span *ngIf="FormControls['state'].touched && FormControls['state'].invalid" >
-                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['state'].errors?.['required']">Please Select State.</div>
+                                    <p-dropdown [options]="states" optionLabel="name" formControlName="stateId"  optionValue="stateId" [ngClass]="{ 'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors }"></p-dropdown>
+                                    <span *ngIf="FormControls['stateId'].touched && FormControls['stateId'].invalid" >
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['stateId'].errors?.['required']">Please Select State.</div>
 
                                         </span>
                                 </div>
                                 <div class=" col-12 ">
                                     <label>Is Active?:<sup class="p-error">*</sup></label><br>
-                                    &nbsp; <p-inputSwitch formControlName="active" ></p-inputSwitch>
+                                    &nbsp; <p-inputSwitch formControlName="isActive" ></p-inputSwitch>
                                 </div>
                                 <div class="col-12">
                                     <button pButton pRipple type="submit" label="Add District"
@@ -115,8 +116,9 @@
                     <td style="width:200px">
                         <span class="image-text ml-2">{{distict.createdBy}}</span>
                     </td>
-                    <td style="width:200px" pFrozenColumn class="font-bold" alignFrozen="right">
-                        {{formatCurrency(distict.updatedBy)}}</td>
+                    <td style="width:200px" pFrozenColumn  alignFrozen="right">
+                        {{distict.updatedBy}}
+                        </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
