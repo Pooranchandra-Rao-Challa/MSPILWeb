@@ -56,8 +56,8 @@ export class ApiHttpService {
           } else {
             errorMsg = this.getServerErrorMessage(error);
           }
-          this.router.navigate(["error"])// Add Redirect to default page
-          return throwError(errorMsg);
+          // this.router.navigate(["error"])// Add Redirect to default page
+          return throwError(error);
         })
       );
   }

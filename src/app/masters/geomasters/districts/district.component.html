@@ -11,7 +11,8 @@
                             <div class="p-fluid p-formgrid grid">
                                 <div class="col-12 ">
                                     <label>Code:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="code" type="text" formControlName="code" [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                                    <input pInputText id="code" type="text" formControlName="code" 
+                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid" >
                                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.</div>
                                         </span>
@@ -37,7 +38,7 @@
                                     &nbsp; <p-inputSwitch formControlName="isActive" ></p-inputSwitch>
                                 </div>
                                 <div class="col-12">
-                                    <button pButton pRipple type="submit" label="Add District"
+                                    <button pButton pRipple type="submit" label="{{submitLabel}}"
                                         class="p-button-raised p-button-success"></button>
                                 </div>
                             </div>
@@ -63,9 +64,9 @@
 
         <!-- table -->
         <p-table #dt1 [value]="districts" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
-            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
-            [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
-            [rowsPerPageOptions]="[10,25,50]">
+            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+            [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true" responsiveLayout="scroll"
+            [rowsPerPageOptions]="[10,25,50]" >
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -80,43 +81,45 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="districtId" style="width:100px">
+                    <th></th>
+                  <th pSortableColumn="districtId">
                     <p-sortIcon field="districtId"></p-sortIcon>District Id
                   </th>
-                    <th pSortableColumn="districtName" style="width:200px">
-                        <p-sortIcon field="districtName"></p-sortIcon>District Name
+                    <th pSortableColumn="districtName" >
+                        District Name <p-sortIcon field="districtName"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="districtCode" style="width:100px">District Code<p-sortIcon field="id"></p-sortIcon>
+                    <th pSortableColumn="districtCode"> District Code <p-sortIcon field="districtCode"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="stateName" style="width:200px">State Name <p-sortIcon field="cpuntry.name">
+                    <th pSortableColumn="stateName" >State Name <p-sortIcon field="stateName">
                         </p-sortIcon>
                     </th>
-                    <th pSortableColumn="createAt" style="width:200px" style="width:200px">Create At<p-sortIcon field="date">
+                    <th pSortableColumn="createAt"  >Create At<p-sortIcon field="createAt">
                         </p-sortIcon>
                     </th>
 
-                    <th pSortableColumn="createdBy" style="width:200px">
-                        <p-sortIcon field="createdBy"></p-sortIcon>Created By
+                    <th pSortableColumn="createdBy" >
+                        Created By<p-sortIcon field="createdBy"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="updatedBy" style="width:200px" pFrozenColumn alignFrozen="right">
-                        <p-sortIcon field="updatedBy"></p-sortIcon>Updated By
+                    <th pSortableColumn="updatedBy"  pFrozenColumn alignFrozen="right">
+                        Updated By <p-sortIcon field="updatedBy"></p-sortIcon>
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-distict>
                 <tr>
-                  <td style="width:100px">{{distict.districtId}}</td>
-                    <td style="width:200px">{{distict.districtName}}</td>
-                    <td style="width:100px">{{distict.districtCode}}</td>
-                    <td style="width:200px">
-                        <span class="image-text ml-2">{{distict.stateName}}</span>
+                    <td><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(distict)"></button></td>
+                  <td >{{distict.districtId}}</td>
+                    <td >{{distict.districtName}}</td>
+                    <td >{{distict.districtCode}}</td>
+                    <td >
+                        {{distict.stateName}}
                     </td>
-                    <td style="width:200px">{{distict.createdAt}}</td>
+                    <td >{{distict.createdAt}}</td>
 
-                    <td style="width:200px">
-                        <span class="image-text ml-2">{{distict.createdBy}}</span>
+                    <td >
+                       {{distict.createdBy}}
                     </td>
-                    <td style="width:200px" pFrozenColumn  alignFrozen="right">
+                    <td  pFrozenColumn  alignFrozen="right">
                         {{distict.updatedBy}}
                         </td>
                 </tr>

@@ -10,14 +10,17 @@ import { JWTService } from '../_services/jwt.service';
 export class AppTopBarComponent {
 
     items!: MenuItem[];
-
+    loggedInUser: String = "";
     @ViewChild('menubutton') menuButton!: ElementRef;
 
     @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
 
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService,private jwtService:JWTService) { }
+    constructor(public layoutService: LayoutService,private jwtService:JWTService) {
+      console.log(this.jwtService.GivenName)
+      this.loggedInUser = this.jwtService.GivenName;
+     }
 
     Logout(){
       this.jwtService.Logout();
