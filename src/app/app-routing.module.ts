@@ -14,6 +14,7 @@ const routes: Routes = [
       children: [
           { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
+          { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
       ]
   },
 
@@ -32,8 +33,7 @@ const routes: Routes = [
           { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
           { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
           { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
-          { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
-          { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
+          { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) }
 
       ]
   },

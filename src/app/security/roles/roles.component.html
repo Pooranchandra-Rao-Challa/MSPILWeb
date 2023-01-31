@@ -49,8 +49,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-role>
         <tr>
-          <td style="text-align: center;"><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-              (click)="showDialog()"></button></td>
+          <td style="text-align: center;"><button pButton pRipple icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2" (click)="showDialog()"></button></td>
           <td>{{role.Code}}</td>
           <td>{{role.Name}}</td>
           <td>{{role.IsActive}}</td>
@@ -75,36 +75,46 @@
 
     <p-dialog header="Role" [(visible)]="dialog" [modal]="true" showEffect="fade">
       <div class="flex flex-column align-items-center justify-content-center">
-        <div class="grid">
-          <div class="col-12">
-            <div class="col-12 p-fluid">
-              <div class="grid">
-                <div class="col-6">
-                  <div class="field">
-                    <label htmlFor="code">Code:</label>
-                    <input pInputText id="code" type="text" />
-                  </div>
+        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+          <div class="grid">
+            <div class="col-12">
+              <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-6">
+                  <label>Code:<sup class="p-error">*</sup></label>&nbsp;
+                  <input pInputText id="code" type="text" formControlName="code"
+                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['code'].touched && roleFormControls['code'].errors }" />
+                  <span *ngIf="roleFormControls['code'].touched && roleFormControls['code'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['required']">
+                      Please Enter Code.</div>
+                  </span>
                 </div>
-                <div class="col-6">
-                  <div class="field">
-                    <label htmlFor="name">Name:</label>
-                    <input pInputText id="name" type="text" />
-                  </div>
+                <div class="field col-12 md:col-6">
+                  <label>Name:<sup class="p-error">*</sup></label>&nbsp;
+                  <input pInputText id="name" type="text" formControlName="name"
+                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['name'].touched && roleFormControls['name'].errors }" />
+                  <span *ngIf="roleFormControls['name'].touched && roleFormControls['name'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['required']">
+                      Please Enter Name.</div>
+                  </span>
                 </div>
-                <div class="col-12">
-                  <div class="field">
-                    <label htmlFor="active">IsActive:</label>
-                    <br>
-                    <p-inputSwitch id="active"></p-inputSwitch>
-                  </div>
+                <div class="field col-12">
+                  <label>Is Active?:<sup class="p-error">*</sup></label><br>
+                  &nbsp;<p-inputSwitch formControlName="active"
+                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['active'].touched && roleFormControls['active'].errors }">
+                  </p-inputSwitch>
+                  <span *ngIf="roleFormControls['active'].touched && roleFormControls['active'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['active'].errors?.['required']">
+                      Please Select Active.</div>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
       <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"></button>
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
+          (click)="onSubmit()"></button>
       </ng-template>
     </p-dialog>
   </div>

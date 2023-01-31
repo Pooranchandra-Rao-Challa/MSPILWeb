@@ -48,7 +48,7 @@ export class AppMenuComponent implements OnInit {
           /*if u want to add single copy this line and pase change router link */
           {
             label: 'Security',
-            icon: 'pi pi-fw pi-unlock',
+            icon: 'pi pi-fw pi-lock',
             items: [
               { label: 'Roles', icon: 'pi pi-fw pi-users', routerLink: ['/security/roles'] },
               { label: 'Users', icon: 'pi pi-fw pi-user', routerLink: ['/security/users'] },
