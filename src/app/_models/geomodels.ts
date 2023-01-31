@@ -26,6 +26,20 @@ export interface CirclesViewDto {
   createdBy: string,
   
 }
+export interface DivisonsViewDto{
+    divisionId: number
+    divisioncode: any
+    divisionname: any
+    inchargeName: string
+    inchargePhoneNo: string
+    address: string
+    listingOrder: number
+    isActive: boolean
+    createdByUser: any
+    updatedByUser: any
+    createAt: any
+    updatedAt: string
+}
 
 export class DistrictDto {
   districtId?: number;

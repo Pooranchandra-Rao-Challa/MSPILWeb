@@ -1,162 +1,127 @@
-import { Component, OnInit,ViewChild, ElementRef  } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
-import { SortEvent } from 'primeng/api';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CirclesViewDto, DistrictDto, DistrictViewDto, DivisonsViewDto, StateDto } from 'src/app/_models/geomodels';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { CommonService } from 'src/app/_services/common.service';
+import { JWTService } from 'src/app/_services/jwt.service';
+import { CustomerService } from 'src/app/demo/service/customer.service';
+
 @Component({
-  selector: 'app-divisions',
+  selector: 'app-division',
   templateUrl: './divisions.component.html',
-  styleUrls: ['./divisions.component.scss']
+  providers: [MessageService, ConfirmationService]
 })
 export class DivisionsComponent implements OnInit {
 
-  cities:any=[];
+  cities: any = [];
   selectedDrop: any;
-   
-
-  showDialog() {
-    this.display = false;
-}
-
   display: boolean = false;
+  divisions: DivisonsViewDto[] = []; 
+  //for View you need to change this 
+  district: DistrictDto = new DistrictDto();
 
+  states: StateDto[] = [];
+  loading: boolean = true;
+  fbdivisions!: FormGroup;
+  filter: any;
+  submitLabel!: string;
+  addFlag:boolean = true;
 
-   customers1: Customer[] = [];
+  constructor(private formbuilder: FormBuilder,
+    private customerService: CustomerService,
+    private geoMasterService: GeoMasterService,
+    private commonService: CommonService,
+    public jwtService: JWTService,
+    ) {
 
-    customers2: Customer[] = [];
+  }
+  InitDistrict() {
+    this.district = new DistrictDto();
+    this.fbdivisions.reset();
+    this.submitLabel = "Add District";
+    this.addFlag = true;
+    this.display = true;
+  }
 
-    customers3: Customer[] = [];
+  get FormControls() {
+    return this.fbdivisions.controls;
+  }
 
-    selectedCustomers1: Customer[] = [];
+  ngOnInit() {
 
-    selectedCustomer: Customer = {};
+    this.initDivisions();
 
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    products: Product[] = [];
-
-    // cols: any[];
-
-    rowGroupMetadata: any;
-
-    activityValues: number[] = [0, 100];
-
-    isExpanded: boolean = false;
-
-    idFrozen: boolean = false;
-
-    loading: boolean = true;
+    this.commonService.GetStates().subscribe((resp) => {
+      this.states = resp as unknown as StateDto[]
+    })
+    this.customerService.getCustomersLarge().then(customers => {
+      this.loading = false;
+    });
+    this.fbdivisions = this.formbuilder.group({
+      code: ['', (Validators.required)],
+      name: ['', (Validators.required)],
+      stateId: ['', (Validators.required)],
+      isActive: true
+    });
     
 
-    @ViewChild('filter') filter!: ElementRef;
-
-    divisions!:FormGroup
-    constructor(private  formbuilder:FormBuilder, private customerService: CustomerService, private productService: ProductService) {
-      this.cities = [
-        { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
-        { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-        { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-        { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-        { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
-    ];
-     }
-
-     get f (){
-        return this.divisions.controls;  
-      }
-   
-    ngOnInit() {
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
-        
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-      
-        this.divisions=this.formbuilder.group({
-            code:['',(Validators.required)],
-            iname:['',],
-            order:['',(Validators.required)],
-            name:['',(Validators.required)],
-            phno:['',],
-            address:['',(Validators.required)],
-            active:true
-          });
-        
+  }
+  initDivisions() {
+    this.geoMasterService.GetDivision().subscribe((resp) => {
+      this.divisions = resp as unknown as DivisonsViewDto[]
+    })
+  }
+  editProduct(district: DistrictViewDto) {
+    this.district.code = district.districtCode;
+    this.district.isActive = true;
+    this.district.name = district.districtName;
+    this.district.stateId = parseInt(district.stateId);
+    // this.fbdivisions = this.formbuilder.group({
+    //   code: [this.district.code, (Validators.required)],
+    //   name: [this.district.name, (Validators.required)],
+    //   stateId: [[this.district.stateId], (Validators.required)],
+    //   isActive: true
+    // });
+    console.log(district);
+    this.fbdivisions.setValue(this.district);
+    this.submitLabel = "Update District";
+    this.addFlag = false;
+    this.display = true;
+}
+  onClose(){
+    this.fbdivisions.reset();
+  }
+  onSubmit() {
+    if (this.fbdivisions.valid) {
+      console.log(this.fbdivisions.value);
+      this.geoMasterService.CreateDistrict(this.fbdivisions.value).subscribe((resp) => {
+        //console.log(resp);
+        this.initDivisions();
+        this.onClose();
+        this.display = false;
+      });
+      // success save.
     }
-    onSubmit(){
-        if(this.divisions.valid){
-            console.log(this.divisions.value);
-            }
-            else{
-                // alert("please fill the fields")
-                 this.divisions.markAllAsTouched();
-            }
+    else {
+      // alert("please fill the fields")
+      this.fbdivisions.markAllAsTouched();
     }
+  }
 
-    dropdownItems = [
-        { name: '',  },
-        { name: 'Telengana', code: 'Telengana' },
-        { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
-    ];
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
 
-    customSort(event: SortEvent) {
-       
-    }
-    onSort() {
-        this.updateRowGroupMetaData();
-    }
-
-    updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
-
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
-
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
-        }
-    }
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
 
 
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-    }
-
-    clear(table: Table) {
-        table.clear();
-        this.filter.nativeElement.value = '';
-    }
-
-
-    valSwitch: boolean = true;
-    
-    
+  valSwitch: boolean = true;
 
 }
+
+
