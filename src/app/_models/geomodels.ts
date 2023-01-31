@@ -2,8 +2,9 @@ export interface DistrictViewDto {
   districtId: number;
   districtName: string;
   districtCode: string;
-  stateId: string;
+  stateId: number;
   stateName: string;
+  isActive: boolean;
   updatedAt: Date;
   createdAt: Date;
   updatedBy: string;
@@ -24,7 +25,7 @@ export interface CirclesViewDto {
   createdAt: Date,
   updatedBy: string,
   createdBy: string,
-  
+
 }
 
 export class DistrictDto {
