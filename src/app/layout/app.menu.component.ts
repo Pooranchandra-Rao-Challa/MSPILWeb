@@ -62,20 +62,32 @@ export class AppMenuComponent implements OnInit {
                 label: 'Geo Masters',
                 icon: 'pi pi-fw pi-id-card',
                 items: [
-                    { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'] },
-                    { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'] },
-                    { label: 'Mandal', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/mandal'] },
-                    { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'] },
-                    { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'] },
-                    { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'] },
-                    { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'] },
+                  { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'] },
+                  { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'] },
+                  { label: 'Mandal', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/mandal'] },
+                  { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'] },
+                  { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'] },
+                  { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'] },
+                  { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'] },
                 ]
-
               },
-
+              {
+                label: 'Bill Masters',
+                icon: 'pi pi-fw pi-bitcoin text-lg',
+                items: [
+                  { label: 'Bill Master', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billmaster'] },
+                  { label: 'Bill Parameters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billparameters'] },
+                  { label: 'Loan Master', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'] },
+                  { label: 'Diesel Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselrates'] },
+                  { label: 'Distance Rate Slab', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'] },
+                  { label: 'Village Param Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villageparamrates'] },
+                  { label: 'Village TPT Rate', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villagetptrate'] },
+                  { label: 'Diesel Bunk', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselbunk'] },
+                  { label: 'Ware House', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'] },
+                ]
+              },
             ]
           },
-
         ]
       },
 

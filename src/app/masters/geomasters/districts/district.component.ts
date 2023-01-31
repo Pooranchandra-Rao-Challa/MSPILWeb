@@ -1,3 +1,5 @@
+import { HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -25,14 +27,14 @@ export class DistrictComponent implements OnInit {
   fbdistricts!: FormGroup;
   filter: any;
   submitLabel!: string;
-  addFlag:boolean = true;
+  addFlag: boolean = true;
 
   constructor(private formbuilder: FormBuilder,
     private customerService: CustomerService,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-    ) {
+  ) {
 
   }
   InitDistrict() {
@@ -61,9 +63,10 @@ export class DistrictComponent implements OnInit {
       code: ['', (Validators.required)],
       name: ['', (Validators.required)],
       stateId: ['', (Validators.required)],
-      isActive: true
+      districtId: [''],
+      isActive: [true, Validators.required]
     });
-    
+
 
   }
   initDistricts() {
@@ -71,36 +74,39 @@ export class DistrictComponent implements OnInit {
       this.districts = resp as unknown as DistrictViewDto[]
     })
   }
+
   editProduct(district: DistrictViewDto) {
     this.district.code = district.districtCode;
-    this.district.isActive = true;
-    this.district.name = district.districtName;
-    this.district.stateId = parseInt(district.stateId);
-    // this.fbdistricts = this.formbuilder.group({
-    //   code: [this.district.code, (Validators.required)],
-    //   name: [this.district.name, (Validators.required)],
-    //   stateId: [[this.district.stateId], (Validators.required)],
-    //   isActive: true
-    // });
-    console.log(district);
+    this.district.name = district.districtName
+    this.district.isActive = district.isActive;
+    this.district.districtId = district.districtId
+    this.district.stateId = district.stateId;
     this.fbdistricts.setValue(this.district);
     this.submitLabel = "Update District";
     this.addFlag = false;
     this.display = true;
-}
-  onClose(){
+  }
+
+  private UpdateForm() {
+
+  }
+  onClose() {
     this.fbdistricts.reset();
+  }
+
+  saveDistrict() : Observable<HttpEvent<DistrictDto>>{
+    if (this.addFlag) return this.geoMasterService.CreateDistrict(this.fbdistricts.value)
+    else return this.geoMasterService.UpdateDistrict(this.fbdistricts.value)
   }
   onSubmit() {
     if (this.fbdistricts.valid) {
-      console.log(this.fbdistricts.value);
-      this.geoMasterService.CreateDistrict(this.fbdistricts.value).subscribe((resp) => {
-        //console.log(resp);
-        this.initDistricts();
-        this.onClose();
-        this.display = false;
-      });
-      // success save.
+      this.saveDistrict().subscribe(resp =>{
+          if (resp) {
+            this.initDistricts();
+            this.onClose();
+            this.display = false;
+          }
+      })
     }
     else {
       // alert("please fill the fields")

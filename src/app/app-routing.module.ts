@@ -10,12 +10,13 @@ const routes: Routes = [
   { path: 'error', loadChildren: () => import('./_common/error/error.module').then(m => m.ErrorModule) },
   { path: 'access', loadChildren: () => import('./_common/access/access.module').then(m => m.AccessModule) },
   {
-      path: '', component: AppLayoutComponent,
-      children: [
-          { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
-          { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
-          { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
-      ]
+    path: '', component: AppLayoutComponent,
+    children: [
+      { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+      { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
+      { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
+      { path: 'billmasters', loadChildren: () => import('./masters/billmasters/billmasters.module').then(m => m.BillMastersModule) },
+    ]
   },
 
 
@@ -23,19 +24,19 @@ const routes: Routes = [
 
 
 
-   // Demo UI Routing  menu
+  // Demo UI Routing  menu
 
   {
-      path: '', component: AppLayoutComponent,
-      children: [
-          { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
-          { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
-          { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
-          { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
-          { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
-          { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) }
+    path: '', component: AppLayoutComponent,
+    children: [
+      { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
+      { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
+      { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
+      { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
+      { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
+      { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) }
 
-      ]
+    ]
   },
   { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
   { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
