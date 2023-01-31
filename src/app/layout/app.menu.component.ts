@@ -62,15 +62,13 @@ export class AppMenuComponent implements OnInit {
                 label: 'Geo Masters',
                 icon: 'pi pi-fw pi-id-card',
                 items: [
-                  { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'] },
-                  { label: 'Mandal', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/mandal'] },
-                  { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'] },
-                  { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'] },
-                  { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'] },
-                  { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'] },
-                  { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'] },
-
-
+                    { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'] },
+                    { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'] },
+                    { label: 'Mandal', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/mandal'] },
+                    { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'] },
+                    { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'] },
+                    { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'] },
+                    { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'] },
                 ]
 
               },

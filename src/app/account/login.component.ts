@@ -53,7 +53,7 @@ export class LoginComponent {
             if(error.status == 401)
                this.messageService.add({severity:'error', summary:'Error', detail:"Invalid Credentials!"});
             
-            if(error.status == 400)
+            else if(error.status == 400)
                this.messageService.add({severity:'error', summary:'Error', detail:"User Not found"});
             else
                 this.router.navigate(["error"])
