@@ -1,1 +1,148 @@
-<p>dieselrates works!</p>
+<div class="col-12">
+  <div class="card">
+
+    <!-- toolbar -->
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Diesel Rates</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New Diesel Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="showDialog = true"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <!-- table -->
+    <p-table #dt1 [value]="dieselRates" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            From Date <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            To Date <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Rate <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Is Active <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Created Date <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Created By User <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Updated Date <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Updated By User <p-sortIcon></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-diesel>
+        <tr>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>
+            <p-checkbox name="active" value="active"></p-checkbox>
+          </td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+          <td>{{diesel}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No diesel rates found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="8">Loading diesel rates data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- dialog box -->
+    <p-dialog header="Diesel Rates" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbDieselRate.reset()">
+      <div class="flex flex-column align-items-center justify-content-center">
+        <form [formGroup]="fbDieselRate" (ngSubmit)="onSubmit()">
+          <div class="grid">
+            <div class="col-12">
+              <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-6">
+                  <label>From Date:<sup class="p-error">*</sup></label>
+                  <p-calendar [readonlyInput]="true" formControlName="fromDate"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
+                  </p-calendar>
+                  <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
+                      Please Select Date.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>To Date:<sup class="p-error">*</sup></label>
+                  <p-calendar [readonlyInput]="true" formControlName="toDate"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
+                  </p-calendar>
+                  <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
+                      Please Select Date.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Rate:<sup class="p-error">*</sup></label>
+                  <input pInputText id="rate" type="text" formControlName="rate"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
+                  <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
+                      Please Enter Rate.</div>
+                  </span>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
+                  <p-inputSwitch formControlName="isActive"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
+                  </p-inputSwitch>
+                  <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
+                      Please Select Active.</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ng-template pTemplate="left">
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
+          (click)="onSubmit()"></button>
+      </ng-template>
+    </p-dialog>
+
+  </div>
+</div>
