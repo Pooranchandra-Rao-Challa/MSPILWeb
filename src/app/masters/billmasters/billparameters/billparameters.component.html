@@ -100,7 +100,7 @@
 
     <!-- dialog box -->
     <p-dialog header="Bill Parameters" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbBillParameters.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbBillParameters" (ngSubmit)="onSubmit()">
           <div class="grid">

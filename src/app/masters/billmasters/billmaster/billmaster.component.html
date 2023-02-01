@@ -105,7 +105,7 @@
     <!-- dialog box -->
     <p-dialog header="Bill" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
-      [contentStyle]="{'overflow': 'visible'}">
+      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbBillMaster.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbBillMaster" (ngSubmit)="onSubmit()">
           <div class="grid">
