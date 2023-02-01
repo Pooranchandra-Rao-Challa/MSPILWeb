@@ -11,8 +11,8 @@
     </p-toolbar>
 
     <p-table #dt1 [value]="roles" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-md" [paginator]="true"
-      [globalFilterFields]="globalFilters" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [globalFilterFields]="globalFilters" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" >
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -50,7 +50,7 @@
       <ng-template pTemplate="body" let-role>
         <tr>
           <td style="text-align: center;"><button pButton pRipple icon="pi pi-pencil"
-              class="p-button-rounded p-button-success mr-2" (click)="showDialog()"></button></td>
+              class="p-element p-ripple p-button-text p-button p-component" (click)="showDialog()"></button></td>
           <td>{{role.Code}}</td>
           <td>{{role.Name}}</td>
           <td>{{role.IsActive}}</td>
