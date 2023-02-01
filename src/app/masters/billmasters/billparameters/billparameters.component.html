@@ -1,1 +1,198 @@
-<p>billparameters works!</p>
+<div class="col-12">
+  <div class="card">
+
+    <!-- toolbar -->
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Bill Parameters</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New Parameter" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="showDialog = true"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <!-- table -->
+    <p-table #dt1 [value]="billParameters" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            Bill Category <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Type <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Code <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Name <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            CalcType <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Formula <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Priority <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Is active <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Created Date <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Created By User <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Updated Date <p-sortIcon></p-sortIcon>
+          </th>
+          <th>
+            Updated By User <p-sortIcon></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-billparam>
+        <tr>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>
+            <p-checkbox name="active" value="active"></p-checkbox>
+          </td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+          <td>{{billparam}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="12">No bill parameters found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="12">Loading bill parameters data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- dialog box -->
+    <p-dialog header="Bill Parameters" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}">
+      <div class="flex flex-column align-items-center justify-content-center">
+        <form [formGroup]="fbBillParameters" (ngSubmit)="onSubmit()">
+          <div class="grid">
+            <div class="col-12">
+              <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-6">
+                  <label>Bill Category:<sup class="p-error">*</sup></label>
+                  <p-dropdown formControlName="category"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['category'].touched && FormControls['category'].errors }">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['category'].touched && FormControls['category'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['category'].errors?.['required']">
+                      Please Select Category.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Type:<sup class="p-error">*</sup></label>
+                  <p-dropdown formControlName="type"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['type'].touched && FormControls['type'].errors }">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['type'].touched && FormControls['type'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['type'].errors?.['required']">
+                      Please Select Type.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Code:<sup class="p-error">*</sup></label>
+                  <input pInputText id="code" type="text" formControlName="code"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                  <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                      Please Enter Code.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Name:<sup class="p-error">*</sup></label>
+                  <input pInputText id="code" type="text" formControlName="name"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                  <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
+                      Please Enter Name.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Calculation Type:<sup class="p-error">*</sup></label>
+                  <p-dropdown formControlName="calcType"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['calcType'].touched && FormControls['calcType'].errors }">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['calcType'].touched && FormControls['calcType'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['calcType'].errors?.['required']">
+                      Please Select Calc Type.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Priority:<sup class="p-error">*</sup></label>
+                  <input pInputText id="priority" type="text" formControlName="priority"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['priority'].touched && FormControls['priority'].errors }">
+                  <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
+                      Please Enter Priority.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Formula:<sup class="p-error">*</sup></label>
+                  <textarea pInputTextarea id="priority" type="text" formControlName="formula"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['formula'].touched && FormControls['formula'].errors }">
+                    </textarea>
+                  <span *ngIf="FormControls['formula'].touched && FormControls['formula'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['formula'].errors?.['required']">
+                      Please Enter Formula.</div>
+                  </span>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
+                  <p-inputSwitch formControlName="isActive"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
+                  </p-inputSwitch>
+                  <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
+                      Please Select Active.</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ng-template pTemplate="left">
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
+          (click)="onSubmit()"></button>
+      </ng-template>
+    </p-dialog>
+
+  </div>
+</div>

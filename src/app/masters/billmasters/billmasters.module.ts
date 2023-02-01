@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { PrimeNgModule } from 'src/app/_shared/primeNg.module';
 import { BillMastersRoutingModule } from './billmasters-routing.module';
 import { BillMasterComponent } from './billmaster/billmaster.component';
 import { BillParametersComponent } from './billparameters/billparameters.component';
@@ -12,10 +12,6 @@ import { DieselBunkComponent } from './dieselbunk/dieselbunk.component';
 import { WareHouseComponent } from './warehouse/warehouse.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    BillMastersRoutingModule
-  ],
   declarations: [
     BillMasterComponent,
     BillParametersComponent,
@@ -26,6 +22,10 @@ import { WareHouseComponent } from './warehouse/warehouse.component';
     VillageTPTRateComponent,
     DieselBunkComponent,
     WareHouseComponent,
-  ]
+  ],
+  imports: [
+    PrimeNgModule,
+    BillMastersRoutingModule
+  ],
 })
 export class BillMastersModule { }
