@@ -1,148 +1,114 @@
-import { Component, OnInit,ViewChild, ElementRef  } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
-import { SortEvent } from 'primeng/api';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CirclesViewDto, DistrictDto, DistrictViewDto, DivisionDto, DivisonsViewDto, StateDto } from 'src/app/_models/geomodels';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { CommonService } from 'src/app/_services/common.service';
+import { JWTService } from 'src/app/_services/jwt.service';
+import { Observable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
+
 @Component({
-  selector: 'app-divisions',
-  templateUrl: './divisions.component.html',
-  styleUrls: ['./divisions.component.scss']
+    selector: 'app-division',
+    templateUrl: './divisions.component.html',
+    providers: [MessageService, ConfirmationService]
 })
 export class DivisionsComponent implements OnInit {
 
-  cities:any=[];
-  selectedDrop: any;
-   
-
-  showDialog() {
-    this.display = false;
-}
-
-  display: boolean = false;
-
-
-   customers1: Customer[] = [];
-
-    customers2: Customer[] = [];
-
-    customers3: Customer[] = [];
-
-    selectedCustomers1: Customer[] = [];
-
-    selectedCustomer: Customer = {};
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    products: Product[] = [];
-
-    // cols: any[];
-
-    rowGroupMetadata: any;
-
-    activityValues: number[] = [0, 100];
-
-    isExpanded: boolean = false;
-
-    idFrozen: boolean = false;
-
+    display: boolean = false;
+    divisions: DivisonsViewDto[] = [];
+    //for View you need to change this 
+    division: DivisionDto = new DivisionDto();
+    states: StateDto[] = [];
     loading: boolean = true;
-    
+    fbdivisions!: FormGroup;
+    filter: any;
+    submitLabel!: string;
+    addFlag: boolean = true;
 
-    @ViewChild('filter') filter!: ElementRef;
+    constructor(private formbuilder: FormBuilder,
+        private geoMasterService: GeoMasterService,
+        private commonService: CommonService,
+        public jwtService: JWTService,
+    ) {
 
-    divisions!:FormGroup
-    constructor(private  formbuilder:FormBuilder, private customerService: CustomerService, private productService: ProductService) {
-      this.cities = [
-        { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
-        { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-        { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-        { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-        { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
-    ];
-     }
+    }
+    InitDivision() {
+        this.division = new DivisionDto();
+        this.fbdivisions.reset();
+        this.submitLabel = "Add Division";
+        this.addFlag = true;
+        this.display = true;
+    }
 
-     get f (){
-        return this.divisions.controls;  
-      }
-   
+    get FormControls() {
+        return this.fbdivisions.controls;
+    }
+
     ngOnInit() {
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
 
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
+        this.initDivisions();
+
+        this.commonService.GetStates().subscribe((resp) => {
+            this.states = resp as unknown as StateDto[]
+        })
+        this.fbdivisions = this.formbuilder.group({
+            divisionId: [null],
+            code: ['', (Validators.required)],
+            inchargeName: ['',],
+            listingOrder: ['', (Validators.required)],
+            name: ['', (Validators.required)],
+            inchargePhoneNo: ['',],
+            address: ['', (Validators.required)],
+            isActive: true
         });
-        
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-      
-        this.divisions=this.formbuilder.group({
-            code:['',(Validators.required)],
-            iname:['',],
-            order:['',(Validators.required)],
-            name:['',(Validators.required)],
-            phno:['',],
-            address:['',(Validators.required)],
-            active:true
-          });
-        
+
+
     }
-    onSubmit(){
-        if(this.divisions.valid){
-            console.log(this.divisions.value);
-            }
-            else{
-                // alert("please fill the fields")
-                 this.divisions.markAllAsTouched();
-            }
+    initDivisions() {
+        this.geoMasterService.GetDivision().subscribe((resp) => {
+            this.divisions = resp as unknown as DivisonsViewDto[]
+            this.loading = false;
+        })
     }
-
-    dropdownItems = [
-        { name: '',  },
-        { name: 'Telengana', code: 'Telengana' },
-        { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
-    ];
-
-    customSort(event: SortEvent) {
-       
+    editProduct(division: DivisonsViewDto) {
+        this.division.divisionId = division.divisionId;
+        this.division.code = division.divisionCode;
+        this.division.name = division.divisionName;
+        this.division.inchargeName = division.inchargeName;
+        this.division.inchargePhoneNo = division.inchargePhoneNo;
+        this.division.address = division.address;
+        this.division.listingOrder = division.listingOrder;
+        this.division.isActive = division.isActive;
+        // this.district.districtId = district.districtId
+        // this.district.stateId = district.stateId;
+        this.fbdivisions.setValue(this.division);
+        this.submitLabel = "Update Divison";
+        this.addFlag = false;
+        this.display = true;
     }
-    onSort() {
-        this.updateRowGroupMetaData();
+    onClose() {
+        this.fbdivisions.reset();
     }
-
-    updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
-
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
-
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
+    saveDivision(): Observable<HttpEvent<DivisionDto>> {
+        if (this.addFlag) return this.geoMasterService.CreateDivision(this.fbdivisions.value)
+        else return this.geoMasterService.UpdateDivision(this.fbdivisions.value)
+    }
+    onSubmit() {
+        if (this.fbdivisions.valid) {
+            this.saveDivision().subscribe(resp => {
+                if (resp) {
+                    this.initDivisions();
+                    this.onClose();
+                    this.display = false;
                 }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
+            })
         }
-    }
-
-
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        else {
+            // alert("please fill the fields")
+            this.fbdivisions.markAllAsTouched();
+        }
     }
 
     onGlobalFilter(table: Table, event: Event) {
@@ -156,7 +122,7 @@ export class DivisionsComponent implements OnInit {
 
 
     valSwitch: boolean = true;
-    
-    
 
 }
+
+

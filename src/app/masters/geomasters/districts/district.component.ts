@@ -8,7 +8,6 @@ import { CirclesViewDto, DistrictDto, DistrictViewDto, StateDto } from 'src/app/
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { CustomerService } from 'src/app/demo/service/customer.service';
 
 @Component({
   selector: 'app-district',
@@ -17,8 +16,7 @@ import { CustomerService } from 'src/app/demo/service/customer.service';
 })
 export class DistrictComponent implements OnInit {
 
-  cities: any = [];
-  selectedDrop: any;
+
   display: boolean = false;
   districts: DistrictViewDto[] = [];
   district: DistrictDto = new DistrictDto();
@@ -30,7 +28,6 @@ export class DistrictComponent implements OnInit {
   addFlag: boolean = true;
 
   constructor(private formbuilder: FormBuilder,
-    private customerService: CustomerService,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
@@ -56,9 +53,7 @@ export class DistrictComponent implements OnInit {
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]
     })
-    this.customerService.getCustomersLarge().then(customers => {
-      this.loading = false;
-    });
+
     this.fbdistricts = this.formbuilder.group({
       code: ['', (Validators.required)],
       name: ['', (Validators.required)],
@@ -72,6 +67,7 @@ export class DistrictComponent implements OnInit {
   initDistricts() {
     this.geoMasterService.GetDistricts().subscribe((resp) => {
       this.districts = resp as unknown as DistrictViewDto[]
+      this.loading = false;
     })
   }
 
@@ -94,18 +90,18 @@ export class DistrictComponent implements OnInit {
     this.fbdistricts.reset();
   }
 
-  saveDistrict() : Observable<HttpEvent<DistrictDto>>{
+  saveDistrict(): Observable<HttpEvent<DistrictDto>> {
     if (this.addFlag) return this.geoMasterService.CreateDistrict(this.fbdistricts.value)
     else return this.geoMasterService.UpdateDistrict(this.fbdistricts.value)
   }
   onSubmit() {
     if (this.fbdistricts.valid) {
-      this.saveDistrict().subscribe(resp =>{
-          if (resp) {
-            this.initDistricts();
-            this.onClose();
-            this.display = false;
-          }
+      this.saveDistrict().subscribe(resp => {
+        if (resp) {
+          this.initDistricts();
+          this.onClose();
+          this.display = false;
+        }
       })
     }
     else {

@@ -1,157 +1,130 @@
-import { Component, OnInit } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
-import { SortEvent } from 'primeng/api';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CirclesViewDto, MandalDto, MandalsViewDto, DistrictDto } from 'src/app/_models/geomodels';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { CommonService } from 'src/app/_services/common.service';
+import { JWTService } from 'src/app/_services/jwt.service';
+
 @Component({
   selector: 'app-mandal',
   templateUrl: './mandal.component.html',
-  styleUrls: ['./mandal.component.scss']
+  providers: [MessageService, ConfirmationService]
 })
 export class MandalComponent implements OnInit {
-  cities:any=[];
-  selectedDrop: any;
-  filter: any;
-  
 
-  showDialog() {
-    this.display = false;
-}
 
   display: boolean = false;
+  mandals: MandalsViewDto[] = [];
+  mandal: MandalDto = new MandalDto();
+  districts: DistrictDto[] = [];
+  loading: boolean = true;
+  fbmandals!: FormGroup;
+  filter: any;
+  submitLabel!: string;
+  addFlag: boolean = true;
 
+  constructor(private formbuilder: FormBuilder,
+    private geoMasterService: GeoMasterService,
+    private commonService: CommonService,
+    public jwtService: JWTService,
+  ) {
 
-   customers1: Customer[] = [];
+  }
+  InitMandal() {
+    this.mandal = new MandalDto();
+    this.fbmandals.reset();
+    this.submitLabel = "Add Mandal";
+    this.addFlag = true;
+    this.display = true;
+  }
 
-    customers2: Customer[] = [];
+  get FormControls() {
+    return this.fbmandals.controls;
+  }
 
-    customers3: Customer[] = [];
+  ngOnInit() {
 
-    selectedCustomers1: Customer[] = [];
+    this.initMandals();
 
-    selectedCustomer: Customer = {};
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    products: Product[] = [];
-
-    // cols: any[];
-
-    rowGroupMetadata: any;
-
-    activityValues: number[] = [0, 100];
-
-    isExpanded: boolean = false;
-
-    idFrozen: boolean = false;
-
-    loading: boolean = true;
-     
-  mandals!:FormGroup
-    constructor(private formbuilder:FormBuilder  ,private customerService: CustomerService, private productService: ProductService) {
-      this.cities = [
-        { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
-        { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-        { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-        { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-        { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
-    ];
-     }
-
-     get f (){
-        return this. mandals.controls;  
-      }
-
-    ngOnInit() {
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
-        
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-      
-        this. mandals=this.formbuilder.group({
-            code:['',(Validators.required)],
-
-            name:['',(Validators.required)],
-            state:['',(Validators.required)],
-            active:true
-          });
-        
-    }
-    onSubmit(){
-       if(this.mandals.valid){
-        console.log(this.mandals.value);
-        }
-        else{
-            // alert("please fill the fields")
-             this.mandals.markAllAsTouched();
-        }
-    }
-    customSort(event: SortEvent) {
-       
-    }
-    onSort() {
-        this.updateRowGroupMetaData();
-    }
-
-    updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
-
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
-
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
-        }
-    }
-
-
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-    }
-
-    clear(table: Table) {
-        table.clear();
-        this.filter.nativeElement.value = '';
-    }
-
-
-    valSwitch: boolean = true;
+    this.commonService.GetDistricts().subscribe((resp) => {
+      this.districts = resp as unknown as DistrictDto[]
+    })
     
 
-    dropdownItems = [
-        { name: '',  },
-        { name: 'Telengana', code: 'Telengana' },
-        { name: 'Andhra Pradesh', code: 'Andhra Pradesh' }
-  ];
+    this.fbmandals = this.formbuilder.group({
+      code: ['', (Validators.required)],
+      name: ['', (Validators.required)],
+      districtId: ['', (Validators.required)],
+      mandalId: [''],
+      isActive: [true, Validators.required]
+    });
 
-       
+
+  }
+  initMandals() {
+    this.geoMasterService.GetMandals().subscribe((resp) => {
+      this.mandals = resp as unknown as MandalsViewDto[]
+      this.loading = false;
+    })
+  }
+
+  editProduct(mandal: MandalsViewDto) {
+    this.mandal.code = mandal.mandalCode;
+    this.mandal.name = mandal.mandalName;
+    this.mandal.isActive = mandal.isActive;
+    this.mandal.mandalId = mandal.mandalId;
+    this.mandal.districtId = mandal.districtId;
+    // this.mandal.districtId = mandal.districtName;
+    // this.mandal.mandalId = mandal.mandalId;
+    this.fbmandals.setValue(this.mandal);
+    this.submitLabel = "Update Mandal";
+    this.addFlag = false;
+    this.display = true;
+  }
+
+  private UpdateForm() {
+
+  }
+  onClose() {
+    this.fbmandals.reset();
+  }
+
+  saveMandal(): Observable<HttpEvent<MandalDto>> {
+    if (this.addFlag) return this.geoMasterService.CreateMandal(this.fbmandals.value)
+    else return this.geoMasterService.UpdateMandal(this.fbmandals.value)
+  }
+  onSubmit() {
+    if (this.fbmandals.valid) {
+      this.saveMandal().subscribe(resp => {
+        if (resp) {
+          this.initMandals();
+          this.onClose();
+          this.display = false;
+        }
+      })
+    }
+    else {
+      // alert("please fill the fields")
+      this.fbmandals.markAllAsTouched();
+    }
+  }
+
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
+
+
+  valSwitch: boolean = true;
+
 }
+
 
