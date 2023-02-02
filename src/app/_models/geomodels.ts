@@ -15,7 +15,7 @@ export class DistrictDto {
   districtId?: number;
   code?: string;
   name?: string;
-  isActive?: boolean = true;
+  isActive?: boolean;
   stateId?: number;
 }
 
@@ -101,8 +101,8 @@ export class MandalDto{
 
 export interface SectionsViewDto {
   sectionId: number,
-  code: any,
-  name: any,
+  sectionCode: any,
+  sectionName: any,
   circleId: number,
   circleName: string,
   divisionId: number,
@@ -114,8 +114,6 @@ export interface SectionsViewDto {
   isActive: boolean,
   updatedAt: string,
   createdAt: string,
-  updatedBy: string,
-  createdBy: string,
 }
 
 

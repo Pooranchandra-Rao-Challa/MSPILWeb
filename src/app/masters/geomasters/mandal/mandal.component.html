@@ -28,14 +28,16 @@
                                 </div>
                                 <div class=" col-12 ">
                                     <label>District:<sup class="p-error">*</sup></label>&nbsp;
-                                    <p-dropdown [options]="districts" optionLabel="districtName" formControlName="districtId"
+                                    <p-dropdown [options]="district" optionLabel="districtName" formControlName="districtId"
                                         optionValue="districtId"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['districtId'].touched && FormControls['districtId'].errors }"></p-dropdown>
                                     <span *ngIf="FormControls['districtId'].touched && FormControls['districtId'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['districtId'].errors?.['required']">Please Select District.
+                                            *ngIf="FormControls['districtId'].errors?.['required']">Please Select State.
                                         </div>
-                                    </span> 
+
+                                    </span>
+                                   
                                 </div>
                                 <div class=" col-12 ">
                                     <label>Is Active?:<sup class="p-error">*</sup></label><br>
