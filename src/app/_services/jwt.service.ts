@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import jwt_decode from 'jwt-decode';
 import { ResponseModel } from "../_models/account/account.model";
 
+const TOKEN_KEY = 'auth-token';
+const REFRESHTOKEN_KEY = 'auth-refreshtoken';
 @Injectable()
 export class JWTService {
   /**
@@ -17,15 +19,27 @@ export class JWTService {
   }
 
   public get JWTToken(): string{
-    if(localStorage.getItem("respModel")){
-      const jwtResp: ResponseModel = JSON.parse(localStorage.getItem("respModel")||"")
-      return jwtResp.accessToken ||"";
-    }else return ""
+    return localStorage.getItem(TOKEN_KEY) ||"";
+  }
+
+  public get RefreshToken(): string{
+    return localStorage.getItem(REFRESHTOKEN_KEY) ||"";
   }
 
   public Logout(){
     localStorage.removeItem("respModel");
     this.router.navigate(["/"])
+  }
+
+  public SaveToken(tokens: ResponseModel){
+    localStorage.removeItem(TOKEN_KEY)
+    localStorage.setItem(TOKEN_KEY,tokens.accessToken||"")
+    this.saveRefreshToken(tokens);
+  }
+
+  public saveRefreshToken(tokens: ResponseModel){
+    localStorage.removeItem(REFRESHTOKEN_KEY)
+    localStorage.setItem(REFRESHTOKEN_KEY,tokens.refreshToken||"")
   }
 
   public get IsLoggedIn():boolean{
