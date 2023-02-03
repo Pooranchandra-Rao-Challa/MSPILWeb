@@ -1,6 +1,8 @@
+import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
+import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 
 @Component({
   selector: 'app-dieselbunk',
@@ -9,15 +11,22 @@ import { Table } from 'primeng/table';
   ]
 })
 export class DieselBunkComponent implements OnInit {
-  dieselBunks: any;
-  loading: boolean = false;
+  dieselBunks: DieselBunkViewDto[] = [];
+  loading: boolean = true;
   filter: any;
   showDialog: boolean = false;
   fbDieselBunk!: FormGroup;
 
-  constructor(private formbuilder: FormBuilder,) { }
+  constructor(private formbuilder: FormBuilder,
+              private billmasterService: BillMasterService) { }
 
   ngOnInit(): void {
+    debugger
+    this.billmasterService.GetDieselBunks().subscribe((resp) => {
+      this.dieselBunks = resp as unknown as DieselBunkViewDto[];
+      console.log(this.dieselBunks);
+      this.loading = false;
+    });
     this.dieselRateForm();
   }
 

@@ -1,192 +1,150 @@
-import { Component,OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
+import { HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService, Message } from 'primeng/api';
-import { SortEvent } from 'primeng/api';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Messages } from 'primeng/messages';
-
-
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CircleDto, CirclesViewDto, DivisionDto, SectionDto, SectionsViewDto, StateDto } from 'src/app/_models/geomodels';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { CommonService } from 'src/app/_services/common.service';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
 export class SectionComponent implements OnInit {
-
-    private apiUrl = 'https://your-api-endpoint.com';
-
-  cities:any=[];
-  selectedDrop: any;
-
-  showDialog() {
-    this.display = false;
-}
-
   display: boolean = false;
+  sections: SectionsViewDto[] = [];
+  section: SectionDto = new SectionDto();
+  states: StateDto[] = [];
+  loading: boolean = true;
+  fbsections!: FormGroup;
+  filter: any;
+  submitLabel!: string;
+  addFlag: boolean = true;
+  divisions: DivisionDto[] = [];
+  circles: CircleDto[] = [];
 
+  constructor(private formbuilder: FormBuilder,
+    private geoMasterService: GeoMasterService,
+    private commonService: CommonService,
+    public jwtService: JWTService,
+  ) {
 
-   customers1: Customer[] = [];
+  }
+  InitSection() {
+    this.section = new SectionDto();
+    this.fbsections.reset();
+    this.submitLabel = "Add Section";
+    this.addFlag = true;
+    this.display = true;
+  }
 
-    customers2: Customer[] = [];
+  get FormControls() {
+    return this.fbsections.controls;
+  }
 
-    customers3: Customer[] = [];
+  ngOnInit() {
+    this.initSections();
 
-    selectedCustomers1: Customer[] = [];
+    this.commonService.GetStates().subscribe((resp) => {
+      this.states = resp as unknown as StateDto[]
+    })
 
-    selectedCustomer: Customer = {};
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    products: Product[] = [];
-
-    // cols: any[];
-
-    rowGroupMetadata: any;
-
-    activityValues: number[] = [0, 100];
-
-    isExpanded: boolean = false;
-
-    idFrozen: boolean = false;
-
-    loading: boolean = true;
+    this.commonService.GetDivision().subscribe((resp) => {
+      this.divisions = resp as unknown as DivisionDto[]
+    })
     
+    this.fbsections = this.formbuilder.group({
+      code: ['', Validators.required],
+      name: ['', Validators.required],
+      listingOrder: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      address: ['', Validators.required],
+      circleId: ['', Validators.required],
+      divisionId: [''],
+      inchargePhoneNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      inchargeName:[''],
+      isActive: [this.valSwitch, Validators.required],
+      sectionId: [''],
+    });
 
-    @ViewChild('filter') filter!: ElementRef;
+  }
+  initSections() {
+    this.geoMasterService.GetSections().subscribe((resp) => {
+      this.sections = resp as unknown as SectionsViewDto[]
+      this.loading = false;
+    })
+  }
 
-    
+  initCircles(division:any){
+    this.commonService.GetCirclesForDivision(division).subscribe((resp) => {
+      this.circles = resp as unknown as CircleDto[]
+    })
+  }
 
-    constructor(private customerService: CustomerService,
-         private productService: ProductService,
-         private http: HttpClient,
-         private formbuilder:FormBuilder,
-         private service: MessageService
-         
-         ) {
-      this.cities = [
-        { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
-        { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-        { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-        { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-        { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
-    ];
-     }
+  editProduct(section: SectionsViewDto) {
+    // this.fbsections.setValue(this.section);
+    this.initCircles(section.divisionId);
+    this.fbsections = this.formbuilder.group({
+      code: [section.sectionCode, Validators.required],
+      name: [section.sectionName, Validators.required],
+      listingOrder: [section.listingOrder, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      address: [section.address, Validators.required],
+      circleId: [section.circleId, Validators.required],
+      divisionId: [section.divisionId],
+      inchargePhoneNo: [section.inchargePhoneNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      inchargeName:[section.inchargeName],
+      isActive: [section.isActive, Validators.required],
+      sectionId: [section.sectionId],
+    });
+    this.submitLabel = "Update Section";
+    this.addFlag = false;
+    this.display = true;    
+  }
 
+  private UpdateForm() {
 
+  }
+  onClose() {
+    this.fbsections.reset();
+  }
 
-   
+  saveSection(): Observable<HttpEvent<SectionDto>> {
+    debugger
+    if (this.addFlag) return this.geoMasterService.CreateSection(this.fbsections.value)
+    else return this.geoMasterService.UpdateSection(this.fbsections.value)
+  }
+  onSubmit() {
+    if (this.fbsections.valid) {
+      debugger
 
-     form!:FormGroup;
-
-
-
-    ngOnInit(): void {
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
-        
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-
-        this.form = this.formbuilder.group({
-            division: ['', Validators.required],
-            sectionCode: ['', Validators.required],
-            inchargeName: ['', Validators.required],
-            order: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-            address: ['', Validators.required],
-            circle: ['', Validators.required],
-            sectionName: ['', Validators.required],
-            inchargePhoneNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-            isActive: [this.valSwitch, Validators.required],
-          });
+      this.saveSection().subscribe(resp => {
+        if (resp) {
+          this.initSections();
+          this.onClose();
+          this.display = false;
         }
-   
-     
-   
- get f(){
-  return this.form.controls
+      })
+    }
+    else {
+      // alert("please fill the fields")
+      this.fbsections.markAllAsTouched();
+    }
+  }
+
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
+
+  valSwitch: boolean = true;
+
 }
 
-
-
-        
-
-   
-
-
-
-      onSubmit() {
-        if (this.form.valid) {
-            console.log(this.form.value);
-            
-          // submit the form
-        } else {
-          this.form.markAllAsTouched();
-        }
-      }
-
-
-
-
-    customSort(event: SortEvent) {
-       
-    }
-    onSort() {
-        this.updateRowGroupMetaData();
-    }
-
-    updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
-
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
-
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
-        }
-    }
-
-
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-    }
-
-    clear(table: Table) {
-        table.clear();
-        this.filter.nativeElement.value = '';
-    }
-
-
-    valSwitch: boolean = true;
-}
 
