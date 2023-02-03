@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CircleDto, CirclesViewDto, DistrictDto, DistrictViewDto, DivisionDto, DivisonsViewDto, MandalDto, MandalsViewDto, SectionDto, SectionsViewDto, StateDto, StatesViewDto } from "../_models/geomodels";
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_CIRCLE_URI, CREATE_DISTRICT_URI, CREATE_DIVISION_URI, CREATE_MANDAL_URI, CREATE_SECTION_URI, CREATE_STATE_URI, GET_CIRCLES_URI, GET_DISTRICTS_URI, GET_DIVISION_URI, GET_MANDALS_URI, GET_SECTIONS_URI, GET_STATES_URI, UPDATE_DISTRICT_URI, UPDATE_DIVISION_URI, UPDATE_MANDAL_URI, UPDATE_SECTION_URI, UPDATE_STATE_URI } from "./api.uri.service";
+import { CREATE_CIRCLE_URI, CREATE_DISTRICT_URI, CREATE_DIVISION_URI, CREATE_MANDAL_URI, CREATE_SECTION_URI, CREATE_STATE_URI, GET_CIRCLES_URI, GET_DISTRICTS_URI, GET_DIVISION_URI, GET_MANDALS_URI, GET_SECTIONS_URI, GET_STATES_URI, UPDATE_CIRCLE_URI, UPDATE_DISTRICT_URI, UPDATE_DIVISION_URI, UPDATE_MANDAL_URI, UPDATE_SECTION_URI, UPDATE_STATE_URI } from "./api.uri.service";
 
 @Injectable({ providedIn: 'root' })
 export class GeoMasterService extends ApiHttpService {
@@ -22,7 +22,7 @@ export class GeoMasterService extends ApiHttpService {
     return this.post<CircleDto>(CREATE_CIRCLE_URI,circle);
   }
   public UpdateCircle(circle: CircleDto){
-    return this.post<CircleDto>(UPDATE_DISTRICT_URI,circle);
+    return this.post<CircleDto>(UPDATE_CIRCLE_URI,circle);
   }
 
   public GetDivision(){

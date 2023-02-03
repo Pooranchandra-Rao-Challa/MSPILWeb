@@ -20,7 +20,7 @@ export class MandalComponent implements OnInit {
   display: boolean = false;
   mandals: MandalsViewDto[] = [];
   mandal: MandalDto = new MandalDto();
-  districts: DistrictDto[] = [];
+  district: DistrictDto[] = [];
   loading: boolean = true;
   fbmandals!: FormGroup;
   filter: any;
@@ -50,8 +50,10 @@ export class MandalComponent implements OnInit {
 
     this.initMandals();
 
-    this.commonService.GetDistricts().subscribe((resp) => {
-      this.districts = resp as unknown as DistrictDto[]
+    this.commonService.GetDistrictsForState().subscribe((resp) => {
+      this.district = resp as unknown as DistrictDto[]
+      console.log(this.district);
+      
     })
     
 
@@ -75,9 +77,9 @@ export class MandalComponent implements OnInit {
   editProduct(mandal: MandalsViewDto) {
     this.mandal.code = mandal.mandalCode;
     this.mandal.name = mandal.mandalName;
+    this.mandal.districtId = mandal.districtId;
     this.mandal.isActive = mandal.isActive;
     this.mandal.mandalId = mandal.mandalId;
-    this.mandal.districtId = mandal.districtId;
     // this.mandal.districtId = mandal.districtName;
     // this.mandal.mandalId = mandal.mandalId;
     this.fbmandals.setValue(this.mandal);
