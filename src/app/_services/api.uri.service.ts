@@ -5,7 +5,8 @@ import { Injectable } from "@angular/core";
 export class APIURIService {
   constructor() {}
 }
-export const LOGIN_URI = "Security/Login"
+export const LOGIN_URI = "Security/Login";
+export const REFRESH_TOKEN_URI = "Security/Refresh"
 export const CREATE_DISTRICT_URI = "GeoMaster/CreateDistrict"
 export const UPDATE_DISTRICT_URI = "GeoMaster/UpdateDistrict"
 export const GET_DISTRICTS_URI = "GeoMaster/GetDistricts"

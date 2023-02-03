@@ -20,6 +20,7 @@ export class BillParametersComponent implements OnInit {
   showDialog: boolean = false;
   fbBillParameters!: FormGroup;
   addFlag: boolean = true;
+  globalFilterFields: string[] = ['id', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'createdAt', 'createdByUser', 'updatedAt', 'updatedByUser'];
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService) { }
@@ -40,7 +41,7 @@ export class BillParametersComponent implements OnInit {
 
   billmasterForm() {
     this.fbBillParameters = this.formbuilder.group({
-      billParameterId: [''],
+      billParameterId: [0],
       categoryId: ['', (Validators.required)],
       type: ['', (Validators.required)],
       code: ['', (Validators.required)],

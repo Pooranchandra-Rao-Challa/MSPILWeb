@@ -1,3 +1,4 @@
+import { JWTService } from 'src/app/_services/jwt.service';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
@@ -10,9 +11,31 @@ export class AppMenuComponent implements OnInit {
 
   model: any[] = [];
 
-  constructor(public layoutService: LayoutService) { }
+  constructor(public layoutService: LayoutService, private jwtService: JWTService) { }
 
+  GroupPermission(groupName: string): boolean {
+    switch (groupName) {
+      case 'Security':
+        return this.jwtService.Permissions.CanViewUsers || this.jwtService.Permissions.CanViewRoles
+      case 'Masters':
+        return this.GroupPermission('Geo Masters') || this.GroupPermission('Bill Masters')
+      case 'Geo Masters':
+        return this.jwtService.Permissions.CanViewStates || this.jwtService.Permissions.CanViewDistricts
+          || this.jwtService.Permissions.CanViewMandals || this.jwtService.Permissions.CanViewDivisions
+          || this.jwtService.Permissions.CanViewCircles || this.jwtService.Permissions.CanViewSections
+          || this.jwtService.Permissions.CanViewVillages
+      case 'Bill Masters':
+        return this.jwtService.Permissions.CanViewBillMasters || this.jwtService.Permissions.CanViewBillParameters
+          || this.jwtService.Permissions.CanViewDieselBunks || this.jwtService.Permissions.CanViewDieselRates
+          || this.jwtService.Permissions.CanViewDistanceRateSlabs || this.jwtService.Permissions.CanViewLoanMasters
+          || this.jwtService.Permissions.CanViewVillageParamRates || this.jwtService.Permissions.CanViewVillagetptRates
+          || this.jwtService.Permissions.CanViewWarehouses
+      default: return false;
+    }
+  }
   ngOnInit() {
+    console.log(this.jwtService.Permissions);
+
     this.model = [
 
       /*Sample Menus*/
@@ -44,46 +67,51 @@ export class AppMenuComponent implements OnInit {
       {
         label: 'Home',
         items: [
-          { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['dashboard'] },
+          { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['dashboard'], permission: true },
           /*if u want to add single copy this line and pase change router link */
           {
             label: 'Security',
             icon: 'pi pi-fw pi-lock',
+            permission: this.GroupPermission('Security'),
             items: [
-              { label: 'Roles', icon: 'pi pi-fw pi-users', routerLink: ['/security/roles'] },
-              { label: 'Users', icon: 'pi pi-fw pi-user', routerLink: ['/security/users'] },
+
+              { label: 'Users', icon: 'pi pi-fw pi-user', routerLink: ['/security/users'], permission: this.jwtService.Permissions.CanViewUsers },
+              { label: 'Roles', icon: 'pi pi-fw pi-users', routerLink: ['/security/roles'], permission: this.jwtService.Permissions.CanViewRoles },
             ]
           },
           {
             label: 'Masters',
             icon: 'pi pi-fw pi-user',
+            permission: this.GroupPermission('Masters'),
             items: [
               {
                 label: 'Geo Masters',
                 icon: 'pi pi-fw pi-id-card',
+                permission: this.GroupPermission('Geo Masters'),
                 items: [
-                  { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'] },
-                  { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'] },
-                  { label: 'Mandal', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/mandal'] },
-                  { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'] },
-                  { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'] },
-                  { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'] },
-                  { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'] },
+                  { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'], permission: this.jwtService.Permissions.CanViewStates },
+                  { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'], permission: this.jwtService.Permissions.CanViewDistricts },
+                  { label: 'Mandal', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/mandal'], permission: this.jwtService.Permissions.CanViewMandals },
+                  { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'], permission: this.jwtService.Permissions.CanViewDivisions },
+                  { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'], permission: this.jwtService.Permissions.CanViewCircles },
+                  { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'], permission: this.jwtService.Permissions.CanViewSections },
+                  { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'], permission: this.jwtService.Permissions.CanViewVillages },
                 ]
               },
               {
                 label: 'Bill Masters',
                 icon: 'pi pi-fw pi-bitcoin text-lg',
+                permission: this.GroupPermission('Bill Masters'),
                 items: [
-                  { label: 'Bill Master', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billmaster'] },
-                  { label: 'Bill Parameters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billparameters'] },
-                  { label: 'Loan Master', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'] },
-                  { label: 'Diesel Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselrates'] },
-                  { label: 'Distance Rate Slab', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'] },
-                  { label: 'Village Param Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villageparamrates'] },
-                  { label: 'Village TPT Rate', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villagetptrate'] },
-                  { label: 'Diesel Bunk', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselbunk'] },
-                  { label: 'Ware House', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'] },
+                  { label: 'Bill Masters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billmaster'], permission: this.jwtService.Permissions.CanViewBillMasters },
+                  { label: 'Bill Parameters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billparameters'], permission: this.jwtService.Permissions.CanViewBillParameters },
+                  { label: 'Loan Masters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'], permission: this.jwtService.Permissions.CanViewLoanMasters },
+                  { label: 'Diesel Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselrates'], permission: this.jwtService.Permissions.CanViewDieselRates },
+                  { label: 'Distance Rate Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'], permission: this.jwtService.Permissions.CanViewDistanceRateSlabs },
+                  { label: 'Village Param Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villageparamrates'], permission: this.jwtService.Permissions.CanViewVillageParamRates },
+                  { label: 'Village TPT Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villagetptrate'], permission: this.jwtService.Permissions.CanViewVillagetptRates },
+                  { label: 'Diesel Bunks', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselbunk'], permission: this.jwtService.Permissions.CanViewDieselBunks },
+                  { label: 'Ware Houses', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'], permission: this.jwtService.Permissions.CanViewWarehouses },
                 ]
               },
             ]
@@ -105,25 +133,27 @@ export class AppMenuComponent implements OnInit {
       {
         label: 'Demo',
         icon: 'pi pi-fw pi-briefcase',
+        permission:true,
         items: [
 
           {
             label: 'ui',
             icon: 'pi pi-fw pi-user',
+            permission:true,
             items: [
-              { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
-              { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
-              { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
-              { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'] },
-              { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] },
-              { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
-              { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
-              { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
-              { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/utilities/icons'] },
-              { label: 'demoui', icon: 'pi pi-fw pi-tablet', routerLink: ['/demoui/dashboard'] },
+              { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'], permission:true },
+              { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'], permission:true },
+              { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'], permission:true },
+              { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'], permission:true },
+              { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'], permission:true },
+              { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'], permission:true },
+              { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'], permission:true },
+              { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'], permission:true },
+              { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/utilities/icons'], permission:true },
+              { label: 'demoui', icon: 'pi pi-fw pi-tablet', routerLink: ['/demoui/dashboard'], permission:true },
               {
-                label: 'Tables', icon: 'pi pi-fw pi-table', items: [
-                  { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
+                label: 'Tables', icon: 'pi pi-fw pi-table', permission:true , items: [
+                  { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] , permission:true},
 
                 ]
               },
@@ -132,6 +162,7 @@ export class AppMenuComponent implements OnInit {
 
                 label: 'Not Found',
                 icon: 'pi pi-fw pi-exclamation-circle',
+                permission:true,
                 routerLink: ['/notfound']
               },
 
@@ -146,5 +177,8 @@ export class AppMenuComponent implements OnInit {
 
 
     ];
+
+    console.log(this.model);
+
   }
 }

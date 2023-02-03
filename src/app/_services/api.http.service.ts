@@ -1,8 +1,10 @@
+import { JWTService } from './jwt.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { URI_ENDPOINT, URI_ENDPOINT_WITH_ID } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
+import { ResponseModel } from '../_models/account/account.model';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -12,7 +14,8 @@ export class ApiHttpService {
   constructor(
     // Angular Modules
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private jwtService: JWTService
   ) { }
   public get<T>(uri: string, options?: any) {
     return this.http.get<T>(URI_ENDPOINT(uri), options)
@@ -87,6 +90,9 @@ export class ApiHttpService {
   public ClearStorage(){
     localStorage.removeItem("respModel");
     this.router.navigate(["/"])
+  }
+  saveToken(token: ResponseModel){
+    this.jwtService.SaveToken(token);
   }
 }
 
