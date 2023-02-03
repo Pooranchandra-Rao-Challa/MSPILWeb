@@ -30,6 +30,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th></th>
           <th>
             Bill Category <p-sortIcon></p-sortIcon>
           </th>
@@ -70,20 +71,24 @@
       </ng-template>
       <ng-template pTemplate="body" let-billparam>
         <tr>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
+          <td><button pButton pRipple icon="pi pi-pencil"
+            class="p-element p-ripple p-button-text p-button p-component"
+            (click)="editProduct(billparam)"></button></td>
+          <td>{{billparam.id}}</td>
+          <td>{{billparam.type}}</td>
+          <td>{{billparam.code}}</td>
+          <td>{{billparam.name}}</td>
+          <td>{{billparam.caluclationType}}</td>
+          <td>{{billparam.formula}}</td>
+          <td>{{billparam.priority}}</td>
           <td>
-            <p-checkbox name="active" value="active"></p-checkbox>
+            <p-checkbox name="active" value="active" [(ngModel)]="billparam.isActive" [binary]="true" [disabled]="true">
+            </p-checkbox>
           </td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
-          <td>{{billparam}}</td>
+          <td>{{billparam.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{billparam.createdByUser}}</td>
+          <td>{{billparam.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{billparam.updatedByUser}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -108,17 +113,18 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
-                  <p-dropdown formControlName="category"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['category'].touched && FormControls['category'].errors }">
+                  <p-dropdown [options]="billParameters" optionLabel="billCategoryId" formControlName="categoryId"
+                    optionValue="billCategoryId"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
-                  <span *ngIf="FormControls['category'].touched && FormControls['category'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['category'].errors?.['required']">
+                  <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['categoryId'].errors?.['required']">
                       Please Select Category.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown formControlName="type"
+                  <p-dropdown [options]="billParameters" optionLabel="type" formControlName="type" optionValue="type"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['type'].touched && FormControls['type'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['type'].touched && FormControls['type'].invalid">
@@ -146,11 +152,12 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Calculation Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown formControlName="calcType"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['calcType'].touched && FormControls['calcType'].errors }">
+                  <p-dropdown [options]="billParameters" optionLabel="caluclationType" formControlName="caluclationType"
+                    optionValue="caluclationType"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['caluclationType'].touched && FormControls['caluclationType'].errors }">
                   </p-dropdown>
-                  <span *ngIf="FormControls['calcType'].touched && FormControls['calcType'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['calcType'].errors?.['required']">
+                  <span *ngIf="FormControls['caluclationType'].touched && FormControls['caluclationType'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['caluclationType'].errors?.['required']">
                       Please Select Calc Type.</div>
                   </span>
                 </div>
