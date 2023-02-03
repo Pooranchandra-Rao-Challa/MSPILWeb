@@ -147,3 +147,66 @@ export class StateDto {
   isActive?: boolean;
 }
 
+
+export interface VillagesViewDto {
+  villageId: number,
+  villageCode: string,
+  villageName: string,
+  sectionId: number,
+  sectionName: string,
+  mandalId: number,
+  mandalName: string,
+  districtId: number,
+  districtName: string,
+  divisionId: number,
+  divisionName: string,
+  circleId: number,
+  circleName: string,
+  inchargeName: string,
+  inchargePhoneNo: string,
+  address: string,
+  pinCode: number,
+  distance: number,
+  divertedDistance: number,
+  noOfEbservices: number,
+  tptRate: number,
+  totalAcres: number,
+  cultivableAcres: number,
+  irrigationAcres: number,
+  dryAcres: number,
+  potentialAcres: number,
+  notSuitableAcres: number,
+  targetTons: number,
+  listingOrder: number,
+  isActive: boolean,
+  updatedAt: string,
+  createdAt: string,
+  updatedBy: string,
+  createdBy: string,
+}
+
+export class VillageDto {
+  villageId?: number;
+  code?: string;
+  name?: string;
+  mandalId?: number;
+  sectionId?: number;
+  inchargeName?: string;
+  inchargePhoneNo?: string;
+  pinCode?: number;
+  address?: string;
+  distance?: number;
+  divertedDistance?: number;
+  noOfEbservices?: number;
+  tptrate?: number;
+  totalAcres?: number;
+  cultivableAcres?: number;
+  irrigationAcres?: number;
+  dryAcres?: number;
+  potentialAcres?: number;
+  notSuitableAcres?: number;
+  targetTons?: number;
+  listingOrder?: number;
+  isActive?: boolean;
+}
+
