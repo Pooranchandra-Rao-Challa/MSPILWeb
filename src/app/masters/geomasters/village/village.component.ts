@@ -1,185 +1,165 @@
+import { HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { SortEvent } from 'primeng/api';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CircleDto, CirclesViewDto, DivisionDto, VillageDto, VillagesViewDto, StateDto } from 'src/app/_models/geomodels';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { CommonService } from 'src/app/_services/common.service';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-village',
   templateUrl: './village.component.html',
-  styleUrls: ['./village.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
 export class VillageComponent implements OnInit {
-
-  cities:any=[];
-  selectedDrop: any;
-
-  showDialog() {
-    this.display = false;
-}
-
   display: boolean = false;
+  villages: VillagesViewDto[] = [];
+  village: VillageDto = new VillageDto();
+  states: StateDto[] = [];
+  loading: boolean = true;
+  fbvillages!: FormGroup;
+  filter: any;
+  submitLabel!: string;
+  addFlag: boolean = true;
+  divisions: DivisionDto[] = [];
+  circles: CircleDto[] = [];
 
+  constructor(private formbuilder: FormBuilder,
+    private geoMasterService: GeoMasterService,
+    private commonService: CommonService,
+    public jwtService: JWTService,
+  ) {
 
-   customers1: Customer[] = [];
+  }
+  InitVillage() {
+    this.village = new VillageDto();
+    this.fbvillages.reset();
+    this.submitLabel = "Add Village";
+    this.addFlag = true;
+    this.display = true;
+  }
 
-    customers2: Customer[] = [];
+  get FormControls() {
+    return this.fbvillages.controls;
+  }
 
-    customers3: Customer[] = [];
+  ngOnInit() {
+    this.initVillages();
 
-    selectedCustomers1: Customer[] = [];
+    this.commonService.GetStates().subscribe((resp) => {
+      this.states = resp as unknown as StateDto[]
+    })
 
-    selectedCustomer: Customer = {};
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    products: Product[] = [];
-
-    // cols: any[];
-
-    rowGroupMetadata: any;
-
-    activityValues: number[] = [0, 100];
-
-    isExpanded: boolean = false;
-
-    idFrozen: boolean = false;
-
-    loading: boolean = true;
+    this.commonService.GetDivision().subscribe((resp) => {
+      this.divisions = resp as unknown as DivisionDto[]
+    })
     
+    this.fbvillages = this.formbuilder.group({
+        division: ['', Validators.required],
+        circle: ['', Validators.required],
+        section: ['', Validators.required],
+        target: ['', Validators.required],
+        district: ['', Validators.required],
+        mandal: ['', Validators.required],
+        address: ['', Validators.required],
+        PinCode:['', Validators.required],
+        code: ['', Validators.required],
+        name: ['', Validators.required],
+        inchargeName: ['',],
+        inchargePhoneNo: ['',],
+        distance: ['', Validators.required],
+        divertedDistance: ['', Validators.required],
+        noOfEBServices: ['', Validators.required],
+        TPTRate: ['', Validators.required],
+        circleCode: ['', Validators.required],
+        cultivatableArea: ['', Validators.required],
+        totalGeographicArea: ['', Validators.required],
+        irrigationArea: ['', Validators.required],
+        dryArea: ['', Validators.required],
+        suitableAreaforCane: ['', Validators.required],
+        notSuitable: ['', Validators.required],
+        ord: ['', Validators.required],
+        isActive: [ Validators.required],
+    });
 
-    @ViewChild('filter') filter!: ElementRef;
+  }
+  initVillages() {
+    this.geoMasterService.GetVillage().subscribe((resp) => {
+      this.villages = resp as unknown as VillagesViewDto[]
+      this.loading = false;
+    })
+  }
 
-    
+  initCircles(division:any){
+    this.commonService.GetCirclesForDivision(division).subscribe((resp) => {
+      this.circles = resp as unknown as CircleDto[]
+    })
+  }
 
-    constructor(private customerService: CustomerService,
-              private productService: ProductService,
-              private formbuilder:FormBuilder) {
+  editProduct(village: VillagesViewDto) {
+    // this.fbvillages.setValue(this.village);
+    this.initCircles(village.divisionId);
+    this.fbvillages = this.formbuilder.group({
+      code: [village.villageCode, Validators.required],
+      name: [village.villageName, Validators.required],
+      listingOrder: [village.listingOrder, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      address: [village.address, Validators.required],
+      circleId: [village.circleId, Validators.required],
+      divisionId: [village.divisionId],
+      inchargePhoneNo: [village.inchargePhoneNo, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      inchargeName:[village.inchargeName],
+      isActive: [village.isActive, Validators.required],
+      villageId: [village.villageId],
+    });
+    this.submitLabel = "Update Village";
+    this.addFlag = false;
+    this.display = true;    
+  }
 
+  private UpdateForm() {
 
+  }
+  onClose() {
+    this.fbvillages.reset();
+  }
 
-      this.cities = [
-        { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },
-        { label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-        { label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-        { label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } },
-        { label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
-    ];
-     }
+  saveVillage(): Observable<HttpEvent<VillageDto>> {
+    debugger
+    if (this.addFlag) return this.geoMasterService.CreateVillage(this.fbvillages.value)
+    else return this.geoMasterService.UpdateVillage(this.fbvillages.value)
+  }
+  onSubmit() {
+    if (this.fbvillages.valid) {
+      debugger
 
-     valSwitch:boolean = false;
-     villageform!: FormGroup;
-    ngOnInit() {
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
-        
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-      
-
-        this.villageform = this.formbuilder.group({
-            division: ['', Validators.required],
-            circle: ['', Validators.required],
-            section: ['', Validators.required],
-            target: ['', Validators.required],
-            district: ['', Validators.required],
-            mandal: ['', Validators.required],
-            address: ['', Validators.required],
-            PinCode:['', Validators.required],
-            code: ['', Validators.required],
-            name: ['', Validators.required],
-            inchargeName: ['',],
-            inchargePhoneNo: ['',],
-            distance: ['', Validators.required],
-            divertedDistance: ['', Validators.required],
-            noOfEBServices: ['', Validators.required],
-            TPTRate: ['', Validators.required],
-            circleCode: ['', Validators.required],
-            cultivatableArea: ['', Validators.required],
-            totalGeographicArea: ['', Validators.required],
-            irrigationArea: ['', Validators.required],
-            dryArea: ['', Validators.required],
-            suitableAreaforCane: ['', Validators.required],
-            notSuitable: ['', Validators.required],
-            ord: ['', Validators.required],
-            isActive: [ Validators.required],
-        });
-
-
-
-        
-    }
-    customSort(event: SortEvent) {
-       
-    }
-    onSort() {
-        this.updateRowGroupMetaData();
-    }
-
-    updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
-
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
-
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
+      this.saveVillage().subscribe(resp => {
+        if (resp) {
+          this.initVillages();
+          this.onClose();
+          this.display = false;
         }
+      })
     }
-
-
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    else {
+      // alert("please fill the fields")
+      this.fbvillages.markAllAsTouched();
     }
+  }
 
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-    }
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
 
-    clear(table: Table) {
-        table.clear();
-        this.filter.nativeElement.value = '';
-    }
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
 
- 
+  valSwitch: boolean = true;
 
-
-
-    onSubmit(){
-        console.log(this.villageform.value)
-    }
-
-    get f(){
-        return this.villageform.controls
-      }
-
-
-    
-
-    
 }
+
+

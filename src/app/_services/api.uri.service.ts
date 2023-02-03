@@ -24,4 +24,7 @@ export const GET_MANDALS_URI = "GeoMaster/GetMandals"
 export const CREATE_SECTION_URI = "GeoMaster/CreateSection"
 export const UPDATE_SECTION_URI = "GeoMaster/UpdateSection"
 export const GET_SECTIONS_URI = "GeoMaster/GetSections"
+export const CREATE_VILLAGE_URI = "GeoMaster/CreateVillage"
+export const UPDATE_VILLAGE_URI = "GeoMaster/UpdateVillage"
+export const GET_VILLAGES_URI = "GeoMaster/GetVillages"
 
