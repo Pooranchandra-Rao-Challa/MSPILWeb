@@ -24,4 +24,11 @@ export const GET_MANDALS_URI = "GeoMaster/GetMandals"
 export const CREATE_SECTION_URI = "GeoMaster/CreateSection"
 export const UPDATE_SECTION_URI = "GeoMaster/UpdateSection"
 export const GET_SECTIONS_URI = "GeoMaster/GetSections"
-
+export const GET_SEASONS_URI = "BillingMaster/GetSeasons";
+export const CREATE_BILL_URI = "BillingMaster/CreateBill";
+export const UPDATE_BILL_URI = "BillingMaster/UpdateBill";
+export const GET_BILLS_URI = "BillingMaster/GetBills";
+export const CREATE_BILLPARAM_URI = "BillingMaster/CreateBillParameter";
+export const UPDATE_BILLPARAM_URI = "BillingMaster/UpdateBillParameter";
+export const GET_BILLPARAMS_URI = "BillingMaster/GetBillParameters";
+export const GET_DIESEL_BUNK_URI = "BillingMaster/GetDieselBunks";
