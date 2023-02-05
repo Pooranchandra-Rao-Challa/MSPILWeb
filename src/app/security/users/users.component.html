@@ -6,13 +6,14 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New User" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="showDialog()"></button>
+          (click)="showUser({})"></button>
       </ng-template>
     </p-toolbar>
 
     <p-table #dt1 [value]="users" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="globalFilters" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      [globalFilterFields]="globalFilters" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
+      [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -26,44 +27,44 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <!-- <th></th> -->
-          <th pSortableColumn="UserId" style="width:100px">User Id<p-sortIcon field="UserId"></p-sortIcon>
+          <th></th>
+          <th pSortableColumn="userId" style="width:100px">User Id<p-sortIcon field="userId"></p-sortIcon>
           </th>
-          <th pSortableColumn="UserName" style="width:100px">User Name<p-sortIcon field="UserName"></p-sortIcon>
+          <th pSortableColumn="userName" style="width:100px">User Name<p-sortIcon field="userName"></p-sortIcon>
           </th>
-          <th pSortableColumn="FirstName" style="width:100px">First Name<p-sortIcon field="FirstName"></p-sortIcon>
+          <th pSortableColumn="firstName" style="width:100px">First Name<p-sortIcon field="firstName"></p-sortIcon>
           </th>
-          <th pSortableColumn="LastName" style="width:100px">Last Name<p-sortIcon field="LastName"></p-sortIcon>
+          <th pSortableColumn="lastName" style="width:100px">Last Name<p-sortIcon field="fastName"></p-sortIcon>
           </th>
-          <th pSortableColumn="EmailId" style="width:100px">Email Id<p-sortIcon field="EmailId"></p-sortIcon>
+          <th pSortableColumn="email" style="width:100px">Email Id<p-sortIcon field="email"></p-sortIcon>
           </th>
-          <th pSortableColumn="MobileNo" style="width:100px">Mobile Number<p-sortIcon field="MobileNo"></p-sortIcon>
+          <th pSortableColumn="MobileNo" style="width:100px">Mobile Number<p-sortIcon field="mobileNumber"></p-sortIcon>
           </th>
           <th pSortableColumn="Role" style="width:100px">Role<p-sortIcon field="Role"></p-sortIcon>
           </th>
-          <th pSortableColumn="IMEINo" style="width:100px">IMEI No<p-sortIcon field="IMEINo"></p-sortIcon>
+          <th pSortableColumn="imeiNo" style="width:100px">IMEI No<p-sortIcon field="imeiNo"></p-sortIcon>
           </th>
-          <th pSortableColumn="IPAddress" style="width:100px">IP Address<p-sortIcon field="IPAddress"></p-sortIcon>
+          <th pSortableColumn="ipAddress" style="width:100px">IP Address<p-sortIcon field="ipAddress"></p-sortIcon>
           </th>
-          <th pSortableColumn="IPRestriction" style="width:100px">IP Restriction<p-sortIcon field="IPRestriction">
+          <th pSortableColumn="ipRestriction" style="width:100px">IP Restriction<p-sortIcon field="ipRestriction">
             </p-sortIcon>
           </th>
-          <th pSortableColumn="IsAdminGate" style="width:100px">Is AdminGate<p-sortIcon field="IsAdminGate">
+          <th pSortableColumn="isAdminGate" style="width:100px">Is AdminGate<p-sortIcon field="isAdminGate">
             </p-sortIcon>
           </th>
 
-          <th pSortableColumn="IsGross" style="width:100px">Is Gross<p-sortIcon field="IsGross"></p-sortIcon>
+          <th pSortableColumn="isGross" style="width:100px">Is Gross<p-sortIcon field="isGross"></p-sortIcon>
           </th>
-          <th pSortableColumn="IsTare" style="width:100px">Is Tare<p-sortIcon field="IsTare"></p-sortIcon>
+          <th pSortableColumn="isTare" style="width:100px">Is Tare<p-sortIcon field="isTare"></p-sortIcon>
           </th>
-          <th pSortableColumn="IsDumpYard" style="width:100px">Is Dump Yard<p-sortIcon field="IsDumpYard"></p-sortIcon>
+          <th pSortableColumn="isDumpYard" style="width:100px">Is Dump Yard<p-sortIcon field="isDumpYard"></p-sortIcon>
           </th>
-          <th pSortableColumn="IsActive" style="width:100px">Is Active<p-sortIcon field="IsActive"></p-sortIcon>
+          <th pSortableColumn="isActive" style="width:100px">Is Active<p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="CreatedDate" style="width:100px">Created Date<p-sortIcon field="CreatedDate">
+          <th pSortableColumn="createdAt" style="width:100px">Created Date<p-sortIcon field="createdAt">
             </p-sortIcon>
           </th>
-          <th pSortableColumn="UpdatedDate" style="width:100px">Updated Date<p-sortIcon field="UpdatedDate">
+          <th pSortableColumn="updatedAt" style="width:100px">Updated Date<p-sortIcon field="updatedAt">
             </p-sortIcon>
           </th>
 
@@ -71,25 +72,25 @@
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr>
-          <!-- <td><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-              (click)="showDialog()"></button></td> -->
-          <td>{{user.UserId}}</td>
-          <td>{{user.UserName}}</td>
-          <td>{{user.FirstName}}</td>
-          <td>{{user.LastName}}</td>
-          <td>{{user.EmailId}}</td>
-          <td>{{user.MobileNo}}</td>
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+              (click)="showUser(user)"></button></td>
+          <td>{{user.userId}}</td>
+          <td>{{user.userName}}</td>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.mobileNumber}}</td>
           <td>{{user.Role}}</td>
-          <td>{{user.IMEINo}}</td>
-          <td>{{user.IPAddress}}</td>
-          <td>{{user.IPRestriction}}</td>
-          <td>{{user.IsAdminGate}}</td>
-          <td>{{user.IsGross}}</td>
-          <td>{{user.IsTare}}</td>
-          <td>{{user.IsDumpYard}}</td>
-          <td>{{user.IsActive}}</td>
-          <td>{{user.CreatedDate}}</td>
-          <td>{{user.UpdatedDate}}</td>
+          <td>{{user.imeino}}</td>
+          <td>{{user.ipAddress}}</td>
+          <td>{{user.ipRestriction}}</td>
+          <td>{{user.isAdminGate}}</td>
+          <td>{{user.isGross}}</td>
+          <td>{{user.isTare}}</td>
+          <td>{{user.isDumpYard}}</td>
+          <td>{{user.isActive}}</td>
+          <td>{{user.createdAt}}</td>
+          <td>{{user.updatedAt}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -110,8 +111,8 @@
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <p-tabView orientation="left">
-              <p-tabPanel header="User Info" class="line-height-3 m-0">
+            <p-tabView orientation="left" class="container">
+              <p-tabPanel header="User Info" class="line-height-3 m-0 col-12">
                 <div class="grid">
                   <div class="col-12">
                     <h6>User Details</h6>
@@ -128,7 +129,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Password:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="password" type="password" formControlName="password"
+                        <input pInputText id="password" type="password" formControlName="password" [disabled]="user.userId != null"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
                         <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -158,41 +159,44 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Email Id:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="emailid" type="text" formControlName="emailId"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['emailId'].touched && userFormControls['emailId'].errors }" />
-                        <span *ngIf="userFormControls['emailId'].touched && userFormControls['emailId'].invalid">
+                        <input pInputText id="emailid" type="text" formControlName="email"
+                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['email'].touched && userFormControls['email'].errors }" />
+                        <span *ngIf="userFormControls['email'].touched && userFormControls['email'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['emailId'].errors?.['required']">
+                            *ngIf="userFormControls['email'].errors?.['required']">
                             Please Enter Email Id.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="mobileno" type="text" formControlName="mobileNo"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNo'].touched && userFormControls['mobileNo'].errors }" />
-                        <span *ngIf="userFormControls['mobileNo'].touched && userFormControls['mobileNo'].invalid">
+                        <input pInputText id="mobileNumber" type="text" formControlName="mobileNumber"
+                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }" />
+                        <span
+                          *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['mobileNo'].errors?.['required']">
+                            *ngIf="userFormControls['mobileNumber'].errors?.['required']">
                             Please Enter Mobile Number.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Role:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="emailid" type="text" formControlName="role"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['role'].touched && userFormControls['role'].errors }" />
-                        <span *ngIf="userFormControls['role'].touched && userFormControls['role'].invalid">
+                        <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId" [autoDisplayFirst]="false"
+                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }"></p-dropdown>
+                        <!-- <input pInputText id="roleId" type="text" formControlName="roleId"
+                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }" /> -->
+                        <span *ngIf="userFormControls['roleId'].touched && userFormControls['roleId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['role'].errors?.['required']">
+                            *ngIf="userFormControls['roleId'].errors?.['required']">
                             Please Enter Role.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
-                        <label htmlFor="emailid">IP Address:</label>
-                        <input pInputText id="emailid" type="text" formControlName="ipAddress" />
+                        <label htmlFor="ipaddress">IP Address:</label>
+                        <input pInputText id="ipaddress" type="text" formControlName="ipaddress" />
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="imeino">IMEI No:</label>
-                        <input pInputText id="imeino" type="text" formControlName="imeiNo" />
+                        <input pInputText id="imeino" type="text" formControlName="imeino" />
                       </div>
                     </div>
                     <h6>User Rights</h6>
@@ -200,7 +204,7 @@
                       <div class="col-12 md:col-3 xl:col-2">
                         <label>IP Restriction:<sup class="p-error">*</sup></label>&nbsp;
                         <br>
-                        <p-inputSwitch formControlName="ipRestriction"></p-inputSwitch>
+                        <p-inputSwitch formControlName="iprestriction"></p-inputSwitch>
                       </div>
                       <div class="col-12 md:col-3 xl:col-2">
                         <label>Is AdminGate:<sup class="p-error">*</sup></label>&nbsp;
@@ -232,11 +236,14 @@
                 </div>
               </p-tabPanel>
               <p-tabPanel header="User Sections" class="line-height-3 m-0">
-                <div class="grid formgrid">
-                  <div class="col-12 md:col-3" *ngFor="let user of userSections">
+                <div class="grid col-12">
+                  <div class="col-3" *ngFor="let userSection of user.userSections">
                     <div class="field-checkbox">
-                      <p-checkbox name="group1" value="New York"></p-checkbox>
-                      <label for="ny">{{user.section}}</label>
+                      <!-- <p-checkbox name="group1" [value]="userSection.sectionId"
+                      inputId="userSection.sectionId"></p-checkbox>
+                      <label for="ny">{{userSection.sectionName}}</label> -->
+                      <p-inputSwitch [(ngModel)]="userSection.isActive" [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+                      <label for="ny">{{userSection.sectionName}}</label>
                     </div>
                   </div>
                 </div>
