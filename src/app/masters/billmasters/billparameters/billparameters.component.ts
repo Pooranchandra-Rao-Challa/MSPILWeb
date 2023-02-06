@@ -10,7 +10,7 @@ import { BillMasterService } from 'src/app/_services/billmaster.service';
   selector: 'app-billparameters',
   templateUrl: './billparameters.component.html',
   styles: [
-  ]
+  ],
 })
 export class BillParametersComponent implements OnInit {
   billParameters: BillParameterViewDto[] = [];
@@ -66,7 +66,7 @@ export class BillParametersComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-  editProduct(billParam: BillParameterViewDto) {
+  editBillParam(billParam: BillParameterViewDto) {
     this.billParam.billParameterId = billParam.id;
     this.billParam.categoryId = billParam.billCategoryId;
     this.billParam.type = billParam.type

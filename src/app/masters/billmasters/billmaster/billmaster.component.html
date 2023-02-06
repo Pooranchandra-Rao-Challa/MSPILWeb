@@ -15,8 +15,8 @@
     <!-- table -->
     <p-table #dt1 [value]="bills" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -30,40 +30,40 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="billCategoryName">
+          <th pSortableColumn="billCategoryName" style="min-width: 100px;">
             Billing Category <p-sortIcon field="billCategoryName"></p-sortIcon>
           </th>
-          <th pSortableColumn="billNo">
+          <th pSortableColumn="billNo" style="min-width: 100px;">
             Billing Number <p-sortIcon field="billNo"></p-sortIcon>
           </th>
-          <th pSortableColumn="seasonName">
+          <th pSortableColumn="seasonName" style="min-width: 100px;">
             Season Code <p-sortIcon field="seasonName"></p-sortIcon>
           </th>
-          <th pSortableColumn="fromDate">
+          <th pSortableColumn="fromDate" style="min-width: 100px;">
             From Date <p-sortIcon field="fromDate"></p-sortIcon>
           </th>
-          <th pSortableColumn="toDate">
+          <th pSortableColumn="toDate" style="min-width: 100px;">
             To Date <p-sortIcon field="toDate"></p-sortIcon>
           </th>
-          <th pSortableColumn="runDate">
+          <th pSortableColumn="runDate" style="min-width: 100px;">
             Run Date <p-sortIcon field="runDate"></p-sortIcon>
           </th>
-          <th>
+          <th style="min-width: 100px; text-align:center">
             Is Final
           </th>
-          <th>
+          <th style="min-width: 100px;text-align:center">
             Is active
           </th>
-          <th pSortableColumn="createdAt">
+          <th pSortableColumn="createdAt" style="min-width: 100px;">
             Created Date <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="createdBy">
+          <th pSortableColumn="createdBy" style="min-width: 100px;">
             Created By User <p-sortIcon field="createdBy"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedAt">
+          <th pSortableColumn="updatedAt" style="min-width: 100px;">
             Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedBy">
+          <th pSortableColumn="updatedBy" style="min-width: 100px;">
             Updated By User <p-sortIcon field="updatedBy"></p-sortIcon>
           </th>
         </tr>
@@ -76,11 +76,11 @@
           <td>{{bill.fromDate | date: 'dd-MMM-yyyy'}}</td>
           <td>{{bill.toDate | date: 'dd-MMM-yyyy'}}</td>
           <td>{{bill.runDate | date: 'dd-MMM-yyyy'}}</td>
-          <td>
+          <td style="text-align:center">
             <p-checkbox name="final" value="final" [(ngModel)]="bill.isFinal" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>
+          <td style="text-align:center">
             <p-checkbox name="active" value="active" [(ngModel)]="bill.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>

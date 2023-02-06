@@ -72,7 +72,7 @@
       <ng-template pTemplate="body" let-billparam>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(billparam)"></button></td>
+              (click)="editBillParam(billparam)"></button></td>
           <td>{{billparam.id}}</td>
           <td>{{billparam.type}}</td>
           <td>{{billparam.code}}</td>
@@ -172,7 +172,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Formula:<sup class="p-error">*</sup></label>
-                  <textarea pInputTextarea id="priority" type="text" formControlName="formula"
+                  <textarea pInputTextarea id="formula" type="text" formControlName="formula"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['formula'].touched && FormControls['formula'].errors }">
                     </textarea>
                   <span *ngIf="FormControls['formula'].touched && FormControls['formula'].invalid">

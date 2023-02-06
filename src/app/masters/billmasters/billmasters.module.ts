@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PrimeNgModule } from 'src/app/_shared/primeNg.module';
+import { PrimeNgModule } from 'src/app/_shared/primeng.module';
 import { BillMastersRoutingModule } from './billmasters-routing.module';
 import { BillMasterComponent } from './billmaster/billmaster.component';
 import { BillParametersComponent } from './billparameters/billparameters.component';

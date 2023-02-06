@@ -1,5 +1,5 @@
-:host ::ng-deep .p-element.container {
-  height: 400px;
+:host ::ng-deep .users-container .p-tabview-panels {
+  height: calc(100vh - 100px);
   display: block;
   width: 800px;
 }

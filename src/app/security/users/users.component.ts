@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { UserViewDto } from 'src/app/_models/security';
 import { SecurityService } from 'src/app/_services/security.service';
+import { Observable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-users',
@@ -13,9 +15,9 @@ import { SecurityService } from 'src/app/_services/security.service';
 export class UsersComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   users: any;
-  selectedUser: UserViewDto ={};
+  selectedUser: UserViewDto = {};
   user: UserDto = {};
-  roles: RoleDto[] =[];
+  roles: RoleDto[] = [];
   loading: boolean = true;
   dialog: boolean = false;
   globalFilters: string[] = ["UserId", "UserName", "FirstName", "LastName", "EmailId", "MobileNo", "Role", "IMEINo", "IPAddress", "IPRestriction", "IsAdminGate", "IsGross", "IsTare", "IsDumpYard", "IsActive", "CreatedDate", "UpdatedDate"];
@@ -30,7 +32,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.userForm = this.formbuilder.group({
       userId: ['',],
-      isAdmin: ['',],
+      isAdmin: [false,],
       userName: ['', (Validators.required)],
       password: ['', (Validators.required)],
       firstName: ['', (Validators.required)],
@@ -40,45 +42,52 @@ export class UsersComponent implements OnInit {
       roleId: ['', (Validators.required)],
       ipaddress: [''],
       imeino: [''],
-      iprestriction: [''],
-      isAdminGate: [''],
-      isGross: [''],
-      isTare: [''],
-      isDumpYard: [''],
-      isActive: [''],
+      iprestriction: [false],
+      isAdminGate: [false],
+      isGross: [false],
+      isTare: [false],
+      isDumpYard: [false],
+      isActive: [false],
       userSections: [''],
-      roles:['']
+      roles: ['']
     });
     this.initUsers();
   }
 
-  initUsers(){
-    this.securityService.GetUsers().subscribe(resp =>{
+  initUsers() {
+    this.securityService.GetUsers().subscribe(resp => {
       this.users = resp as unknown as UserViewDto[];
     })
   }
 
-  allottedSections(){
-    return this.user.userSections?.filter(fn => fn.isActive==true);
+  allottedSections() {
+    return this.user.userSections?.filter(fn => fn.isActive == true);
   }
 
-  initUser(){
-    this.securityService.GetRoles().subscribe(resp =>{
+  initUser() {
+    this.securityService.GetRoles().subscribe(resp => {
       this.roles = resp as unknown as RoleDto[];
     });
-    if(this.selectedUser && this.selectedUser.userId){
-      this.securityService.GetUserWithSections(this.selectedUser.userId).subscribe(resp =>{
+    if (this.selectedUser && this.selectedUser.userId) {
+      this.securityService.GetUserWithSections(this.selectedUser.userId).subscribe(resp => {
         this.user = resp as unknown as UserDto;
-        if(this.user.roles?.length == 1)
-        this.user.roleId = this.user.roles[0].roleId;
-        this.user.password ="";
+        if (this.user.roles?.length == 1)
+          this.user.roleId = this.user.roles[0].roleId;
+        this.user.password = "";
         this.userForm.setValue(this.user);
         this.userForm.get("password")?.disable();
       })
-    }else {
+    } else {
       this.user = {};
+      this.user.IsGross = false;
+      this.user.isActive = false;
+      this.user.isAdminGate = false;
+      this.user.iprestriction = false;
+      this.user.isDumpYard = false;
+      this.user.isTare = false;
+      this.user.isAdmin = false;
       this.userForm.get("password")?.enable();
-      this.securityService.GetAllSections().subscribe(resp =>{
+      this.securityService.GetAllSections().subscribe(resp => {
         this.user.userSections = resp as unknown as UserSectionDto[];
       })
     }
@@ -101,14 +110,37 @@ export class UsersComponent implements OnInit {
     this.selectedUser = user;
     this.initUser();
   }
-
+  saveDistrict(): Observable<HttpEvent<UserDto>> {
+    this.userForm.value.userSections = this.user.userSections;
+    if (!this.user.userId) return this.securityService.CreateUser(this.userForm.value)
+    else return this.securityService.UpdateUser(this.userForm.value)
+  }
   onSubmit() {
     if (this.userForm.valid) {
-      this.userForm.value.userSections = this.user.userSections;
       console.log(this.userForm.value);
+
+      this.saveDistrict().subscribe((resp) => {
+        if (resp) {
+          this.dialog = false;
+          this.userForm.reset();
+          this.filter.nativeElement.value = '';
+          this.initUsers();
+        } else {
+
+        }
+      });
+      // console.log(this.userForm.value);
+      // this.securityService.CreateUser(this.userForm.value).subscribe(resp =>{
+      //   if(resp){
+      //     this.userForm.reset();
+      //     this.filter.nativeElement.value = '';
+      //     this.initUsers();
+      //   }else{
+
+      //   }
+      // })
     }
     else {
-      // alert("please fill the fields")
       this.userForm.markAllAsTouched();
     }
   }
