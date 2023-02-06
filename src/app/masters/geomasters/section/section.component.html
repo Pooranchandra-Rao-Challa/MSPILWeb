@@ -3,115 +3,119 @@
         <p-dialog header="Section" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '50vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
+
+                <form [formGroup]="fbsections" (ngSubmit)="onSubmit()">
                 <div class="grid">
                     <div class="col-12">
-                        <div class="col-12 p-fluid">
-                            <form [formGroup]="fbsections" (ngSubmit)="onSubmit()">
-                                <div class="grid">
-                                    <div class="col-6">
-                                        <div class="field form-group">
-                                            <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
-                                            <p-dropdown [options]="divisions" optionLabel="divisionName" formControlName="divisionId"
-                                            optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
-                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-dropdown>
-                                            <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['divisionId'].errors?.['required']">Please Select Division.
-                                                </div>
-                                            </span>
-                                        </div>
-                                        <div class="field form-group">
-                                            <label htmlFor="gender1">Section Code:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="sectionCode" class="form-control"
-                                                formControlName="code" type="text" />
-                                            <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched"
-                                                class="error-message p-error">
-                                                Section code is required
-                                            </div>
-                                        </div>
-                                        <div class="field form-group">
-                                            <label htmlFor="inchargeName">Incharge Name:</label>
-                                            <input pInputText id="inchargeName" class="form-control"
-                                                formControlName="inchargeName" type="text" />
-                                        </div>
-                                        <div class="field form-group">
-                                            <label htmlFor="listingOrder">Order:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="listingOrder" class="form-control" formControlName="listingOrder"
-                                                type="text" />
-                                            <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
-                                                class="error-message p-error">
-                                                Please Enter Order
-                                            </div>
-                                        </div>
-                                        <div class="field form-group">
-                                            <label htmlFor="isActive">Is Active?:<sup
-                                                    class="p-error">*</sup></label><br><br>
-                                            &nbsp; <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"
-                                                class="form-control"></p-inputSwitch>
+                      <div class="p-fluid p-formgrid grid">
 
-                                            <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
-                                                class="error-message p-error">
-                                                Is Active
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="field form-group">
-                                            <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
-                                            <p-dropdown [options]="circles" optionLabel="name" formControlName="circleId"
-                                            optionValue="circleId"
-                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
-                                        
-                                            </p-dropdown>
-                                            <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['circleId'].errors?.['required']">Please Select Circle.
-                                                </div>
-        
-                                            </span>
-
-                                        </div>
-                                        <div class="field form-group">
-                                            <label htmlFor="Section Name">Section Name:<sup
-                                                    class="p-error">*</sup></label>
-                                            <input pInputText id="Section Name" class="form-control"
-                                                formControlName="name" type="text" />
-
-                                            <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched"
-                                                class="error-message p-error">
-                                                Section Name is required
-                                            </div>
-
-                                        </div>
-                                        <div class="field form-group">
-                                            <label htmlFor="Incharge PhoneNo">Incharge PhoneNo:</label>
-                                            <input pInputText id="Incharge PhoneNo" class="form-control"
-                                                formControlName="inchargePhoneNo" type="text" />
-                                            <div *ngIf="FormControls['inchargePhoneNo'].invalid &&  FormControls['inchargePhoneNo'].touched"
-                                                class="error-message p-error">
-                                                Incharge Phone Number
-                                            </div>
-                                        </div>
-                                        <div class="field form-group">
-                                            <label htmlFor="address">Address:<sup class="p-error">*</sup></label>
-                                            <textarea rows="5" cols="30" class="form-control" formControlName="address"
-                                                placeholder="Adddress" pInputTextarea></textarea>
-                                            <div *ngIf="FormControls['address'].invalid &&  FormControls['address'].touched"
-                                                class="error-message p-error">
-                                                Address is required
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <button pButton pRipple type="submit" label="{{submitLabel}}"
-                                            class="p-button-raised p-button-success"></button>
-                                    </div>
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
+                            <p-dropdown [options]="divisions" optionLabel="divisionName" formControlName="divisionId"
+                            optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-dropdown>
+                            <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['divisionId'].errors?.['required']">Please Select Division.
                                 </div>
-                            </form> 
+                            </span>
+                        </div>
+
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
+                            <p-dropdown [options]="circles" optionLabel="name" formControlName="circleId"
+                            optionValue="circleId"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
+                        
+                            </p-dropdown>
+                            <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['circleId'].errors?.['required']">Please Select Circle.
+                                </div>
+                           </span>
+                        </div>  
+
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="gender1">Section Code:<sup class="p-error">*</sup></label>
+                            <input pInputText id="sectionCode" class="form-control"
+                                formControlName="code" type="text" />
+                            <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched"
+                                class="error-message p-error">
+                                Section code is required
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="Section Name">Section Name:<sup
+                                    class="p-error">*</sup></label>
+                            <input pInputText id="Section Name" class="form-control"
+                                formControlName="name" type="text" />
+
+                            <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched"
+                                class="error-message p-error">
+                                Section Name is required
+                            </div>
+                        </div>
+
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="inchargeName">Incharge Name:</label>
+                            <input pInputText id="inchargeName" class="form-control"
+                                formControlName="inchargeName" type="text" />
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="Incharge PhoneNo">Incharge PhoneNo:</label>
+                            <input pInputText id="Incharge PhoneNo" class="form-control"
+                                formControlName="inchargePhoneNo" type="text" />
+                            <div *ngIf="FormControls['inchargePhoneNo'].invalid &&  FormControls['inchargePhoneNo'].touched"
+                                class="error-message p-error">
+                                Incharge Phone Number
+                            </div>
+                        </div>
+                        
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="address">Address:<sup class="p-error">*</sup></label>
+                            <textarea rows="5" cols="30" class="form-control" formControlName="address"
+                                placeholder="Adddress" pInputTextarea></textarea>
+                            <div *ngIf="FormControls['address'].invalid &&  FormControls['address'].touched"
+                                class="error-message p-error">
+                                Address is required
+                            </div>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="listingOrder">Order:<sup class="p-error">*</sup></label>
+                            <input pInputText id="listingOrder" class="form-control" formControlName="listingOrder"
+                                type="text" />
+                            <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
+                                class="error-message p-error">
+                                Please Enter Order
+                            </div>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="isActive">Is Active?:<sup
+                                    class="p-error">*</sup></label><br><br>
+                            &nbsp; <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"
+                                class="form-control"></p-inputSwitch>
+
+                            <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                class="error-message p-error">
+                                Is Active
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button pButton pRipple type="submit" label="{{submitLabel}}"
+                                class="p-button-raised p-button-success"></button>
+                        </div>
+                           
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
         </p-dialog>
 
