@@ -58,14 +58,14 @@ export class SectionComponent implements OnInit {
     })
     
     this.fbsections = this.formbuilder.group({
-      code: ['', Validators.required],
-      name: ['', Validators.required],
-      listingOrder: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      address: ['', Validators.required],
-      circleId: ['', Validators.required],
-      divisionId: [''],
-      inchargePhoneNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      inchargeName:[''],
+      code: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      listingOrder: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      address:new FormControl ('', Validators.required),
+      circleId: new FormControl ('', Validators.required),
+      divisionId: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      inchargePhoneNo: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      inchargeName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       isActive: [this.valSwitch, Validators.required],
       sectionId: [''],
     });
