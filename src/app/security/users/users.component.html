@@ -111,11 +111,11 @@
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <p-tabView orientation="left" class="container">
+            <p-tabView orientation="left" class="users-container">
               <p-tabPanel header="User Info" class="line-height-3 m-0 col-12">
                 <div class="grid">
                   <div class="col-12">
-                    <h6>User Details</h6>
+                    <h6>User Info</h6>
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-6">
                         <label>User Name:<sup class="p-error">*</sup></label>&nbsp;
@@ -204,7 +204,7 @@
                       <div class="col-12 md:col-3 xl:col-2">
                         <label>IP Restriction:<sup class="p-error">*</sup></label>&nbsp;
                         <br>
-                        <p-inputSwitch formControlName="iprestriction"></p-inputSwitch>
+                        <p-inputSwitch [trueValue]="true" [falseValue]="false" formControlName="iprestriction"></p-inputSwitch>
                       </div>
                       <div class="col-12 md:col-3 xl:col-2">
                         <label>Is AdminGate:<sup class="p-error">*</sup></label>&nbsp;
