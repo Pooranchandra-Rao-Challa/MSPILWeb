@@ -16,6 +16,7 @@ const routes: Routes = [
       { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
       { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
       { path: 'billmasters', loadChildren: () => import('./masters/billmasters/billmasters.module').then(m => m.BillMastersModule) },
+      { path: 'appmasters', loadChildren: () => import('./masters/applicationmaster/appmasters.module').then(m => m.AppMastersModule) },
     ]
   },
 
