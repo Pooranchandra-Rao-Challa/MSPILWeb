@@ -6,7 +6,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Role" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="showDialog()"></button>
+          (click)="initRole({})"></button>
       </ng-template>
     </p-toolbar>
 
@@ -27,22 +27,22 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="Code">Code<p-sortIcon field="Code"></p-sortIcon>
+          <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon>
           </th>
-          <th pSortableColumn="Name">Name<p-sortIcon field="Name"></p-sortIcon>
+          <th pSortableColumn="came">Name<p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="IsActive">Is Active <p-sortIcon field="IsActive"></p-sortIcon>
+          <th pSortableColumn="isActive">Is Active <p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="CreatedDate">Created Date <p-sortIcon field="CreatedDate"></p-sortIcon>
+          <th pSortableColumn="createdDate">Created Date <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="CreatedBy">Created By User <p-sortIcon field="CreatedBy"></p-sortIcon>
+          <th pSortableColumn="createdBy">Created By User <p-sortIcon field="createdBy"></p-sortIcon>
           </th>
-          <th pSortableColumn="UpdatedDate" pFrozenColumn alignFrozen="right">Updated Date <p-sortIcon
-              field="UpdatedDate">
+          <th pSortableColumn="updatedAt" pFrozenColumn alignFrozen="right">Updated Date <p-sortIcon
+              field="updatedAt">
             </p-sortIcon>
           </th>
-          <th pSortableColumn="UpdatedBy" pFrozenColumn alignFrozen="right">Updated By User<p-sortIcon
-              field="UpdatedBy">
+          <th pSortableColumn="updatedBy" pFrozenColumn alignFrozen="right">Updated By User<p-sortIcon
+              field="updatedBy">
             </p-sortIcon>
           </th>
         </tr>
@@ -50,14 +50,14 @@
       <ng-template pTemplate="body" let-role>
         <tr>
           <td style="text-align: center;"><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component" (click)="showDialog()"></button></td>
-          <td>{{role.Code}}</td>
-          <td>{{role.Name}}</td>
-          <td>{{role.IsActive}}</td>
-          <td>{{role.CreatedDate}}</td>
-          <td>{{role.CreatedBy}}</td>
-          <td>{{role.UpdatedDate}}</td>
-          <td>{{role.UpdatedBy}}</td>
+              class="p-element p-ripple p-button-text p-button p-component" (click)="initRole(role)"></button></td>
+          <td>{{role.code}}</td>
+          <td>{{role.name}}</td>
+          <td>{{role.isActive}}</td>
+          <td>{{role.createdAt}}</td>
+          <td>{{role.createdBy}}</td>
+          <td>{{role.updatedAt}}</td>
+          <td>{{role.updatedBy}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -77,7 +77,7 @@
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
           <div class="grid">
-            <div class="col-12">
+            <div class="col-12 roles-container">
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Code:<sup class="p-error">*</sup></label>&nbsp;
@@ -99,13 +99,26 @@
                 </div>
                 <div class="field col-12">
                   <label>Is Active?:<sup class="p-error">*</sup></label><br>
-                  &nbsp;<p-inputSwitch formControlName="active"
-                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['active'].touched && roleFormControls['active'].errors }">
+                  &nbsp;<p-inputSwitch formControlName="isActive"
+                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['isActive'].touched && roleFormControls['isActive'].errors }">
                   </p-inputSwitch>
-                  <span *ngIf="roleFormControls['active'].touched && roleFormControls['active'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['active'].errors?.['required']">
+                  <span *ngIf="roleFormControls['isActive'].touched && roleFormControls['isActive'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['isActive'].errors?.['required']">
                       Please Select Active.</div>
                   </span>
+                </div>
+                <div class="field col-12">
+                  <label>Permissions:<sup class="p-error">*</sup></label><br>
+                  <div class="grid col-12">
+                    <p-accordion *ngFor="let screen of screens" class="col-3"  [multiple]="false">
+                      <p-accordionTab [header]="screen" [selected]="false" [cache]="false">
+                        <div class="col-12 role-accordian-view" *ngFor="let permission of getPermissions(screen)">
+                          <p-inputSwitch [(ngModel)]="permission.assigned" [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+                          <label for="ny">{{permission.displayName}}</label>
+                        </div>
+                      </p-accordionTab>
+                    </p-accordion>
+                  </div>
                 </div>
               </div>
             </div>

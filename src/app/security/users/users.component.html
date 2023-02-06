@@ -72,7 +72,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component mr-2"
               (click)="showUser(user)"></button></td>
           <td>{{user.userId}}</td>
           <td>{{user.userName}}</td>
@@ -239,9 +239,6 @@
                 <div class="grid col-12">
                   <div class="col-3" *ngFor="let userSection of user.userSections">
                     <div class="field-checkbox">
-                      <!-- <p-checkbox name="group1" [value]="userSection.sectionId"
-                      inputId="userSection.sectionId"></p-checkbox>
-                      <label for="ny">{{userSection.sectionName}}</label> -->
                       <p-inputSwitch [(ngModel)]="userSection.isActive" [ngModelOptions]="{standalone: true}"></p-inputSwitch>
                       <label for="ny">{{userSection.sectionName}}</label>
                     </div>

@@ -1,0 +1,13 @@
+:host ::ng-deep .roles-container {
+  height: calc(100vh - 100px);
+  display: block;
+}
+
+.role-accordian-view{
+  display: inline-flex;
+}
+
+
+.role-accordian-view label{
+  padding-left: 10px;
+}
