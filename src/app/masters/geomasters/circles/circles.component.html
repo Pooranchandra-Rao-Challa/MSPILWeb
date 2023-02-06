@@ -3,115 +3,117 @@
         <p-dialog header="Circle" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '50vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
+                <form [formGroup]="fbcircles" (ngSubmit)="onSubmit()">
                 <div class="grid">
                     <div class="col-12">
-                        <div class="col-12 p-fluid">
+                      <div class="p-fluid p-formgrid grid">
 
-                            <form [formGroup]="fbcircles" (ngSubmit)="onSubmit()">
-                                <div class="grid">
-                                    <div class="col-6">
-                                        <div class="field">
+                        <div class="field col-12 md:col-6">
+                            <label>Divisions:<sup class="p-error">*</sup></label>
+                            <p-dropdown [options]="divisions" optionLabel="divisionName"
+                                formControlName="divisionId" optionValue="divisionId"
+                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-dropdown>
+                            <span
+                                *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['divisionId'].errors?.['required']">Please
+                                    Select Division.</div>
+                            </span>
+                        </div>
 
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="code">Circle Code:<sup class="p-error">*</sup></label>
+                            <input pInputText id="code" formControlName="code" type="text" 
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"/>
 
-                                            <label>Divisions:<sup class="p-error">*</sup></label>
-                                            <p-dropdown [options]="divisions" optionLabel="divisionName"
-                                                formControlName="divisionId" optionValue="divisionId"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-dropdown>
-                                            <span
-                                                *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['divisionId'].errors?.['required']">Please
-                                                    Select Division.</div>
+                            <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched && FormControls['code'].errors?.['required']"
+                                class="error-message p-error">
+                                Code is required
+                            </div>
+                            
+                            <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['code'].errors?.['pattern']">Code should only contain numbers.
+                            </div>
+                            
+                        </div>
 
-                                            </span>
-                                        </div>
-                                        <div class="field">
-                                            <label htmlFor="name">Circle Name:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="name" formControlName="name" type="text" />
+                        <div class="field col-12 md:col-6">
+                            <label>Circle Name:<sup class="p-error">*</sup></label>
+                                    <input pInputText id="address1" type="text" formControlName="name"
+                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }" >
+                                  
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
 
-                                            <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched"
-                                                class="error-message p-error">
-                                                Circle Name is required
-                                            </div>
-
-                                        </div>
-                                        <div class="field">
-                                            <label htmlFor="inchargeName">Incharge Name:</label>
-                                            <input pInputText id="inchargeName" formControlName="inchargeName"
-                                                type="text" />
-
-                                            <div *ngIf="FormControls['inchargeName'].invalid &&  FormControls['inchargeName'].touched"
-                                                class="error-message p-error">
-                                                Circle Name is required
-                                            </div>
-
-                                        </div>
-                                        <div class="field">
-                                            <label htmlFor="listingOrder">listing Order:<sup
-                                                    class="p-error">*</sup></label>
-                                            <input pInputText id="listingOrder" formControlName="listingOrder"
-                                                type="text" />
-                                            <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
-                                                class="error-message p-error">
-                                                Circle Name is required
-                                            </div>
-
-                                        </div>
-                                        <div class="field">
-                                            <label htmlFor="isActive">Is Active?:<sup
-                                                    class="p-error">*</sup></label><br><br>
-                                            &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"
-                                                formControlName="isActive"></p-inputSwitch>
-
-                                            <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
-                                                class="error-message p-error">
-                                                Circle Name is required
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                            <div class="ng-invalid ng-touched p-error"
+                                              *ngIf="FormControls['name'].errors?.['pattern']">Code should only contain Alphabets .</div>
+                                  
+                        </div>
 
 
-                                    <div class="col-6">
-                                        <div class="field">
-                                            <label htmlFor="code">Circle Code:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="code" formControlName="code" type="text" />
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="inchargePhoneNo">Incharge PhoneNo:</label>
+                            <input pInputText id="inchargePhoneNo" formControlName="inchargePhoneNo"
+                                type="text" />
+                            <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">PhoneNo should only contain numbers.
+                            </div>
+                            
+                        </div>
 
-                                            <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched"
-                                                class="error-message p-error">
-                                                Circle Name is required
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <label htmlFor="inchargePhoneNo">Incharge PhoneNo:</label>
-                                            <input pInputText id="inchargePhoneNo" formControlName="inchargePhoneNo"
-                                                type="text" />
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="inchargeName">Incharge Name:</label>
+                            <input pInputText id="inchargeName" formControlName="inchargeName"
+                                type="text" />
+                           
+                            <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['name'].errors?.['pattern']">Code should only contain Alphabets .</div>
+                            </div>
 
-                                            <div *ngIf="FormControls['inchargePhoneNo'].invalid &&  FormControls['inchargePhoneNo'].touched"
-                                                class="error-message p-error">
-                                                Circle Name is required
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <label htmlFor="address">Address:<sup class="p-error">*</sup></label>
-                                            <textarea rows="5" cols="30" formControlName="address"
-                                                placeholder="Your Message" pInputTextarea></textarea>
-                                            <div *ngIf="FormControls['address'].invalid &&  FormControls['address'].touched"
-                                                class="error-message p-error">
-                                                Circle Name is required
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 ">
-                                        <button pButton pRipple type="submit" label="{{submitLabel}}"
-                                            class="p-button-raised p-button-success"></button>
-                                    </div>
-                                </div>
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="listingOrder">listing Order:<sup
+                                    class="p-error">*</sup></label>
+                            <input pInputText id="listingOrder" formControlName="listingOrder"
+                                type="text" />
+                            <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched && FormControls['code'].errors?.['required']"
+                                class="error-message p-error">
+                                listing Order is required
+                            </div>
 
-                            </form>
+                            <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order should only contain numbers.
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="address">Address:<sup class="p-error">*</sup></label>
+                            <textarea rows="5" cols="30" formControlName="address"
+                                placeholder="Your Message" pInputTextarea></textarea>
+                            <div *ngIf="FormControls['address'].invalid &&  FormControls['address'].touched"
+                                class="error-message p-error">
+                                Address is required
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label htmlFor="isActive">Is Active?:<sup
+                                    class="p-error">*</sup></label><br><br>
+                            &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"
+                                formControlName="isActive"></p-inputSwitch>
+                        <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                            class="error-message p-error">
+                             Please Active
+                        </div>
+                        </div>
+                        <div class="col-12 ">
+                            <button pButton pRipple type="submit" label="{{submitLabel}}"
+                                class="p-button-raised p-button-success"></button>
+                        </div>
+                           
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </p-dialog>
         <p-toolbar styleClass="p-mb-4">
@@ -179,16 +181,19 @@
 
                 </tr>
             </ng-template>
+            
             <ng-template pTemplate="emptymessage">
                 <tr>
                     <td colspan="8">No Circles found.</td>
                 </tr>
             </ng-template>
+
             <ng-template pTemplate="loadingbody">
                 <tr>
                     <td colspan="8">Loading Circles data. Please wait.</td>
                 </tr>
-            </ng-template>
+             </ng-template>
+
         </p-table>
     </div>
 

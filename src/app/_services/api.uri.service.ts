@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable({ providedIn: 'root' })
 export class APIURIService {
-  constructor() {}
+  constructor() { }
 }
 export const LOGIN_URI = "Security/Login";
 export const REFRESH_TOKEN_URI = "Security/Refresh"
@@ -46,3 +46,5 @@ export const CREATE_BILLPARAM_URI = "BillingMaster/CreateBillParameter";
 export const UPDATE_BILLPARAM_URI = "BillingMaster/UpdateBillParameter";
 export const GET_BILLPARAMS_URI = "BillingMaster/GetBillParameters";
 export const GET_DIESEL_BUNK_URI = "BillingMaster/GetDieselBunks";
+export const CREATE_DIESELBUNK_URI = "BillingMaster/CreateDieselBunk";
+export const UPDATE_DIESELBUNK_URI = "BillingMaster/UpdateDieselBunk";

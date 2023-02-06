@@ -78,10 +78,10 @@ export class BillMasterComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-  saveBill(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.billmasterService.CreateBill(this.fbBillMaster.value)
-    else return this.billmasterService.UpdateBill(this.fbBillMaster.value)
-  }
+  // saveBill(): Observable<HttpEvent<any>> {
+  //   if (this.addFlag) return this.billmasterService.CreateBill(this.fbBillMaster.value)
+  //   else return this.billmasterService.UpdateBill(this.fbBillMaster.value)
+  // }
 
   onSubmit() {
     if (this.fbBillMaster.valid) {

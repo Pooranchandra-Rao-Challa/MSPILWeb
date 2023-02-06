@@ -1,3 +1,4 @@
+import { FloatLabelDemoComponent } from './../demo/components/uikit/floatlabel/floatlabeldemo.component';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
@@ -114,6 +115,14 @@ export class AppMenuComponent implements OnInit {
                   { label: 'Ware Houses', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'], permission: this.jwtService.Permissions.CanViewWarehouses },
                 ]
               },
+              {
+                label: 'Application Masters',
+                icon: 'pi pi-fw pi-bitcoin text-lg',
+                permission: true,
+                items: [
+                  { label: 'Season', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
+                ]
+              }
             ]
           },
         ]

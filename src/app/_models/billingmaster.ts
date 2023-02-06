@@ -29,38 +29,6 @@ export class BillViewDto {
   updatedBy?: Date;
 }
 
-export class DieselBunkDto {
-  id?: number;
-  code?: string;
-  name?: string;
-  rate?: number;
-  pinCode?: string;
-  phoneNo?: string;
-  email?: string;
-  gLcode?: string;
-  subGLcode?: string;
-  address?: string;
-  isActive?: boolean;
-}
-
-export class DieselBunkViewDto {
-  id?: number;
-  code?: string;
-  name?: string;
-  rate?: number;
-  pinCode?: string;
-  phoneNo?: string;
-  email?: string;
-  gLcode?: string;
-  subGLcode?: string;
-  address?: string;
-  isActive?: boolean;
-  updatedAt?: Date;
-  createdAt?: Date;
-  updatedBy?: string;
-  createdBy?: string;
-}
-
 export class BillParameterDto {
   billParameterId?: number;
   code?: string;
@@ -89,3 +57,36 @@ export class BillParameterViewDto {
   updatedByUser?: string;
   createdByUser?: string;
 }
+
+export class DieselBunkDto {
+  id?: number;
+  code?: string;
+  name?: string;
+  rate?: number;
+  pinCode?: string;
+  phoneNo?: string;
+  email?: string;
+  gLcode?: string;
+  subGLcode?: string;
+  address?: string;
+  isActive?: boolean;
+}
+
+export class DieselBunkViewDto {
+  id?: number;
+  code?: string;
+  name?: string;
+  rate?: number;
+  pinCode?: string;
+  phoneNo?: string;
+  email?: string;
+  glCode?: string;
+  subGLCode?: string;
+  address?: string;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
