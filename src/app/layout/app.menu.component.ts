@@ -121,6 +121,7 @@ export class AppMenuComponent implements OnInit {
                 permission: true,
                 items: [
                   { label: 'Season', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
+                  { label: 'Weed', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/weed'], permission: true },
                 ]
               }
             ]
