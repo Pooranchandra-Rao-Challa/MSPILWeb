@@ -56,7 +56,7 @@ export class VillageComponent implements OnInit {
     this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[]
     })
-    
+
     this.fbvillages = this.formbuilder.group({
         division: ['', Validators.required],
         circle: ['', Validators.required],
@@ -116,7 +116,7 @@ export class VillageComponent implements OnInit {
     });
     this.submitLabel = "Update Village";
     this.addFlag = false;
-    this.display = true;    
+    this.display = true;
   }
 
   private UpdateForm() {
@@ -127,14 +127,11 @@ export class VillageComponent implements OnInit {
   }
 
   saveVillage(): Observable<HttpEvent<VillageDto>> {
-    debugger
     if (this.addFlag) return this.geoMasterService.CreateVillage(this.fbvillages.value)
     else return this.geoMasterService.UpdateVillage(this.fbvillages.value)
   }
   onSubmit() {
     if (this.fbvillages.valid) {
-      debugger
-
       this.saveVillage().subscribe(resp => {
         if (resp) {
           this.initVillages();

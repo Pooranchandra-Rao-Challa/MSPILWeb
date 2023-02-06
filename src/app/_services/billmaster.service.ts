@@ -20,7 +20,6 @@ export class BillMasterService extends ApiHttpService {
   }
 
   public CreateBillParam(billParam: BillParameterDto) {
-    debugger
     return this.post<BillParameterDto>(CREATE_BILLPARAM_URI, billParam);
   }
 

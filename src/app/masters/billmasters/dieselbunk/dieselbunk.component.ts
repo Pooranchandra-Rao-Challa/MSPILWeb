@@ -21,7 +21,6 @@ export class DieselBunkComponent implements OnInit {
               private billmasterService: BillMasterService) { }
 
   ngOnInit(): void {
-    debugger
     this.billmasterService.GetDieselBunks().subscribe((resp) => {
       this.dieselBunks = resp as unknown as DieselBunkViewDto[];
       console.log(this.dieselBunks);

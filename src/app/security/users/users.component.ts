@@ -110,7 +110,7 @@ export class UsersComponent implements OnInit {
     this.selectedUser = user;
     this.initUser();
   }
-  saveDistrict(): Observable<HttpEvent<UserDto>> {
+  saveUser(): Observable<HttpEvent<UserDto>> {
     this.userForm.value.userSections = this.user.userSections;
     if (!this.user.userId) return this.securityService.CreateUser(this.userForm.value)
     else return this.securityService.UpdateUser(this.userForm.value)
@@ -119,7 +119,7 @@ export class UsersComponent implements OnInit {
     if (this.userForm.valid) {
       console.log(this.userForm.value);
 
-      this.saveDistrict().subscribe((resp) => {
+      this.saveUser().subscribe((resp) => {
         if (resp) {
           this.dialog = false;
           this.userForm.reset();

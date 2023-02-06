@@ -56,7 +56,7 @@ export class SectionComponent implements OnInit {
     this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[]
     })
-    
+
     this.fbsections = this.formbuilder.group({
       code: ['', Validators.required],
       name: ['', Validators.required],
@@ -101,7 +101,7 @@ export class SectionComponent implements OnInit {
     });
     this.submitLabel = "Update Section";
     this.addFlag = false;
-    this.display = true;    
+    this.display = true;
   }
 
   private UpdateForm() {
@@ -112,14 +112,11 @@ export class SectionComponent implements OnInit {
   }
 
   saveSection(): Observable<HttpEvent<SectionDto>> {
-    debugger
     if (this.addFlag) return this.geoMasterService.CreateSection(this.fbsections.value)
     else return this.geoMasterService.UpdateSection(this.fbsections.value)
   }
   onSubmit() {
     if (this.fbsections.valid) {
-      debugger
-
       this.saveSection().subscribe(resp => {
         if (resp) {
           this.initSections();

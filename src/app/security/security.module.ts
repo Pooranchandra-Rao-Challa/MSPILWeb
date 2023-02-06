@@ -6,7 +6,7 @@ import { RolesComponent } from './roles/roles.component';
 import { UsersComponent } from './users/users.component';
 
 import { TabViewModule } from 'primeng/tabview';
-import {CheckboxModule} from 'primeng/checkbox';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -30,7 +30,8 @@ import { InputNumberModule } from "primeng/inputnumber";
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputSwitchModule } from 'primeng/inputswitch';
-import {ToolbarModule} from 'primeng/toolbar';
+import { ToolbarModule } from 'primeng/toolbar';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -46,27 +47,28 @@ import {ToolbarModule} from 'primeng/toolbar';
     FormsModule,
     ReactiveFormsModule,
     TableModule,
-		RatingModule,
-		ButtonModule,
-		SliderModule,
-		InputTextModule,
-		ToggleButtonModule,
-		RippleModule,
-		MultiSelectModule,
-		DropdownModule,
-		ProgressBarModule,
-		ToastModule,
-		DialogModule,
-		ToolbarModule,
-		ContextMenuModule,
-		CalendarModule,
+    RatingModule,
+    ButtonModule,
+    SliderModule,
+    InputTextModule,
+    ToggleButtonModule,
+    RippleModule,
+    MultiSelectModule,
+    DropdownModule,
+    ProgressBarModule,
+    ToastModule,
+    DialogModule,
+    ToolbarModule,
+    ContextMenuModule,
+    CalendarModule,
     AutoCompleteModule,
     ChipsModule,
     InputMaskModule,
     InputNumberModule,
     CascadeSelectModule,
     InputTextareaModule,
-    InputSwitchModule
+    InputSwitchModule,
+    AccordionModule
 
   ]
 })
