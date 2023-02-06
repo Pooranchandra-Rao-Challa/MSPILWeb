@@ -7,6 +7,15 @@ export class APIURIService {
 }
 export const LOGIN_URI = "Security/Login";
 export const REFRESH_TOKEN_URI = "Security/Refresh"
+export const GET_USERS_URI = "Security/GetUsers"
+export const CREATE_USER_URI = "Security/CreateUser"
+export const UPDATE_USER_URI = "Security/UpdateUser"
+export const GET_USER_SECTIONS_URI = "Security/GetUserSections"
+export const GET_ALL_SECTIONS_URI = "Security/GetAllSections"
+export const GET_ROLES_URI = "Security/GetRoles"
+export const CREATE_ROLE_URI = "Security/CreateRole"
+export const UPDATE_ROLE_URI = "Security/UpdateRole"
+export const GET_ROLE_PERMISSIONS_URI = "Security/GetRolePermissions"
 export const CREATE_DISTRICT_URI = "GeoMaster/CreateDistrict"
 export const UPDATE_DISTRICT_URI = "GeoMaster/UpdateDistrict"
 export const GET_DISTRICTS_URI = "GeoMaster/GetDistricts"
