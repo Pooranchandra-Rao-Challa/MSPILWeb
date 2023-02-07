@@ -16,7 +16,7 @@
     <p-table #dt1 [value]="bills" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      [rowsPerPageOptions]="[10,25,50]">
+      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -30,40 +30,40 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="billCategoryName" style="min-width: 100px;">
+          <th pSortableColumn="billCategoryName" style="min-width: 120px;">
             Billing Category <p-sortIcon field="billCategoryName"></p-sortIcon>
           </th>
-          <th pSortableColumn="billNo" style="min-width: 100px;">
+          <th pSortableColumn="billNo" style="min-width: 120px;">
             Billing Number <p-sortIcon field="billNo"></p-sortIcon>
           </th>
-          <th pSortableColumn="seasonName" style="min-width: 100px;">
+          <th pSortableColumn="seasonName" style="min-width: 120px;">
             Season Code <p-sortIcon field="seasonName"></p-sortIcon>
           </th>
-          <th pSortableColumn="fromDate" style="min-width: 100px;">
+          <th pSortableColumn="fromDate" style="min-width: 120px;">
             From Date <p-sortIcon field="fromDate"></p-sortIcon>
           </th>
-          <th pSortableColumn="toDate" style="min-width: 100px;">
+          <th pSortableColumn="toDate" style="min-width: 120px;">
             To Date <p-sortIcon field="toDate"></p-sortIcon>
           </th>
-          <th pSortableColumn="runDate" style="min-width: 100px;">
+          <th pSortableColumn="runDate" style="min-width: 120px;">
             Run Date <p-sortIcon field="runDate"></p-sortIcon>
           </th>
-          <th style="min-width: 100px; text-align:center">
+          <th style="min-width: 120px; text-align:center">
             Is Final
           </th>
-          <th style="min-width: 100px;text-align:center">
+          <th style="min-width: 120px;text-align:center">
             Is active
           </th>
-          <th pSortableColumn="createdAt" style="min-width: 100px;">
+          <th pSortableColumn="createdAt" style="min-width: 120px;">
             Created Date <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="createdBy" style="min-width: 100px;">
+          <th pSortableColumn="createdBy" style="min-width: 120px;">
             Created By User <p-sortIcon field="createdBy"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedAt" style="min-width: 100px;">
+          <th pSortableColumn="updatedAt" style="min-width: 120px;">
             Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedBy" style="min-width: 100px;">
+          <th pSortableColumn="updatedBy" style="min-width: 120px;">
             Updated By User <p-sortIcon field="updatedBy"></p-sortIcon>
           </th>
         </tr>

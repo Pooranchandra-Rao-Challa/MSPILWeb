@@ -22,12 +22,14 @@ export class DieselRatesComponent implements OnInit {
   filter: any;
   showDialog: boolean = false;
   fbDieselRate!: FormGroup;
+  value?: Date;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private datepipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.value = new Date();
     this.loadDieselRates();
     this.dieselRateForm();
   }

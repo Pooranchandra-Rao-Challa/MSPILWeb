@@ -15,8 +15,8 @@
     <!-- table -->
     <p-table #dt1 [value]="dieselBunks" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -31,54 +31,54 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th>
-            Code <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="code" style="min-width: 120px;">
+            Code <p-sortIcon field="code"></p-sortIcon>
           </th>
-          <th>
-            Name <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="name" style="min-width: 120px;">
+            Name <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th>
-            Address <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="address" style="min-width: 120px;">
+            Address <p-sortIcon field="address"></p-sortIcon>
           </th>
-          <th>
-            Pin Code <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="pinCode" style="min-width: 120px;">
+            Pin Code <p-sortIcon field="pinCode"></p-sortIcon>
           </th>
-          <th>
-            Mobile <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="phoneNo" style="min-width: 120px;">
+            Mobile <p-sortIcon field="phoneNo"></p-sortIcon>
           </th>
-          <th>
-            Email <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="email" style="min-width: 120px;">
+            Email <p-sortIcon field="email"></p-sortIcon>
           </th>
-          <th>
-            Rate <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="rate" style="min-width: 120px;">
+            Rate <p-sortIcon field="rate"></p-sortIcon>
           </th>
-          <th>
-            GL Code <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="glCode" style="min-width: 120px;">
+            GL Code <p-sortIcon field="glCode"></p-sortIcon>
           </th>
-          <th>
-            Sub GL Code <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="subGLCode" style="min-width: 120px;">
+            Sub GL Code <p-sortIcon field="subGLCode"></p-sortIcon>
           </th>
-          <th style="text-align:center">
+          <th style="min-width: 120px; text-align:center;">
             Is Active
           </th>
-          <th>
-            Created Date <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="createdAt" style="min-width: 120px;">
+            Created Date <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
-          <th>
-            Created By User <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="createdBy" style="min-width: 120px;">
+            Created By User <p-sortIcon field="createdBy"></p-sortIcon>
           </th>
-          <th>
-            Updated Date <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="updatedAt" style="min-width: 120px;">
+            Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
-          <th>
-            Updated By User <p-sortIcon></p-sortIcon>
+          <th pSortableColumn="updatedBy" style="min-width: 120px;">
+            Updated By User <p-sortIcon field="updatedBy"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-bunk>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-            (click)="editDieselBunk(bunk)"></button></td>
+              (click)="editDieselBunk(bunk)"></button></td>
           <td>{{bunk.code}}</td>
           <td>{{bunk.name}}</td>
           <td>{{bunk.address}}</td>
@@ -100,12 +100,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="14">No diesel bunk found.</td>
+          <td colspan="15">No diesel bunk found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="14">Loading diesel bunk data. Please wait.</td>
+          <td colspan="15">Loading diesel bunk data. Please wait.</td>
         </tr>
       </ng-template>
     </p-table>

@@ -95,7 +95,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" formControlName="fromDate"
+                  <p-calendar [readonlyInput]="true" [(ngModel)]="value"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
