@@ -90,3 +90,40 @@ export class DieselBunkViewDto {
   createdBy?: string;
 }
 
+export class DieselRateDto {
+  id?: number;
+  fromDate?: Date;
+  toDate?: Date;
+  rate?: number;
+  isActive?: boolean;
+}
+
+export class DieselRateViewDto {
+  id?: number;
+  fromDate?: Date;
+  toDate?: Date;
+  rate?: number;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedByUser?: string;
+  createdByUser?: string;
+}
+
+export class DistanceRateDto {
+  id?: number;
+  distance?: number;
+  rate?: number;
+  isActive?: boolean
+}
+
+export class DistanceRateViewDto {
+  id?: number;
+  distance?: number;
+  rate?: number;
+  isActive?: boolean
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}

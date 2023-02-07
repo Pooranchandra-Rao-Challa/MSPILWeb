@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="card">
         <!-- dailog box -->
-        <p-dialog header="Mandal" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+        <p-dialog header="Mandal" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbmandals" (ngSubmit)="onSubmit()">

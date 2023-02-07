@@ -52,7 +52,7 @@
           <th pSortableColumn="priority">
             Priority <p-sortIcon field="priority"></p-sortIcon>
           </th>
-          <th>
+          <th style="text-align:center">
             Is active
           </th>
           <th pSortableColumn="createdAt">
@@ -80,7 +80,7 @@
           <td>{{billparam.caluclationType}}</td>
           <td>{{billparam.formula}}</td>
           <td>{{billparam.priority}}</td>
-          <td>
+          <td style="text-align:center">
             <p-checkbox name="active" value="active" [(ngModel)]="billparam.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>

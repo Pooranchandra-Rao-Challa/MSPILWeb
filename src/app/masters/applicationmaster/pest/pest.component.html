@@ -1,0 +1,131 @@
+<div class="col-12">
+    <div class="card">
+  
+      <!-- toolbar -->
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <h4>Pest</h4>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <button pButton pRipple label="Add Pest" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="display =true"></button>
+        </ng-template>
+      </p-toolbar>
+  
+      <!-- table -->
+      <p-table #dt1  dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+        [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
+        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+              (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+                class="w-full" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Pest Code <p-sortIcon></p-sortIcon></th>
+            <th>Pest Name <p-sortIcon></p-sortIcon></th>
+            <th>Is Active <p-sortIcon></p-sortIcon> </th>
+            <th> Created Date <p-sortIcon></p-sortIcon> </th>
+            <th> Created By User <p-sortIcon></p-sortIcon> </th>
+            <th> Updated Date <p-sortIcon></p-sortIcon> </th>
+            <th>  Updated By User <p-sortIcon></p-sortIcon> </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-bunk>
+          <tr>
+            <td> <p-inputNumber  inputId="pest"  > </p-inputNumber></td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            <td>{{bunk}}</td>
+            
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="14">No pest Data found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="14">Loading Pest Data. Please wait.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+  
+      <!-- dialog box -->
+      <p-dialog header="Weed" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            [style]="{width: '40vw'}">
+            <div class="flex flex-column align-items-center justify-content-center">
+                <form [formGroup]="fbpest" (ngSubmit)="onSubmit()">
+                    <div class="grid">
+                        <div class="col-12">
+                            <div class="p-fluid p-formgrid grid">
+                                <div class="col-12">
+
+                                    <label>Code:<sup class="p-error">*</sup></label>
+                                    <input pInputText type="text" formControlName="Code"
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['Code'].touched && FormControls['Code'].errors }">
+                                    <span *ngIf="FormControls['Code'].touched && FormControls['Code'].invalid">
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['Code'].errors?.['required']">Please Enter Code.</div>
+
+                                            <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['Code'].errors?.['pattern']">Code should only contain numbers.</div>
+                                    </span>
+                                </div>
+                                <div class="col-12">
+                                    <label> Name:<sup class="p-error">*</sup></label>
+                                    <input pInputText id="Name" type="text" formControlName="Name"
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['Name'].touched && FormControls['Name'].errors }">
+                                    <span *ngIf="FormControls['Name'].touched && FormControls['Name'].invalid">
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['Name'].errors?.['required']">Please Enter Name.</div>
+
+                                            <div class="ng-invalid ng-touched p-error"
+                                              *ngIf="FormControls['Name'].errors?.['pattern']">Name should only contain Alphabets .</div>
+                                    </span>
+                                </div>
+
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="isActive">Is Active?:<sup
+                                            class="p-error">*</sup></label><br><br>
+                                    &nbsp; <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"
+                                        class="form-control"></p-inputSwitch>
+        
+                                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                        class="error-message p-error">
+                                         Please Active
+                                    </div>
+                                </div>
+        
+                                <div class="col-12 mt-2">
+                                    
+                                        <button pButton pRipple type="submit" label="Submit"
+                                            class="p-button-raised p-button-success"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </p-dialog>
+ </div>
+</div>
+  

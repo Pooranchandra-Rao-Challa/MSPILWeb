@@ -1,1 +1,203 @@
-<p>villageparamrates works!</p>
+<div class="col-12">
+  <div class="card">
+
+    <!-- toolbar -->
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Village Param Rates</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple pTooltip="New Village Param Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="showDialog = true"></button>
+      </ng-template>
+      <div class="ui-toolbar-group-center">Centered Content</div>
+    </p-toolbar>
+
+    <p-toolbar>
+      <div class="ui-toolbar-group-left">
+        <h4>Village Param Rates</h4>
+      </div>
+      <div class="ui-toolbar-group-center" style="min-width: 300px;">
+        <p-dropdown class="min-w-full"></p-dropdown>
+      </div>
+      <div class="ui-toolbar-group-right">
+        <button pButton pRipple pTooltip="New Village Param Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="showDialog = true"></button>
+      </div>
+    </p-toolbar>
+
+    <!-- table -->
+    <p-table #dt1 [value]="villageParamRates" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="billCategoryName" style="min-width: 100px;">
+            Season Code <p-sortIcon field="billCategoryName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="billNo" style="min-width: 100px;">
+            Division <p-sortIcon field="billNo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="seasonName" style="min-width: 100px;">
+            Circle <p-sortIcon field="seasonName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="fromDate" style="min-width: 100px;">
+            Section <p-sortIcon field="fromDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="toDate" style="min-width: 100px;">
+            Village <p-sortIcon field="toDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="runDate" style="min-width: 100px;">
+            Param Name <p-sortIcon field="runDate"></p-sortIcon>
+          </th>
+          <th>
+            Rate
+          </th>
+          <th style="min-width: 100px;text-align:center">
+            Is active
+          </th>
+          <th pSortableColumn="createdAt" style="min-width: 100px;">
+            Created Date <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdBy" style="min-width: 100px;">
+            Created By User <p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedAt" style="min-width: 100px;">
+            Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedBy" style="min-width: 100px;">
+            Updated By User <p-sortIcon field="updatedBy"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-vParamRate>
+        <tr>
+          <td>{{vParamRate.billCategoryName}}</td>
+          <td>{{vParamRate.billNo}}</td>
+          <td>{{vParamRate.seasonName}}</td>
+          <td>{{vParamRate.fromDate}}</td>
+          <td>{{vParamRate.toDate}}</td>
+          <td>{{vParamRate.runDate}}</td>
+          <td>{{vParamRate.Rate}}</td>
+          <td style="text-align:center">
+            <p-checkbox name="active" value="active" [(ngModel)]="vParamRate.isActive" [binary]="true"
+              [disabled]="true">
+            </p-checkbox>
+          </td>
+          <td>{{vParamRate.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{vParamRate.createdBy}}</td>
+          <td>{{vParamRate.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{vParamRate.updatedBy}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="12">No village param rates found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="12">Loading village param rates data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- dialog box -->
+    <p-dialog header="Village Param Rate" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
+      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbVillageParamRate.reset()">
+      <div class="flex flex-column align-items-center justify-content-center">
+        <form [formGroup]="fbVillageParamRate" (ngSubmit)="onSubmit()">
+          <div class="grid">
+            <div class="col-12">
+              <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-6">
+                  <label>Season Code:<sup class="p-error">*</sup></label>
+                  <p-dropdown formControlName="seasonCode"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonCode'].touched && FormControls['seasonCode'].errors }">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['seasonCode'].touched && FormControls['seasonCode'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['seasonCode'].errors?.['required']">
+                      Please Select Season Code.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Village:<sup class="p-error">*</sup></label>
+                  <!-- <p-dropdown formControlName="village"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['village'].touched && FormControls['village'].errors }">
+                  </p-dropdown> -->
+                  <p-dropdown [filter]="true" filterBy="name" formControlName="village" [showClear]="true"
+                    placeholder="Select a Village"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['village'].touched && FormControls['village'].errors }">
+                    <ng-template pTemplate="selectedItem">
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                      <div class="country-item">
+                        <div>{{country.name}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                  <span *ngIf="FormControls['village'].touched && FormControls['village'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['village'].errors?.['required']">
+                      Please Select Village.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Village Name:<sup class="p-error">*</sup></label>
+                  <input pInputText formControlName="villageName">
+                  <span *ngIf="FormControls['villageName'].touched && FormControls['villageName'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageName'].errors?.['required']">
+                      Please Select Date.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Village Id:<sup class="p-error">*</sup></label>
+                  <input pInputText formControlName="villageId">
+                  <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageId'].errors?.['required']">
+                      Please Select Date.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Bill Param:<sup class="p-error">*</sup></label>
+                  <p-dropdown formControlName="billParam"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['billParam'].touched && FormControls['billParam'].errors }">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['billParam'].touched && FormControls['billParam'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['billParam'].errors?.['required']">
+                      Please Select Bill Param.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Rate:<sup class="p-error">*</sup></label>
+                  <input pInputText formControlName="rate">
+                  <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
+                      Please Select Rate.</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ng-template pTemplate="left">
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
+          (click)="onSubmit()"></button>
+      </ng-template>
+    </p-dialog>
+
+  </div>
+</div>

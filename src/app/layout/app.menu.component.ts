@@ -117,10 +117,14 @@ export class AppMenuComponent implements OnInit {
               },
               {
                 label: 'Application Masters',
-                icon: 'pi pi-fw pi-bitcoin text-lg',
+                icon: 'pi pi-fw pi-align-justify text-lg',
                 permission: true,
                 items: [
                   { label: 'Season', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
+                  { label: 'Weed', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/weed'], permission: true },
+                  { label: 'Pest', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/pest'], permission: true },
+                  { label: 'Disease', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/disease'], permission: true },
+                  { label: 'Fertilizer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/fertilizer'], permission: true },
                 ]
               }
             ]
