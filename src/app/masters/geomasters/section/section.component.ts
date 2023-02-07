@@ -56,16 +56,16 @@ export class SectionComponent implements OnInit {
     this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[]
     })
-    
+
     this.fbsections = this.formbuilder.group({
-      code: ['', Validators.required],
-      name: ['', Validators.required],
-      listingOrder: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      address: ['', Validators.required],
-      circleId: ['', Validators.required],
-      divisionId: [''],
-      inchargePhoneNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      inchargeName:[''],
+      code: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      listingOrder: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      address:new FormControl ('', Validators.required),
+      circleId: new FormControl ('', Validators.required),
+      divisionId: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      inchargePhoneNo: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      inchargeName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       isActive: [this.valSwitch, Validators.required],
       sectionId: [''],
     });
@@ -101,7 +101,7 @@ export class SectionComponent implements OnInit {
     });
     this.submitLabel = "Update Section";
     this.addFlag = false;
-    this.display = true;    
+    this.display = true;
   }
 
   private UpdateForm() {
@@ -112,14 +112,11 @@ export class SectionComponent implements OnInit {
   }
 
   saveSection(): Observable<HttpEvent<SectionDto>> {
-    debugger
     if (this.addFlag) return this.geoMasterService.CreateSection(this.fbsections.value)
     else return this.geoMasterService.UpdateSection(this.fbsections.value)
   }
   onSubmit() {
     if (this.fbsections.valid) {
-      debugger
-
       this.saveSection().subscribe(resp => {
         if (resp) {
           this.initSections();

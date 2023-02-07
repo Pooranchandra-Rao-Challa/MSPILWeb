@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="card">
         <!-- dialog box -->
-        <p-dialog header="Districts" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+        <p-dialog header="Districts" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '40vw'}" (onHide)="onClose()">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">
@@ -15,7 +15,12 @@
                                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.</div>
+                                            <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['code'].errors?.['pattern']">Code should only contain numbers.
+											</div>
                                     </span>
+
+
                                 </div>
                                 <div class="col-12">
                                     <label>Name:<sup class="p-error">*</sup></label>
@@ -24,7 +29,8 @@
                                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
-
+                                            <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['name'].errors?.['pattern']">Name should only contain Alphabets .</div>
                                     </span>
                                 </div>
                                 <div class="col-12">
@@ -37,11 +43,18 @@
                                             *ngIf="FormControls['stateId'].errors?.['required']">Please Select State.
                                         </div>
 
+
                                     </span>
                                 </div>
                                 <div class=" col-12 ">
                                     <label>Is Active?:<sup class="p-error">*</sup></label><br>
                                     &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+
+                                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                        class="error-message p-error">
+                                         Please Active
+                                    </div>
+                                    
                                 </div>
                                 <div class="col-12">
                                     <button pButton pRipple type="submit" label="{{submitLabel}}"

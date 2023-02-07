@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="card">
-        <p-dialog header="Section" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+        <p-dialog header="Section" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '50vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
 
@@ -13,11 +13,13 @@
                             <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
                             <p-dropdown [options]="divisions" optionLabel="divisionName" formControlName="divisionId"
                             optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
+                           
                             [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-dropdown>
                             <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
                                 <div class="ng-invalid ng-touched p-error"
                                     *ngIf="FormControls['divisionId'].errors?.['required']">Please Select Division.
                                 </div>
+
                             </span>
                         </div>
 
@@ -40,22 +42,35 @@
                         <div class="field col-12 md:col-6">
                             <label htmlFor="gender1">Section Code:<sup class="p-error">*</sup></label>
                             <input pInputText id="sectionCode" class="form-control"
-                                formControlName="code" type="text" />
-                            <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched"
-                                class="error-message p-error">
-                                Section code is required
-                            </div>
+                                formControlName="code" type="text" 
+                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }" />
+
+                                <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                                    <div class="ng-invalid ng-touched p-error"
+                                        *ngIf="FormControls['code'].errors?.['required']">Please Select Division.
+                                    </div>
+                                    <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['code'].errors?.['pattern']">Code should only contain numbers.
+                                    </div>
+                                </span>
+
+                            
                         </div>
                         <div class="field col-12 md:col-6">
                             <label htmlFor="Section Name">Section Name:<sup
                                     class="p-error">*</sup></label>
                             <input pInputText id="Section Name" class="form-control"
-                                formControlName="name" type="text" />
+                                formControlName="name" type="text"
+                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"  />
 
-                            <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched"
-                                class="error-message p-error">
-                                Section Name is required
-                            </div>
+                                <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                                    <div class="ng-invalid ng-touched p-error"
+                                        *ngIf="FormControls['name'].errors?.['required']">Please Select Division.
+                                    </div>
+                                    <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['name'].errors?.['pattern']">Code should only contain Alphabets.
+                                    </div>
+                                </span>
                         </div>
 
 
@@ -63,16 +78,20 @@
                             <label htmlFor="inchargeName">Incharge Name:</label>
                             <input pInputText id="inchargeName" class="form-control"
                                 formControlName="inchargeName" type="text" />
+
+                                <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['inchargeName'].errors?.['pattern']">Code should only contain Alphabets.
+                                    </div>
                         </div>
 
                         <div class="field col-12 md:col-6">
                             <label htmlFor="Incharge PhoneNo">Incharge PhoneNo:</label>
                             <input pInputText id="Incharge PhoneNo" class="form-control"
                                 formControlName="inchargePhoneNo" type="text" />
-                            <div *ngIf="FormControls['inchargePhoneNo'].invalid &&  FormControls['inchargePhoneNo'].touched"
-                                class="error-message p-error">
-                                Incharge Phone Number
-                            </div>
+
+                                <div class="ng-invalid ng-touched p-error"
+                                *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">Code should only contain nubers.
+                                </div>
                         </div>
                         
                         <div class="field col-12 md:col-6">
@@ -88,11 +107,20 @@
                         <div class="field col-12 md:col-6">
                             <label htmlFor="listingOrder">Order:<sup class="p-error">*</sup></label>
                             <input pInputText id="listingOrder" class="form-control" formControlName="listingOrder"
-                                type="text" />
-                            <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
-                                class="error-message p-error">
-                                Please Enter Order
-                            </div>
+                                type="text"
+                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }"/>
+
+                                <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
+                                   
+                                    <div class="ng-invalid ng-touched p-error"
+                                         *ngIf="FormControls['listingOrder'].errors?.['required']">Please Select Division.
+                                     </div>
+                                     
+                                     <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['listingOrder'].errors?.['pattern']">Code should only contain numbers.
+                                     </div>
+                                     
+                                     </span>
                         </div>
 
                         <div class="field col-12 md:col-6">

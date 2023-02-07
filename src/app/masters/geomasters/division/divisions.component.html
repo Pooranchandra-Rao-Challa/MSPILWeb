@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="card">
         <!-- <dialog> -->
-        <p-dialog header="Divisions" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+        <p-dialog header="Divisions" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbdivisions" (ngSubmit)="onSubmit()">
@@ -19,6 +19,10 @@
                                     <div class="ng-invalid ng-touched p-error"
                                         *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.
                                     </div>
+                                    <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['code'].errors?.['pattern']">Code should only contain numbers.
+                                    </div>
+                                    
                                 </span>
                             </div>
 
@@ -30,27 +34,24 @@
                                     <div class="ng-invalid ng-touched p-error"
                                         *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.
                                     </div>
+                                    <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['name'].errors?.['pattern']">Code should only contain Alphabets
+                                    </div>
                                 </span>
                             </div> 
 
                             <div class="field col-12 md:col-6">
                                 <label>Incharge Name:</label>
                                 <input pInputText type="text" formControlName="inchargeName">
-                                <span
-                                    *ngIf="FormControls['inchargeName'].touched && FormControls['inchargeName'].invalid">
-                                    <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="FormControls['inchargeName'].errors?.['required']">Please
-                                        Enter Code.</div>
-                                </span>
                             </div>
 
                             <div class="field col-12 md:col-6">
-                                <label>Incharge PhoneNo:<sup class="p-error">*</sup></label>
-                                <input pInputText type="text" formControlName="inchargePhoneNo"
-                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].errors }">
-                                <!-- <span *ngIf="FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].invalid" >
-                                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['inchargePhoneNo'].errors?.['required']">Please Enter Name.</div>
-                                    </span> -->
+                                <label>Incharge PhoneNo:</label>
+                                <input pInputText type="text" formControlName="inchargePhoneNo">
+                                <div class="ng-invalid ng-touched p-error"
+                                *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">PhoneNo should only contain numbers.
+                                </div>
+                                
                             </div>
                          
                             <div class="field col-12 md:col-6">
@@ -63,6 +64,7 @@
                                     <div class="ng-invalid ng-touched p-error"
                                         *ngIf="FormControls['address'].errors?.['required']">Please Enter
                                         Address .</div>
+                                        
                                 </span>
                             </div>
 
@@ -75,13 +77,22 @@
                                     <div class="ng-invalid ng-touched p-error"
                                         *ngIf="FormControls['listingOrder'].errors?.['required']">Please
                                         Enter Order.</div>
+
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order should only contain numbers.
+											</div>
                                 </span>
                             </div>
 
                             <div class="field col-12 md:col-6">
                                 <label>Is Active?:<sup class="p-error">*</sup></label><br>
                                 &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                                <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                class="error-message p-error">
+                                 Please Active
                             </div>
+                            </div>
+                           
                             
                     
                             <div class=" col-12">

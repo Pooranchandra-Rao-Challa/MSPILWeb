@@ -58,11 +58,11 @@ export class MandalComponent implements OnInit {
     
 
     this.fbmandals = this.formbuilder.group({
-      code: ['', (Validators.required)],
-      name: ['', (Validators.required)],
+      code: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       districtId: ['', (Validators.required)],
       mandalId: [''],
-      isActive: [true, Validators.required]
+      isActive: new FormControl (true, Validators.required),
     });
 
 

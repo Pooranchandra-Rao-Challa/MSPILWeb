@@ -2,7 +2,7 @@
     <div class="card">
 
         <!-- dialog -->
-        <p-dialog header="State" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+        <p-dialog header="State" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbstates" (ngSubmit)="onSubmit()">
@@ -16,6 +16,9 @@
                                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.</div>
+
+                                            <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['code'].errors?.['pattern']">Code should only contain numbers.</div>
                                     </span>
                                 </div>
                                 <div class="col-12">
@@ -25,12 +28,28 @@
                                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
+
+                                            <div class="ng-invalid ng-touched p-error"
+                                              *ngIf="FormControls['name'].errors?.['pattern']">Code should only contain Alphabets .</div>
                                     </span>
                                 </div>
-                                <div class="col-12">
-                                    <label>Is Active?:<sup class="p-error">*</sup></label><br>
-                                    &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="isActive">Is Active?:<sup
+                                            class="p-error">*</sup></label><br><br>
+                                    &nbsp; <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"
+                                        class="form-control"></p-inputSwitch>
+        
+                                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                        class="error-message p-error">
+                                         Please Active
+                                    </div>
+                                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                        class="error-message p-error">
+                                         Please Active
+                                    </div>
                                 </div>
+        
                                 <div class="col-12 mt-2">
                                     <button pButton pRipple type="submit" label="{{submitLabel}}"
                                         class="p-button-raised p-button-success"></button>

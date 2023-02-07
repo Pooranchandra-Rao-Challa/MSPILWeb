@@ -55,13 +55,13 @@ export class DivisionsComponent implements OnInit {
         })
         this.fbdivisions = this.formbuilder.group({
             divisionId: [null],
-            code: ['', (Validators.required)],
-            inchargeName: ['',],
-            listingOrder: ['', (Validators.required)],
-            name: ['', (Validators.required)],
-            inchargePhoneNo: ['',],
-            address: ['', (Validators.required)],
-            isActive: true
+            code: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+            inchargeName:new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+            listingOrder: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+            name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+            inchargePhoneNo:new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+            address: new FormControl(null, [ Validators.required, Validators.pattern("[a-zA-Z0-9.,/#&-]+")]),
+            isActive: new FormControl (true, Validators.required),
         });
 
 

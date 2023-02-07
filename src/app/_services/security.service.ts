@@ -1,7 +1,7 @@
-import { RoleDto, RoleViewDto, UserDto, UserViewDto } from './../_models/security';
+import { RoleDto, RoleViewDto, UserDto, UserViewDto, RolePermissionDto } from './../_models/security';
 import { Injectable } from "@angular/core";
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_ROLE_URI, CREATE_USER_URI, GET_ALL_SECTIONS_URI, GET_ROLES_URI, GET_ROLE_PERMISSIONS_URI, GET_USERS_URI, GET_USER_SECTIONS_URI, UPDATE_ROLE_URI, UPDATE_USER_URI, } from "./api.uri.service";
+import { CREATE_ROLE_URI, CREATE_USER_URI, GET_ALL_SECTIONS_URI, GET_PERMISSIONS_URI, GET_ROLES_URI, GET_ROLE_PERMISSIONS_URI, GET_USERS_URI, GET_USER_SECTIONS_URI, UPDATE_ROLE_URI, UPDATE_USER_URI, } from "./api.uri.service";
 
 
 @Injectable({ providedIn: 'root' })
@@ -31,6 +31,10 @@ export class SecurityService extends ApiHttpService {
     return this.get<RoleViewDto[]>(GET_ROLES_URI);
   }
 
+  public GetPermissions(){
+    return this.get<RolePermissionDto[]>(GET_PERMISSIONS_URI);
+  }
+
   public GetRoleWithPermissions(roleId:string){
     return this.getWithId(GET_ROLE_PERMISSIONS_URI,roleId);
   }
@@ -39,7 +43,7 @@ export class SecurityService extends ApiHttpService {
     return this.post<any>(CREATE_ROLE_URI,roleDto);
   }
 
-  public UpdateRoler(roleDto:RoleDto){
+  public UpdateRole(roleDto:RoleDto){
     return this.post<any>(UPDATE_ROLE_URI,roleDto);
   }
 

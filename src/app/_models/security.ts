@@ -57,7 +57,7 @@ export class RoleViewDto {
   roleId?: string
   name?: string
   code?: string
-  isActive?: string
+  isActive?: boolean
   createdBy?: string
   createdAt?: string
   updatedBy?: string
@@ -69,4 +69,13 @@ export class RoleDto {
   name?: string
   code?: string
   isActive?: boolean
+  permissions?:RolePermissionDto[]
+}
+
+export class RolePermissionDto {
+  permissionId?: string
+  label?: string
+  screenName?: string
+  displayName?:string
+  assigned?: boolean = false;
 }
