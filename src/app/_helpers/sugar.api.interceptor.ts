@@ -14,16 +14,9 @@ export class SugarAPIInterceptor implements HttpInterceptor {
   constructor(private jwtService: JWTService,private accountService: AccountService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // add auth header with ehr user, if user is logged in and request is to the api url
     const isApiUrl = request.url.startsWith(environment.ApiUrl);
     const isLoggedIn = this.jwtService.IsLoggedIn;
     if (isLoggedIn && isApiUrl) {
-      // const req = request.clone({
-      //   setHeaders: {
-      //     TOKEN_HEADER_KEY: `${this.jwtService.JWTToken}`,
-      //     'Content-Type': 'application/json'
-      //   }
-      // });
       let authReq = request;
       const token = this.jwtService.JWTToken;
       if (token != null) {
@@ -71,7 +64,7 @@ export class SugarAPIInterceptor implements HttpInterceptor {
               this.isRefreshing = false;
 
               this.jwtService.Logout();
-              return throwError(err);
+              return throwError(() => new Error(err));
             })
           );
         }
