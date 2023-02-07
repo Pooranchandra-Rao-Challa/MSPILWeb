@@ -33,8 +33,6 @@ export class StateComponent implements OnInit {
 
     }
     InitState() {
-
-        
         this.state = new StateDto();
         this.fbstates.reset();
         this.submitLabel = "Add State";

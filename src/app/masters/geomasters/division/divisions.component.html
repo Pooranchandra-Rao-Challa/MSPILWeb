@@ -43,6 +43,9 @@
                             <div class="field col-12 md:col-6">
                                 <label>Incharge Name:</label>
                                 <input pInputText type="text" formControlName="inchargeName">
+                                <div class="ng-invalid ng-touched p-error"
+                                *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">Incharge Name should only contain numbers.
+                                </div>
                             </div>
 
                             <div class="field col-12 md:col-6">

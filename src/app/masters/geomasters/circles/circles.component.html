@@ -46,7 +46,7 @@
                                             *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
 
                                             <div class="ng-invalid ng-touched p-error"
-                                              *ngIf="FormControls['name'].errors?.['pattern']">Code should only contain Alphabets .</div>
+                                              *ngIf="FormControls['name'].errors?.['pattern']">Circle Name should only contain Alphabets .</div>
                                   
                         </div>
 
@@ -67,7 +67,7 @@
                                 type="text" />
                            
                             <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['name'].errors?.['pattern']">Code should only contain Alphabets .</div>
+                            *ngIf="FormControls['name'].errors?.['pattern']">Incharge Name should only contain Alphabets .</div>
                             </div>
 
                         <div class="field col-12 md:col-6">
@@ -75,7 +75,7 @@
                                     class="p-error">*</sup></label>
                             <input pInputText id="listingOrder" formControlName="listingOrder"
                                 type="text" />
-                            <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched && FormControls['code'].errors?.['required']"
+                            <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched && FormControls['listingOrder'].errors?.['required']"
                                 class="error-message p-error">
                                 listing Order is required
                             </div>

@@ -54,4 +54,7 @@ export const UPDATE_DIESELRATE_URI = "BillingMaster/UpdateDieselRate";
 export const GET_DISTANCERATES_URI = "BillingMaster/GetDistanceRates";
 export const CREATE_DISTANCERATE_URI = "BillingMaster/CreateDistanceRate";
 export const UPDATE_DISTANCERATE_URI = "BillingMaster/UpdateDistanceRate";
+export const GET_WAREHOUSE_URI = "BillingMaster/GetWareHouses";
+export const CREATE_WAREHOUSE_URI = "BillingMaster/CreateWareHouse";
+export const UPDATE_WAREHOUSE_URI = "BillingMaster/UpdateWareHouse"; 
 

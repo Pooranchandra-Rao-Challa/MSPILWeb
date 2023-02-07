@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { BillDto, BillParameterDto, BillParameterViewDto, BillViewDto, DieselBunkDto, DieselBunkViewDto, DieselRateDto, DieselRateViewDto, DistanceRateDto, DistanceRateViewDto } from "../_models/billingmaster";
+import { BillDto, BillParameterDto, BillParameterViewDto, BillViewDto, DieselBunkDto, DieselBunkViewDto, DieselRateDto, DieselRateViewDto, DistanceRateDto, DistanceRateViewDto, WareHouseDto, WareHouseViewDto } from "../_models/billingmaster";
 import { ApiHttpService } from "./api.http.service";
 import {
-  CREATE_BILLPARAM_URI, CREATE_BILL_URI, CREATE_DIESELBUNK_URI, CREATE_DIESELRATE_URI, CREATE_DISTANCERATE_URI, GET_BILLPARAMS_URI, GET_BILLS_URI, GET_DIESELRATES_URI, GET_DIESEL_BUNK_URI, GET_DISTANCERATES_URI, UPDATE_BILLPARAM_URI, UPDATE_BILL_URI,
+  CREATE_BILLPARAM_URI, CREATE_BILL_URI, CREATE_DIESELBUNK_URI, CREATE_DIESELRATE_URI, CREATE_DISTANCERATE_URI, CREATE_WAREHOUSE_URI, GET_BILLPARAMS_URI, GET_BILLS_URI, GET_DIESELRATES_URI, GET_DIESEL_BUNK_URI, GET_DISTANCERATES_URI, GET_WAREHOUSE_URI, UPDATE_BILLPARAM_URI, UPDATE_BILL_URI,
   UPDATE_DIESELBUNK_URI,
   UPDATE_DIESELRATE_URI,
-  UPDATE_DISTANCERATE_URI
+  UPDATE_DISTANCERATE_URI,
+  UPDATE_WAREHOUSE_URI
 } from "./api.uri.service";
 
 
@@ -56,7 +57,6 @@ export class BillMasterService extends ApiHttpService {
   }
 
   public CreateDieselRate(dieselRate: DieselRateDto) {
-    debugger
     return this.post<DieselRateDto>(CREATE_DIESELRATE_URI, dieselRate);
   }
 
@@ -79,4 +79,15 @@ export class BillMasterService extends ApiHttpService {
     return this.post<DistanceRateDto>(UPDATE_DISTANCERATE_URI, distanceRate);
   }
 
+  public GetWareHouse(){
+    return this.get<WareHouseViewDto[]>(GET_WAREHOUSE_URI);
+  }
+  public CreateWareHouse(warehouse: WareHouseDto){
+    return this.post<WareHouseDto>(CREATE_WAREHOUSE_URI,warehouse);
+  }
+  public UpdateWareHouse(warehouse: WareHouseDto){
+    return this.post<WareHouseDto>(UPDATE_WAREHOUSE_URI,warehouse);
+  }
+
+ 
 }
