@@ -10,6 +10,7 @@ import { VillageParamRatesComponent } from './villageparamrates/villageparamrate
 import { VillageTPTRateComponent } from './village-tpt-rate/village-tpt-rate.component';
 import { DieselBunkComponent } from './dieselbunk/dieselbunk.component';
 import { WareHouseComponent } from './warehouse/warehouse.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,5 +28,8 @@ import { WareHouseComponent } from './warehouse/warehouse.component';
     PrimeNgModule,
     BillMastersRoutingModule
   ],
+  providers: [
+    DatePipe
+  ]
 })
 export class BillMastersModule { }

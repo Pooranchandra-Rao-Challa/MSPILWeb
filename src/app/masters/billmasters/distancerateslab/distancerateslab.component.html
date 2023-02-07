@@ -15,13 +15,54 @@
     <!-- toolbar -->
     <!-- <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Distance Rate</h4>
+        <div class="p-fluid p-formgrid grid">
+          <div class="field  md:col-3 col-12">
+            <label>UpTo KM:</label>
+            <input pInputText type="text">
+          </div>
+          <div class="field  md:col-3 col-12">
+            <label>UpTo KM Rate():</label>
+            <input pInputText type="text">
+          </div>
+          <div class="field  md:col-3 col-12">
+            <label>To KM:</label>
+            <input pInputText type="text">
+          </div>
+          <div class="field  md:col-3 col-12">
+            <label>One KM Rate():</label>
+            <input pInputText type="text">
+          </div>
+        </div>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Bill" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="showDialog = true"></button>
+        <label>Proess</label>
+        <button pButton pRipple label="Proess" class="p-button-success p-mr-2"></button>
       </ng-template>
     </p-toolbar> -->
+
+    <!-- filter -->
+    <div class="p-fluid p-formgrid grid mt-2">
+      <div class="field xl:col-2 md:col-3 col-12">
+        <label>UpTo KM:</label>
+        <input pInputText type="text">
+      </div>
+      <div class="field xl:col-2 md:col-3 col-12">
+        <label>UpTo KM Rate(₹):</label>
+        <input pInputText type="text">
+      </div>
+      <div class="field xl:col-2 md:col-3 col-12">
+        <label>To KM:</label>
+        <input pInputText type="text">
+      </div>
+      <div class="field xl:col-2 md:col-3 col-12">
+        <label>One KM Rate(₹):</label>
+        <input pInputText type="text">
+      </div>
+      <div class="field xl:col-2 md:col-3 col-12">
+        <label>Process:</label>
+        <button pButton pRipple label="Process" class="p-button-success p-mr-2"></button>
+      </div>
+    </div>
 
     <!-- table -->
     <p-table #dt1 [value]="distanceRates" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
@@ -41,14 +82,15 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="billCategoryName" style="min-width: 100px;">
-            Distance(KM) <p-sortIcon field="billCategoryName"></p-sortIcon>
+          <th></th>
+          <th pSortableColumn="distance" style="min-width: 100px;">
+            Distance(KM) <p-sortIcon field="distance"></p-sortIcon>
           </th>
-          <th pSortableColumn="billNo" style="min-width: 100px;">
-            Rate <p-sortIcon field="billNo"></p-sortIcon>
+          <th pSortableColumn="rate" style="min-width: 100px;">
+            Rate <p-sortIcon field="rate"></p-sortIcon>
           </th>
-          <th pSortableColumn="seasonName" style="min-width: 100px;">
-            IsActive <p-sortIcon field="seasonName"></p-sortIcon>
+          <th pSortableColumn="isActive" style="min-width: 100px;">
+            IsActive <p-sortIcon field="isActive"></p-sortIcon>
           </th>
           <th pSortableColumn="createdAt" style="min-width: 100px;">
             Created Date <p-sortIcon field="createdAt"></p-sortIcon>
@@ -66,8 +108,10 @@
       </ng-template>
       <ng-template pTemplate="body" let-distance>
         <tr>
-          <td>{{distance.billCategoryName}}</td>
-          <td>{{distance.billNo}}</td>
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+            (click)="editDistanceRate(distance)"></button></td>
+          <td>{{distance.distance}}</td>
+          <td>{{distance.rate}}</td>
           <td style="text-align:center">
             <p-checkbox name="active" value="active" [(ngModel)]="distance.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
@@ -80,12 +124,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="7">No distance rate found.</td>
+          <td colspan="8">No distance rate found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="7">Loading distance rate data. Please wait.</td>
+          <td colspan="8">Loading distance rate data. Please wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -93,8 +137,8 @@
     <!-- dialog box -->
     <p-dialog header="Distance Rate" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
-      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbDistanceRate.reset()">
-      <div class="flex flex-column align-items-center justify-content-center">
+      (onHide)="fbDistanceRate.reset()">
+      <div class="flex flex-column justify-content-center">
         <form [formGroup]="fbDistanceRate" (ngSubmit)="onSubmit()">
           <div class="grid">
             <div class="col-12">
@@ -133,8 +177,7 @@
         </form>
       </div>
       <ng-template pTemplate="left">
-        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
-         ></button>
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success" (click)="onSubmit()"></button>
       </ng-template>
     </p-dialog>
 

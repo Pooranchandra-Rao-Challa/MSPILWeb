@@ -58,7 +58,7 @@
           <th>
             Sub GL Code <p-sortIcon></p-sortIcon>
           </th>
-          <th>
+          <th style="text-align:center">
             Is Active
           </th>
           <th>
@@ -88,7 +88,7 @@
           <td>{{bunk.rate}}</td>
           <td>{{bunk.glCode}}</td>
           <td>{{bunk.subGLCode}}</td>
-          <td>
+          <td style="text-align:center">
             <p-checkbox name="active" value="active" [(ngModel)]="bunk.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
