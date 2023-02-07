@@ -117,8 +117,6 @@ export class UsersComponent implements OnInit {
   }
   onSubmit() {
     if (this.userForm.valid) {
-      console.log(this.userForm.value);
-
       this.saveUser().subscribe((resp) => {
         if (resp) {
           this.dialog = false;
@@ -129,16 +127,6 @@ export class UsersComponent implements OnInit {
 
         }
       });
-      // console.log(this.userForm.value);
-      // this.securityService.CreateUser(this.userForm.value).subscribe(resp =>{
-      //   if(resp){
-      //     this.userForm.reset();
-      //     this.filter.nativeElement.value = '';
-      //     this.initUsers();
-      //   }else{
-
-      //   }
-      // })
     }
     else {
       this.userForm.markAllAsTouched();

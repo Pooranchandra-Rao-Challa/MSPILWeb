@@ -26,7 +26,6 @@ export class DieselBunkComponent implements OnInit {
     private billmasterService: BillMasterService) { }
 
   ngOnInit(): void {
-    debugger
     this.loadDieselBunks();
     this.dieselRateForm();
   }
