@@ -192,7 +192,7 @@
                             </div>
 
                             <div class="field col-12 md:col-3">
-                                <label for="dryArea">Dry Area(Acres):<sup class="p-error">*</sup></label>
+                                <label for="dryArea">Dry Area(Area):<sup class="p-error">*</sup></label>
                                 <p-inputNumber inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2">
                                 </p-inputNumber>
 
@@ -313,16 +313,16 @@
                     <th pSortableColumn="noOfEbservices"><p-sortIcon field="noOfEbservices"></p-sortIcon>No of
                         Ebservices</th>
                     <th pSortableColumn="tptRate"><p-sortIcon field="tptRate"></p-sortIcon>Tpt Rate</th>
-                    <th pSortableColumn="totalAcres"><p-sortIcon field="totalAcres"></p-sortIcon>Total Acres</th>
-                    <th pSortableColumn="cultivableAcres"><p-sortIcon field="cultivableAcres"></p-sortIcon>Cultivable
-                        Acress</th>
-                    <th pSortableColumn="irrigationAcres"><p-sortIcon field="irrigationAcres"></p-sortIcon>Irrigation
-                        Acres</th>
-                    <th pSortableColumn="dryAcres"><p-sortIcon field="dryAcres"></p-sortIcon>Dry Acres</th>
-                    <th pSortableColumn="potentialAcres"><p-sortIcon field="potentialAcres"></p-sortIcon>Potential Acres
+                    <th pSortableColumn="totalArea"><p-sortIcon field="totalArea"></p-sortIcon>Total Area</th>
+                    <th pSortableColumn="cultivableArea"><p-sortIcon field="cultivableArea"></p-sortIcon>Cultivable
+                        Area</th>
+                    <th pSortableColumn="irrigationArea"><p-sortIcon field="irrigationArea"></p-sortIcon>Irrigation
+                        Area</th>
+                    <th pSortableColumn="dryArea"><p-sortIcon field="dryArea"></p-sortIcon>Dry Area</th>
+                    <th pSortableColumn="potentialArea"><p-sortIcon field="potentialArea"></p-sortIcon>Potential Area
                     </th>
-                    <th pSortableColumn="notSuitableAcres"><p-sortIcon field="notSuitableAcres"></p-sortIcon>Not
-                        Suitable Acres</th>
+                    <th pSortableColumn="notSuitableArea"><p-sortIcon field="notSuitableArea"></p-sortIcon>Not
+                        Suitable Area</th>
                     <th pSortableColumn="targetTons"><p-sortIcon field="targetTons"></p-sortIcon>Target Tons</th>
                     <th pSortableColumn="listingOrder"><p-sortIcon field="listingOrder"></p-sortIcon>Listing Order</th>
                     <th pSortableColumn="isActive"><p-sortIcon field="isActive"></p-sortIcon>Is Active</th>
@@ -358,12 +358,12 @@
                     <td>{{village.divertedDistance}}</td>
                     <td>{{village.noOfEbservices}}</td>
                     <td>{{village.tptRate}}</td>
-                    <td>{{village.totalAcres}}</td>
-                    <td>{{village.cultivableAcres}}</td>
-                    <td>{{village.irrigationAcres}}</td>
-                    <td>{{village.dryAcres}}</td>
-                    <td>{{village.potentialAcres}}</td>
-                    <td>{{village.notSuitableAcres}}</td>
+                    <td>{{village.totalArea}}</td>
+                    <td>{{village.cultivableArea}}</td>
+                    <td>{{village.irrigationArea}}</td>
+                    <td>{{village.dryArea}}</td>
+                    <td>{{village.potentialArea}}</td>
+                    <td>{{village.notSuitableArea}}</td>
                     <td>{{village.targetTons}}</td>
                     <td>{{village.listingOrder}}</td>
                     <td>{{village.isActive}}</td>

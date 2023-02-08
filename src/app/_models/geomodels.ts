@@ -165,17 +165,17 @@ export interface VillagesViewDto {
   inchargeName: string,
   inchargePhoneNo: string,
   address: string,
-  pinCode: number,
+  pinCode: string,
   distance: number,
   divertedDistance: number,
   noOfEbservices: number,
   tptRate: number,
-  totalAcres: number,
-  cultivableAcres: number,
-  irrigationAcres: number,
-  dryAcres: number,
-  potentialAcres: number,
-  notSuitableAcres: number,
+  totalArea: number,
+  cultivableArea: number,
+  irrigationArea: number,
+  dryArea: number,
+  potentialArea: number,
+  notSuitableArea: number,
   targetTons: number,
   listingOrder: number,
   isActive: boolean,
@@ -193,19 +193,19 @@ export class VillageDto {
   sectionId?: number;
   inchargeName?: string;
   inchargePhoneNo?: string;
-  pinCode?: number;
+  pinCode?: string;
   address?: string;
   distance?: number;
   divertedDistance?: number;
   noOfEbservices?: number;
   tptrate?: number;
-  totalAcres?: number;
-  cultivableAcres?: number;
-  irrigationAcres?: number;
-  dryAcres?: number;
-  potentialAcres?: number;
-  notSuitableAcres?: number;
-  targetTons?: number;
+  totalArea?: number;
+  cultivableArea?: number;
+  irrigationArea?: number;
+  dryArea?: number;
+  potentialArea?: number;
+  notSuitableArea?: number;
+  targetArea?: number;
   listingOrder?: number;
   isActive?: boolean;
 }
