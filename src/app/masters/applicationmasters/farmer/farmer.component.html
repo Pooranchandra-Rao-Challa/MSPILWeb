@@ -1,0 +1,187 @@
+<div class="col-12">
+    <div class="card">
+  
+      <!-- toolbar -->
+      <p-toolbar styleClass="p-mb-4 p-d-flex p-jc-center">
+        <ng-template pTemplate="left">
+          <h4>Distance Rate</h4>
+
+
+          
+            <div class="p-fluid p-formgrid grid p-d-flex p-ai-center">
+            <div class="field xl:col-6 md:col-6 col-12 p-d-flex p-jc-center">
+                <input pInputText type="text" placeholder="Search Farmer Name" style="width: 300px;">
+              </div>   
+              
+              <div class="field xl:col-6 md:col-6 col-12 p-d-flex p-jc-center">
+                <input pInputText type="text" placeholder="Search Farmer Name" style="width: 300px;">
+              </div>
+            </div>
+
+
+
+                
+    
+        </ng-template>
+              
+        <ng-template pTemplate="right">
+          <button pButton pRipple label="New Distance Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="showDialog = true"></button>
+        </ng-template>
+      </p-toolbar>
+      
+      
+      
+      
+  
+      <!-- toolbar -->
+      <!-- <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <div class="p-fluid p-formgrid grid">
+            <div class="field  md:col-3 col-12">
+              <label>UpTo KM:</label>
+              <input pInputText type="text">
+            </div>
+            <div class="field  md:col-3 col-12">
+              <label>UpTo KM Rate():</label>
+              <input pInputText type="text">
+            </div>
+            <div class="field  md:col-3 col-12">
+              <label>To KM:</label>
+              <input pInputText type="text">
+            </div>
+            <div class="field  md:col-3 col-12">
+              <label>One KM Rate():</label>
+              <input pInputText type="text">
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="right">
+          <label>Proess</label>
+          <button pButton pRipple label="Proess" class="p-button-success p-mr-2"></button>
+        </ng-template>
+      </p-toolbar> -->
+  
+      <!-- filter -->
+    
+  
+      <!-- table -->
+      <p-table #dt1 [value]="distanceRates" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+        [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+        [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+              (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+                class="w-full" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th></th>
+            <th pSortableColumn="distance" style="min-width: 100px;">
+              Distance(KM) <p-sortIcon field="distance"></p-sortIcon>
+            </th>
+            <th pSortableColumn="rate" style="min-width: 100px;">
+              Rate <p-sortIcon field="rate"></p-sortIcon>
+            </th>
+            <th pSortableColumn="isActive" style="min-width: 100px;">
+              IsActive <p-sortIcon field="isActive"></p-sortIcon>
+            </th>
+            <th pSortableColumn="createdAt" style="min-width: 100px;">
+              Created Date <p-sortIcon field="createdAt"></p-sortIcon>
+            </th>
+            <th pSortableColumn="createdBy" style="min-width: 100px;">
+              Created By User <p-sortIcon field="createdBy"></p-sortIcon>
+            </th>
+            <th pSortableColumn="updatedAt" style="min-width: 100px;">
+              Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
+            </th>
+            <th pSortableColumn="updatedBy" style="min-width: 100px;">
+              Updated By User <p-sortIcon field="updatedBy"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-distance>
+          <tr>
+            <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editDistanceRate(distance)"></button></td>
+            <td>{{distance.distance}}</td>
+            <td>{{distance.rate}}</td>
+            <td style="text-align:center">
+              <p-checkbox name="active" value="active" [(ngModel)]="distance.isActive" [binary]="true" [disabled]="true">
+              </p-checkbox>
+            </td>
+            <td>{{distance.createdAt | date: 'dd-MMM-yyyy'}}</td>
+            <td>{{distance.createdBy}}</td>
+            <td>{{distance.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+            <td>{{distance.updatedBy}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">No distance rate found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">Loading distance rate data. Please wait.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+  
+      <!-- dialog box -->
+      <p-dialog header="Distance Rate" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+        [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
+        (onHide)="fbDistanceRate.reset()">
+        <div class="flex flex-column justify-content-center">
+          <form [formGroup]="fbDistanceRate" (ngSubmit)="onSubmit()">
+            <div class="grid">
+              <div class="col-12">
+                <div class="p-fluid p-formgrid grid">
+                  <div class="field col-12">
+                    <label>Distance:<sup class="p-error">*</sup></label>
+                    <input pInputText id="distance" type="text" formControlName="distance"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
+                    <span *ngIf="FormControls['distance'].touched && FormControls['distance'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['distance'].errors?.['required']">
+                        Please Enter Distance.</div>
+                    </span>
+                  </div>
+                  <div class="field col-12">
+                    <label>Rate:<sup class="p-error">*</sup></label>
+                    <input pInputText id="rate" type="text" formControlName="rate"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
+                    <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
+                        Please Enter Rate.</div>
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
+                    <p-inputSwitch formControlName="isActive"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
+                    </p-inputSwitch>
+                    <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
+                        Please Select Active.</div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <ng-template pTemplate="left">
+          <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success" (click)="onSubmit()"></button>
+        </ng-template>
+      </p-dialog>
+  
+    </div>
+  </div>
+  
