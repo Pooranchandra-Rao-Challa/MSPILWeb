@@ -22,14 +22,12 @@ export class DieselRatesComponent implements OnInit {
   filter: any;
   showDialog: boolean = false;
   fbDieselRate!: FormGroup;
-  value?: Date;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.value = new Date();
     this.loadDieselRates();
     this.dieselRateForm();
   }
@@ -64,16 +62,12 @@ export class DieselRatesComponent implements OnInit {
   }
 
   editDieselRate(dieselRate: DieselRateViewDto) {
-    debugger
     this.dieselRate.id = dieselRate.id;
-    this.dieselRate.fromDate = dieselRate.fromDate;
-    // this.dieselRate.fromDate = this.datepipe.transform(dieselRate.fromDate, "yyyy-MM-dd");
-    this.dieselRate.toDate = dieselRate.toDate;
+    this.dieselRate.fromDate = new Date(dieselRate.fromDate?.toString()||"")
+    this.dieselRate.toDate =  new Date(dieselRate.toDate?.toString()||"");
     this.dieselRate.rate = dieselRate.rate;
     this.dieselRate.isActive = dieselRate.isActive;
     this.fbDieselRate.setValue(this.dieselRate);
-    console.log(this.fbDieselRate.value.fromDate);
-
     this.addFlag = false;
     this.showDialog = true;
   }
@@ -84,9 +78,7 @@ export class DieselRatesComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger
     if (this.fbDieselRate.valid) {
-      console.log(this.fbDieselRate.value);
       this.saveBillParam().subscribe(resp => {
         if (resp) {
           this.loadDieselRates();
