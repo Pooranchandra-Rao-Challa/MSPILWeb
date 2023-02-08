@@ -1,3 +1,4 @@
+
 export class BillDto {
   billId?: number;
   billNo?: number;
@@ -90,3 +91,65 @@ export class DieselBunkViewDto {
   createdBy?: string;
 }
 
+export class DieselRateDto {
+  id?: number;
+  fromDate?: Date;
+  toDate?: Date;
+  rate?: number;
+  isActive?: boolean;
+}
+
+export class DieselRateViewDto {
+  id?: number;
+  fromDate?: Date;
+  toDate?: Date;
+  rate?: number;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedByUser?: string;
+  createdByUser?: string;
+}
+
+export class DistanceRateDto {
+  id?: number;
+  distance?: number;
+  rate?: number;
+  isActive?: boolean
+}
+
+export class DistanceRateViewDto {
+  id?: number;
+  distance?: number;
+  rate?: number;
+  isActive?: boolean
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
+
+export class WareHouseViewDto {
+  id?: number
+  code?: string
+  name?: string
+  glcode?: string
+  subGlcode?: string
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedByUser?: string
+  createdByUser?: string
+  warehouseId: any;
+}
+
+export class WareHouseDto {
+  id?: number
+  code?: string
+  name?: string
+  glcode?: string
+  subGlcode?: string
+  isActive?: boolean
+
+}

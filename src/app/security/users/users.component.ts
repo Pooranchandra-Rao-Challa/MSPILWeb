@@ -14,7 +14,7 @@ import { HttpEvent } from '@angular/common/http';
 })
 export class UsersComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
-  users: any;
+  users: UserViewDto[] =[];
   selectedUser: UserViewDto = {};
   user: UserDto = {};
   roles: RoleDto[] = [];
@@ -57,6 +57,7 @@ export class UsersComponent implements OnInit {
   initUsers() {
     this.securityService.GetUsers().subscribe(resp => {
       this.users = resp as unknown as UserViewDto[];
+      this.users.sort((a,b)=> (a.userName||"").localeCompare(b.userName||""))
     })
   }
 
@@ -117,8 +118,6 @@ export class UsersComponent implements OnInit {
   }
   onSubmit() {
     if (this.userForm.valid) {
-      console.log(this.userForm.value);
-
       this.saveUser().subscribe((resp) => {
         if (resp) {
           this.dialog = false;
@@ -129,16 +128,6 @@ export class UsersComponent implements OnInit {
 
         }
       });
-      // console.log(this.userForm.value);
-      // this.securityService.CreateUser(this.userForm.value).subscribe(resp =>{
-      //   if(resp){
-      //     this.userForm.reset();
-      //     this.filter.nativeElement.value = '';
-      //     this.initUsers();
-      //   }else{
-
-      //   }
-      // })
     }
     else {
       this.userForm.markAllAsTouched();

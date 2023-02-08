@@ -55,7 +55,7 @@ export class DivisionsComponent implements OnInit {
         })
         this.fbdivisions = this.formbuilder.group({
             divisionId: [null],
-            code: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+            code:new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
             inchargeName:new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
             listingOrder: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
             name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),

@@ -21,12 +21,12 @@ export class DieselBunkComponent implements OnInit {
   showDialog: boolean = false;
   fbDieselBunk!: FormGroup;
   addFlag: boolean = true;
+  globalFilterFields: string[] = ['code','name','address','pinCode','phoneNo','email','rate','glCode','subGLCode','createdAt','createdBy','updatedAt','updatedBy'];
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService) { }
 
   ngOnInit(): void {
-    debugger
     this.loadDieselBunks();
     this.dieselRateForm();
   }

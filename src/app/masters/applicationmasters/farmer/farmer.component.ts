@@ -7,12 +7,16 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 
 @Component({
-  selector: 'app-distancerateslab',
-  templateUrl: './distancerateslab.component.html',
+  selector: 'app-farmer',
+  templateUrl: './farmer.component.html',
   styles: [
   ]
 })
-export class DistanceRateSlabComponent implements OnInit {
+export class FarmerComponent implements OnInit {
+
+
+  value8:any
+
   distanceRates: DistanceRateViewDto[] = [];
   distanceRate: DistanceRateDto = new DistanceRateDto();
   showDialog: boolean = false;

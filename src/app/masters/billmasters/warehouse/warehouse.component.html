@@ -4,16 +4,16 @@
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>WareHouse</h4>
+        <h4>Ware House</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New WareHouse" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Ware House" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="showDialog = true"></button>
       </ng-template>
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dt1 [value]="wareHouse" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+    <p-table #dt1 [value]="warehouses" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
@@ -30,118 +30,137 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th></th>
           <th>
-            Code <p-sortIcon></p-sortIcon>
+            WareHouse code <p-sortIcon></p-sortIcon>
           </th>
           <th>
-            Name <p-sortIcon></p-sortIcon>
+            WareHouse Name <p-sortIcon></p-sortIcon>
           </th>
           <th>
-            Rate <p-sortIcon></p-sortIcon>
+            GL Code <p-sortIcon></p-sortIcon>
           </th>
           <th>
-            GLCode <p-sortIcon></p-sortIcon>
+          Sub GL Code <p-sortIcon></p-sortIcon>
+          </th>
+          <th style="text-align:center">
+            Is Active
           </th>
           <th>
-            Sub GLCode <p-sortIcon></p-sortIcon>
+            updatedAt<p-sortIcon></p-sortIcon>
           </th>
           <th>
-            Is Active <p-sortIcon></p-sortIcon>
+            createdAt <p-sortIcon></p-sortIcon>
           </th>
           <th>
-            Created By User <p-sortIcon></p-sortIcon>
+            updatedByUser <p-sortIcon></p-sortIcon>
           </th>
           <th>
-            Updated Date <p-sortIcon></p-sortIcon>
-          </th>
-          <th>
-            Updated By User <p-sortIcon></p-sortIcon>
+            createdByUser <p-sortIcon></p-sortIcon>
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-diesel>
+      <ng-template pTemplate="body" let-warehouses>
         <tr>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>
-            <p-checkbox name="active" value="active"></p-checkbox>
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+            (click)="editWarehouse(warehouses)"></button></td>
+          <td>{{warehouses.code}}</td>
+          <td>{{warehouses.name}}</td>
+          <td>{{warehouses.glcode}}</td>
+          <td>{{warehouses.subGlcode}}</td>
+          <td style="text-align:center">
+            <p-checkbox name="active" value="active" [(ngModel)]="warehouses.isActive" [binary]="true" [disabled]="true">
+            </p-checkbox>
           </td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
-          <td>{{diesel}}</td>
+          <td>{{warehouses.updatedAt }}</td>
+          <td>{{warehouses.createdAt}}</td>
+          <td>{{warehouses.updatedByUser }}</td>
+          <td>{{warehouses.createdByUser}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="9">No ware house found.</td>
+          <td colspan="14">No diesel bunk found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="9">Loading ware house data. Please wait.</td>
+          <td colspan="14">Loading diesel bunk data. Please wait.</td>
         </tr>
       </ng-template>
     </p-table>
 
     <!-- dialog box -->
-    <p-dialog header="WareHouse" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbWareHouse.reset()">
+    <p-dialog header="Ware House" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbwarehouse.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbWareHouse" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbwarehouse" (ngSubmit)="onSubmit()">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code" type="text" formControlName="code"
+                  <input pInputText id="code" type="text" formControlName="code" 
+
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                  <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                      Please Enter Code.</div>
+                 <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.</div>
+
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['code'].errors?.['pattern']">Code should only contain Numbers .</div>
                   </span>
+
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name" type="text" formControlName="name"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                  
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                      Please Enter Name.</div>
-                  </span>
+                       <div class="ng-invalid ng-touched p-error"
+                           *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
+ 
+                           <div class="ng-invalid ng-touched p-error"
+                             *ngIf="FormControls['name'].errors?.['pattern']">Name should only contain Alphabets .</div>
+                   </span>
+ 
                 </div>
+               
                 <div class="field col-12 md:col-6">
-                  <label>GLCode:<sup class="p-error">*</sup></label>
-                  <input pInputText id="glcode" type="text" formControlName="glcode"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
+                  <label>GLCode:</label>
+                  <input pInputText id="gLcode" type="text" formControlName="glcode"
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
                   <span *ngIf="FormControls['glcode'].touched && FormControls['glcode'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['required']">
-                      Please Enter GLCode.</div>
-                  </span>
+                       <div class="ng-invalid ng-touched p-error"
+                           *ngIf="FormControls['glcode'].errors?.['required']">Please Enter GLCode.</div>
+ 
+                           <div class="ng-invalid ng-touched p-error"
+                             *ngIf="FormControls['glcode'].errors?.['pattern']">GLCode should only contain Numbers .</div>
+                   </span>
+ 
+                  
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>SubGLCode:<sup class="p-error">*</sup></label>
-                  <input pInputText id="subglcode" type="text" formControlName="subglcode"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['subglcode'].touched && FormControls['subglcode'].errors }">
-                  <span *ngIf="FormControls['subglcode'].touched && FormControls['subglcode'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subglcode'].errors?.['required']">
-                      Please Enter SubGLCode.</div>
-                  </span>
+                  <label>SubGLCode:</label>
+                  <input pInputText id="subGlcode" type="text" formControlName="subGlcode"
+                  
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
+                  <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
+                       <div class="ng-invalid ng-touched p-error"
+                           *ngIf="FormControls['subGlcode'].errors?.['required']">Please Enter SubGLCode.</div>
+ 
+                           <div class="ng-invalid ng-touched p-error"
+                             *ngIf="FormControls['subGlcode'].errors?.['pattern']">SubGLCode should only contain Numbers .</div>
+                   </span>
                 </div>
+               
+
                 <div class="col-12 md:col-6">
                   <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
-                  <p-inputSwitch formControlName="isActive"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
+                  <p-inputSwitch formControlName="isActive">
                   </p-inputSwitch>
-                  <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
-                      Please Select Active.</div>
-                  </span>
+                
                 </div>
               </div>
             </div>

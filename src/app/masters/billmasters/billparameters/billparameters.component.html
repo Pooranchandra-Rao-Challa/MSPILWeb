@@ -16,7 +16,7 @@
     <p-table #dt1 [value]="billParameters" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      [rowsPerPageOptions]="[10,25,50]">
+      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -31,40 +31,40 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="id">
+          <th pSortableColumn="id" style="min-width: 120px;">
             Bill Category <p-sortIcon field="id"></p-sortIcon>
           </th>
-          <th pSortableColumn="type">
+          <th pSortableColumn="type" style="min-width: 120px;">
             Type <p-sortIcon field="type"></p-sortIcon>
           </th>
-          <th pSortableColumn="code">
+          <th pSortableColumn="code" style="min-width: 120px;">
             Code <p-sortIcon field="code"></p-sortIcon>
           </th>
-          <th pSortableColumn="name">
+          <th pSortableColumn="name" style="min-width: 120px;">
             Name <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="caluclationType">
+          <th pSortableColumn="caluclationType" style="min-width: 120px;">
             CalcType <p-sortIcon field="caluclationType"></p-sortIcon>
           </th>
-          <th pSortableColumn="formula">
+          <th pSortableColumn="formula" style="min-width: 120px;">
             Formula <p-sortIcon field="formula"></p-sortIcon>
           </th>
-          <th pSortableColumn="priority">
+          <th pSortableColumn="priority" style="min-width: 120px;">
             Priority <p-sortIcon field="priority"></p-sortIcon>
           </th>
-          <th>
+          <th style="text-align:center" style="min-width: 120px;">
             Is active
           </th>
-          <th pSortableColumn="createdAt">
+          <th pSortableColumn="createdAt" style="min-width: 120px;">
             Created Date <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="createdByUser">
+          <th pSortableColumn="createdByUser" style="min-width: 120px;">
             Created By User <p-sortIcon field="createdByUser"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedAt">
+          <th pSortableColumn="updatedAt" style="min-width: 120px;">
             Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedByUser">
+          <th pSortableColumn="updatedByUser" style="min-width: 120px;">
             Updated By User <p-sortIcon field="updatedByUser"></p-sortIcon>
           </th>
         </tr>
@@ -80,7 +80,7 @@
           <td>{{billparam.caluclationType}}</td>
           <td>{{billparam.formula}}</td>
           <td>{{billparam.priority}}</td>
-          <td>
+          <td style="text-align:center">
             <p-checkbox name="active" value="active" [(ngModel)]="billparam.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>

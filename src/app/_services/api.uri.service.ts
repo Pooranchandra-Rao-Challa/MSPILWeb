@@ -48,3 +48,13 @@ export const GET_BILLPARAMS_URI = "BillingMaster/GetBillParameters";
 export const GET_DIESEL_BUNK_URI = "BillingMaster/GetDieselBunks";
 export const CREATE_DIESELBUNK_URI = "BillingMaster/CreateDieselBunk";
 export const UPDATE_DIESELBUNK_URI = "BillingMaster/UpdateDieselBunk";
+export const GET_DIESELRATES_URI = "BillingMaster/GetDieselRates";
+export const CREATE_DIESELRATE_URI = "BillingMaster/CreateDieselRate";
+export const UPDATE_DIESELRATE_URI = "BillingMaster/UpdateDieselRate";
+export const GET_DISTANCERATES_URI = "BillingMaster/GetDistanceRates";
+export const CREATE_DISTANCERATE_URI = "BillingMaster/CreateDistanceRate";
+export const UPDATE_DISTANCERATE_URI = "BillingMaster/UpdateDistanceRate";
+export const GET_WAREHOUSE_URI = "BillingMaster/GetWareHouses";
+export const CREATE_WAREHOUSE_URI = "BillingMaster/CreateWareHouse";
+export const UPDATE_WAREHOUSE_URI = "BillingMaster/UpdateWareHouse"; 
+

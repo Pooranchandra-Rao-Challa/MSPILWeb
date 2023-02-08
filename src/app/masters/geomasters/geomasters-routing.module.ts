@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CirclesComponent } from './circles/circles.component';
+import { DistrictComponent } from './districts/district.component';
+import { DivisionsComponent } from './division/divisions.component';
+import { MandalComponent } from './mandal/mandal.component';
+import { SectionComponent } from './section/section.component';
+import { StateComponent } from './state/state.component';
+import { VillageComponent } from './village/village.component';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: 'districts', data: { breadcrumb: 'Districts' }, loadChildren: () => import('./districts/district.module').then(m => m.DistirctsModule) },
-        { path: 'circle', data: { breadcrumb: 'Circles' }, loadChildren: () => import('./circles/circles.module').then(m => m.CirclesModule) },
-        { path: 'division', data: { breadcrumb: 'Division' }, loadChildren: () => import('./division/divisions.module').then(m => m.DivisionsModule) },
-        { path: 'mandal', data: { breadcrumb: 'villages' }, loadChildren: () => import('./mandal/mandal.module').then(m => m.MandalModule) },
-        { path: 'section', data: { breadcrumb: 'Section' }, loadChildren: () => import('./section/section.module').then(m => m.SectionModule) },
-        { path: 'state', data: { breadcrumb: 'State' }, loadChildren: () => import('./state/state.module').then(m => m.StateModule) },
-        { path: 'village', data: { breadcrumb: 'Village' }, loadChildren: () => import('./village/village.module').then(m => m.VillageModule) },
-
+        {path:'circle', component: CirclesComponent },
+        {path:'districts', component: DistrictComponent },
+        {path:'division',component:DivisionsComponent},
+        {path:'mandal',component:MandalComponent},
+        {path:'section',component:SectionComponent},
+        {path:'state',component:StateComponent},
+        {path:'village',component:VillageComponent},
     ])],
     exports: [RouterModule]
 })

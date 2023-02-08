@@ -55,7 +55,7 @@ export class DistrictComponent implements OnInit {
     })
 
     this.fbdistricts = this.formbuilder.group({
-      code:new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
       name:new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       stateId: ['',],
       districtId: ['',(Validators.required)],
