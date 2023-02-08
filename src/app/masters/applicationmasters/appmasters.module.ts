@@ -5,7 +5,8 @@ import { SeasonComponent } from './season/season.component';
 import { WeedComponent } from './weed/weed.component';
 import { PestComponent } from './pest/pest.component';
 import { DiseaseComponent } from './disease/disease.component';
-import { FertilizerComponent } from './fertilizer/fertilizer.component'
+import { FertilizerComponent } from './fertilizer/fertilizer.component';
+import { FarmerComponent } from './farmer/farmer.component'
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { FertilizerComponent } from './fertilizer/fertilizer.component'
     WeedComponent,
     PestComponent,
     DiseaseComponent,
-    FertilizerComponent
+    FertilizerComponent,
+    FarmerComponent
   ],
   imports: [
     PrimeNgModule,

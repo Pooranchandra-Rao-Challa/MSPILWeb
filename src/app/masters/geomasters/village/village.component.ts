@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CircleDto, CirclesViewDto, DivisionDto, VillageDto, VillagesViewDto, StateDto } from 'src/app/_models/geomodels';
+import { CircleDto, CirclesViewDto, DivisionDto, VillageDto, VillagesViewDto, StateDto, SectionDto, DistrictDto, MandalDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
@@ -26,6 +26,9 @@ export class VillageComponent implements OnInit {
   addFlag: boolean = true;
   divisions: DivisionDto[] = [];
   circles: CircleDto[] = [];
+  sections: SectionDto[] = [];
+  mandals: MandalDto[] = [];
+  district: DistrictDto[] = [];
 
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -52,36 +55,38 @@ export class VillageComponent implements OnInit {
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]
     })
+   
 
     this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[]
     })
 
     this.fbvillages = this.formbuilder.group({
-        division: ['', Validators.required],
-        circle: ['', Validators.required],
-        section: ['', Validators.required],
-        target: ['', Validators.required],
-        district: ['', Validators.required],
-        mandal: ['', Validators.required],
+        divisionId: ['', Validators.required],
+        circleId: ['', Validators.required],
+        sectionId: ['', Validators.required],
+        targetTons: ['', Validators.required],
+        stateId: ['', Validators.required],
+        districtId: ['', Validators.required],
+        mandalId: ['', Validators.required],
         address: ['', Validators.required],
         PinCode:['', Validators.required],
-        code: ['', Validators.required],
-        name: ['', Validators.required],
+        villageCode: ['', Validators.required],
+        villageName: ['', Validators.required],
         inchargeName: ['',],
         inchargePhoneNo: ['',],
         distance: ['', Validators.required],
         divertedDistance: ['', Validators.required],
-        noOfEBServices: ['', Validators.required],
-        TPTRate: ['', Validators.required],
-        circleCode: ['', Validators.required],
-        cultivatableArea: ['', Validators.required],
+        noOfEbservices: ['', Validators.required],
+        tptRate: ['', Validators.required],
+        // circleCode: ['', Validators.required],
+        cultivableAcres: ['', Validators.required],
         totalGeographicArea: ['', Validators.required],
-        irrigationArea: ['', Validators.required],
-        dryArea: ['', Validators.required],
-        suitableAreaforCane: ['', Validators.required],
-        notSuitable: ['', Validators.required],
-        ord: ['', Validators.required],
+        irrigationAcres: ['', Validators.required],
+        dryAcres: ['', Validators.required],
+        potentialAcres: ['', Validators.required],
+        notSuitableAcres: ['', Validators.required],
+        listingOrder: ['', Validators.required],
         isActive: [ Validators.required],
     });
 
@@ -92,10 +97,26 @@ export class VillageComponent implements OnInit {
       this.loading = false;
     })
   }
-
   initCircles(division:any){
     this.commonService.GetCirclesForDivision(division).subscribe((resp) => {
       this.circles = resp as unknown as CircleDto[]
+    })
+  }
+  initSections(circle:any){
+    this.commonService.GetSectionsForCircle(circle).subscribe((resp) => {
+      this.sections = resp as unknown as SectionDto[]
+    })
+  }
+  initMandals(district:any){
+    debugger
+    this.commonService.GetMandalsForDistrict(district).subscribe((resp) => {
+      this.mandals = resp as unknown as MandalDto[]
+    })
+  }
+  initDistricts(states:any){
+    debugger
+    this.commonService.GetDistrictsForState(states).subscribe((resp) => {
+      this.district = resp as unknown as DistrictDto[]
     })
   }
 
