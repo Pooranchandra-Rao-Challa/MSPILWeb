@@ -192,7 +192,11 @@ export class VillageDto {
   code?: string;
   name?: string;
   mandalId?: number;
+  districtId?:number;
+  stateId?:number;
   sectionId?: number;
+  divisionId?:number;
+  circleId?:number;
   inchargeName?: string;
   inchargePhoneNo?: string;
   pinCode?: string;

@@ -45,7 +45,7 @@ export class GeoMasterService extends ApiHttpService {
     return this.post<MandalDto>(UPDATE_MANDAL_URI,mandal);
   }
 
-  
+
   public GetSections(){
     return this.get<SectionsViewDto[]>(GET_SECTIONS_URI);
   }
@@ -73,7 +73,7 @@ export class GeoMasterService extends ApiHttpService {
   public CreateVillage(village: VillageDto){
     return this.post<VillageDto>(CREATE_VILLAGE_URI,village);
   }
-  public UpdateVillage(village: StateDto){
+  public UpdateVillage(village: VillageDto){
     return this.post<VillageDto>(UPDATE_VILLAGE_URI,village);
   }
 

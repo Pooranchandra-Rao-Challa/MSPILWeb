@@ -44,11 +44,19 @@ export class VillageComponent implements OnInit {
     this.selectedVillage = village;
     this.clearParents();
     if(village.villageId){
+      this.initCircles(village.divisionId);
+      this.initSections(village.circleId);
+      this.initDistricts(village.stateId);
+      this.initMandals(village.districtId);
       this.village.villageId = village.villageId;
       this.village.code = village.villageCode;
       this.village.name = village.villageName;
       this.village.sectionId = village.sectionId;
+      this.village.circleId = village.circleId;
+      this.village.divisionId = village.divisionId;
       this.village.mandalId = village.mandalId;
+      this.village.districtId = village.districtId;
+      this.village.stateId = village.stateId;
       this.village.address = village.address;
       this.village.distance = village.distance;
       this.village.cultivableArea = village.cultivableArea;
@@ -67,14 +75,10 @@ export class VillageComponent implements OnInit {
       this.village.totalArea = village.totalArea;
       this.village.tptrate = village.tptRate;
       this.village.targetArea = 0
-      console.log(this.village);
+
       this.fbvillages.setValue(this.village);
       this.submitLabel = "Update Village";
       this.addFlag = false;
-      this.initCircles(village.divisionId);
-      this.initSections(village.circleId);
-      this.initDistricts(village.stateId);
-      this.initMandals(village.districtId);
     }else{
       this.submitLabel = "Add Village";
       this.addFlag = true;
@@ -110,9 +114,13 @@ export class VillageComponent implements OnInit {
 
     this.fbvillages = this.formbuilder.group({
       villageId: [''],
+      divisionId:['', Validators.required],
+      circleId:['', Validators.required],
       sectionId: ['', Validators.required],
       targetArea: ['', Validators.required],
       mandalId: ['', Validators.required],
+      districtId: ['', Validators.required],
+      stateId: ['', Validators.required],
       address: ['', Validators.required],
       pinCode: ['', Validators.required],
       code: ['', Validators.required],
@@ -130,7 +138,7 @@ export class VillageComponent implements OnInit {
       potentialArea: ['', Validators.required],
       notSuitableArea: ['', Validators.required],
       listingOrder: ['', Validators.required],
-      isActive: [Validators.required],
+      isActive: [''],
     });
 
   }
@@ -175,6 +183,10 @@ export class VillageComponent implements OnInit {
     else return this.geoMasterService.UpdateVillage(this.fbvillages.value)
   }
   onSubmit() {
+
+    console.log(this.fbvillages.value);
+    this.fbvillages.value.pinCode = this.fbvillages.value.pinCode+"";
+    this.fbvillages.value.inchargePhoneNo = this.fbvillages.value.inchargePhoneNo+"";
     if (this.fbvillages.valid) {
       this.saveVillage().subscribe(resp => {
         if (resp) {
