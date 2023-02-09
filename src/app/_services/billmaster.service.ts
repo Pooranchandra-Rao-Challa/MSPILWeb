@@ -1,11 +1,13 @@
+import { VillageParamRateViewDto, VillageParamRateDto } from './../_models/billingmaster';
 import { Injectable } from "@angular/core";
 import { BillDto, BillParameterDto, BillParameterViewDto, BillViewDto, DieselBunkDto, DieselBunkViewDto, DieselRateDto, DieselRateViewDto, DistanceRateDto, DistanceRateViewDto } from "../_models/billingmaster";
 import { ApiHttpService } from "./api.http.service";
 import {
-  CREATE_BILLPARAM_URI, CREATE_BILL_URI, CREATE_DIESELBUNK_URI, CREATE_DIESELRATE_URI, CREATE_DISTANCERATE_URI, GET_BILLPARAMS_URI, GET_BILLS_URI, GET_DIESELRATES_URI, GET_DIESEL_BUNK_URI, GET_DISTANCERATES_URI, UPDATE_BILLPARAM_URI, UPDATE_BILL_URI,
+  CREATE_BILLPARAM_URI, CREATE_BILL_URI, CREATE_DIESELBUNK_URI, CREATE_DIESELRATE_URI, CREATE_DISTANCERATE_URI, CREATE_VILLAGEPARAMRATE_URI, GET_BILLPARAMS_URI, GET_BILLS_URI, GET_DIESELRATES_URI, GET_DIESEL_BUNK_URI, GET_DISTANCERATES_URI, GET_VILLAGEPARAMRATES_URI, UPDATE_BILLPARAM_URI, UPDATE_BILL_URI,
   UPDATE_DIESELBUNK_URI,
   UPDATE_DIESELRATE_URI,
-  UPDATE_DISTANCERATE_URI
+  UPDATE_DISTANCERATE_URI,
+  UPDATE_VILLAGEPARAMRATE_URI
 } from "./api.uri.service";
 
 
@@ -41,7 +43,6 @@ export class BillMasterService extends ApiHttpService {
   }
 
   public CreateDieselBunk(dieselBunk: DieselBunkDto) {
-    debugger
     return this.post<DieselBunkDto>(CREATE_DIESELBUNK_URI, dieselBunk);
   }
 
@@ -56,7 +57,6 @@ export class BillMasterService extends ApiHttpService {
   }
 
   public CreateDieselRate(dieselRate: DieselRateDto) {
-    debugger
     return this.post<DieselRateDto>(CREATE_DIESELRATE_URI, dieselRate);
   }
 
@@ -71,12 +71,25 @@ export class BillMasterService extends ApiHttpService {
   }
 
   public CreateDistanceRate(distanceRate: DistanceRateDto) {
-    debugger
     return this.post<DistanceRateDto>(CREATE_DISTANCERATE_URI, distanceRate);
   }
 
   public UpdateDistanceRate(distanceRate: DistanceRateDto) {
     return this.post<DistanceRateDto>(UPDATE_DISTANCERATE_URI, distanceRate);
+  }
+
+  // Village param rate services
+
+  public GetVillageParamRates() {
+    return this.get<VillageParamRateViewDto[]>(GET_VILLAGEPARAMRATES_URI);
+  }
+
+  public CreateVillageParamRate(villageParamRate: VillageParamRateDto) {
+    return this.post<VillageParamRateDto>(CREATE_VILLAGEPARAMRATE_URI, villageParamRate);
+  }
+
+  public UpdateVillageParamRate(villageParamRate: VillageParamRateDto) {
+    return this.post<VillageParamRateDto>(UPDATE_VILLAGEPARAMRATE_URI, villageParamRate);
   }
 
 }

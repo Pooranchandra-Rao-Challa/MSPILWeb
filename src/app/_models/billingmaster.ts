@@ -127,3 +127,31 @@ export class DistanceRateViewDto {
   updatedBy?: string;
   createdBy?: string;
 }
+
+export class VillageParamRateDto {
+  id?: number;
+  seasonsId?: number;
+  villageId?: number;
+  billParameterId?: number;
+  rate?: number;
+  isActive?: boolean
+}
+
+export class VillageParamRateViewDto {
+  id?: number;
+  seasonsId?: number;
+  seasonName?: string;
+  villageId?: number;
+  villageName?: string;
+  sectionName?: string;
+  circleName?: string;
+  divisionName?: string;
+  billParameterId?: number;
+  billParameterName?: string;
+  rate?: number;
+  isActive?: boolean
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
