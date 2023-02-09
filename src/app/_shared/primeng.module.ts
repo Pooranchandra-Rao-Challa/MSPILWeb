@@ -26,6 +26,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FieldsetModule } from 'primeng/fieldset';
+import { FileUploadModule } from 'primeng/fileupload';
+import { RadioButtonModule } from 'primeng/radiobutton';
+
 
 @NgModule({
   exports: [
@@ -57,6 +60,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     TabViewModule,
     CheckboxModule,
     FieldsetModule,
+    FileUploadModule,
+    RadioButtonModule
   ]
 })
 export class PrimeNgModule { }

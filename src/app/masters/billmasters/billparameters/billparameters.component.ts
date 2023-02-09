@@ -20,7 +20,8 @@ export class BillParametersComponent implements OnInit {
   showDialog: boolean = false;
   fbBillParameters!: FormGroup;
   addFlag: boolean = true;
-  globalFilterFields: string[] = ['id', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'createdAt', 'createdByUser', 'updatedAt', 'updatedByUser'];
+  globalFilterFields: string[] = ['id', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'isActive', 'createdAt', 'createdByUser', 'updatedAt', 'updatedByUser'];
+  submitLabel!: string;
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService) { }
@@ -66,6 +67,12 @@ export class BillParametersComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
+  addBillParam() {
+    this.submitLabel = "Add Bill";
+    this.addFlag = true;
+    this.showDialog = true;
+  }
+
   editBillParam(billParam: BillParameterViewDto) {
     this.billParam.billParameterId = billParam.id;
     this.billParam.categoryId = billParam.billCategoryId;
@@ -78,6 +85,7 @@ export class BillParametersComponent implements OnInit {
     this.billParam.isActive = billParam.isActive;
     this.fbBillParameters.setValue(this.billParam);
     this.addFlag = false;
+    this.submitLabel = "Update Bill";
     this.showDialog = true;
   }
 
@@ -100,6 +108,11 @@ export class BillParametersComponent implements OnInit {
     else {
       this.fbBillParameters.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.billParameters = [];
+    this.billParam = new BillParameterDto();
   }
 
 }

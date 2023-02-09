@@ -98,14 +98,9 @@
                             </div>
                         </div>
                         <div class="field col-12 md:col-6">
-                            <label htmlFor="isActive">Is Active?:<sup
-                                    class="p-error">*</sup></label><br><br>
-                            &nbsp; <p-inputSwitch [(ngModel)]="valSwitch"
-                                formControlName="isActive"></p-inputSwitch>
-                        <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
-                            class="error-message p-error">
-                             Please Active
-                        </div>
+                            <label htmlFor="isActive">Is Active?:</label><br>
+                            <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                    
                         </div>
                         <div class="col-12 ">
                             <button pButton pRipple type="submit" label="{{submitLabel}}"

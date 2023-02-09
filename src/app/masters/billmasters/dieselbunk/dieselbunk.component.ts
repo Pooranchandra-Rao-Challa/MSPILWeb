@@ -21,7 +21,9 @@ export class DieselBunkComponent implements OnInit {
   showDialog: boolean = false;
   fbDieselBunk!: FormGroup;
   addFlag: boolean = true;
-  globalFilterFields: string[] = ['code','name','address','pinCode','phoneNo','email','rate','glCode','subGLCode','createdAt','createdBy','updatedAt','updatedBy'];
+  globalFilterFields: string[] = ['code', 'name', 'address', 'pinCode', 'phoneNo', 'email', 'rate', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy',
+    'updatedAt', 'updatedBy'];
+  submitLabel!: string;
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService) { }
@@ -68,8 +70,13 @@ export class DieselBunkComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
+  addDieselBunk() {
+    this.submitLabel = "Add Diesel Bunk";
+    this.addFlag = true;
+    this.showDialog = true;
+  }
+
   editDieselBunk(dieselBunk: DieselBunkViewDto) {
-    debugger
     this.dieselBunk.id = dieselBunk.id;
     this.dieselBunk.code = dieselBunk.code;
     this.dieselBunk.name = dieselBunk.name;
@@ -83,6 +90,7 @@ export class DieselBunkComponent implements OnInit {
     this.dieselBunk.isActive = dieselBunk.isActive;
     this.fbDieselBunk.setValue(this.dieselBunk);
     this.addFlag = false;
+    this.submitLabel = "Update Diesel Bunk";
     this.showDialog = true;
   }
 
@@ -92,7 +100,6 @@ export class DieselBunkComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger
     if (this.fbDieselBunk.valid) {
       console.log(this.fbDieselBunk.value);
       this.saveBillParam().subscribe(resp => {
@@ -106,6 +113,11 @@ export class DieselBunkComponent implements OnInit {
     else {
       this.fbDieselBunk.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.dieselBunks = [];
+    this.dieselBunk = new DieselBunkDto();
   }
 
 }
