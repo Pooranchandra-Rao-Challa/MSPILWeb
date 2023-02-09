@@ -21,6 +21,7 @@ export class DistanceRateSlabComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   fbDistanceRate!: FormGroup;
   addFlag: boolean = true;
+  submitLabel!: string;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService) { }
@@ -59,6 +60,12 @@ export class DistanceRateSlabComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
+  addDistanceRate() {
+    this.submitLabel = "Add Distance Rate";
+    this.addFlag = true;
+    this.showDialog = true;
+  }
+
   editDistanceRate(distanceRate: DistanceRateViewDto) {
     this.distanceRate.id = distanceRate.id;
     this.distanceRate.distance = distanceRate.distance;
@@ -66,6 +73,7 @@ export class DistanceRateSlabComponent implements OnInit {
     this.distanceRate.isActive = distanceRate.isActive;
     this.fbDistanceRate.setValue(this.distanceRate);
     this.addFlag = false;
+    this.submitLabel = "Update Distance Rate";
     this.showDialog = true;
   }
 
@@ -75,7 +83,6 @@ export class DistanceRateSlabComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger
     if (this.fbDistanceRate.valid) {
       console.log(this.fbDistanceRate.value);
       this.saveBillParam().subscribe(resp => {
@@ -89,6 +96,11 @@ export class DistanceRateSlabComponent implements OnInit {
     else {
       this.fbDistanceRate.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.distanceRates = [];
+    this.distanceRate = new DistanceRateDto();
   }
 
 }

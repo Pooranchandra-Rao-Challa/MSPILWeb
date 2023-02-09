@@ -8,15 +8,15 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Diesel Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="showDialog = true"></button>
+          (click)="addDieselRate()"></button>
       </ng-template>
     </p-toolbar>
 
     <!-- table -->
     <p-table #dt1 [value]="dieselRates" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -32,40 +32,50 @@
         <tr>
           <th></th>
           <th pSortableColumn="fromDate">
-            From Date <p-sortIcon field="fromDate"></p-sortIcon>
+            From Date <p-columnFilter type="text" field="fromDate" display="menu"></p-columnFilter>
+            <p-sortIcon field="fromDate"></p-sortIcon>
           </th>
           <th pSortableColumn="toDate">
-            To Date <p-sortIcon field="toDate"></p-sortIcon>
+            To Date <p-columnFilter type="text" field="toDate" display="menu"></p-columnFilter>
+            <p-sortIcon field="toDate"></p-sortIcon>
           </th>
           <th pSortableColumn="rate">
-            Rate <p-sortIcon field="rate"></p-sortIcon>
+            Rate <p-columnFilter type="text" field="rate" display="menu"></p-columnFilter>
+            <p-sortIcon field="rate"></p-sortIcon>
           </th>
-          <th style="text-align:center">
-            Is Active
+          <th pSortableColumn="isActive" style="text-align:center">
+            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+            <p-sortIcon field="isActive"></p-sortIcon>
           </th>
           <th pSortableColumn="createdAt">
-            Created Date <p-sortIcon field="createdAt"></p-sortIcon>
+            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
           <th pSortableColumn="createdByUser">
-            Created By User <p-sortIcon field="createdByUser"></p-sortIcon>
+            Created By <p-columnFilter type="text" field="createdByUser" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdByUser"></p-sortIcon>
           </th>
           <th pSortableColumn="updatedAt">
-            Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
+            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
           <th pSortableColumn="updatedByUser">
-            Updated By User <p-sortIcon field="updatedByUser"></p-sortIcon>
+            Updated By <p-columnFilter type="text" field="updatedByUser" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedByUser"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rate>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-            (click)="editDieselRate(rate)"></button></td>
+          <td><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component mr-2"
+              (click)="editDieselRate(rate)"></button></td>
           <td>{{rate.fromDate | date: 'dd-MMM-yyyy'}}</td>
           <td>{{rate.toDate | date: 'dd-MMM-yyyy'}}</td>
           <td>{{rate.rate}}</td>
           <td style="text-align:center">
-            <p-checkbox name="active" value="active" [(ngModel)]="rate.isActive" [binary]="true" [disabled]="true"></p-checkbox>
+            <p-checkbox name="active" value="active" [(ngModel)]="rate.isActive" [binary]="true" [disabled]="true">
+            </p-checkbox>
           </td>
           <td>{{rate.createdAt | date: 'dd-MMM-yyyy'}}</td>
           <td>{{rate.createdByUser}}</td>
@@ -87,7 +97,8 @@
 
     <!-- dialog box -->
     <p-dialog header="Diesel Rates" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbDieselRate.reset()" [contentStyle]="{'overflow': 'visible'}">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbDieselRate.reset()"
+      [contentStyle]="{'overflow': 'visible'}">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbDieselRate" (ngSubmit)="onSubmit()">
           <div class="grid">
@@ -95,7 +106,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" formControlName="fromDate"
+                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
@@ -105,7 +116,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" formControlName="toDate"
+                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="toDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
@@ -138,7 +149,7 @@
         </form>
       </div>
       <ng-template pTemplate="left">
-        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
+        <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>
     </p-dialog>
