@@ -148,41 +148,43 @@ export class StateDto {
 }
 
 
-export interface VillagesViewDto {
-  villageId: number,
-  villageCode: string,
-  villageName: string,
-  sectionId: number,
-  sectionName: string,
-  mandalId: number,
-  mandalName: string,
-  districtId: number,
-  districtName: string,
-  divisionId: number,
-  divisionName: string,
-  circleId: number,
-  circleName: string,
-  inchargeName: string,
-  inchargePhoneNo: string,
-  address: string,
-  pinCode: string,
-  distance: number,
-  divertedDistance: number,
-  noOfEbservices: number,
-  tptRate: number,
-  totalArea: number,
-  cultivableArea: number,
-  irrigationArea: number,
-  dryArea: number,
-  potentialArea: number,
-  notSuitableArea: number,
-  targetTons: number,
-  listingOrder: number,
-  isActive: boolean,
-  updatedAt: string,
-  createdAt: string,
-  updatedBy: string,
-  createdBy: string,
+export class VillagesViewDto {
+  villageId?: number
+  villageCode?: string
+  villageName?: string
+  stateId?:number
+  stateName?:string
+  sectionId?: number
+  sectionName?: string
+  mandalId?: number
+  mandalName?: string
+  districtId?: number
+  districtName?: string
+  divisionId?: number
+  divisionName?: string
+  circleId?: number
+  circleName?: string
+  inchargeName?: string
+  inchargePhoneNo?: string
+  address?: string
+  pinCode?: string
+  distance?: number
+  divertedDistance?: number
+  noOfEbservices?: number
+  tptRate?: number
+  totalArea?: number
+  cultivableArea?: number
+  irrigationArea?: number
+  dryArea?: number
+  potentialArea?: number
+  notSuitableArea?: number
+  targetArea?: number
+  listingOrder?: number
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedBy?: string
+  createdBy?: string
 }
 
 export class VillageDto {
