@@ -22,7 +22,6 @@ export class DieselRatesComponent implements OnInit {
   filter: any;
   showDialog: boolean = false;
   fbDieselRate!: FormGroup;
-  Calendar!: Date;
   submitLabel!: string;
 
   constructor(private formbuilder: FormBuilder,
@@ -30,7 +29,6 @@ export class DieselRatesComponent implements OnInit {
     private datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.Calendar = new Date();
     this.loadDieselRates();
     this.dieselRateForm();
   }
@@ -95,7 +93,6 @@ export class DieselRatesComponent implements OnInit {
 
   onSubmit() {
     if (this.fbDieselRate.valid) {
-      console.log(this.fbDieselRate.value);
       this.saveBillParam().subscribe(resp => {
         if (resp) {
           this.loadDieselRates();

@@ -57,3 +57,7 @@ export const UPDATE_DISTANCERATE_URI = "BillingMaster/UpdateDistanceRate";
 export const GET_VILLAGEPARAMRATES_URI = "BillingMaster/GetVillageParamRates";
 export const CREATE_VILLAGEPARAMRATE_URI = "BillingMaster/CreateVillageParamRate";
 export const UPDATE_VILLAGEPARAMRATE_URI = "BillingMaster/UpdateVillageParamRate";
+export const GET_WAREHOUSE_URI = "BillingMaster/GetWareHouses";
+export const CREATE_WAREHOUSE_URI = "BillingMaster/CreateWareHouse";
+export const UPDATE_WAREHOUSE_URI = "BillingMaster/UpdateWareHouse";
+

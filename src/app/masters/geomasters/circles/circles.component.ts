@@ -59,7 +59,7 @@ export class CirclesComponent implements OnInit {
             inchargeName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
             listingOrder: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
             isActive: [this.valSwitch, Validators.required],
-            code: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+            code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
             inchargePhoneNo: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
             address: ['', Validators.required],
             circleId: [''],

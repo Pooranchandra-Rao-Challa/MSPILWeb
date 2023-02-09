@@ -25,6 +25,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
   exports: [
@@ -55,6 +56,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     InputSwitchModule,
     TabViewModule,
     CheckboxModule,
+    FieldsetModule,
   ]
 })
 export class PrimeNgModule { }

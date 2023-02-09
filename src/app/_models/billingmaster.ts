@@ -1,3 +1,4 @@
+
 export class BillDto {
   billId?: number;
   billNo?: number;
@@ -154,4 +155,28 @@ export class VillageParamRateViewDto {
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+}
+
+export class WareHouseViewDto {
+  id?: number
+  code?: string
+  name?: string
+  glcode?: string
+  subGlcode?: string
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedByUser?: string
+  createdByUser?: string
+  warehouseId: any;
+}
+
+export class WareHouseDto {
+  id?: number
+  code?: string
+  name?: string
+  glcode?: string
+  subGlcode?: string
+  isActive?: boolean
+
 }

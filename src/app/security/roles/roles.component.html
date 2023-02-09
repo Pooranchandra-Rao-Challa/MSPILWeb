@@ -35,13 +35,13 @@
           </th>
           <th pSortableColumn="createdDate">Created Date <p-columnFilter type="text" field="createdDate" display="menu"></p-columnFilter><p-sortIcon field="createdAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="createdBy">Created By User <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+          <th pSortableColumn="createdBy">Created By<p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
           </th>
           <th pSortableColumn="updatedAt" pFrozenColumn alignFrozen="right">Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter><p-sortIcon
               field="updatedAt">
             </p-sortIcon>
           </th>
-          <th pSortableColumn="updatedBy" pFrozenColumn alignFrozen="right">Updated By User <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter><p-sortIcon
+          <th pSortableColumn="updatedBy" pFrozenColumn alignFrozen="right">Updated By<p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter><p-sortIcon
               field="updatedBy">
             </p-sortIcon>
           </th>
@@ -53,10 +53,13 @@
               class="p-element p-ripple p-button-text p-button p-component" (click)="initRole(role)"></button></td>
           <td>{{role.code}}</td>
           <td>{{role.name}}</td>
-          <td>{{role.isActive}}</td>
-          <td>{{role.createdAt}}</td>
+          <td>
+            <p-checkbox name="active" value="active" [(ngModel)]="role.isActive" [binary]="true" [disabled]="true">
+            </p-checkbox>
+          </td>
+          <td>{{role.createdAt | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
           <td>{{role.createdBy}}</td>
-          <td>{{role.updatedAt}}</td>
+          <td>{{role.updatedAt | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
           <td>{{role.updatedBy}}</td>
         </tr>
       </ng-template>
@@ -127,7 +130,7 @@
         </form>
       </div>
       <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Add Role" class="p-button-raised p-button-success"
+        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>
     </p-dialog>
