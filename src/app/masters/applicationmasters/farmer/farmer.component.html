@@ -1,1 +1,380 @@
-<h1>Farmer works</h1>
+<div class="col-12">
+  <div class="card">
+    <p-dialog header="Farmer" [(visible)]="display" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
+      <ng-template pTemplate="content">
+        <div class="flex flex-column align-items-center justify-content-center">
+          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()">
+           
+            <div class="container">
+              <div class="grid p-fluid">
+                <p-fieldset legend="Farmer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="grid p-fluid">
+
+                    <div class="field col-12 md:col-4">
+                      <label htmlFor="name">Code:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" formControlName="name" type="text" />  
+                    </div>
+
+
+                    <div class="field col-12 md:col-4">
+                      <label htmlFor="name">Name:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" formControlName="name" type="text" />  
+                    </div>
+
+
+                    <div class="field col-12 md:col-4">
+                      <div class="field col-12">
+                      
+                      <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*"
+                       (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>
+                          
+                      </div>
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label htmlFor="name">Alias Name:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" formControlName="name" type="text" /> 
+                      
+                      
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label htmlFor="name"> Father Name:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" formControlName="name" type="text" />  
+                    </div>
+
+
+
+                    <div class="field col-12 md:col-4">
+                      <div class="field col-12">
+                        <label>Please Select Gender :</label><br>
+                      <p-radioButton name="gender" value="Male" label="Male"></p-radioButton>&nbsp;
+                      <p-radioButton name="gender" value="Female" label="Female"></p-radioButton>
+                    </div>
+                  </div>
+
+                    <div class="col-6">
+                      <label htmlFor="isActive">Is Registered?:<sup class="p-error">*</sup></label><br>
+                      <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+  
+                    </div>
+                    
+                    
+                  </div>
+                </p-fieldset>
+
+
+                <p-fieldset legend="Village Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="grid p-fluid">
+                    <div class="field col-12 md:col-3">
+                      <label for="code">Village:<sup class="p-error">*</sup></label>
+                      <input pInputText inputId="code" formControlName="code" type="text" />
+                      <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched"
+                        class="error-message p-error">
+                        Village Code required
+                      </div>   
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+                      <label htmlFor="name">Division:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" formControlName="name" type="text" />
+                      
+                    </div>
+
+
+                    <div class="field col-12 md:col-3">
+                      <label for="inchargeName">Circle:</label>
+                      <input pInputText id="inchargeName" formControlName="inchargeName" type="text" />
+
+
+                    </div>
+                    <div class="field col-12 md:col-3">
+                      <label for="inchargePhoneNo">Section:</label>
+                      <p-inputNumber inputId="inchargePhoneNo" formControlName="inchargePhoneNo" inputId="minmax"
+                        mode="decimal" [min]="0" [max]="100">
+                      </p-inputNumber>
+                    </div>
+
+
+
+                    <div class="field col-8 md:col-3">
+                      <label htmlFor="address">District:</label>
+                      <input pInputText id="name" formControlName="name" type="text" />
+
+                    </div>
+                    <div class="field col-12 md:col-3">
+                      <label for="PinCode">Mandal:</label>
+                      <p-inputNumber inputId="pinCode" formControlName="pinCode">
+                      </p-inputNumber>
+
+
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+                      <label for="distance">PinCode:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2">
+                      </p-inputNumber>
+                    </div>
+
+                    <div class="field col-8 md:col-3">
+                      <label htmlFor="address"> Address:</label>
+                      <textarea rows="5" cols="30" formControlName="address" placeholder="Village Address"
+                        pInputTextarea></textarea>
+                    </div>
+
+                   
+                  </div>
+
+                </p-fieldset>
+
+
+
+                <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="grid p-fluid">
+                    <div class="field col-12 md:col-3">
+                      <label for="code"> Phone No:<sup class="p-error">*</sup></label>
+                      <input pInputText inputId="code" formControlName="code" type="text" /> 
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+                      <label htmlFor="name"> Email:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" formControlName="name" type="text" />
+                      
+                    </div>
+
+
+                    <div class="field col-12 md:col-3">
+                      <label for="inchargeName">PAN No:</label>
+                      <input pInputText id="inchargeName" formControlName="inchargeName" type="text" />
+
+
+                    </div>
+                    <div class="field col-12 md:col-3">
+                      <label for="inchargePhoneNo"> Aadhar No:</label>
+                      <p-inputNumber inputId="inchargePhoneNo" formControlName="inchargePhoneNo" inputId="minmax"
+                        mode="decimal" [min]="0" [max]="100">
+                      </p-inputNumber>
+                    </div>
+
+
+
+                    <div class="field col-8 md:col-3">
+                      <label htmlFor="address">Cast:</label>
+                      <input pInputText id="name" formControlName="name" type="text" />
+
+                    </div>
+                    <div class="field col-12 md:col-3">
+                      <label for="PinCode">Old Ryot:</label>
+                      <p-inputNumber inputId="pinCode" formControlName="pinCode">
+                      </p-inputNumber>
+
+
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+                      <label for="distance">JF No:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2">
+                      </p-inputNumber>
+                    </div>
+
+                    
+                    
+                  </div>
+
+                </p-fieldset>
+
+               
+
+                <p-fieldset legend="Land Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="grid p-fluid">
+
+                    <div class="field col-12 md:col-4">
+                      <label for="cultivableArea">Total Area:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2">
+                      </p-inputNumber>
+                    
+                    </div>
+
+
+                    <div class="field col-12 md:col-4">
+                      <label for="irrigationArea">Cultivated Area:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2">
+                      </p-inputNumber>
+                    </div>
+                  </div>
+
+                </p-fieldset>
+
+                
+                <p-fieldset legend="Bank Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="grid p-fluid">
+
+                    <div class="field col-12 md:col-4">
+                      <label for="cultivableArea">Bank:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2">
+                      </p-inputNumber>
+                    
+                    </div>
+
+
+                    <div class="field col-12 md:col-4">
+                      <label for="irrigationArea">Branch:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2">
+                      </p-inputNumber>
+
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label for="potentialArea">IFSC:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="potentialArea" formControlName="potentialArea" mode="decimal"
+                        locale="en-US" [minFractionDigits]="2">
+                      </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label for="totalArea">Account No:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2">
+                      </p-inputNumber>
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label for="dryArea">GL Code:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2">
+                      </p-inputNumber>
+
+                      <div *ngIf="FormControls['dryArea'].invalid &&  FormControls['dryArea'].touched"
+                        class="error-message p-error">
+                        Dry Area is required
+                      </div>
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label for="notSuitableArea">Sub GL Code:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="notSuitableArea" formControlName="notSuitableArea" mode="decimal"
+                        locale="de-DE" [minFractionDigits]="2">
+                      </p-inputNumber>
+
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label for="noOfEbservices">Other Code:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="2">
+                      </p-inputNumber>     
+                    </div>
+
+                    </div>
+                </p-fieldset>
+
+
+                <div class="field col-12 md:col-3 ">
+                  <div class="col-6">
+                    <label htmlFor="isActive">Is Active?:<sup class="p-error">*</sup></label><br><br>
+                    <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+
+                  </div>
+              
+                
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="col-12">
+          <div class="col-4" style="float:right">
+            <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+              (click)="onSubmit()"></button>
+          </div>
+        </div>
+      </ng-template>
+    </p-dialog>
+
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Farmer</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New Farmer" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="InitVillage({})"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt1 [value]="villages" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th pSortableColumn="villageId"><p-sortIcon field="villageId"></p-sortIcon>Farmer Id</th>
+          <th pSortableColumn="villageCode"><p-sortIcon field="villageCode"></p-sortIcon>Farmer Code</th>
+          <th pSortableColumn="villageName"><p-sortIcon field="villageName"></p-sortIcon>Farmer Name</th>
+          <th pSortableColumn="sectionId"><p-sortIcon field="sectionId"></p-sortIcon>Father Name</th>
+          <th pSortableColumn="sectionName"><p-sortIcon field="sectionName"></p-sortIcon>Division</th>
+          <th pSortableColumn="mandalId"><p-sortIcon field="mandalId"></p-sortIcon>Circle</th>
+          <th pSortableColumn="mandalName"><p-sortIcon field="mandalName"></p-sortIcon>Section</th>
+          <th pSortableColumn="districtId"><p-sortIcon field="districtId"></p-sortIcon>Village </th>
+          <th pSortableColumn="districtName"><p-sortIcon field="districtName"></p-sortIcon>Bank</th>
+          <th pSortableColumn="divisionId"><p-sortIcon field="divisionId"></p-sortIcon>Branch</th>
+          <th pSortableColumn="divisionName"><p-sortIcon field="divisionName"></p-sortIcon>IFSC</th>
+          <th pSortableColumn="circleId"><p-sortIcon field="circleId"></p-sortIcon>AC NO</th>
+          <th pSortableColumn="isActive"><p-sortIcon field="isActive"></p-sortIcon>Is Active</th>
+          <th pSortableColumn="updatedAt"><p-sortIcon field="updatedAt"></p-sortIcon>Updated At</th>
+          <th pSortableColumn="createdAt"><p-sortIcon field="createdAt"></p-sortIcon>Created At</th>
+          <th pSortableColumn="updatedBy"><p-sortIcon field="updatedBy"></p-sortIcon>Updated By</th>
+          <th pSortableColumn="createdBy"><p-sortIcon field="createdBy"></p-sortIcon>Created By</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-village>
+        <tr>
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="InitVillage(village)"></button></td>
+          <td>{{village.villageId}}</td>
+          <td>{{village.villageCode}}</td>
+          <td>{{village.villageName}}</td>
+          <td>{{village.sectionId}}</td>
+          <td>{{village.sectionName}}</td>
+          <td>{{village.mandalId}}</td>
+          <td>{{village.mandalName}}</td>
+          <td>{{village.districtId}}</td>
+          <td>{{village.districtName}}</td>
+          <td>{{village.divisionId}}</td>
+          <td>{{village.divisionName}}</td>
+          <td>{{village.circleId}}</td>
+         <td>{{village.isActive}}</td>
+          <td>{{village.updatedAt}}</td>
+          <td>{{village.createdAt}}</td>
+          <td>{{village.updatedBy}}</td>
+          <td>{{village.createdBy}}</td>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No Villages found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="8">Loading.. Villages data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>

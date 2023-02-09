@@ -128,8 +128,8 @@
                             class="p-element p-ripple p-button-text p-button p-component"
                             (click)="editProduct(states)"></button></td>
                     <td>{{states.stateId}}</td>
-                    <td>{{states.code}}</td>
-                    <td>{{states.name}}</td>
+                    <td>{{states.stateCode}}</td>
+                    <td>{{states.stateName}}</td>
                     <td style="text-align:center">
                         <p-checkbox name="active" value="active" [(ngModel)]="states.isActive" [binary]="true" [disabled]="true">
                         </p-checkbox>

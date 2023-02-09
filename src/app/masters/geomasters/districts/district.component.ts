@@ -59,7 +59,7 @@ export class DistrictComponent implements OnInit {
       name:new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       stateId: ['',],
       districtId: ['',(Validators.required)],
-      isActive: [true, Validators.required]
+      isActive: [ Validators.required]
     });
 
 

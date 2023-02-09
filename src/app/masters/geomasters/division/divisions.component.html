@@ -88,12 +88,8 @@
                             </div>
 
                             <div class="field col-12 md:col-6">
-                                <label>Is Active?:<sup class="p-error">*</sup></label><br>
+                                <label>Is Active?:</label><br>
                                 &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-                                <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
-                                class="error-message p-error">
-                                 Please Active
-                            </div>
                             </div>
                            
                             
@@ -201,10 +197,13 @@
                     <td pFrozenColumn alignFrozen="right">
                         {{divisons.listingOrder}}
                     </td>
-                    <td>{{divisons.isActive}}</td>
+                    <td style="text-align:center">
+                        <p-checkbox name="active" value="active" [(ngModel)]="divisons.isActive" [binary]="true" [disabled]="true">
+                        </p-checkbox>
+                      </td>
                     <td>{{divisons.createdBy}}</td>
                     <td>{{divisons.updatedBy}}</td>
-                    <td>{{divisons.createAt}}</td>
+                    <td>{{divisons.createdAt}}</td>
                     <td>{{divisons.updatedAt}}</td>
                 </tr>
             </ng-template>
