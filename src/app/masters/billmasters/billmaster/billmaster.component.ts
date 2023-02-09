@@ -3,8 +3,6 @@ import { CommonService } from 'src/app/_services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { Observable } from 'rxjs';
-import { HttpEvent } from '@angular/common/http';
 import { BillViewDto } from 'src/app/_models/billingmaster';
 @Component({
   selector: 'app-billmaster',
@@ -20,9 +18,10 @@ export class BillMasterComponent implements OnInit {
   loading: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
+  submitLabel!: string;
   fbBillMaster!: FormGroup;
   seasons: any;
-  addFlag: any;
+  addFlag: boolean = true;
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
@@ -61,7 +60,7 @@ export class BillMasterComponent implements OnInit {
       fromDate: ['', (Validators.required)],
       toDate: ['', (Validators.required)],
       isFinal: [true, Validators.requiredTrue],
-      isActive: [true]
+      isActive: [false]
     });
   }
 
@@ -76,6 +75,12 @@ export class BillMasterComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+  }
+
+  addBill() {
+    this.submitLabel = "Add Bill";
+    this.addFlag = true;
+    this.showDialog = true;
   }
 
   // saveBill(): Observable<HttpEvent<any>> {
@@ -98,6 +103,11 @@ export class BillMasterComponent implements OnInit {
     else {
       this.fbBillMaster.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.bills = [];
+    this.seasons = [];
   }
 
 }

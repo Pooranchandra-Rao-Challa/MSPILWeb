@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Bill" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="showDialog = true"></button>
+          (click)="addBill()"></button>
       </ng-template>
     </p-toolbar>
 
@@ -31,40 +31,52 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="billCategoryName" style="min-width: 120px;">
-            Billing Category <p-sortIcon field="billCategoryName"></p-sortIcon>
+            Billing Category <p-columnFilter type="text" field="billCategoryName" display="menu"></p-columnFilter>
+            <p-sortIcon field="billCategoryName"></p-sortIcon>
           </th>
           <th pSortableColumn="billNo" style="min-width: 120px;">
-            Billing Number <p-sortIcon field="billNo"></p-sortIcon>
+            Billing Number <p-columnFilter type="text" field="billNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="billNo"></p-sortIcon>
           </th>
           <th pSortableColumn="seasonName" style="min-width: 120px;">
-            Season Code <p-sortIcon field="seasonName"></p-sortIcon>
+            Season Code <p-columnFilter type="text" field="seasonName" display="menu"></p-columnFilter>
+            <p-sortIcon field="seasonName"></p-sortIcon>
           </th>
           <th pSortableColumn="fromDate" style="min-width: 120px;">
-            From Date <p-sortIcon field="fromDate"></p-sortIcon>
+            From Date <p-columnFilter type="text" field="fromDate" display="menu"></p-columnFilter>
+            <p-sortIcon field="fromDate"></p-sortIcon>
           </th>
           <th pSortableColumn="toDate" style="min-width: 120px;">
-            To Date <p-sortIcon field="toDate"></p-sortIcon>
+            To Date <p-columnFilter type="text" field="toDate" display="menu"></p-columnFilter>
+            <p-sortIcon field="toDate"></p-sortIcon>
           </th>
           <th pSortableColumn="runDate" style="min-width: 120px;">
-            Run Date <p-sortIcon field="runDate"></p-sortIcon>
+            Run Date <p-columnFilter type="text" field="runDate" display="menu"></p-columnFilter>
+            <p-sortIcon field="runDate"></p-sortIcon>
           </th>
-          <th style="min-width: 120px; text-align:center">
-            Is Final
+          <th pSortableColumn="isFinal" style="min-width: 120px; text-align:center">
+            Is Final <p-columnFilter type="text" field="isFinal" display="menu"></p-columnFilter>
+            <p-sortIcon field="isFinal"></p-sortIcon>
           </th>
-          <th style="min-width: 120px;text-align:center">
-            Is active
+          <th pSortableColumn="isActive" style="min-width: 120px;text-align:center">
+            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+            <p-sortIcon field="isActive"></p-sortIcon>
           </th>
           <th pSortableColumn="createdAt" style="min-width: 120px;">
-            Created Date <p-sortIcon field="createdAt"></p-sortIcon>
+            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
           <th pSortableColumn="createdBy" style="min-width: 120px;">
-            Created By User <p-sortIcon field="createdBy"></p-sortIcon>
+            Created By <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdBy"></p-sortIcon>
           </th>
           <th pSortableColumn="updatedAt" style="min-width: 120px;">
-            Updated Date <p-sortIcon field="updatedAt"></p-sortIcon>
+            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
           <th pSortableColumn="updatedBy" style="min-width: 120px;">
-            Updated By User <p-sortIcon field="updatedBy"></p-sortIcon>
+            Updated By <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedBy"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -134,7 +146,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" formControlName="fromDate"
+                  <p-calendar class="cursor-pointer" [readonlyInput]="true" [showIcon]="true" formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
@@ -144,7 +156,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" formControlName="toDate"
+                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="toDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
@@ -168,7 +180,7 @@
         </form>
       </div>
       <ng-template pTemplate="left">
-        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
+        <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>
     </p-dialog>

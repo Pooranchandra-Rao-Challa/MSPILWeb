@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class DieselRatesComponent implements OnInit {
-  globalFilterFields: string[] = ['fromDate','toDate','rate','createdAt','createdByUser','updatedAt','updatedByUser'];
+  globalFilterFields: string[] = ['fromDate', 'toDate', 'rate', 'isActive', 'createdAt', 'createdByUser', 'updatedAt', 'updatedByUser'];
   dieselRates: DieselRateViewDto[] = [];
   dieselRate: DieselRateDto = new DieselRateDto();
   loading: boolean = false;
@@ -22,14 +22,15 @@ export class DieselRatesComponent implements OnInit {
   filter: any;
   showDialog: boolean = false;
   fbDieselRate!: FormGroup;
-  value?: Date;
+  Calendar!: Date;
+  submitLabel!: string;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.value = new Date();
+    this.Calendar = new Date();
     this.loadDieselRates();
     this.dieselRateForm();
   }
@@ -63,28 +64,36 @@ export class DieselRatesComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
+  addDieselRate() {
+    this.submitLabel = "Add Diesel Rate";
+    this.addFlag = true;
+    this.showDialog = true;
+  }
+
   editDieselRate(dieselRate: DieselRateViewDto) {
-    debugger
     this.dieselRate.id = dieselRate.id;
-    this.dieselRate.fromDate = dieselRate.fromDate;
-    // this.dieselRate.fromDate = this.datepipe.transform(dieselRate.fromDate, "yyyy-MM-dd");
-    this.dieselRate.toDate = dieselRate.toDate;
+    this.dieselRate.fromDate = new Date(dieselRate.fromDate?.toString() + "");
+    this.dieselRate.toDate = new Date(dieselRate.toDate?.toString() + "");
     this.dieselRate.rate = dieselRate.rate;
     this.dieselRate.isActive = dieselRate.isActive;
     this.fbDieselRate.setValue(this.dieselRate);
-    console.log(this.fbDieselRate.value.fromDate);
-
     this.addFlag = false;
+    this.submitLabel = "Update Diesel Rate";
     this.showDialog = true;
   }
 
   saveBillParam(): Observable<HttpEvent<any>> {
+    this.fbDieselRate.value.fromDate = new Date(Date.UTC(this.fbDieselRate.value.fromDate.getFullYear(),
+      this.fbDieselRate.value.fromDate.getMonth(),
+      this.fbDieselRate.value.fromDate.getDate(),
+      this.fbDieselRate.value.fromDate.getHours(),
+      this.fbDieselRate.value.fromDate.getMinutes(),
+      this.fbDieselRate.value.fromDate.getSeconds()));
     if (this.addFlag) return this.billMasterService.CreateDieselRate(this.fbDieselRate.value)
     else return this.billMasterService.UpdateDieselRate(this.fbDieselRate.value)
   }
 
   onSubmit() {
-    debugger
     if (this.fbDieselRate.valid) {
       console.log(this.fbDieselRate.value);
       this.saveBillParam().subscribe(resp => {
@@ -98,6 +107,11 @@ export class DieselRatesComponent implements OnInit {
     else {
       this.fbDieselRate.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.dieselRates = [];
+    this.dieselRate = new DieselRateDto();
   }
 
 }
