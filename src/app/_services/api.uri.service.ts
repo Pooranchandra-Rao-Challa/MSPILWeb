@@ -99,3 +99,5 @@ export const LOOKUP_WEED_STATUSES_URI = "Lookup/WeedStatuses";
 export const LOOKUP_WEEDS_URI = "Lookup/Weeds";
 export const LOOKUP_SEED_MATERIAL_USED_URI = "Lookup/SeedMaterialUsed";
 
+
+export const GET_LOOKUP_URI = "ApplicationMaster/GetLookUps"
