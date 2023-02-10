@@ -105,6 +105,8 @@ export class VillageComponent implements OnInit {
 
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]
+      console.log(this.states );
+
     })
 
 
