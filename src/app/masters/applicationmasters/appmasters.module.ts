@@ -6,7 +6,8 @@ import { WeedComponent } from './weed/weed.component';
 import { PestComponent } from './pest/pest.component';
 import { DiseaseComponent } from './disease/disease.component';
 import { FertilizerComponent } from './fertilizer/fertilizer.component';
-import { FarmerComponent } from './farmer/farmer.component'
+import { FarmerComponent } from './farmer/farmer.component';
+import { LookupComponent } from './lookup/lookup.component'
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FarmerComponent } from './farmer/farmer.component'
     PestComponent,
     DiseaseComponent,
     FertilizerComponent,
-    FarmerComponent
+    FarmerComponent,
+    LookupComponent
   ],
   imports: [
     PrimeNgModule,
