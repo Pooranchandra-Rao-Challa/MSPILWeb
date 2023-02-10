@@ -1,24 +1,27 @@
 export class LookUpHeaderDto{
-  lookupHeaderId?:number
-  code?: string
-  name?: string
-  details?:LookupDetailDto[]
+  id?:number
+  code?: string;
+  name?: string;
+  isActive?: boolean;
+  lookUpDetails?:LookupDetailDto[];
+  LookupDetailDto: any;
 }
 export class LookupDetailDto{
-  lookupDetailId?:number
-  lokkupDetailHeaderId?:string
-  code?: string
-  name?: string
-  remarks?:string
-  order?: number
+  id?:number;
+  code?: string;
+  name?: string;
+  remarks?: string;
+  listingorder?: number;
 }
+
 export class LookupViewDto{
   id?: number;
   code?: string;
-  name?: string
-  isActive?: boolean
+  name?: string;
+  isActive?: boolean;
   updatedAt?: Date;
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
 }
+

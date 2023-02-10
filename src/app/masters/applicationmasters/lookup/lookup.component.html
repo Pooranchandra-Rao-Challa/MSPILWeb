@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Lookup" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    (click)="showDialog= true"></button>
+                    (click)="addlookupdialog()"></button>
             </ng-template>
         </p-toolbar>
 
@@ -46,15 +46,10 @@
                                 </div>
 
                                 <div class="field col-12 md:col-8">
-                                    <label>Is Active?:<sup class="p-error">*</sup></label><br>
-                                    &nbsp; <p-inputSwitch formControlName="isActive"
-                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
+                                    <label>Is Active?:</label><br>
+                                    &nbsp; <p-inputSwitch formControlName="isActive">
                                     </p-inputSwitch>
-                                    <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['isActive'].errors?.['required']">
-                                            Please Select Active.</div>
-                                    </span>
+                                    
                                 </div>
                                 <div class="field col-12 md:col-4 ">
                                     <div class="button-container">
@@ -69,31 +64,31 @@
                     <!-- lookupdetails -->
                     <div *ngIf="dataShown">
                         <div class="col-12">
-                            <p-table formArrayName="lookupDtls" dataKey="id" [tableStyle]="{'min-width': '50rem'}">
+                            <p-table formArrayName="lookUpDetails" dataKey="id" [tableStyle]="{'min-width': '50rem'}">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                                        <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="remark">Remark <p-sortIcon field="remark"></p-sortIcon>
+                                        <th pSortableColumn="remark">Remarks<p-sortIcon field="remark"></p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="order">Order<p-sortIcon field="order"></p-sortIcon>
+                                        <th pSortableColumn="order">Listing Order<p-sortIcon field="order"></p-sortIcon>
                                         </th>
                                     </tr>&nbsp;
-                                    <tr *ngFor="let items of lookupDtl.controls;let formarry=index"
-                                        [formGroupName]="formarry">
+                                    <tr *ngFor="let items of lookUpDetails.controls;let fblookup=index"
+                                        [formGroupName]="fblookup">
                                         <td>
-                                            <input type="text" pInputText class="form-control" formControlName="code">
+                                            <input  pInputText class="form-control" formControlName="code">
                                         </td>
                                         <td>
-                                            <input type="text" pInputText class="form-control" formControlName="name">
+                                            <input  pInputText class="form-control" formControlName="name">
                                         </td>
                                         <td>
-                                            <input type="text" pInputText class="form-control" formControlName="remark">
+                                            <input  pInputText class="form-control" formControlName="remarks">
                                         </td>
                                         <td>
-                                            <input type="text" pInputText class="form-control" formControlName="order">
+                                            <input pInputText class="form-control" formControlName="listingorder">
                                         </td>
                                     </tr>&nbsp;
 
@@ -115,7 +110,7 @@
 
         <!-- table -->
 
-        <p-table #dt1 [value]="look" dataKey="id" [rows]="10" [rowHover]="true" [loading]="loading"
+        <p-table #dt1 [value]="look" dataKey="id" [rows]="5" [rowHover]="true" [loading]="loading"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="['lookupId','code','name','isActive','createdBy','updatedBy','createdAt','updatedAt']"
             [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[5,10,25,50]">
@@ -148,7 +143,8 @@
                     </th>
 
                     <th pSortableColumn="isActive">
-                        Is Active
+                        Is Active<p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+                        <p-sortIcon field="isActive"></p-sortIcon>
                     </th>
 
                     <th pSortableColumn="createdByUser">
