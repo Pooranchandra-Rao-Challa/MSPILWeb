@@ -7,8 +7,8 @@ export class BillDto {
   runDate?: Date;
   fromDate?: Date;
   toDate?: Date;
-  isFinal?: boolean;
-  isActive?: boolean;
+  isFinal: boolean = true;
+  isActive: boolean = true;
 }
 
 export class BillViewDto {
@@ -21,8 +21,8 @@ export class BillViewDto {
   runDate?: Date;
   fromDate?: Date;
   toDate?: Date;
-  isFinal?: boolean;
-  isActive?: boolean;
+  isFinal: boolean = true;
+  isActive: boolean = true;
   isConfirmed?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -70,7 +70,7 @@ export class DieselBunkDto {
   gLcode?: string;
   subGLcode?: string;
   address?: string;
-  isActive?: boolean;
+  isActive: boolean = true;
 }
 
 export class DieselBunkViewDto {
@@ -84,7 +84,7 @@ export class DieselBunkViewDto {
   glCode?: string;
   subGLCode?: string;
   address?: string;
-  isActive?: boolean;
+  isActive: boolean = true;
   updatedAt?: Date;
   createdAt?: Date;
   updatedBy?: string;
@@ -96,7 +96,7 @@ export class DieselRateDto {
   fromDate?: Date;
   toDate?: Date;
   rate?: number;
-  isActive?: boolean;
+  isActive: boolean = true;
 }
 
 export class DieselRateViewDto {
@@ -104,7 +104,7 @@ export class DieselRateViewDto {
   fromDate?: Date;
   toDate?: Date;
   rate?: number;
-  isActive?: boolean;
+  isActive: boolean = true;
   updatedAt?: Date;
   createdAt?: Date;
   updatedByUser?: string;
@@ -122,7 +122,7 @@ export class DistanceRateViewDto {
   id?: number;
   distance?: number;
   rate?: number;
-  isActive?: boolean
+  isActive: boolean = true;
   updatedAt?: Date;
   createdAt?: Date;
   updatedBy?: string;
@@ -135,7 +135,7 @@ export class VillageParamRateDto {
   villageId?: number;
   billParameterId?: number;
   rate?: number;
-  isActive?: boolean
+  isActive: boolean = true;
 }
 
 export class VillageParamRateViewDto {
