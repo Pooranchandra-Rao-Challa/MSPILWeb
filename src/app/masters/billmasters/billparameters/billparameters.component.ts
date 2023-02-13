@@ -101,7 +101,7 @@ export class BillParametersComponent implements OnInit {
 
   onSubmit() {
     if (this.fbBillParameters.valid) {
-      console.log(this.fbBillParameters.value);
+     console.log(this .fbBillParameters.value);
       this.saveBillParam().subscribe(resp => {
         if (resp) {
           this.loadBillParams();

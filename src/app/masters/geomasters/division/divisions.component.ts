@@ -121,7 +121,7 @@ export class DivisionsComponent implements OnInit {
     }
 
 
-    valSwitch: boolean = true;
+    valSwitch: boolean = false;
 
 }
 

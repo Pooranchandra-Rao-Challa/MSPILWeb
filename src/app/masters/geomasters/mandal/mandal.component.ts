@@ -47,16 +47,12 @@ export class MandalComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.initMandals();
-
     this.commonService.GetDistrictsForState().subscribe((resp) => {
       this.district = resp as unknown as DistrictDto[]
-      console.log(this.district);
-      
+      console.log(this.district);    
     })
     
-
     this.fbmandals = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
       name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -64,8 +60,6 @@ export class MandalComponent implements OnInit {
       mandalId: [''],
       isActive: new FormControl (true, Validators.required),
     });
-
-
   }
   initMandals() {
     this.geoMasterService.GetMandals().subscribe((resp) => {

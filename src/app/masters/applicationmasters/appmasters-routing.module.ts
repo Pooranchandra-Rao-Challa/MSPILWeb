@@ -6,6 +6,8 @@ import { PestComponent } from './pest/pest.component';
 import { DiseaseComponent } from './disease/disease.component';
 import { FertilizerComponent } from './fertilizer/fertilizer.component';
 import { FarmerComponent } from './farmer/farmer.component';
+import { LookupComponent } from './lookup/lookup.component';
+import { PlanttypeComponent } from './planttype/planttype.component';
 
 @NgModule({
   imports: [RouterModule.forChild([
@@ -15,6 +17,8 @@ import { FarmerComponent } from './farmer/farmer.component';
     { path: 'disease', component: DiseaseComponent},
     { path: 'fertilizer', component: FertilizerComponent},
     { path: 'farmer', component:FarmerComponent},
+    { path: 'lookup', component:LookupComponent},
+    {path:'planttype', component:PlanttypeComponent}
   ])],
   exports: [RouterModule]
 })

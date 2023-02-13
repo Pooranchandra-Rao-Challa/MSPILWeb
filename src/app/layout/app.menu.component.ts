@@ -126,6 +126,8 @@ export class AppMenuComponent implements OnInit {
                   { label: 'Disease', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/disease'], permission: true },
                   { label: 'Fertilizer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/fertilizer'], permission: true },
                   { label: 'Farmer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: true },
+                  { label: 'Lookup', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
+                  { label: 'Plant type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
                 ]
               }
             ]

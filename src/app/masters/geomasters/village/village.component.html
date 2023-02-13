@@ -11,80 +11,74 @@
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
                       <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="divisions" optionLabel="divisionName" [required]="true"
+                      <p-dropdown [options]="divisions" optionLabel="divisionName"
                         optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
-                        [(ngModel)]="selectedVillage.divisionId" #divisionId="ngModel"
-                        [ngModelOptions]="{standalone: true}"
-                        [ngClass]="{ 'is-invalid ng-dirty': divisionId.touched && divisionId.errors }"></p-dropdown>
-                      <span *ngIf="divisionId.touched && divisionId.invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="divisionId.errors?.['required']">Please Select
+                        formControlName="divisionId"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-dropdown>
+                      <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['divisionId'].errors?.['required']">Please Select
                           Division.
                         </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="circles" optionLabel="name" [required]="true" optionValue="circleId"
+                      <p-dropdown [options]="circles" optionLabel="name"  optionValue="circleId"
                         (onChange)="initSections($event.value)" [autoDisplayFirst]="false"
-                        [(ngModel)]="selectedVillage.circleId" #circleId="ngModel" [ngModelOptions]="{standalone: true}"
-                        [ngClass]="{ 'is-invalid ng-dirty': circleId.touched && circleId.errors }">
+                        formControlName="circleId"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
                       </p-dropdown>
-                      <span *ngIf="circleId.touched && circleId.invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="circleId.errors?.['required']">Please Select
+                      <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['circleId'].errors?.['required']">Please Select
                           Circle.
                         </div>
-
-
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="section">Sections:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="sections" optionLabel="name" [(ngModel)]="village.sectionId"
-                        [required]="true" optionValue="sectionId" [autoDisplayFirst]="false" #sectionId="ngModel"
-                        [ngModelOptions]="{standalone: true}"
-                        [ngClass]="{ 'is-invalid ng-dirty': sectionId.touched && sectionId.errors }">
+                      <p-dropdown [options]="sections" optionLabel="name" optionValue="sectionId"
+                        [autoDisplayFirst]="false" formControlName="sectionId"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }">
                       </p-dropdown>
-                      <span *ngIf="sectionId?.touched && sectionId.invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="sectionId.errors?.['required']">Please Select
+                      <span *ngIf="FormControls['sectionId'].touched && FormControls['sectionId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['sectionId'].errors?.['required']">Please Select
                           Section.
                         </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="age1">State:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="states" optionLabel="name" [required]="true" optionValue="stateId"
+                      <p-dropdown [options]="states" optionLabel="name" optionValue="stateId"
                         (onChange)="initDistricts($event.value)" [autoDisplayFirst]="false"
-                        [(ngModel)]="selectedVillage.stateId" #stateId="ngModel" [ngModelOptions]="{standalone: true}"
-                        [ngClass]="{ 'is-invalid ng-dirty': stateId?.touched && stateId?.errors }"></p-dropdown>
-                      <span *ngIf="stateId?.touched && stateId?.invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="stateId.errors?.['required']">Please Select
+                        formControlName="stateId"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors }"></p-dropdown>
+                      <span *ngIf="FormControls['stateId'].touched && FormControls['stateId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['stateId'].errors?.['required']">Please Select
                           State.
                         </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="districtId">Districts:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="districts" optionLabel="name" [required]="true" optionValue="districtId"
+                      <p-dropdown [options]="districts" optionLabel="name" optionValue="districtId"
                         (onChange)="initMandals($event.value)" [autoDisplayFirst]="false"
-                        [(ngModel)]="selectedVillage.districtId" #districtId="ngModel"
-                        [ngModelOptions]="{standalone: true}"
-                        [ngClass]="{ 'is-invalid ng-dirty': districtId?.touched && districtId.errors }">
+                        formControlName="districtId"
+                        [ngClass]="{ 'is-invalid ng-dirty':FormControls['districtId'].touched && FormControls['districtId'].errors }">
                       </p-dropdown>
-                      <span *ngIf="districtId?.touched && districtId?.invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="districtId?.errors?.['required']">Please
+                      <span *ngIf="FormControls['districtId'].touched && FormControls['districtId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['districtId'].errors?.['required']">Please
                           Select District.
                         </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="circle">Mandals:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="mandals" optionLabel="name" [(ngModel)]="village.mandalId"
-                        [required]="true" optionValue="mandalId" [autoDisplayFirst]="false" #mandalId="ngModel"
-                        [ngModelOptions]="{standalone: true}"
-                        [ngClass]="{ 'is-invalid ng-dirty': mandalId.touched && mandalId.errors }">
+                      <p-dropdown [options]="mandals" optionLabel="name" optionValue="mandalId" [autoDisplayFirst]="false"
+                        formControlName="mandalId"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['mandalId'].touched && FormControls['mandalId'].errors }">
                       </p-dropdown>
-                      <span *ngIf="mandalId?.touched && mandalId.invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="mandalId.errors?.['required']">Please Select
+                      <span *ngIf="FormControls['mandalId'].touched && FormControls['mandalId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['mandalId'].errors?.['required']">Please Select
                           Mandals.
                         </div>
                       </span>
@@ -101,8 +95,6 @@
                         class="error-message p-error">
                         Village Code required
                       </div>
-
-
                     </div>
 
                     <div class="field col-12 md:col-3">
@@ -123,8 +115,8 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargePhoneNo">Incharge Phone No.:</label>
-                      <p-inputNumber inputId="inchargePhoneNo" formControlName="inchargePhoneNo" inputId="minmax"
-                        mode="decimal" [min]="0" [max]="100">
+                      <p-inputNumber inputId="inchargePhoneNo" formControlName="inchargePhoneNo"
+                        mode="decimal" [useGrouping]="false" [size]="10" [maxlength]="10">
                       </p-inputNumber>
                     </div>
 
@@ -138,7 +130,8 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="PinCode">Pin Code:</label>
-                      <p-inputNumber inputId="pinCode" formControlName="pinCode">
+                      <p-inputNumber inputId="pinCode" formControlName="pinCode" mode="decimal" [useGrouping]="false"
+                      [size]="6" [maxlength]="6">
                       </p-inputNumber>
 
 
@@ -249,7 +242,7 @@
 
                     <div class="field col-12 md:col-4">
                       <label for="noOfEbservices">No Of EB Services:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="2">
+                      <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="0">
                       </p-inputNumber>
                       <div *ngIf="FormControls['noOfEbservices'].invalid &&  FormControls['noOfEbservices'].touched"
                         class="error-message p-error">
@@ -277,19 +270,14 @@
 
                 <div class="field col-12 md:col-3 ">
                   <div class="col-6">
-                    <label htmlFor="isActive">Is Active?:<sup class="p-error">*</sup></label><br>
+                    <label htmlFor="isActive">Is Active?:</label><br>
                     <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
-
-                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
-                      class="error-message p-error">
-                      IsActive is required
-                    </div>
                   </div>
                 </div>
                 <div class="field col-12 md:col-3">
                   <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal" [min]="0" [max]="1000"
-                    locale="en-IN">
+                  <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
+                    locale="en-IN"  [useGrouping]="false" [size]="6" [maxlength]="6">
                   </p-inputNumber>
                   <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
                     class="error-message p-error">
@@ -341,47 +329,108 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="villageId"><p-sortIcon field="villageId"></p-sortIcon>Village Id</th>
-          <th pSortableColumn="villageCode"><p-sortIcon field="villageCode"></p-sortIcon>Village Code</th>
-          <th pSortableColumn="villageName"><p-sortIcon field="villageName"></p-sortIcon>Village Name</th>
-          <th pSortableColumn="sectionId"><p-sortIcon field="sectionId"></p-sortIcon>Section Id</th>
-          <th pSortableColumn="sectionName"><p-sortIcon field="sectionName"></p-sortIcon>Section NAme</th>
-          <th pSortableColumn="mandalId"><p-sortIcon field="mandalId"></p-sortIcon>Mandal Id</th>
-          <th pSortableColumn="mandalName"><p-sortIcon field="mandalName"></p-sortIcon>Mandal Name</th>
-          <th pSortableColumn="districtId"><p-sortIcon field="districtId"></p-sortIcon>District Id</th>
-          <th pSortableColumn="districtName"><p-sortIcon field="districtName"></p-sortIcon>District Name</th>
-          <th pSortableColumn="divisionId"><p-sortIcon field="divisionId"></p-sortIcon>Division Id</th>
-          <th pSortableColumn="divisionName"><p-sortIcon field="divisionName"></p-sortIcon>Division Name</th>
-          <th pSortableColumn="circleId"><p-sortIcon field="circleId"></p-sortIcon>Circle Id</th>
-          <th pSortableColumn="circleName"><p-sortIcon field="circleName"></p-sortIcon>Circle Name</th>
-          <th pSortableColumn="inchargeName"><p-sortIcon field="inchargeName"></p-sortIcon>Incharge Name</th>
-          <th pSortableColumn="inchargePhoneNo"><p-sortIcon field="inchargePhoneNo"></p-sortIcon>Incharge
-            Phone No</th>
-          <th pSortableColumn="address"><p-sortIcon field="address"></p-sortIcon>Address</th>
-          <th pSortableColumn="pinCode"><p-sortIcon field="pinCode"></p-sortIcon>Pincode</th>
-          <th pSortableColumn="distance"><p-sortIcon field="distance"></p-sortIcon>Distance</th>
-          <th pSortableColumn="divertedDistance"><p-sortIcon field="divertedDistance"></p-sortIcon>Diverted
-            Distance</th>
-          <th pSortableColumn="noOfEbservices"><p-sortIcon field="noOfEbservices"></p-sortIcon>No of
-            Ebservices</th>
-          <th pSortableColumn="tptRate"><p-sortIcon field="tptRate"></p-sortIcon>Tpt Rate</th>
-          <th pSortableColumn="totalArea"><p-sortIcon field="totalArea"></p-sortIcon>Total Area</th>
-          <th pSortableColumn="cultivableArea"><p-sortIcon field="cultivableArea"></p-sortIcon>Cultivable
-            Area</th>
-          <th pSortableColumn="irrigationArea"><p-sortIcon field="irrigationArea"></p-sortIcon>Irrigation
-            Area</th>
-          <th pSortableColumn="dryArea"><p-sortIcon field="dryArea"></p-sortIcon>Dry Area</th>
-          <th pSortableColumn="potentialArea"><p-sortIcon field="potentialArea"></p-sortIcon>Potential Area
-          </th>
-          <th pSortableColumn="notSuitableArea"><p-sortIcon field="notSuitableArea"></p-sortIcon>Not
-            Suitable Area</th>
-          <th pSortableColumn="targetTons"><p-sortIcon field="targetTons"></p-sortIcon>Target Tons</th>
-          <th pSortableColumn="listingOrder"><p-sortIcon field="listingOrder"></p-sortIcon>Listing Order</th>
-          <th pSortableColumn="isActive"><p-sortIcon field="isActive"></p-sortIcon>Is Active</th>
-          <th pSortableColumn="updatedAt"><p-sortIcon field="updatedAt"></p-sortIcon>Updated At</th>
-          <th pSortableColumn="createdAt"><p-sortIcon field="createdAt"></p-sortIcon>Created At</th>
-          <th pSortableColumn="updatedBy"><p-sortIcon field="updatedBy"></p-sortIcon>Updated By</th>
-          <th pSortableColumn="createdBy"><p-sortIcon field="createdBy"></p-sortIcon>Created By</th>
+          <th pSortableColumn="villageId">Village Id<p-columnFilter type="text" field="villageId"
+            display="menu"></p-columnFilter><p-sortIcon field="villageId"></p-sortIcon>
+         </th>
+          <th pSortableColumn="villageCode">Village Code<p-columnFilter type="text" field="villageCode"
+            display="menu"></p-columnFilter><p-sortIcon field="villageCode"></p-sortIcon>
+        </th>
+          <th pSortableColumn="villageName">Village Name<p-columnFilter type="text" field="villageName"
+            display="menu"></p-columnFilter><p-sortIcon field="villageName"></p-sortIcon>
+        </th>
+          <th pSortableColumn="sectionId">Section Id<p-columnFilter type="text" field="sectionId"
+            display="menu"></p-columnFilter><p-sortIcon field="sectionId"></p-sortIcon>
+        </th>
+          <th pSortableColumn="sectionName">Section NAme<p-columnFilter type="text" field="sectionName"
+            display="menu"></p-columnFilter><p-sortIcon field="sectionName"></p-sortIcon>
+        </th>
+          <th pSortableColumn="mandalId">Mandal Id<p-columnFilter type="text" field="mandalId"
+            display="menu"></p-columnFilter><p-sortIcon field="mandalId"></p-sortIcon>
+        </th>
+          <th pSortableColumn="mandalName">Mandal Name<p-columnFilter type="text" field="mandalName"
+            display="menu"></p-columnFilter><p-sortIcon field="mandalName"></p-sortIcon>
+        </th>
+          <th pSortableColumn="districtId">District Id<p-columnFilter type="text" field="districtId"
+            display="menu"></p-columnFilter><p-sortIcon field="districtId"></p-sortIcon>
+        </th>
+          <th pSortableColumn="districtName">District Name<p-columnFilter type="text" field="districtName"
+            display="menu"></p-columnFilter><p-sortIcon field="districtName"></p-sortIcon>
+        </th>
+          <th pSortableColumn="divisionId">Division Id<p-columnFilter type="text" field="divisionId"
+            display="menu"></p-columnFilter><p-sortIcon field="divisionId"></p-sortIcon>
+        </th>
+          <th pSortableColumn="divisionName">Division Name<p-columnFilter type="text" field="divisionName"
+            display="menu"></p-columnFilter><p-sortIcon field="divisionName"></p-sortIcon>
+        </th>
+          <th pSortableColumn="circleId">Circle Id<p-columnFilter type="text" field="circleId"
+            display="menu"></p-columnFilter><p-sortIcon field="circleId"></p-sortIcon>
+        </th>
+          <th pSortableColumn="circleName">Circle Name<p-columnFilter type="text" field="circleName"
+            display="menu"></p-columnFilter><p-sortIcon field="circleName"></p-sortIcon>
+        </th>
+          <th pSortableColumn="inchargeName">Incharge Name<p-columnFilter type="text" field="inchargeName"
+            display="menu"></p-columnFilter><p-sortIcon field="inchargeName"></p-sortIcon>
+        </th>
+          <th pSortableColumn="inchargePhoneNo">InchargePhone No<p-columnFilter type="text" field="inchargePhoneNo"
+            display="menu"></p-columnFilter><p-sortIcon field="inchargePhoneNo"></p-sortIcon>
+        </th>
+          <th pSortableColumn="address">Address<p-columnFilter type="text" field="address"
+            display="menu"></p-columnFilter><p-sortIcon field="address"></p-sortIcon>
+        </th>
+          <th pSortableColumn="pinCode">Pincode<p-columnFilter type="text" field="pinCode"
+            display="menu"></p-columnFilter><p-sortIcon field="pinCode"></p-sortIcon>
+        </th>
+          <th pSortableColumn="distance">Distance<p-columnFilter type="text" field="distance"
+            display="menu"></p-columnFilter><p-sortIcon field="distance"></p-sortIcon>
+        </th>
+          <th pSortableColumn="divertedDistance">DivertedDistance<p-columnFilter type="text" field="divertedDistance"
+            display="menu"></p-columnFilter><p-sortIcon field="divertedDistance"></p-sortIcon>
+        </th>
+          <th pSortableColumn="noOfEbservices">No ofEbservices<p-columnFilter type="text" field="noOfEbservices"
+            display="menu"></p-columnFilter><p-sortIcon field="noOfEbservices"></p-sortIcon>
+        </th>
+          <th pSortableColumn="tptRate">Tpt Rate<p-columnFilter type="text" field="tptRate"
+            display="menu"></p-columnFilter><p-sortIcon field="tptRate"></p-sortIcon>
+        </th>
+          <th pSortableColumn="totalArea">Total Area<p-columnFilter type="text" field="totalArea"
+            display="menu"></p-columnFilter><p-sortIcon field="totalArea"></p-sortIcon>
+        </th>
+          <th pSortableColumn="cultivableArea">Cultivable Area<p-columnFilter type="text" field="cultivableArea"
+            display="menu"></p-columnFilter><p-sortIcon field="cultivableArea"></p-sortIcon>
+        </th>
+          <th pSortableColumn="irrigationArea">IrrigationArea<p-columnFilter type="text" field="irrigationArea"
+            display="menu"></p-columnFilter><p-sortIcon field="irrigationArea"></p-sortIcon>
+        </th>
+          <th pSortableColumn="dryArea">Dry Area<p-columnFilter type="text" field="dryArea"
+            display="menu"></p-columnFilter><p-sortIcon field="dryArea"></p-sortIcon>
+        </th>
+          <th pSortableColumn="potentialArea">Potential Area<p-columnFilter type="text" field="potentialArea"
+            display="menu"></p-columnFilter><p-sortIcon field="potentialArea"></p-sortIcon>
+        </th>
+
+          <th pSortableColumn="notSuitableArea">Not Suitable Area<p-columnFilter type="text" field="notSuitableArea"
+            display="menu"></p-columnFilter><p-sortIcon field="notSuitableArea"></p-sortIcon>
+        </th>
+          <th pSortableColumn="targetTons">Target Tons<p-columnFilter type="text" field="targetTons"
+            display="menu"></p-columnFilter><p-sortIcon field="targetTons"></p-sortIcon>
+        </th>
+          <th pSortableColumn="listingOrder">Listing Order<p-columnFilter type="text" field="listingOrder"
+            display="menu"></p-columnFilter><p-sortIcon field="listingOrder"></p-sortIcon>
+        </th>
+          <th pSortableColumn="isActive">Is Active<p-sortIcon field="isActive"></p-sortIcon>
+        </th>
+          <th pSortableColumn="updatedAt">Updated At<p-columnFilter type="text" field="updatedAt"
+            display="menu"></p-columnFilter><p-sortIcon field="updatedAt"></p-sortIcon>
+        </th>
+          <th pSortableColumn="createdAt">Created At<p-columnFilter type="text" field="createdAt"
+            display="menu"></p-columnFilter><p-sortIcon field="createdAt"></p-sortIcon>
+        </th>
+          <th pSortableColumn="updatedBy">Updated By<p-columnFilter type="text" field="updatedBy"
+            display="menu"></p-columnFilter><p-sortIcon field="updatedBy"></p-sortIcon>
+        </th>
+          <th pSortableColumn="createdBy">Created By<p-columnFilter type="text" field="createdBy"
+            display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+        </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-village>
@@ -417,7 +466,10 @@
           <td>{{village.notSuitableArea}}</td>
           <td>{{village.targetTons}}</td>
           <td>{{village.listingOrder}}</td>
-          <td>{{village.isActive}}</td>
+          <td style="text-align:center">
+            <p-checkbox name="active" value="active" [(ngModel)]="village.isActive" [binary]="true" [disabled]="true">
+            </p-checkbox>
+          </td>
           <td>{{village.updatedAt}}</td>
           <td>{{village.createdAt}}</td>
           <td>{{village.updatedBy}}</td>
