@@ -30,14 +30,13 @@ export class DieselBunkComponent implements OnInit {
     private billmasterService: BillMasterService) { }
 
   ngOnInit(): void {
-    this.loadDieselBunks();
+    this.initDieselBunks();
     this.dieselRateForm();
   }
 
-  loadDieselBunks() {
+  initDieselBunks() {
     this.billmasterService.GetDieselBunks().subscribe((resp) => {
       this.dieselBunks = resp as unknown as DieselBunkViewDto[];
-      console.log(this.dieselBunks);
       this.loading = false;
     });
   }
@@ -50,7 +49,6 @@ export class DieselBunkComponent implements OnInit {
       address: ['', (Validators.required)],
       pinCode: ['', (Validators.required)],
       phoneNo: new FormControl('', [Validators.required, Validators.pattern(phoneNoReg)]),
-      // phoneNo: [''],
       email: [''],
       gLcode: [''],
       subGLcode: [''],
@@ -103,10 +101,9 @@ export class DieselBunkComponent implements OnInit {
 
   onSubmit() {
     if (this.fbDieselBunk.valid) {
-      console.log(this.fbDieselBunk.value);
       this.saveBillParam().subscribe(resp => {
         if (resp) {
-          this.loadDieselBunks();
+          this.initDieselBunks();
           this.fbDieselBunk.reset();
           this.showDialog = false;
         }

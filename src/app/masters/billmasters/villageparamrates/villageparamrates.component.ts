@@ -37,7 +37,7 @@ export class VillageParamRatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.initVillageParamRates();
-    this.loadDefaults();
+    this.initDefaults();
     this.villageParamRateForm();
   }
 
@@ -45,25 +45,20 @@ export class VillageParamRatesComponent implements OnInit {
     this.billMasterService.GetVillageParamRates().subscribe((resp) => {
       this.villageParamRates = resp as unknown as VillageParamRateViewDto[];
       this.loading = false;
-      console.log(this.villageParamRates);
     });
   }
 
-  loadDefaults() {
+  initDefaults() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp;
     });
 
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
-      console.log(this.villages);
-
     });
 
     this.billMasterService.GetBillParameters().subscribe((resp) => {
       this.billParameters = resp as unknown as BillParameterViewDto[];
-      console.log(this.billParameters);
-
     });
   }
 
@@ -111,15 +106,12 @@ export class VillageParamRatesComponent implements OnInit {
   }
 
   saveBillParam(): Observable<HttpEvent<any>> {
-    console.log(this.fbVillageParamRate.value);
-
     if (this.addFlag) return this.billMasterService.CreateVillageParamRate(this.fbVillageParamRate.value)
     else return this.billMasterService.UpdateVillageParamRate(this.fbVillageParamRate.value)
   }
 
   onSubmit() {
     if (this.fbVillageParamRate.valid) {
-      console.log(this.fbVillageParamRate.value);
       this.saveBillParam().subscribe(resp => {
         if (resp) {
           this.initVillageParamRates();

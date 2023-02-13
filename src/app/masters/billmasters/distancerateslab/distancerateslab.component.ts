@@ -27,11 +27,11 @@ export class DistanceRateSlabComponent implements OnInit {
     private billMasterService: BillMasterService) { }
 
   ngOnInit(): void {
-    this.loadDistanceRates();
+    this.initDistanceRates();
     this.distanceRateForm();
   }
 
-  loadDistanceRates() {
+  initDistanceRates() {
     this.billMasterService.GetDistanceRates().subscribe((resp) => {
       this.distanceRates = resp as unknown as DistanceRateViewDto[];
       this.loading = false;
@@ -84,10 +84,9 @@ export class DistanceRateSlabComponent implements OnInit {
 
   onSubmit() {
     if (this.fbDistanceRate.valid) {
-      console.log(this.fbDistanceRate.value);
       this.saveBillParam().subscribe(resp => {
         if (resp) {
-          this.loadDistanceRates();
+          this.initDistanceRates();
           this.fbDistanceRate.reset();
           this.showDialog = false;
         }

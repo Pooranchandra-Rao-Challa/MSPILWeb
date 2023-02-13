@@ -125,7 +125,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a bill category" optionLabel="categoryName" [options]="billCategories" optionValue="categoryId"
+                  <p-dropdown placeholder="Select a bill category" optionLabel="name" [options]="billCategories" optionValue="lookUpDetailId"
                     formControlName="categoryId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
@@ -151,7 +151,7 @@
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
-                      Please Select Date.</div>
+                      Please Select From Date.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -161,7 +161,7 @@
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
-                      Please Select Date.</div>
+                      Please Select To Date.</div>
                   </span>
                 </div>
                 <div class="col-12">

@@ -154,7 +154,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['village'].touched && FormControls['village'].errors }">
                   </p-dropdown> -->
                   <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
-                    filterBy="villageName,villageCode" formControlName="villageId" [showClear]="true"
+                    filterBy="villageName,villageCode" formControlName="villageId"
                     placeholder="Select a Village" (onChange)="onSelectedVillage($event.value)"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }">
                     <ng-template let-village pTemplate="selectedItem">
@@ -173,18 +173,18 @@
                 <div class="field col-12 md:col-6">
                   <label>Village Name:<sup class="p-error">*</sup></label>
                   <input pInputText formControlName="villageName" readonly>
-                  <span *ngIf="FormControls['villageName'].touched && FormControls['villageName'].invalid">
+                  <!-- <span *ngIf="FormControls['villageName'].touched && FormControls['villageName'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageName'].errors?.['required']">
                       Please Select Village.</div>
-                  </span>
+                  </span> -->
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Village Id:<sup class="p-error">*</sup></label>
                   <input pInputText formControlName="villageId" readonly>
-                  <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
+                  <!-- <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageId'].errors?.['required']">
                       Please Select Village.</div>
-                  </span>
+                  </span> -->
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Bill Param:<sup class="p-error">*</sup></label>

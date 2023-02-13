@@ -1,3 +1,4 @@
+import { LookupService } from './../../../_services/lookup.service';
 import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -23,25 +24,27 @@ export class BillParametersComponent implements OnInit {
   addFlag: boolean = true;
   globalFilterFields: string[] = ['id', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'isActive', 'createdAt', 'createdByUser', 'updatedAt', 'updatedByUser'];
   submitLabel!: string;
+  billCategories: any;
 
   constructor(private formbuilder: FormBuilder,
-    private billmasterService: BillMasterService) { }
+    private billmasterService: BillMasterService,
+    private lookupService: LookupService) { }
 
   ngOnInit(): void {
-    // this.lookupService.GetLookups(GET_ACTIONPLANS_URI).subscribe((resp) => {
-    //   console.log(resp);
-
-    // });
-    this.loadBillParams();
+    this.initBillParams();
+    this.initLookupDetails();
     this.billmasterForm();
   }
 
-  loadBillParams() {
-    this.billmasterService.GetBillParameters().subscribe((resp) => {
-      console.log(resp);
+  initLookupDetails() {
+    this.lookupService.BillCategories().subscribe((resp) => {
+      this.billCategories = resp;
+    });
+  }
 
+  initBillParams() {
+    this.billmasterService.GetBillParameters().subscribe((resp) => {
       this.billParameters = resp as unknown as BillParameterViewDto[];
-      console.log(this.billParameters);
     });
   }
 
@@ -101,10 +104,9 @@ export class BillParametersComponent implements OnInit {
 
   onSubmit() {
     if (this.fbBillParameters.valid) {
-     console.log(this .fbBillParameters.value);
       this.saveBillParam().subscribe(resp => {
         if (resp) {
-          this.loadBillParams();
+          this.initBillParams();
           this.fbBillParameters.reset();
           this.showDialog = false;
         }

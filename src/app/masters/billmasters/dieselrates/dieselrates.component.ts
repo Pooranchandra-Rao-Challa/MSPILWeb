@@ -30,11 +30,11 @@ export class DieselRatesComponent implements OnInit {
     private billMasterService: BillMasterService) { }
 
   ngOnInit(): void {
-    this.loadDieselRates();
+    this.initDieselRates();
     this.dieselRateForm();
   }
 
-  loadDieselRates() {
+  initDieselRates() {
     this.billMasterService.GetDieselRates().subscribe((resp) => {
       this.dieselRates = resp as unknown as DieselRateViewDto[];
     });
@@ -96,7 +96,7 @@ export class DieselRatesComponent implements OnInit {
     if (this.fbDieselRate.valid) {
       this.saveBillParam().subscribe(resp => {
         if (resp) {
-          this.loadDieselRates();
+          this.initDieselRates();
           this.fbDieselRate.reset();
           this.showDialog = false;
         }

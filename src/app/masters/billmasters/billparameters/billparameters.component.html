@@ -124,8 +124,8 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
-                  <p-dropdown [options]="billParameters" optionLabel="billCategoryId" formControlName="categoryId"
-                    optionValue="billCategoryId"
+                  <p-dropdown [options]="billCategories" optionLabel="name" formControlName="categoryId"
+                    optionValue="lookUpDetailId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
