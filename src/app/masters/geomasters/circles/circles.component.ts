@@ -16,7 +16,7 @@ import { JWTService } from 'src/app/_services/jwt.service';
 })
 export class CirclesComponent implements OnInit {
 
-    display: boolean = false;
+    dialog: boolean = false;
     circles: CirclesViewDto[] = [];
     circle: CircleDto = new CircleDto();
     states: StateDto[] = [];
@@ -39,7 +39,7 @@ export class CirclesComponent implements OnInit {
         this.fbcircles.reset();
         this.submitLabel = "Add Circle";
         this.addFlag = true;
-        this.display = true;
+        this.dialog = true;
     }
 
     get FormControls() {
@@ -90,7 +90,7 @@ export class CirclesComponent implements OnInit {
         this.fbcircles.setValue(this.circle);
         this.submitLabel = "Update Circle";
         this.addFlag = false;
-        this.display = true;
+        this.dialog = true;
     }
 
     private UpdateForm() {
@@ -110,7 +110,7 @@ export class CirclesComponent implements OnInit {
                 if (resp) {
                     this.initCircles();
                     this.onClose();
-                    this.display = false;
+                    this.dialog = false;
                 }
             })
         }

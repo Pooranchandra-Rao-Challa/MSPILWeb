@@ -1,7 +1,8 @@
 <div class="col-12">
     <div class="card">
-        <p-dialog header="Circle" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-            [style]="{width: '50vw'}">
+        <p-dialog header="Circle" [(visible)]="dialog" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            [style]="{width: '50vw'}" [modal]="true">
+            
                 <ng-template pTemplate="content">
                 <div class="flex flex-column align-items-center justify-content-center">
                     <form [formGroup]="fbcircles" (ngSubmit)="onSubmit()">
@@ -155,7 +156,7 @@
                     <th pSortableColumn="name">Circle Name <p-columnFilter type="text" field="name"
                         display="menu"></p-columnFilter><p-sortIcon field="name"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="divisionId">Divison Id <p-columnFilter type="text" field="divisionId"
+                    <th pSortableColumn="divisionId"> Division Id <p-columnFilter type="text" field="divisionId"
                         display="menu"></p-columnFilter><p-sortIcon field="divisionId"></p-sortIcon>
                     </th>
                     <th pSortableColumn="divisionName">Division Name<p-columnFilter type="text" field="divisionName"

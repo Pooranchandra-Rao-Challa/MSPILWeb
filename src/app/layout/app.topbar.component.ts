@@ -22,7 +22,18 @@ export class AppTopBarComponent {
       this.loggedInUser = this.jwtService.GivenName;
      }
 
-    Logout(){
-      this.jwtService.Logout();
-    }
+    // Logout(){
+    //   this.jwtService.Logout();
+    // }
+    ngOnInit() {
+      this.items = [
+          { label: 'Settings', icon: 'pi pi-external-link', url: '#' },
+          { label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
+            console.log(this.jwtService.Logout());
+            // logic
+          }}
+      ];
+
+     
+  }
 }

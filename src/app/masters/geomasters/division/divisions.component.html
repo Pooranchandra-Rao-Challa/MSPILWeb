@@ -2,7 +2,7 @@
     <div class="card">
         <!-- <dialog> -->
         <p-dialog header="Divisions" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-            [style]="{width: '40vw'}">
+            [style]="{width: '40vw'}" [modal]="true">
             <ng-template pTemplate="content">
                 <div class="flex flex-column align-items-center justify-content-center">
                     <form [formGroup]="fbdivisions" (ngSubmit)="onSubmit()">
@@ -137,7 +137,7 @@
                     <th pSortableColumn="code"> Division Code<p-columnFilter type="text" field="code"
                         display="menu"></p-columnFilter><p-sortIcon field="code"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="name"> Divison Name <p-columnFilter type="text" field="name"
+                    <th pSortableColumn="name"> Division Name <p-columnFilter type="text" field="name"
                         display="menu"></p-columnFilter><p-sortIcon field="name"></p-sortIcon>
                     </th>
                     <th pSortableColumn="inchargeName">InCharge Name<p-columnFilter type="text" field="inchargeName"
