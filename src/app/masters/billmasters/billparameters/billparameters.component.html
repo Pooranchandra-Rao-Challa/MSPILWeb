@@ -150,6 +150,8 @@
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please Enter Code.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                      alpha numeric.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -159,6 +161,9 @@
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">Name
+                      should contains only characters.
+                    </div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -180,6 +185,8 @@
                   <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
                       Please Enter Priority.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['pattern']">
+                      Priority should contains only numbers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -193,21 +200,15 @@
                   </span>
                 </div>
                 <div class="col-12 md:col-6">
-                  <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
-                  <p-inputSwitch formControlName="isActive"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
-                  </p-inputSwitch>
-                  <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
-                      Please Select Active.</div>
-                  </span>
+                  <label>Is Active:</label><br>
+                  <p-inputSwitch formControlName="isActive"> </p-inputSwitch>
                 </div>
               </div>
             </div>
           </div>
         </form>
       </div>
-      <ng-template pTemplate="left">
+      <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>

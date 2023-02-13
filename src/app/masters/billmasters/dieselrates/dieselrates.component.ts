@@ -5,7 +5,6 @@ import { Table } from 'primeng/table';
 import { DieselRateViewDto, DieselRateDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dieselrates',
@@ -23,10 +22,12 @@ export class DieselRatesComponent implements OnInit {
   showDialog: boolean = false;
   fbDieselRate!: FormGroup;
   submitLabel!: string;
+  // short_Date: string = SHORT_DATE;
+  // medium_Date: string = MEDIUM_DATE;
+  // long_Date: string = LONG_DATE;
 
   constructor(private formbuilder: FormBuilder,
-    private billMasterService: BillMasterService,
-    private datepipe: DatePipe) { }
+    private billMasterService: BillMasterService) { }
 
   ngOnInit(): void {
     this.loadDieselRates();
@@ -45,7 +46,7 @@ export class DieselRatesComponent implements OnInit {
       fromDate: ['', (Validators.required)],
       toDate: ['', (Validators.required)],
       rate: ['', (Validators.required)],
-      isActive: [true, Validators.requiredTrue]
+      isActive: [true]
     });
   }
 

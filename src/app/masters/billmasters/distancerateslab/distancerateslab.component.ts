@@ -43,7 +43,7 @@ export class DistanceRateSlabComponent implements OnInit {
       id: [0],
       distance: ['', (Validators.required)],
       rate: ['', (Validators.required)],
-      isActive: [true, Validators.requiredTrue]
+      isActive: [true]
     });
   }
 

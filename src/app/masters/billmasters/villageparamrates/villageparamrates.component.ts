@@ -20,7 +20,8 @@ export class VillageParamRatesComponent implements OnInit {
   showDialog: boolean = false;
   loading: boolean = true;
   addFlag: boolean = true;
-  globalFilterFields: string[] = ['seasonName', 'divisionName', 'circleName', 'sectionName', 'villageName', 'billParameterName', 'rate', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
+  globalFilterFields: string[] = ['seasonName', 'divisionName', 'circleName', 'sectionName', 'villageName', 'billParameterName', 'rate', 'isActive',
+    'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
   fbVillageParamRate!: FormGroup;
   seasons: any;
@@ -55,6 +56,8 @@ export class VillageParamRatesComponent implements OnInit {
 
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
+      console.log(this.villages);
+
     });
 
     this.billMasterService.GetBillParameters().subscribe((resp) => {

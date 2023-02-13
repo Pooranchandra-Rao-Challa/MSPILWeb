@@ -125,7 +125,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
-                  <p-dropdown optionLabel="categoryName" [options]="billCategories" optionValue="categoryId"
+                  <p-dropdown placeholder="Select a bill category" optionLabel="categoryName" [options]="billCategories" optionValue="categoryId"
                     formControlName="categoryId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Season:<sup class="p-error">*</sup></label>
-                  <p-dropdown optionLabel="name" [options]="seasons" optionValue="seasonId" formControlName="seasonsId"
+                  <p-dropdown placeholder="Select a season" optionLabel="name" [options]="seasons" optionValue="seasonId" formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonsId'].touched && FormControls['seasonsId'].invalid">
@@ -165,21 +165,15 @@
                   </span>
                 </div>
                 <div class="col-12">
-                  <label>Is Final?:<sup class="p-error">*</sup></label><br><br>
-                  <p-inputSwitch formControlName="isFinal"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isFinal'].touched && FormControls['isFinal'].errors }">
-                  </p-inputSwitch>
-                  <span *ngIf="FormControls['isFinal'].touched && FormControls['isFinal'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isFinal'].errors?.['required']">
-                      Please Select Active.</div>
-                  </span>
+                  <label>Is Final:</label><br>
+                  <p-inputSwitch formControlName="isFinal"></p-inputSwitch>
                 </div>
               </div>
             </div>
           </div>
         </form>
       </div>
-      <ng-template pTemplate="left">
+      <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>

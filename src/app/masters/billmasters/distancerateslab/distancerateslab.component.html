@@ -168,21 +168,15 @@
                   </span>
                 </div>
                 <div class="col-12">
-                  <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
-                  <p-inputSwitch formControlName="isActive"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
-                  </p-inputSwitch>
-                  <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
-                      Please Select Active.</div>
-                  </span>
+                  <label>Is Active:</label><br>
+                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                 </div>
               </div>
             </div>
           </div>
         </form>
       </div>
-      <ng-template pTemplate="left">
+      <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>

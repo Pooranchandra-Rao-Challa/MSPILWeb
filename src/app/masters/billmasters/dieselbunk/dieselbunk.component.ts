@@ -1,11 +1,12 @@
 import { DieselBunkDto } from './../../../_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { phoneNoReg } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-dieselbunk',
@@ -48,12 +49,13 @@ export class DieselBunkComponent implements OnInit {
       name: ['', (Validators.required)],
       address: ['', (Validators.required)],
       pinCode: ['', (Validators.required)],
-      phoneNo: [''],
+      phoneNo: new FormControl('', [Validators.required, Validators.pattern(phoneNoReg)]),
+      // phoneNo: [''],
       email: [''],
       gLcode: [''],
       subGLcode: [''],
       rate: ['', (Validators.required)],
-      isActive: [true, Validators.requiredTrue]
+      isActive: [true]
     });
   }
 

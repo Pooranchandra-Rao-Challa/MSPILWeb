@@ -1,8 +1,9 @@
 import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { alphaNumericReg, alphaOnlyReg, numericOnlyReg } from 'src/app/_shared/regex';
 import { BillParameterDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 
@@ -27,6 +28,10 @@ export class BillParametersComponent implements OnInit {
     private billmasterService: BillMasterService) { }
 
   ngOnInit(): void {
+    // this.lookupService.GetLookups(GET_ACTIONPLANS_URI).subscribe((resp) => {
+    //   console.log(resp);
+
+    // });
     this.loadBillParams();
     this.billmasterForm();
   }
@@ -45,12 +50,12 @@ export class BillParametersComponent implements OnInit {
       billParameterId: [0],
       categoryId: ['', (Validators.required)],
       type: ['', (Validators.required)],
-      code: ['', (Validators.required)],
-      name: ['', (Validators.required)],
+      code: new FormControl('', [Validators.required, Validators.pattern(alphaNumericReg)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(alphaOnlyReg)]),
       caluclationType: ['', Validators.required],
-      priority: ['', Validators.required],
-      formula: ['', Validators.required],
-      isActive: [true, Validators.requiredTrue]
+      priority: new FormControl('', [Validators.required, Validators.pattern(numericOnlyReg)]),
+      formula: new FormControl('', [Validators.required, Validators.pattern(alphaNumericReg)]),
+      isActive: [true]
     });
   }
 

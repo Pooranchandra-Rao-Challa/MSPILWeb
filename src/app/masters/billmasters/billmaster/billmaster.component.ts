@@ -59,8 +59,8 @@ export class BillMasterComponent implements OnInit {
       seasonsId: ['', (Validators.required)],
       fromDate: ['', (Validators.required)],
       toDate: ['', (Validators.required)],
-      isFinal: [true, Validators.requiredTrue],
-      isActive: [false]
+      isFinal: [true],
+      isActive: [true]
     });
   }
 

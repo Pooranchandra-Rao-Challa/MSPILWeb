@@ -171,7 +171,17 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Phone No:</label>
-                  <input pInputText id="phoneNo" type="text" formControlName="phoneNo">
+                  <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
+                  </p-inputMask>
+                  <!-- <input pInputText formControlName="phoneNo"
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }" /> -->
+                  <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['required']">
+                      Please Enter Phone No.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
+                      Pattern is in correct.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Email:</label>
@@ -195,21 +205,15 @@
                   </span>
                 </div>
                 <div class="col-12 md:col-6">
-                  <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
-                  <p-inputSwitch formControlName="isActive"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
-                  </p-inputSwitch>
-                  <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
-                      Please Select Active.</div>
-                  </span>
+                  <label>Is Active:</label><br>
+                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                 </div>
               </div>
             </div>
           </div>
         </form>
       </div>
-      <ng-template pTemplate="left">
+      <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>

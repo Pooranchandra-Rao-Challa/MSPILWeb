@@ -116,7 +116,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="toDate"
+                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="toDate" mask="99/99/9999"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
@@ -126,7 +126,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate:<sup class="p-error">*</sup></label>
-                  <input pInputText id="rate" type="text" formControlName="rate"
+                  <input pInputText id="rate" type="text" formControlName="rate" mask="99/99/9999"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
@@ -134,21 +134,15 @@
                   </span>
                 </div>
                 <div class="col-12 md:col-6">
-                  <label>Is Active?:<sup class="p-error">*</sup></label><br><br>
-                  <p-inputSwitch formControlName="isActive"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['isActive'].touched && FormControls['isActive'].errors }">
-                  </p-inputSwitch>
-                  <span *ngIf="FormControls['isActive'].touched && FormControls['isActive'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['isActive'].errors?.['required']">
-                      Please Select Active.</div>
-                  </span>
+                  <label>Is Active:</label><br>
+                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                 </div>
               </div>
             </div>
           </div>
         </form>
       </div>
-      <ng-template pTemplate="left">
+      <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
           (click)="onSubmit()"></button>
       </ng-template>
