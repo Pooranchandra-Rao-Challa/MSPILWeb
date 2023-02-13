@@ -3,66 +3,70 @@
         <!-- dialog box -->
         <p-dialog header="Districts" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '40vw'}" (onHide)="onClose()">
-            <div class="flex flex-column align-items-center justify-content-center">
-                <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">
-                    <div class="grid">
-                        <div class="col-12 ">
-                            <div class="p-fluid p-formgrid grid">
-                                <div class="col-12 ">
-                                    <label>Code:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="code" type="text" formControlName="code"
-                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                                    <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.</div>
+            <ng-template pTemplate="content">
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">
+                        <div class="grid">
+                            <div class="col-12 ">
+                                <div class="p-fluid p-formgrid grid">
+                                    <div class="field col-12 ">
+                                        <label>Code:<sup class="p-error">*</sup></label>
+                                        <input pInputText id="code" type="text" formControlName="code" placeholder="Enter District Code "
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                                        <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                                             <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['code'].errors?.['pattern']">Code Should Only Contain Names & Numbers.
-											</div>
-                                    </span>
-
-
-                                </div>
-                                <div class="col-12">
-                                    <label>Name:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="name" type="text" formControlName="name"
-                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                                    <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
+                                                *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.</div>
+                                                <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['code'].errors?.['pattern']">Code Should Only Contain Names & Numbers.
+                                                </div>
+                                        </span>
+                                    </div>
+                                    <div class="field col-12">
+                                        <label>Name:<sup class="p-error">*</sup></label>
+                                        <input pInputText id="name" type="text" formControlName="name" placeholder="Enter District Name "
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                                        <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                                             <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['name'].errors?.['pattern']">Name Should Only Contain Alphabets .
-                                        </div>
-                                    </span>
-                                </div>
-                                <div class="col-12">
-                                    <label>State:<sup class="p-error">*</sup></label>
-                                    <p-dropdown [options]="states" optionLabel="name" formControlName="stateId"
-                                        optionValue="stateId"
-                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors }"></p-dropdown>
-                                    <span *ngIf="FormControls['stateId'].touched && FormControls['stateId'].invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['stateId'].errors?.['required']">Please Select State.
-                                        </div>
-                                    </span>
-                                </div>
-                                <div class=" col-12 ">
-                                    <label>Is Active?:<sup class="p-error">*</sup></label><br>
-                                    &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                                                *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
+                                                <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['name'].errors?.['pattern']">Name Should Only Contain Alphabets .
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="field col-12">
+                                        <label>State:<sup class="p-error">*</sup></label>
+                                        <p-dropdown [options]="states" optionLabel="name" formControlName="stateId"
+                                            optionValue="stateId" placeholder="Select State"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors }"></p-dropdown>
+                                        <span *ngIf="FormControls['stateId'].touched && FormControls['stateId'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['stateId'].errors?.['required']">Please Select State.
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="field col-12">
+                                        <label>Is Active?:<sup class="p-error">*</sup></label><br>
+                                        &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
 
-                                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
-                                        class="error-message p-error">
-                                         Please Active
-                                    </div>                                  
-                                </div>
-                                <div class="col-12">
-                                    <button pButton pRipple type="submit" label="{{submitLabel}}"
-                                        class="p-button-raised p-button-success"></button>
+                                        <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                            class="error-message p-error">
+                                            Please Active
+                                        </div>                                  
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <div class="col-12">
+                    <div  style="float:right">
+                    <button pButton pRipple type="submit" label="{{submitLabel}}"
+                        class="p-button-raised p-button-success"></button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </ng-template>
         </p-dialog>
         <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
@@ -79,7 +83,7 @@
         <p-table #dt1 [value]="districts" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="['districtId','districtName','districtCode','stateName','updatedAt','createdAt','updatedBy','createdBy' ]" [autoLayout]="true"
-            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"

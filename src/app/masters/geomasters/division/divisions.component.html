@@ -3,110 +3,97 @@
         <!-- <dialog> -->
         <p-dialog header="Divisions" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '40vw'}">
-            <div class="flex flex-column align-items-center justify-content-center">
-                <form [formGroup]="fbdivisions" (ngSubmit)="onSubmit()">
-
-
-                    <div class="grid">
-                        <div class="col-12">
-                          <div class="p-fluid p-formgrid grid">
-                            <div class="field col-12 md:col-6">
-                                
-                                <label>Code:<sup class="p-error">*</sup></label>
-                                <input pInputText type="text" formControlName="code"
-                                    [ngClass]="{ 'is-invalid  ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                                <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                                    <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.
+            <ng-template pTemplate="content">
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <form [formGroup]="fbdivisions" (ngSubmit)="onSubmit()">
+                        <div class="grid">
+                            <div class="col-12">
+                                <div class="p-fluid p-formgrid grid">
+                                    <div class="field col-12 md:col-6">           
+                                        <label>Code:<sup class="p-error">*</sup></label>
+                                        <input pInputText type="text" formControlName="code" placeholder="Enter Division Code"
+                                            [ngClass]="{ 'is-invalid  ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                                        <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.
+                                            </div>
+                                            <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['code'].errors?.['pattern']">Code Should Only Contain Names & Numbers.
+                                            </div>
+                                        </span>
                                     </div>
-                                    <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['code'].errors?.['pattern']">Code Should Only Contain Names & Numbers.
-                                    </div>
-                                    
-                                </span>
-                            </div>
-
-                            <div class="field col-12 md:col-6">
-                                <label>Name:<sup class="p-error">*</sup></label>
-                                <input pInputText type="text" formControlName="name"
-                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                                <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                                    <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.
-                                    </div>
-                                    <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['name'].errors?.['pattern']"> Name Should Only Contain Alphabets .
-                                    </div>
-                                </span>
-                            </div> 
-
-                            <div class="field col-12 md:col-6">
-                                <label>Incharge Name:</label>
-                                <input pInputText type="text" formControlName="inchargeName">
-                                <div class="ng-invalid ng-touched p-error"
-                                *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">Incharge Name Should Only Contain Alphabets .
-                                </div>
-                            </div>
-
-                            <div class="field col-12 md:col-6">
-                                <label>Incharge PhoneNo:</label>
-                                <input pInputText type="text" formControlName="inchargePhoneNo">
-                                <div class="ng-invalid ng-touched p-error"
-                                *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">PhoneNo Should Only Contain Numbers.
-                                </div>
-                                
-                            </div>
-                         
-                            <div class="field col-12 md:col-6">
-                                <label>Address:<sup class="p-error">*</sup></label>
-                                <textarea rows="5" cols="30" placeholder="Your Message" pInputTextarea
-                                    formControlName="address"
-                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
-                                <span
-                                    *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
-                                    <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="FormControls['address'].errors?.['required']">Please Enter
-                                        Address .</div>
-                                        
-                                </span>
-                            </div>
-
-                            <div class="field col-12 md:col-6">
-                                <label>Order:<sup class="p-error">*</sup></label>
-                                <input pInputText type="text" formControlName="listingOrder"
-                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
-                                <span
-                                    *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
-                                    <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please
-                                        Enter Order.</div>
-
+                                    <div class="field col-12 md:col-6">
+                                        <label>Name:<sup class="p-error">*</sup></label>
+                                        <input pInputText type="text" formControlName="name" placeholder="Enter Division Name"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                                        <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.
+                                            </div>
+                                            <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['name'].errors?.['pattern']"> Name Should Only Contain Alphabets .
+                                            </div>
+                                        </span>
+                                    </div> 
+                                    <div class="field col-12 md:col-6">
+                                        <label>Incharge Name:</label>
+                                        <input pInputText type="text" formControlName="inchargeName" placeholder="Enter Incharge Name">
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contain Numbers.
-											</div>
-                                </span>
-                            </div>
+                                        *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">Incharge Name Should Only Contain Alphabets .
+                                        </div>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label>Incharge PhoneNo:</label>
+                                        <input pInputText type="text" formControlName="inchargePhoneNo" placeholder="Enter Incharge Phone No">
+                                        <div class="ng-invalid ng-touched p-error"
+                                        *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">PhoneNo Should Only Contain Numbers.
+                                        </div>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label>Address:<sup class="p-error">*</sup></label>
+                                        <textarea rows="5" cols="30" placeholder="Address" pInputTextarea
+                                            formControlName="address"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                                        <span
+                                            *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['address'].errors?.['required']">Please Enter
+                                                Address .</div>  
+                                        </span>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label>Order:<sup class="p-error">*</sup></label>
+                                        <input pInputText type="text" formControlName="listingOrder"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
+                                        <span
+                                            *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['listingOrder'].errors?.['required']">Please
+                                                Enter Order.</div>
 
-                            <div class="field col-12 md:col-6">
-                                <label>Is Active?:</label><br>
-                                &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-                            </div>
-                           
-                            
-                    
-                            <div class=" col-12">
-                                <button pButton pRipple type="submit" label="{{submitLabel}}"
-                                class="p-button-raised p-button-success"></button>
-                
-                            </div>
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contain Numbers.
+                                                    </div>
+                                        </span>
+                                    </div>
+                                    <div class="field col-12 md:col-6">
+                                        <label>Is Active?:</label><br>
+                                        &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <div class="col-12">
+                    <div  style="float:right">
+                    <button pButton pRipple type="submit" label="{{submitLabel}}"
+                        class="p-button-raised p-button-success"></button>
                     </div>
-
-                </form>
-            </div>
-
-        
+                </div>
+            </ng-template>
         </p-dialog>
 
 

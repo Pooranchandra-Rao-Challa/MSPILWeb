@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
   roles: RoleDto[] = [];
   loading: boolean = true;
   dialog: boolean = false;
+  submitLabel!: string;
   globalFilters: string[] = ["UserId", "UserName", "FirstName", "LastName", "EmailId", "MobileNo", "Role", "IMEINo", "IPAddress", "IPRestriction", "IsAdminGate", "IsGross", "IsTare", "IsDumpYard", "IsActive", "CreatedDate", "UpdatedDate"];
 
   userForm!: FormGroup;
@@ -70,6 +71,7 @@ export class UsersComponent implements OnInit {
       this.roles = resp as unknown as RoleDto[];
     });
     if (this.selectedUser && this.selectedUser.userId) {
+      this.submitLabel = "Update User";
       this.securityService.GetUserWithSections(this.selectedUser.userId).subscribe(resp => {
         this.user = resp as unknown as UserDto;
         if (this.user.roles?.length == 1)
@@ -79,6 +81,7 @@ export class UsersComponent implements OnInit {
         this.userForm.get("password")?.disable();
       })
     } else {
+      this.submitLabel = "Add User";
       this.user = {};
       this.user.IsGross = false;
       this.user.isActive = false;

@@ -38,6 +38,7 @@ export class LoginComponent {
     }
 
     onSubmit() {
+        debugger
         this.submitted = true;
         this.accountService.Authenticate(this.loginForm.value as LoginModel)
         .subscribe(

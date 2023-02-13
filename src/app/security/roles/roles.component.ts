@@ -20,6 +20,7 @@ export class RolesComponent implements OnInit {
   loading: boolean = true;
   dialog: boolean = false;
   roleForm!: FormGroup;
+  submitLabel!: string;
   globalFilters: string[] = ["Code", "Name", "IsActive", "CreatedDate", "CreatedBy", "UpdatedDate", "UpdatedBy"];
 
   constructor(private formbuilder: FormBuilder, private securityService: SecurityService) {
@@ -78,22 +79,25 @@ export class RolesComponent implements OnInit {
     this.showDialog();
     this.screens = [];
     if (role.roleId != null) {
+      this.submitLabel = "Update Role";
       this.securityService.GetRoleWithPermissions(role.roleId).subscribe(resp => {
-        this.role.roleId = role.roleId
-        this.role.code = role.code
-        this.role.name = role.name;
-        this.role.isActive = role.isActive;
-        this.role.permissions = (resp as unknown as RoleDto).permissions;
-        this.roleForm.setValue(this.role);
-        this.screensInPermissions()
+      this.role.roleId = role.roleId
+      this.role.code = role.code
+      this.role.name = role.name;
+      this.role.isActive = role.isActive;
+      this.role.permissions = (resp as unknown as RoleDto).permissions;
+      this.roleForm.setValue(this.role);
+      this.screensInPermissions()
       })
     } else {
+      this.submitLabel = "Add Role";
       this.role = {};
       this.role.roleId = "";
       this.role.code = "";
       this.role.isActive = false;
       this.role.name = "";
       this.initPermissoins();
+     
     }
   }
 

@@ -139,7 +139,6 @@
       </ng-template>
     </p-table>
 
-
     <p-dialog header="User" [(visible)]="dialog" [modal]="true" showEffect="fade" [style]="{width: '60vw'}"
       [breakpoints]="{'960px': '90vw'}" (onHide)="userForm.reset()">
       <ng-template pTemplate="content">
@@ -153,7 +152,7 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-6">
                         <label>User Name:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="username" type="text" formControlName="userName"
+                        <input pInputText id="username" type="text" formControlName="userName" placeholder="Enter User Name"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['userName'].touched && userFormControls['userName'].errors }" />
                         <span *ngIf="userFormControls['userName'].touched && userFormControls['userName'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -163,7 +162,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Password:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="password" type="password" formControlName="password"
+                        <input pInputText id="password" type="password" formControlName="password" placeholder="Enter Password"
                           [disabled]="user.userId != null"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
                         <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
@@ -174,7 +173,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>First Name:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="firstname" type="text" formControlName="firstName"
+                        <input pInputText id="firstname" type="text" formControlName="firstName" placeholder="Enter First Name"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['firstName'].touched && userFormControls['firstName'].errors }" />
                         <span *ngIf="userFormControls['firstName'].touched && userFormControls['firstName'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -184,7 +183,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Last Name:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="lastname" type="text" formControlName="lastName"
+                        <input pInputText id="lastname" type="text" formControlName="lastName" placeholder="Enter Last Name"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['lastName'].touched && userFormControls['lastName'].errors }" />
                         <span *ngIf="userFormControls['lastName'].touched && userFormControls['lastName'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -194,7 +193,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Email Id:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="emailid" type="text" formControlName="email"
+                        <input pInputText id="emailid" type="text" formControlName="email" placeholder="Enter Emaild ID"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['email'].touched && userFormControls['email'].errors }" />
                         <span *ngIf="userFormControls['email'].touched && userFormControls['email'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -204,7 +203,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="mobileNumber" type="text" formControlName="mobileNumber"
+                        <input pInputText id="mobileNumber" type="text" formControlName="mobileNumber" placeholder="Enter Mobile Number"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }" />
                         <span
                           *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
@@ -215,7 +214,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Role:<sup class="p-error">*</sup></label>&nbsp;
-                        <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId"
+                        <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId" placeholder="Enter Role"
                           [autoDisplayFirst]="false"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }"></p-dropdown>
                         <!-- <input pInputText id="roleId" type="text" formControlName="roleId"
@@ -228,45 +227,39 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="ipaddress">IP Address:</label>
-                        <input pInputText id="ipaddress" type="text" formControlName="ipaddress" />
+                        <input pInputText id="ipaddress" type="text" formControlName="ipaddress" placeholder="IP Address"/>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="imeino">IMEI No:</label>
-                        <input pInputText id="imeino" type="text" formControlName="imeino" />
+                        <input pInputText id="imeino" type="text" formControlName="imeino" placeholder="IMEI Number"/>
                       </div>
                     </div>
                     <h6>User Rights</h6>
                     <div class="grid md:flex">
-                      <div class="col-12 md:col-3 xl:col-2">
-                        <label>IP Restriction:<sup class="p-error">*</sup></label>&nbsp;
-                        <br>
-                        <p-inputSwitch [trueValue]="true" [falseValue]="false"
-                          formControlName="iprestriction"></p-inputSwitch>
+                      <div class="field col-12 md:col-4 xl:col-3">
+                        <label class="col-12">IP Restriction:<sup class="p-error">*</sup></label>
+                        <p-inputSwitch [trueValue]="true" [falseValue]="false" placeholder="IP Ristriction"
+                          formControlName="iprestriction" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="col-12 md:col-3 xl:col-2">
-                        <label>Is AdminGate:<sup class="p-error">*</sup></label>&nbsp;
-                        <br>
-                        <p-inputSwitch formControlName="isAdminGate"></p-inputSwitch>
+                      <div class="field col-12 md:col-4 xl:col-3">
+                        <label  class="col-12">Is AdminGate:<sup class="p-error">*</sup></label>
+                        <p-inputSwitch formControlName="isAdminGate" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="col-12 md:col-3 xl:col-2">
-                        <label>Is Gross:<sup class="p-error">*</sup></label>&nbsp;
-                        <br>
-                        <p-inputSwitch formControlName="isGross"></p-inputSwitch>
+                      <div class="field col-12 md:col-4 xl:col-3">
+                        <label  class="col-12">Is Gross:<sup class="p-error">*</sup></label>
+                        <p-inputSwitch formControlName="isGross" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="col-12 md:col-3 xl:col-2">
-                        <label>Is Tare:<sup class="p-error">*</sup></label>&nbsp;
-                        <br>
-                        <p-inputSwitch formControlName="isTare"></p-inputSwitch>
+                      <div class="field col-12 md:col-4 xl:col-3">
+                        <label  class="col-12">Is Tare:<sup class="p-error">*</sup></label>
+                        <p-inputSwitch formControlName="isTare" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="col-12 md:col-3 xl:col-2">
-                        <label>Is DumpYard:<sup class="p-error">*</sup></label>&nbsp;
-                        <br>
-                        <p-inputSwitch formControlName="isDumpYard"></p-inputSwitch>
+                      <div class="field col-12 md:col-4 xl:col-3">
+                        <label class="col-12">Is DumpYard:<sup class="p-error">*</sup></label>
+                        <p-inputSwitch formControlName="isDumpYard" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="col-12 md:col-3 xl:col-2">
-                        <label>Is Active?:<sup class="p-error">*</sup></label>&nbsp;
-                        <br>
-                        <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                      <div class="field col-12 md:col-4 xl:col-3">
+                        <label class="col-12">Is Active?:<sup class="p-error">*</sup></label>
+                        <p-inputSwitch formControlName="isActive" class="col-12"></p-inputSwitch>
                       </div>
                     </div>
                   </div>
@@ -288,8 +281,12 @@
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
-          (click)="onSubmit()"></button>
+        <div class="col-12">
+          <div style="float:right">
+            <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+              (click)="onSubmit()"></button>
+            </div>
+          </div>
       </ng-template>
     </p-dialog>
   </div>
