@@ -111,7 +111,7 @@
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
-                      Please Select Date.</div>
+                      Please Select From Date.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -121,7 +121,7 @@
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
-                      Please Select Date.</div>
+                      Please Select To Date.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -134,7 +134,7 @@
                   </span>
                 </div>
                 <div class="col-12 md:col-6">
-                  <label>Is Active:</label><br>
+                  <label>Is Active:</label><br><br>
                   <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                 </div>
               </div>
