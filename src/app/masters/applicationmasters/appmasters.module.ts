@@ -11,6 +11,7 @@ import { LookupComponent } from './lookup/lookup.component';
 import { PlanttypeComponent } from './planttype/planttype.component';
 import { PlantsubtypeComponent } from './plantsubtype/plantsubtype.component';
 import { BankComponent } from './bank/bank.component';
+import { VarietyComponent } from './variety/variety.component'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { BankComponent } from './bank/bank.component';
     LookupComponent,
     PlanttypeComponent,
     PlantsubtypeComponent,
-    BankComponent 
+    BankComponent ,
+    VarietyComponent
   ],
   imports: [
     PrimeNgModule,
