@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { DieselRateViewDto, DieselRateDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-dieselrates',
@@ -82,12 +83,8 @@ export class DieselRatesComponent implements OnInit {
   }
 
   saveBillParam(): Observable<HttpEvent<any>> {
-    this.fbDieselRate.value.fromDate = new Date(Date.UTC(this.fbDieselRate.value.fromDate.getFullYear(),
-      this.fbDieselRate.value.fromDate.getMonth(),
-      this.fbDieselRate.value.fromDate.getDate(),
-      this.fbDieselRate.value.fromDate.getHours(),
-      this.fbDieselRate.value.fromDate.getMinutes(),
-      this.fbDieselRate.value.fromDate.getSeconds()));
+    this.fbDieselRate.value.fromDate = FORMAT_DATE(this.fbDieselRate.value.fromDate);
+    this.fbDieselRate.value.toDate = FORMAT_DATE(this.fbDieselRate.value.toDate);
     if (this.addFlag) return this.billMasterService.CreateDieselRate(this.fbDieselRate.value)
     else return this.billMasterService.UpdateDieselRate(this.fbDieselRate.value)
   }

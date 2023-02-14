@@ -1,0 +1,236 @@
+<div class="col-12">
+  <div class="card">
+
+    <!-- toolbar -->
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Variety</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New Variety" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="addVariety()"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <!-- table -->
+    <p-table #dt1 [value]="varieties" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th pSortableColumn="varietyType">
+            Variety Type <p-columnFilter type="text" field="varietyType" display="menu"></p-columnFilter>
+            <p-sortIcon field="varietyType"></p-sortIcon>
+          </th>
+          <th pSortableColumn="code">
+            Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+            <p-sortIcon field="code"></p-sortIcon>
+          </th>
+          <th pSortableColumn="name">
+            Name <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="plantAge">
+            Plant Age <p-columnFilter type="text" field="plantAge" display="menu"></p-columnFilter>
+            <p-sortIcon field="plantAge"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ratoonAge">
+            Ratoon Age <p-columnFilter type="text" field="ratoonAge" display="menu"></p-columnFilter>
+            <p-sortIcon field="ratoonAge"></p-sortIcon>
+          </th>
+          <th pSortableColumn="sugarContent">
+            Sugar Content <p-columnFilter type="text" field="sugarContent" display="menu"></p-columnFilter>
+            <p-sortIcon field="sugarContent"></p-sortIcon>
+          </th>
+          <th pSortableColumn="plantSuitability">
+            Plant Suitability <p-columnFilter type="text" field="plantSuitability" display="menu"></p-columnFilter>
+            <p-sortIcon field="plantSuitability"></p-sortIcon>
+          </th>
+          <th pSortableColumn="isActive" style="text-align:center">
+            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+            <p-sortIcon field="isActive"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdAt">
+            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdBy">
+            Created By <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedAt">
+            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedBy">
+            Updated By <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedBy"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-variety>
+        <tr>
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editVariety(variety)"></button></td>
+          <td>{{variety.varietyName}}</td>
+          <td>{{variety.code}}</td>
+          <td>{{variety.name}}</td>
+          <td>{{variety.plantAge}}</td>
+          <td>{{variety.ratoonAge}}</td>
+          <td>{{variety.sugarContent}}</td>
+          <td>{{variety.plantSuitability}}</td>
+          <td style="text-align:center">
+            <p-checkbox name="active" value="active" [(ngModel)]="variety.isActive" [binary]="true" [disabled]="true">
+            </p-checkbox>
+          </td>
+          <td>{{variety.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{variety.createdBy}}</td>
+          <td>{{variety.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{variety.updatedBy}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="12">No variety masters found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="12">Loading variety masters data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- dialog box -->
+    <p-dialog header="variety" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
+      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbVariety.reset()">
+      <div class="flex flex-column align-items-center justify-content-center">
+        <form [formGroup]="fbVariety" (ngSubmit)="onSubmit()">
+          <div class="grid">
+            <div class="col-12">
+              <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-6">
+                  <label>VarietyType:<sup class="p-error">*</sup></label>
+                  <p-dropdown placeholder="Select a variety category" optionLabel="name" [options]="varietyTypes"
+                    optionValue="lookUpDetailId" formControlName="varietyTypeId"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['varietyTypeId'].touched && FormControls['varietyTypeId'].errors }">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['varietyTypeId'].touched && FormControls['varietyTypeId'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['varietyTypeId'].errors?.['required']">
+                      Please Select Type.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Name:<sup class="p-error">*</sup></label>
+                  <input pInputText id="name" type="text" formControlName="name"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                  <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
+                      Please Enter Name.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Code:<sup class="p-error">*</sup></label>
+                  <input pInputText id="code" type="text" formControlName="code"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                  <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                      Please Enter Code.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Plant Age(Months):<sup class="p-error">*</sup></label>
+                  <input pInputText id="plantAge" type="number" formControlName="plantAge"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantAge'].touched && FormControls['plantAge'].errors }">
+
+                  <!-- <p-inputNumber id="plantAge" mode="decimal" locale="en-IN" [minFractionDigits]="2"
+                    [maxFractionDigits]="2" formControlName="plantAge" inputId="plantAge" [useGrouping]="false"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantAge'].touched && FormControls['plantAge'].errors }">
+                  </p-inputNumber> -->
+                  <span *ngIf="FormControls['plantAge'].touched && FormControls['plantAge'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantAge'].errors?.['required']">
+                      Please Enter Plant Age.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Ratoon Age(Months):<sup class="p-error">*</sup></label>
+                  <input pInputText id="ratoonAge" type="number" formControlName="ratoonAge"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['ratoonAge'].touched && FormControls['ratoonAge'].errors }">
+
+                  <!-- <p-inputNumber id="ratoonAge" mode="decimal" locale="en-IN" [minFractionDigits]="2"
+                    [maxFractionDigits]="2" formControlName="ratoonAge" inputId="ratoonAge" [useGrouping]="false"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['ratoonAge'].touched && FormControls['ratoonAge'].errors }">
+                  </p-inputNumber> -->
+                  <span *ngIf="FormControls['ratoonAge'].touched && FormControls['ratoonAge'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['ratoonAge'].errors?.['required']">
+                      Please Enter Ratoon Age.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Sugar Content:<sup class="p-error">*</sup></label>
+                  <div class="p-field-radiobutton">
+                    <p-radioButton name="sugarContent" value="HSV" formControlName="sugarContent"></p-radioButton>
+                    <label>HSV</label>
+                  </div>
+                  <br>
+                  <div class="p-field-radiobutton">
+                    <p-radioButton name="sugarContent" value="OV" formControlName="sugarContent"></p-radioButton>
+                    <label>OV</label>
+                  </div>
+                  <span *ngIf="FormControls['sugarContent'].touched && FormControls['sugarContent'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['sugarContent'].errors?.['required']">
+                      Please Select Sugar Content.</div>
+                  </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Plant Suitability:<sup class="p-error">*</sup></label>
+                  <div class="p-field-radiobutton">
+                    <p-radioButton name="plantSuitability" value="I spell" formControlName="plantSuitability">
+                    </p-radioButton>
+                    <label>I spell</label>
+                  </div>
+                  <br>
+                  <div class="p-field-radiobutton">
+                    <p-radioButton name="plantSuitability" value="II spell" formControlName="plantSuitability">
+                    </p-radioButton>
+                    <label>II spell</label>
+                  </div>
+                  <span *ngIf="FormControls['plantSuitability'].touched && FormControls['plantSuitability'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['plantSuitability'].errors?.['required']">
+                      Please Select Plant Suitability.</div>
+                  </span>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label>Is Active:</label><br>
+                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+          (click)="onSubmit()"></button>
+      </ng-template>
+    </p-dialog>
+
+  </div>
+</div>

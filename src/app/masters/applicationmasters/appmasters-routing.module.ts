@@ -1,3 +1,4 @@
+import { VarietyComponent } from './variety/variety.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SeasonComponent } from './season/season.component';
@@ -13,12 +14,14 @@ import { PlanttypeComponent } from './planttype/planttype.component';
   imports: [RouterModule.forChild([
     { path: 'season', component: SeasonComponent },
     { path: 'weed', component: WeedComponent },
-    { path: 'pest', component: PestComponent},
-    { path: 'disease', component: DiseaseComponent},
-    { path: 'fertilizer', component: FertilizerComponent},
-    { path: 'farmer', component:FarmerComponent},
-    { path: 'lookup', component:LookupComponent},
-    {path:'planttype', component:PlanttypeComponent}
+    { path: 'pest', component: PestComponent },
+    { path: 'disease', component: DiseaseComponent },
+    { path: 'fertilizer', component: FertilizerComponent },
+    { path: 'farmer', component: FarmerComponent },
+    { path: 'lookup', component: LookupComponent },
+    { path: 'planttype', component: PlanttypeComponent },
+    { path: 'variety', component: VarietyComponent }
+
   ])],
   exports: [RouterModule]
 })
