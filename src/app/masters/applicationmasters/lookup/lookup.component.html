@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Lookup" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    (click)="addlookupdialog()"></button>
+                    (click)="addLookupDialog()"></button>
             </ng-template>
         </p-toolbar>
 
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="field col-12 md:col-4 ">
                                     <div class="button-container">
-                                        <p-button type="button" label="Add lookupdetails" (click)="addlookupdtls()">
+                                        <p-button type="button" label="Add Lookup Details" (click)="addLookupDtls()">
                                         </p-button>
                                     </div>
                                 </div>
@@ -76,8 +76,8 @@
                                         <th pSortableColumn="order">Listing Order<p-sortIcon field="order"></p-sortIcon>
                                         </th>
                                     </tr>&nbsp;
-                                    <tr *ngFor="let items of lookUpDetails.controls;let fblookup=index"
-                                        [formGroupName]="fblookup">
+                                    <tr *ngFor="let items of lookUpDetails.controls;let i=index"
+                                        [formGroupName]="i">
                                         <td>
                                             <input  pInputText class="form-control" formControlName="code">
                                         </td>
@@ -129,10 +129,6 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th></th>
-                    <th pSortableColumn="lookupId">
-                        Lookup Id<p-columnFilter type="text" field="lookupId" display="menu"></p-columnFilter>
-                        <p-sortIcon field="lookupId"></p-sortIcon>
-                    </th>
                     <th pSortableColumn="code">
                         Lookup Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
                         <p-sortIcon field="code"></p-sortIcon>
@@ -141,12 +137,10 @@
                         Lookup Name<p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
                         <p-sortIcon field="name"></p-sortIcon>
                     </th>
-
                     <th pSortableColumn="isActive">
                         Is Active<p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
                         <p-sortIcon field="isActive"></p-sortIcon>
                     </th>
-
                     <th pSortableColumn="createdByUser">
                         Created By <p-columnFilter type="text" field="createdByUser" display="menu"></p-columnFilter>
                         <p-sortIcon field="createdBy"></p-sortIcon>
@@ -169,8 +163,7 @@
             <ng-template pTemplate="body" let-lookup>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil"
-                            class="p-element p-ripple p-button-text p-button p-component"></button></td>
-                    <td>{{lookup.id}}</td>
+                         class="p-element p-ripple p-button-text p-button p-component"></button></td>
                     <td>{{lookup.code}}</td>
                     <td>{{lookup.name}}</td>
                     <td style="text-align:center">

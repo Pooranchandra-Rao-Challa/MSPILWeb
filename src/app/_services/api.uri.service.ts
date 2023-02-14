@@ -104,3 +104,5 @@ export const CREATE_LOOKUP_URI = "ApplicationMaster/CreateLookUp"
 export const UPDATE_LOOKUP_URI = "ApplicationMaster/UpdateLookUp"
 
 export const GET_PLANTTYPE_URI = "ApplicationMaster/GetPlantTypes";
+export const CREATE_PLANTTYPE_URI = "ApplicationMaster/CreatePlantType";
+export const UPDATE_PLANTTYPE_URI = "ApplicationMaster/UpdatePlantType";

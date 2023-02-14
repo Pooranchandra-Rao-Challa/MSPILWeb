@@ -8,7 +8,9 @@ import { DiseaseComponent } from './disease/disease.component';
 import { FertilizerComponent } from './fertilizer/fertilizer.component';
 import { FarmerComponent } from './farmer/farmer.component';
 import { LookupComponent } from './lookup/lookup.component';
-import { PlanttypeComponent } from './planttype/planttype.component'
+import { PlanttypeComponent } from './planttype/planttype.component';
+import { PlantsubtypeComponent } from './plantsubtype/plantsubtype.component';
+import { BankComponent } from './bank/bank.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { PlanttypeComponent } from './planttype/planttype.component'
     FertilizerComponent,
     FarmerComponent,
     LookupComponent,
-    PlanttypeComponent
+    PlanttypeComponent,
+    PlantsubtypeComponent,
+    BankComponent 
   ],
   imports: [
     PrimeNgModule,

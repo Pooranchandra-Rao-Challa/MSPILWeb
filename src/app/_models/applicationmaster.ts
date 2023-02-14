@@ -1,21 +1,19 @@
 export class LookUpHeaderDto{
-  id?:number
+  lookUpId?:number
   code?: string;
   name?: string;
   isActive?: boolean;
   lookUpDetails?:LookupDetailDto[];
-  LookupDetailDto: any;
 }
 export class LookupDetailDto{
-  id?:number;
+  lookUpId?:number;
   code?: string;
   name?: string;
   remarks?: string;
   listingorder?: number;
 }
-
 export class LookupViewDto{
-  id?: number;
+  lookUpId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
@@ -23,5 +21,26 @@ export class LookupViewDto{
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+  lookUpDetails?: LookupDetailDto[] ;
 }
 
+export class planttypeViewDto{
+ plantTypeId?: number;
+ code?: string;
+ name?: string;
+ estimatedTon?:number;
+ loanEligible?:number;
+ isActive?: boolean;
+ updatedAt?: Date;
+ createdAt?: Date;
+ updatedBy?: string;
+ createdBy?: string;
+}
+export class plantTypeDto{
+  plantTypeId?:number;
+  code?: string;
+  name?: string;
+  estimatedTon?:number;
+  loanEligible?:number;
+  isActive?: boolean;
+}
