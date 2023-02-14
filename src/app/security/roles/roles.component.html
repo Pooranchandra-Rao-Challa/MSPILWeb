@@ -74,8 +74,6 @@
         </tr>
       </ng-template>
     </p-table>
-
-
     <p-dialog header="Role" [(visible)]="dialog" [modal]="true" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
     [style]="{width: '80vw'}">
       <div class="flex flex-column align-items-center justify-content-center">
@@ -85,7 +83,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Code:<sup class="p-error">*</sup></label>&nbsp;
-                  <input pInputText id="code" type="text" formControlName="code"
+                  <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Role Code"
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['code'].touched && roleFormControls['code'].errors }" />
                   <span *ngIf="roleFormControls['code'].touched && roleFormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['required']">
@@ -94,7 +92,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Name:<sup class="p-error">*</sup></label>&nbsp;
-                  <input pInputText id="name" type="text" formControlName="name"
+                  <input pInputText id="name" type="text" formControlName="name"  placeholder="Enter Role Name"
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['name'].touched && roleFormControls['name'].errors }" />
                   <span *ngIf="roleFormControls['name'].touched && roleFormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['required']">
@@ -130,8 +128,12 @@
         </form>
       </div>
       <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Submit" class="p-button-raised p-button-success"
-          (click)="onSubmit()"></button>
+        <div class="col-12">
+          <div style="float:right">
+            <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+              (click)="onSubmit()"></button>
+          </div>
+        </div>
       </ng-template>
     </p-dialog>
   </div>
