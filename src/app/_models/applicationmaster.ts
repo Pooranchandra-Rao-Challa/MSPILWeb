@@ -4,7 +4,6 @@ export class LookUpHeaderDto {
   name?: string;
   isActive?: boolean;
   lookUpDetails?: LookupDetailDto[];
-  LookupDetailDto: any;
 }
 export class LookupDetailDto {
   id?: number;
@@ -45,6 +44,7 @@ export class plantTypeDto{
   loanEligible?:number;
   isActive?: boolean;
 }
+
 export class VarietyDto {
   varietyId?: number;
   code?: string;
@@ -98,4 +98,55 @@ export class VehicleTypeViewDto {
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+}
+
+export class PlantSubTypeViewDto {
+plantSubTypeId?: number;
+plantId?:number;
+plantName?:string;
+code?: string;
+name?: string;
+isActive: boolean = true;
+updatedAt?: Date;
+createdAt?: Date;
+updatedBy?: string;
+createdBy?: string;
+}
+export class PlantSubTypeDto{
+plantSubTypeId?: number;
+plantId?:number;
+code?: string;
+name?: string;
+isActive: boolean = true;
+updatedAt?: Date;
+createdAt?: Date;
+updatedBy?: string;
+createdBy?: string;
+}
+export class BankViewDto{
+bankId?:number;
+code?: string;
+name?: string;
+abbr?:string;
+isActive: boolean = true;
+updatedAt?: Date;
+createdAt?: Date;
+updatedBy?: string;
+createdBy?: string;
+}
+
+export class BankDto{
+  bankId?:number;
+  code?: string;
+  name?: string;
+  abbr?:string;
+  isActive: boolean = true;
+  branches?:BranchesDto[];
+}
+export class BranchesDto{
+  branchId?:number;
+  bankId?:number;
+  code?: string;
+  name?: string;
+  ifsc?: string;
 }
