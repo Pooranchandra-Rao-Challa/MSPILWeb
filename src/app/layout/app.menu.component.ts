@@ -133,6 +133,7 @@ export class AppMenuComponent implements OnInit {
                   { label: 'Lookup', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
                   { label: 'Plant type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
                   { label: 'Variety', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: true },
+                  { label: 'hgl', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: true },
                 ]
               }
             ]

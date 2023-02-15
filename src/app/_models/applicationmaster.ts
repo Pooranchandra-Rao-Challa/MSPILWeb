@@ -150,3 +150,128 @@ export class BranchesDto{
   name?: string;
   ifsc?: string;
 }
+
+export class SeasonViewDto{
+  seasonId?: number
+  code?: string
+  name?: string
+  plantFrom?: Date
+  plantTo?: Date
+  crushFrom?: Date
+  crushTo?: Date
+  burnCaneRate?: number
+  caneRate?: number
+  capacity?: number
+  currentSeason?: any
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedBy?: string
+  createdBy?: string
+}
+
+export class SeasonDto {
+  seasonId?: number
+  code?:  string
+  name?:  string
+  plantFrom?:  Date
+  plantTo?:  Date
+  crushFrom?:  Date
+  crushTo?:  Date
+  burnCaneRate?:  number
+  caneRate?:  number
+  capacity?:  number
+  currentSeason?:  string
+  isActive?:  boolean
+  seasonBillingRates?:  SeasonBillingRateDto[]
+}
+
+export class SeasonBillingRateDto{
+  seasonBillingRateId?:  number
+  seasonId?:  number
+  billParameterId?:  number
+  rate?:  number
+  priority?:  number
+  isActive?:  boolean
+}
+
+
+export class HglViewDto {
+  hglId?: number
+  code?: string
+  name?: string
+  gender?: string
+  relationTypeId?: number
+  relationType?: string
+  relationName?: string
+  address?: string
+  pinCode?: string
+  phoneNo?: string
+  email?: string
+  panNo?: string
+  aadhaarNo?: string
+  tax?: number
+  tds?: boolean
+  guarantor1?: string
+  guarantor2?: string
+  guarantor3?: string
+  branchId?: number
+  branchName?: string
+  bankName?: string
+  ifsc?: string
+  accountNo?: string
+  glCode?: string
+  subGLCode?: string
+  otherCode?: string
+  isActive?: boolean
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+}
+
+
+export class HglDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  hglId?: number
+  code?: string
+  name?: string
+  gender?: string
+  relationTypeId?: number
+  relationName?: string
+  address?: string
+  pinCode?: string
+  phoneNo?: string
+  email?: string
+  panNo?: string
+  aadhaarNo?: string
+  tax?: number
+  tds?: boolean
+  guarantor1?: string
+  guarantor2?: string
+  guarantor3?: string
+  branchId?: number
+  accountNo?: string
+  glcode?: string
+  subGlcode?: string
+  otherCode?: string
+  isActive?: boolean
+  subHgls?: SubHgldto[]
+}
+
+export class SubHgldto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  subHglId?: number
+  hglid?: number
+  code?: string
+  name?: string
+  vehicleTypeId?: number
+  noOfPersons?: number
+  isActive?: boolean
+}

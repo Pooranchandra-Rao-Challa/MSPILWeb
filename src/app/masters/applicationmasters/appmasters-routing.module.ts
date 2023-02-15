@@ -11,6 +11,7 @@ import { LookupComponent } from './lookup/lookup.component';
 import { PlanttypeComponent } from './planttype/planttype.component';
 import { PlantsubtypeComponent } from './plantsubtype/plantsubtype.component';
 import { BankComponent } from './bank/bank.component';
+import { HglComponent } from './hgl/hgl.component';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { BankComponent } from './bank/bank.component';
     { path: 'planttype', component: PlanttypeComponent },
     {path:'plantsubtype', component:PlantsubtypeComponent},
     {path:'bank', component:BankComponent},
-    { path: 'variety', component: VarietyComponent }
+    { path: 'variety', component: VarietyComponent },
+    { path: 'hgl', component: HglComponent }
+   
 
   ])],
   exports: [RouterModule]

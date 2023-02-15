@@ -1,0 +1,547 @@
+<div class="col-12">
+    <div class="card">
+      <p-dialog header="HGL " [(visible)]="display" showEffect="fade"
+        [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
+       
+       
+       
+          <div class="flex flex-column align-items-center justify-content-center">
+              <div class="container">
+                <div class="grid p-fluid">
+                  <form [formGroup]="fbhgl" (ngSubmit)="onSubmit()">
+
+                      <p-fieldset legend="Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                        <div class="grid p-fluid">
+                            
+                            <div class="field col-12 md:col-4">
+                                <label htmlFor="code"> Code:<sup class="p-error">*</sup></label>
+                                <input pInputText id="code" formControlName="code" type="text"
+                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"/>
+                                <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">     
+                                    <div class="ng-invalid ng-touched p-error"
+                                         *ngIf="FormControls['code'].errors?.['required']">Please Enter Your  Order
+                                     </div>
+
+                                   <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['code'].errors?.['pattern']">Order should only contain numbers.
+                                     </div> 
+                                     </span>
+                                  </div>
+
+                             <div class="field col-12 md:col-4">
+                                <label htmlFor="name"> Name:<sup class="p-error">*</sup></label>
+                                <input pInputText id="name" formControlName="name" type="text" 
+                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }"/>
+                                <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">     
+                                    <div class="ng-invalid ng-touched p-error"
+                                         *ngIf="FormControls['name'].errors?.['required']">Please Enter Your  Order
+                                     </div>
+
+                                   <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['name'].errors?.['pattern']">Name should only contain Alphabets.
+                                     </div> 
+                                     </span>
+                                  </div>
+      
+                           <div class="field col-12 md:col-4">
+                            <label for="gender">Gender:</label>
+                            <p-dropdown id="gender" formControlName="gender" [options]="genderOptions" [style]="{'width': '100%'}"></p-dropdown>
+                       </div>
+      
+                              <div class="field col-12 md:col-4">
+                                <label htmlFor="relationName"> Relationship Name:<sup class="p-error">*</sup></label>
+                                <input pInputText id="relationName" formControlName="relationName" type="text"
+                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }"/>
+                                <span *ngIf="FormControls['relationName'].touched && FormControls['relationName'].invalid">     
+                                    <div class="ng-invalid ng-touched p-error"
+                                         *ngIf="FormControls['relationName'].errors?.['required']">Please Enter Your  Order
+                                     </div>
+
+                                   <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['relationName'].errors?.['pattern']">relation Name should only contain Alphabets.
+                                     </div> 
+                                     </span>
+                                  </div>
+
+                             
+                           <div class="field col-12 md:col-4">
+                            <label>Relation Type:<sup class="p-error">*</sup></label>
+                            <p-dropdown [options]="relationType" optionLabel="name" formControlName="relationTypeId" optionValue="name">
+                            </p-dropdown>
+                               </div>
+      
+                                <div class="field col-12 md:col-4">
+                                    <label htmlFor="pinCode"> Pincode:<sup class="p-error">*</sup></label>
+                                    <input pInputText id="pinCode" formControlName="pinCode" type="text"
+                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }"/>
+                                <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">     
+                                    <div class="ng-invalid ng-touched p-error"
+                                         *ngIf="FormControls['pinCode'].errors?.['required']">Please Enter Your  Order
+                                     </div>
+
+                                   <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['pinCode'].errors?.['pattern']">pinCode Name should only contain Numbers.
+                                     </div> 
+                                     </span>
+                                  </div>
+      
+                              <div class="field col-12 md:col-4">
+                                <label htmlFor="address">Address:</label>
+                                <textarea rows="5" cols="30" formControlName="address" placeholder="Village Address"
+                                  pInputTextarea></textarea>
+                                  <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['address'].errors?.['address']">Please Enter Your  Order
+                                 </div>
+                            </div>
+
+                           
+                          </div>
+      
+                     </p-fieldset>
+                     <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                    <div class="grid p-fluid">
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="phoneNo"> PhoneNumber:<sup class="p-error">*</sup></label>
+                            <input pInputText id="phoneNo" formControlName="phoneNo" type="text"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }"/>
+                            <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">     
+                                <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['phoneNo'].errors?.['required']">Please Enter Your  Order
+                                 </div>
+
+                               <div class="ng-invalid ng-touched p-error"
+                                 *ngIf="FormControls['phoneNo'].errors?.['pattern']">pin Code Name should only contain Numbers.
+                                 </div> 
+                                 </span>
+                              </div>
+
+                         <div class="field col-12 md:col-4">
+                            <label htmlFor="panNo"> Pan No:<sup class="p-error">*</sup></label>
+                            <input pInputText id="panNo" formControlName="panNo" type="text" 
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }"/>
+                            <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">     
+                                <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['panNo'].errors?.['required']">Please Enter Your  Order
+                                 </div>
+
+                               <div class="ng-invalid ng-touched p-error"
+                                 *ngIf="FormControls['panNo'].errors?.['pattern']">pan No Name should only contain Numbers & Alphabets
+                                 </div> 
+                                 </span>
+                              </div>
+  
+                            <div class="field col-12 md:col-4">
+                                <label htmlFor="aadhaarNo"> Aadhaar No:<sup class="p-error">*</sup></label>
+                                <input pInputText id="aadhaarNo" formControlName="aadhaarNo" type="text"
+                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }"/>
+                                <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">     
+                                    <div class="ng-invalid ng-touched p-error"
+                                         *ngIf="FormControls['aadhaarNo'].errors?.['required']">Please Enter Your  Aadhaar
+                                     </div>
+    
+                                   <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">Aadhaar No  Name should only contain Numbers
+                                     </div> 
+                                     </span>
+                                  </div>
+
+  
+                          <div class="field col-12 md:col-4">
+                            <label htmlFor="tax"> Tax:<sup class="p-error">*</sup></label>
+                            <input pInputText id="tax" formControlName="tax" type="text"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['tax'].touched && FormControls['tax'].errors }"/>
+                                <span *ngIf="FormControls['tax'].touched && FormControls['tax'].invalid">     
+                                    <div class="ng-invalid ng-touched p-error"
+                                         *ngIf="FormControls['tax'].errors?.['required']">Please Enter Your  tax
+                                     </div>
+    
+                                   <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['tax'].errors?.['pattern']">tax  No Name should only contain Numbers
+                                     </div> 
+                                     </span>
+                                  </div>
+
+                         <div class="field col-12 md:col-4">
+                            <label htmlFor="tds">Tds?:</label><br>
+                            <p-inputSwitch [(ngModel)]="valSwitch" formControlName="tds"></p-inputSwitch>
+                       </div>
+                     </div>
+  
+                     </p-fieldset>
+                    <p-fieldset legend="Bank Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <div class="grid p-fluid">
+
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="guarantor1"> Guarantor1:<sup class="p-error">*</sup></label>
+                        <input pInputText id="guarantor1" formControlName="guarantor1" type="text">
+                    </div>
+
+                     <div class="field col-12 md:col-4">
+                        <label htmlFor="guarantor2"> Guarantor2:<sup class="p-error">*</sup></label>
+                        <input pInputText id="guarantor2" formControlName="guarantor2" type="text">
+                   </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="guarantor3"> Guarantor3:<sup class="p-error">*</sup></label>
+                            <input pInputText id="guarantor3" formControlName="guarantor3" type="text">
+                      </div>
+
+                      <div class="field col-12 md:col-4">
+                        <label>Bank:<sup class="p-error">*</sup></label>
+                        <p-dropdown [options]="bank" optionLabel="name" formControlName="branchId" optionValue="name">
+                        </p-dropdown>
+                  
+                      </div>
+                      
+                   <div class="field col-12 md:col-4">
+                    <label>Branch:<sup class="p-error">*</sup></label>
+                        <p-dropdown [options]="branch" optionLabel="bankName" formControlName="branchId" optionValue="bankName ">
+                        </p-dropdown>
+               </div>
+
+                     <div class="field col-12 md:col-4">
+                        <label htmlFor="ifsc"> IFSC:<sup class="p-error">*</sup></label>
+                        <input pInputText id="ifsc" formControlName="ifsc" type="text"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['ifsc'].touched && FormControls['ifsc'].errors }"/>
+                        <span *ngIf="FormControls['ifsc'].touched && FormControls['ifsc'].invalid">     
+                            <div class="ng-invalid ng-touched p-error"
+                                 *ngIf="FormControls['ifsc'].errors?.['required']">Please Enter Your  Order
+                             </div>
+
+                           <div class="ng-invalid ng-touched p-error"
+                             *ngIf="FormControls['ifsc'].errors?.['pattern']">ifsc code should only contain Numbers
+                             </div> 
+                             </span>
+                          </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label htmlFor="accountNo"> Acount Number:<sup class="p-error">*</sup></label>
+                            <input pInputText id="accountNo" formControlName="accountNo" type="text"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }"/>
+                            <span *ngIf="FormControls['accountNo'].touched && FormControls['accountNo'].invalid">     
+                                <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['accountNo'].errors?.['required']">Please Enter Your  Order
+                                 </div>
+    
+                               <div class="ng-invalid ng-touched p-error"
+                                 *ngIf="FormControls['accountNo'].errors?.['pattern']">pan No Name should only contain Numbers
+                                 </div> 
+                                 </span>
+                              </div>
+                      <div class="field col-12 md:col-4">
+                        <label htmlFor="glCode"> GL Code:<sup class="p-error">*</sup></label>
+                        <input pInputText id="glCode" formControlName="glCode" type="text"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['glCode'].touched && FormControls['glCode'].errors }"/>
+                            <span *ngIf="FormControls['glCode'].touched && FormControls['glCode'].invalid">     
+                                <div class="ng-invalid ng-touched p-error"
+                                     *ngIf="FormControls['glCode'].errors?.['required']">Please Enter Your  glCode
+                                 </div>
+    
+                               <div class="ng-invalid ng-touched p-error"
+                                 *ngIf="FormControls['glCode'].errors?.['pattern']">glCode should only contain Numbers
+                                 </div> 
+                                 </span>
+                              </div>
+
+                    <div class="field col-12 md:col-4">
+                        <label htmlFor="subGLCode"> Sub GL Code:<sup class="p-error">*</sup></label>
+                        <input pInputText id="subGLCode" formControlName="subGLCode" type="text"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGLCode'].touched && FormControls['subGLCode'].errors }"/>
+                        <span *ngIf="FormControls['subGLCode'].touched && FormControls['subGLCode'].invalid">     
+                            <div class="ng-invalid ng-touched p-error"
+                                 *ngIf="FormControls['subGLCode'].errors?.['required']">Please Enter Your  subGLCode
+                             </div>
+
+                           <div class="ng-invalid ng-touched p-error"
+                             *ngIf="FormControls['subGLCode'].errors?.['pattern']">subGLCode should only contain Numbers
+                             </div> 
+                             </span>
+                          </div>
+
+                     <div class="field col-12 md:col-4">
+                        <label htmlFor="otherCode"> Other Code:<sup class="p-error">*</sup></label>
+                        <input pInputText id="otherCode" formControlName="otherCode" type="text" 
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['otherCode'].touched && FormControls['otherCode'].errors }"/>
+                        <span *ngIf="FormControls['otherCode'].touched && FormControls['otherCode'].invalid">     
+                            <div class="ng-invalid ng-touched p-error"
+                                 *ngIf="FormControls['otherCode'].errors?.['required']">Please Enter Your  Order
+                             </div>
+
+                           <div class="ng-invalid ng-touched p-error"
+                             *ngIf="FormControls['otherCode'].errors?.['pattern']">pan No Name should only contain Numbers
+                             </div> 
+                             </span>
+                          </div>
+
+
+                   <div class="field col-12 md:col-4">
+                    <label htmlFor="isActive">Is Active?:</label><br>
+                    <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+               </div>
+ 
+                    </div>
+
+                    </p-fieldset>
+
+                    <div class="col-12">
+                      <div class="col-2" style="float:right">
+                        <button (click)="addItem('subHgls')" pButton pRipple type="button" label="Add SubHgl" icon="pi pi-plus" class="p-button-raised p-button-success" ></button>
+                      </div>
+                    </div>
+
+
+               <div *ngIf="showFieldset">
+                <p-fieldset legend="SubHGL" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="grid p-fluid">
+  
+                    <div formArrayName="subHgls">
+                      <ng-container *ngIf="fbhgl.get('subHgls') as formArray">
+                        
+                        <div *ngFor="let item of (subHgls).controls; let i = index">
+                          <div [formGroupName]="i">
+            
+                          
+                            <div class="field col-12 md:col-3" style="display:inline-block; " >
+                                <label htmlFor="code">Code:<sup class="p-error">*</sup></label>
+                                <input pInputText id="code" formControlName="code" type="text" />
+                              </div>
+
+                            <div class="field col-12 md:col-3" style="display:inline-block; ">
+                              <label htmlFor="name">Name:<sup class="p-error">*</sup></label>
+                              <input pInputText id="name" formControlName="name" type="text" />
+                            </div>
+            
+                            <div class="field col-12 md:col-3" style="display:inline-block; ">
+                              <label>Relation Type:<sup class="p-error">*</sup></label>
+                        <p-dropdown [options]="vehicle" optionLabel="name" formControlName="vehicleTypeId" optionValue="vehicleTypeId ">
+                        </p-dropdown>
+                            </div>
+
+                            
+                            <div class="field col-12 md:col-3" style="display:inline-block; ">
+                              <label htmlFor="noOfPersons">No Of Persons:<sup class="p-error">*</sup></label>
+                              <input pInputText id="noOfPersons" formControlName="noOfPersons" type="text" />
+                            </div>
+
+
+
+                            <div class="field col-12 md:col-4">
+                              <label htmlFor="isActive">Is Active?:</label><br>
+                              <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                         </div>
+
+                            
+                          </div>
+                        </div>
+                       </ng-container>                 
+                        </div>  
+                       </div>
+                         </p-fieldset>
+
+                      </div>
+                    </form>
+                  </div>
+              </div>          
+          </div>
+  
+        <ng-template pTemplate="footer">
+          <div class="col-12">
+            <div class="col-4" style="float:right">
+              <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+                (click)="onSubmit()"></button>
+            </div>
+          </div>
+        </ng-template>
+      </p-dialog>
+  
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <h4>HGL</h4>
+        </ng-template>
+        <ng-template pTemplate="right">
+          <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="Initseason({})"></button>
+        </ng-template>
+      </p-toolbar>
+  
+      <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+        [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
+        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+              (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+                class="w-full" />
+            </span>
+          </div>
+        </ng-template>
+  
+        <ng-template pTemplate="header">
+          <tr>
+            <th></th>
+            <th pSortableColumn="villageId">HGL Id<p-columnFilter type="text" field="villageId"
+              display="menu"></p-columnFilter><p-sortIcon field="villageId"></p-sortIcon>
+           </th>
+            <th pSortableColumn="villageId">HGL Code<p-columnFilter type="text" field="villageId"
+              display="menu"></p-columnFilter><p-sortIcon field="villageId"></p-sortIcon>
+           </th>
+            <th pSortableColumn="villageCode">HGL Name<p-columnFilter type="text" field="villageCode"
+              display="menu"></p-columnFilter><p-sortIcon field="villageCode"></p-sortIcon>
+          </th>
+            <th pSortableColumn="villageName">Gender<p-columnFilter type="text" field="villageName"
+              display="menu"></p-columnFilter><p-sortIcon field="villageName"></p-sortIcon>
+          </th>
+        
+            <th pSortableColumn="villageName">RelationTypeId<p-columnFilter type="text" field="villageName"
+          display="menu"></p-columnFilter><p-sortIcon field="villageName"></p-sortIcon>
+          </th>
+            <th pSortableColumn="sectionId">RelationType<p-columnFilter type="text" field="sectionId"
+              display="menu"></p-columnFilter><p-sortIcon field="sectionId"></p-sortIcon>
+          </th>
+            <th pSortableColumn="sectionName">RelationName<p-columnFilter type="text" field="sectionName"
+              display="menu"></p-columnFilter><p-sortIcon field="sectionName"></p-sortIcon>
+          </th>
+            <th pSortableColumn="mandalId">Address<p-columnFilter type="text" field="mandalId"
+              display="menu"></p-columnFilter><p-sortIcon field="mandalId"></p-sortIcon>
+          </th>
+            <th pSortableColumn="mandalName">PinCode<p-columnFilter type="text" field="mandalName"
+              display="menu"></p-columnFilter><p-sortIcon field="mandalName"></p-sortIcon>
+          </th>
+            <th pSortableColumn="districtId">PhoneNo<p-columnFilter type="text" field="districtId"
+              display="menu"></p-columnFilter><p-sortIcon field="districtId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="districtId">Email<p-columnFilter type="text" field="districtId"
+            display="menu"></p-columnFilter><p-sortIcon field="districtId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="districtId">Pan No<p-columnFilter type="text" field="districtId"
+          display="menu"></p-columnFilter><p-sortIcon field="districtId"></p-sortIcon>
+            </th>
+            <th pSortableColumn="updatedAt">AadhaarNo<p-columnFilter type="text" field="updatedAt"
+              display="menu"></p-columnFilter><p-sortIcon field="updatedAt"></p-sortIcon>
+          </th>
+            <th pSortableColumn="createdAt">Tax<p-columnFilter type="text" field="createdAt"
+              display="menu"></p-columnFilter><p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+            <th pSortableColumn="updatedBy">tds<p-columnFilter type="text" field="updatedBy"
+              display="menu"></p-columnFilter><p-sortIcon field="updatedBy"></p-sortIcon>
+            </th>
+                <th pSortableColumn="createdBy">Guarantor1<p-columnFilter type="text" field="createdBy"
+                  display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+              </th>
+                  <th pSortableColumn="createdBy">Guarantor2 <p-columnFilter type="text" field="createdBy"
+                  display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+                  </th>
+                <th pSortableColumn="createdBy">Guarantor3 <p-columnFilter type="text" field="createdBy"
+                     display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="createdBy">Branch Id<p-columnFilter type="text" field="createdBy"
+                   display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+                  </th>
+                    <th pSortableColumn="createdBy">Branch Name<p-columnFilter type="text" field="createdBy"
+                   display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+                   </th>
+                   <th pSortableColumn="createdBy">Bank Name<p-columnFilter type="text" field="createdBy"
+                    display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+                    </th>
+                   <th pSortableColumn="createdBy">Ifsc<p-columnFilter type="text" field="createdBy"
+                   display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+                   </th>
+
+                <th pSortableColumn="createdBy">AccountNo<p-columnFilter type="text" field="createdBy"
+                 display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+               </th>
+            <th pSortableColumn="createdBy">GlCode<p-columnFilter type="text" field="createdBy"
+             display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+             </th>
+
+             <th pSortableColumn="createdBy">SubGLCode<p-columnFilter type="text" field="createdBy"
+              display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+            </th>
+         <th pSortableColumn="createdBy">OtherCode<p-columnFilter type="text" field="createdBy"
+          display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="createdBy">Is Active<p-columnFilter type="text" field="createdBy"
+            display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+       <th pSortableColumn="createdBy">CreatedAt<p-columnFilter type="text" field="createdBy"
+        display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="createdBy">CreatedBy<p-columnFilter type="text" field="createdBy"
+          display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+        </th>
+     <th pSortableColumn="createdBy">UpdatedAt<p-columnFilter type="text" field="createdBy"
+      display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+      </th>
+
+      <th pSortableColumn="createdBy">UpdatedBy<p-columnFilter type="text" field="createdBy"
+        display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+      </th>
+   
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-seasons>
+          <tr>
+            <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+                (click)="Initseason(seasons)"></button></td>
+            <td>{{seasons.hglId}}</td>
+            <td>{{seasons.code}}</td>
+            <td>{{seasons.name}}</td>
+            <td>{{seasons.gender}}</td>
+            <td>{{seasons.relationTypeId}}</td>
+            <td>{{seasons.relationType}}</td>
+            <td>{{seasons.relationName}}</td>
+            <td>{{seasons.address}}</td>
+            <td>{{seasons.pinCode}}</td>
+            <td>{{seasons.phoneNo}}</td>
+            <td>{{seasons.email}}</td>
+            <td>{{seasons.panNo}}</td>
+            <td>{{seasons.aadhaarNo}}</td>
+            <td>{{seasons.tax}}</td>
+            <td style="text-align:center">
+              <p-checkbox name="active" value="active" [(ngModel)]="seasons.tds" [binary]="true" [disabled]="true">
+              </p-checkbox>
+            </td>
+            <td>{{seasons.guarantor1}}</td>
+            <td>{{seasons.guarantor2}}</td>
+            <td>{{seasons.guarantor3}}</td>
+            <td>{{seasons.branchId}}</td>
+            <td>{{seasons.branchName}}</td>
+            <td>{{seasons.bankName}}</td>
+            <td>{{seasons.ifsc}}</td>
+            <td>{{seasons.accountNo}}</td>
+            <td>{{seasons.glCode}}</td>
+            <td>{{seasons.subGLCode}}</td>
+            <td>{{seasons.otherCode}}</td>
+            <td style="text-align:center">
+              <p-checkbox name="active" value="active" [(ngModel)]="seasons.tds" [binary]="true" [disabled]="true">
+              </p-checkbox>
+            </td>
+            <td>{{seasons.createdAt}}</td>
+            <td>{{seasons.createdBy}}</td>
+            <td>{{seasons.updatedAt}}</td>
+            <td>{{seasons.updatedBy}}</td>
+  
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">No HGL found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">Loading.. HGL data. Please wait.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  
+  </div>
+  
