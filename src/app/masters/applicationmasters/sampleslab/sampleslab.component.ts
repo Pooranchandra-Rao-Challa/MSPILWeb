@@ -4,7 +4,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {  StateDto, DivisionDto } from 'src/app/_models/geomodels';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { SampleSlabDto, SampleslabsViewDto } from 'src/app/_models/applicationmaster';
@@ -16,17 +15,14 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
     providers: [MessageService, ConfirmationService]
 })
 export class SampleslabsComponent implements OnInit {
-
     dialog: boolean = false;
     sampleslabs: SampleslabsViewDto[] = [];
     sampleslab: SampleSlabDto = new SampleSlabDto();
-    states: StateDto[] = [];
     loading: boolean = true;
     fbsampleslabs!: FormGroup;
     filter: any;
     submitLabel!: string;
     addFlag: boolean = true;
-    divisions: DivisionDto[] = [];
 
     constructor(private formbuilder: FormBuilder,
         private appmasterservice: AppMasterService,
@@ -51,8 +47,8 @@ export class SampleslabsComponent implements OnInit {
 
         this.initSampleslabs();
         this.fbsampleslabs = this.formbuilder.group({
-            toArea: new FormControl('', [Validators.required,Validators.pattern(/^[0-9]+$/)]),
-            fromArea: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)]),
+            toArea: new FormControl('', [Validators.required,Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
+            fromArea: new FormControl('', [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
             noOfSample: new FormControl('', [Validators.required,  Validators.pattern(/^[0-9]+$/)]),
             isActive: [ Validators.required],
         });
@@ -103,20 +99,15 @@ export class SampleslabsComponent implements OnInit {
             this.fbsampleslabs.markAllAsTouched();
         }
     }
-
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
-
     clear(table: Table) {
         table.clear();
         this.filter.nativeElement.value = '';
     }
-
-
     valSwitch: boolean = true;
     nextSwitch: boolean = true;
-
 }
 
 

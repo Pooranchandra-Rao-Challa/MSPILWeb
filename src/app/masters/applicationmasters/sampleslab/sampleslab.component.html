@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="card">
-        <p-dialog header="Shift" [(visible)]="dialog" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+        <p-dialog header="Sample Slab" [(visible)]="dialog" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '50vw'}" [modal]="true">
                 <ng-template pTemplate="content">
                 <div class="flex flex-column align-items-center justify-content-center">
@@ -19,7 +19,7 @@
                                     </div>
                                     
                                     <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['fromArea'].errors?.['pattern']">Code Should Only Contain  Numbers .
+                                    *ngIf="FormControls['fromArea'].errors?.['pattern']">Code Should Only Contain  Numbers in Point Value .
                                     </div>
                                 </div>
                                 <div class="field col-12 md:col-6">
@@ -33,7 +33,7 @@
                                     </div>
                                     
                                     <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['toArea'].errors?.['pattern']">Code Should Only Contain Numbers .
+                                    *ngIf="FormControls['toArea'].errors?.['pattern']">Code Should Only Contain Numbers in Point Value  .
                                     </div>
                                 </div>
                                 <div class="field col-12 md:col-6">
@@ -50,64 +50,16 @@
                                     *ngIf="FormControls['noOfSample'].errors?.['pattern']">Code Should Only Contain Numbers .
                                     </div>
                                 </div>
-                                <!-- <div class="field col-12 md:col-6">
-                                    <label htmlFor="fromArea">From Area:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="fromArea" formControlName="fromArea" type="text" placeholder="Enter Shift Code"
-                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromArea'].touched && FormControls['fromArea'].errors }"/>
-
-                                    <div *ngIf="FormControls['fromArea'].invalid &&  FormControls['fromArea'].touched && FormControls['code'].errors?.['required']"
-                                        class="error-message p-error">
-                                        From Area is required
-                                    </div>
-                                    
-                                    <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['code'].errors?.['pattern']">From Area Should Only Contain Names & Numbers .
-                                    </div>
-                                </div>
-
-                                <div class="field col-12 md:col-6">
-                                    <label>To Area:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="address1" type="text" formControlName="toArea" placeholder="Enter Shift Name"
-                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['toArea'].touched && FormControls['toArea'].errors }"/>
-
-                                    <div *ngIf="FormControls['toArea'].invalid &&  FormControls['toArea'].touched && FormControls['toArea'].errors?.['required']"
-                                        class="error-message p-error">
-                                        To Area is required
-                                    </div>
-                                    <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['toArea'].errors?.['pattern']">To Area Should Only Contain Names & Numbers .
-                                    </div>  
-                                </div>
-                                
-                                <div class="field col-12 md:col-6">
-                                    <label>No of Samples:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="address1" type="text" formControlName="noOfSample" placeholder="Enter Shift Name"
-                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfSample'].touched && FormControls['noOfSample'].errors }"/>
-
-                                    <div *ngIf="FormControls['noOfSample'].invalid &&  FormControls['noOfSample'].touched && FormControls['noOfSample'].errors?.['required']"
-                                        class="error-message p-error">
-                                        Samples is required
-                                    </div>
-                                    <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['noOfSample'].errors?.['pattern']">Samples Should Only Contain Names & Numbers .
-                                    </div>  
-                                </div> -->
-
-                               
-
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="isActive">Is Active?:</label><br>
                                     <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
-                            
                                 </div>
-                            
                             </div>
                         </div>
                     </div>
                     </form>
                 </div>
             </ng-template>
-                        
             <ng-template pTemplate="footer">
                 <div class="col-12">
                     <div style="float:right">
@@ -122,7 +74,7 @@
                 <h4>Shifts</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="New Shift" icon="pi pi-plus" class="p-button-success p-mr-2"
+                <button pButton pRipple label="New Sample Slab" icon="pi pi-plus" class="p-button-success p-mr-2"
                     (click)="InitSampleslab();"></button>
             </ng-template>
         </p-toolbar>
@@ -171,13 +123,11 @@
                     <th pSortableColumn="updatedBy">Updated By <p-columnFilter type="text" field="updatedBy"
                         display="menu"></p-columnFilter><p-sortIcon field="updatedBy"></p-sortIcon>
                     </th>
-                    
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-SampleSlabs>
                 <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil"
-                            class="p-element p-ripple p-button-text p-button p-component"
+                    <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
                             (click)="editProduct(SampleSlabs)"></button></td>
                     <td>{{SampleSlabs.sampleSlabId}}</td>
                     <td>{{SampleSlabs.fromArea}}</td>
@@ -197,7 +147,7 @@
             
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="8">No Shifts found.</td>
+                    <td colspan="8">No Sample Slabs found.</td>
                 </tr>
             </ng-template>
 
@@ -206,8 +156,6 @@
                     <td colspan="8"></td>
                 </tr>
              </ng-template>
-
         </p-table>
     </div>
-
 </div>
