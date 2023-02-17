@@ -4,8 +4,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {  StateDto, DivisionDto } from 'src/app/_models/geomodels';
-import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { ShiftDto, ShiftsViewDto } from 'src/app/_models/applicationmaster';
@@ -21,13 +19,11 @@ export class ShiftsComponent implements OnInit {
     dialog: boolean = false;
     shifts: ShiftsViewDto[] = [];
     shift: ShiftDto = new ShiftDto();
-    states: StateDto[] = [];
     loading: boolean = true;
     fbshifts!: FormGroup;
     filter: any;
     submitLabel!: string;
     addFlag: boolean = true;
-    divisions: DivisionDto[] = [];
 
     constructor(private formbuilder: FormBuilder,
         private appmasterservice: AppMasterService,
@@ -51,8 +47,6 @@ export class ShiftsComponent implements OnInit {
     ngOnInit() {
 
         this.initShifts();
-
-        
         this.fbshifts = this.formbuilder.group({
             
             name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -62,8 +56,6 @@ export class ShiftsComponent implements OnInit {
             isNextDay: [ Validators.required],
             isActive: [ Validators.required],
         });
-
-
     }
     initShifts() {
         this.appmasterservice.GetShift().subscribe((resp) => {
@@ -71,7 +63,6 @@ export class ShiftsComponent implements OnInit {
             this.loading = false;
         })
     }
-
     editProduct(shifts: ShiftsViewDto) {
         this.shift.code = shifts.code;
         this.shift.name = shifts.name;
@@ -79,21 +70,12 @@ export class ShiftsComponent implements OnInit {
         this.shift.isNextDay = shifts.isNextDay;
         this.shift.fromTime= shifts.fromTime
         this.shift.toTime = shifts.toTime;
-        // 
-        // this.shift.listingOrder = shift.listingOrder;
-        // this.shift.address = shift.address;
-        // this.shift.shiftId = shift.shiftId;
-
-        // // this.shift.shiftId = shift.shiftId
-        // // this.shift.stateId = shift.stateId;
         this.fbshifts.setValue(this.shift);
         this.submitLabel = "Update Shift";
         this.addFlag = false;
         this.dialog = true;
     }
-
     private UpdateForm() {
-
     }
     onClose() {
         this.fbshifts.reset();
