@@ -1,0 +1,194 @@
+<div class="col-12">
+    <div class="card">
+        <p-dialog header="Shift" [(visible)]="dialog" showEffect="fade" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            [style]="{width: '50vw'}" [modal]="true">
+                <ng-template pTemplate="content">
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <form [formGroup]="fbshifts" (ngSubmit)="onSubmit()">
+                    <div class="grid">
+                        <div class="col-12">
+                        <div class="p-fluid p-formgrid grid">
+                        
+                               
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="code">Shift Code:<sup class="p-error">*</sup></label>
+                                    <input pInputText id="code" formControlName="code" type="text" placeholder="Enter Shift Code"
+                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"/>
+
+                                    <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched && FormControls['code'].errors?.['required']"
+                                        class="error-message p-error">
+                                        Code is required
+                                    </div>
+                                    
+                                    <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['code'].errors?.['pattern']">Code Should Only Contain Names & Numbers .
+                                    </div>
+                                </div>
+
+                                <div class="field col-12 md:col-6">
+                                    <label>Shift Name:<sup class="p-error">*</sup></label>
+                                            <input pInputText id="address1" type="text" formControlName="name" placeholder="Enter Shift Name"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }"/>
+
+                                    <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched && FormControls['name'].errors?.['required']"
+                                        class="error-message p-error">
+                                        Name is required
+                                    </div>
+                                    <div class="ng-invalid ng-touched p-error"
+                                    *ngIf="FormControls['name'].errors?.['pattern']">Name Should Only Contain Alphabets .
+                                    </div>  
+                                </div>
+                                
+                                <div class="field col-12 md:col-6">
+                                    <label>From Time:<sup class="p-error">*</sup></label>
+                                    <p-calendar class="cursor-pointer" [timeOnly]="true"   [showSeconds]="true" dataType="string" [readonlyInput]="true" [showIcon]="true" formControlName="fromTime"
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromTime'].touched && FormControls['fromTime'].errors }">
+                                    </p-calendar>
+                                    <span *ngIf="FormControls['fromTime'].touched && FormControls['fromTime'].invalid">
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromTime'].errors?.['required']">
+                                        Please Select From Time.</div>
+                                    </span>
+                                </div>
+                                <div class="field col-12 md:col-6">
+                                    <label>To Time:<sup class="p-error">*</sup></label>
+                                    <p-calendar [readonlyInput]="true" [timeOnly]="true"   [showSeconds]="true" dataType="string" [showIcon]="true" formControlName="toTime"
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['toTime'].touched && FormControls['toTime'].errors }">
+                                    </p-calendar>
+                                    <span *ngIf="FormControls['toTime'].touched && FormControls['toTime'].invalid">
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toTime'].errors?.['required']">
+                                        Please Select To Time.</div>
+                                    </span>
+                                </div>
+
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="isNextDay">Is Next day?:</label><br>
+                                    <p-inputSwitch [(ngModel)]="nextSwitch" formControlName="isNextDay"></p-inputSwitch>
+                            
+                                </div>
+
+                                <div class="field col-12 md:col-6">
+                                    <label htmlFor="isActive">Is Active?:</label><br>
+                                    <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </ng-template>
+                        
+            <ng-template pTemplate="footer">
+                <div class="col-12">
+                    <div style="float:right">
+                    <button pButton pRipple type="submit" label="{{submitLabel}}"
+                    (click)="onSubmit()" class="p-button-raised p-button-success"></button>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dialog>
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <h4>Shifts</h4>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <button pButton pRipple label="New Shift" icon="pi pi-plus" class="p-button-success p-mr-2"
+                    (click)="InitShift();"></button>
+            </ng-template>
+        </p-toolbar>
+        <p-table #dt1 [value]="shifts" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading"
+            [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+            [globalFilterFields]="['shiftId','code','name','divisionId','divisionName','inchargeName','inchargePhoneNo',
+           'address','listingOrder','updatedAt','createdAt','updatedBy','createdBy' ]" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
+            [autoLayout]="true" [rowsPerPageOptions]="[10,25,50]">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left mb-2">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)"
+                            placeholder="Search Keyword" class="w-full" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th pSortableColumn="shiftId">Shift Id<p-columnFilter type="text" field="shiftId"
+                        display="menu"></p-columnFilter><p-sortIcon field="shiftId"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="code">Shift Code<p-columnFilter type="text" field="code"
+                        display="menu"></p-columnFilter><p-sortIcon field="code"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="name">Shift Name <p-columnFilter type="text" field="name"
+                        display="menu"></p-columnFilter><p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fromTime"> From Time  <p-columnFilter type="text" field="fromTime"
+                        display="menu"></p-columnFilter><p-sortIcon field="fromTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="toTime">To Time<p-columnFilter type="text" field="toTime"
+                        display="menu"></p-columnFilter><p-sortIcon field="toTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="isNextDay">Is Next Day <p-columnFilter type="text" field="isNextDay"
+                        display="menu"></p-columnFilter><p-sortIcon field="isNextDay"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="isActive">Is Active  <p-columnFilter type="text" field="isActive"
+                        display="menu"></p-columnFilter><p-sortIcon field="isActive"></p-sortIcon>
+                    </th>                
+                    <th pSortableColumn="createdAt">Created At <p-columnFilter type="text" field="createdAt"
+                        display="menu"></p-columnFilter><p-sortIcon field="createdAt"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="createdBy">Created By <p-columnFilter type="text" field="createdBy"
+                        display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="updatedAt">Updated At <p-columnFilter type="text" field="updatedAt"
+                        display="menu"></p-columnFilter><p-sortIcon field="updatedAt"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="updatedBy">Updated By <p-columnFilter type="text" field="updatedBy"
+                        display="menu"></p-columnFilter><p-sortIcon field="updatedBy"></p-sortIcon>
+                    </th>
+                    
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-shifts>
+                <tr>
+                    <td><button pButton pRipple icon="pi pi-pencil"
+                            class="p-element p-ripple p-button-text p-button p-component"
+                            (click)="editProduct(shifts)"></button></td>
+                    <td>{{shifts.shiftId}}</td>
+                    <td>{{shifts.code}}</td>
+                    <td>{{shifts.name}}</td>
+                    <td>{{shifts.fromTime}}</td>
+                    <td>{{shifts.toTime}}</td>
+                    <td style="text-align:center">
+                    <p-checkbox name="active" value="active" [(ngModel)]="shifts.isNextDay" [binary]="true" [disabled]="true">
+                    </p-checkbox>
+                    </td>
+                    <td style="text-align:center">
+                    <p-checkbox name="active" value="active" [(ngModel)]="shifts.isActive" [binary]="true" [disabled]="true">
+                    </p-checkbox>
+                    </td>
+                    <td>{{shifts.createdAt}}</td>
+                    <td>{{shifts.createdBy}}</td>
+                    <td>{{shifts.updatedAt}}</td>
+                    <td>{{shifts.updatedBy}}</td>
+
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No Shifts found.</td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="8"></td>
+                </tr>
+             </ng-template>
+
+        </p-table>
+    </div>
+
+</div>

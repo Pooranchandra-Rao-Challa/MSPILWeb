@@ -275,3 +275,75 @@ export class SubHgldto {
   noOfPersons?: number
   isActive?: boolean
 }
+
+export class ShiftsViewDto{
+  
+    shiftId?: number
+    code?: string
+    name?: string
+    fromTime?: string
+    toTime?: string
+    isNextDay?: boolean
+    isActive?: boolean
+    createdAt?: string
+    createdBy?: string
+    updatedAt?: string
+    updatedBy?: string
+}
+
+export class ShiftDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  shiftId?: number
+  code?: string
+  name?: string
+  fromTime?: string
+  toTime?: string
+  isNextDay?: boolean
+  isActive?: boolean
+}
+
+export class FromTime {
+  ticks?: number
+  days?: number
+  hours?: number
+  milliseconds?: number
+  minutes?: number
+  seconds?: number
+}
+
+export class ToTime {
+  ticks?: number
+  days?: number
+  hours?: number
+  milliseconds?: number
+  minutes?: number
+  seconds?: number
+}
+
+export class SampleslabsViewDto{
+  
+  sampleSlabId?: number
+  fromArea?: number
+  toArea?: number
+  noOfSample?: number
+  isActive?: boolean
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+}
+
+export class SampleSlabDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  sampleSlabId?: number
+  fromArea?: number
+  toArea?: number
+  noOfSample?: number
+  isActive?: boolean
+}

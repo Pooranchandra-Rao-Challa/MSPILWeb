@@ -12,6 +12,8 @@ import { PlanttypeComponent } from './planttype/planttype.component';
 import { PlantsubtypeComponent } from './plantsubtype/plantsubtype.component';
 import { BankComponent } from './bank/bank.component';
 import { HglComponent } from './hgl/hgl.component';
+import { ShiftsComponent } from './shift/shift.component';
+import { SampleslabsComponent } from './sampleslab/sampleslab.component';
 
 
 @NgModule({
@@ -24,10 +26,12 @@ import { HglComponent } from './hgl/hgl.component';
     { path: 'farmer', component: FarmerComponent },
     { path: 'lookup', component: LookupComponent },
     { path: 'planttype', component: PlanttypeComponent },
-    {path:'plantsubtype', component:PlantsubtypeComponent},
-    {path:'bank', component:BankComponent},
+    { path:'plantsubtype', component:PlantsubtypeComponent},
+    { path:'bank', component:BankComponent},
     { path: 'variety', component: VarietyComponent },
-    { path: 'hgl', component: HglComponent }
+    { path: 'hgl', component: HglComponent },
+    { path: 'Shift', component: ShiftsComponent },
+    { path: 'Sample_Slabs', component: SampleslabsComponent }
    
 
   ])],

@@ -13,6 +13,8 @@ import { PlantsubtypeComponent } from './plantsubtype/plantsubtype.component';
 import { BankComponent } from './bank/bank.component';
 import { VarietyComponent } from './variety/variety.component';
 import { HglComponent } from './hgl/hgl.component'
+import { ShiftsComponent } from './shift/shift.component';
+import { SampleslabsComponent } from './sampleslab/sampleslab.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { HglComponent } from './hgl/hgl.component'
     PlantsubtypeComponent,
     BankComponent ,
     VarietyComponent,
-    HglComponent
+    HglComponent,
+   ShiftsComponent,
+   SampleslabsComponent
   ],
   imports: [
     PrimeNgModule,
