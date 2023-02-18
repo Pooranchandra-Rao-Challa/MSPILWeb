@@ -24,6 +24,8 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -33,7 +35,8 @@ import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
         AppRoutingModule,
         AppLayoutModule,
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        ToastModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
@@ -42,7 +45,7 @@ import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
         PhotoService, ProductService,
         // Application services,
         AccountService, JWTService, GeoMasterService,CommonService,BillMasterService,
-        AppMasterService,
+        AppMasterService, MessageService
     ],
     bootstrap: [AppComponent]
 })

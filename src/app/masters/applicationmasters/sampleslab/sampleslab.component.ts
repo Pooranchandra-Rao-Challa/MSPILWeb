@@ -34,6 +34,7 @@ export class SampleslabsComponent implements OnInit {
     InitSampleslab() {
         this.sampleslab = new SampleSlabDto();
         this.fbsampleslabs.reset();
+        this.fbsampleslabs.patchValue({sampleSlabId: 0})
         this.submitLabel = "Add Sample Slab";
         this.addFlag = true;
         this.dialog = true;
@@ -47,10 +48,12 @@ export class SampleslabsComponent implements OnInit {
 
         this.initSampleslabs();
         this.fbsampleslabs = this.formbuilder.group({
+            sampleSlabId:  [0],
             toArea: new FormControl('', [Validators.required,Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
             fromArea: new FormControl('', [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
             noOfSample: new FormControl('', [Validators.required,  Validators.pattern(/^[0-9]+$/)]),
             isActive: [ Validators.required],
+          
         });
     }
     initSampleslabs() {
@@ -61,10 +64,13 @@ export class SampleslabsComponent implements OnInit {
     }
 
     editProduct(sampleslabs: SampleslabsViewDto) {
+     
+      debugger
         this.sampleslab.toArea = sampleslabs.toArea;
         this.sampleslab.fromArea = sampleslabs.fromArea;
         this.sampleslab.noOfSample = sampleslabs.noOfSample;
         this.sampleslab.isActive = sampleslabs.isActive;
+        this.sampleslab.sampleSlabId = sampleslabs.sampleSlabId;
         this.fbsampleslabs.setValue(this.sampleslab);
         this.submitLabel = "Update Sample Slab";
         this.addFlag = false;
@@ -79,12 +85,11 @@ export class SampleslabsComponent implements OnInit {
     }
 
     saveSampleslab(): Observable<HttpEvent<SampleSlabDto>> {
-      debugger
         if (this.addFlag) return this.appmasterservice.CreateSampleSlab(this.fbsampleslabs.value)
         else return this.appmasterservice.UpdateSampleSlab(this.fbsampleslabs.value)
     }
     onSubmit() {
-      debugger
+      console.log(this.fbsampleslabs.valid);
         if (this.fbsampleslabs.valid) {
             this.saveSampleslab().subscribe(resp => {
                 if (resp) {
@@ -107,7 +112,7 @@ export class SampleslabsComponent implements OnInit {
         this.filter.nativeElement.value = '';
     }
     valSwitch: boolean = true;
-    nextSwitch: boolean = true;
+    
 }
 
 

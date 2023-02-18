@@ -50,9 +50,14 @@
                                     *ngIf="FormControls['noOfSample'].errors?.['pattern']">Code Should Only Contain Numbers .
                                     </div>
                                 </div>
-                                <div class="field col-12 md:col-6">
-                                    <label htmlFor="isActive">Is Active?:</label><br>
-                                    <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                                <div class="field col-6">
+                                    <label>Is Active?:<sup class="p-error">*</sup></label><br>
+                                    &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+
+                                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
+                                        class="error-message p-error">
+                                        Please Active
+                                    </div>                                  
                                 </div>
                             </div>
                         </div>
@@ -71,7 +76,7 @@
         </p-dialog>
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
-                <h4>Shifts</h4>
+                <h4>Sample Slabs</h4>
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Sample Slab" icon="pi pi-plus" class="p-button-success p-mr-2"

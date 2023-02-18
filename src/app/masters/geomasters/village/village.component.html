@@ -13,7 +13,7 @@
                       <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="divisions" optionLabel="divisionName"
                         optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
-                        formControlName="divisionId"
+                        formControlName="divisionId" placeholder="Select Division"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-dropdown>
                       <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['divisionId'].errors?.['required']">Please Select
@@ -25,7 +25,7 @@
                       <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="circles" optionLabel="name"  optionValue="circleId"
                         (onChange)="initSections($event.value)" [autoDisplayFirst]="false"
-                        formControlName="circleId"
+                        formControlName="circleId" placeholder="Select Circle"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
@@ -37,7 +37,7 @@
                     <div class="field col-12 md:col-4">
                       <label htmlFor="section">Sections:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="sections" optionLabel="name" optionValue="sectionId"
-                        [autoDisplayFirst]="false" formControlName="sectionId"
+                        [autoDisplayFirst]="false" formControlName="sectionId" placeholder="Select Section"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['sectionId'].touched && FormControls['sectionId'].invalid">
@@ -48,9 +48,9 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="age1">State:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="states" optionLabel="name" optionValue="stateId"
+                      <p-dropdown [options]="states" optionLabel="stateName" optionValue="stateId"
                         (onChange)="initDistricts($event.value)" [autoDisplayFirst]="false"
-                        formControlName="stateId"
+                        formControlName="stateId" placeholder="Select State"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors }"></p-dropdown>
                       <span *ngIf="FormControls['stateId'].touched && FormControls['stateId'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['stateId'].errors?.['required']">Please Select
@@ -62,7 +62,7 @@
                       <label htmlFor="districtId">Districts:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="districts" optionLabel="name" optionValue="districtId"
                         (onChange)="initMandals($event.value)" [autoDisplayFirst]="false"
-                        formControlName="districtId"
+                        formControlName="districtId" placeholder="Select District"
                         [ngClass]="{ 'is-invalid ng-dirty':FormControls['districtId'].touched && FormControls['districtId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['districtId'].touched && FormControls['districtId'].invalid">
@@ -74,7 +74,7 @@
                     <div class="field col-12 md:col-4">
                       <label htmlFor="circle">Mandals:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="mandals" optionLabel="name" optionValue="mandalId" [autoDisplayFirst]="false"
-                        formControlName="mandalId"
+                        formControlName="mandalId" placeholder="Select Mandal"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['mandalId'].touched && FormControls['mandalId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['mandalId'].touched && FormControls['mandalId'].invalid">
@@ -90,7 +90,7 @@
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-3">
                       <label for="code">Village Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="code" formControlName="code" type="text" />
+                      <input pInputText inputId="code" formControlName="code" type="text" placeholder="Enter Village Code"/>
                       <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched"
                         class="error-message p-error">
                         Village Code required
@@ -99,7 +99,7 @@
 
                     <div class="field col-12 md:col-3">
                       <label htmlFor="name">Village Name:<sup class="p-error">*</sup></label>
-                      <input pInputText id="name" formControlName="name" type="text" />
+                      <input pInputText id="name" formControlName="name" type="text" placeholder="Enter Village Name"/>
                       <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched"
                         class="error-message p-error">
                         Village Name required
@@ -109,14 +109,12 @@
 
                     <div class="field col-12 md:col-3">
                       <label for="inchargeName">Incharge Name:</label>
-                      <input pInputText id="inchargeName" formControlName="inchargeName" type="text" />
-
-
+                      <input pInputText id="inchargeName" formControlName="inchargeName" placeholder="Enter Incharge Name" type="text" />
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargePhoneNo">Incharge Phone No.:</label>
                       <p-inputNumber inputId="inchargePhoneNo" formControlName="inchargePhoneNo"
-                        mode="decimal" [useGrouping]="false" [size]="10" [maxlength]="10">
+                        mode="decimal" [useGrouping]="false" [size]="10" [maxlength]="10" placeholder="Enter Incharge PhoneNo">
                       </p-inputNumber>
                     </div>
 
@@ -139,7 +137,7 @@
 
                     <div class="field col-12 md:col-3">
                       <label for="distance">Distance:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2">
+                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2" placeholder="Enter Distance">
                       </p-inputNumber>
                       <div *ngIf="FormControls['distance'].invalid &&  FormControls['distance'].touched"
                         class="error-message p-error">
@@ -149,7 +147,7 @@
                     <div class="field col-12 md:col-3">
                       <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
-                        [minFractionDigits]="2">
+                        [minFractionDigits]="2" placeholder="Enter Diverted Distance">
                       </p-inputNumber>
 
                       <div *ngIf="FormControls['divertedDistance'].invalid &&  FormControls['divertedDistance'].touched"
@@ -166,7 +164,7 @@
 
                     <div class="field col-12 md:col-3">
                       <label for="cultivableArea">Cultivatable Area(Acres):<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2">
+                      <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2" placeholder="Enter Cultivable Area(Acres)">
                       </p-inputNumber>
                       <div *ngIf="FormControls['cultivableArea'].invalid &&  FormControls['cultivableArea'].touched"
                         class="error-message p-error">
@@ -177,7 +175,7 @@
 
                     <div class="field col-12 md:col-3">
                       <label for="irrigationArea">Irrigation Area(In Peek Summer):<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2">
+                      <p-inputNumber inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2" placeholder="Enter Irrigation Area">
                       </p-inputNumber>
 
                       <div *ngIf="FormControls['irrigationArea'].invalid &&  FormControls['irrigationArea'].touched"
@@ -188,7 +186,7 @@
                     <div class="field col-12 md:col-3">
                       <label for="potentialArea">Suitable Area for Cane(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="potentialArea" formControlName="potentialArea" mode="decimal"
-                        locale="en-US" [minFractionDigits]="2">
+                        locale="en-US" placeholder="Enter Suitable Area" [minFractionDigits]="2">
                       </p-inputNumber>
 
                       <div *ngIf="FormControls['potentialArea'].invalid &&  FormControls['potentialArea'].touched"

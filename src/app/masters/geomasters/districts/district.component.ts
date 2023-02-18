@@ -51,14 +51,15 @@ export class DistrictComponent implements OnInit {
     this.initDistricts();
 
     this.commonService.GetStates().subscribe((resp) => {
+      debugger
       this.states = resp as unknown as StateDto[]
     })
 
     this.fbdistricts = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
       name:new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      stateId: ['',],
-      districtId: ['',(Validators.required)],
+      stateId: ['',(Validators.required)],
+      districtId: [''],
       isActive: [ Validators.required]
     });
 
@@ -91,10 +92,12 @@ export class DistrictComponent implements OnInit {
   }
 
   saveDistrict(): Observable<HttpEvent<DistrictDto>> {
+
     if (this.addFlag) return this.geoMasterService.CreateDistrict(this.fbdistricts.value)
     else return this.geoMasterService.UpdateDistrict(this.fbdistricts.value)
   }
   onSubmit() {
+    debugger
     if (this.fbdistricts.valid) {
       this.saveDistrict().subscribe(resp => {
         if (resp) {

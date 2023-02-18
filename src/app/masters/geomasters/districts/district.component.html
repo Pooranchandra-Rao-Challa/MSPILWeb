@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="field col-12">
                                         <label>State:<sup class="p-error">*</sup></label>
-                                        <p-dropdown [options]="states" optionLabel="name" formControlName="stateId"
+                                        <p-dropdown [options]="states" optionLabel="stateName" formControlName="stateId"
                                             optionValue="stateId" placeholder="Select State"
                                             [ngClass]="{ 'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors }"></p-dropdown>
                                         <span *ngIf="FormControls['stateId'].touched && FormControls['stateId'].invalid">
