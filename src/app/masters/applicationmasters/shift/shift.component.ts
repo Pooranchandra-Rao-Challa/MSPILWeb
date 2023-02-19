@@ -45,10 +45,8 @@ export class ShiftsComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.initShifts();
-        this.fbshifts = this.formbuilder.group({
-            
+        this.fbshifts = this.formbuilder.group({            
             name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
             code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
             fromTime: new FormControl('', [Validators.required]),
@@ -111,11 +109,6 @@ export class ShiftsComponent implements OnInit {
         table.clear();
         this.filter.nativeElement.value = '';
     }
-
-
     valSwitch: boolean = true;
     nextSwitch: boolean = true;
-
 }
-
-

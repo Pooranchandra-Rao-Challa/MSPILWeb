@@ -129,7 +129,7 @@
                     <div class="field col-12 md:col-3">
                       <label for="PinCode">Pin Code:</label>
                       <p-inputNumber inputId="pinCode" formControlName="pinCode" mode="decimal" [useGrouping]="false"
-                      [size]="6" [maxlength]="6">
+                      [size]="6" [maxlength]="6" placeholder="Pin Code">
                       </p-inputNumber>
 
 
@@ -185,7 +185,7 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="potentialArea">Suitable Area for Cane(Acres):<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="potentialArea" formControlName="potentialArea" mode="decimal"
+                      <p-inputNumber inputId="potentialArea" formControlName="potentialArea" mode="decimal" placeholder="Suitable Area"
                         locale="en-US" placeholder="Enter Suitable Area" [minFractionDigits]="2">
                       </p-inputNumber>
 
@@ -197,7 +197,7 @@
 
                     <div class="field col-12 md:col-3">
                       <label for="totalArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2">
+                      <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2" placeholder="Total Area">
                       </p-inputNumber>
 
                       <div *ngIf="FormControls['totalArea'].invalid &&  FormControls['totalArea'].touched"
@@ -208,7 +208,7 @@
 
                     <div class="field col-12 md:col-4">
                       <label for="dryArea">Dry Area(Acres):<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2">
+                      <p-inputNumber inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2" placeholder="Enter Dry Area">
                       </p-inputNumber>
 
                       <div *ngIf="FormControls['dryArea'].invalid &&  FormControls['dryArea'].touched"
@@ -218,8 +218,8 @@
                     </div>
 
                     <div class="field col-12 md:col-4">
-                      <label for="notSuitableArea">Not Suitable:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="notSuitableArea" formControlName="notSuitableArea" mode="decimal"
+                      <label for="notSuitableArea">Not Suitable Area:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="notSuitableArea" formControlName="notSuitableArea" mode="decimal" placeholder="Enter Not Suitable Area"
                         locale="de-DE" [minFractionDigits]="2">
                       </p-inputNumber>
 
@@ -231,7 +231,7 @@
 
                     <div class="field col-12 md:col-4">
                       <label for="target">Target Area</label>
-                      <p-inputNumber formControlName="targetArea" inputId="target">
+                      <p-inputNumber formControlName="targetArea" inputId="target" placeholder="Enter Target Area">
                       </p-inputNumber>
 
                     </div>
@@ -240,7 +240,7 @@
 
                     <div class="field col-12 md:col-4">
                       <label for="noOfEbservices">No Of EB Services:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="0">
+                      <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="0" placeholder="Enter No of EB Services">
                       </p-inputNumber>
                       <div *ngIf="FormControls['noOfEbservices'].invalid &&  FormControls['noOfEbservices'].touched"
                         class="error-message p-error">
@@ -249,7 +249,7 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="tptrate">TPT Rate(₹):<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="tptRate" formControlName="tptrate" [minFractionDigits]="2">
+                      <p-inputNumber inputId="tptRate" formControlName="tptrate" [minFractionDigits]="2" placeholder="Enter TPT Rate">
                       </p-inputNumber>
 
                       <div *ngIf="FormControls['tptrate'].invalid &&  FormControls['tptrate'].touched"
@@ -271,7 +271,7 @@
                 <div class="field col-12 md:col-3">
                   <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
-                    locale="en-IN"  [useGrouping]="false" [size]="6" [maxlength]="6">
+                    locale="en-IN"  [useGrouping]="false" [size]="6" [maxlength]="6" placeholder="Enter Listing Order">
                   </p-inputNumber>
                   <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
                     class="error-message p-error">
@@ -380,7 +380,7 @@
           <th pSortableColumn="divertedDistance">DivertedDistance<p-columnFilter type="text" field="divertedDistance"
             display="menu"></p-columnFilter><p-sortIcon field="divertedDistance"></p-sortIcon>
         </th>
-          <th pSortableColumn="noOfEbservices">No ofEbservices<p-columnFilter type="text" field="noOfEbservices"
+          <th pSortableColumn="noOfEbservices">No of EB Services<p-columnFilter type="text" field="noOfEbservices"
             display="menu"></p-columnFilter><p-sortIcon field="noOfEbservices"></p-sortIcon>
         </th>
           <th pSortableColumn="tptRate">Tpt Rate<p-columnFilter type="text" field="tptRate"
@@ -392,7 +392,7 @@
           <th pSortableColumn="cultivableArea">Cultivable Area<p-columnFilter type="text" field="cultivableArea"
             display="menu"></p-columnFilter><p-sortIcon field="cultivableArea"></p-sortIcon>
         </th>
-          <th pSortableColumn="irrigationArea">IrrigationArea<p-columnFilter type="text" field="irrigationArea"
+          <th pSortableColumn="irrigationArea">Irrigation Area<p-columnFilter type="text" field="irrigationArea"
             display="menu"></p-columnFilter><p-sortIcon field="irrigationArea"></p-sortIcon>
         </th>
           <th pSortableColumn="dryArea">Dry Area<p-columnFilter type="text" field="dryArea"
