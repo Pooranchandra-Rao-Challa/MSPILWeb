@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table/table';
 import { Observable } from 'rxjs';
-import { plantTypeDto, planttypeViewDto } from 'src/app/_models/applicationmaster';
+import { plantTypeDto, plantTypeViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 
@@ -14,56 +14,56 @@ import { JWTService } from 'src/app/_services/jwt.service';
 })
 export class PlanttypeComponent implements OnInit {
   showDialog: boolean = false;
-  plant:planttypeViewDto [] = [];
-  planttype: plantTypeDto = new plantTypeDto();
+  plantType: plantTypeViewDto[] = [];
+  plantTypes: plantTypeDto = new plantTypeDto();
   loading: boolean = false;
-  fbplanttype!: FormGroup;
+  fbplantTypes!: FormGroup;
   filter: any;
   submitLabel!: string;
   addFlag: boolean = true;
   valSwitch: boolean = true;
   constructor(private formbuilder: FormBuilder,
-    public jwtService: JWTService, private appmasterservice: AppMasterService,
-  ) {} 
+    public jwtService: JWTService, private appMasterService: AppMasterService,
+  ) { }
 
   initPlant() {
-    this.fbplanttype.reset();
+    this.fbplantTypes.reset();
     this.submitLabel = "Add Plant Type";
     this.addFlag = true;
     this.showDialog = true;
   }
   get FormControls() {
-    return this.fbplanttype.controls;
+    return this.fbplantTypes.controls;
   }
   ngOnInit() {
     this.plantTypeForm();
     this.getPlant();
   }
-  plantTypeForm(){
-  this.fbplanttype = this.formbuilder.group({
-    plantTypeId:[0],
-    code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-    name: new FormControl('', [Validators.required, Validators.pattern(('[a-zA-Z ]*'))]),
-    estimatedTon: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-    loanEligible: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-    isActive:true
-  });
-}
-onClose() {
-  this.fbplanttype.reset();
-}
-// post method
- savePlant():Observable<HttpEvent<plantTypeDto>>{
-  if (this.addFlag) 
-  {
-    this.fbplanttype.value.plantTypeId=0;
-    return this.appmasterservice.CreatePlantType(this.fbplanttype.value);
+  plantTypeForm() {
+    this.fbplantTypes = this.formbuilder.group({
+      plantTypeId: [0],
+      code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(('[a-zA-Z ]*'))]),
+      estimatedTon: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      loanEligible: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      isActive: true
+    });
   }
-    else return this.appmasterservice.UpdatePlantType(this.fbplanttype.value)
+  onClose() {
+    this.fbplantTypes.reset();
+  }
+  // post method
+  savePlant(): Observable<HttpEvent<plantTypeDto>> {
+    if (this.addFlag)
+      // {
+      //   this.fbplanttype.value.plantTypeId=0;
+      return this.appMasterService.CreatePlantType(this.fbplantTypes.value);
+    // }
+    else return this.appMasterService.UpdatePlantType(this.fbplantTypes.value)
   }
   onSubmit() {
-    if (this.fbplanttype.valid) {
-      console.log(this.fbplanttype.value)
+    if (this.fbplantTypes.valid) {
+      console.log(this.fbplantTypes.value)
       this.savePlant().subscribe(resp => {
         if (resp) {
           this.getPlant();
@@ -74,39 +74,40 @@ onClose() {
     }
     else {
       // alert("please fill the fields")
-      this.fbplanttype.markAllAsTouched();
+      this.fbplantTypes.markAllAsTouched();
     }
   }
-// get method
-getPlant(){
-  this.appmasterservice.GetPlantType().subscribe((resp) => {
-    this.plant = resp as unknown as  planttypeViewDto[];
-    console.log(this.plant);
-    this.loading = false;
-  })
-}
-editPlantType(planttype:plantTypeDto) {
-  this.planttype.plantTypeId = planttype.plantTypeId;
-  this.planttype.code = planttype.code;
-  this.planttype.name = planttype.name;
-  this.planttype.estimatedTon = planttype.estimatedTon;
-  this.planttype.loanEligible = planttype.loanEligible;
-  this.planttype.isActive = planttype.isActive;
-  this.fbplanttype.setValue(this.planttype);
-  this.addFlag = false;
-  this.submitLabel ="Update Plant Type";
-  this.showDialog = true;
-}
+  // get method
+  getPlant() {
+    this.appMasterService.GetPlantType().subscribe((resp) => {
+      this.plantType = resp as unknown as plantTypeViewDto[];
+      console.log(this.plantType);
+      this.loading = false;
+    });
+  }
+
+  editPlantType(plantTypes: plantTypeDto) {
+    this.plantTypes.plantTypeId = plantTypes.plantTypeId;
+    this.plantTypes.code = plantTypes.code;
+    this.plantTypes.name = plantTypes.name;
+    this.plantTypes.estimatedTon = plantTypes.estimatedTon;
+    this.plantTypes.loanEligible = plantTypes.loanEligible;
+    this.plantTypes.isActive = plantTypes.isActive;
+    this.fbplantTypes.setValue(this.plantTypes)
+    this.addFlag = false;
+    this.submitLabel = "Update Plant Type";
+    this.showDialog = true;
+  }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
-  } 
+  }
 
   ngOnDestroy() {
-    this.plant = [];
-    this. planttype = new plantTypeDto();
+    this. plantType = [];
+    this.plantTypes = new plantTypeDto();
   }
 }

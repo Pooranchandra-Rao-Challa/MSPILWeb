@@ -4,19 +4,20 @@
         <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
-                <h4>Lookup</h4>
+                <h4>LookUp</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="New Lookup" icon="pi pi-plus" class="p-button-success p-mr-2"
+                <button pButton pRipple label="New LookUp" icon="pi pi-plus" class="p-button-success p-mr-2"
                     (click)="addLookupDialog()"></button>
             </ng-template>
         </p-toolbar>
 
         <!-- dialog -->
-        <p-dialog header="Lookup" [(visible)]="showDialog" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-            [style]="{width: '45vw'}">
+        <p-dialog header="LookUp" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+         [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            [style]="{width:'45vw'}" (onHide)="onClose()"> 
             <div class="flex flex-column align-items-center justify-content-center">
-                <form [formGroup]="fblookup" (ngSubmit)="onSubmit()">
+                <form [formGroup]="fblookup">
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">
@@ -46,12 +47,10 @@
                                 </div>
 
                                 <div class="field col-12 md:col-8">
-                                    <label>Is Active?:</label><br>
-                                    &nbsp; <p-inputSwitch formControlName="isActive">
-                                    </p-inputSwitch>
-                                    
+                                    <label>Is Active:</label><br>
+                                    <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                                 </div>
-                                <div class="field col-12 md:col-4 ">
+                                <div class="field col-12 md:col-4 mt-2">
                                     <div class="button-container">
                                         <p-button type="button" label="Add Lookup Details" (click)="addLookupDtls()">
                                         </p-button>
@@ -62,47 +61,60 @@
                     </div>
 
                     <!-- lookupdetails -->
-                    <div *ngIf="dataShown">
-                        <div class="col-12">
-                            <p-table formArrayName="lookUpDetails" dataKey="id" [tableStyle]="{'min-width': '50rem'}">
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon>
-                                        </th>
-                                        <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon>
-                                        </th>
-                                        <th pSortableColumn="remark">Remarks<p-sortIcon field="remark"></p-sortIcon>
-                                        </th>
-                                        <th pSortableColumn="order">Listing Order<p-sortIcon field="order"></p-sortIcon>
-                                        </th>
-                                    </tr>&nbsp;
-                                    <tr *ngFor="let items of lookUpDetails.controls;let i=index"
-                                        [formGroupName]="i">
-                                        <td>
-                                            <input  pInputText class="form-control" formControlName="code">
-                                        </td>
-                                        <td>
-                                            <input  pInputText class="form-control" formControlName="name">
-                                        </td>
-                                        <td>
-                                            <input  pInputText class="form-control" formControlName="remarks">
-                                        </td>
-                                        <td>
-                                            <input pInputText class="form-control" formControlName="listingorder">
-                                        </td>
-                                    </tr>&nbsp;
+                    <div class="col-12" formArrayName="lookUpDetails" *ngIf="ShowlookupDetails">
+                        <p-table #dt2 [value]="falookupDtls().controls" dataKey="id" [rows]="10" [loading]="loading"
+                        [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+                        [paginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+                        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                        <ng-template pTemplate="caption">
+                            <div class="flex justify-content-between flex-column sm:flex-row">
+                                <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                                    (click)="clear(dt1)"></button>
+                                <span class="p-input-icon-left mb-2">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)"
+                                        placeholder="Search Keyword" class="w-full" />
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="remark">Remarks<p-sortIcon field="remark"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="order">Listing Order<p-sortIcon field="order"></p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body"  let-lookUp let-lookUpDetailsIndex="rowIndex" >
+                            <tr [formGroupName]="lookUpDetailsIndex">
+                                <td>
+                                    <input pInputText class="form-control" formControlName="code">
+                                </td>
+                                <td>
+                                    <input pInputText class="form-control" formControlName="name">
+                                </td>
+                                <td>
+                                    <input pInputText class="form-control" formControlName="remarks">
+                                </td>
+                                <td>
+                                    <input pInputText class="form-control" formControlName="listingorder">
+                                </td>
+                            </tr>&nbsp;
 
-                                </ng-template>
-                            </p-table>
-                        </div>
+                        </ng-template>
+                        </p-table>
                     </div>
                 </form>
             </div>
             <ng-template pTemplate="footer">
                 <div class="col-12">
                     <div class="col-4" style="float:right">
-                        <button pButton pRipple type="submit" label="submit" class="p-button-raised p-button-success"
-                            (click)="onSubmit()"></button>
+                        <button pButton pRipple type="submit" label="{{submitLabel}}"
+                            class="p-button-raised p-button-success" (click)="onSubmit()"></button>
                     </div>
                 </div>
             </ng-template>
@@ -162,8 +174,8 @@
 
             <ng-template pTemplate="body" let-lookup>
                 <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil"
-                         class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                    <td><button pButton pRipple icon="pi pi-pencil" (click)="editLookUp(lookup)"
+                            class="p-element p-ripple p-button-text p-button p-component"></button></td>
                     <td>{{lookup.code}}</td>
                     <td>{{lookup.name}}</td>
                     <td style="text-align:center">
