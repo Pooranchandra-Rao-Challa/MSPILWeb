@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { ApiHttpService } from "./api.http.service";
 import { LOGIN_URI, REFRESH_TOKEN_URI, } from "./api.uri.service";
 import { LoginModel, ResponseModel } from "../_models/account/account.model";
-import { BehaviorSubject, map, Observable, observeOn, throwError } from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, observeOn, throwError } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class AccountService extends ApiHttpService {
@@ -19,7 +19,7 @@ export class AccountService extends ApiHttpService {
         localStorage.setItem("respModel", JSON.stringify(resp as ResponseModel))
         this.respSubject = new BehaviorSubject<ResponseModel>(resp as ResponseModel);
         return this.respSubject.asObservable()
-      }),
+      })
     )
   }
 

@@ -126,12 +126,18 @@ export class AppMenuComponent implements OnInit {
                   { label: 'Disease', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/disease'], permission: true },
                   { label: 'Fertilizer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/fertilizer'], permission: true },
                   { label: 'Farmer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: true },
+                  // { label: 'LookUp', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
+                  // { label: 'Plant Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
+                  { label: 'Plant Sub Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/plantsubtype'], permission: true },
+                  { label: 'Bank', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/bank'], permission: true },
                   { label: 'Lookup', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
                   { label: 'Plant type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
                   { label: 'Variety', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: true },
                   { label: 'Vehicle', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/vehicle'], permission: true },
                   { label: 'TPT', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/tpt'], permission: true },
-
+                  { label: 'hgl', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: true },
+                  { label: 'Shift', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Shift'], permission: true },
+                  { label: 'Sample Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Sample_Slabs'], permission: true },
                 ]
               }
             ]

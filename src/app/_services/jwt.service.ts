@@ -28,6 +28,8 @@ export class JWTService {
 
   public Logout(){
     localStorage.removeItem("respModel");
+    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(REFRESHTOKEN_KEY)
     this.router.navigate(["/"])
   }
 

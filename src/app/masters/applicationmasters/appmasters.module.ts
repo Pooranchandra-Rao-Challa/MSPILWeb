@@ -12,6 +12,11 @@ import { PlanttypeComponent } from './planttype/planttype.component';
 import { VarietyComponent } from './variety/variety.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { TptComponent } from './tpt/tpt.component'
+import { PlantsubtypeComponent } from './plantsubtype/plantsubtype.component';
+import { BankComponent } from './bank/bank.component';
+import { HglComponent } from './hgl/hgl.component'
+import { ShiftsComponent } from './shift/shift.component';
+import { SampleslabsComponent } from './sampleslab/sampleslab.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,13 @@ import { TptComponent } from './tpt/tpt.component'
     PlanttypeComponent,
     VarietyComponent,
     VehicleComponent,
-    TptComponent
+    TptComponent,
+    PlantsubtypeComponent,
+    BankComponent,
+    VarietyComponent,
+    HglComponent,
+    ShiftsComponent,
+    SampleslabsComponent,
   ],
   imports: [
     PrimeNgModule,

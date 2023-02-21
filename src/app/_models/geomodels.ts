@@ -131,8 +131,8 @@ export class SectionDto {
 
 export interface StatesViewDto {
   stateId: number,
-  code: string,
-  name: string,
+  stateCode: string,
+  stateName: string,
   isActive: boolean,
   createdBy: string,
   createdAt: string,

@@ -65,8 +65,9 @@ export class StateComponent implements OnInit {
     }
 
     editProduct(state: StatesViewDto) {
-        this.state.code = state.code;
-        this.state.name = state.name
+        console.log(state);
+        this.state.code = state.stateCode;
+        this.state.name = state.stateName
         this.state.isActive = state.isActive;
         this.state.stateId = state.stateId;
         //this.state.stateId = state.stateId;

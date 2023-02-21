@@ -15,10 +15,9 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 })
 export class LookupComponent implements OnInit {
 
-  display: boolean = false;
   showDialog: boolean = false;
-  lookup: [] = [];
-  billParam: LookUpHeaderDto = new LookUpHeaderDto ();
+  look: LookupViewDto[] = [];
+  lookup: LookUpHeaderDto = new LookUpHeaderDto();
   filter: any;
   dataShown: boolean = false;
   addfields: any;
@@ -26,7 +25,6 @@ export class LookupComponent implements OnInit {
   fblookup!: FormGroup;
   lookUpDetails!: FormArray;
   addFlag: boolean = true;
-  look: LookupViewDto[] = [];
   submitLabel!: string;
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,) { }
@@ -34,14 +32,23 @@ export class LookupComponent implements OnInit {
   get FormControls() {
     return this.fblookup.controls;
   }
-  addlookupdialog() {
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
+  addLookupDialog() {
     this.submitLabel = "Add Lookup";
     this.addFlag = true;
     this.showDialog = true;
   }
+
   ngOnInit(): void {
     this.lookupForm();
-    this.Getlook();
+    this.GetLookUp();
   }
   lookupForm() {
     this.addfields = []
@@ -52,8 +59,9 @@ export class LookupComponent implements OnInit {
       lookUpDetails: this.formbuilder.array([]),
     });
   }
+
   // add lookupdtls fields
-  addlookupdtls() {
+  addLookupDtls() {
     this.dataShown = true;
     this.lookUpDetails = this.fblookup.get("lookUpDetails") as FormArray
     this.lookUpDetails.push(this.generaterow())
@@ -63,13 +71,14 @@ export class LookupComponent implements OnInit {
   }
   generaterow() {
     return this.formbuilder.group({
-      code: [''],
-      name: [''],
-      remarks: [''],
-      listingorder: [0]
+      code:[''],
+      name:[''],
+      remarks:[''],
+      listingorder:[0]
     })
   }
-  
+
+  //  post lookup 
   savelookup(): Observable<HttpEvent<LookUpHeaderDto>> {
     if (this.addFlag) return this.appmasterservice.Createlookup(this.fblookup.getRawValue())
     else return this.appmasterservice.Updatelookup(this.fblookup.getRawValue())
@@ -78,12 +87,12 @@ export class LookupComponent implements OnInit {
     this.fblookup.reset();
   }
   onSubmit() {
-    if (this.fblookup.valid) {
+    if(this.fblookup.valid) {
       this.savelookup().subscribe(resp => {
         if (resp) {
-          this.Getlook();
+          this.GetLookUp();
           this.onClose();
-          this.display = false;
+          this.showDialog = false;
         }
       })
     }
@@ -92,20 +101,17 @@ export class LookupComponent implements OnInit {
       this.fblookup.markAllAsTouched();
     }
   }
+
   // getmethod
-  Getlook() {
+  GetLookUp() {
     this.appmasterservice.GetlookUp().subscribe((resp) => {
       this.look = resp as unknown as LookupViewDto[];
       console.log(this.look);
       this.loading = false;
     })
   }
-
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
-  clear(table: Table) {
-    table.clear();
-    this.filter.nativeElement.value = '';
-  }
+ 
 }
+
+
+

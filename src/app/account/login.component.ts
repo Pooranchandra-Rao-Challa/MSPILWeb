@@ -20,8 +20,7 @@ import { MessageService } from 'primeng/api';
             margin-right: 1rem;
             color: var(--primary-color) !important;
         }
-    `],
-    providers: [MessageService]
+    `]
 })
 export class LoginComponent {
 
@@ -43,7 +42,6 @@ export class LoginComponent {
         this.accountService.Authenticate(this.loginForm.value as LoginModel)
         .subscribe(
           (resp) => {
-            this.messageService.add({severity:'success', summary:'Success!', detail:'Signing in...!'});
             setTimeout(() => {
                 this.router.navigate(['dashboard']);
             }, 1000);
@@ -51,13 +49,7 @@ export class LoginComponent {
         },
           (error) => {
             console.log(error);
-            if(error.status == 401)
-               this.messageService.add({severity:'error', summary:'Error', detail:"Invalid Credentials!"});
-            
-            else if(error.status == 400)
-               this.messageService.add({severity:'error', summary:'Error', detail:"User Not found"});
-            else
-                this.router.navigate(["error"])
+            this.submitted = false;
           },
         );
     }

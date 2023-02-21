@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup,ReactiveFormsModule, Validators, } from '@angular/forms';
-import {ToastModule} from 'primeng/toast';
 import {RippleModule} from 'primeng/ripple';
 
 
@@ -22,7 +21,6 @@ import {RippleModule} from 'primeng/ripple';
         InputTextModule,
         FormsModule,
         PasswordModule,
-        ToastModule,
         ReactiveFormsModule,
         RippleModule
       

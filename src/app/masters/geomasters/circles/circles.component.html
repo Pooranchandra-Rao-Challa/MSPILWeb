@@ -18,8 +18,8 @@
                                     <span
                                         *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['divisionId'].errors?.['required']">Please
-                                            Select Division.</div>
+                                            *ngIf="FormControls['divisionId'].errors?.['required']">
+                                            Select Division Required.</div>
                                     </span>
                                 </div>
                                 <div class="field col-12 md:col-6">
@@ -29,7 +29,7 @@
 
                                     <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched && FormControls['code'].errors?.['required']"
                                         class="error-message p-error">
-                                        Code is required
+                                        Circle Code is required
                                     </div>
                                     
                                     <div class="ng-invalid ng-touched p-error"
@@ -44,7 +44,7 @@
 
                                     <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched && FormControls['name'].errors?.['required']"
                                         class="error-message p-error">
-                                        Code is required
+                                        Circle Name is required
                                     </div>
                                     <div class="ng-invalid ng-touched p-error"
                                     *ngIf="FormControls['name'].errors?.['pattern']">Name Should Only Contain Alphabets .
@@ -113,7 +113,7 @@
                 <div class="col-12">
                     <div style="float:right">
                     <button pButton pRipple type="submit" label="{{submitLabel}}"
-                        class="p-button-raised p-button-success"></button>
+                    (click)="onSubmit()" class="p-button-raised p-button-success"></button>
                     </div>
                 </div>
             </ng-template>
@@ -223,7 +223,7 @@
 
             <ng-template pTemplate="loadingbody">
                 <tr>
-                    <td colspan="8"></td>
+                    <td colspan="8">Loading.. Circle data. Please wait.</td>
                 </tr>
              </ng-template>
 

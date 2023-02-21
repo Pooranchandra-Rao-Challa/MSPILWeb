@@ -4,7 +4,6 @@ export class LookUpHeaderDto {
   name?: string;
   isActive?: boolean;
   lookUpDetails?: LookupDetailDto[];
-  LookupDetailDto: any;
 }
 export class LookupDetailDto {
   id?: number;
@@ -13,9 +12,8 @@ export class LookupDetailDto {
   remarks?: string;
   listingorder?: number;
 }
-
-export class LookupViewDto {
-  id?: number;
+export class LookupViewDto{
+  lookUpId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
@@ -23,6 +21,28 @@ export class LookupViewDto {
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+  lookUpDetails?: LookupDetailDto[] ;
+}
+
+export class planttypeViewDto{
+ plantTypeId?: number;
+ code?: string;
+ name?: string;
+ estimatedTon?:number;
+ loanEligible?:number;
+ isActive?: boolean;
+ updatedAt?: Date;
+ createdAt?: Date;
+ updatedBy?: string;
+ createdBy?: string;
+}
+export class plantTypeDto{
+  plantTypeId?:number;
+  code?: string;
+  name?: string;
+  estimatedTon?:number;
+  loanEligible?:number;
+  isActive?: boolean;
 }
 
 export class VarietyDto {
@@ -206,4 +226,224 @@ export class BranchDto {
   email?: string;
   ifsc?: string;
   isActive?: boolean;
+}
+export class PlantSubTypeViewDto {
+plantSubTypeId?: number;
+plantId?:number;
+plantName?:string;
+code?: string;
+name?: string;
+isActive: boolean = true;
+updatedAt?: Date;
+createdAt?: Date;
+updatedBy?: string;
+createdBy?: string;
+}
+export class PlantSubTypeDto{
+plantSubTypeId?: number;
+plantId?:number;
+code?: string;
+name?: string;
+isActive: boolean = true;
+updatedAt?: Date;
+createdAt?: Date;
+updatedBy?: string;
+createdBy?: string;
+}
+
+export class SeasonViewDto{
+  seasonId?: number
+  code?: string
+  name?: string
+  plantFrom?: Date
+  plantTo?: Date
+  crushFrom?: Date
+  crushTo?: Date
+  burnCaneRate?: number
+  caneRate?: number
+  capacity?: number
+  currentSeason?: any
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedBy?: string
+  createdBy?: string
+}
+
+export class SeasonDto {
+  seasonId?: number
+  code?:  string
+  name?:  string
+  plantFrom?:  Date
+  plantTo?:  Date
+  crushFrom?:  Date
+  crushTo?:  Date
+  burnCaneRate?:  number
+  caneRate?:  number
+  capacity?:  number
+  currentSeason?:  string
+  isActive?:  boolean
+  seasonBillingRates?:  SeasonBillingRateDto[]
+}
+
+export class SeasonBillingRateDto{
+  seasonBillingRateId?:  number
+  seasonId?:  number
+  billParameterId?:  number
+  rate?:  number
+  priority?:  number
+  isActive?:  boolean
+}
+
+
+export class HglViewDto {
+  hglId?: number
+  code?: string
+  name?: string
+  gender?: string
+  relationTypeId?: number
+  relationType?: string
+  relationName?: string
+  address?: string
+  pinCode?: string
+  phoneNo?: string
+  email?: string
+  panNo?: string
+  aadhaarNo?: string
+  tax?: number
+  tds?: boolean
+  guarantor1?: string
+  guarantor2?: string
+  guarantor3?: string
+  branchId?: number
+  branchName?: string
+  bankName?: string
+  ifsc?: string
+  accountNo?: string
+  glCode?: string
+  subGLCode?: string
+  otherCode?: string
+  isActive?: boolean
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+}
+
+
+export class HglDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  hglId?: number
+  code?: string
+  name?: string
+  gender?: string
+  relationTypeId?: number
+  relationName?: string
+  address?: string
+  pinCode?: string
+  phoneNo?: string
+  email?: string
+  panNo?: string
+  aadhaarNo?: string
+  tax?: number
+  tds?: boolean
+  guarantor1?: string
+  guarantor2?: string
+  guarantor3?: string
+  branchId?: number
+  accountNo?: string
+  glcode?: string
+  subGlcode?: string
+  otherCode?: string
+  isActive?: boolean
+  subHgls?: SubHgldto[]
+}
+
+export class SubHgldto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  subHglId?: number
+  hglid?: number
+  code?: string
+  name?: string
+  vehicleTypeId?: number
+  noOfPersons?: number
+  isActive?: boolean
+}
+
+export class ShiftsViewDto{
+
+    shiftId?: number
+    code?: string
+    name?: string
+    fromTime?: string
+    toTime?: string
+    isNextDay?: boolean
+    isActive?: boolean
+    createdAt?: string
+    createdBy?: string
+    updatedAt?: string
+    updatedBy?: string
+}
+
+export class ShiftDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  shiftId?: number
+  code?: string
+  name?: string
+  fromTime?: string
+  toTime?: string
+  isNextDay?: boolean
+  isActive?: boolean
+}
+
+export class FromTime {
+  ticks?: number
+  days?: number
+  hours?: number
+  milliseconds?: number
+  minutes?: number
+  seconds?: number
+}
+
+export class ToTime {
+  ticks?: number
+  days?: number
+  hours?: number
+  milliseconds?: number
+  minutes?: number
+  seconds?: number
+}
+
+export class SampleslabsViewDto{
+
+  sampleSlabId?: number
+  fromArea?: number
+  toArea?: number
+  noOfSample?: number
+  isActive?: boolean
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+}
+
+export class SampleSlabDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  sampleSlabId?: number
+  fromArea?: number
+  toArea?: number
+  noOfSample?: number
+  isActive?: boolean
 }
