@@ -104,20 +104,19 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="12">No variety masters found.</td>
+          <td colspan="13">No varieties found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="12">Loading variety masters data. Please wait.</td>
+          <td colspan="13">Loading varieties data. Please wait.</td>
         </tr>
       </ng-template>
     </p-table>
 
     <!-- dialog box -->
-    <p-dialog header="variety" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
-      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbVariety.reset()">
+    <p-dialog header="Variety" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbVariety.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbVariety" (ngSubmit)="onSubmit()">
           <div class="grid">
@@ -142,6 +141,8 @@
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                      Name should contains only characters.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -151,17 +152,15 @@
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please Enter Code.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                      Code should contains only characters and integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Plant Age(Months):<sup class="p-error">*</sup></label>
-                  <input pInputText id="plantAge" type="number" formControlName="plantAge"
+                  <p-inputNumber inputId="plantAge" formControlName="plantAge" [maxlength]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantAge'].touched && FormControls['plantAge'].errors }">
-
-                  <!-- <p-inputNumber id="plantAge" mode="decimal" locale="en-IN" [minFractionDigits]="2"
-                    [maxFractionDigits]="2" formControlName="plantAge" inputId="plantAge" [useGrouping]="false"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantAge'].touched && FormControls['plantAge'].errors }">
-                  </p-inputNumber> -->
+                  </p-inputNumber>
                   <span *ngIf="FormControls['plantAge'].touched && FormControls['plantAge'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantAge'].errors?.['required']">
                       Please Enter Plant Age.</div>
@@ -169,13 +168,9 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Ratoon Age(Months):<sup class="p-error">*</sup></label>
-                  <input pInputText id="ratoonAge" type="number" formControlName="ratoonAge"
+                  <p-inputNumber inputId="ratoonAge" formControlName="ratoonAge" [maxlength]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['ratoonAge'].touched && FormControls['ratoonAge'].errors }">
-
-                  <!-- <p-inputNumber id="ratoonAge" mode="decimal" locale="en-IN" [minFractionDigits]="2"
-                    [maxFractionDigits]="2" formControlName="ratoonAge" inputId="ratoonAge" [useGrouping]="false"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['ratoonAge'].touched && FormControls['ratoonAge'].errors }">
-                  </p-inputNumber> -->
+                  </p-inputNumber>
                   <span *ngIf="FormControls['ratoonAge'].touched && FormControls['ratoonAge'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['ratoonAge'].errors?.['required']">
                       Please Enter Ratoon Age.</div>
@@ -184,12 +179,14 @@
                 <div class="field col-12 md:col-6">
                   <label>Sugar Content:<sup class="p-error">*</sup></label>
                   <div class="p-field-radiobutton">
-                    <p-radioButton name="sugarContent" value="HSV" formControlName="sugarContent"></p-radioButton>
+                    <p-radioButton class="mr-2" name="sugarContent" value="HSV" formControlName="sugarContent">
+                    </p-radioButton>
                     <label>HSV</label>
                   </div>
                   <br>
                   <div class="p-field-radiobutton">
-                    <p-radioButton name="sugarContent" value="OV" formControlName="sugarContent"></p-radioButton>
+                    <p-radioButton class="mr-2" name="sugarContent" value="OV" formControlName="sugarContent">
+                    </p-radioButton>
                     <label>OV</label>
                   </div>
                   <span *ngIf="FormControls['sugarContent'].touched && FormControls['sugarContent'].invalid">
@@ -201,13 +198,15 @@
                 <div class="field col-12 md:col-6">
                   <label>Plant Suitability:<sup class="p-error">*</sup></label>
                   <div class="p-field-radiobutton">
-                    <p-radioButton name="plantSuitability" value="I spell" formControlName="plantSuitability">
+                    <p-radioButton class="mr-2" name="plantSuitability" value="I spell"
+                      formControlName="plantSuitability">
                     </p-radioButton>
                     <label>I spell</label>
                   </div>
                   <br>
                   <div class="p-field-radiobutton">
-                    <p-radioButton name="plantSuitability" value="II spell" formControlName="plantSuitability">
+                    <p-radioButton class="mr-2" name="plantSuitability" value="II spell"
+                      formControlName="plantSuitability">
                     </p-radioButton>
                     <label>II spell</label>
                   </div>
