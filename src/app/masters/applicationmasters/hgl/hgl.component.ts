@@ -8,7 +8,7 @@ import { CircleDto, CirclesViewDto, DivisionDto, VillageDto, VillagesViewDto, St
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { SeasonViewDto, SeasonDto, HglViewDto, HglDto, LookupViewDto, LookUpHeaderDto, LookupDetailDto, BankDto, BranchesDto, VehicleTypeDto } from '../../../_models/applicationmaster';
+import { SeasonViewDto, SeasonDto, HglViewDto, HglDto, LookupViewDto, LookUpHeaderDto, LookupDetailDto, BankDto, VehicleTypeDto } from '../../../_models/applicationmaster';
 import { AppMasterService } from '../../../_services/appmaster.service';
 import { LookupService } from '../../../_services/lookup.service';
 
@@ -21,7 +21,7 @@ import { LookupService } from '../../../_services/lookup.service';
 })
 export class HglComponent implements OnInit {
 
-  
+
   display: boolean = false;
   hgls: HglViewDto[] = [];
   hgl: HglDto = new HglDto();
@@ -53,7 +53,7 @@ export class HglComponent implements OnInit {
   Initseason(hgls: HglViewDto) {
     this.fbhgl.reset();
     this.hgl = new HglDto();
-   
+
     this.clearParents();
     if(hgls.hglId){
       this.fbhgl.setValue(this.hgls);
@@ -67,7 +67,7 @@ export class HglComponent implements OnInit {
   }
 
   clearParents(){
-   
+
   }
 
   get FormControls() {
@@ -83,13 +83,13 @@ export class HglComponent implements OnInit {
 
     });
 
-    this.AppMasterService.GetBank().subscribe((resp) => {
+    this.AppMasterService.GetBanks().subscribe((resp) => {
       this.bank = resp as unknown as BankDto[];
       console.log(this.bank);
 
     });
 
-    this.AppMasterService.GetBank().subscribe((resp) => {
+    this.AppMasterService.GetBanks().subscribe((resp) => {
       this.branch = resp as unknown as BankDto[];
       console.log(this.branch);
 
@@ -134,9 +134,9 @@ export class HglComponent implements OnInit {
       subGLCode:new FormControl('', Validators.required),
       otherCode:new FormControl('', Validators.required),
       isActive: new FormControl('', Validators.required),
-  
+
       subHgls: this.formbuilder.array([this.createItem()]),
-  
+
     });
 
      this.genderOptions = [
@@ -145,11 +145,11 @@ export class HglComponent implements OnInit {
     ];
 
   }
-  
+
   get gender() {
     return this.fbhgl.get('gender');
   }
-  
+
 
 
   createItem(): FormGroup {
@@ -170,8 +170,8 @@ export class HglComponent implements OnInit {
     const formArray = this.fbhgl.get(formArrayName) as FormArray;
     if (formArray.length <1) {
       formArray.push(this.createItem());
-    } 
-    
+    }
+
     this.showFieldset = true;
   }
 
@@ -186,11 +186,11 @@ export class HglComponent implements OnInit {
     this.fbhgl.reset();
   }
 
-  saveHgl(): Observable<HttpEvent<HglDto>> {  
+  saveHgl(): Observable<HttpEvent<HglDto>> {
     if (this.addFlag) return this.AppMasterService.CreateHgl(this.fbhgl.value)
     else return this.AppMasterService.UpdateHgl(this.fbhgl.value)
   }
-  
+
   onSubmit() {
     console.log(this.fbhgl.value);
     if (this.fbhgl.valid) {
