@@ -1,18 +1,17 @@
-import { HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto, SeasonDto } from './../../../_models/applicationmaster';
+import { LookupService } from './../../../_services/lookup.service';
+import { PHONE_NO, NUMERIC_ONLY } from './../../../_shared/regex';
+import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormBuilder, FormControl, FormGroup, Validators,FormArrayName,FormArray } from '@angular/forms';
-import { CircleDto, CirclesViewDto, DivisionDto, VillageDto, VillagesViewDto, StateDto, SectionDto, DistrictDto, MandalDto } from 'src/app/_models/geomodels';
-import { GeoMasterService } from 'src/app/_services/geomaster.service';
-import { CommonService } from 'src/app/_services/common.service';
-import { JWTService } from 'src/app/_services/jwt.service';
-import { SeasonViewDto, SeasonDto } from '../../../_models/applicationmaster';
-import { AppMasterService } from '../../../_services/appmaster.service';
-import { BillParameterDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
+import { Observable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
+import { SeasonViewDto } from '../../../_models/applicationmaster';
 import { BillMasterService } from '../../../_services/billmaster.service';
-
+import { BillParameterViewDto } from 'src/app/_models/billingmaster';
 
 @Component({
   selector: 'app-season',
@@ -22,112 +21,108 @@ import { BillMasterService } from '../../../_services/billmaster.service';
 })
 export class SeasonComponent implements OnInit {
 
-
-  display: boolean = false;
   seasons: SeasonViewDto[] = [];
   season: SeasonDto = new SeasonDto();
-  village: VillageDto ={};
   loading: boolean = false;
+  globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
+    'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
+  @ViewChild('filter') filter!: ElementRef;
   fbseasons!: FormGroup;
-  filter: any;
   submitLabel!: string;
   addFlag: boolean = true;
-  valSwitch: boolean = true;
-  farmers: any[] = [];
-  harvesters:any[] = [];
-  seeds:any[] = [];
-  tranceporters:any[] = [];
-  showDialog!: boolean;
+  showDialog: boolean = false;
+  showTptDetails: boolean = false;
+  relationTypes: any;
+  banks: BankViewDto[] = [];
+  bank: BankDto = new BankDto();
+  branches: BranchDto[] = [];
+  genders: { label: string; value: string; }[];
+  vehicleTypes: VehicleTypeViewDto[] = [];
   billParam: BillParameterViewDto[] = [];
-
-
+  defaults: { name: string; id: boolean; }[];
+ 
 
 
   constructor(private formbuilder: FormBuilder,
-    private AppMasterService: AppMasterService,
-    private commonService: CommonService,
-    public jwtService: JWTService,
-    public BillMasterService:BillMasterService,
-  ) {
-
-  }
-  Initseason(season: SeasonViewDto) {
-    this.fbseasons.reset();
-    this.season = new SeasonDto();
-   
-    this.clearParents();
-    if(season.seasonId){
-      this.fbseasons.setValue(this.seasons);
-      this.submitLabel = "Update Season";
-      this.addFlag = false;
-    }else{
-      this.submitLabel = "Add Season";
-      this.addFlag = true;
-    }
-    this.display = true;
+    private appMasterService: AppMasterService,
+    private LookupService: LookupService,
+    private BillMasterService:BillMasterService) {
+    this.defaults = [
+      { name: 'Yes', id: true },
+      { name: 'No', id: false }
+    ];
+    this.genders = [
+      { label: 'Male', value: 'M' },
+      { label: 'Female', value: 'F' }
+    ];
   }
 
-  clearParents(){
-   
-  }
-
-  get FormControls() {
-    return this.fbseasons.controls;
-  }
-
-  ngOnInit() {
-    this.initSeason();
+  ngOnInit(): void {
+    this. initSeasons();
+    this.seasonForm();
 
     this.BillMasterService.GetBillParameters().subscribe((resp) => {
       this.billParam = resp as unknown as BillParameterViewDto[];
+      console.log(this.billParam);
  
+    });
+  }
+
+  initSeasons() {
+    this.appMasterService.Getseason().subscribe((resp) => {
+      this.seasons = resp as unknown as SeasonViewDto[];
+      this.loading = false;
+    });
+  }
+
+
+ 
+  seasonForm() {
+    this.fbseasons = this.formbuilder.group({
+      seasonId: [],
+      code: new FormControl('',),
+      name: new FormControl('',),
+      plantFrom: ['', (Validators.required)],
+      plantTo: new FormControl('', ),
+      crushFrom: ['', (Validators.required)],
+      crushTo: [Date, (Validators.required)],
+      burnCaneRate: ['', (Validators.required)],
+      caneRate: ['', (Validators.required)],
+      capacity: ['',],
+      currentSeason: [''],
+      isActive: [true],
+      farmer: this.formbuilder.array([this.createItem()]),
+      harvestor: this.formbuilder.array([this.createItem()]),
+      transporter: this.formbuilder.array([this.createItem()]),
+      seed: this.formbuilder.array([this.createItem()])
     });
     
 
-    this.fbseasons = this.formbuilder.group({
-
-      seasonId: [''],
-      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      code:new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      plantFrom: new FormControl('', Validators.required),
-      plantTo: new FormControl('', Validators.required),
-      crushFrom: new FormControl('', Validators.required),
-      crushTo:  new FormControl('', Validators.required),
-      burnCaneRate:new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      caneRate: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      currentSeason:new FormControl(''),
-      capacity: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      isActive: new FormControl(''),
- 
-      former: this.formbuilder.array([this.createItem()]),
-      harvester: this.formbuilder.array([this.createItem()]),
-      tranceporter: this.formbuilder.array([this.createItem()]),
-      seed: this.formbuilder.array([this.createItem()])
-    });
-
-
-
-
+      
   }
+
 
   createItem(): FormGroup {
     return this.formbuilder.group({
-      billPeram: ['', Validators.required],
+      seasonBillingRateId:[0],
+      seasonId:[0],
+      billParameterId: ['', Validators.required],
       rate: ['', Validators.required],
-      priority: ['', Validators.required]
+      priority: ['', Validators.required],
+      isActive: [true],
     });
   }
 
-  get former(): FormArray {
-    return this.fbseasons.get('former') as FormArray;
+  get farmer(): FormArray {
+    return this.fbseasons.get('farmer') as FormArray;
   }
 
-  get harvester(): FormArray {
-    return this.fbseasons.get('harvester') as FormArray;
+  get harvestor(): FormArray {
+    return this.fbseasons.get('harvestor') as FormArray;
   }
 
-  get tranceporter(): FormArray {
-    return this.fbseasons.get('tranceporter') as FormArray;
+  get transporter(): FormArray {
+    return this.fbseasons.get('transporter') as FormArray;
   }
 
   get seed(): FormArray {
@@ -141,43 +136,67 @@ export class SeasonComponent implements OnInit {
   }
 
 
+  get FormControls() {
+    return this.fbseasons.controls;
+  }
 
+
+  // editseason(season: SeasonViewDto) {
+  //   this.season.seasonId = season.seasonId;
+  //   this.season.code = season.code;
+  //   this.season.name = season.name;
+  //   this.season.plantFrom = season.plantFrom;
+  //   this.season.plantTo = season.plantTo;
+  //   this.season.crushFrom = season.crushFrom;
+  //   this.season.crushTo = season.crushTo;
+  //   this.season.burnCaneRate = season.burnCaneRate;
+  //   this.season.caneRate = season.caneRate;
+  //   this.season.caneRate = season.caneRate;
+  //   this.season.capacity = season.capacity;
+  //   this.season.currentSeason = season.currentSeason;
+  //   this.season.isActive = season.isActive;
+  //   this.season.farmer = this.farmer ? [] : this.farmer;
+  //   this.season.transporter = this.transporter ? [] : this.transporter;
+  //   this.season.harvestor = this.harvestor ? [] : this.harvestor;
+  //   this.season.seed = this.seed ? [] : this.seed;
+  //   this.fbseasons.controls['seasonId'].setValue(season.seasonId);
+  //   this.addFlag = false;
+  //   this.submitLabel = "Update Season";
+  //   this.showDialog = true;
+  // }
+
+
+  editseason(season: SeasonViewDto) {
+    this.season = season;
+    this.fbseasons.controls['seasonId'].setValue(season.seasonId);
+    this.fbseasons.controls['code'].setValue(season.code);
+    this.fbseasons.controls['name'].setValue(season.name);
+    this.fbseasons.controls['plantFrom'].setValue(season.plantFrom);
+    this.fbseasons.controls['plantTo'].setValue(season.plantTo);
+    this.fbseasons.controls['crushFrom'].setValue(season.crushFrom);
+    this.fbseasons.controls['crushTo'].setValue(season.crushTo);
+    this.fbseasons.controls['burnCaneRate'].setValue(season.burnCaneRate);
+    this.fbseasons.controls['caneRate'].setValue(season.caneRate);
+    this.fbseasons.controls['capacity'].setValue(season.capacity);
+    this.fbseasons.controls['currentSeason'].setValue(season.currentSeason);
+    this.fbseasons.controls['isActive'].setValue(season.isActive);
+   // Bind farmer, transporter, harvestor and seed arrays
+  //  this.season.farmer = this.farmer ? [] : this.farmer;
+  //    this.season.transporter = this.transporter ? [] : this.transporter;
+  //    this.season.harvestor = this.harvestor ? [] : this.harvestor;
+  //    this.season.seed = this.seed ? [] : this.seed;
+  
  
-  initSeason() {
-    this.AppMasterService.Getseason().subscribe((resp) => {
-      this.seasons = resp as unknown as SeasonViewDto[]
-      console.log(this.seasons)
-      this.loading = false;
-    })
-  }
-
-  
-  onClose() {
-    this.fbseasons.reset();
-  }
-
-  saveSeason(): Observable<HttpEvent<SeasonDto>> {
-
-    if (this.addFlag) return this.AppMasterService.CreateSeason(this.fbseasons.value)
-    else return this.AppMasterService.UpdateSeason(this.fbseasons.value)
-  }
-  
-  onSubmit() {
-
-    console.log(this.fbseasons.value)
-    // if (this.fbseasons.valid) {
-    //  console.log(this.fbseasons.value);
-    //   this.saveSeason().subscribe(resp => {
-    //     if (resp) {
-    //       this.initSeason();
-    //       this.fbseasons.reset();
-    //       this.showDialog = false;
-    //     }
-    //   })
-    // }
-    // else {
-    //   this.fbseasons.markAllAsTouched();
-    // }
+   this.addFlag = false;
+   this.submitLabel = "Update Season";
+   this.showDialog = true;
+ }
+ 
+ 
+  addSeason() {
+    this.submitLabel = "Add Season";
+    this.addFlag = true;
+    this.showDialog = true;
   }
 
   onGlobalFilter(table: Table, event: Event) {
@@ -191,10 +210,30 @@ export class SeasonComponent implements OnInit {
 
 
 
- 
+  saveSeason(): Observable<HttpEvent<any>> {
+    if (this.addFlag) return this.appMasterService.CreateSeason(this.fbseasons.value)
+    else return this.appMasterService.UpdateSeason(this.fbseasons.value)
+  }
+
+  onSubmit() {
+  
+    console.log(this.fbseasons.value);
+    if (this.fbseasons.valid) {
+      this.saveSeason().subscribe(resp => {
+        if (resp) {
+          this. initSeasons();
+          this.fbseasons.reset();
+          this.showDialog = false;
+        }
+      })
+    }
+    else {
+      this.fbseasons.markAllAsTouched();
+    }
+  }
+
+  onClose() {
+    this.fbseasons.reset();
+    this.showTptDetails = false;
+  }
 }
-
-
-
-
-

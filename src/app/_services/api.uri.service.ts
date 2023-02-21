@@ -98,11 +98,9 @@ export const LOOKUP_WB_MACHINES_URI = "Lookup/WBMachines";
 export const LOOKUP_WEED_STATUSES_URI = "Lookup/WeedStatuses";
 export const LOOKUP_WEEDS_URI = "Lookup/Weeds";
 export const LOOKUP_SEED_MATERIAL_USED_URI = "Lookup/SeedMaterialUsed";
-
 export const GET_LOOKUP_URI = "ApplicationMaster/GetLookUps"
 export const CREATE_LOOKUP_URI = "ApplicationMaster/CreateLookUp"
 export const UPDATE_LOOKUP_URI = "ApplicationMaster/UpdateLookUp"
-
 export const GET_PLANTTYPE_URI = "ApplicationMaster/GetPlantTypes";
 export const CREATE_PLANTTYPE_URI = "ApplicationMaster/CreatePlantType";
 export const UPDATE_PLANTTYPE_URI = "ApplicationMaster/UpdatePlantType";
@@ -112,7 +110,6 @@ export const UPDATE_VARIETY_URI = "ApplicationMaster/UpdateVariety";
 export const GET_VEHICLE_TYPE_URI = "ApplicationMaster/GetVehicleTypes";
 export const CREATE_VEHICLE_TYPE_URI = "ApplicationMaster/CreateVehicleType";
 export const UPDATE_VEHICLE_TYPE_URI = "ApplicationMaster/UpdateVehicleType";
-
 export const GET_TPTS_URI = "ApplicationMaster/GetTpts";
 export const CREATE_CreateTpt_URI = "ApplicationMaster/CreateTpt";
 export const UPDATE_UpdateTpt_URI = "ApplicationMaster/UpdateTpt";
@@ -127,12 +124,13 @@ export const UPDATE_BANK_URI = "ApplicationMaster/UpdateBank";
 export const GET_SEASON_URI = "ApplicationMaster/GetSeasons";
 export const CREATE_SEASON_URI = "ApplicationMaster/CreateSeason";
 export const UPDATE_SEASON_URI = "ApplicationMaster/UpdateSeason";
-export const GET_HGL_URI = "ApplicationMaster/GetHgls";
-export const CREATE_HGL_URI = "ApplicationMaster/CreateHgl";
-export const UPDATE_HGL_URI = "ApplicationMaster/UpdateHgl";
 export const GET_SHIFT_URI = "ApplicationMaster/GetShifts";
 export const CREATE_SHIFT_URI = "ApplicationMaster/CreateShift";
 export const UPDATE_SHIFT_URI = "ApplicationMaster/UpdateShift";
 export const GET_SAMPLESLABS_URI = "ApplicationMaster/GetSampleSlabs";
 export const CREATE_SAMPLESLAB_URI = "ApplicationMaster/CreateSampleSlab";
 export const UPDATE_SAMPLESLAB_URI = "ApplicationMaster/UpdateSampleSlab";
+export const GET_HGL_URI = "ApplicationMaster/GetHgls";
+export const CREATE_HGL_URI = "ApplicationMaster/CreateHgl";
+export const UPDATE_HGL_URI = "ApplicationMaster/UpdateHgl";
+export const GET_SUBHGL_URI = "ApplicationMaster/GetSubHgls";

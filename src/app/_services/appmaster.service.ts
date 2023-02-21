@@ -3,8 +3,9 @@ import {
   HglDto, ShiftsViewDto, ShiftDto, SampleslabsViewDto, SampleSlabDto, TptViewDto, TptDto, TptdetailViewDto
 } from './../_models/applicationmaster';
 import { Injectable } from "@angular/core";
-import { LookUpHeaderDto, LookupViewDto, plantTypeDto, planttypeViewDto } from "../_models/applicationmaster";
+import { LookUpHeaderDto, LookupViewDto, plantTypeDto, planttypeViewDto, SubHglViewDto } from '../_models/applicationmaster';
 import { ApiHttpService } from "./api.http.service";
+import { GET_SUBHGL_URI } from './api.uri.service';
 import {
   CREATE_BANK_URI, CREATE_CreateTpt_URI, CREATE_HGL_URI, CREATE_LOOKUP_URI, CREATE_PLANTTYPE_URI, CREATE_PLANT_SUB_TYPE_URI, CREATE_SAMPLESLAB_URI, CREATE_SEASON_URI,
   CREATE_SHIFT_URI, CREATE_VARIETY_URI, CREATE_VEHICLE_TYPE_URI, GET_BANKS_URI, GET_BANK_URI, GET_HGL_URI, GET_LOOKUP_URI, GET_PLANTTYPE_URI, GET_PLANT_SUB_TYPE_URI,
@@ -104,7 +105,7 @@ export class AppMasterService extends ApiHttpService {
   public UpdateBank(bank: BankDto) {
     return this.post<BankDto>(UPDATE_BANK_URI, bank);
   }
-
+  // season
   public Getseason() {
     return this.get<SeasonViewDto[]>(GET_SEASON_URI);
   }
@@ -119,19 +120,22 @@ export class AppMasterService extends ApiHttpService {
     return this.post<SeasonDto>(UPDATE_SEASON_URI, season);
   }
 
-
+ // Hgl
   public GetHgls() {
     return this.get<HglViewDto[]>(GET_HGL_URI);
   }
 
   public CreateHgl(hgl: HglDto) {
+    debugger;
     return this.post<HglDto>(CREATE_HGL_URI, hgl);
   }
 
   public UpdateHgl(hgl: HglDto) {
     return this.post<HglDto>(UPDATE_HGL_URI, hgl);
   }
-
+  public GetSubHgl(SubHglId: number) {
+    return this.get<SubHglViewDto[]>(GET_SUBHGL_URI + SubHglId);
+  }
 
   // shift
 
