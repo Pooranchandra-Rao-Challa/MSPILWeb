@@ -125,6 +125,7 @@ export class TptDto {
   otherCode?: string;
   isActive?: boolean;
   tptdetails?: TptdetailDto[]
+  hglId: number | undefined;
 }
 
 export class TptdetailDto {
@@ -297,6 +298,9 @@ export class SeasonBillingRateDto{
 
 
 export class HglViewDto {
+  subHglId(subHglId: any) {
+    throw new Error('Method not implemented.');
+  }
   hglId?: number
   code?: string
   name?: string
@@ -359,14 +363,10 @@ export class HglDto {
   subGlcode?: string
   otherCode?: string
   isActive?: boolean
-  subHgls?: SubHgldto[]
+  subHgls?: SubHglDto[]
 }
 
-export class SubHgldto {
-  createdBy?: string
-  createdAt?: string
-  updatedBy?: string
-  updatedAt?: string
+export class SubHglDto {
   subHglId?: number
   hglid?: number
   code?: string
@@ -375,6 +375,22 @@ export class SubHgldto {
   noOfPersons?: number
   isActive?: boolean
 }
+
+export class SubHglViewDto {
+  subHglId?: number
+  hglId?: number
+  code?: string
+  name?: string
+  vehicleTypeId?: number
+  vehicleName?: string
+  noOfPersons?: number
+  isActive?: boolean
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+}
+
 
 export class ShiftsViewDto{
 

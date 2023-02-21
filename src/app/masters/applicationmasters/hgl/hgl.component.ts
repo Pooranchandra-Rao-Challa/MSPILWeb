@@ -1,17 +1,15 @@
-import { HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto } from './../../../_models/applicationmaster';
+import { LookupService } from './../../../_services/lookup.service';
+import { PHONE_NO, NUMERIC_ONLY, } from './../../../_shared/regex';
+import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BankViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormBuilder, FormControl, FormGroup, Validators,FormArrayName,FormArray } from '@angular/forms';
-import { CircleDto, CirclesViewDto, DivisionDto, VillageDto, VillagesViewDto, StateDto, SectionDto, DistrictDto, MandalDto } from 'src/app/_models/geomodels';
-import { GeoMasterService } from 'src/app/_services/geomaster.service';
-import { CommonService } from 'src/app/_services/common.service';
-import { JWTService } from 'src/app/_services/jwt.service';
-import { SeasonViewDto, SeasonDto, HglViewDto, HglDto, LookupViewDto, LookUpHeaderDto, LookupDetailDto, BankDto, VehicleTypeDto } from '../../../_models/applicationmaster';
-import { AppMasterService } from '../../../_services/appmaster.service';
-import { LookupService } from '../../../_services/lookup.service';
-
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
+import { Observable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
+import { HglViewDto, SubHglViewDto, HglDto } from '../../../_models/applicationmaster';
 
 @Component({
   selector: 'app-hgl',
@@ -21,191 +19,191 @@ import { LookupService } from '../../../_services/lookup.service';
 })
 export class HglComponent implements OnInit {
 
-
-  display: boolean = false;
   hgls: HglViewDto[] = [];
   hgl: HglDto = new HglDto();
-  relationType: LookupDetailDto[] = [];
-  bank:BankDto[]=[];
-  branch:BankDto[]=[];
-  vehicle:VehicleTypeDto[]=[];
-  loading: boolean = false;
-  fbhgl!: FormGroup;
-  filter: any;
+  subHgls: SubHglViewDto[] = [];
+  loading: boolean = true;
+  globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
+    'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
+  @ViewChild('filter') filter!: ElementRef;
+  fbTpt!: FormGroup;
   submitLabel!: string;
   addFlag: boolean = true;
-  valSwitch: boolean = true;
-  subHglss:any[] = [];
-  showDialog!: boolean;
-  showFieldset = false;
-  genderOptions!: any[];
-
-
+  showDialog: boolean = false;
+  showTptDetails: boolean = false;
+  relationTypes: any;
+  banks: BankViewDto[] = [];
+  bank: BankDto = new BankDto();
+  branches: BranchDto[] = [];
+  genders: { label: string; value: string; }[];
+  vehicleTypes: VehicleTypeViewDto[] = [];
+  defaults: { name: string; id: boolean; }[];
 
   constructor(private formbuilder: FormBuilder,
-    private AppMasterService: AppMasterService,
-    private commonService: CommonService,
-    public jwtService: JWTService,
-    public LookupService:LookupService
-  ) {
-
-  }
-  Initseason(hgls: HglViewDto) {
-    this.fbhgl.reset();
-    this.hgl = new HglDto();
-
-    this.clearParents();
-    if(hgls.hglId){
-      this.fbhgl.setValue(this.hgls);
-      this.submitLabel = "Update HGL";
-      this.addFlag = false;
-    }else{
-      this.submitLabel = "Add HGL";
-      this.addFlag = true;
-    }
-    this.display = true;
-  }
-
-  clearParents(){
-
-  }
-
-  get FormControls() {
-    return this.fbhgl.controls;
-  }
-
-  ngOnInit() {
-    this.initHgl();
-
-    this.LookupService.RelationTypes().subscribe((resp) => {
-      this.relationType = resp as unknown as LookupDetailDto[];
-      console.log(this.relationType);
-
-    });
-
-    this.AppMasterService.GetBanks().subscribe((resp) => {
-      this.bank = resp as unknown as BankDto[];
-      console.log(this.bank);
-
-    });
-
-    this.AppMasterService.GetBanks().subscribe((resp) => {
-      this.branch = resp as unknown as BankDto[];
-      console.log(this.branch);
-
-    });
-
-    this.AppMasterService.GetVehicleTypes().subscribe((resp) => {
-      this.vehicle = resp as unknown as VehicleTypeDto[];
-      console.log(this.vehicle);
-
-    });
-
-
-
-
-
-    this.fbhgl = this.formbuilder.group({
-
-      hglId: [''],
-      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      code:new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      gender: new FormControl('', Validators.required),
-      relationTypeId: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      relationType: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      relationName:  new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      address:new FormControl('', Validators.required),
-      pinCode: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      phoneNo:new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      email: new FormControl('', [Validators.required, Validators.pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)]),
-      panNo: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      aadhaarNo: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      tax: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      tds:new FormControl('',),
-      guarantor1:new FormControl(''),
-      guarantor2:new FormControl(''),
-      guarantor3:new FormControl(''),
-      branchId: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      branchName:new FormControl(''),
-      bankName: new FormControl('',),
-      ifsc: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      accountNo:new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      glCode:new FormControl('', Validators.required),
-      subGLCode:new FormControl('', Validators.required),
-      otherCode:new FormControl('', Validators.required),
-      isActive: new FormControl('', Validators.required),
-
-      subHgls: this.formbuilder.array([this.createItem()]),
-
-    });
-
-     this.genderOptions = [
+    private appMasterService: AppMasterService,
+    private LookupService: LookupService) {
+    this.defaults = [
+      { name: 'Yes', id: true },
+      { name: 'No', id: false }
+    ];
+    this.genders = [
       { label: 'Male', value: 'M' },
       { label: 'Female', value: 'F' }
     ];
-
   }
 
-  get gender() {
-    return this.fbhgl.get('gender');
+  ngOnInit(): void {
+    this.inithgls();
+    this.initBanks();
+    this.initRelationTypes();
+    this.initVehicles();
+    this.tptForm();
   }
 
-
-
-  createItem(): FormGroup {
-    return this.formbuilder.group({
-      code: ['', Validators.required],
-      name: ['', Validators.required],
-      vehicleTypeId: ['', Validators.required],
-      noOfPersons: ['', Validators.required],
-      isActive:['', Validators.required]
+  inithgls() {
+    this.appMasterService.GetHgls().subscribe((resp) => {
+      this.hgls = resp as unknown as HglViewDto[];
+      this.loading = false;
     });
   }
 
-  get subHgls(): FormArray {
-    return this.fbhgl.get('subHgls') as FormArray;
-  }
+  initsubHgls(hglId: number) {
+    this.appMasterService.GetSubHgl(hglId).subscribe((resp) => {
+      this.subHgls = resp as unknown as SubHglViewDto[];
+      console.log(this.subHgls);
 
-  addItem(formArrayName: string) {
-    const formArray = this.fbhgl.get(formArrayName) as FormArray;
-    if (formArray.length <1) {
-      formArray.push(this.createItem());
-    }
-
-    this.showFieldset = true;
-  }
-
-  initHgl() {
-    this.AppMasterService.GetHgls().subscribe((resp) => {
-      this.hgls = resp as unknown as HglViewDto[]
-      console.log(this.hgls)
+      this.faSubHgl().clear();
+      this.subHgls.forEach((subHgl) => {
+        this.faSubHgl().push(this.generateRow(subHgl));
+      });
       this.loading = false;
-    })
-  }
-  onClose() {
-    this.fbhgl.reset();
+    });
   }
 
-  saveHgl(): Observable<HttpEvent<HglDto>> {
-    if (this.addFlag) return this.AppMasterService.CreateHgl(this.fbhgl.value)
-    else return this.AppMasterService.UpdateHgl(this.fbhgl.value)
+  initRelationTypes() {
+    this.LookupService.RelationTypes().subscribe((resp) => {
+      this.relationTypes = resp;
+    });
   }
 
-  onSubmit() {
-    console.log(this.fbhgl.value);
-    if (this.fbhgl.valid) {
-     console.log(this.fbhgl.value);
-      this.saveHgl().subscribe(resp => {
-        if (resp) {
-          this.initHgl();
-          this.fbhgl.reset();
-          this.showDialog = false;
-        }
-      })
-    }
-    else {
-      this.fbhgl.markAllAsTouched();
-    }
+  initBanks() {
+    this.appMasterService.GetBanks().subscribe((resp) => {
+      this.banks = resp as unknown as BankViewDto[];
+    });
+  }
+
+  getBranchByBankId(Id: number) {
+    debugger
+    this.appMasterService.GetBank(Id).subscribe(resp => {
+      if (resp) {
+        this.bank = resp as unknown as BankDto;
+        this.branches = this.bank.branches as unknown as BranchDto[];
+      }
+    });
+  }
+
+  initVehicles() {
+    this.appMasterService.GetVehicleTypes().subscribe((resp) => {
+      this.vehicleTypes = resp as unknown as VehicleTypeViewDto[];
+      console.log(this.vehicleTypes);
+    });
+  }
+
+  tptForm() {
+    this.fbTpt = this.formbuilder.group({
+      hglId: [0],
+      code: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      relationTypeId: ['', (Validators.required)],
+      relationName: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      gender: ['', (Validators.required)],
+      address: ['', (Validators.required)],
+      pinCode: ['', (Validators.required)],
+      phoneNo: ['', (Validators.pattern(PHONE_NO))],
+      tax: ['', (Validators.required)],
+      email: [''],
+      panNo: ['', Validators.pattern(ALPHA_NUMERIC)],
+      tds: [false],
+      guarantor1: ['', Validators.pattern(ALPHA_NUMERIC)],
+      guarantor2: ['', Validators.pattern(ALPHA_NUMERIC)],
+      guarantor3: ['', Validators.pattern(ALPHA_NUMERIC)],
+      glcode: ['', Validators.pattern(ALPHA_NUMERIC)],
+      subGlcode: ['', Validators.pattern(ALPHA_NUMERIC)],
+      otherCode: ['', Validators.pattern(ALPHA_NUMERIC)],
+      branchId: ['', (Validators.required)],
+      accountNo: new FormControl('', [Validators.required, Validators.pattern(NUMERIC_ONLY)]),
+      aadhaarNo:new FormControl('', [Validators.required, Validators.pattern(NUMERIC_ONLY)]),
+      isActive: [false],
+      subHgls: this.formbuilder.array([]),
+    });
+  }
+ 
+
+  get FormControls() {
+    return this.fbTpt.controls;
+  }
+
+  /* Form Array For Tpt Details */
+
+  faSubHgl(): FormArray {
+    return this.fbTpt.get("subHgls") as FormArray;
+  }
+
+  addSubHgl() {
+    this.showTptDetails = true;
+    this.faSubHgl().push(this.generateRow());
+  }
+
+  generateRow(subHgl: SubHglViewDto = new SubHglViewDto()): FormGroup {
+    debugger
+    if (!this.addFlag) subHgl.hglId = this.hgl.hglId;
+    return this.formbuilder.group({
+      subHglId: subHgl.subHglId == undefined ? 0 : subHgl.subHglId,
+      hglId: subHgl.hglId,subHgl,
+      code: new FormControl(subHgl.code,),
+      name: [subHgl.name, (Validators.required)],
+      vehicleTypeId:[subHgl.vehicleTypeId, (Validators.required)],
+      noOfPersons:[subHgl.noOfPersons, (Validators.required)],
+      isActive: subHgl.isActive
+    });
+  }
+
+  editHgl(hgl: HglViewDto) {
+    this.hgl.hglId = hgl.hglId;
+    this.hgl.code = hgl.code;
+    this.hgl.name = hgl.name;
+    this.hgl.relationTypeId = hgl.relationTypeId;
+    this.hgl.relationName = hgl.relationName;
+    this.hgl.gender = hgl.gender;
+    this.hgl.address = hgl.address;
+    this.hgl.pinCode = hgl.pinCode;
+    this.hgl.phoneNo = hgl.phoneNo;
+    this.hgl.tax = hgl.tax;
+    this.hgl.email = hgl.email;
+    this.hgl.panNo = hgl.panNo;
+    this.hgl.tds = hgl.tds;
+    this.hgl.guarantor1 = hgl.guarantor1;
+    this.hgl.guarantor2 = hgl.guarantor2;
+    this.hgl.guarantor3 = hgl.guarantor3;
+    this.hgl.glcode = hgl.glCode;
+    this.hgl.subGlcode = hgl.subGLCode;
+    this.hgl.otherCode = hgl.otherCode;
+    this.hgl.branchId = hgl.branchId;
+    this.hgl.accountNo = hgl.accountNo;
+    this.hgl.aadhaarNo=hgl. aadhaarNo;
+    this.hgl.isActive = hgl.isActive;
+    this.hgl.subHgls = this.subHgls ? [] : this.subHgls;
+    this.fbTpt.setValue(this.hgl);
+    this.addFlag = false;
+    this.submitLabel = "Update TPT";
+    this.showDialog = true;
+    this.showTptDetails = true;
+  }
+
+  addHgl() {
+    this.submitLabel = "Add TPT";
+    this.addFlag = true;
+    this.showDialog = true;
   }
 
   onGlobalFilter(table: Table, event: Event) {
@@ -215,6 +213,40 @@ export class HglComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+  }
+
+
+
+  saveHgl(): Observable<HttpEvent<any>> {
+    if (this.addFlag) return this.appMasterService.CreateHgl(this.fbTpt.value)
+    else return this.appMasterService.UpdateHgl(this.fbTpt.value)
+  }
+
+  onSubmit() {
+    // this.fbTpt.value.tds = false;
+    // this.fbTpt.value.tptId = 0;
+
+    this.fbTpt.value.pinCode = this.fbTpt.value.pinCode + "";
+    // this.fbTpt.value.tptdetails.vehicleTypeId = 1;
+    console.log(this.fbTpt.value);
+    if (this.fbTpt.valid) {
+      this.saveHgl().subscribe(resp => {
+        if (resp) {
+          this.inithgls();
+          this.fbTpt.reset();
+          this.showDialog = false;
+        }
+      })
+    }
+    else {
+      this.fbTpt.markAllAsTouched();
+    }
+  }
+
+  onClose() {
+    this.fbTpt.reset();
+    this.faSubHgl().clear();
+    this.showTptDetails = false;
   }
 
 }
