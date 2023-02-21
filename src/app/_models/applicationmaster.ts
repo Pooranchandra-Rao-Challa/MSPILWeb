@@ -184,8 +184,8 @@ export class TptdetailViewDto {
   insuranceNo?: string;
   receivableAmt?: number;
   receivedAmt?: number;
-  transporterFreeze?: boolean;
-  gateEntryFreeze?: boolean;
+  transporterFreeze: boolean = true;
+  gateEntryFreeze: boolean = true;
   isActive: boolean = true;
   updatedAt?: Date;
   createdAt?: Date;
