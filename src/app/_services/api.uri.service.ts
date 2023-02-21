@@ -111,3 +111,10 @@ export const UPDATE_VARIETY_URI = "ApplicationMaster/UpdateVariety";
 export const GET_VEHICLE_TYPE_URI = "ApplicationMaster/GetVehicleTypes";
 export const CREATE_VEHICLE_TYPE_URI = "ApplicationMaster/CreateVehicleType";
 export const UPDATE_VEHICLE_TYPE_URI = "ApplicationMaster/UpdateVehicleType";
+
+export const GET_TPTS_URI = "ApplicationMaster/GetTpts";
+export const CREATE_CreateTpt_URI = "ApplicationMaster/CreateTpt";
+export const UPDATE_UpdateTpt_URI = "ApplicationMaster/UpdateTpt";
+export const GET_BANKS_URI = "ApplicationMaster/GetBanks";
+export const GET_BANK_URI = "ApplicationMaster/GetBank/";
+export const GET_TPTDETAILS_URI = "ApplicationMaster/GetTptDetail/";
