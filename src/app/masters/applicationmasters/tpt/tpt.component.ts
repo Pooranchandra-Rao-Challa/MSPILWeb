@@ -1,4 +1,3 @@
-import { Country } from './../../../demo/api/customer';
 import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
 import { PHONE_NO, NUMERIC_ONLY, RG_VEHICLE } from './../../../_shared/regex';
@@ -22,9 +21,11 @@ export class TptComponent implements OnInit {
   tpt: TptDto = new TptDto();
   tptDetails: TptdetailViewDto[] = [];
   loading: boolean = true;
+  loadingTptDetails: boolean = true;
   globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
     'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
-  @ViewChild('filter') filter!: ElementRef;
+  globalFilterFieldsTptDetails2: string[] = ['vehicleNo', 'vehicleTypeId', 'insuranceNo', 'receivableAmt', 'receivedAmt', 'gateEntryFreeze', 'transporterFreeze'];
+    @ViewChild('filter') filter!: ElementRef;
   fbTpt!: FormGroup;
   submitLabel!: string;
   addFlag: boolean = true;
@@ -37,6 +38,7 @@ export class TptComponent implements OnInit {
   genders: { label: string; value: string; }[];
   vehicleTypes: VehicleTypeViewDto[] = [];
   defaults: { name: string; id: boolean; }[];
+  IFSC?: string;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -67,16 +69,13 @@ export class TptComponent implements OnInit {
   }
 
   initTptDetails(tptId: number) {
-    debugger
     this.appMasterService.GetTptDetails(tptId).subscribe((resp) => {
       this.tptDetails = resp as unknown as TptdetailViewDto[];
-      console.log(this.tptDetails);
-
       this.faTptDetails().clear();
       this.tptDetails.forEach((tptDetail) => {
         this.faTptDetails().push(this.generateRow(tptDetail));
       });
-      this.loading = false;
+      this.loadingTptDetails = false;
     });
   }
 
@@ -93,7 +92,6 @@ export class TptComponent implements OnInit {
   }
 
   getBranchByBankId(Id: number) {
-    debugger
     this.appMasterService.GetBank(Id).subscribe(resp => {
       if (resp) {
         this.bank = resp as unknown as BankDto;
@@ -102,10 +100,15 @@ export class TptComponent implements OnInit {
     });
   }
 
+  getIFSCByBranch(Id: number) {
+    let branch = this.branches.find(x => x.branchId == Id);
+    if (branch) this.IFSC = branch.ifsc;
+    else this.IFSC = '';
+  }
+
   initVehicles() {
     this.appMasterService.GetVehicleTypes().subscribe((resp) => {
       this.vehicleTypes = resp as unknown as VehicleTypeViewDto[];
-      console.log(this.vehicleTypes);
     });
   }
 
@@ -142,6 +145,10 @@ export class TptComponent implements OnInit {
     return this.fbTpt.controls;
   }
 
+  FormArrayControls(i: number, formControlName: string) {
+    return this.faTptDetails().controls[i].get(formControlName);
+  }
+
   /* Form Array For Tpt Details */
 
   faTptDetails(): FormArray {
@@ -151,31 +158,13 @@ export class TptComponent implements OnInit {
   addTptDetail() {
     this.showTptDetails = true;
     this.faTptDetails().push(this.generateRow());
+    this.loadingTptDetails = false;
   }
 
-  // get tptDetail() {
-  //   return this.fbTpt.get("tptdetails") as FormArray;
-  // }
-
-  // generateRow(): FormGroup {
-  //   return this.formbuilder.group({
-  //     id: [0],
-  //     tptId: [0],
-  //     vehicleNo: ['', (Validators.required)],
-  //     vehicleTypeId: [0, (Validators.required)],
-  //     insuranceNo: [''],
-  //     receivableAmt: [],
-  //     receivedAmt: [],
-  //     gateEntryFreeze: [false],
-  //     transporterFreeze: [false]
-  //   })
-  // }
-
   generateRow(tptDetail: TptdetailViewDto = new TptdetailViewDto()): FormGroup {
-    debugger
     if (!this.addFlag) tptDetail.tptId = this.tpt.tptId;
     return this.formbuilder.group({
-      id: tptDetail.tptdetailId == undefined ? 0 : tptDetail.tptdetailId,
+      id: tptDetail.tptdetailId,
       tptId: tptDetail.tptId,
       vehicleNo: new FormControl(tptDetail.vehicleNo, [Validators.pattern(RG_VEHICLE)]),
       vehicleTypeId: [tptDetail.vehicleTypeId, (Validators.required)],
@@ -190,6 +179,11 @@ export class TptComponent implements OnInit {
 
   editTpt(tpt: TptViewDto) {
     this.initTptDetails(tpt.tptId);
+    this.getBranchByBankId(tpt.bankId || 0);
+    setTimeout(() => {
+      this.getIFSCByBranch(tpt.branchId || 0);
+    }, 5000);
+    // this.getIFSCByBranch(tpt.branchId || 0);
     this.tpt.tptId = tpt.tptId;
     this.tpt.code = tpt.code;
     this.tpt.name = tpt.name;
@@ -244,11 +238,7 @@ export class TptComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.fbTpt.value.tds = false;
-    // this.fbTpt.value.tptId = 0;
     this.fbTpt.value.pinCode = this.fbTpt.value.pinCode + "";
-    this.fbTpt.value.tptdetails.vehicleTypeId = 1;
-    console.log(this.fbTpt.value);
     if (this.fbTpt.valid) {
       this.saveTpt().subscribe(resp => {
         if (resp) {
@@ -261,12 +251,14 @@ export class TptComponent implements OnInit {
     else {
       this.fbTpt.markAllAsTouched();
     }
+    this.IFSC = '';
   }
 
   onClose() {
     this.fbTpt.reset();
     this.faTptDetails().clear();
     this.showTptDetails = false;
+    this.IFSC = '';
   }
 
 }

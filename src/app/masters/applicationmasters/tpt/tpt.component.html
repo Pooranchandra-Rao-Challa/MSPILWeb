@@ -197,7 +197,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code" type="text" formControlName="code"
+                  <input pInputText id="code" type="text" formControlName="code" [readonly]="FormControls['tptId']"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
@@ -383,7 +383,7 @@
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Branch:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select a relation" optionLabel="name" [options]="branches"
-                    optionValue="branchId" formControlName="branchId">
+                    optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
                   </p-dropdown>
                   <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
                     <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
@@ -398,7 +398,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>IFSC:</label>
-                  <input pInputText id="ifsc" type="text" readonly>
+                  <input pInputText id="ifsc" type="text" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
+                    readonly>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Account Number:<sup class="p-error">*</sup></label>
@@ -423,9 +424,9 @@
             </div>
             <!-- TPT Details -->
             <div class="col-12" formArrayName="tptdetails" *ngIf="showTptDetails">
-              <p-table #dt2 [value]="faTptDetails().controls" dataKey="id" [rows]="10" [loading]="loading"
+              <p-table #dt2 [value]="faTptDetails().controls" dataKey="id" [rows]="10" [loading]="loadingTptDetails"
                 [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                [paginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+                [paginator]="false" [globalFilterFields]="globalFilterFieldsTptDetails2" [autoLayout]="true"
                 responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
                 <ng-template pTemplate="caption">
                   <div class="flex justify-content-between flex-column sm:flex-row">
@@ -440,43 +441,77 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pSortableColumn="vehicleNo">Vehicle No.<p-sortIcon field="vehicleNo"></p-sortIcon>
+                    <th pSortableColumn="vehicleNo">Vehicle No.
+                      <p-columnFilter type="text" field="vehicleNo" display="menu"></p-columnFilter>
+                      <p-sortIcon field="vehicleNo"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="vehicleTypeId">Vehicle Type<p-sortIcon field="vehicleTypeId"></p-sortIcon>
+                    <th pSortableColumn="vehicleTypeId">Vehicle Type
+                      <p-columnFilter type="text" field="vehicleTypeId" display="menu"></p-columnFilter>
+                      <p-sortIcon field="vehicleTypeId"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="insuranceNo">Insurance No.<p-sortIcon field="insuranceNo"></p-sortIcon>
+                    <th pSortableColumn="insuranceNo">Insurance No.
+                      <p-columnFilter type="text" field="insuranceNo" display="menu"></p-columnFilter>
+                      <p-sortIcon field="insuranceNo"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="receivableAmt">Receivable Amount<p-sortIcon field="receivableAmt">
+                    <th pSortableColumn="receivableAmt">Receivable Amount
+                      <p-columnFilter type="text" field="receivableAmt" display="menu"></p-columnFilter>
+                      <p-sortIcon field="receivableAmt">
                       </p-sortIcon>
                     </th>
-                    <th pSortableColumn="receivedAmt">Received Amount<p-sortIcon field="receivedAmt"></p-sortIcon>
+                    <th pSortableColumn="receivedAmt">Received Amount
+                      <p-columnFilter type="text" field="receivedAmt" display="menu"></p-columnFilter>
+                      <p-sortIcon field="receivedAmt"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="gateEntryFreeze">Gate Entry Freeze<p-sortIcon field="gateEntryFreeze">
+                    <th pSortableColumn="gateEntryFreeze">Gate Entry Freeze
+                      <p-columnFilter type="text" field="gateEntryFreeze" display="menu"></p-columnFilter>
+                      <p-sortIcon field="gateEntryFreeze">
                       </p-sortIcon>
                     </th>
-                    <th pSortableColumn="transporterFreeze">Transporter Freeze<p-sortIcon field="transporterFreeze">
+                    <th pSortableColumn="transporterFreeze">Transporter Freeze
+                      <p-columnFilter type="text" field="transporterFreeze" display="menu"></p-columnFilter>
+                      <p-sortIcon field="transporterFreeze">
                       </p-sortIcon>
                     </th>
+                    <!-- <th>
+                      Action
+                    </th> -->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-tpt let-tptDetailIndex="rowIndex">
                   <tr [formGroupName]="tptDetailIndex">
                     <td>
-                      <input pInputText class="form-control" formControlName="vehicleNo">
+                      <input pInputText class="form-control" formControlName="vehicleNo" [ngClass]="{ 'is-invalid ng-dirty': FormArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
+                        FormArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
+                      <span
+                        *ngIf="FormArrayControls(tptDetailIndex, 'vehicleNo')?.touched && FormArrayControls(tptDetailIndex, 'vehicleNo')?.invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormArrayControls(tptDetailIndex, 'vehicleNo')?.errors?.['pattern']">
+                          Invalid vehicle number, eg: XY00-XY-0000 / XY00 XY 0000.</div>
+                      </span>
                     </td>
                     <td>
                       <p-dropdown placeholder="Select a vehicle" [options]="vehicleTypes"
-                        formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId" appendTo="body">
+                        formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId" appendTo="body"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched &&
+                        FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors }">
                       </p-dropdown>
+                      <span
+                        *ngIf="FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched && FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors?.['required']">
+                          Please Select Vehicle Type.</div>
+                      </span>
                     </td>
                     <td>
                       <input pInputText class="form-control" formControlName="insuranceNo">
                     </td>
                     <td>
-                      <p-inputNumber inputId="receivableAmt" formControlName="receivableAmt" [showButtons]="true"></p-inputNumber>
+                      <p-inputNumber inputId="receivableAmt" formControlName="receivableAmt" [showButtons]="true">
+                      </p-inputNumber>
                     </td>
                     <td>
-                      <p-inputNumber inputId="receivedAmt" formControlName="receivedAmt" [showButtons]="true"></p-inputNumber>
+                      <p-inputNumber inputId="receivedAmt" formControlName="receivedAmt" [showButtons]="true">
+                      </p-inputNumber>
                     </td>
                     <td>
                       <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" [options]="defaults"
@@ -488,16 +523,23 @@
                         formControlName="transporterFreeze" appendTo="body">
                       </p-dropdown>
                     </td>
+                    <!-- <td>
+                      <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
+                        *ngIf="!FormArrayControls(tptDetailIndex, 'id')"
+                        (click)="faTptDetails().removeAt(tptDetailIndex)"></i>
+                      <i class="pi pi-fw pi-verified text-3xl"
+                        *ngIf="FormArrayControls(tptDetailIndex, 'id')"></i>
+                    </td> -->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                   <tr>
-                    <td colspan="7">No tpt details found.</td>
+                    <td colspan="8">No tpt details found.</td>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="loadingbody">
                   <tr>
-                    <td colspan="7">Loading tpt details data. Please wait.</td>
+                    <td colspan="8">Loading tpt details data. Please wait.</td>
                   </tr>
                 </ng-template>
               </p-table>
