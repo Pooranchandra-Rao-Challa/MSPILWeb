@@ -1,3 +1,5 @@
+import { TptComponent } from './tpt/tpt.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
 import { VarietyComponent } from './variety/variety.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -20,7 +22,9 @@ import { PlanttypeComponent } from './planttype/planttype.component';
     { path: 'farmer', component: FarmerComponent },
     { path: 'lookup', component: LookupComponent },
     { path: 'planttype', component: PlanttypeComponent },
-    { path: 'variety', component: VarietyComponent }
+    { path: 'variety', component: VarietyComponent },
+    { path: 'vehicle', component: VehicleComponent },
+    { path: 'tpt', component: TptComponent }
 
   ])],
   exports: [RouterModule]

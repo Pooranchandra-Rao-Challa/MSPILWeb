@@ -9,7 +9,9 @@ import { FertilizerComponent } from './fertilizer/fertilizer.component';
 import { FarmerComponent } from './farmer/farmer.component';
 import { LookupComponent } from './lookup/lookup.component';
 import { PlanttypeComponent } from './planttype/planttype.component';
-import { VarietyComponent } from './variety/variety.component'
+import { VarietyComponent } from './variety/variety.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
+import { TptComponent } from './tpt/tpt.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { VarietyComponent } from './variety/variety.component'
     FarmerComponent,
     LookupComponent,
     PlanttypeComponent,
-    VarietyComponent
+    VarietyComponent,
+    VehicleComponent,
+    TptComponent
   ],
   imports: [
     PrimeNgModule,
