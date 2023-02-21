@@ -6,7 +6,7 @@ import { Table } from 'primeng/table';
 import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { phoneNoReg } from 'src/app/_shared/regex';
+import { PHONE_NO } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-dieselbunk',
@@ -48,7 +48,7 @@ export class DieselBunkComponent implements OnInit {
       name: ['', (Validators.required)],
       address: ['', (Validators.required)],
       pinCode: ['', (Validators.required)],
-      phoneNo: new FormControl('', [Validators.required, Validators.pattern(phoneNoReg)]),
+      phoneNo: new FormControl('', [Validators.required, Validators.pattern(PHONE_NO)]),
       email: [''],
       gLcode: [''],
       subGLcode: [''],

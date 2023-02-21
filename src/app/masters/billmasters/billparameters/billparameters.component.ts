@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { alphaNumericReg, alphaOnlyReg, numericOnlyReg } from 'src/app/_shared/regex';
+import { ALPHA_NUMERIC, ALPHA_ONLY, NUMERIC_ONLY } from 'src/app/_shared/regex';
 import { BillParameterDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 
@@ -53,11 +53,11 @@ export class BillParametersComponent implements OnInit {
       billParameterId: [0],
       categoryId: ['', (Validators.required)],
       type: ['', (Validators.required)],
-      code: new FormControl('', [Validators.required, Validators.pattern(alphaNumericReg)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(alphaOnlyReg)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
       caluclationType: ['', Validators.required],
-      priority: new FormControl('', [Validators.required, Validators.pattern(numericOnlyReg)]),
-      formula: new FormControl('', [Validators.required, Validators.pattern(alphaNumericReg)]),
+      priority: new FormControl('', [Validators.required, Validators.pattern(NUMERIC_ONLY)]),
+      formula: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
       isActive: [true]
     });
   }
