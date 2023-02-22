@@ -59,13 +59,11 @@
                     </form>
                 </div>
             </ng-template>
-            <ng-template pTemplate="footer">
-                <div class="col-12">
-                    <div  style="float:right">
-                    <button pButton pRipple type="submit" label="{{submitLabel}}"
-                    (click)="onSubmit()"  class="p-button-raised p-button-success"></button>
-                    </div>
-                </div>
+            <ng-template pTemplate="footer">  
+                <div class="col-4" style="float:right">
+                  <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+                    (click)="onSubmit()"></button>
+                </div>     
             </ng-template>
         </p-dialog>
         <!-- toolbar -->
@@ -147,7 +145,7 @@
                     <td>{{district.districtName}}</td>
                     <td>{{district.districtCode}}</td>
                     <td style="text-align:center">
-                        <p-checkbox name="active" value="active" [(ngModel)]="district.isActive" [binary]="true" [disabled]="false">
+                        <p-checkbox name="active" value="active" [(ngModel)]="district.isActive" [binary]="true" [disabled]="true">
                         </p-checkbox>
                       </td>
                     <td>

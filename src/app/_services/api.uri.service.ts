@@ -131,3 +131,6 @@ export const UPDATE_SHIFT_URI = "ApplicationMaster/UpdateShift";
 export const GET_SAMPLESLABS_URI = "ApplicationMaster/GetSampleSlabs";
 export const CREATE_SAMPLESLAB_URI = "ApplicationMaster/CreateSampleSlab";
 export const UPDATE_SAMPLESLAB_URI = "ApplicationMaster/UpdateSampleSlab";
+export const GET_FARMERS_URI= "ApplicationMaster/GetFarmers";
+export const CREATE_FARMER_URI= "ApplicationMaster/CreateFarmer";
+export const UPDATE_FARMER_URI= "ApplicationMaster/UpdateFarmer";

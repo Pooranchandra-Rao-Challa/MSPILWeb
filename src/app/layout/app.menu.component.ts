@@ -121,10 +121,6 @@ export class AppMenuComponent implements OnInit {
                 permission: true,
                 items: [
                   { label: 'Season', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
-                  { label: 'Weed', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/weed'], permission: true },
-                  { label: 'Pest', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/pest'], permission: true },
-                  { label: 'Disease', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/disease'], permission: true },
-                  { label: 'Fertilizer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/fertilizer'], permission: true },
                   { label: 'Farmer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: true },
                   // { label: 'LookUp', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
                   // { label: 'Plant Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },

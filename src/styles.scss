@@ -26,4 +26,10 @@ $gutter: 1rem; //for primeflex grid system
   .p-dropdown-panel .p-dropdown-items{
     padding:0px;
   }
-  
+.p-dialog .p-dialog-header{
+    background-color: var(--surface-ground);
+}
+.p-dialog .p-dialog-footer{
+  background-color: var(--surface-ground);
+  padding:0px;
+}
