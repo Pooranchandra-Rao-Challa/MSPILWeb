@@ -1,12 +1,12 @@
 import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { PHONE_NO, NUMERIC_ONLY, RG_VEHICLE } from './../../../_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_VEHICLE } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
-import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
+import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 
@@ -24,7 +24,7 @@ export class TptComponent implements OnInit {
   loadingTptDetails: boolean = true;
   globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
     'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
-  globalFilterFieldsTptDetails2: string[] = ['vehicleNo', 'vehicleTypeId', 'insuranceNo', 'receivableAmt', 'receivedAmt', 'gateEntryFreeze', 'transporterFreeze'];
+  globalFilterFieldsTptDetails: string[] = ['vehicleNo', 'vehicleTypeId', 'insuranceNo', 'receivableAmt', 'receivedAmt', 'gateEntryFreeze', 'transporterFreeze'];
     @ViewChild('filter') filter!: ElementRef;
   fbTpt!: FormGroup;
   submitLabel!: string;
@@ -115,27 +115,27 @@ export class TptComponent implements OnInit {
   tptForm() {
     this.fbTpt = this.formbuilder.group({
       tptId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(10), Validators.minLength(6)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       relationTypeId: ['', (Validators.required)],
-      relationName: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       gender: ['', (Validators.required)],
       address: ['', (Validators.required)],
       pinCode: ['', (Validators.required)],
-      phoneNo: ['', (Validators.pattern(PHONE_NO))],
+      phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
       tax: ['', (Validators.required)],
       email: [''],
-      panNo: ['', Validators.pattern(ALPHA_NUMERIC)],
+      panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       tds: [false],
-      guarantor1: ['', Validators.pattern(ALPHA_NUMERIC)],
-      guarantor2: ['', Validators.pattern(ALPHA_NUMERIC)],
-      guarantor3: ['', Validators.pattern(ALPHA_NUMERIC)],
-      glCode: ['', Validators.pattern(ALPHA_NUMERIC)],
-      subGlcode: ['', Validators.pattern(ALPHA_NUMERIC)],
-      otherCode: ['', Validators.pattern(ALPHA_NUMERIC)],
+      guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      guarantor3: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      glCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       bankId: ['', (Validators.required)],
       branchId: ['', (Validators.required)],
-      accountNo: new FormControl('', [Validators.required, Validators.pattern(NUMERIC_ONLY)]),
+      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
       isActive: [true],
       tptdetails: this.formbuilder.array([]),
     });
@@ -145,7 +145,7 @@ export class TptComponent implements OnInit {
     return this.fbTpt.controls;
   }
 
-  FormArrayControls(i: number, formControlName: string) {
+  formArrayControls(i: number, formControlName: string) {
     return this.faTptDetails().controls[i].get(formControlName);
   }
 
@@ -168,7 +168,7 @@ export class TptComponent implements OnInit {
       tptId: tptDetail.tptId,
       vehicleNo: new FormControl(tptDetail.vehicleNo, [Validators.pattern(RG_VEHICLE)]),
       vehicleTypeId: [tptDetail.vehicleTypeId, (Validators.required)],
-      insuranceNo: [tptDetail.insuranceNo, (Validators.pattern(ALPHA_NUMERIC))],
+      insuranceNo: [tptDetail.insuranceNo, (Validators.pattern(RG_ALPHA_NUMERIC))],
       receivableAmt: [tptDetail.receivableAmt],
       receivedAmt: tptDetail.receivedAmt,
       transporterFreeze: tptDetail.transporterFreeze,
