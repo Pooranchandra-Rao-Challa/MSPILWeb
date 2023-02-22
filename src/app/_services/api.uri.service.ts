@@ -134,4 +134,6 @@ export const UPDATE_SAMPLESLAB_URI = "ApplicationMaster/UpdateSampleSlab";
 export const GET_HGL_URI = "ApplicationMaster/GetHgls";
 export const CREATE_HGL_URI = "ApplicationMaster/CreateHgl";
 export const UPDATE_HGL_URI = "ApplicationMaster/UpdateHgl";
-export const GET_SUBHGL_URI = "ApplicationMaster/GetSubHgls";
+export const GET_LOANTYPE_URI = "BillingMaster/GetLoanTypes";
+export const CREATE_LOANTYPE_URI = "BillingMaster/CreateLoanType";
+export const UPDATE_LOANTYPE_URI = "BillingMaster/UpdateLoanType";
