@@ -4,7 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
+import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 
@@ -42,9 +42,9 @@ export class VehicleComponent implements OnInit {
 
   vehicleTypeForm() {
     this.fbVehicleType = this.formbuilder.group({
-      vehicleTypeId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      vehicleTypeId: [null],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       capacity: ['', (Validators.required)],
       billingCapacity: ['', (Validators.required)],
       bindingCane: ['', (Validators.required)],
@@ -105,6 +105,11 @@ export class VehicleComponent implements OnInit {
     else {
       this.fbVehicleType.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.vehicleTypes = [];
+    this.vehicleType = new VehicleTypeDto();
   }
 
 

@@ -6,7 +6,7 @@ import { Table } from 'primeng/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
+import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-variety',
@@ -52,10 +52,10 @@ export class VarietyComponent implements OnInit {
 
   varietyForm() {
     this.fbVariety = this.formbuilder.group({
-      varietyId: [0],
+      varietyId: [null],
       varietyTypeId: ['', (Validators.required)],
-      code: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       plantAge: ['', (Validators.required)],
       ratoonAge: ['', (Validators.required)],
       sugarContent: ['', (Validators.required)],
@@ -118,4 +118,11 @@ export class VarietyComponent implements OnInit {
       this.fbVariety.markAllAsTouched();
     }
   }
+
+  ngOnDestroy() {
+    this.varietyTypes = [];
+    this.varieties = [];
+    this.variety = new VarietyDto();
+  }
+
 }
