@@ -19,11 +19,6 @@ $gutter: 1rem; //for primeflex grid system
   margin: 9px !important;
 }
 
-:host ::ng-deep .users-container .p-tabview-panels {
-    height: calc(100vh - 100px);
-    display: block;
-    width: 800px;
-  }
   .p-dropdown-panel .p-dropdown-items{
     padding:0px;
   }
@@ -32,10 +27,10 @@ $gutter: 1rem; //for primeflex grid system
 }
 .p-dialog .p-dialog-footer{
   background-color: var(--surface-ground);
-  padding:0px;
-  height: calc(100vh - 100px);
+  // padding:0px;
+  // height: calc(100vh - 100px);
   display: block;
-  width: 800px;
+  // width: 800px;
 }
 
 .p-dropdown-panel .p-dropdown-items {
