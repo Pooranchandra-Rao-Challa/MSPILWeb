@@ -1,12 +1,12 @@
 import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { PHONE_NO, NUMERIC_ONLY, } from './../../../_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
-import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
+import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { HglViewDto, SubHglViewDto, HglDto } from '../../../_models/applicationmaster';
@@ -112,32 +112,32 @@ export class HglComponent implements OnInit {
   tptForm() {
     this.fbTpt = this.formbuilder.group({
       hglId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       relationTypeId: ['', (Validators.required)],
-      relationName: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       gender: ['', (Validators.required)],
       address: ['', (Validators.required)],
       pinCode: ['', (Validators.required)],
-      phoneNo: ['', (Validators.pattern(PHONE_NO))],
+      phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
       tax: ['', (Validators.required)],
       email: [''],
-      panNo: ['', Validators.pattern(ALPHA_NUMERIC)],
+      panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       tds: [false],
-      guarantor1: ['', Validators.pattern(ALPHA_NUMERIC)],
-      guarantor2: ['', Validators.pattern(ALPHA_NUMERIC)],
-      guarantor3: ['', Validators.pattern(ALPHA_NUMERIC)],
-      glcode: ['', Validators.pattern(ALPHA_NUMERIC)],
-      subGlcode: ['', Validators.pattern(ALPHA_NUMERIC)],
-      otherCode: ['', Validators.pattern(ALPHA_NUMERIC)],
+      guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      guarantor3: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       branchId: ['', (Validators.required)],
-      accountNo: new FormControl('', [Validators.required, Validators.pattern(NUMERIC_ONLY)]),
-      aadhaarNo:new FormControl('', [Validators.required, Validators.pattern(NUMERIC_ONLY)]),
+      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+      aadhaarNo:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
       isActive: [false],
       subHgls: this.formbuilder.array([]),
     });
   }
- 
+
 
   get FormControls() {
     return this.fbTpt.controls;
