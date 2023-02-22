@@ -26,7 +26,7 @@ export class HglComponent implements OnInit {
   globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
     'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
-  fbTpt!: FormGroup;
+  fbHgl!: FormGroup;
   submitLabel!: string;
   addFlag: boolean = true;
   showDialog: boolean = false;
@@ -57,7 +57,7 @@ export class HglComponent implements OnInit {
     this.initBanks();
     this.initRelationTypes();
     this.initVehicles();
-    this.tptForm();
+    this.hglform();
   }
 
   inithgls() {
@@ -109,8 +109,8 @@ export class HglComponent implements OnInit {
     });
   }
 
-  tptForm() {
-    this.fbTpt = this.formbuilder.group({
+  hglform() {
+    this.fbHgl = this.formbuilder.group({
       hglId: [0],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
@@ -140,13 +140,13 @@ export class HglComponent implements OnInit {
 
 
   get FormControls() {
-    return this.fbTpt.controls;
+    return this.fbHgl.controls;
   }
 
   /* Form Array For Tpt Details */
 
   faSubHgl(): FormArray {
-    return this.fbTpt.get("subHgls") as FormArray;
+    return this.fbHgl.get("subHgls") as FormArray;
   }
 
   addSubHgl() {
@@ -169,6 +169,9 @@ export class HglComponent implements OnInit {
   }
 
   editHgl(hgl: HglViewDto) {
+    if (hgl.hglId !== undefined) {
+      this.initsubHgls(hgl.hglId);
+  }
     this.hgl.hglId = hgl.hglId;
     this.hgl.code = hgl.code;
     this.hgl.name = hgl.name;
@@ -193,7 +196,7 @@ export class HglComponent implements OnInit {
     this.hgl.aadhaarNo=hgl. aadhaarNo;
     this.hgl.isActive = hgl.isActive;
     this.hgl.subHgls = this.subHgls ? [] : this.subHgls;
-    this.fbTpt.setValue(this.hgl);
+    this.fbHgl.setValue(this.hgl);
     this.addFlag = false;
     this.submitLabel = "Update TPT";
     this.showDialog = true;
@@ -218,33 +221,33 @@ export class HglComponent implements OnInit {
 
 
   saveHgl(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.appMasterService.CreateHgl(this.fbTpt.value)
-    else return this.appMasterService.UpdateHgl(this.fbTpt.value)
+    if (this.addFlag) return this.appMasterService.CreateHgl(this.fbHgl.value)
+    else return this.appMasterService.UpdateHgl(this.fbHgl.value)
   }
 
   onSubmit() {
-    // this.fbTpt.value.tds = false;
-    // this.fbTpt.value.tptId = 0;
+    // this.fbHgl.value.tds = false;
+    // this.fbHgl.value.tptId = 0;
 
-    this.fbTpt.value.pinCode = this.fbTpt.value.pinCode + "";
-    // this.fbTpt.value.tptdetails.vehicleTypeId = 1;
-    console.log(this.fbTpt.value);
-    if (this.fbTpt.valid) {
+    this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + "";
+    // this.fbHgl.value.tptdetails.vehicleTypeId = 1;
+    console.log(this.fbHgl.value);
+    if (this.fbHgl.valid) {
       this.saveHgl().subscribe(resp => {
         if (resp) {
           this.inithgls();
-          this.fbTpt.reset();
+          this.fbHgl.reset();
           this.showDialog = false;
         }
       })
     }
     else {
-      this.fbTpt.markAllAsTouched();
+      this.fbHgl.markAllAsTouched();
     }
   }
 
   onClose() {
-    this.fbTpt.reset();
+    this.fbHgl.reset();
     this.faSubHgl().clear();
     this.showTptDetails = false;
   }

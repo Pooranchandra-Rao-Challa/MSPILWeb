@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
-import { LookUpHeaderDto, LookupViewDto } from 'src/app/_models/applicationmaster';
+import { LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 
 
@@ -17,17 +17,20 @@ export class LookupComponent implements OnInit {
 
   showDialog: boolean = false;
   look: LookupViewDto[] = [];
+  lookupDetails: LookupDetailViewDto[] = [];
   lookup: LookUpHeaderDto = new LookUpHeaderDto();
   filter: any;
   dataShown: boolean = false;
+  ShowlookupDetails: boolean = false;
   addfields: any;
   loading: boolean = true;
   fblookup!: FormGroup;
   lookUpDetails!: FormArray;
   addFlag: boolean = true;
   submitLabel!: string;
+  globalFilterFields: string[] = ['code', 'name', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   constructor(private formbuilder: FormBuilder,
-    private appmasterservice: AppMasterService,) { }
+    private appMasterService: AppMasterService,) {}
 
   get FormControls() {
     return this.fblookup.controls;
@@ -53,41 +56,53 @@ export class LookupComponent implements OnInit {
   lookupForm() {
     this.addfields = []
     this.fblookup = this.formbuilder.group({
+      lookUpId: [0],
       code: ['', (Validators.required)],
       name: ['', (Validators.required)],
-      isActive: ['',],
+      isActive: [true],
       lookUpDetails: this.formbuilder.array([]),
     });
   }
-
   // add lookupdtls fields
   addLookupDtls() {
-    this.dataShown = true;
+    this.ShowlookupDetails = true;
     this.lookUpDetails = this.fblookup.get("lookUpDetails") as FormArray
     this.lookUpDetails.push(this.generaterow())
   }
-  get lookupDtl() {
+  falookupDtls(): FormArray {
     return this.fblookup.get("lookUpDetails") as FormArray
   }
-  generaterow() {
+  generaterow(lookupDetail: LookupDetailViewDto = new LookupDetailViewDto()): FormGroup {
     return this.formbuilder.group({
+      lookUpDetailId:[0],
       code:[''],
       name:[''],
       remarks:[''],
       listingorder:[0]
+    // if (!this.addFlag) lookupDetail.lookUpId = this.lookup.lookUpId;
+    // return this.formbuilder.group({
+    //   id: lookupDetail.lookUpDetailId == undefined ? 0 : lookupDetail.lookUpDetailId,
+    //   lookupId: lookupDetail.lookUpId,
+    //   lookUpDetailId: lookupDetail.lookUpDetailId,
+    //   code: lookupDetail.code,
+    //   name: lookupDetail.name,
+    //   remarks: lookupDetail.remarks,
+    //   listingorder: lookupDetail.listingorder,
+    //   isActive: lookupDetail.isActive,
     })
   }
 
   //  post lookup 
   savelookup(): Observable<HttpEvent<LookUpHeaderDto>> {
-    if (this.addFlag) return this.appmasterservice.Createlookup(this.fblookup.getRawValue())
-    else return this.appmasterservice.Updatelookup(this.fblookup.getRawValue())
+    if (this.addFlag) return this.appMasterService.Createlookup(this.fblookup.getRawValue())
+    else return this.appMasterService.Updatelookup(this.fblookup.getRawValue())
   }
   onClose() {
     this.fblookup.reset();
+    this.falookupDtls().clear();
   }
   onSubmit() {
-    if(this.fblookup.valid) {
+    if (this.fblookup.valid) {
       this.savelookup().subscribe(resp => {
         if (resp) {
           this.GetLookUp();
@@ -97,20 +112,40 @@ export class LookupComponent implements OnInit {
       })
     }
     else {
-      // alert("please fill the fields")
       this.fblookup.markAllAsTouched();
     }
   }
 
   // getmethod
   GetLookUp() {
-    this.appmasterservice.GetlookUp().subscribe((resp) => {
+    this.appMasterService.GetlookUp().subscribe((resp) => {
       this.look = resp as unknown as LookupViewDto[];
       console.log(this.look);
       this.loading = false;
     })
   }
- 
+  initlookupDetails(lookUpId: number) {
+    this.appMasterService.GetlookupDetails(lookUpId).subscribe((resp) => {
+      this.lookupDetails = resp as unknown as LookupDetailViewDto[];
+      console.log(this.lookupDetails)
+      this.lookupDetails.forEach((lookupDetail) => {
+        this.falookupDtls().push(this.generaterow(lookupDetail));
+      })
+    });
+  }
+  editLookUp(lookup: LookUpHeaderDto) {
+    // this.initlookupDetails(lookup.lookUpId);
+    // this.lookup.lookUpId = lookup.lookUpId;
+    // this.lookup.code = lookup.code;
+    // this.lookup.name = lookup.name;
+    // this.lookup.isActive = lookup.isActive;
+    // this.lookup.lookUpDetails = this.lookUpDetails ? [] : this.lookUpDetails;
+    // this.fblookup.setValue(this.lookup);
+    // this.addFlag = false;
+    // this.submitLabel = "Update Lookup";
+    // this.showDialog = true;
+    // this.ShowlookupDetails = true;
+  }
 }
 
 

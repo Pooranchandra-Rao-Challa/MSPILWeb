@@ -1,18 +1,18 @@
 export class LookUpHeaderDto {
-  id?: number
+  lookUpId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
   lookUpDetails?: LookupDetailDto[];
 }
 export class LookupDetailDto {
-  id?: number;
+  lookUpDetailId?: number;
   code?: string;
   name?: string;
   remarks?: string;
   listingorder?: number;
 }
-export class LookupViewDto{
+export class LookupViewDto {
   lookUpId?: number;
   code?: string;
   name?: string;
@@ -21,27 +21,39 @@ export class LookupViewDto{
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
-  lookUpDetails?: LookupDetailDto[] ;
 }
-
-export class planttypeViewDto{
- plantTypeId?: number;
- code?: string;
- name?: string;
- estimatedTon?:number;
- loanEligible?:number;
- isActive?: boolean;
- updatedAt?: Date;
- createdAt?: Date;
- updatedBy?: string;
- createdBy?: string;
-}
-export class plantTypeDto{
-  plantTypeId?:number;
+export class LookupDetailViewDto {
+  lookUpDetailId?: number;
+  lookUpId?: number;
   code?: string;
   name?: string;
-  estimatedTon?:number;
-  loanEligible?:number;
+  remarks?: string;
+  listingorder?: number;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
+export class plantTypeViewDto {
+  plantTypeId?: number;
+  code?: string;
+  name?: string;
+  estimatedTon?: number;
+  loanEligible?: number;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+export class plantTypeDto {
+  plantTypeId?: number;
+  code?: string;
+  name?: string;
+  estimatedTon?: number;
+  loanEligible?: number;
   isActive?: boolean;
 }
 
@@ -229,27 +241,23 @@ export class BranchDto {
   isActive?: boolean;
 }
 export class PlantSubTypeViewDto {
-plantSubTypeId?: number;
-plantId?:number;
-plantName?:string;
-code?: string;
-name?: string;
-isActive: boolean = true;
-updatedAt?: Date;
-createdAt?: Date;
-updatedBy?: string;
-createdBy?: string;
+  plantSubTypeId?: number;
+  plantId?: number;
+  plantName?: string;
+  code?: string;
+  name?: string;
+  isActive: boolean = true;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
 }
-export class PlantSubTypeDto{
-plantSubTypeId?: number;
-plantId?:number;
-code?: string;
-name?: string;
-isActive: boolean = true;
-updatedAt?: Date;
-createdAt?: Date;
-updatedBy?: string;
-createdBy?: string;
+export class PlantSubTypeDto {
+  plantSubTypeId?: number;
+  plantId?: number;
+  code?: string;
+  name?: string;
+  isActive: boolean = true;
 }
 
 export class SeasonViewDto{

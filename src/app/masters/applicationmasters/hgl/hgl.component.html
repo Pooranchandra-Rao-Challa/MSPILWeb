@@ -33,7 +33,7 @@
           <th></th>
 
           <th pSortableColumn="code">
-            HglId <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+            Hgl Id <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
             <p-sortIcon field="code"></p-sortIcon>
           </th>
           <th pSortableColumn="code">
@@ -142,6 +142,14 @@
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
+          <th pSortableColumn="isActive" style="text-align:center">
+            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+            <p-sortIcon field="isActive"></p-sortIcon>
+          </th>
+          <th pSortableColumn="isActive" style="text-align:center">
+            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+            <p-sortIcon field="isActive"></p-sortIcon>
+          </th>
           <th pSortableColumn="createdAt">
             Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
             <p-sortIcon field="createdAt"></p-sortIcon>
@@ -222,7 +230,7 @@
     <p-dialog header="HGL" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbTpt" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -341,7 +349,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>aadhaar No:</label>
+                  <label>Aadhaar No:</label>
                   <input pInputText id="panNo" type="text" formControlName="aadhaarNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
                   <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
@@ -365,7 +373,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>guarantor2:</label>
+                  <label>Guarantor2:</label>
                   <input pInputText id="guarantor2" type="text" formControlName="guarantor2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor2'].touched && FormControls['guarantor2'].errors }">
                   <span *ngIf="FormControls['guarantor2'].touched && FormControls['guarantor2'].invalid">
@@ -382,15 +390,7 @@
                       Guarantor3 contains only characters and integers.</div>
                   </span>
                 </div>
-                <!-- <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>GL Code:</label>
-                  <input pInputText id="glCode" type="text" formControlName="glCode"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['glCode'].touched && FormControls['glCode'].errors }">
-                  <span *ngIf="FormControls['glCode'].touched && FormControls['glCode'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glCode'].errors?.['pattern']">
-                      GL code contains only characters and integers.</div>
-                  </span>
-                </div> -->
+                
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Sub GLCode:</label>
                   <input pInputText id="subGlcode" type="text" formControlName="subGlcode"

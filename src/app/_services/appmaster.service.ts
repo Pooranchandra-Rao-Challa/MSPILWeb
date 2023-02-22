@@ -1,11 +1,11 @@
 import {
   VarietyViewDto, VarietyDto, VehicleTypeViewDto, VehicleTypeDto, PlantSubTypeViewDto, PlantSubTypeDto, BankViewDto, BankDto, SeasonViewDto, SeasonDto, HglViewDto,
-  HglDto, ShiftsViewDto, ShiftDto, SampleslabsViewDto, SampleSlabDto, TptViewDto, TptDto, TptdetailViewDto
+  HglDto, ShiftsViewDto, ShiftDto, SampleslabsViewDto, SampleSlabDto, TptViewDto, TptDto, TptdetailViewDto, LookupDetailViewDto
 } from './../_models/applicationmaster';
 import { Injectable } from "@angular/core";
-import { LookUpHeaderDto, LookupViewDto, plantTypeDto, planttypeViewDto, SubHglViewDto } from '../_models/applicationmaster';
+import { LookUpHeaderDto, LookupViewDto, plantTypeDto, plantTypeViewDto, SubHglViewDto } from '../_models/applicationmaster';
 import { ApiHttpService } from "./api.http.service";
-import { GET_SUBHGL_URI } from './api.uri.service';
+import { GET_LOOKUP_DETAILS_URI, } from './api.uri.service';
 import {
   CREATE_BANK_URI, CREATE_CreateTpt_URI, CREATE_HGL_URI, CREATE_LOOKUP_URI, CREATE_PLANTTYPE_URI, CREATE_PLANT_SUB_TYPE_URI, CREATE_SAMPLESLAB_URI, CREATE_SEASON_URI,
   CREATE_SHIFT_URI, CREATE_VARIETY_URI, CREATE_VEHICLE_TYPE_URI, GET_BANKS_URI, GET_BANK_URI, GET_HGL_URI, GET_LOOKUP_URI, GET_PLANTTYPE_URI, GET_PLANT_SUB_TYPE_URI,
@@ -17,26 +17,30 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class AppMasterService extends ApiHttpService {
-  // lookup
-  public GetlookUp() {
-    return this.get<LookupViewDto[]>(GET_LOOKUP_URI);
-  }
-  public Createlookup(lookup: LookUpHeaderDto) {
-    return this.post<LookUpHeaderDto>(CREATE_LOOKUP_URI, lookup);
-  }
-  public Updatelookup(lookup: LookUpHeaderDto) {
-    return this.post<LookUpHeaderDto>(UPDATE_LOOKUP_URI, lookup);
-  }
-  // plant type
-  public GetPlantType() {
-    return this.get<planttypeViewDto[]>(GET_PLANTTYPE_URI);
-  }
-  public CreatePlantType(plant: plantTypeDto) {
-    return this.post<plantTypeDto>(CREATE_PLANTTYPE_URI, plant);
-  }
-  public UpdatePlantType(plant: plantTypeDto) {
-    return this.post<plantTypeDto>(UPDATE_PLANTTYPE_URI, plant);
-  }
+ // lookup
+ public GetlookUp() {
+  return this.get<LookupViewDto[]>(GET_LOOKUP_URI);
+}
+public Createlookup(lookup: LookUpHeaderDto) {
+  return this.post<LookUpHeaderDto>(CREATE_LOOKUP_URI, lookup);
+}
+public Updatelookup(lookup: LookUpHeaderDto) {
+  return this.post<LookUpHeaderDto>(UPDATE_LOOKUP_URI, lookup);
+}
+// Lookup Details
+public GetlookupDetails(lookupId:number) {
+  return this.get<LookupDetailViewDto[]>(GET_LOOKUP_DETAILS_URI+lookupId);
+}
+// plant type
+public GetPlantType() {
+  return this.get<plantTypeViewDto[]>(GET_PLANTTYPE_URI);
+}
+public CreatePlantType(plant: plantTypeDto) {
+  return this.post<plantTypeDto>(CREATE_PLANTTYPE_URI, plant);
+}
+public UpdatePlantType(plant: plantTypeDto) {
+  return this.post<plantTypeDto>(UPDATE_PLANTTYPE_URI, plant);
+}
 
   /* Variety */
 
@@ -91,7 +95,10 @@ export class AppMasterService extends ApiHttpService {
   public UpdatePlantSubType(PlantSubType: PlantSubTypeDto) {
     return this.post<PlantSubTypeDto>(UPDATE_PLANT_SUB_TYPE_URI, PlantSubType);
   }
-
+  public GetPlantTypeForPlantSubType(plantId?: number) {
+    if (plantId != null) return this.getWithId<plantTypeDto>(GET_PLANTTYPE_URI, plantId);
+    else return this.get<plantTypeDto>(GET_PLANTTYPE_URI);
+  }
   /* Bank */
   public GetBanks() {
     return this.get<BankViewDto[]>(GET_BANKS_URI);
@@ -105,6 +112,7 @@ export class AppMasterService extends ApiHttpService {
   public UpdateBank(bank: BankDto) {
     return this.post<BankDto>(UPDATE_BANK_URI, bank);
   }
+
   // season
   public Getseason() {
     return this.get<SeasonViewDto[]>(GET_SEASON_URI);
@@ -134,7 +142,7 @@ export class AppMasterService extends ApiHttpService {
     return this.post<HglDto>(UPDATE_HGL_URI, hgl);
   }
   public GetSubHgl(SubHglId: number) {
-    return this.get<SubHglViewDto[]>(GET_SUBHGL_URI + SubHglId);
+    return this.get<SubHglViewDto[]>(GET_HGL_URI + SubHglId);
   }
 
   // shift

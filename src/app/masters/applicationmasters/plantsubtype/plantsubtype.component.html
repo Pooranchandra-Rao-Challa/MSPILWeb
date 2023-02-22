@@ -20,12 +20,17 @@
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">
-                                <div class="field col-12 ">
-                                    <label>Plant Type Name:<sup class="p-error">*</sup></label>
-                                        <p-dropdown [options]="planttype" optionLabel="plantId" formControlName="plantId" optionValue="plantId">
-                                        </p-dropdown>
+                                  <div class="field col-12">
+                                    <label>Plant Type Name:<sup class="p-error">*</sup></label>&nbsp;
+                                    <p-dropdown [options]="planttype" optionLabel="name" formControlName="plantId" optionValue="plantTypeId"  placeholder="Select Plant Type Name."
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantId'].touched && FormControls['plantId'].errors }"></p-dropdown>
+                                    <span *ngIf="FormControls['plantId'].touched && FormControls['plantId'].invalid">
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['plantId'].errors?.['required']">Please Select Plant Type.
+                                        </div>
+                                    </span>
                                 </div>
-
+                                
                                 <div class="field col-12">
                                     <label>Code:<sup class="p-error">*</sup></label>
                                     <input pInputText id="code" type="text" formControlName="code"
@@ -50,14 +55,13 @@
                                             Alphabets .</div>
                                     </span>
                                 </div>
-                                <div class="field col-12 ">
+                                <div class="field col-12">
                                     <label>Is Active:</label><br>
                                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
             <ng-template pTemplate="footer">
@@ -72,7 +76,7 @@
 
         <!-- table -->
 
-        <p-table #dt1 dataKey="id" [value]="plantSubType" [rows]="5" [loading]="loading" [rowHover]="true"
+        <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="5" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="['code','name','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo',
        'createdByUser','updatedByUser','createAt','updatedAt']" [autoLayout]="true" responsiveLayout="scroll"

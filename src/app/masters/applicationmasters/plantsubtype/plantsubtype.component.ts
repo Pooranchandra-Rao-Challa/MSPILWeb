@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { PlantSubTypeDto, PlantSubTypeViewDto, plantTypeDto,  } from 'src/app/_models/applicationmaster';
+import { PlantSubTypeDto, PlantSubTypeViewDto, plantTypeDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+
 
 
 @Component({
@@ -16,16 +17,16 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 export class PlantsubtypeComponent implements OnInit {
   fbplantsubtype!: FormGroup;
   showDialog: boolean = false;
-  plantSubType: PlantSubTypeViewDto[] = [];
-  plantSub: PlantSubTypeDto = new PlantSubTypeDto();
-  planttype: PlantSubTypeDto[] = [];
+  plantSubTypes: PlantSubTypeViewDto[] = [];
+  plantSubType: PlantSubTypeDto = new PlantSubTypeDto();
+  planttype: plantTypeDto[] = [];
   submitLabel!: string;
   addFlag: boolean = true;
   loading: boolean = false;
   filter: any;
 
   constructor(private formbuilder: FormBuilder,
-    private appmasterservice: AppMasterService,) { }
+    private appMasterService: AppMasterService,) { }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -43,58 +44,57 @@ export class PlantsubtypeComponent implements OnInit {
   ngOnInit(): void {
     this.plantSubTypeForm();
     this.PlantSubType();
-    this.initPlantName();
+
+    this.appMasterService.GetPlantTypeForPlantSubType().subscribe((resp) => {
+      this.planttype = resp as unknown as plantTypeDto[]
+      console.log(this.planttype);
+    })
   }
 
   plantSubTypeForm() {
     this.fbplantsubtype = this.formbuilder.group({
-      plantSubTypeId: [0],
-      plantId: ['', Validators.required],
+      plantSubTypeId: [],
+      plantId: [0],
       code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
       name: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      isActive: [true,]
+      isActive:[true]
     });
-  }
-
-  initPlantName() {
-  
-    this.appmasterservice.GetPlantType().subscribe((resp) => {
-      this.planttype = resp as unknown as PlantSubTypeDto[];
-
-    });
-
-
-
   }
 
   //  get method
   PlantSubType() {
-    this.appmasterservice.GetPlantSubType().subscribe((resp) => {
-      this.plantSubType = resp as unknown as PlantSubTypeViewDto[];
+    this.appMasterService.GetPlantSubType().subscribe((resp) => {
+      this.plantSubTypes = resp as unknown as PlantSubTypeViewDto[];
       console.log(this.plantSubType);
       this.loading = false;
     })
   }
-// post method
-  savePlantSubType(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.appmasterservice.CreatePlantSubType(this.fbplantsubtype.value)
-    else return this.appmasterservice.UpdatePlantSubType(this.fbplantsubtype.value)
+  onClose() {
+    this.fbplantsubtype.reset();
   }
-  onSubmit() {
-    console.log(this.fbplantsubtype.value)
-    // if (this.fbplantsubtype.valid) {
-    //   console.log(this.fbplantsubtype.value)
-    //   this.savePlantSubType().subscribe(resp => {
-    //     if (resp) {
-    //       this.PlantSubType();
-    //       this.fbplantsubtype.reset();
-    //       this.showDialog = false;
-    //     }
-    //   })
-    // }
-    // else {
-    //   this.fbplantsubtype.markAllAsTouched();
-    // }
+  // post method
+  savePlantSubType(): Observable<HttpEvent<any>> {
+    if (this.addFlag) 
+      // this.fbplantsubtype.value.plantSubTypeId = 0;
+      return this.appMasterService.CreatePlantSubType(this.fbplantsubtype.value)
+    
+    else return this.appMasterService.UpdatePlantSubType(this.fbplantsubtype.value)
+  }
+  onSubmit() {                                      
+    if (this.fbplantsubtype.valid) {
+      console.log(this.fbplantsubtype.value)
+
+      this.savePlantSubType().subscribe(resp => {
+        if (resp) {
+          this.PlantSubType();
+          this.onClose();
+          this.showDialog = false;
+        }
+      })
+    }
+    else {
+      this.fbplantsubtype.markAllAsTouched();
+    }
   }
 
   initPlantsub() {
@@ -103,13 +103,13 @@ export class PlantsubtypeComponent implements OnInit {
     this.addFlag = true;
     this.showDialog = true;
   }
-  editPlantSubType(plantSub: PlantSubTypeViewDto) {
-    this.plantSub.plantSubTypeId = plantSub.plantSubTypeId;
-    this.plantSub.plantId = plantSub.plantId;
-    this.plantSub.code = plantSub.code;
-    this.plantSub.name =plantSub.name;
-    this.plantSub.isActive = plantSub.isActive;
-    this.fbplantsubtype.setValue(this.plantSub);
+  editPlantSubType( plantSubType: PlantSubTypeViewDto) {
+    this.plantSubType.plantSubTypeId = plantSubType.plantSubTypeId;
+    this.plantSubType.plantId = plantSubType.plantId;
+    this.plantSubType.code = plantSubType.code;
+    this.plantSubType.name = plantSubType.name;
+    this.plantSubType.isActive = plantSubType.isActive;
+    this.fbplantsubtype.setValue(this.plantSubType);
     this.addFlag = false;
     this.submitLabel = "Update Plant Sub Type";
     this.showDialog = true;
