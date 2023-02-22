@@ -82,7 +82,7 @@ export class BillParametersComponent implements OnInit {
   }
 
   editBillParam(billParam: BillParameterViewDto) {
-    this.billParam.billParameterId = billParam.id;
+    this.billParam.billParameterId = billParam.billParamId;
     this.billParam.categoryId = billParam.billCategoryId;
     this.billParam.type = billParam.type
     this.billParam.code = billParam.code;

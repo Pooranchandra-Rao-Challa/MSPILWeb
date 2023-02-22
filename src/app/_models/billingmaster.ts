@@ -43,7 +43,7 @@ export class BillParameterDto {
 }
 
 export class BillParameterViewDto {
-  id?: number;
+  billParamId?: number;
   code?: string;
   billCategoryId?: number;
   billCategoryName?: string;

@@ -1,8 +1,8 @@
-import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto, SeasonDto } from './../../../_models/applicationmaster';
+import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto, SeasonDto, LookupDetailDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
 import { PHONE_NO, NUMERIC_ONLY } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
@@ -38,9 +38,12 @@ export class SeasonComponent implements OnInit {
   branches: BranchDto[] = [];
   genders: { label: string; value: string; }[];
   vehicleTypes: VehicleTypeViewDto[] = [];
-  billParam: BillParameterViewDto[] = [];
+  billParams: BillParameterViewDto[] = [];
   defaults: { name: string; id: boolean; }[];
- 
+  billCategories: LookupDetailDto[] = [];
+  @Input()
+    headerTemplate: TemplateRef<any> | undefined ;
+
 
 
   constructor(private formbuilder: FormBuilder,
@@ -62,9 +65,12 @@ export class SeasonComponent implements OnInit {
     this.seasonForm();
 
     this.BillMasterService.GetBillParameters().subscribe((resp) => {
-      this.billParam = resp as unknown as BillParameterViewDto[];
-      console.log(this.billParam);
- 
+      this.billParams = resp as unknown as BillParameterViewDto[];
+      console.log(this.billParams);
+
+    });
+    this.LookupService.BillCategories().subscribe((resp) => {
+      this.billCategories = resp as unknown as LookupDetailDto[];
     });
   }
 
@@ -76,7 +82,7 @@ export class SeasonComponent implements OnInit {
   }
 
 
- 
+
   seasonForm() {
     this.fbseasons = this.formbuilder.group({
       seasonId: [],
@@ -91,48 +97,51 @@ export class SeasonComponent implements OnInit {
       capacity: ['',],
       currentSeason: [''],
       isActive: [true],
-      farmer: this.formbuilder.array([this.createItem()]),
-      harvestor: this.formbuilder.array([this.createItem()]),
-      transporter: this.formbuilder.array([this.createItem()]),
-      seed: this.formbuilder.array([this.createItem()])
+      farmerRates: this.formbuilder.array([]),
+      harvesterRates: this.formbuilder.array([]),
+      transporterRates: this.formbuilder.array([]),
+      seedRates: this.formbuilder.array([])
     });
-    
 
-      
+
+
   }
 
 
-  createItem(): FormGroup {
+  createItem(billCategory: LookupDetailDto): FormGroup {
     return this.formbuilder.group({
       seasonBillingRateId:[0],
-      seasonId:[0],
-      billParameterId: ['', Validators.required],
+      billParamId: ['', Validators.required],
+      billCatetoryId: [billCategory.lookUpDetailId, Validators.required],
       rate: ['', Validators.required],
       priority: ['', Validators.required],
       isActive: [true],
     });
   }
 
-  get farmer(): FormArray {
-    return this.fbseasons.get('farmer') as FormArray;
+  RateControls(formgroupname: string) : FormArray{
+    return this.fbseasons.get(formgroupname) as FormArray;
   }
+  // get farmerRates(): FormArray {
+  //   return this.fbseasons.get('farmerRates') as FormArray;
+  // }
 
-  get harvestor(): FormArray {
-    return this.fbseasons.get('harvestor') as FormArray;
-  }
+  // get harvestor(): FormArray {
+  //   return this.fbseasons.get('harvestorRates') as FormArray;
+  // }
 
-  get transporter(): FormArray {
-    return this.fbseasons.get('transporter') as FormArray;
-  }
+  // get transporter(): FormArray {
+  //   return this.fbseasons.get('transporterRates') as FormArray;
+  // }
 
-  get seed(): FormArray {
-    return this.fbseasons.get('seed') as FormArray;
-  }
+  // get seed(): FormArray {
+  //   return this.fbseasons.get('seedRates') as FormArray;
+  // }
 
 
-  addItem(formArrayName: string) {
+  addItem(formArrayName: string, billCategory: LookupDetailDto) {
     const formArray = this.fbseasons.get(formArrayName) as FormArray;
-    formArray.push(this.createItem());
+    formArray.push(this.createItem(billCategory));
   }
 
 
@@ -185,14 +194,14 @@ export class SeasonComponent implements OnInit {
   //    this.season.transporter = this.transporter ? [] : this.transporter;
   //    this.season.harvestor = this.harvestor ? [] : this.harvestor;
   //    this.season.seed = this.seed ? [] : this.seed;
-  
- 
+
+
    this.addFlag = false;
    this.submitLabel = "Update Season";
    this.showDialog = true;
  }
- 
- 
+
+
   addSeason() {
     this.submitLabel = "Add Season";
     this.addFlag = true;
@@ -216,8 +225,12 @@ export class SeasonComponent implements OnInit {
   }
 
   onSubmit() {
-  
+
+    console.log(this.fbseasons.valid);
+
     console.log(this.fbseasons.value);
+
+    return
     if (this.fbseasons.valid) {
       this.saveSeason().subscribe(resp => {
         if (resp) {
@@ -235,5 +248,11 @@ export class SeasonComponent implements OnInit {
   onClose() {
     this.fbseasons.reset();
     this.showTptDetails = false;
+  }
+
+  handleBillCategoryChange(sevent:any){
+    var index = sevent.index;
+    console.log(sevent);
+
   }
 }
