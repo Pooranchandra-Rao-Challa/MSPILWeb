@@ -233,3 +233,22 @@ export class LoanSubTypeDto {
   subGlcode?: string
   isActive?: boolean
 }
+
+export class LoanSubTypeViewDto {
+  loanSubTypeId?: number
+  loanTypeId?: number
+  loanName?: string
+  code?: string
+  name?: string
+  priority?: number
+  interestRate?: number
+  rate?: number
+  requestReq?: boolean
+  uomId?: number
+  uomName?: string
+  loanQtyType?: string
+  glCode?: string
+  subGLcode?: string
+  isActive?: boolean
+
+}
