@@ -1,12 +1,10 @@
 import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto, SeasonDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { PHONE_NO, NUMERIC_ONLY } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
-import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
@@ -40,7 +38,7 @@ export class SeasonComponent implements OnInit {
   vehicleTypes: VehicleTypeViewDto[] = [];
   billParam: BillParameterViewDto[] = [];
   defaults: { name: string; id: boolean; }[];
- 
+
 
 
   constructor(private formbuilder: FormBuilder,
@@ -64,7 +62,7 @@ export class SeasonComponent implements OnInit {
     this.BillMasterService.GetBillParameters().subscribe((resp) => {
       this.billParam = resp as unknown as BillParameterViewDto[];
       console.log(this.billParam);
- 
+
     });
   }
 
@@ -76,7 +74,7 @@ export class SeasonComponent implements OnInit {
   }
 
 
- 
+
   seasonForm() {
     this.fbseasons = this.formbuilder.group({
       seasonId: [],
@@ -96,9 +94,9 @@ export class SeasonComponent implements OnInit {
       transporter: this.formbuilder.array([this.createItem()]),
       seed: this.formbuilder.array([this.createItem()])
     });
-    
 
-      
+
+
   }
 
 
@@ -185,14 +183,14 @@ export class SeasonComponent implements OnInit {
   //    this.season.transporter = this.transporter ? [] : this.transporter;
   //    this.season.harvestor = this.harvestor ? [] : this.harvestor;
   //    this.season.seed = this.seed ? [] : this.seed;
-  
- 
+
+
    this.addFlag = false;
    this.submitLabel = "Update Season";
    this.showDialog = true;
  }
- 
- 
+
+
   addSeason() {
     this.submitLabel = "Add Season";
     this.addFlag = true;
@@ -216,7 +214,7 @@ export class SeasonComponent implements OnInit {
   }
 
   onSubmit() {
-  
+
     console.log(this.fbseasons.value);
     if (this.fbseasons.valid) {
       this.saveSeason().subscribe(resp => {
