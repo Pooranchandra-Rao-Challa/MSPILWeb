@@ -1,3 +1,5 @@
+import { TptComponent } from './tpt/tpt.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
 import { VarietyComponent } from './variety/variety.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -26,14 +28,15 @@ import { SampleslabsComponent } from './sampleslab/sampleslab.component';
     { path: 'farmer', component: FarmerComponent },
     { path: 'lookup', component: LookupComponent },
     { path: 'planttype', component: PlanttypeComponent },
-    { path:'plantsubtype', component:PlantsubtypeComponent},
-    { path:'bank', component:BankComponent},
+    { path: 'variety', component: VarietyComponent },
+    { path: 'vehicle', component: VehicleComponent },
+    { path: 'tpt', component: TptComponent },
+    { path: 'plantsubtype', component: PlantsubtypeComponent },
+    { path: 'bank', component: BankComponent },
     { path: 'variety', component: VarietyComponent },
     { path: 'hgl', component: HglComponent },
     { path: 'Shift', component: ShiftsComponent },
-    { path: 'Sample_Slabs', component: SampleslabsComponent }
-   
-
+    { path: 'Sample_Slabs', component: SampleslabsComponent },
   ])],
   exports: [RouterModule]
 })

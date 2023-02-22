@@ -1,18 +1,18 @@
 export class LookUpHeaderDto {
-  id?: number
+  lookUpId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
   lookUpDetails?: LookupDetailDto[];
 }
 export class LookupDetailDto {
-  id?: number;
+  lookUpDetailId?: number;
   code?: string;
   name?: string;
   remarks?: string;
   listingorder?: number;
 }
-export class LookupViewDto{
+export class LookupViewDto {
   lookUpId?: number;
   code?: string;
   name?: string;
@@ -21,27 +21,39 @@ export class LookupViewDto{
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
-  lookUpDetails?: LookupDetailDto[] ;
 }
-
-export class planttypeViewDto{
- plantTypeId?: number;
- code?: string;
- name?: string;
- estimatedTon?:number;
- loanEligible?:number;
- isActive?: boolean;
- updatedAt?: Date;
- createdAt?: Date;
- updatedBy?: string;
- createdBy?: string;
-}
-export class plantTypeDto{
-  plantTypeId?:number;
+export class LookupDetailViewDto {
+  lookUpDetailId?: number;
+  lookUpId?: number;
   code?: string;
   name?: string;
-  estimatedTon?:number;
-  loanEligible?:number;
+  remarks?: string;
+  listingorder?: number;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
+export class plantTypeViewDto {
+  plantTypeId?: number;
+  code?: string;
+  name?: string;
+  estimatedTon?: number;
+  loanEligible?: number;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+export class plantTypeDto {
+  plantTypeId?: number;
+  code?: string;
+  name?: string;
+  estimatedTon?: number;
+  loanEligible?: number;
   isActive?: boolean;
 }
 
@@ -100,55 +112,152 @@ export class VehicleTypeViewDto {
   createdBy?: string;
 }
 
-export class PlantSubTypeViewDto {
-plantSubTypeId?: number;
-plantId?:number;
-plantName?:string;
-code?: string;
-name?: string;
-isActive: boolean = true;
-updatedAt?: Date;
-createdAt?: Date;
-updatedBy?: string;
-createdBy?: string;
-}
-export class PlantSubTypeDto{
-plantSubTypeId?: number;
-plantId?:number;
-code?: string;
-name?: string;
-isActive: boolean = true;
-updatedAt?: Date;
-createdAt?: Date;
-updatedBy?: string;
-createdBy?: string;
-}
-export class BankViewDto{
-bankId?:number;
-code?: string;
-name?: string;
-abbr?:string;
-isActive: boolean = true;
-updatedAt?: Date;
-createdAt?: Date;
-updatedBy?: string;
-createdBy?: string;
+export class TptDto {
+  tptId!: number;
+  code?: string;
+  name?: string;
+  gender?: string;
+  relationTypeId?: number;
+  relationName?: string;
+  address?: string;
+  pinCode?: string;
+  phoneNo?: string;
+  email?: string;
+  panNo?: string;
+  tax?: number;
+  tds?: boolean;
+  guarantor1?: string;
+  guarantor2?: string;
+  guarantor3?: string;
+  bankId?: number;
+  branchId?: number;
+  accountNo?: string;
+  glCode?: string;
+  subGlcode?: string;
+  otherCode?: string;
+  isActive?: boolean;
+  tptdetails?: TptdetailDto[]
+  hglId: number | undefined;
 }
 
-export class BankDto{
-  bankId?:number;
-  code?: string;
-  name?: string;
-  abbr?:string;
-  isActive: boolean = true;
-  branches?:BranchesDto[];
+export class TptdetailDto {
+  id?: number;
+  tptId?: number;
+  vehicleNo?: string;
+  vehicleTypeId?: number;
+  insuranceNo?: string;
+  receivableAmt?: number;
+  receivedAmt?: number;
+  transporterFreeze?: boolean;
+  gateEntryFreeze?: boolean;
+  isActive?: boolean;
 }
-export class BranchesDto{
-  branchId?:number;
-  bankId?:number;
+
+export class TptViewDto {
+  tptId!: number;
   code?: string;
   name?: string;
+  gender?: string;
+  relationTypeId?: number;
+  relationType?: string;
+  relationName?: string;
+  address?: string;
+  pinCode?: string;
+  phoneNo?: string;
+  email?: string;
+  panNo?: string;
+  tax?: number;
+  tds?: boolean;
+  guarantor1?: string;
+  guarantor2?: string;
+  guarantor3?: string;
   ifsc?: string;
+  bankName?: string;
+  bankId?: number;
+  branchId?: number;
+  branchName?: string;
+  accountNo?: string;
+  glCode?: string;
+  subGLCode?: string;
+  otherCode?: string;
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
+export class TptdetailViewDto {
+  tptdetailId?: number;
+  tptId?: number;
+  tPTName?: string;
+  vehicleNo?: string
+  vehicleTypeId?: number;
+  vehicleName?: string;
+  insuranceNo?: string;
+  receivableAmt?: number;
+  receivedAmt?: number;
+  transporterFreeze: boolean = true;
+  gateEntryFreeze: boolean = true;
+  isActive: boolean = true;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
+export class BankDto {
+  bankId?: number;
+  code?: string;
+  name?: string;
+  abbr?: string
+  isActive?: boolean;
+  branches?: BranchDto[];
+}
+
+export class BankViewDto {
+  bankId?: number;
+  code?: string;
+  name?: string;
+  abbr?: string
+  isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
+export class BranchDto {
+  branchId?: number;
+  bankId?: number;
+  code?: string;
+  name?: string;
+  abbr?: string
+  address?: string;
+  pinCode?: string;
+  phoneNo?: string;
+  email?: string;
+  ifsc?: string;
+  isActive?: boolean;
+}
+export class PlantSubTypeViewDto {
+  plantSubTypeId?: number;
+  plantId?: number;
+  plantName?: string;
+  code?: string;
+  name?: string;
+  isActive: boolean = true;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+export class PlantSubTypeDto {
+  plantSubTypeId?: number;
+  plantId?: number;
+  code?: string;
+  name?: string;
+  isActive: boolean = true;
 }
 
 export class SeasonViewDto{
@@ -197,6 +306,9 @@ export class SeasonBillingRateDto{
 
 
 export class HglViewDto {
+  subHglId(subHglId: any) {
+    throw new Error('Method not implemented.');
+  }
   hglId?: number
   code?: string
   name?: string
@@ -259,14 +371,10 @@ export class HglDto {
   subGlcode?: string
   otherCode?: string
   isActive?: boolean
-  subHgls?: SubHgldto[]
+  subHgls?: SubHglDto[]
 }
 
-export class SubHgldto {
-  createdBy?: string
-  createdAt?: string
-  updatedBy?: string
-  updatedAt?: string
+export class SubHglDto {
   subHglId?: number
   hglid?: number
   code?: string
@@ -276,8 +384,24 @@ export class SubHgldto {
   isActive?: boolean
 }
 
+export class SubHglViewDto {
+  subHglId?: number
+  hglId?: number
+  code?: string
+  name?: string
+  vehicleTypeId?: number
+  vehicleName?: string
+  noOfPersons?: number
+  isActive?: boolean
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+}
+
+
 export class ShiftsViewDto{
-  
+
     shiftId?: number
     code?: string
     name?: string
@@ -336,17 +460,7 @@ export class SampleslabsViewDto{
   updatedBy?: string;
 }
 
-export class SampleSlabDto {
-  createdBy?: string;
-  createdAt?: string;
-  updatedBy?: string;
-  updatedAt?: string;
-  sampleSlabId?: number;
-  fromArea?: number;
-  toArea?: number;
-  noOfSample?: number;
-  isActive?: boolean;
-}
+
 
 export class FarmersViewDto{
   farmerId?: number;
@@ -428,4 +542,15 @@ export class FarmerDto{
   imageUrl?: string;
   isRegistered?: boolean;
   isActive?: boolean;
+}
+export class SampleSlabDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  sampleSlabId?: number
+  fromArea?: number
+  toArea?: number
+  noOfSample?: number
+  isActive?: boolean
 }

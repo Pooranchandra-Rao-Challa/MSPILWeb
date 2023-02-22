@@ -10,20 +10,6 @@
         <button pButton pRipple pTooltip="New Village Param Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addVillageParamRate()"></button>
       </ng-template>
-      <div class="ui-toolbar-group-center">Centered Content</div>
-    </p-toolbar>
-
-    <p-toolbar>
-      <div class="ui-toolbar-group-left">
-        <h4>Village Param Rates</h4>
-      </div>
-      <div class="ui-toolbar-group-center" style="min-width: 300px;">
-        <p-dropdown class="min-w-full"></p-dropdown>
-      </div>
-      <div class="ui-toolbar-group-right">
-        <button pButton pRipple pTooltip="New Village Param Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="showDialog = true"></button>
-      </div>
     </p-toolbar>
 
     <!-- table -->
@@ -35,11 +21,16 @@
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
             (click)="clear(dt1)"></button>
-          <span class="p-input-icon-left mb-2">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
-              class="w-full" />
-          </span>
+          <div>
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+                class="w-full" />
+            </span>
+            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons" [showClear]="true" (onChange)="getVillageParamRatesBySeason()"
+              optionValue="seasonId">
+            </p-dropdown>
+          </div>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
@@ -140,7 +131,8 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Season Code:<sup class="p-error">*</sup></label>
-                  <p-dropdown optionLabel="name" [options]="seasons" optionValue="seasonId" formControlName="seasonsId"
+                  <p-dropdown placeholder="Select a season" optionLabel="name" [options]="seasons"
+                    optionValue="seasonId" formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonsId'].touched && FormControls['seasonsId'].invalid">
@@ -154,8 +146,8 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['village'].touched && FormControls['village'].errors }">
                   </p-dropdown> -->
                   <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
-                    filterBy="villageName,villageCode" formControlName="villageId"
-                    placeholder="Select a Village" (onChange)="onSelectedVillage($event.value)"
+                    filterBy="villageName,villageCode" formControlName="villageId" placeholder="Select a village"
+                    (onChange)="onSelectedVillage($event.value)"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }">
                     <ng-template let-village pTemplate="selectedItem">
                       <div>{{village.villageCode}}</div>
@@ -188,8 +180,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Bill Param:<sup class="p-error">*</sup></label>
-                  <p-dropdown optionLabel="code" [options]="billParameters" optionValue="id"
-                    formControlName="billParameterId"
+                  <p-dropdown placeholder="Select a bill param" optionLabel="code" [options]="billParameters"
+                    optionValue="id" formControlName="billParameterId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['billParameterId'].touched && FormControls['billParameterId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['billParameterId'].touched && FormControls['billParameterId'].invalid">
@@ -200,7 +192,10 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate:<sup class="p-error">*</sup></label>
-                  <input pInputText formControlName="rate">
+                  <p-inputNumber formControlName="rate" mode="decimal" locale="en-IN" [minFractionDigits]="2"
+                    [maxFractionDigits]="2"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
+                  </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
                       Please Select Rate.</div>

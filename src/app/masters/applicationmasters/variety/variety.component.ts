@@ -3,9 +3,10 @@ import { AppMasterService } from './../../../_services/appmaster.service';
 import { LookupService } from './../../../_services/lookup.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-variety',
@@ -19,7 +20,7 @@ export class VarietyComponent implements OnInit {
   variety: VarietyDto = new VarietyDto();
   loading: boolean = true;
   globalFilterFields: string[] = ['varietyType', 'code', 'name', 'plantAge', 'ratoonAge', 'sugarContent', 'plantSuitability', 'isActive', 'createdAt', 'createdBy',
-  'updatedAt', 'updatedBy'];
+    'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
   addFlag: boolean = true;
@@ -28,7 +29,7 @@ export class VarietyComponent implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
     private lookupService: LookupService,
-    private appmasterService: AppMasterService) { }
+    private appMasterService: AppMasterService) { }
 
   ngOnInit(): void {
     this.initVarieties();
@@ -39,13 +40,11 @@ export class VarietyComponent implements OnInit {
   initLookupDetails() {
     this.lookupService.VarietyTypes().subscribe((resp) => {
       this.varietyTypes = resp;
-      console.log(this.varietyTypes);
-
     });
   }
 
   initVarieties() {
-    this.appmasterService.GetVarieties().subscribe((resp) => {
+    this.appMasterService.GetVarieties().subscribe((resp) => {
       this.varieties = resp as unknown as VarietyViewDto[];
       this.loading = false;
     });
@@ -53,10 +52,10 @@ export class VarietyComponent implements OnInit {
 
   varietyForm() {
     this.fbVariety = this.formbuilder.group({
-      varietyId: [0],
+      varietyId: [null],
       varietyTypeId: ['', (Validators.required)],
-      code: ['', (Validators.required)],
-      name: ['', (Validators.required)],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       plantAge: ['', (Validators.required)],
       ratoonAge: ['', (Validators.required)],
       sugarContent: ['', (Validators.required)],
@@ -100,15 +99,14 @@ export class VarietyComponent implements OnInit {
     this.showDialog = true;
   }
 
-  saveBillParam(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.appmasterService.CreateVariety(this.fbVariety.value)
-    else return this.appmasterService.UpdateVariety(this.fbVariety.value)
+  saveVariety(): Observable<HttpEvent<any>> {
+    if (this.addFlag) return this.appMasterService.CreateVariety(this.fbVariety.value)
+    else return this.appMasterService.UpdateVariety(this.fbVariety.value)
   }
 
   onSubmit() {
-    console.log(this.fbVariety.value);
     if (this.fbVariety.valid) {
-      this.saveBillParam().subscribe(resp => {
+      this.saveVariety().subscribe(resp => {
         if (resp) {
           this.initVarieties();
           this.fbVariety.reset();
@@ -120,4 +118,11 @@ export class VarietyComponent implements OnInit {
       this.fbVariety.markAllAsTouched();
     }
   }
+
+  ngOnDestroy() {
+    this.varietyTypes = [];
+    this.varieties = [];
+    this.variety = new VarietyDto();
+  }
+
 }

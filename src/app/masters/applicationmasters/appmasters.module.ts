@@ -9,9 +9,11 @@ import { FertilizerComponent } from './fertilizer/fertilizer.component';
 import { FarmerComponent } from './farmer/farmer.component';
 import { LookupComponent } from './lookup/lookup.component';
 import { PlanttypeComponent } from './planttype/planttype.component';
+import { VarietyComponent } from './variety/variety.component';
+import { VehicleComponent } from './vehicle/vehicle.component';
+import { TptComponent } from './tpt/tpt.component'
 import { PlantsubtypeComponent } from './plantsubtype/plantsubtype.component';
 import { BankComponent } from './bank/bank.component';
-import { VarietyComponent } from './variety/variety.component';
 import { HglComponent } from './hgl/hgl.component'
 import { ShiftsComponent } from './shift/shift.component';
 import { SampleslabsComponent } from './sampleslab/sampleslab.component';
@@ -26,12 +28,15 @@ import { SampleslabsComponent } from './sampleslab/sampleslab.component';
     FarmerComponent,
     LookupComponent,
     PlanttypeComponent,
+    VarietyComponent,
+    VehicleComponent,
+    TptComponent,
     PlantsubtypeComponent,
-    BankComponent ,
+    BankComponent,
     VarietyComponent,
     HglComponent,
-   ShiftsComponent,
-   SampleslabsComponent
+    ShiftsComponent,
+    SampleslabsComponent,
   ],
   imports: [
     PrimeNgModule,

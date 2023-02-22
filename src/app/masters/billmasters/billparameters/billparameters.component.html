@@ -124,8 +124,8 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
-                  <p-dropdown [options]="billCategories" optionLabel="name" formControlName="categoryId"
-                    optionValue="lookUpDetailId"
+                  <p-dropdown placeholder="Select a bill category" [options]="billCategories" optionLabel="name"
+                    formControlName="categoryId" optionValue="lookUpDetailId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
@@ -135,7 +135,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown [options]="billParameters" optionLabel="type" formControlName="type" optionValue="type"
+                  <p-dropdown placeholder="Select a type" [options]="types" formControlName="type"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['type'].touched && FormControls['type'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['type'].touched && FormControls['type'].invalid">
@@ -168,8 +168,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Calculation Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown [options]="billParameters" optionLabel="caluclationType" formControlName="caluclationType"
-                    optionValue="caluclationType"
+                  <p-dropdown placeholder="Select a calculation type" [options]="calTypes"
+                    formControlName="caluclationType"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['caluclationType'].touched && FormControls['caluclationType'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['caluclationType'].touched && FormControls['caluclationType'].invalid">

@@ -129,6 +129,8 @@ export class AppMenuComponent implements OnInit {
                   { label: 'Lookup', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
                   { label: 'Plant type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
                   { label: 'Variety', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: true },
+                  { label: 'Vehicle', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/vehicle'], permission: true },
+                  { label: 'TPT', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/tpt'], permission: true },
                   { label: 'hgl', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: true },
                   { label: 'Shift', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Shift'], permission: true },
                   { label: 'Sample Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Sample_Slabs'], permission: true },

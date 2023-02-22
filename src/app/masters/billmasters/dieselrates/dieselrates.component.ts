@@ -43,10 +43,10 @@ export class DieselRatesComponent implements OnInit {
 
   dieselRateForm() {
     this.fbDieselRate = this.formbuilder.group({
-      id: [0],
+      id: [null],
       fromDate: ['', (Validators.required)],
       toDate: ['', (Validators.required)],
-      rate: ['', (Validators.required)],
+      rate: [null, (Validators.required)],
       isActive: [true]
     });
   }

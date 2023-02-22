@@ -43,7 +43,7 @@ export class BillParameterDto {
 }
 
 export class BillParameterViewDto {
-  id?: number;
+  billParamId?: number;
   code?: string;
   billCategoryId?: number;
   billCategoryName?: string;
@@ -133,6 +133,7 @@ export class VillageParamRateDto {
   id?: number;
   seasonsId?: number;
   villageId?: number;
+  villageName?: string;
   billParameterId?: number;
   rate?: number;
   isActive: boolean = true;
@@ -177,6 +178,78 @@ export class WareHouseDto {
   name?: string
   glcode?: string
   subGlcode?: string
+  isActive?: boolean
+
+}
+
+export class LoanTypeViewDto {
+  loanTypeId?: number
+  code?: string
+  categoryId?: number
+  categoryName?: string
+  name?: string
+  interestRate?: number
+  priority?: number
+  glCode?: string
+  subGLcode?: string
+  isActive?: boolean
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+}
+export class LoanTypeDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  loanTypeId?: number
+  code?: string
+  categoryId?: number
+  name?: string
+  interestRate?: number
+  priority?: number
+  glcode?: string
+  subGlcode?: string
+  isActive?: boolean
+  loanSubTypes?: LoanSubTypeDto[]
+}
+
+export class LoanSubTypeDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  loanSubTypeId?: number
+  loanTypeId?: number
+  code?: string
+  name?: string
+  priority?: number
+  interestRate?: number
+  rate?: number
+  requestReq?: boolean
+  uomid?: number
+  loanQtyType?: string
+  glcode?: string
+  subGlcode?: string
+  isActive?: boolean
+}
+
+export class LoanSubTypeViewDto {
+  loanSubTypeId?: number
+  loanTypeId?: number
+  loanName?: string
+  code?: string
+  name?: string
+  priority?: number
+  interestRate?: number
+  rate?: number
+  requestReq?: boolean
+  uomId?: number
+  uomName?: string
+  loanQtyType?: string
+  glCode?: string
+  subGLcode?: string
   isActive?: boolean
 
 }

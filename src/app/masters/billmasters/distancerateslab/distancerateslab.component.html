@@ -149,25 +149,28 @@
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
                   <label>Distance:<sup class="p-error">*</sup></label>
-                  <input pInputText id="distance" type="text" formControlName="distance"
+                  <p-inputNumber formControlName="distance" mode="decimal" locale="en-IN" [minFractionDigits]="2"
+                    [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
+                  </p-inputNumber>
                   <span *ngIf="FormControls['distance'].touched && FormControls['distance'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['distance'].errors?.['required']">
                       Please Enter Distance.</div>
                   </span>
                 </div>
-                <div class="field col-12">
-                  <label>Rate:<sup class="p-error">*</sup></label>
-                  <input pInputText id="rate" type="text" formControlName="rate"
+                <div class="field col-12 md:col-6">
+                  <label>Rate:(₹)<sup class="p-error">*</sup></label>
+                  <p-inputNumber formControlName="rate" mode="currency" currency="INR" locale="en-IN"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
+                  </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
                       Please Enter Rate.</div>
                   </span>
                 </div>
-                <div class="col-12">
+                <div class="col-12 md:col-6">
                   <label>Is Active:</label><br>
                   <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                 </div>

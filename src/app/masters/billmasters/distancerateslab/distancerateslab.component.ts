@@ -40,7 +40,7 @@ export class DistanceRateSlabComponent implements OnInit {
 
   distanceRateForm() {
     this.fbDistanceRate = this.formbuilder.group({
-      id: [0],
+      id: [null],
       distance: ['', (Validators.required)],
       rate: ['', (Validators.required)],
       isActive: [true]

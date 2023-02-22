@@ -64,13 +64,14 @@ export class VillageParamRatesComponent implements OnInit {
 
   villageParamRateForm() {
     this.fbVillageParamRate = this.formbuilder.group({
-      id: [0],
+      id: [null],
       seasonsId: ['', (Validators.required)],
       // village: ['', (Validators.required)],
       villageName: ['', (Validators.required)],
       villageId: ['', (Validators.required)],
       billParameterId: ['', (Validators.required)],
-      rate: ['', Validators.required]
+      rate: ['', Validators.required],
+      isActive: [true]
     });
   }
 
@@ -94,12 +95,13 @@ export class VillageParamRatesComponent implements OnInit {
   }
 
   editVillageParamRate(vParamRate: VillageParamRateViewDto) {
-    // this.villageParamRate.id = vParamRate.id;
-    // this.villageParamRate.seasonsId = vParamRate.seasonsId;
-    // this.villageParamRate.villageId = vParamRate.villageId;
-    // this.villageParamRate.billParameterId = vParamRate.billParameterId;
-    this.fbVillageParamRate.controls['villageId'].setValue(vParamRate.villageId);
-    this.fbVillageParamRate.setValue(vParamRate);
+    this.villageParamRate.id = vParamRate.id;
+    this.villageParamRate.seasonsId = vParamRate.seasonsId;
+    this.villageParamRate.villageId = vParamRate.villageId;
+    this.villageParamRate.villageName = vParamRate.villageName;
+    this.villageParamRate.billParameterId = vParamRate.billParameterId;
+    this.villageParamRate.rate = vParamRate.rate;
+    this.fbVillageParamRate.setValue(this.villageParamRate);
     this.addFlag = false;
     this.submitLabel = "Update Village Param Rate";
     this.showDialog = true;
@@ -132,6 +134,10 @@ export class VillageParamRatesComponent implements OnInit {
         this.fbVillageParamRate.controls['villageName'].setValue(value.villageName);
       }
     });
+  }
+
+  getVillageParamRatesBySeason(){
+    console.log('Event fired successfully');
   }
 
   ngOnDestroy() {

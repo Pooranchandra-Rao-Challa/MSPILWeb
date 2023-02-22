@@ -196,9 +196,10 @@
                   <input pInputText id="subGLcode" type="text" formControlName="subGLcode">
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Rate():<sup class="p-error">*</sup></label>
-                  <input pInputText id="rate" type="text" formControlName="rate"
+                  <label>Rate(₹):<sup class="p-error">*</sup></label>
+                  <p-inputNumber formControlName="rate" mode="currency" currency="INR" locale="en-IN"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
+                  </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
                       Please Enter Rate.</div>
