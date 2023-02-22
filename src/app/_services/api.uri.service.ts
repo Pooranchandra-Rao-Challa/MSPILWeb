@@ -38,7 +38,6 @@ export const GET_SECTIONS_URI = "GeoMaster/GetSections"
 export const CREATE_VILLAGE_URI = "GeoMaster/CreateVillage"
 export const UPDATE_VILLAGE_URI = "GeoMaster/UpdateVillage"
 export const GET_VILLAGES_URI = "GeoMaster/GetVillages"
-export const GET_SEASONS_URI = "BillingMaster/GetSeasons";
 export const CREATE_BILL_URI = "BillingMaster/CreateBill";
 export const UPDATE_BILL_URI = "BillingMaster/UpdateBill";
 export const GET_BILLS_URI = "BillingMaster/GetBills";

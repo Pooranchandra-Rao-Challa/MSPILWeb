@@ -117,7 +117,7 @@
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
                   <label>Code:<sup class="p-error">*</sup></label>
                   <input pInputText id="code" type="text" formControlName="code"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -128,7 +128,7 @@
                       Code should contains only characters and integers.</div>
                   </span>
                 </div>
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
                   <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name" type="text" formControlName="name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -139,7 +139,7 @@
                       Name should contains only characters.</div>
                   </span>
                 </div>
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
                   <label>Capacity (Tons):<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="capacity" formControlName="capacity" mode="decimal" [minFractionDigits]="2"
                     [maxFractionDigits]="2"
@@ -150,7 +150,7 @@
                       Please Enter Capacity.</div>
                   </span>
                 </div>
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
                   <label>Billing Capacity (Tons):<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="billingCapacity" formControlName="billingCapacity" mode="decimal"
                     [minFractionDigits]="2" [maxFractionDigits]="2"
@@ -162,7 +162,7 @@
                       Please Enter Billing Capacity.</div>
                   </span>
                 </div>
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
                   <label>Binding %:<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="bindingCane" formControlName="bindingCane" mode="decimal"
                     [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" [max]="100"
@@ -173,7 +173,7 @@
                       Please Enter Binding Cane.</div>
                   </span>
                 </div>
-                <div class="field col-12">
+                <div class="field col-12 md:col-6">
                   <label>Bad Cane %:<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="badCane" formControlName="badCane" mode="decimal" [minFractionDigits]="2"
                     [maxFractionDigits]="2" [min]="0" [max]="100"
@@ -184,7 +184,7 @@
                       Please Select Plant Suitability.</div>
                   </span>
                 </div>
-                <div class="col-12">
+                <div class="col-12 md:col-6">
                   <label>Is Active:</label><br>
                   <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                 </div>

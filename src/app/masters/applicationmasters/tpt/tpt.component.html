@@ -423,82 +423,44 @@
               </div>
             </div>
             <!-- TPT Details -->
-            <div class="col-12" formArrayName="tptdetails" *ngIf="showTptDetails">
-              <p-table #dt2 [value]="faTptDetails().controls" dataKey="id" [rows]="10" [loading]="loadingTptDetails"
-                [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                [paginator]="false" [globalFilterFields]="globalFilterFieldsTptDetails2" [autoLayout]="true"
-                responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-                <ng-template pTemplate="caption">
-                  <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                      (click)="clear(dt2)"></button>
-                    <span class="p-input-icon-left mb-2">
-                      <i class="pi pi-search"></i>
-                      <input pInputText type="text" #filter (input)="onGlobalFilter(dt2, $event)"
-                        placeholder="Search Keyword" class="w-full" />
-                    </span>
-                  </div>
-                </ng-template>
+            <div formArrayName="tptdetails" *ngIf="showTptDetails">
+              <p-table #dt2 [value]="faTptDetails().controls" dataKey="id" [loading]="loadingTptDetails"
+                [rowHover]="true" [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
+                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pSortableColumn="vehicleNo">Vehicle No.
-                      <p-columnFilter type="text" field="vehicleNo" display="menu"></p-columnFilter>
-                      <p-sortIcon field="vehicleNo"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="vehicleTypeId">Vehicle Type
-                      <p-columnFilter type="text" field="vehicleTypeId" display="menu"></p-columnFilter>
-                      <p-sortIcon field="vehicleTypeId"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="insuranceNo">Insurance No.
-                      <p-columnFilter type="text" field="insuranceNo" display="menu"></p-columnFilter>
-                      <p-sortIcon field="insuranceNo"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="receivableAmt">Receivable Amount
-                      <p-columnFilter type="text" field="receivableAmt" display="menu"></p-columnFilter>
-                      <p-sortIcon field="receivableAmt">
-                      </p-sortIcon>
-                    </th>
-                    <th pSortableColumn="receivedAmt">Received Amount
-                      <p-columnFilter type="text" field="receivedAmt" display="menu"></p-columnFilter>
-                      <p-sortIcon field="receivedAmt"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="gateEntryFreeze">Gate Entry Freeze
-                      <p-columnFilter type="text" field="gateEntryFreeze" display="menu"></p-columnFilter>
-                      <p-sortIcon field="gateEntryFreeze">
-                      </p-sortIcon>
-                    </th>
-                    <th pSortableColumn="transporterFreeze">Transporter Freeze
-                      <p-columnFilter type="text" field="transporterFreeze" display="menu"></p-columnFilter>
-                      <p-sortIcon field="transporterFreeze">
-                      </p-sortIcon>
-                    </th>
-                    <!-- <th>
-                      Action
-                    </th> -->
+                    <th>Vehicle No.</th>
+                    <th>Vehicle Type</th>
+                    <th>Insurance No.</th>
+                    <th>Receivable Amount</th>
+                    <th>Received Amount</th>
+                    <th>Gate Entry Freeze</th>
+                    <th>Transporter Freeze</th>
+                    <th>Action</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-tpt let-tptDetailIndex="rowIndex">
                   <tr [formGroupName]="tptDetailIndex">
                     <td>
-                      <input pInputText class="form-control" formControlName="vehicleNo" [ngClass]="{ 'is-invalid ng-dirty': FormArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
-                        FormArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
+                      <input pInputText class="form-control" formControlName="vehicleNo" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
+                        formArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
                       <span
-                        *ngIf="FormArrayControls(tptDetailIndex, 'vehicleNo')?.touched && FormArrayControls(tptDetailIndex, 'vehicleNo')?.invalid">
+                        *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.touched && formArrayControls(tptDetailIndex, 'vehicleNo')?.invalid">
                         <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormArrayControls(tptDetailIndex, 'vehicleNo')?.errors?.['pattern']">
+                          *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.errors?.['pattern']">
                           Invalid vehicle number, eg: XY00-XY-0000 / XY00 XY 0000.</div>
                       </span>
                     </td>
                     <td>
                       <p-dropdown placeholder="Select a vehicle" [options]="vehicleTypes"
                         formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId" appendTo="body"
-                        [ngClass]="{ 'is-invalid ng-dirty': FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched &&
-                        FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors }">
+                        [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched &&
+                        formArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors }">
                       </p-dropdown>
                       <span
-                        *ngIf="FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched && FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.invalid">
+                        *ngIf="formArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched && formArrayControls(tptDetailIndex, 'vehicleTypeId')?.invalid">
                         <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors?.['required']">
+                          *ngIf="formArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors?.['required']">
                           Please Select Vehicle Type.</div>
                       </span>
                     </td>
@@ -523,13 +485,13 @@
                         formControlName="transporterFreeze" appendTo="body">
                       </p-dropdown>
                     </td>
-                    <!-- <td>
+                    <td>
                       <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                        *ngIf="!FormArrayControls(tptDetailIndex, 'id')"
+                        *ngIf="!this.faTptDetails().controls[tptDetailIndex].get('id')?.value"
                         (click)="faTptDetails().removeAt(tptDetailIndex)"></i>
                       <i class="pi pi-fw pi-verified text-3xl"
-                        *ngIf="FormArrayControls(tptDetailIndex, 'id')"></i>
-                    </td> -->
+                        *ngIf="this.faTptDetails().controls[tptDetailIndex].get('id')?.value"></i>
+                    </td>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">

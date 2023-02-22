@@ -1,10 +1,10 @@
 import { LookupService } from './../../../_services/lookup.service';
 import { HttpEvent } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { ALPHA_NUMERIC, ALPHA_ONLY, NUMERIC_ONLY } from 'src/app/_shared/regex';
+import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 import { BillParameterDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 
@@ -17,18 +17,37 @@ import { BillMasterService } from 'src/app/_services/billmaster.service';
 export class BillParametersComponent implements OnInit {
   billParameters: BillParameterViewDto[] = [];
   billParam: BillParameterDto = new BillParameterDto();
-  loading: boolean = false;
-  filter: any;
+  loading: boolean = true;
+  @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   fbBillParameters!: FormGroup;
   addFlag: boolean = true;
-  globalFilterFields: string[] = ['id', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'isActive', 'createdAt', 'createdByUser', 'updatedAt', 'updatedByUser'];
+  globalFilterFields: string[] = ['id', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'isActive', 'createdAt', 'createdByUser',
+    'updatedAt', 'updatedByUser'];
   submitLabel!: string;
   billCategories: any;
+  types: { label: string; value: string; }[];
+  calTypes: { label: string; value: string; }[];
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,
-    private lookupService: LookupService) { }
+    private lookupService: LookupService) {
+    this.calTypes = [
+      { label: 'FIXED', value: 'Fixed' },
+      { label: 'NETWEIGHT', value: 'NetWeight' },
+      { label: 'TOTALWEIGHT', value: 'TotalWeight' },
+      { label: 'TPTRATE', value: 'TptRate' },
+      { label: 'HGLRATE', value: 'HglRate' },
+      { label: 'LOAN', value: 'Loan' },
+      { label: 'BURNTCANE', value: 'BurntCane' },
+    ];
+
+    this.types = [
+      { label: 'Allowance', value: 'A' },
+      { label: 'Deduction', value: 'D' },
+      { label: 'NA', value: 'NA' }
+    ];
+  }
 
   ngOnInit(): void {
     this.initBillParams();
@@ -45,19 +64,20 @@ export class BillParametersComponent implements OnInit {
   initBillParams() {
     this.billmasterService.GetBillParameters().subscribe((resp) => {
       this.billParameters = resp as unknown as BillParameterViewDto[];
+      this.loading = false;
     });
   }
 
   billmasterForm() {
     this.fbBillParameters = this.formbuilder.group({
-      billParameterId: [0],
+      billParameterId: [null],
       categoryId: ['', (Validators.required)],
       type: ['', (Validators.required)],
-      code: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(ALPHA_ONLY)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       caluclationType: ['', Validators.required],
-      priority: new FormControl('', [Validators.required, Validators.pattern(NUMERIC_ONLY)]),
-      formula: new FormControl('', [Validators.required, Validators.pattern(ALPHA_NUMERIC)]),
+      priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+      formula: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
       isActive: [true]
     });
   }
@@ -98,8 +118,8 @@ export class BillParametersComponent implements OnInit {
   }
 
   saveBillParam(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.billmasterService.CreateBillParam(this.fbBillParameters.value)
-    else return this.billmasterService.UpdateBillParam(this.fbBillParameters.value)
+    if (this.addFlag) return this.billmasterService.CreateBillParam(this.fbBillParameters.value);
+    else return this.billmasterService.UpdateBillParam(this.fbBillParameters.value);
   }
 
   onSubmit() {
@@ -119,6 +139,7 @@ export class BillParametersComponent implements OnInit {
 
   ngOnDestroy() {
     this.billParameters = [];
+    this.billCategories = [];
     this.billParam = new BillParameterDto();
   }
 

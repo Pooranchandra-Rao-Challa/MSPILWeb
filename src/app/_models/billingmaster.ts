@@ -133,6 +133,7 @@ export class VillageParamRateDto {
   id?: number;
   seasonsId?: number;
   villageId?: number;
+  villageName?: string;
   billParameterId?: number;
   rate?: number;
   isActive: boolean = true;

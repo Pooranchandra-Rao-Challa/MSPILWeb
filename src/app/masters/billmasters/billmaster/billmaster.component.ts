@@ -1,4 +1,4 @@
-import { LookupService } from './../../../_services/lookup.service';
+import { LookupService } from 'src/app/_services/lookup.service';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { BillViewDto } from 'src/app/_models/billingmaster';
 import { LookupDetailDto } from 'src/app/_models/applicationmaster';
+import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 @Component({
   selector: 'app-billmaster',
   templateUrl: './billmaster.component.html',
@@ -55,8 +56,9 @@ export class BillMasterComponent implements OnInit {
 
   billmasterForm() {
     this.fbBillMaster = this.formbuilder.group({
-      billNo: [''],
-      categoryId: [0],
+      billId: [null],
+      billNo: [null],
+      categoryId: ['', (Validators.required)],
       seasonsId: ['', (Validators.required)],
       fromDate: ['', (Validators.required)],
       toDate: ['', (Validators.required)],
@@ -91,6 +93,8 @@ export class BillMasterComponent implements OnInit {
 
   onSubmit() {
     if (this.fbBillMaster.valid) {
+      this.fbBillMaster.value.fromDate = FORMAT_DATE(this.fbBillMaster.value.fromDate);
+      this.fbBillMaster.value.toDate = FORMAT_DATE(this.fbBillMaster.value.toDate);
       this.billmasterService.CreateBill(this.fbBillMaster.value).subscribe(resp => {
         if (resp) {
           this.initBills();
@@ -107,6 +111,7 @@ export class BillMasterComponent implements OnInit {
   ngOnDestroy() {
     this.bills = [];
     this.seasons = [];
+    this.billCategories = [];
   }
 
 }

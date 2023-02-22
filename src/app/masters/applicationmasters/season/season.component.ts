@@ -1,12 +1,10 @@
 import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto, SeasonDto, LookupDetailDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { PHONE_NO, NUMERIC_ONLY } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
-import { ALPHA_NUMERIC, ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
