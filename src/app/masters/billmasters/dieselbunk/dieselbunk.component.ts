@@ -1,3 +1,4 @@
+import { MAX_LENGTH_6 } from './../../../_shared/regex';
 import { DieselBunkDto } from './../../../_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -6,7 +7,7 @@ import { Table } from 'primeng/table';
 import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { RG_PHONE_NO } from 'src/app/_shared/regex';
+import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_EMAIL, RG_PHONE_NO } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-dieselbunk',
@@ -44,12 +45,12 @@ export class DieselBunkComponent implements OnInit {
   dieselRateForm() {
     this.fbDieselBunk = this.formbuilder.group({
       id: [null],
-      code: ['', (Validators.required)],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: ['', (Validators.required)],
       address: ['', (Validators.required)],
       pinCode: ['', (Validators.required)],
       phoneNo: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
-      email: [''],
+      email: new FormControl('', [Validators.pattern(RG_EMAIL)]),
       gLcode: [''],
       subGLcode: [''],
       rate: ['', (Validators.required)],

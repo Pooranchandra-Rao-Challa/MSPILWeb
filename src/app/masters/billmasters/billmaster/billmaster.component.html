@@ -131,7 +131,7 @@
                   </p-dropdown>
                   <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['categoryId'].errors?.['required']">
-                      Please Select Category.</div>
+                      Please select category.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -141,7 +141,7 @@
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonsId'].touched && FormControls['seasonsId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['seasonsId'].errors?.['required']">
-                      Please Select Season.</div>
+                      Please select season.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -151,7 +151,7 @@
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
-                      Please Select From Date.</div>
+                      Please select from date.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -161,7 +161,7 @@
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
-                      Please Select To Date.</div>
+                      Please select to date.</div>
                   </span>
                 </div>
                 <div class="col-12">
@@ -173,11 +173,11 @@
           </div>
         </form>
       </div>
-      <ng-template pTemplate="footer">  
+      <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
             (click)="onSubmit()"></button>
-        </div>     
+        </div>
       </ng-template>
     </p-dialog>
 

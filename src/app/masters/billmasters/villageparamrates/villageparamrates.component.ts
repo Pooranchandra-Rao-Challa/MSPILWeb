@@ -48,6 +48,14 @@ export class VillageParamRatesComponent implements OnInit {
     });
   }
 
+  getVillageParamRatesBySeason(seasonId: number) {
+    var seasonId = seasonId ? seasonId : 0;
+    this.billMasterService.GetVillageParamRatesBySeasonId(seasonId).subscribe((resp) => {
+      this.villageParamRates = resp as unknown as VillageParamRateViewDto[];
+      this.loading = false;
+    });
+  }
+
   initDefaults() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp;
@@ -134,10 +142,6 @@ export class VillageParamRatesComponent implements OnInit {
         this.fbVillageParamRate.controls['villageName'].setValue(value.villageName);
       }
     });
-  }
-
-  getVillageParamRatesBySeason(){
-    console.log('Event fired successfully');
   }
 
   ngOnDestroy() {
