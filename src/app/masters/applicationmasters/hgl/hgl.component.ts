@@ -68,6 +68,7 @@ export class HglComponent implements OnInit {
   }
 
   initsubHgls(hglId: number) {
+    debugger;
     this.appMasterService.GetSubHgl(hglId).subscribe((resp) => {
       this.subHgls = resp as unknown as SubHglViewDto[];
       console.log(this.subHgls);
@@ -143,7 +144,7 @@ export class HglComponent implements OnInit {
     return this.fbHgl.controls;
   }
 
-  /* Form Array For Tpt Details */
+  /* Form Array For hgl Details */
 
   faSubHgl(): FormArray {
     return this.fbHgl.get("subHgls") as FormArray;
@@ -155,7 +156,6 @@ export class HglComponent implements OnInit {
   }
 
   generateRow(subHgl: SubHglViewDto = new SubHglViewDto()): FormGroup {
-    debugger
     if (!this.addFlag) subHgl.hglId = this.hgl.hglId;
     return this.formbuilder.group({
       subHglId: subHgl.subHglId == undefined ? 0 : subHgl.subHglId,
@@ -168,7 +168,8 @@ export class HglComponent implements OnInit {
     });
   }
 
-  editHgl(hgl: HglViewDto) {
+  editHgl(hgl: HglViewDto) {   
+    debugger;
     if (hgl.hglId !== undefined) {
       this.initsubHgls(hgl.hglId);
   }
@@ -195,16 +196,17 @@ export class HglComponent implements OnInit {
     this.hgl.accountNo = hgl.accountNo;
     this.hgl.aadhaarNo=hgl. aadhaarNo;
     this.hgl.isActive = hgl.isActive;
-    this.hgl.subHgls = this.subHgls ? [] : this.subHgls;
+    debugger;
+    this.hgl.subHgls = this.subHgls ? []: this.subHgls;
     this.fbHgl.setValue(this.hgl);
     this.addFlag = false;
-    this.submitLabel = "Update TPT";
+    this.submitLabel = "Update Hgl";
     this.showDialog = true;
     this.showTptDetails = true;
   }
 
   addHgl() {
-    this.submitLabel = "Add TPT";
+    this.submitLabel = "Add Hgl";
     this.addFlag = true;
     this.showDialog = true;
   }
