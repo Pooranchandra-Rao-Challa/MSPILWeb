@@ -91,9 +91,9 @@
             <p-checkbox name="active" value="active" [(ngModel)]="vehicle.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{vehicle.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{vehicle.createdAt | date: mediumDate}}</td>
           <td>{{vehicle.createdBy}}</td>
-          <td>{{vehicle.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{vehicle.updatedAt | date: mediumDate}}</td>
           <td>{{vehicle.updatedBy}}</td>
         </tr>
       </ng-template>
@@ -123,9 +123,9 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                      Please Enter Code.</div>
+                      Please enter code.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code should contains only characters and integers.</div>
+                      Code should contains only letters and integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -134,9 +134,9 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                      Please Enter Name.</div>
+                      Please enter name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                      Name should contains only characters.</div>
+                      Name should contains only letters.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -147,7 +147,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['capacity'].touched && FormControls['capacity'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['capacity'].errors?.['required']">
-                      Please Enter Capacity.</div>
+                      Please enter capacity.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -159,7 +159,7 @@
                   <span *ngIf="FormControls['billingCapacity'].touched && FormControls['billingCapacity'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['billingCapacity'].errors?.['required']">
-                      Please Enter Billing Capacity.</div>
+                      Please enter billing capacity.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -170,7 +170,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['bindingCane'].touched && FormControls['bindingCane'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['bindingCane'].errors?.['required']">
-                      Please Enter Binding Cane.</div>
+                      Please enter binding cane.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -181,7 +181,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['badCane'].touched && FormControls['badCane'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['badCane'].errors?.['required']">
-                      Please Select Plant Suitability.</div>
+                      Please select plant suitability.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

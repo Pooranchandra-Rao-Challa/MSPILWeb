@@ -106,9 +106,9 @@
             <p-checkbox name="active" value="active" [(ngModel)]="bunk.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{bunk.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{bunk.createdAt | date: mediumDate}}</td>
           <td>{{bunk.createdBy}}</td>
-          <td>{{bunk.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{bunk.updatedAt | date: mediumDate}}</td>
           <td>{{bunk.updatedBy}}</td>
         </tr>
       </ng-template>
@@ -194,7 +194,7 @@
                   <input pInputText id="email" type="email" formControlName="email">
                   <span *ngIf="FormControls['email'].touched && FormControls['email'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['email'].errors?.['pattern']">
-                      Email contains only characters, integers and periods(.)</div>
+                      Email contains only letters, integers and periods(.)</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">

@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { DistanceRateDto, DistanceRateViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-distancerateslab',
@@ -22,6 +23,7 @@ export class DistanceRateSlabComponent implements OnInit {
   fbDistanceRate!: FormGroup;
   addFlag: boolean = true;
   submitLabel!: string;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService) { }

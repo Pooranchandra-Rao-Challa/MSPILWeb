@@ -8,6 +8,7 @@ import { LookupService } from 'src/app/_services/lookup.service';
 import { HttpEvent } from '@angular/common/http';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-billparameters',
@@ -29,6 +30,7 @@ export class BillParametersComponent implements OnInit {
   billCategories: any;
   types: { label: string; value: string; }[];
   calTypes: { label: string; value: string; }[];
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,

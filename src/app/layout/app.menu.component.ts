@@ -30,7 +30,10 @@ export class AppMenuComponent implements OnInit {
           || this.jwtService.Permissions.CanViewDieselBunks || this.jwtService.Permissions.CanViewDieselRates
           || this.jwtService.Permissions.CanViewDistanceRates || this.jwtService.Permissions.CanViewLoanMasters
           || this.jwtService.Permissions.CanViewVillageParamRates || this.jwtService.Permissions.CanViewVillagetptRates
-          || this.jwtService.Permissions.CanViewWarehouses
+          || this.jwtService.Permissions.CanViewWareHouses
+      case 'Application Masters':
+        return this.jwtService.Permissions.CanViewTpts || this.jwtService.Permissions.CanViewVarieties
+          || this.jwtService.Permissions.CanViewVehicleTypes
       default: return false;
     }
   }
@@ -90,13 +93,13 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-id-card',
                 permission: this.GroupPermission('Geo Masters'),
                 items: [
-                  { label: 'State', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/state'], permission: this.jwtService.Permissions.CanViewStates },
-                  { label: 'Districts', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/districts'], permission: this.jwtService.Permissions.CanViewDistricts },
-                  { label: 'Mandal', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/mandal'], permission: this.jwtService.Permissions.CanViewMandals },
-                  { label: 'Division', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/division'], permission: this.jwtService.Permissions.CanViewDivisions },
-                  { label: 'Circles', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/circle'], permission: this.jwtService.Permissions.CanViewCircles },
-                  { label: 'Section', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/section'], permission: this.jwtService.Permissions.CanViewSections },
-                  { label: 'Village', icon: 'pi pi-fw pi-check-square', routerLink: ['/geomasters/village'], permission: this.jwtService.Permissions.CanViewVillages },
+                  { label: 'State', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/state'], permission: this.jwtService.Permissions.CanViewStates },
+                  { label: 'District', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/districts'], permission: this.jwtService.Permissions.CanViewDistricts },
+                  { label: 'Mandal', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/mandal'], permission: this.jwtService.Permissions.CanViewMandals },
+                  { label: 'Division', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/division'], permission: this.jwtService.Permissions.CanViewDivisions },
+                  { label: 'Circle', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/circle'], permission: this.jwtService.Permissions.CanViewCircles },
+                  { label: 'Section', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/section'], permission: this.jwtService.Permissions.CanViewSections },
+                  { label: 'Village', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/village'], permission: this.jwtService.Permissions.CanViewVillages },
                 ]
               },
               {
@@ -111,27 +114,25 @@ export class AppMenuComponent implements OnInit {
                   { label: 'Distance Rate Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'], permission: this.jwtService.Permissions.CanViewDistanceRates },
                   { label: 'Village Param Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villageparamrates'], permission: this.jwtService.Permissions.CanViewVillageParamRates },
                   { label: 'Village TPT Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villagetptrate'], permission: this.jwtService.Permissions.CanViewVillagetptRates },
-                  { label: 'Diesel Bunks', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselbunk'], permission: this.jwtService.Permissions.CanViewDieselBunks },
-                  { label: 'Ware Houses', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'],  permission: true },
+                  { label: 'Diesel Bunk', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselbunk'], permission: this.jwtService.Permissions.CanViewDieselBunks },
+                  { label: 'Ware House', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'], permission: this.jwtService.Permissions.CanViewWareHouses },
                 ]
               },
               {
                 label: 'Application Masters',
                 icon: 'pi pi-fw pi-align-justify text-lg',
-                permission: true,
+                permission: this.GroupPermission('Application Masters'),
                 items: [
                   { label: 'Season', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
                   { label: 'Farmer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: true },
-                  // { label: 'LookUp', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
-                  // { label: 'Plant Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
-                  { label: 'Plant Sub Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/plantsubtype'], permission: true },
-                  { label: 'Bank', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/bank'], permission: true },
-                  { label: 'Lookup', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
-                  { label: 'Plant type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
-                  { label: 'Variety', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: true },
-                  { label: 'Vehicle', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/vehicle'], permission: true },
-                  { label: 'TPT', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/tpt'], permission: true },
                   { label: 'hgl', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: true },
+                  { label: 'TPT', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/tpt'], permission: this.jwtService.Permissions.CanViewTpts },
+                  { label: 'Plant type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
+                  { label: 'Plant Sub Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/plantsubtype'], permission: true },
+                  { label: 'Variety', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: this.jwtService.Permissions.CanViewVarieties },
+                  { label: 'Bank', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/bank'], permission: true },
+                  { label: 'Vehicle', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/vehicle'], permission: this.jwtService.Permissions.CanViewVehicleTypes },
+                  { label: 'Lookup', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
                   { label: 'Shift', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Shift'], permission: true },
                   { label: 'Sample Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Sample_Slabs'], permission: true },
                 ]
@@ -155,27 +156,27 @@ export class AppMenuComponent implements OnInit {
       {
         label: 'Demo',
         icon: 'pi pi-fw pi-briefcase',
-        permission:true,
+        permission: true,
         items: [
 
           {
             label: 'ui',
             icon: 'pi pi-fw pi-user',
-            permission:true,
+            permission: true,
             items: [
-              { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'], permission:true },
-              { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'], permission:true },
-              { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'], permission:true },
-              { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'], permission:true },
-              { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'], permission:true },
-              { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'], permission:true },
-              { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'], permission:true },
-              { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'], permission:true },
-              { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/utilities/icons'], permission:true },
-              { label: 'demoui', icon: 'pi pi-fw pi-tablet', routerLink: ['/demoui/dashboard'], permission:true },
+              { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'], permission: true },
+              { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'], permission: true },
+              { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'], permission: true },
+              { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'], permission: true },
+              { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'], permission: true },
+              { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'], permission: true },
+              { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'], permission: true },
+              { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'], permission: true },
+              { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['/utilities/icons'], permission: true },
+              { label: 'demoui', icon: 'pi pi-fw pi-tablet', routerLink: ['/demoui/dashboard'], permission: true },
               {
-                label: 'Tables', icon: 'pi pi-fw pi-table', permission:true , items: [
-                  { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] , permission:true},
+                label: 'Tables', icon: 'pi pi-fw pi-table', permission: true, items: [
+                  { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'], permission: true },
 
                 ]
               },
@@ -184,7 +185,7 @@ export class AppMenuComponent implements OnInit {
 
                 label: 'Not Found',
                 icon: 'pi pi-fw pi-exclamation-circle',
-                permission:true,
+                permission: true,
                 routerLink: ['/notfound']
               },
 

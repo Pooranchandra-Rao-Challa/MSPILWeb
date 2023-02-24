@@ -1,12 +1,13 @@
-import { MAX_LENGTH_6 } from './../../../_shared/regex';
-import { DieselBunkDto } from './../../../_models/billingmaster';
-import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { MAX_LENGTH_6 } from 'src/app/_shared/regex';
+import { DieselBunkDto } from 'src/app/_models/billingmaster';
+import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_EMAIL, RG_PHONE_NO } from 'src/app/_shared/regex';
 
 @Component({
@@ -26,6 +27,7 @@ export class DieselBunkComponent implements OnInit {
   globalFilterFields: string[] = ['code', 'name', 'address', 'pinCode', 'phoneNo', 'email', 'rate', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy',
     'updatedAt', 'updatedBy'];
   submitLabel!: string;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService) { }

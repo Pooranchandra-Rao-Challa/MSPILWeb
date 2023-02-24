@@ -70,16 +70,16 @@
           <td><button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component mr-2"
               (click)="editDieselRate(rate)"></button></td>
-          <td>{{rate.fromDate | date: 'dd-MMM-yyyy'}}</td>
-          <td>{{rate.toDate | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{rate.fromDate | date: mediumDate}}</td>
+          <td>{{rate.toDate | date: mediumDate}}</td>
           <td>{{rate.rate}}</td>
           <td style="text-align:center">
             <p-checkbox name="active" value="active" [(ngModel)]="rate.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{rate.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{rate.createdAt | date: mediumDate}}</td>
           <td>{{rate.createdByUser}}</td>
-          <td>{{rate.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{rate.updatedAt | date: mediumDate}}</td>
           <td>{{rate.updatedByUser}}</td>
         </tr>
       </ng-template>
@@ -111,17 +111,23 @@
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
-                      Please Select From Date.</div>
+                      Please select from date.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="toDate" mask="99/99/9999"
+                    [minDate]="fbDieselRate.value.fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
-                      Please Select To Date.</div>
+                      Please select to date.</div>
+                  </span>
+                  <span>
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="fbDieselRate.value.fromDate > fbDieselRate.value.toDate">
+                      To Date always greater than equals to from date</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -132,7 +138,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
-                      Please Enter Rate.</div>
+                      Please enter rate.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

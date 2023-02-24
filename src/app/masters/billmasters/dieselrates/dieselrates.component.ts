@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { DieselRateViewDto, DieselRateDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-dieselrates',
@@ -23,9 +23,7 @@ export class DieselRatesComponent implements OnInit {
   showDialog: boolean = false;
   fbDieselRate!: FormGroup;
   submitLabel!: string;
-  // short_Date: string = SHORT_DATE;
-  // medium_Date: string = MEDIUM_DATE;
-  // long_Date: string = LONG_DATE;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService) { }
