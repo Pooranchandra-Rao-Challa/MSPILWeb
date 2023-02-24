@@ -85,9 +85,9 @@
           <td>{{bill.billCategoryName}}</td>
           <td>{{bill.billNo}}</td>
           <td>{{bill.seasonName}}</td>
-          <td>{{bill.fromDate | date: 'dd-MMM-yyyy'}}</td>
-          <td>{{bill.toDate | date: 'dd-MMM-yyyy'}}</td>
-          <td>{{bill.runDate | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{bill.fromDate | date: mediumDate}}</td>
+          <td>{{bill.toDate | date: mediumDate}}</td>
+          <td>{{bill.runDate | date: mediumDate}}</td>
           <td style="text-align:center">
             <p-checkbox name="final" value="final" [(ngModel)]="bill.isFinal" [binary]="true" [disabled]="true">
             </p-checkbox>
@@ -96,9 +96,9 @@
             <p-checkbox name="active" value="active" [(ngModel)]="bill.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{bill.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{bill.createdAt | date: mediumDate}}</td>
           <td>{{bill.createdBy}}</td>
-          <td>{{bill.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{bill.updatedAt | date: mediumDate}}</td>
           <td>{{bill.updatedBy}}</td>
         </tr>
       </ng-template>

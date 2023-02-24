@@ -96,9 +96,9 @@
             <p-checkbox name="active" value="active" [(ngModel)]="billparam.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{billparam.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{billparam.createdAt | date: mediumDate}}</td>
           <td>{{billparam.createdByUser}}</td>
-          <td>{{billparam.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{billparam.updatedAt | date: mediumDate}}</td>
           <td>{{billparam.updatedByUser}}</td>
         </tr>
       </ng-template>

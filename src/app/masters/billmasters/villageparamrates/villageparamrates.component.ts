@@ -1,13 +1,14 @@
-import { GeoMasterService } from './../../../_services/geomaster.service';
-import { CommonService } from './../../../_services/common.service';
-import { BillMasterService } from 'src/app/_services/billmaster.service';
-import { VillageParamRateViewDto, VillageParamRateDto, BillParameterViewDto } from './../../../_models/billingmaster';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { VillagesViewDto } from 'src/app/_models/geomodels';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { CommonService } from 'src/app/_services/common.service';
+import { BillMasterService } from 'src/app/_services/billmaster.service';
+import { VillageParamRateViewDto, VillageParamRateDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
 
 @Component({
   selector: 'app-villageparamrates',
@@ -28,6 +29,7 @@ export class VillageParamRatesComponent implements OnInit {
   villages: VillagesViewDto[] = [];
   billParameters: BillParameterViewDto[] = [];
   submitLabel!: string;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
@@ -74,7 +76,6 @@ export class VillageParamRatesComponent implements OnInit {
     this.fbVillageParamRate = this.formbuilder.group({
       id: [null],
       seasonsId: ['', (Validators.required)],
-      // village: ['', (Validators.required)],
       villageName: ['', (Validators.required)],
       villageId: ['', (Validators.required)],
       billParameterId: ['', (Validators.required)],
