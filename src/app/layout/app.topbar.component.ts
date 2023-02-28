@@ -4,36 +4,38 @@ import { LayoutService } from "./service/app.layout.service";
 import { JWTService } from '../_services/jwt.service';
 
 @Component({
-    selector: 'app-topbar',
-    templateUrl: './app.topbar.component.html'
+  selector: 'app-topbar',
+  templateUrl: './app.topbar.component.html'
 })
 export class AppTopBarComponent {
 
-    items!: MenuItem[];
-    loggedInUser: String = "";
-    @ViewChild('menubutton') menuButton!: ElementRef;
+  items!: MenuItem[];
+  loggedInUser: String = "";
+  @ViewChild('menubutton') menuButton!: ElementRef;
 
-    @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
+  @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
 
-    @ViewChild('topbarmenu') menu!: ElementRef;
+  @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService,private jwtService:JWTService) {
-      console.log(this.jwtService.GivenName)
-      this.loggedInUser = this.jwtService.GivenName;
-     }
+  constructor(public layoutService: LayoutService, private jwtService: JWTService) {
+    console.log(this.jwtService.GivenName)
+    this.loggedInUser = this.jwtService.GivenName;
+  }
 
-    // Logout(){
-    //   this.jwtService.Logout();
-    // }
-    ngOnInit() {
-      this.items = [
-          { label: 'Settings', icon: 'pi pi-external-link', url: '#' },
-          { label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
-            console.log(this.jwtService.Logout());
-            // logic
-          }}
-      ];
+  // Logout(){
+  //   this.jwtService.Logout();
+  // }
+  ngOnInit() {
+    this.items = [
+      { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['changepassword'] },
+      {
+        label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
+          console.log(this.jwtService.Logout());
+          // logic
+        }
+      }
+    ];
 
-     
+
   }
 }

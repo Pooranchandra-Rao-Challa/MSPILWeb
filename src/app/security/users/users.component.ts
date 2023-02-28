@@ -1,11 +1,13 @@
-import { UserDto, RoleViewDto, RoleDto, UserSectionDto } from './../../_models/security';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { UserViewDto } from 'src/app/_models/security';
 import { SecurityService } from 'src/app/_services/security.service';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { UserDto, RoleDto, UserSectionDto } from 'src/app/_models/security';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { RG_ALPHA_ONLY, RG_EMAIL, RG_PHONE_NO, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-users',
@@ -21,9 +23,10 @@ export class UsersComponent implements OnInit {
   loading: boolean = true;
   dialog: boolean = false;
   submitLabel!: string;
-  globalFilters: string[] = ["UserId", "UserName", "FirstName", "LastName", "EmailId", "MobileNo", "Role", "IMEINo", "IPAddress", "IPRestriction", "IsAdminGate", "IsGross", "IsTare", "IsDumpYard", "IsActive", "CreatedDate", "UpdatedDate"];
-
+  globalFilters: string[] = ["UserId", "UserName", "FirstName", "LastName", "EmailId", "MobileNo", "Role", "IMEINo", "IPAddress", "IPRestriction",
+  "IsAdminGate", "IsGross", "IsTare", "IsDumpYard", "IsActive", "CreatedDate", "UpdatedDate"];
   userForm!: FormGroup;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private securityService: SecurityService) {
@@ -36,13 +39,13 @@ export class UsersComponent implements OnInit {
       isAdmin: [false,],
       userName: ['', (Validators.required)],
       password: ['', (Validators.required)],
-      firstName: ['', (Validators.required)],
-      lastName: ['', (Validators.required)],
-      email: ['', (Validators.required)],
-      mobileNumber: ['', (Validators.required)],
+      firstName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      lastName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      email: new FormControl('', [Validators.pattern(RG_EMAIL)]),
+      mobileNumber: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
       roleId: ['', (Validators.required)],
       ipaddress: [''],
-      imeino: [''],
+      imeino: ['', (Validators.pattern(RG_NUMERIC_ONLY))],
       iprestriction: [false],
       isAdminGate: [false],
       isGross: [false],

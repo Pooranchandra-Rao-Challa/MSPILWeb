@@ -139,10 +139,10 @@
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please enter code.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-                        Code min length is 2  .</div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-                          Code max length is 6.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                      Code min length is 2 .</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                      Code max length is 6.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
                       Code should contains only characters.</div>
                   </span>
@@ -225,8 +225,10 @@
         </form>
       </div>
       <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
-          (click)="onSubmit()"></button>
+        <div class="col-12" style="float:right">
+          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+            (click)="onSubmit()"></button>
+        </div>
       </ng-template>
     </p-dialog>
 

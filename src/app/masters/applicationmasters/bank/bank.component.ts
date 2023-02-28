@@ -1,10 +1,12 @@
 import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { BankDto, BankViewDto } from 'src/app/_models/applicationmaster';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { BankDto, BankViewDto,BranchViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { MAX_LENGTH_10,  MAX_LENGTH_20,  MAX_LENGTH_25,  MAX_LENGTH_6,  MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-bank',
@@ -14,67 +16,76 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 })
 export class BankComponent implements OnInit {
   display: boolean = false;
-  showDialog: boolean=false;
+  showDialog: boolean = false;
+  bank: BankDto = new BankDto()
   Bank: BankViewDto[] = [];
+  branches: BranchViewDto = new BranchViewDto();
+  //branch:BranchDto = new BranchDto();
   filter: any;
-  dataShown:boolean=false;
-  addfields:any;
+  ShowbranchDetails: boolean = false;
+  addfields: any;
   loading: boolean = false;
-  fbbank!:FormGroup
-  branches!: FormArray;
+  fbbank!: FormGroup
+  fabranch!: FormArray;
   submitLabel!: string;
   addFlag: boolean = true;
-  constructor(private formbuilder:FormBuilder,
+  globalFilterFields: string[] = ['code', 'name','ifsc','address','pinCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
+  mediumDate: string = MEDIUM_DATE;
+  constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,) { }
- 
+
   get FormControls() {
     return this.fbbank.controls;
   }
-  ngOnInit(): void { 
-    this.BankForm(); 
+  ngOnInit(): void {
+    this.BankForm();
     this.initBank();
   }
   BankForm() {
-    this.addfields=[]
-    this.fbbank= this.formbuilder.group({
-      bankId:[0],
-      code:['', (Validators.required)],
-      name: ['', (Validators.required)],
-      abbr: ['',],
-      isActive:[true, Validators.required],
+    this.fbbank = this.formbuilder.group({
+      bankId: [0],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
+      name:new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY)]),
+      abbr: [''],
+      isActive: [true],
       branches: this.formbuilder.array([]),
     });
   }
   addBranches() {
-    this.dataShown = true;
-    this.branches = this.fbbank.get("branches") as FormArray
-    this.branches.push(this.generateRow())
+    this.ShowbranchDetails = true;
+    this.fabranch = this.fbbank.get("branches") as FormArray
+    this.fabranch.push(this.generateRow())
   }
-  get lookupDtl() {
+  fabranchDetails() {
     return this.fbbank.get("branches") as FormArray
   }
-  generateRow() {
+  generateRow(branchDetail: BranchViewDto = new BranchViewDto()): FormGroup {
+    if (!this.addFlag) branchDetail.bankId = this.bank.bankId;
     return this.formbuilder.group({
-      branchId:[0],
-      code:[''],
-      name:[''],
-      ifsc:[''],
-      abbr: [''],
-      address:[''],
-      pinCode: [''],
-      phoneNo:[''],
-      email:[''],
+      bankId: [branchDetail.bankId],
+      branchId: [branchDetail.branchId],
+      code:new FormControl(branchDetail.code,[Validators.required,Validators.minLength(MIN_LENGTH_2),Validators.maxLength(MAX_LENGTH_20)]),
+      name:[branchDetail.name,(Validators.required)],
+      ifsc: new FormControl(branchDetail.ifsc,[Validators.required,Validators.pattern(RG_ALPHA_NUMERIC),Validators.maxLength(MAX_LENGTH_25)]),
+      abbr: [""],
+      address:[branchDetail.address,(Validators.required)],
+      pinCode: new FormControl(branchDetail.pinCode,[Validators.required,Validators.pattern(RG_NUMERIC_ONLY),Validators.maxLength(MAX_LENGTH_6)]),
+      phoneNo: [branchDetail.phoneNo],
+      email: [branchDetail.email],
+      isActive: [branchDetail.isActive],
     })
   }
-  
   addBank() {
     this.submitLabel = "Add Bank";
+    this.fbbank.reset();
     this.addFlag = true;
     this.showDialog = true;
   }
-
+  formArrayControls(i: number, formControlName: string) {
+    return this.fabranchDetails().controls[i].get(formControlName);
+  }
   initBank() {
-    this.appMasterService.GetBanks().subscribe((resp) => {
+     this.appMasterService.GetBanks().subscribe((resp) => {
       this.Bank = resp as unknown as BankViewDto[];
       console.log(this.Bank);
       this.loading = false;
@@ -82,20 +93,20 @@ export class BankComponent implements OnInit {
   }
   onClose() {
     this.fbbank.reset();
+    this.fabranchDetails().clear();
+    this.ShowbranchDetails = false;
   }
   saveBank(): Observable<HttpEvent<BankDto>> {
-    debugger
     if (this.addFlag) return this.appMasterService.CreateBank(this.fbbank.value)
     else return this.appMasterService.UpdateBank(this.fbbank.value)
   }
   onSubmit() {
-    debugger
     if (this.fbbank.valid) {
-       console.log(this.fbbank.value);
-       this. saveBank().subscribe(resp => {
+      console.log(this.fbbank.value);
+      this.saveBank().subscribe(resp => {
         if (resp) {
           this.initBank();
-          this.onClose();
+          this.fbbank.reset();
           this.showDialog = false;
         }
       })
@@ -104,16 +115,43 @@ export class BankComponent implements OnInit {
       this.fbbank.markAllAsTouched();
     }
   }
-  showData(){
-    this.dataShown=true;  
-    this.addfields.push(this.fbbank.value)
+  showData() {
+    this.ShowbranchDetails = true;
+    this.addfields.push(this.fbbank.value);
   }
-
+  initBranch(bankId: number) {
+    this.appMasterService.GetBranchDetails(bankId).subscribe((resp) => {
+      this.branches = resp as unknown as BranchViewDto;
+      this. fabranchDetails().clear();
+      this.branches.branches?.forEach((branches: BranchViewDto) => {
+        this.fabranchDetails().push(this.generateRow(branches));
+      })
+    });
+  }
+  editBank(bank: BankViewDto) {
+    this.initBranch(bank.bankId);
+    this.bank.bankId = bank.bankId;
+    this.bank.branchId = bank.branchId;
+    this.bank.code = bank.code;
+    this.bank.name = bank.name;
+    this.bank.abbr = bank.abbr;
+    this.bank.isActive = bank.isActive;
+    this.bank.branches = this.branches ? [] : this.branches;
+    this.fbbank.patchValue(this.bank);
+    this.addFlag = false;
+    this.submitLabel = "Update Bank";
+    this.showDialog = true;
+    this.ShowbranchDetails = true;
+  }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
   clear(table: Table) {
     table.clear();
-    this.filter.nativeElement.value='';
+    this.filter.nativeElement.value = '';
+  }
+  ngOnDestroy() {
+    this.Bank = [];
+    this.bank = new BankDto();
   }
 }

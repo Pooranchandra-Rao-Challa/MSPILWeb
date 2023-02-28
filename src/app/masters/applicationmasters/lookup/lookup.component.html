@@ -4,16 +4,16 @@
         <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
-                <h4>LookUp</h4>
+                <h4>Lookup</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="New LookUp" icon="pi pi-plus" class="p-button-success p-mr-2"
+                <button pButton pRipple label="New Lookup" icon="pi pi-plus" class="p-button-success p-mr-2"
                     (click)="addLookupDialog()"></button>
             </ng-template>
         </p-toolbar>
 
         <!-- dialog -->
-        <p-dialog header="LookUp" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+        <p-dialog header="Lookup" [(visible)]="showDialog" [modal]="true" showEffect="fade"
          [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width:'45vw'}" (onHide)="onClose()"> 
             <div class="flex flex-column align-items-center justify-content-center">
@@ -21,7 +21,7 @@
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">
-                                <div class="field col-12">
+                                <div class="field col-12 md:col-6">
                                     <label>Code:<sup class="p-error">*</sup></label>
                                     <input pInputText id="code" type="text" formControlName="code"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -33,7 +33,7 @@
                                             numbers.</div>
                                     </span>
                                 </div>
-                                <div class="field col-12">
+                                <div class="field col-12 md:col-6">
                                     <label>Name:<sup class="p-error">*</sup></label>
                                     <input pInputText id="name" type="text" formControlName="name"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -45,7 +45,6 @@
                                             Alphabets .</div>
                                     </span>
                                 </div>
-
                                 <div class="field col-12 md:col-8">
                                     <label>Is Active:</label><br>
                                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
@@ -125,7 +124,7 @@
         <p-table #dt1 [value]="look" dataKey="id" [rows]="5" [rowHover]="true" [loading]="loading"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="['lookupId','code','name','isActive','createdBy','updatedBy','createdAt','updatedAt']"
-            [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[5,10,25,50]">
+            [autoLayout]="true" responsiveLayout="scroll"  [rowsPerPageOptions]="[5,10,25,50]">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -142,11 +141,11 @@
                 <tr>
                     <th></th>
                     <th pSortableColumn="code">
-                        Lookup Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+                         Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
                         <p-sortIcon field="code"></p-sortIcon>
                     </th>
                     <th pSortableColumn="name">
-                        Lookup Name<p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                        Name<p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
                         <p-sortIcon field="name"></p-sortIcon>
                     </th>
                     <th pSortableColumn="isActive">
@@ -158,7 +157,7 @@
                         <p-sortIcon field="createdBy"></p-sortIcon>
                     </th>
                     <th pSortableColumn="updatedByUser">
-                        Updated BY<p-columnFilter type="text" field="updatedByUser" display="menu"></p-columnFilter>
+                        Updated By<p-columnFilter type="text" field="updatedByUser" display="menu"></p-columnFilter>
                         <p-sortIcon field="updatedBy"></p-sortIcon>
                     </th>
                     <th pSortableColumn="createdAt">
@@ -174,7 +173,7 @@
 
             <ng-template pTemplate="body" let-lookup>
                 <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil" (click)="editLookUp(lookup)"
+                    <td><button pButton pRipple icon="pi pi-pencil" (click)=" editLookUp(lookup)"
                             class="p-element p-ripple p-button-text p-button p-component"></button></td>
                     <td>{{lookup.code}}</td>
                     <td>{{lookup.name}}</td>
@@ -187,7 +186,6 @@
                     <td>{{lookup.updatedBy}}</td>
                     <td>{{lookup.createdAt | date: 'dd-MMM-yyyy'}}</td>
                     <td>{{lookup.updatedAt | date: 'dd-MMM-yyyy'}}</td>
-
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">

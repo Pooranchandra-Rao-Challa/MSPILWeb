@@ -17,7 +17,7 @@ export class LookupComponent implements OnInit {
 
   showDialog: boolean = false;
   look: LookupViewDto[] = [];
-  lookupDetails: LookupDetailViewDto[] = [];
+  lookupDetails: LookupDetailViewDto = new LookupDetailViewDto();
   lookup: LookUpHeaderDto = new LookUpHeaderDto();
   filter: any;
   dataShown: boolean = false;
@@ -30,7 +30,7 @@ export class LookupComponent implements OnInit {
   submitLabel!: string;
   globalFilterFields: string[] = ['code', 'name', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   constructor(private formbuilder: FormBuilder,
-    private appMasterService: AppMasterService,) {}
+    private appMasterService: AppMasterService,) { }
 
   get FormControls() {
     return this.fblookup.controls;
@@ -74,28 +74,20 @@ export class LookupComponent implements OnInit {
   }
   generaterow(lookupDetail: LookupDetailViewDto = new LookupDetailViewDto()): FormGroup {
     return this.formbuilder.group({
-      lookUpDetailId:[0],
-      code:[''],
-      name:[''],
-      remarks:[''],
-      listingorder:[0]
-    // if (!this.addFlag) lookupDetail.lookUpId = this.lookup.lookUpId;
-    // return this.formbuilder.group({
-    //   id: lookupDetail.lookUpDetailId == undefined ? 0 : lookupDetail.lookUpDetailId,
-    //   lookupId: lookupDetail.lookUpId,
-    //   lookUpDetailId: lookupDetail.lookUpDetailId,
-    //   code: lookupDetail.code,
-    //   name: lookupDetail.name,
-    //   remarks: lookupDetail.remarks,
-    //   listingorder: lookupDetail.listingorder,
-    //   isActive: lookupDetail.isActive,
+      lookupId: [lookupDetail.lookupId],
+      lookUpDetailId:[lookupDetail.lookUpDetailId],
+      code: [lookupDetail.code],
+      name: [lookupDetail.name],
+      remarks: [lookupDetail.remarks],
+      listingorder: [lookupDetail.listingorder],
+      isActive: [lookupDetail.isActive],
     })
   }
 
   //  post lookup 
   savelookup(): Observable<HttpEvent<LookUpHeaderDto>> {
-    if (this.addFlag) return this.appMasterService.Createlookup(this.fblookup.getRawValue())
-    else return this.appMasterService.Updatelookup(this.fblookup.getRawValue())
+    if (this.addFlag) return this.appMasterService.Createlookup(this.fblookup.value)
+    else return this.appMasterService.Updatelookup(this.fblookup.value)
   }
   onClose() {
     this.fblookup.reset();
@@ -124,27 +116,27 @@ export class LookupComponent implements OnInit {
       this.loading = false;
     })
   }
-  initlookupDetails(lookUpId: number) {
-    this.appMasterService.GetlookupDetails(lookUpId).subscribe((resp) => {
-      this.lookupDetails = resp as unknown as LookupDetailViewDto[];
-      console.log(this.lookupDetails)
-      this.lookupDetails.forEach((lookupDetail) => {
-        this.falookupDtls().push(this.generaterow(lookupDetail));
+  initlookupDetails(lookupId: number) {
+    this.appMasterService.GetlookupDetails(lookupId).subscribe((resp) => {
+      this.lookupDetails = resp as unknown as LookupDetailViewDto;
+      console.log(this.lookupDetails);
+      this.lookupDetails.lookupDetails?.forEach((lookupDetails: LookupDetailViewDto) => {
+        this.falookupDtls().push(this.generaterow(lookupDetails));
       })
     });
   }
-  editLookUp(lookup: LookUpHeaderDto) {
-    // this.initlookupDetails(lookup.lookUpId);
-    // this.lookup.lookUpId = lookup.lookUpId;
-    // this.lookup.code = lookup.code;
-    // this.lookup.name = lookup.name;
-    // this.lookup.isActive = lookup.isActive;
-    // this.lookup.lookUpDetails = this.lookUpDetails ? [] : this.lookUpDetails;
-    // this.fblookup.setValue(this.lookup);
-    // this.addFlag = false;
-    // this.submitLabel = "Update Lookup";
-    // this.showDialog = true;
-    // this.ShowlookupDetails = true;
+  editLookUp(lookup: LookupViewDto) {
+    this.initlookupDetails(lookup.id);
+    this.lookup.lookUpId = lookup.id;
+    this.lookup.code = lookup.code;
+    this.lookup.name = lookup.name;
+    this.lookup.isActive = lookup.isActive;
+    this.lookup.lookupDetails = this.lookupDetails ? [] : this.lookupDetails;
+    this.fblookup.patchValue(this.lookup);
+    this.addFlag = false;
+    this.submitLabel = "Update Lookup";
+    this.showDialog = true;
+    this.ShowlookupDetails = true;
   }
 }
 

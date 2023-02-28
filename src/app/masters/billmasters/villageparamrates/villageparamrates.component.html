@@ -27,8 +27,8 @@
               <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
                 class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons" [showClear]="true" (onChange)="getVillageParamRatesBySeason($event.value)"
-              optionValue="seasonId">
+            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+              [showClear]="true" (onChange)="getVillageParamRatesBySeason($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
         </div>
@@ -204,8 +204,10 @@
         </form>
       </div>
       <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
-          (click)="onSubmit()"></button>
+        <div class="col-12" style="float:right">
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+            (click)="onSubmit()"></button>
+        </div>
       </ng-template>
     </p-dialog>
 

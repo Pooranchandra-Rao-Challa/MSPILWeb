@@ -10,8 +10,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RippleModule } from 'primeng/ripple';
 import { ChangepasswordComponent } from 'src/app/account/changepassword/changepassword.component';
-import { ForgotpasswordComponent } from 'src/app/account/forgotpassword/forgotpassword.component';
-import { RequestforgotpasswordComponent } from 'src/app/account/requestforgotpassword/requestforgotpassword.component';
 
 @NgModule({
   imports: [
@@ -25,7 +23,7 @@ import { RequestforgotpasswordComponent } from 'src/app/account/requestforgotpas
     ReactiveFormsModule,
     RippleModule,
   ],
-  declarations: [LoginComponent, ChangepasswordComponent, ForgotpasswordComponent, RequestforgotpasswordComponent],
+  declarations: [LoginComponent, ChangepasswordComponent],
   bootstrap: [LoginComponent]
 })
 export class LoginModule { }

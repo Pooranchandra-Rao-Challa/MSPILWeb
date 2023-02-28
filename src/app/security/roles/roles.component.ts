@@ -1,10 +1,13 @@
+import { RG_ALPHA_ONLY } from './../../_shared/regex';
 import { RoleDto, RoleViewDto, RolePermissionDto } from './../../_models/security';
 import { SecurityService } from './../../_services/security.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-roles',
@@ -13,30 +16,24 @@ import { HttpEvent } from '@angular/common/http';
 })
 export class RolesComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
-  roles: any;
+  roles: RoleViewDto[] = [];
   role: RoleDto = {}
   permissions: RolePermissionDto[] = [];
-  screens: string[] =[]
+  screens: string[] = []
   loading: boolean = true;
   dialog: boolean = false;
   roleForm!: FormGroup;
   submitLabel!: string;
   globalFilters: string[] = ["Code", "Name", "IsActive", "CreatedDate", "CreatedBy", "UpdatedDate", "UpdatedBy"];
+  mediumDate: string = MEDIUM_DATE;
 
-  constructor(private formbuilder: FormBuilder, private securityService: SecurityService) {
-    // this.roles = [
-    //   { Code: '123456', Name: 'sai1', IsActive: true, CreatedDate: "25/01/2023", CreatedBy: 'Acc1', UpdatedDate: "25/01/2023", UpdatedBy: "hghj" },
-    //   { Code: '123', Name: 'kiran1', IsActive: true, CreatedDate: "25/01/2023", CreatedBy: 'accont1', UpdatedDate: "25/01/2023", UpdatedBy: "saio" },
-    //   { Code: '345', Name: 'kumar1', IsActive: true, CreatedDate: "25/01/2023", CreatedBy: 'fit1', UpdatedDate: "25/01/2023", UpdatedBy: "hgh" }
-    // ];
-    this.loading = false;
-  }
+  constructor(private formbuilder: FormBuilder, private securityService: SecurityService) { }
 
   ngOnInit(): void {
     this.roleForm = this.formbuilder.group({
       roleId: [''],
-      code: ['', (Validators.required)],
-      name: ['', (Validators.required)],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       isActive: [true, (Validators.requiredTrue)],
       permissions: []
     });
@@ -62,8 +59,8 @@ export class RolesComponent implements OnInit {
   }
   intiRoles() {
     this.securityService.GetRoles().subscribe(resp => {
-      this.roles = resp as unknown as RoleViewDto
-      console.log(this.roles);
+      this.roles = resp as unknown as RoleViewDto[];
+      this.loading = false;
     });
   }
   initPermissoins() {
@@ -81,13 +78,13 @@ export class RolesComponent implements OnInit {
     if (role.roleId != null) {
       this.submitLabel = "Update Role";
       this.securityService.GetRoleWithPermissions(role.roleId).subscribe(resp => {
-      this.role.roleId = role.roleId
-      this.role.code = role.code
-      this.role.name = role.name;
-      this.role.isActive = role.isActive;
-      this.role.permissions = (resp as unknown as RoleDto).permissions;
-      this.roleForm.setValue(this.role);
-      this.screensInPermissions()
+        this.role.roleId = role.roleId
+        this.role.code = role.code
+        this.role.name = role.name;
+        this.role.isActive = role.isActive;
+        this.role.permissions = (resp as unknown as RoleDto).permissions;
+        this.roleForm.setValue(this.role);
+        this.screensInPermissions()
       })
     } else {
       this.submitLabel = "Add Role";
@@ -97,15 +94,15 @@ export class RolesComponent implements OnInit {
       this.role.isActive = false;
       this.role.name = "";
       this.initPermissoins();
-     
+
     }
   }
 
   screensInPermissions() {
     this.screens = getDistinct(this.role?.permissions || [], "screenName") as string[];
-    this.screens.sort((a,b)=> (a||"").localeCompare(b||""))
+    this.screens.sort((a, b) => (a || "").localeCompare(b || ""))
   }
-  getPermissions(screen: string){
+  getPermissions(screen: string) {
     return this.role?.permissions?.filter(fn => fn.screenName == screen)
   }
   saveRole(): Observable<HttpEvent<RoleDto>> {
@@ -118,8 +115,8 @@ export class RolesComponent implements OnInit {
 
     if (this.roleForm.valid) {
       console.log(this.roleForm.value);
-      this.saveRole().subscribe(resp =>{
-        if(resp){
+      this.saveRole().subscribe(resp => {
+        if (resp) {
           this.roleForm.reset();
           this.dialog = false;
           this.intiRoles();

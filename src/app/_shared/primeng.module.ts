@@ -28,6 +28,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { PasswordModule } from 'primeng/password';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     CheckboxModule,
     FieldsetModule,
     FileUploadModule,
-    RadioButtonModule
+    RadioButtonModule,
+    PasswordModule,
   ]
 })
 export class PrimeNgModule { }

@@ -1,3 +1,4 @@
+import { ChangepasswordComponent } from 'src/app/account/changepassword/changepassword.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -7,11 +8,13 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 const routes: Routes = [
   { path: '', loadChildren: () => import('./account/login.module').then(m => m.LoginModule) },
   { path: 'login', loadChildren: () => import('./account/login.module').then(m => m.LoginModule) },
+  { path: 'forgotpassword', loadChildren: () => import('src/app/account/forgotpassword/forgotpassword.module').then(m => m.ForgotPasswordModule) },
   { path: 'error', loadChildren: () => import('./_common/error/error.module').then(m => m.ErrorModule) },
   { path: 'access', loadChildren: () => import('./_common/access/access.module').then(m => m.AccessModule) },
   {
     path: '', component: AppLayoutComponent,
     children: [
+      { path: 'changepassword', component: ChangepasswordComponent },
       { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
       { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
       { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
