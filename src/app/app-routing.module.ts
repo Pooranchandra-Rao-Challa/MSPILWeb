@@ -1,3 +1,4 @@
+import { ChangepasswordComponent } from 'src/app/account/changepassword/changepassword.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -13,6 +14,7 @@ const routes: Routes = [
   {
     path: '', component: AppLayoutComponent,
     children: [
+      { path: 'changepassword', component: ChangepasswordComponent },
       { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
       { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
       { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },

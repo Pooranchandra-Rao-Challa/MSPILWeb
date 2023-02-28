@@ -6,7 +6,6 @@ import { ChangepasswordComponent } from 'src/app/account/changepassword/changepa
 @NgModule({
   imports: [RouterModule.forChild([
     { path: '', component: LoginComponent },
-    { path: 'changepassword', component: ChangepasswordComponent },
   ])],
   exports: [RouterModule]
 })
