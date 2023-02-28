@@ -22,9 +22,10 @@ export const RG_EMAIL = /^(?!\.)(?!.*\.$)(?!.*\.\.)[a-zA-Z0-9.]{1,}@[a-zA-Z.]{2,
 
 
 
-/* Ranges for codes */
+/* Min and Max lengths */
 export const MIN_LENGTH_2 = 2;
 export const MAX_LENGTH_6 = 6;
 export const MAX_LENGTH_10 = 10;
-export const MAX_LENGTH_20 = 30;
+export const MAX_LENGTH_20 = 20;
+export const MAX_LENGTH_30 = 30;
 export const MAX_LENGTH_50 = 50;
