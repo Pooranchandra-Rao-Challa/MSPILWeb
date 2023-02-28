@@ -137,7 +137,6 @@ export class TptDto {
   otherCode?: string;
   isActive?: boolean;
   tptdetails?: TptdetailDto[]
-  hglId: number | undefined;
 }
 
 export class TptdetailDto {

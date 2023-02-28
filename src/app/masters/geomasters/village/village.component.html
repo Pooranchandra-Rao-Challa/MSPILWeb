@@ -121,40 +121,59 @@
 
 
                     <div class="field col-8 md:col-3">
+                      
                       <label htmlFor="address">Address:</label>
-                      <textarea rows="5" cols="30" formControlName="address" placeholder="Village Address"
+                      <textarea rows="6" cols="30" formControlName="address" placeholder="Village Address"
                         pInputTextarea></textarea>
 
                     </div>
-                    <div class="field col-12 md:col-3">
-                      <label for="PinCode">Pin Code:</label>
-                      <p-inputNumber inputId="pinCode" formControlName="pinCode" mode="decimal" [useGrouping]="false"
-                      [size]="6" [maxlength]="6" placeholder="Pin Code">
-                      </p-inputNumber>
-
-
-                    </div>
-
-                    <div class="field col-12 md:col-3">
-                      <label for="distance">Distance:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2" placeholder="Enter Distance">
-                      </p-inputNumber>
-                      <div *ngIf="FormControls['distance'].invalid &&  FormControls['distance'].touched"
-                        class="error-message p-error">
-                        Distance required
+                    <div class=" col-8 md:col-9">
+                      <div class="grid">
+                      <div class="field col-12 md:col-4">
+                        <label for="PinCode">Pin Code:</label>
+                        <p-inputNumber inputId="pinCode" formControlName="pinCode" mode="decimal" [useGrouping]="false"
+                        [size]="6" [maxlength]="6" placeholder="Pin Code">
+                        </p-inputNumber>  
+                      </div>  
+                      <div class="field col-12 md:col-4">
+                        <label for="distance">Distance:<sup class="p-error">*</sup></label>
+                        <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2" placeholder="Enter Distance">
+                        </p-inputNumber>
+                        <div *ngIf="FormControls['distance'].invalid &&  FormControls['distance'].touched"
+                          class="error-message p-error">
+                          Distance required
+                        </div>
+                      </div>
+                      <div class="field col-12 md:col-4">
+                        <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
+                        <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
+                          [minFractionDigits]="2" placeholder="Enter Diverted Distance">
+                        </p-inputNumber>  
+                        <div *ngIf="FormControls['divertedDistance'].invalid &&  FormControls['divertedDistance'].touched"
+                          class="error-message p-error">
+                          Diverted Distance required
+                        </div>
+                      </div>
+                      <div class="field col-12 md:col-4">
+                        <div class="col-6">
+                          <label htmlFor="isActive">Is Active?:</label><br>
+                          <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                        </div>
+                      </div>
+                      <div class="field col-12 md:col-4">
+                        <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
+                        <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
+                          locale="en-IN"  [useGrouping]="false" [size]="6" [maxlength]="6" placeholder="Enter Listing Order">
+                        </p-inputNumber>
+                        <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
+                          class="error-message p-error">
+                          Listing Order is required
+                        </div>
                       </div>
                     </div>
-                    <div class="field col-12 md:col-3">
-                      <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
-                        [minFractionDigits]="2" placeholder="Enter Diverted Distance">
-                      </p-inputNumber>
 
-                      <div *ngIf="FormControls['divertedDistance'].invalid &&  FormControls['divertedDistance'].touched"
-                        class="error-message p-error">
-                        Diverted Distance required
-                      </div>
                     </div>
+                   
 
                   </div>
                 </p-fieldset>
@@ -262,22 +281,7 @@
 
                 </p-fieldset>
 
-                <div class="field col-12 md:col-3 ">
-                  <div class="col-6">
-                    <label htmlFor="isActive">Is Active?:</label><br>
-                    <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
-                  </div>
-                </div>
-                <div class="field col-12 md:col-3">
-                  <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
-                    locale="en-IN"  [useGrouping]="false" [size]="6" [maxlength]="6" placeholder="Enter Listing Order">
-                  </p-inputNumber>
-                  <div *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched"
-                    class="error-message p-error">
-                    Listing Order is required
-                  </div>
-                </div>
+                
 
               </div>
             </div>
@@ -333,7 +337,7 @@
           <th pSortableColumn="sectionId">Section Id<p-columnFilter type="text" field="sectionId"
             display="menu"></p-columnFilter><p-sortIcon field="sectionId"></p-sortIcon>
         </th>
-          <th pSortableColumn="sectionName">Section NAme<p-columnFilter type="text" field="sectionName"
+          <th pSortableColumn="sectionName">Section Name<p-columnFilter type="text" field="sectionName"
             display="menu"></p-columnFilter><p-sortIcon field="sectionName"></p-sortIcon>
         </th>
           <th pSortableColumn="mandalId">Mandal Id<p-columnFilter type="text" field="mandalId"

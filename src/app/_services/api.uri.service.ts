@@ -140,3 +140,5 @@ export const UPDATE_HGL_URI = "ApplicationMaster/UpdateHgl";
 export const GET_LOANTYPE_URI = "BillingMaster/GetLoanTypes";
 export const CREATE_LOANTYPE_URI = "BillingMaster/CreateLoanType";
 export const UPDATE_LOANTYPE_URI = "BillingMaster/UpdateLoanType";
+export const GET_LOANSUBTYPES_URI = "BillingMaster/GetLoanSubTypes/";
+export const GET_SUBHGL_URI = "ApplicationMaster/GetSubHgls/";
