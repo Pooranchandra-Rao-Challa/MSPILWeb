@@ -123,6 +123,7 @@ export const UPDATE_PLANT_SUB_TYPE_URI = "ApplicationMaster/UpdatePlantSubType";
 export const CREATE_BANK_URI = "ApplicationMaster/CreateBank"
 export const UPDATE_BANK_URI = "ApplicationMaster/UpdateBank";
 export const GET_SEASON_URI = "ApplicationMaster/GetSeasons";
+export const GET_BRANCH_URI = "ApplicationMaster/GetBank/"
 export const CREATE_SEASON_URI = "ApplicationMaster/CreateSeason";
 export const UPDATE_SEASON_URI = "ApplicationMaster/UpdateSeason";
 export const GET_SHIFT_URI = "ApplicationMaster/GetShifts";

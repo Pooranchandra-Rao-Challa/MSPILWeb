@@ -21,7 +21,6 @@ export class PlanttypeComponent implements OnInit {
   filter: any;
   submitLabel!: string;
   addFlag: boolean = true;
-  valSwitch: boolean = true;
   constructor(private formbuilder: FormBuilder,
     public jwtService: JWTService, private appMasterService: AppMasterService,
   ) { }
@@ -46,7 +45,7 @@ export class PlanttypeComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(('[a-zA-Z ]*'))]),
       estimatedTon: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
       loanEligible: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      isActive: true
+      isActive: [true],
     });
   }
   onClose() {
@@ -55,11 +54,8 @@ export class PlanttypeComponent implements OnInit {
   // post method
   savePlant(): Observable<HttpEvent<plantTypeDto>> {
     if (this.addFlag)
-      // {
-      //   this.fbplanttype.value.plantTypeId=0;
       return this.appMasterService.CreatePlantType(this.fbplantTypes.value);
-    // }
-    else return this.appMasterService.UpdatePlantType(this.fbplantTypes.value)
+      else return this.appMasterService.UpdatePlantType(this.fbplantTypes.value)
   }
   onSubmit() {
     if (this.fbplantTypes.valid) {
@@ -107,7 +103,7 @@ export class PlanttypeComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this. plantType = [];
+    this.plantType = [];
     this.plantTypes = new plantTypeDto();
   }
 }

@@ -29,3 +29,4 @@ export const MAX_LENGTH_10 = 10;
 export const MAX_LENGTH_20 = 20;
 export const MAX_LENGTH_30 = 30;
 export const MAX_LENGTH_50 = 50;
+export const MAX_LENGTH_25 = 25;
