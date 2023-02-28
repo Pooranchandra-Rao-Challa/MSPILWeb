@@ -30,7 +30,7 @@ export class HglComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   showDialog: boolean = false;
-  showTptDetails: boolean = false;
+  showSuhgl: boolean = false;
   relationTypes: any;
   banks: BankViewDto[] = [];
   bank: BankDto = new BankDto();
@@ -67,12 +67,11 @@ export class HglComponent implements OnInit {
     });
   }
 
-  initsubHgls(hglId: number) {
+  initsubHgls(hglId :any) {
+
     debugger;
     this.appMasterService.GetSubHgl(hglId).subscribe((resp) => {
       this.subHgls = resp as unknown as SubHglViewDto[];
-      console.log(this.subHgls);
-
       this.faSubHgl().clear();
       this.subHgls.forEach((subHgl) => {
         this.faSubHgl().push(this.generateRow(subHgl));
@@ -151,28 +150,25 @@ export class HglComponent implements OnInit {
   }
 
   addSubHgl() {
-    this.showTptDetails = true;
+    this.showSuhgl = true;
     this.faSubHgl().push(this.generateRow());
   }
 
-  generateRow(subHgl: SubHglViewDto = new SubHglViewDto()): FormGroup {
-    if (!this.addFlag) subHgl.hglId = this.hgl.hglId;
+  generateRow(subHgls: SubHglViewDto = new SubHglViewDto()): FormGroup {
+    if (!this.addFlag) subHgls.hglId = this.hgl.hglId;
     return this.formbuilder.group({
-      subHglId: subHgl.subHglId == undefined ? 0 : subHgl.subHglId,
-      hglId: subHgl.hglId,subHgl,
-      code: new FormControl(subHgl.code,),
-      name: [subHgl.name, (Validators.required)],
-      vehicleTypeId:[subHgl.vehicleTypeId, (Validators.required)],
-      noOfPersons:[subHgl.noOfPersons, (Validators.required)],
-      isActive: subHgl.isActive
+      subHglId: subHgls.subHglId == undefined ? 0 : subHgls.subHglId,
+      hglId: subHgls.hglId,
+      code: new FormControl(subHgls.code,),
+      name: [subHgls.name, (Validators.required)],
+      vehicleTypeId:[subHgls.vehicleTypeId, (Validators.required)],
+      noOfPersons:[subHgls.noOfPersons, (Validators.required)],
+      isActive: subHgls.isActive
     });
   }
 
   editHgl(hgl: HglViewDto) {   
-    debugger;
-    if (hgl.hglId !== undefined) {
       this.initsubHgls(hgl.hglId);
-  }
     this.hgl.hglId = hgl.hglId;
     this.hgl.code = hgl.code;
     this.hgl.name = hgl.name;
@@ -196,13 +192,15 @@ export class HglComponent implements OnInit {
     this.hgl.accountNo = hgl.accountNo;
     this.hgl.aadhaarNo=hgl. aadhaarNo;
     this.hgl.isActive = hgl.isActive;
-    debugger;
-    this.hgl.subHgls = this.subHgls ? []: this.subHgls;
-    this.fbHgl.setValue(this.hgl);
+    this.hgl.subHgls = this.subHgls ? this.subHgls : [];
+    setTimeout(() => {
+      this.fbHgl.setValue(this.hgl);
+    }, 5000);
+
     this.addFlag = false;
     this.submitLabel = "Update Hgl";
     this.showDialog = true;
-    this.showTptDetails = true;
+    this.showSuhgl = true;
   }
 
   addHgl() {
@@ -229,10 +227,10 @@ export class HglComponent implements OnInit {
 
   onSubmit() {
     // this.fbHgl.value.tds = false;
-    // this.fbHgl.value.tptId = 0;
+    // this.fbHgl.value.hglId = 0;
 
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + "";
-    // this.fbHgl.value.tptdetails.vehicleTypeId = 1;
+    // this.fbHgl.value.subHgls.vehicleTypeId = 1;
     console.log(this.fbHgl.value);
     if (this.fbHgl.valid) {
       this.saveHgl().subscribe(resp => {
@@ -251,7 +249,7 @@ export class HglComponent implements OnInit {
   onClose() {
     this.fbHgl.reset();
     this.faSubHgl().clear();
-    this.showTptDetails = false;
+    this.showSuhgl = false;
   }
 
 }

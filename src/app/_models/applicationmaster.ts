@@ -305,9 +305,7 @@ export class SeasonBillingRateDto{
 
 
 export class HglViewDto {
-  subHglId(subHglId: any) {
-    throw new Error('Method not implemented.');
-  }
+
   hglId?: number
   code?: string
   name?: string
@@ -379,6 +377,7 @@ export class SubHglDto {
   code?: string
   name?: string
   vehicleTypeId?: number
+  // vehicleName?: string
   noOfPersons?: number
   isActive?: boolean
 }
