@@ -224,11 +224,6 @@
                   </div>
 
                   <div class="field col-12 md:col-12 ">
-                    <div class="col-12">
-
-                    </div>
-                  </div>
-
                   <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)">
                     <p-tabPanel  *ngFor="let billCategory of billCategories; let i = index" [selected]="i == 0">
                       <ng-template pTemplate="header">
@@ -239,7 +234,7 @@
                           <div class="col-12">
                             <div class="col-3" style="float:right">
                               <button (click)="addItem((billCategory.name?.toLowerCase())+'Rates', billCategory)" pButton pRipple type="button" [label]="'Add '+ billCategory.name"
-                                icon="pi pi-plus" class="p-button-raised p-button-success"></button>
+                                icon="pi pi-plus" class="p-button-raised p-button-success" style="white-space: nowrap;"></button>
                             </div>
                             <div [formArrayName]="(billCategory.name?.toLowerCase())+'Rates'" class="season-rates-tab-items">
                               <ng-container *ngIf="fbseasons.get((billCategory.name?.toLowerCase())+'Rates') as formArray">
@@ -272,208 +267,13 @@
                     </p-tabPanel>
                   </p-tabView>
 
-                  <ng-template #farmar>
-
-                  </ng-template>
-
-
-                  <!-- <p-tabView styleClass="tabview-custom"> -->
-
-
-                    <!-- <p-tabPanel>
-                      <ng-template pTemplate="header">
-                        <span>Farmer</span>
-                      </ng-template>
-                      <div class="grid p-fluid">
-
-                        <div class="col-12">
-                          <div class="col-3" style="float:right">
-                            <button (click)="addItem('farmer')" pButton pRipple type="button" label="Add farmer"
-                              icon="pi pi-plus" class="p-button-raised p-button-success"></button>
-                          </div>
-                        </div>
-
-                        <div formArrayName="farmer">
-                          <ng-container *ngIf="fbseasons.get('farmer') as formArray">
-                            <div *ngFor="let item of (farmerRates).controls; let i = index">
-                              <div [formGroupName]="i">
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="billPeram">bill Parameter:<sup class="p-error">*</sup></label>
-                                  <p-dropdown [options]="billParam" optionLabel="name" formControlName="billParameterId"
-                                    optionValue="billCategoryId"></p-dropdown>
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="rate" formControlName="rate" type="text" />
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="priority" formControlName="priority" type="text" />
-                                </div>
-
-                              </div>
-                            </div>
-                          </ng-container>
-
-                        </div>
-
-                      </div>
-
-                    </p-tabPanel> -->
-
-<!--
-                    <p-tabPanel header="Harvester">
-                      <ng-template pTemplate="header">
-                        <span>Harvester</span>
-                      </ng-template>
-
-                      <div class="grid p-fluid">
-
-                        <div class="col-12">
-                          <div class="col-3" style="float:right">
-                            <button (click)="addItem('harvester')" pButton pRipple type="button" label="Add Harvester"
-                              icon="pi pi-plus" class="p-button-raised p-button-success"></button>
-                          </div>
-                        </div>
-
-                        <div formArrayName="harvestor">
-                          <ng-container *ngIf="fbseasons.get('harvestor') as formArray">
-                            <div *ngFor="let item of (harvestor).controls; let i = index">
-                              <div [formGroupName]="i">
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="billPerameter">bill Parameter:<sup class="p-error">*</sup></label>
-                                  <p-dropdown [options]="billParam" optionLabel="name" formControlName="billParameterId"
-                                    optionValue="billCategoryId"></p-dropdown>
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="rate" formControlName="rate" type="text" />
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="priority" formControlName="priority" type="text" />
-                                </div>
-
-
-                              </div>
-                            </div>
-                          </ng-container>
-
-                        </div>
-
-                      </div>
-
-                    </p-tabPanel>
-
-                    <p-tabPanel header="Header III">
-                      <ng-template pTemplate="header">
-                        <span>Transporter</span>
-
-                      </ng-template>
-                      <div class="grid p-fluid">
-
-                        <div class="col-12">
-                          <div class="col-3" style="float:right">
-                            <button (click)="addItem('transporter')" pButton pRipple type="button"
-                              label="Add Tranceporter" icon="pi pi-plus"
-                              class="p-button-raised p-button-success"></button>
-                          </div>
-                        </div>
-
-                        <div formArrayName="transporter">
-                          <ng-container *ngIf="fbseasons.get('transporter') as formArray">
-                            <div *ngFor="let item of (transporter).controls; let i = index">
-                              <div [formGroupName]="i">
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="billPeram">bill Parameter:<sup class="p-error">*</sup></label>
-                                  <p-dropdown [options]="billParam" optionLabel="name" formControlName="billParameterId"
-                                    optionValue="billCategoryId"></p-dropdown>
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="rate" formControlName="rate" type="text" />
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="priority" formControlName="priority" type="text" />
-                                </div>
-
-
-                              </div>
-                            </div>
-                          </ng-container>
-
-                        </div>
-
-                      </div>
-                    </p-tabPanel>
-
-                    <p-tabPanel header="Header III">
-                      <ng-template pTemplate="header">
-                        <span>Seed</span>
-                      </ng-template>
-
-                      <div class="grid p-fluid">
-
-                        <div class="col-12">
-                          <div class="col-3" style="float:right">
-                            <button (click)="addItem('seed')" pButton pRipple type="button" label="Add Seed"
-                              icon="pi pi-plus" class="p-button-raised p-button-success"></button>
-                          </div>
-                        </div>
-
-                        <div formArrayName="seed">
-                          <ng-container *ngIf="fbseasons.get('seed') as formArray">
-                            <div *ngFor="let item of (seed).controls; let i = index">
-                              <div [formGroupName]="i">
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="billPeram">bill Parameter:<sup class="p-error">*</sup></label>
-                                  <p-dropdown [options]="billParam" optionLabel="name" formControlName="billParameterId"
-                                    optionValue="billCategoryId"></p-dropdown>
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="rate" formControlName="rate" type="text" />
-                                </div>
-
-                                <div class="field col-12 md:col-4" style="display:inline-block; width:33.33%">
-                                  <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>
-                                  <input pInputText id="priority" formControlName="priority" type="text" />
-                                </div>
-
-                              </div>
-                            </div>
-                          </ng-container>
-
-                        </div>
-
-                      </div>
-                    </p-tabPanel> -->
-                  <!-- </p-tabView> -->
+                </div>
 
 
 
                 </div>
 
               </p-fieldset>
-
-              <div class="field col-12 md:col-3 ">
-                <div class="col-6">
-                  <label>Is Active:</label><br>
-                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-                </div>
-              </div>
 
             </form>
 

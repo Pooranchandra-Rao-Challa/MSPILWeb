@@ -1,12 +1,14 @@
-import { LookupService } from './../../../_services/lookup.service';
-import { HttpEvent } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Table } from 'primeng/table';
-import { Observable } from 'rxjs';
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 import { BillParameterDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
+import { MAX_LENGTH_10, MIN_LENGTH_2 } from 'src/app/_shared/regex';
+import { LookupService } from 'src/app/_services/lookup.service';
+import { HttpEvent } from '@angular/common/http';
+import { Table } from 'primeng/table';
+import { Observable } from 'rxjs';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-billparameters',
@@ -28,6 +30,7 @@ export class BillParametersComponent implements OnInit {
   billCategories: any;
   types: { label: string; value: string; }[];
   calTypes: { label: string; value: string; }[];
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,
@@ -73,7 +76,7 @@ export class BillParametersComponent implements OnInit {
       billParameterId: [null],
       categoryId: ['', (Validators.required)],
       type: ['', (Validators.required)],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       caluclationType: ['', Validators.required],
       priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),

@@ -1,8 +1,8 @@
-import { VillageParamRateViewDto, VillageParamRateDto, LoanTypeDto } from './../_models/billingmaster';
+import { VillageParamRateViewDto, VillageParamRateDto, LoanTypeDto, LoanSubTypeViewDto } from './../_models/billingmaster';
 import { Injectable } from "@angular/core";
 import { BillDto, BillParameterDto, BillParameterViewDto, BillViewDto, DieselBunkDto, DieselBunkViewDto, DieselRateDto, DieselRateViewDto, DistanceRateDto, DistanceRateViewDto, WareHouseDto, WareHouseViewDto, LoanTypeViewDto } from '../_models/billingmaster';
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_LOANTYPE_URI, UPDATE_LOANTYPE_URI } from './api.uri.service';
+import { CREATE_LOANTYPE_URI, GET_LOANSUBTYPES_URI, GET_SUBHGL_URI, GET_VILLAGEPARAMRATESBYSEASONID_URI, UPDATE_LOANTYPE_URI } from './api.uri.service';
 import {
   CREATE_BILLPARAM_URI, CREATE_BILL_URI, CREATE_DIESELBUNK_URI, CREATE_DIESELRATE_URI, CREATE_DISTANCERATE_URI, CREATE_VILLAGEPARAMRATE_URI, CREATE_WAREHOUSE_URI, GET_BILLPARAMS_URI, GET_BILLS_URI, GET_DIESELRATES_URI, GET_DIESEL_BUNK_URI, GET_DISTANCERATES_URI, GET_LOANTYPE_URI, GET_VILLAGEPARAMRATES_URI, GET_WAREHOUSE_URI, UPDATE_BILLPARAM_URI, UPDATE_BILL_URI,
   UPDATE_DIESELBUNK_URI,
@@ -11,6 +11,7 @@ import {
   UPDATE_VILLAGEPARAMRATE_URI,
   UPDATE_WAREHOUSE_URI
 } from "./api.uri.service";
+import { SubHglViewDto } from '../_models/applicationmaster';
 
 
 @Injectable({ providedIn: 'root' })
@@ -86,6 +87,10 @@ export class BillMasterService extends ApiHttpService {
     return this.get<VillageParamRateViewDto[]>(GET_VILLAGEPARAMRATES_URI);
   }
 
+  public GetVillageParamRatesBySeasonId(seasonId?: number) {
+    return this.get<VillageParamRateViewDto[]>(GET_VILLAGEPARAMRATESBYSEASONID_URI + seasonId);
+  }
+
   public CreateVillageParamRate(villageParamRate: VillageParamRateDto) {
     return this.post<VillageParamRateDto>(CREATE_VILLAGEPARAMRATE_URI, villageParamRate);
   }
@@ -108,11 +113,19 @@ export class BillMasterService extends ApiHttpService {
     return this.get<LoanTypeViewDto[]>(GET_LOANTYPE_URI);
   }
   public CreateLoanType(loantype: LoanTypeDto){
+    debugger;
     return this.post<LoanTypeDto>(CREATE_LOANTYPE_URI,loantype);
   }
   public UpdateLoanType(loantype: LoanTypeDto){
     return this.post<LoanTypeDto>(UPDATE_LOANTYPE_URI,loantype);
   }
+  public GetSubHgl(hglId: number) {
+    return this.get<SubHglViewDto[]>(GET_SUBHGL_URI + hglId);
+  }
+  
+  public GetLoanSubTypes(loanTypeId: number) {
+  return this.get<LoanSubTypeViewDto[]>(GET_LOANSUBTYPES_URI + loanTypeId);
+}
 
 
 

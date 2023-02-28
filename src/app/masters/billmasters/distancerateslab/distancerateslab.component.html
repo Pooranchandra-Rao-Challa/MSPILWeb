@@ -42,20 +42,20 @@
 
     <!-- filter -->
     <div class="p-fluid p-formgrid grid mt-2">
-      <div class="field xl:col-2 md:col-3 col-12">
-        <label>UpTo KM:</label>
+      <div class="field xl:col-2 md:col-4 col-12">
+        <label>Initial KM:</label>
         <input pInputText type="text">
       </div>
-      <div class="field xl:col-2 md:col-3 col-12">
-        <label>UpTo KM Rate(₹):</label>
+      <div class="field xl:col-2 md:col-4 col-12">
+        <label>Initial KM Rate(₹):</label>
         <input pInputText type="text">
       </div>
-      <div class="field xl:col-2 md:col-3 col-12">
-        <label>To KM:</label>
+      <div class="field xl:col-2 md:col-4 col-12">
+        <label>Final KM:</label>
         <input pInputText type="text">
       </div>
-      <div class="field xl:col-2 md:col-3 col-12">
-        <label>One KM Rate(₹):</label>
+      <div class="field xl:col-2 md:col-4 col-12">
+        <label>Per KM Rate(₹) After Initial:</label>
         <input pInputText type="text">
       </div>
       <div class="field xl:col-2 md:col-3 col-12">
@@ -123,9 +123,9 @@
             <p-checkbox name="active" value="active" [(ngModel)]="distance.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{distance.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{distance.createdAt | date: mediumDate}}</td>
           <td>{{distance.createdBy}}</td>
-          <td>{{distance.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{distance.updatedAt | date: mediumDate}}</td>
           <td>{{distance.updatedBy}}</td>
         </tr>
       </ng-template>
@@ -157,7 +157,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['distance'].touched && FormControls['distance'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['distance'].errors?.['required']">
-                      Please Enter Distance.</div>
+                      Please enter distance.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -167,7 +167,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
-                      Please Enter Rate.</div>
+                      Please enter rate.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

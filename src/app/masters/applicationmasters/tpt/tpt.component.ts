@@ -1,14 +1,15 @@
-import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto } from './../../../_models/applicationmaster';
-import { LookupService } from './../../../_services/lookup.service';
-import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_VEHICLE } from './../../../_shared/regex';
+import { Table } from 'primeng/table';
+import { Observable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL } from 'src/app/_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
-import { Table } from 'primeng/table';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
-import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
-import { Observable } from 'rxjs';
-import { HttpEvent } from '@angular/common/http';
+import { BankDto, BranchDto, TptdetailViewDto } from 'src/app/_models/applicationmaster';
+import { LookupService } from 'src/app/_services/lookup.service';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_VEHICLE, MIN_LENGTH_2, MAX_LENGTH_20 } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-tpt',
@@ -25,7 +26,7 @@ export class TptComponent implements OnInit {
   globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
     'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   globalFilterFieldsTptDetails: string[] = ['vehicleNo', 'vehicleTypeId', 'insuranceNo', 'receivableAmt', 'receivedAmt', 'gateEntryFreeze', 'transporterFreeze'];
-    @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('filter') filter!: ElementRef;
   fbTpt!: FormGroup;
   submitLabel!: string;
   addFlag: boolean = true;
@@ -39,6 +40,7 @@ export class TptComponent implements OnInit {
   vehicleTypes: VehicleTypeViewDto[] = [];
   defaults: { name: string; id: boolean; }[];
   IFSC?: string;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -115,7 +117,7 @@ export class TptComponent implements OnInit {
   tptForm() {
     this.fbTpt = this.formbuilder.group({
       tptId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(10), Validators.minLength(6)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       relationTypeId: ['', (Validators.required)],
       relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
@@ -124,7 +126,7 @@ export class TptComponent implements OnInit {
       pinCode: ['', (Validators.required)],
       phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
       tax: ['', (Validators.required)],
-      email: [''],
+      email: ['', (Validators.pattern(RG_EMAIL))],
       panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],

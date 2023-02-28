@@ -1,12 +1,13 @@
-import { VehicleTypeDto } from './../../../_models/applicationmaster';
-import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_10, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { VehicleTypeDto } from 'src/app/_models/applicationmaster';
+import { AppMasterService } from 'src/app/_services/appmaster.service';
 
 @Component({
   selector: 'app-vehicle',
@@ -24,6 +25,7 @@ export class VehicleComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   showDialog: boolean = false;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService) { }
@@ -43,7 +45,7 @@ export class VehicleComponent implements OnInit {
   vehicleTypeForm() {
     this.fbVehicleType = this.formbuilder.group({
       vehicleTypeId: [null],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       capacity: ['', (Validators.required)],
       billingCapacity: ['', (Validators.required)],

@@ -199,10 +199,6 @@ export class LoanTypeViewDto {
   updatedBy?: string
 }
 export class LoanTypeDto {
-  createdBy?: string
-  createdAt?: string
-  updatedBy?: string
-  updatedAt?: string
   loanTypeId?: number
   code?: string
   categoryId?: number
@@ -251,5 +247,9 @@ export class LoanSubTypeViewDto {
   glCode?: string
   subGLcode?: string
   isActive?: boolean
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
 
 }

@@ -5,8 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { BillViewDto } from 'src/app/_models/billingmaster';
-import { LookupDetailDto } from 'src/app/_models/applicationmaster';
-import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+
 @Component({
   selector: 'app-billmaster',
   templateUrl: './billmaster.component.html',
@@ -25,6 +25,7 @@ export class BillMasterComponent implements OnInit {
   seasons: any;
   addFlag: boolean = true;
   billCategories: any;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,

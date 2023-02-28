@@ -1,12 +1,13 @@
-import { VarietyViewDto, VarietyDto } from './../../../_models/applicationmaster';
-import { AppMasterService } from './../../../_services/appmaster.service';
-import { LookupService } from './../../../_services/lookup.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_10, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { VarietyViewDto, VarietyDto } from 'src/app/_models/applicationmaster';
+import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { LookupService } from 'src/app/_services/lookup.service';
 
 @Component({
   selector: 'app-variety',
@@ -26,6 +27,7 @@ export class VarietyComponent implements OnInit {
   addFlag: boolean = true;
   showDialog: boolean = false;
   fbVariety!: FormGroup;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private lookupService: LookupService,
@@ -54,7 +56,7 @@ export class VarietyComponent implements OnInit {
     this.fbVariety = this.formbuilder.group({
       varietyId: [null],
       varietyTypeId: ['', (Validators.required)],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       plantAge: ['', (Validators.required)],
       ratoonAge: ['', (Validators.required)],

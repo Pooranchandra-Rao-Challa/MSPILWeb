@@ -96,9 +96,9 @@
             <p-checkbox name="active" value="active" [(ngModel)]="variety.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{variety.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{variety.createdAt | date: mediumDate}}</td>
           <td>{{variety.createdBy}}</td>
-          <td>{{variety.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{variety.updatedAt | date: mediumDate}}</td>
           <td>{{variety.updatedBy}}</td>
         </tr>
       </ng-template>
@@ -131,7 +131,7 @@
                   <span *ngIf="FormControls['varietyTypeId'].touched && FormControls['varietyTypeId'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['varietyTypeId'].errors?.['required']">
-                      Please Select Type.</div>
+                      Please select type.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -140,9 +140,9 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                      Please Enter Name.</div>
+                      Please enter name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                      Name should contains only characters.</div>
+                      Name should contains only letters.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -151,9 +151,9 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                      Please Enter Code.</div>
+                      Please enter code.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code should contains only characters and integers.</div>
+                      Code should contains only letters and integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -163,7 +163,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['plantAge'].touched && FormControls['plantAge'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantAge'].errors?.['required']">
-                      Please Enter Plant Age.</div>
+                      Please enter plant age.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -173,7 +173,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['ratoonAge'].touched && FormControls['ratoonAge'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['ratoonAge'].errors?.['required']">
-                      Please Enter Ratoon Age.</div>
+                      Please enter ratoon age.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -192,7 +192,7 @@
                   <span *ngIf="FormControls['sugarContent'].touched && FormControls['sugarContent'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['sugarContent'].errors?.['required']">
-                      Please Select Sugar Content.</div>
+                      Please select sugar content.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -213,7 +213,7 @@
                   <span *ngIf="FormControls['plantSuitability'].touched && FormControls['plantSuitability'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['plantSuitability'].errors?.['required']">
-                      Please Select Plant Suitability.</div>
+                      Please select plant suitability.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

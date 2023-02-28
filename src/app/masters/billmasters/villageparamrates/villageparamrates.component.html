@@ -27,7 +27,7 @@
               <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
                 class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons" [showClear]="true" (onChange)="getVillageParamRatesBySeason()"
+            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons" [showClear]="true" (onChange)="getVillageParamRatesBySeason($event.value)"
               optionValue="seasonId">
             </p-dropdown>
           </div>
@@ -102,9 +102,9 @@
               [disabled]="true">
             </p-checkbox>
           </td>
-          <td>{{vParamRate.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{vParamRate.createdAt | date: mediumDate}}</td>
           <td>{{vParamRate.createdBy}}</td>
-          <td>{{vParamRate.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{vParamRate.updatedAt | date: mediumDate}}</td>
           <td>{{vParamRate.updatedBy}}</td>
         </tr>
       </ng-template>
@@ -137,14 +137,11 @@
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonsId'].touched && FormControls['seasonsId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['seasonsId'].errors?.['required']">
-                      Please Select Season Code.</div>
+                      Please select season code.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Village:<sup class="p-error">*</sup></label>
-                  <!-- <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" formControlName="village"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['village'].touched && FormControls['village'].errors }">
-                  </p-dropdown> -->
                   <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
                     filterBy="villageName,villageCode" formControlName="villageId" placeholder="Select a village"
                     (onChange)="onSelectedVillage($event.value)"
@@ -159,7 +156,7 @@
                   </p-dropdown>
                   <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageId'].errors?.['required']">
-                      Please Select Village.</div>
+                      Please select village.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -187,7 +184,7 @@
                   <span *ngIf="FormControls['billParameterId'].touched && FormControls['billParameterId'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['billParameterId'].errors?.['required']">
-                      Please Select Bill Param.</div>
+                      Please select bill param.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -198,7 +195,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
-                      Please Select Rate.</div>
+                      Please select rate.</div>
                   </span>
                 </div>
               </div>
