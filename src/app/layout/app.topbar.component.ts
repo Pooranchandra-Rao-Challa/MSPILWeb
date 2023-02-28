@@ -27,13 +27,13 @@ export class AppTopBarComponent {
     // }
     ngOnInit() {
       this.items = [
-          { label: 'Settings', icon: 'pi pi-external-link', url: '#' },
+          { label: 'Settings', icon: 'pi pi-external-link', routerLink: 'changepassword' },
           { label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
             console.log(this.jwtService.Logout());
             // logic
           }}
       ];
 
-     
+
   }
 }
