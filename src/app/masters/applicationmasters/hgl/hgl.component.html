@@ -228,7 +228,7 @@
 
     <!-- dialog box -->
     <p-dialog header="HGL" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()" [modal]="true">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
           <div class="grid">
