@@ -4,10 +4,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CirclesViewDto, MandalDto, MandalsViewDto, DistrictDto } from 'src/app/_models/geomodels';
+import { MandalDto, MandalsViewDto, DistrictDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-mandal',
@@ -15,25 +17,24 @@ import { JWTService } from 'src/app/_services/jwt.service';
   providers: [MessageService, ConfirmationService]
 })
 export class MandalComponent implements OnInit {
-
-
   display: boolean = false;
   mandals: MandalsViewDto[] = [];
   mandal: MandalDto = new MandalDto();
   district: DistrictDto[] = [];
   loading: boolean = true;
   fbmandals!: FormGroup;
-  filter: any;
+  @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
   addFlag: boolean = true;
+  valSwitch: boolean = true;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-  ) {
+  ) { }
 
-  }
   InitMandal() {
     this.mandal = new MandalDto();
     this.fbmandals.reset();
@@ -50,17 +51,17 @@ export class MandalComponent implements OnInit {
     this.initMandals();
     this.commonService.GetDistrictsForState().subscribe((resp) => {
       this.district = resp as unknown as DistrictDto[]
-      console.log(this.district);    
-    })
-    
+    });
+
     this.fbmandals = this.formbuilder.group({
-      code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       districtId: ['', (Validators.required)],
       mandalId: [''],
-      isActive: new FormControl (true, Validators.required),
+      isActive: new FormControl(true, Validators.required),
     });
   }
+
   initMandals() {
     this.geoMasterService.GetMandals().subscribe((resp) => {
       this.mandals = resp as unknown as MandalsViewDto[]
@@ -74,17 +75,12 @@ export class MandalComponent implements OnInit {
     this.mandal.districtId = mandal.districtId;
     this.mandal.isActive = mandal.isActive;
     this.mandal.mandalId = mandal.mandalId;
-    // this.mandal.districtId = mandal.districtName;
-    // this.mandal.mandalId = mandal.mandalId;
     this.fbmandals.setValue(this.mandal);
     this.submitLabel = "Update Mandal";
     this.addFlag = false;
     this.display = true;
   }
 
-  private UpdateForm() {
-
-  }
   onClose() {
     this.fbmandals.reset();
   }
@@ -93,6 +89,7 @@ export class MandalComponent implements OnInit {
     if (this.addFlag) return this.geoMasterService.CreateMandal(this.fbmandals.value)
     else return this.geoMasterService.UpdateMandal(this.fbmandals.value)
   }
+
   onSubmit() {
     if (this.fbmandals.valid) {
       this.saveMandal().subscribe(resp => {
@@ -104,7 +101,6 @@ export class MandalComponent implements OnInit {
       })
     }
     else {
-      // alert("please fill the fields")
       this.fbmandals.markAllAsTouched();
     }
   }
@@ -118,8 +114,10 @@ export class MandalComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-
-  valSwitch: boolean = true;
+  ngOnDestroy() {
+    this.mandals = [];
+    this.district = [];
+  }
 
 }
 
