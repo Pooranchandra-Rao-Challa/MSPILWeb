@@ -10,6 +10,7 @@ import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
 import { BillMasterService } from '../../../_services/billmaster.service';
 import { BillParameterViewDto } from 'src/app/_models/billingmaster';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-season',
@@ -22,52 +23,27 @@ export class SeasonComponent implements OnInit {
   seasons: SeasonViewDto[] = [];
   season: SeasonDto = new SeasonDto();
   loading: boolean = false;
-  globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
-    'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
+  globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 
+  'email', 'panNo', 'tax', 'tds', 'guarantor1', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
   fbseasons!: FormGroup;
   submitLabel!: string;
   addFlag: boolean = true;
   showDialog: boolean = false;
-  showTptDetails: boolean = false;
-  relationTypes: any;
-  banks: BankViewDto[] = [];
-  bank: BankDto = new BankDto();
-  branches: BranchDto[] = [];
-  genders: { label: string; value: string; }[];
-  vehicleTypes: VehicleTypeViewDto[] = [];
   billParams: BillParameterViewDto[] = [];
-  defaults: { name: string; id: boolean; }[];
   billCategories: LookupDetailDto[] = [];
-  @Input()
-    headerTemplate: TemplateRef<any> | undefined ;
-
+  mediumDate: string = MEDIUM_DATE;
 
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
-    private LookupService: LookupService,
-    private BillMasterService:BillMasterService) {
-    this.defaults = [
-      { name: 'Yes', id: true },
-      { name: 'No', id: false }
-    ];
-    this.genders = [
-      { label: 'Male', value: 'M' },
-      { label: 'Female', value: 'F' }
-    ];
+    private LookupService: LookupService,) { 
   }
 
   ngOnInit(): void {
     this. initSeasons();
     this.seasonForm();
-    
-  
-    this.LookupService.BillCategories().subscribe((resp) => {
-      this.billCategories = resp as unknown as LookupDetailDto[];
-      this.initBillParamsForCategory(this.billCategories[0].lookUpDetailId +'');
-    });
-
+    this.initBillCategories()
   }
 
   initSeasons() {
@@ -76,9 +52,28 @@ export class SeasonComponent implements OnInit {
       this.loading = false;
     });
   }
+  initBillCategories(){
+   this.LookupService.BillCategories().subscribe((resp) => {
+    this.billCategories = resp as unknown as LookupDetailDto[];
+    this.initBillParamsForCategory(this.billCategories[0].lookUpDetailId +'');
+    });
+  }
 
+  initBillParamsForCategory(categoryId:string){
+    this.appMasterService.BillParamsForCategory(categoryId).subscribe((resp) => {
+      this.billParams = resp as unknown as BillParameterViewDto[];
+      console.log(this.billParams);
+    }); 
+  }
 
-
+  handleBillCategoryChange(sevent:any){
+    console.log(this.fbseasons.controls['farmerRates'].getRawValue());
+    var index = sevent.index;
+    console.log(sevent);
+    // var billCategoryId = this.billCategories[index].lookUpDetailId
+    this.initBillParamsForCategory(this.billCategories[index].lookUpDetailId +'') 
+  }
+  
   seasonForm() {
     this.fbseasons = this.formbuilder.group({
       seasonId: [],
@@ -98,18 +93,6 @@ export class SeasonComponent implements OnInit {
       transporterRates: this.formbuilder.array([]),
       seedRates: this.formbuilder.array([])
     });
-
-
-
-  }
-
-  initBillParamsForCategory(categoryId:string){
-
-    this.appMasterService.BillParamsForCategory(categoryId).subscribe((resp) => {
-      this.billParams = resp as unknown as BillParameterViewDto[];
-      console.log(this.billParams);
-    });
-    
   }
   createItem(billCategory: LookupDetailDto): FormGroup {
     return this.formbuilder.group({
@@ -119,11 +102,21 @@ export class SeasonComponent implements OnInit {
       rate: ['', Validators.required],
       priority: ['', Validators.required],
       isActive: [true],
-    });
+   });
   }
+
   RateControls(formgroupname: string) : FormArray{
     return this.fbseasons.get(formgroupname) as FormArray;
   }
+  addItem(formArrayName: string, billCategory: LookupDetailDto) {
+    const formArray = this.fbseasons.get(formArrayName) as FormArray;
+    formArray.push(this.createItem(billCategory));
+  }
+
+  get FormControls() {
+    return this.fbseasons.controls;
+  }
+
   // get farmerRates(): FormArray {
   //   return this.fbseasons.get('farmerRates') as FormArray;
   // }
@@ -141,14 +134,7 @@ export class SeasonComponent implements OnInit {
   // }
 
 
-  addItem(formArrayName: string, billCategory: LookupDetailDto) {
-
-    const formArray = this.fbseasons.get(formArrayName) as FormArray;
-    formArray.push(this.createItem(billCategory));
-  }
-  get FormControls() {
-    return this.fbseasons.controls;
-  }
+  
 
 
   // editseason(season: SeasonViewDto) {
@@ -165,7 +151,7 @@ export class SeasonComponent implements OnInit {
   //   this.season.capacity = season.capacity;
   //   this.season.currentSeason = season.currentSeason;
   //   this.season.isActive = season.isActive;
-  //   this.season.farmer = this.farmer ? [] : this.farmer;
+  //   this.season.farmerRates = this.farmerRates ? [] : this.farmerRates;
   //   this.season.transporter = this.transporter ? [] : this.transporter;
   //   this.season.harvestor = this.harvestor ? [] : this.harvestor;
   //   this.season.seed = this.seed ? [] : this.seed;
@@ -190,18 +176,16 @@ export class SeasonComponent implements OnInit {
 //     this.fbseasons.controls['capacity'].setValue(season.capacity);
 //     this.fbseasons.controls['currentSeason'].setValue(season.currentSeason);
 //     this.fbseasons.controls['isActive'].setValue(season.isActive);
-//   //  Bind farmer, transporter, harvestor and seed arrays
+//     Bind farmer, transporter, harvestor and seed array
+//     this.season.farmerRates = this.farmerRates ? [] : this.farmerRates;
+//     this.season.transporter = this.transporter ? [] : this.transporter;
+//     this.season.harvestor = this.harvestor ? [] : this.harvestor;
+//     this.season.seed = this.seed ? [] : this.seed;
+//     this.addFlag = false;
+//     this.submitLabel = "Update Season";
+//     this.showDialog = true;
+ //  }
 
-//    this.season.farmerRates = this.farmerRates ? [] : this.farmerRates;
-//     //  this.season.transporter = this.transporter ? [] : this.transporter;
-//     //  this.season.harvestor = this.harvestor ? [] : this.harvestor;
-//     //  this.season.seed = this.seed ? [] : this.seed;
-
-
-//    this.addFlag = false;
-//    this.submitLabel = "Update Season";
-//    this.showDialog = true;
-//  }
   addSeason() {
     this.submitLabel = "Add Season";
     this.addFlag = true;
@@ -221,32 +205,25 @@ export class SeasonComponent implements OnInit {
   onSubmit() {
 
     console.log(this.fbseasons.valid);
-    // if (this.fbseasons.valid) {
-    //   this.saveSeason().subscribe(resp => {
-    //     if (resp) {
-    //       this. initSeasons();
-    //       this.fbseasons.reset();
-    //       this.showDialog = false;
-    //     }
-    //   })
-    // }
-    // else {
-    //   this.fbseasons.markAllAsTouched();
-    // }
+    return
+    if (this.fbseasons.valid) {
+      this.saveSeason().subscribe(resp => {
+        if (resp) {
+          this. initSeasons();
+          this.fbseasons.reset();
+          this.showDialog = false;
+        }
+      })
+    }
+    else {
+      this.fbseasons.markAllAsTouched();
+    }
   }
   onClose() {
     this.fbseasons.reset();
-    this.showTptDetails = false;
   }
-  handleBillCategoryChange(sevent:any){
-    debugger;
-    console.log(this.fbseasons.controls['farmerRates'].getRawValue());
-    
-    var index = sevent.index;
-    console.log(sevent);
-    // var billCategoryId = this.billCategories[index].lookUpDetailId
-    this.initBillParamsForCategory(this.billCategories[index].lookUpDetailId +'');
 
-   
-  }
+  
+
+  
 }

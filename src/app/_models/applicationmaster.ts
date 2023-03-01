@@ -310,10 +310,10 @@ export class SeasonViewDto{
   seasonId?: number
   code?: string
   name?: string
-  plantFrom?: Date
-  plantTo?: Date
-  crushFrom?: Date
-  crushTo?: Date
+  plantFrom?: string
+  plantTo?: string
+  crushFrom?: string
+  crushTo?: string
   burnCaneRate?: number
   caneRate?: number
   capacity?: number
@@ -398,6 +398,22 @@ export interface HarvestorRate {
   rate?: number
   priority?: number
   isActive?: boolean
+}
+
+
+export class SeasonBillingRateViewDto {
+  seasonBillingRateId?: number
+  seasonId?: number
+  seasonName?: string
+  billParameterId?: number
+  billParameterName?: string
+  rate?: number
+  priority?: number
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedBy?: string
+  createdBy?: string
 }
 
 
