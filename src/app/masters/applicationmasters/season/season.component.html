@@ -100,7 +100,7 @@
 
       <ng-template pTemplate="body" let-season>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil"
+          <td><button pButton pRipple icon="pi pi-pencil" (click)="editseason(season)" 
               class="p-element p-ripple p-button-text p-button p-component"></button>
             <!-- (click)="editseason(season)" -->
           </td>
@@ -205,7 +205,7 @@
                  </div>
 
                  <div class="field col-12 md:col-12 ">
-                   {{this.fbseasons.controls['farmerRates'].getRawValue()|json}}
+                   {{this.fbseasons.getRawValue()|json}}
                    <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)">
                      <p-tabPanel *ngFor="let billCategory of billCategories; let i = index" [selected]="i == 0">
                        <ng-template pTemplate="header">
@@ -229,8 +229,8 @@
 
                            <div class="field col-3 md:col-4" style="display:inline-block;">
                             <label htmlFor="billPeram">bill Parameter:<sup class="p-error">*</sup></label>
-                            <p-dropdown [options]="billParams" optionLabel="name"
-                            formControlName="billParamId" optionValue="billParameterId"
+                            <p-dropdown [options]="billCategory.billParams" optionLabel="name"
+                            formControlName="billParameterId" optionValue="billParameterId"
                             placeholder="Please"></p-dropdown>
                            </div>
                             <div class="field col-3 md:col-4" style="display:inline-block;">

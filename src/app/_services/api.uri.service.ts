@@ -144,5 +144,5 @@ export const UPDATE_LOANTYPE_URI = "BillingMaster/UpdateLoanType";
 export const GET_LOANSUBTYPES_URI = "BillingMaster/GetLoanSubType/";
 export const GET_SUBHGL_URI = "ApplicationMaster/GetSubHgl/";
 export const GET_BILLPARAMSFORCATEGORY_URI = "ApplicationMaster/GetBillParameterForCategory/";
-export const GET_GETSEASONBILLINGRATES_URI = "ApplicationMaster/GetSeasonBillingRates/";
+export const GET_GETSEASONBILLINGRATES_URI = "ApplicationMaster/GetSeasonBillingRate/";
 

@@ -1,14 +1,12 @@
-import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto, SeasonDto, LookupDetailDto } from './../../../_models/applicationmaster';
+import {  SeasonDto, LookupDetailDto, SeasonBillingRateViewDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
-import { BillMasterService } from '../../../_services/billmaster.service';
 import { BillParameterViewDto } from 'src/app/_models/billingmaster';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
@@ -61,22 +59,27 @@ export class SeasonComponent implements OnInit {
 
   initBillParamsForCategory(categoryId:string){
     this.appMasterService.BillParamsForCategory(categoryId).subscribe((resp) => {
-      this.billParams = resp as unknown as BillParameterViewDto[];
-      console.log(this.billParams);
+      // this.billParams = resp as unknown as BillParameterViewDto[];
+      // console.log(this.billParams);
+      this.billCategories.map( s => {
+        if(s.lookUpDetailId?.toString() == categoryId.toString()){
+          s.billParams = [];
+          s.billParams = resp as unknown as BillParameterViewDto[];
+        }
+      } )
     }); 
   }
 
   handleBillCategoryChange(sevent:any){
     console.log(this.fbseasons.controls['farmerRates'].getRawValue());
     var index = sevent.index;
-    console.log(sevent);
     // var billCategoryId = this.billCategories[index].lookUpDetailId
-    this.initBillParamsForCategory(this.billCategories[index].lookUpDetailId +'') 
+   this.initBillParamsForCategory(this.billCategories[index].lookUpDetailId +'') ;
   }
   
   seasonForm() {
     this.fbseasons = this.formbuilder.group({
-      seasonId: [],
+      seasonId: [null],
       code: new FormControl('',),
       name: new FormControl('',),
       plantFrom: ['', (Validators.required)],
@@ -96,8 +99,9 @@ export class SeasonComponent implements OnInit {
   }
   createItem(billCategory: LookupDetailDto): FormGroup {
     return this.formbuilder.group({
-      seasonBillingRateId:[0],
-      billParamId: ['', Validators.required],
+      seasonBillingRateId:[null],
+      seasonId: [null],
+      billParameterId: ['', Validators.required],
       billCatetoryId: [billCategory.lookUpDetailId, Validators.required],
       rate: ['', Validators.required],
       priority: ['', Validators.required],
@@ -117,74 +121,59 @@ export class SeasonComponent implements OnInit {
     return this.fbseasons.controls;
   }
 
-  // get farmerRates(): FormArray {
-  //   return this.fbseasons.get('farmerRates') as FormArray;
-  // }
+  get farmerRatesControls(): FormArray {
+    return this.fbseasons.get('farmerRates') as FormArray;
+  }
 
-  // get harvesterRates(): FormArray {
-  //   return this.fbseasons.get('harvestorRates') as FormArray;
-  // }
+  get harvesterRatesControls(): FormArray {
+    return this.fbseasons.get('harvesterRates') as FormArray;
+  }
 
-  // get transporterRates(): FormArray {
-  //   return this.fbseasons.get('transporterRates') as FormArray;
-  // }
+  get transporterRatesControls(): FormArray {
+    return this.fbseasons.get('transporterRates') as FormArray;
+  }
 
-  // get seedRates(): FormArray {
-  //   return this.fbseasons.get('seedRates') as FormArray;
-  // }
+  get seedRatesControls(): FormArray {
+    return this.fbseasons.get('seedRates') as FormArray;
+  }
 
 
+  editseason(season: SeasonViewDto) {
+    this.fbseasons.patchValue(season);
+    this.getSeasonBillingRatesBySeasonId(season.seasonId);
+    this.addFlag = false;
+    this.submitLabel = "Update Season";
+    this.showDialog = true;
+  }
   
+  getSeasonBillingRatesBySeasonId(seasonId: number | undefined) {
+    this.appMasterService.GetSeasonBillingRates(seasonId).subscribe((resp) => {      
+      let rates = resp as unknown as SeasonBillingRateViewDto[];
+      console.log(rates);
+      
+      // let farmerRates = rates.filter(element => element.billCatetoryId == this.billCategories[0].lookUpDetailId);
+      // let transporterRates = rates.filter(element => element.billCatetoryId == this.billCategories[1].lookUpDetailId);
+      // let harvesterRates = rates.filter(element => element.billCatetoryId == this.billCategories[2].lookUpDetailId);
+      // let seedRates = rates.filter(element => element.billCatetoryId == this.billCategories[3].lookUpDetailId);
 
-
-  // editseason(season: SeasonViewDto) {
-  //   this.season.seasonId = season.seasonId;
-  //   this.season.code = season.code;
-  //   this.season.name = season.name;
-  //   this.season.plantFrom = season.plantFrom;
-  //   this.season.plantTo = season.plantTo;
-  //   this.season.crushFrom = season.crushFrom;
-  //   this.season.crushTo = season.crushTo;
-  //   this.season.burnCaneRate = season.burnCaneRate;
-  //   this.season.caneRate = season.caneRate;
-  //   this.season.caneRate = season.caneRate;
-  //   this.season.capacity = season.capacity;
-  //   this.season.currentSeason = season.currentSeason;
-  //   this.season.isActive = season.isActive;
-  //   this.season.farmerRates = this.farmerRates ? [] : this.farmerRates;
-  //   this.season.transporter = this.transporter ? [] : this.transporter;
-  //   this.season.harvestor = this.harvestor ? [] : this.harvestor;
-  //   this.season.seed = this.seed ? [] : this.seed;
-  //   this.fbseasons.controls['seasonId'].setValue(season.seasonId);
-  //   this.addFlag = false;
-  //   this.submitLabel = "Update Season";
-  //   this.showDialog = true;
-  // }
-
-
-//   editseason(season: SeasonViewDto) {
-//     this.season = season;
-//     this.fbseasons.controls['seasonId'].setValue(season.seasonId);
-//     this.fbseasons.controls['code'].setValue(season.code);
-//     this.fbseasons.controls['name'].setValue(season.name);
-//     this.fbseasons.controls['plantFrom'].setValue(season.plantFrom);
-//     this.fbseasons.controls['plantTo'].setValue(season.plantTo);
-//     this.fbseasons.controls['crushFrom'].setValue(season.crushFrom);
-//     this.fbseasons.controls['crushTo'].setValue(season.crushTo);
-//     this.fbseasons.controls['burnCaneRate'].setValue(season.burnCaneRate);
-//     this.fbseasons.controls['caneRate'].setValue(season.caneRate);
-//     this.fbseasons.controls['capacity'].setValue(season.capacity);
-//     this.fbseasons.controls['currentSeason'].setValue(season.currentSeason);
-//     this.fbseasons.controls['isActive'].setValue(season.isActive);
-//     Bind farmer, transporter, harvestor and seed array
-//     this.season.farmerRates = this.farmerRates ? [] : this.farmerRates;
-//     this.season.transporter = this.transporter ? [] : this.transporter;
-//     this.season.harvestor = this.harvestor ? [] : this.harvestor;
-//     this.season.seed = this.seed ? [] : this.seed;
-//     this.addFlag = false;
-//     this.submitLabel = "Update Season";
-//     this.showDialog = true;
- //  }
+      // for (const key in farmerRates) {
+      //   this.addItem('farmerRates', this.billCategories[0]);
+      //   this.farmerRatesControls.controls[key].patchValue(farmerRates[key]);
+      // }
+      // for (const key in transporterRates) {
+      //   this.addItem('transporterRates', this.billCategories[1]);
+      //   this.transporterRatesControls.controls[key].patchValue(farmerRates[key]);
+      // }
+      // for (const key in harvesterRates) {
+      //   this.addItem('harvesterRates', this.billCategories[2]);
+      //   this.harvesterRatesControls.controls[key].patchValue(farmerRates[key]);
+      // }
+      // for (const key in seedRates) {
+      //   this.addItem('seedRates', this.billCategories[3]);
+      //   this.seedRatesControls.controls[key].patchValue(farmerRates[key]);
+      // }
+    });
+  }
 
   addSeason() {
     this.submitLabel = "Add Season";
@@ -203,17 +192,15 @@ export class SeasonComponent implements OnInit {
     else return this.appMasterService.UpdateSeason(this.fbseasons.value)
   }
   onSubmit() {
-
+    debugger;
     console.log(this.fbseasons.valid);
-    return
     if (this.fbseasons.valid) {
       this.saveSeason().subscribe(resp => {
         if (resp) {
           this. initSeasons();
           this.fbseasons.reset();
           this.showDialog = false;
-        }
-      })
+        } })
     }
     else {
       this.fbseasons.markAllAsTouched();
@@ -222,8 +209,5 @@ export class SeasonComponent implements OnInit {
   onClose() {
     this.fbseasons.reset();
   }
-
-  
-
   
 }

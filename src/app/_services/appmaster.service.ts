@@ -201,7 +201,7 @@ public GetBranchDetails(bankId:number) {
     return this.get<BillParameterViewDto[]>(GET_BILLPARAMSFORCATEGORY_URI + categoryId);
   }
 
-  public GetSeasonBillingRates(seasonId: number) {
+  public GetSeasonBillingRates(seasonId: number | undefined) {
     return this.get<SeasonBillingRateViewDto[]>(GET_GETSEASONBILLINGRATES_URI + seasonId);
   }
 

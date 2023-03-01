@@ -1,3 +1,5 @@
+import { BillParameterViewDto } from "./billingmaster";
+
 export class LookUpHeaderDto {
   lookUpId!: number;
   code?: string;
@@ -31,6 +33,7 @@ export class LookupDetailDto {
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+  billParams: BillParameterViewDto[] =[];
 }
 export class LookupDetailViewDto {
   lookupId?: number;
