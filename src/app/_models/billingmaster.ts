@@ -253,3 +253,4 @@ export class LoanSubTypeViewDto {
   updatedAt?: string
 
 }
+

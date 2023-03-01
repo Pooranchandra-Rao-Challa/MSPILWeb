@@ -11,7 +11,7 @@
       </p-toolbar>
   
       <!-- table -->
-      <p-table #dt1 [value]="loanTypes" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      <p-table #dt1 [value]="loanTypes" dataKey="id" [rows]="10" [rowHover]="true"
         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
         [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
         [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
@@ -121,38 +121,38 @@
   
       <!-- dialog box -->
       <p-dialog header="Loan SubType" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-        [breakpoints]="{'960px': '75vw', '840px': '100vw'}" [style]="{width: '80vw'}" (onHide)="onClose()">
-        <div class="flex flex-column align-items-center justify-content-center">
+        [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()">  
+         
+            <div class="container">
+              <div class="grid p-fluid">
           <form [formGroup]="fbloantype" (ngSubmit)="onSubmit()">
-            <div class="grid">
-              <div class="col-12">
-                <div class="p-fluid p-formgrid grid">
-
-                  <div class="field col-12 md:col-2 ">
+     
+            <div class="grid p-fluid">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" formControlName="code">
                       
                   </div>
-                  <div class="field col-12 md:col-3 ">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
                     <label>Category:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Categories" optionLabel="name" [options]="billCategories"
                       optionValue="lookUpDetailId" formControlName="categoryId">
                     </p-dropdown> 
                   </div>
 
-                  <div class="field col-12 md:col-3 ">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
                     <label>Name:<sup class="p-error">*</sup></label>
                     <input pInputText id="name" type="text" formControlName="name">
                      
                   </div>
                   
-                  <div class="field col-12 md:col-2 ">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
                     <label>interestRate:<sup class="p-error">*</sup></label>
                     <input pInputText id="name" type="number" formControlName="interestRate">
                     
                      
                   </div>
-                  <div class="field col-12 md:col-2 ">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
                     <label>priority:<sup class="p-error">*</sup></label>
                     <input pInputText id="name" type="number" formControlName="priority">
                      
@@ -161,17 +161,17 @@
 
   
 
-                  <div class="field col-12 md:col-3 ">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
                     <label>GL Code:</label>
                     <input pInputText id="glCode" type="text" formControlName="glcode">
                   </div>
-                  <div class="field col-12 md:col-3">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
                     <label>Sub GLCode:</label>
                     <input pInputText id="subGlcode" type="text" formControlName="subGlcode">
                      
                   </div>
                   
-                  <div class="col-12 md:col-3 ">
+                  <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
                     <label>Is Active:</label><br>
                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                   </div>
@@ -179,12 +179,12 @@
                     <button pButton pRipple type="button" label="Add loanType Details" class="p-button-raised p-button-success"
                       (click)="addLoanSubType()"></button>
                   </div>
-                </div>
-              </div>
+                
+              
               <!-- loanType Details -->
               <div formArrayName="loanSubTypes" *ngIf="showloantype">
-                <p-table #dt2 [value]="faLoanSubType().controls" dataKey="id" [loading]="loadingTptDetails"
-                  [rowHover]="true" [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'fit-content'}"
+                <p-table #dt2 [value]="faLoanSubType().controls" dataKey="id" 
+                  [rowHover]="true" [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
                   styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                   
                   <ng-template pTemplate="header">
@@ -275,6 +275,10 @@
             </div>
           </form>
         </div>
+      </div>
+  
+
+ 
         <ng-template pTemplate="footer">
           <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
             (click)="onSubmit()"></button>

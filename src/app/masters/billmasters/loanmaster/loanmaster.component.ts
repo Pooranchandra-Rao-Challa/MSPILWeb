@@ -21,12 +21,11 @@ import { BillMasterService } from '../../../_services/billmaster.service';
 })
 
 export class LoanMasterComponent implements OnInit {
-
   loanTypes: LoanTypeViewDto[] = [];
   loanType: LoanTypeDto = new LoanTypeDto();
   loanSubTypes: LoanSubTypeViewDto[] = [];
-  loading: boolean = true;
-  loadingTptDetails: boolean = true;
+  // loading: boolean = true;
+  // loadingTptDetails: boolean = true;
   globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
     'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   globalFilterFieldsTptDetails: string[] = ['vehicleNo', 'vehicleTypeId', 'insuranceNo', 'receivableAmt', 'receivedAmt', 'gateEntryFreeze', 'transporterFreeze'];
@@ -60,20 +59,33 @@ export class LoanMasterComponent implements OnInit {
   initLoanTypes() {
     this.BillMasterService.GetLoanTypes().subscribe((resp) => {
       this.loanTypes = resp as unknown as LoanTypeViewDto[];
-      this.loading = false;
+      // this.loading = false;
     });
   }
 
-  initLoanSubtype(loanTypeId: number) {
+  // initLoanSubtype(loanTypeId: any) {
+  //   this.BillMasterService.GetLoanSubTypes(loanTypeId).subscribe((resp) => {
+  //     this.loanSubTypes = resp as unknown as LoanSubTypeViewDto[];
+  //     this.faLoanSubType().clear();
+  //     this.loanSubTypes.forEach((loanSubType) => {
+  //       this.faLoanSubType().push(this.generateRow(loanSubType));
+  //     });
+  //     this.loadingTptDetails = false;
+  //   });
+  // }
+
+  initLoanSubtype(loanTypeId :any) {
     this.BillMasterService.GetLoanSubTypes(loanTypeId).subscribe((resp) => {
       this.loanSubTypes = resp as unknown as LoanSubTypeViewDto[];
       this.faLoanSubType().clear();
       this.loanSubTypes.forEach((loanSubType) => {
         this.faLoanSubType().push(this.generateRow(loanSubType));
       });
-      this.loadingTptDetails = false;
+      // this.loading = false;
     });
   }
+
+ 
 
 
   initUom() {
@@ -91,7 +103,7 @@ export class LoanMasterComponent implements OnInit {
 
   loanTypesForm() {
     this.fbloantype = this.formbuilder.group({
-      loanTypeId: [15],
+      loanTypeId: [0],
       code: new FormControl(''),
       categoryId: [''],
       name: new FormControl('',),
@@ -121,32 +133,31 @@ export class LoanMasterComponent implements OnInit {
   addLoanSubType() {
     this.showloantype = true;
     this.faLoanSubType().push(this.generateRow());
-    this.loadingTptDetails = false;
+    // this.loadingTptDetails = false;
   }
 
-  generateRow(loanSubType: LoanSubTypeViewDto = new LoanSubTypeViewDto()): FormGroup {
-    if (!this.addFlag) loanSubType.loanTypeId = this.loanType.loanTypeId;
+  generateRow(loanSubTypes: LoanSubTypeViewDto = new LoanSubTypeViewDto()): FormGroup {
+    if (!this.addFlag) loanSubTypes.loanTypeId = this.loanType.loanTypeId;
     return this.formbuilder.group({
-    
-      loanSubTypeId:loanSubType.loanSubTypeId,
-      loanTypeId: loanSubType.loanTypeId,
-      code: [loanSubType.code || 'AA'],
-      name: [loanSubType.name || 'AA'],
-      requestReq: [loanSubType.requestReq],
-      priority: [loanSubType.priority],
-      interestRate: [loanSubType.interestRate,],
-      rate:[ loanSubType.rate,],
-      uomid: loanSubType.uomId,
-      loanQtyType: [loanSubType.loanQtyType],
-      glcode: [loanSubType.glCode,],
-      subGlcode: [loanSubType.subGLcode,],
-      isActive: loanSubType.isActive=true
+      loanSubTypeId:loanSubTypes.loanSubTypeId,
+      loanTypeId: loanSubTypes.loanTypeId,
+      code: [loanSubTypes.code ],
+      name: [loanSubTypes.name],
+      requestReq: [loanSubTypes.requestReq],
+      priority: [loanSubTypes.priority],
+      interestRate: [loanSubTypes.interestRate,],
+      rate:[ loanSubTypes.rate,],
+      uomid: loanSubTypes.uomId,
+      loanQtyType: [loanSubTypes.loanQtyType],
+      glcode: [loanSubTypes.glCode,],
+      subGlcode: [loanSubTypes.subGLcode,],
+      isActive: loanSubTypes.isActive=true
     });
   }
 
   editTpt(loanType: LoanTypeViewDto) {
-
-  //  this.initLoanSubtype(loanType.loanTypeId);
+    debugger;
+   this.initLoanSubtype(loanType.loanTypeId);
     this.loanType.loanTypeId = loanType.loanTypeId;
     this.loanType.code = loanType.code;
     this.loanType.categoryId = loanType.categoryId;
@@ -156,9 +167,11 @@ export class LoanMasterComponent implements OnInit {
     this.loanType.glcode = loanType.glCode;
     this.loanType.subGlcode = loanType.subGLcode;
     this.loanType.isActive = loanType.isActive;
-    this.loanType.loanSubTypes = this.loanSubTypes ? [] : this.loanSubTypes;
+    this.loanType.loanSubTypes = this.loanSubTypes ?  this.loanSubTypes: [];
+    setTimeout(() => {
+      this.fbloantype.setValue(this.loanType);
+    }, 5000);
 
-    this.fbloantype.setValue(this.loanType);
     this.addFlag = false;
     this.submitLabel = "Update loanType";
     this.showDialog = true;
@@ -190,7 +203,6 @@ export class LoanMasterComponent implements OnInit {
   }
 
   onSubmit() { 
-    debugger;
     console.log(this.fbloantype.value)
     if (this.fbloantype.valid) {
       this.saveLoantype().subscribe(resp => {

@@ -13,14 +13,14 @@
         </p-toolbar>
 
         <!-- dialog -->
-        <p-dialog header="Plant Sub Type" [(visible)]="showDialog" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+        <p-dialog header="Plant Sub Type" [(visible)]="showDialog" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '45vw'}">
             <div class="flex flex-column  justify-content-center">
                 <form [formGroup]="fbplantsubtype">
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">
-                                  <div class="field col-12">
+                                  <div class="field col-12 md:col-6">
                                     <label>Plant Type Name:<sup class="p-error">*</sup></label>&nbsp;
                                     <p-dropdown [options]="planttype" optionLabel="name" formControlName="plantId" optionValue="plantTypeId"  placeholder="Select Plant Type Name."
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantId'].touched && FormControls['plantId'].errors }"></p-dropdown>
@@ -31,7 +31,7 @@
                                     </span>
                                 </div>
                                 
-                                <div class="field col-12">
+                                <div class="field col-12 md:col-6">
                                     <label>Code:<sup class="p-error">*</sup></label>
                                     <input pInputText id="code" type="text" formControlName="code"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -43,7 +43,7 @@
                                             numbers.</div>
                                     </span>
                                 </div>
-                                <div class="field col-12">
+                                <div class="field col-12 md:col-6">
                                     <label>Name:<sup class="p-error">*</sup></label>
                                     <input pInputText id="name" type="text" formControlName="name"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -55,7 +55,7 @@
                                             Alphabets .</div>
                                     </span>
                                 </div>
-                                <div class="field col-12">
+                                <div class="field col-12 md:col-6">
                                     <label>Is Active:</label><br>
                                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                                 </div>
@@ -76,11 +76,11 @@
 
         <!-- table -->
 
-        <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="5" [loading]="loading" [rowHover]="true"
+        <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="10" [loading]="loading" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="['code','name','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo',
        'createdByUser','updatedByUser','createAt','updatedAt']" [autoLayout]="true" responsiveLayout="scroll"
-            [rowsPerPageOptions]="[5,10,25,50]">
+            [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -119,7 +119,7 @@
                             display="menu"></p-columnFilter>
                         <p-sortIcon field="createdByUser"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="updatedByUser"> Updated BY<p-columnFilter type="text" field="updatedByUser"
+                    <th pSortableColumn="updatedByUser"> Updated By<p-columnFilter type="text" field="updatedByUser"
                             display="menu"></p-columnFilter>
                         <p-sortIcon field="updatedByUser"></p-sortIcon>
                     </th>

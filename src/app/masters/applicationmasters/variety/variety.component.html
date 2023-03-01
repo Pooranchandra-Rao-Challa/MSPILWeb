@@ -226,8 +226,10 @@
         </form>
       </div>
       <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
-          (click)="onSubmit()"></button>
+        <div class="col-12" style="float:right">
+          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+            (click)="onSubmit()"></button>
+        </div>
       </ng-template>
     </p-dialog>
 

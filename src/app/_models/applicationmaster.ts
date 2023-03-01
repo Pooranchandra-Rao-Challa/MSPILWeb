@@ -1,21 +1,35 @@
 export class LookUpHeaderDto {
-  lookUpId?: number;
+  lookUpId!: number;
   code?: string;
   name?: string;
   isActive?: boolean;
-  lookUpDetails?: LookupDetailDto[];
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+  lookupDetails?: LookupDetailDto[];
 }
+
+export class LookupViewDto {
+  id!: number;
+  code?: string;
+  name?: string;
+  isActive?: boolean;
+  lookupDetails?: LookupDetailDto[];
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
 export class LookupDetailDto {
   lookUpDetailId?: number;
   code?: string;
   name?: string;
+  lookupId?: number;
   remarks?: string;
+  lookupName?: string;
   listingorder?: number;
-}
-export class LookupViewDto {
-  lookUpId?: number;
-  code?: string;
-  name?: string;
   isActive?: boolean;
   updatedAt?: Date;
   createdAt?: Date;
@@ -23,19 +37,20 @@ export class LookupViewDto {
   createdBy?: string;
 }
 export class LookupDetailViewDto {
-  lookUpDetailId?: number;
-  lookUpId?: number;
+  lookupId?: number;
+  lookUpDetailId?:number;
   code?: string;
   name?: string;
   remarks?: string;
-  listingorder?: number;
   isActive?: boolean;
+  listingorder?: number;
+  lookupDetails?: LookupDetailDto[];
   updatedAt?: Date;
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+  // lookupName?: string;
 }
-
 export class plantTypeViewDto {
   plantTypeId?: number;
   code?: string;
@@ -56,7 +71,6 @@ export class plantTypeDto {
   loanEligible?: number;
   isActive?: boolean;
 }
-
 export class VarietyDto {
   varietyId?: number;
   code?: string;
@@ -205,27 +219,34 @@ export class TptdetailViewDto {
   createdBy?: string;
 }
 
+
 export class BankDto {
-  bankId?: number;
+  bankId!: number;
+  branchId?: number;
   code?: string;
   name?: string;
-  abbr?: string
+  abbr?: string;
   isActive?: boolean;
   branches?: BranchDto[];
-}
-
-export class BankViewDto {
-  bankId?: number;
-  code?: string;
-  name?: string;
-  abbr?: string
-  isActive?: boolean;
   updatedAt?: Date;
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
 }
 
+export class BankViewDto {
+  bankId!: number;
+  branchId?: number;
+  code?: string;
+  name?: string;
+  abbr?: string
+  isActive?: boolean;
+  branches?: BranchDto[];
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
 export class BranchDto {
   branchId?: number;
   bankId?: number;
@@ -238,7 +259,33 @@ export class BranchDto {
   email?: string;
   ifsc?: string;
   isActive?: boolean;
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
 }
+
+
+export class BranchViewDto {
+  branchId?: number;
+  bankId?: number;
+  code?: string;
+  name?: string;
+  abbr?: string
+  address?: string;
+  pinCode?: string;
+  phoneNo?: string;
+  email?: string;
+  ifsc?: string;
+  isActive?: boolean;
+  branches?: BranchDto[];
+  updatedAt?: Date;
+  createdAt?: Date;
+  updatedBy?: string;
+  createdBy?: string;
+}
+
+
 export class PlantSubTypeViewDto {
   plantSubTypeId?: number;
   plantId?: number;
@@ -305,9 +352,7 @@ export class SeasonBillingRateDto{
 
 
 export class HglViewDto {
-  subHglId(subHglId: any) {
-    throw new Error('Method not implemented.');
-  }
+
   hglId?: number
   code?: string
   name?: string
@@ -379,6 +424,7 @@ export class SubHglDto {
   code?: string
   name?: string
   vehicleTypeId?: number
+  // vehicleName?: string
   noOfPersons?: number
   isActive?: boolean
 }
