@@ -1,4 +1,4 @@
-import { BankDto, BranchDto, TptdetailViewDto, TptdetailDto } from './../../../_models/applicationmaster';
+import { BankDto, BranchDto,} from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
 import { RG_PHONE_NO, RG_NUMERIC_ONLY, } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
@@ -37,21 +37,46 @@ export class HglComponent implements OnInit {
   branches: BranchDto[] = [];
   genders: { label: string; value: string; }[];
   vehicleTypes: VehicleTypeViewDto[] = [];
-  defaults: { name: string; id: boolean; }[];
+
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService) {
-    this.defaults = [
-      { name: 'Yes', id: true },
-      { name: 'No', id: false }
-    ];
+
     this.genders = [
       { label: 'Male', value: 'M' },
       { label: 'Female', value: 'F' }
     ];
   }
 
+  hglform() {
+    this.fbHgl = this.formbuilder.group({
+      hglId: [0],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      relationTypeId: ['', (Validators.required)],
+      relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      gender: ['', (Validators.required)],
+      address: ['', (Validators.required)],
+      pinCode: ['', (Validators.required)],
+      phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
+      tax: ['', (Validators.required)],
+      email: [''],
+      panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      tds: [false],
+      guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      guarantor3: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      branchId: ['', (Validators.required)],
+      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+      aadhaarNo:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+      isActive: [false],
+      subHgls: this.formbuilder.array([]),
+    });
+  }
   ngOnInit(): void {
     this.inithgls();
     this.initBanks();
@@ -109,36 +134,6 @@ export class HglComponent implements OnInit {
     });
   }
 
-  hglform() {
-    this.fbHgl = this.formbuilder.group({
-      hglId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      relationTypeId: ['', (Validators.required)],
-      relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      gender: ['', (Validators.required)],
-      address: ['', (Validators.required)],
-      pinCode: ['', (Validators.required)],
-      phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
-      tax: ['', (Validators.required)],
-      email: [''],
-      panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      tds: [false],
-      guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      guarantor3: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      branchId: ['', (Validators.required)],
-      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
-      aadhaarNo:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
-      isActive: [false],
-      subHgls: this.formbuilder.array([]),
-    });
-  }
-
-
   get FormControls() {
     return this.fbHgl.controls;
   }
@@ -166,6 +161,7 @@ export class HglComponent implements OnInit {
       isActive: subHgls.isActive
     });
   }
+
 
   editHgl(hgl: HglViewDto) {   
       this.initsubHgls(hgl.hglId);

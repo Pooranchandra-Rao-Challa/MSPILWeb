@@ -3,10 +3,6 @@ export class LookUpHeaderDto {
   code?: string;
   name?: string;
   isActive?: boolean;
-  updatedAt?: Date;
-  createdAt?: Date;
-  updatedBy?: string;
-  createdBy?: string;
   lookupDetails?: LookupDetailDto[];
 }
 
@@ -288,7 +284,7 @@ export class BranchViewDto {
 
 export class PlantSubTypeViewDto {
   plantSubTypeId?: number;
-  plantId?: number;
+  plantTypeId?: number;
   plantName?: string;
   code?: string;
   name?: string;
@@ -300,7 +296,7 @@ export class PlantSubTypeViewDto {
 }
 export class PlantSubTypeDto {
   plantSubTypeId?: number;
-  plantId?: number;
+  plantTypeId?: number;
   code?: string;
   name?: string;
   isActive: boolean = true;
@@ -310,10 +306,10 @@ export class SeasonViewDto{
   seasonId?: number
   code?: string
   name?: string
-  plantFrom?: Date
-  plantTo?: Date
-  crushFrom?: Date
-  crushTo?: Date
+  plantFrom?: string
+  plantTo?: string
+  crushFrom?: string
+  crushTo?: string
   burnCaneRate?: number
   caneRate?: number
   capacity?: number
@@ -398,6 +394,22 @@ export interface HarvestorRate {
   rate?: number
   priority?: number
   isActive?: boolean
+}
+
+
+export class SeasonBillingRateViewDto {
+  seasonBillingRateId?: number
+  seasonId?: number
+  seasonName?: string
+  billParameterId?: number
+  billParameterName?: string
+  rate?: number
+  priority?: number
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedBy?: string
+  createdBy?: string
 }
 
 
