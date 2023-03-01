@@ -43,7 +43,7 @@
             Rate <p-columnFilter type="text" field="rate" display="menu"></p-columnFilter>
             <p-sortIcon field="rate"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -73,7 +73,7 @@
           <td>{{rate.fromDate | date: mediumDate}}</td>
           <td>{{rate.toDate | date: mediumDate}}</td>
           <td>{{rate.rate}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="rate.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
@@ -127,7 +127,7 @@
                   <span>
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="fbDieselRate.value.fromDate > fbDieselRate.value.toDate">
-                      To Date always greater than equals to from date</div>
+                      To date always greater than equals to from date</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">

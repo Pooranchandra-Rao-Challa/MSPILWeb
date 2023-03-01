@@ -67,7 +67,7 @@
             Sub GL Code <p-columnFilter type="text" field="subGLCode" display="menu"></p-columnFilter>
             <p-sortIcon field="subGLCode"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center;">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="updatedBy"></p-sortIcon>
           </th>
@@ -102,7 +102,7 @@
           <td>{{bunk.rate}}</td>
           <td>{{bunk.glCode}}</td>
           <td>{{bunk.subGLCode}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="bunk.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
@@ -144,7 +144,7 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
                       Code max length is 6.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code should contains only characters.</div>
+                      Code should contains only letters and integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -153,7 +153,10 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                      Please Enter Name.</div>
+                      Please enter name.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">Name
+                      should contains only letters.
+                    </div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -163,7 +166,7 @@
                   </textarea>
                   <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
-                      Please Enter Address.</div>
+                      Please enter address.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -172,7 +175,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
                   <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
-                      Please Enter Pin Code.</div>
+                      Please enter pin code.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -180,11 +183,9 @@
                   <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
                   </p-inputMask>
-                  <!-- <input pInputText formControlName="phoneNo"
-                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }" /> -->
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['required']">
-                      Please Enter Phone No.</div>
+                      Please enter phone no.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
                       Pattern is in correct.</div>
                   </span>
@@ -212,7 +213,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
-                      Please Enter Rate.</div>
+                      Please enter rate.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

@@ -64,7 +64,7 @@
             Rate <p-columnFilter type="text" field="rate" display="menu"></p-columnFilter>
             <p-sortIcon field="rate"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -97,7 +97,7 @@
           <td>{{vParamRate.villageName}}</td>
           <td>{{vParamRate.billParameterName}}</td>
           <td>{{vParamRate.rate}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="vParamRate.isActive" [binary]="true"
               [disabled]="true">
             </p-checkbox>

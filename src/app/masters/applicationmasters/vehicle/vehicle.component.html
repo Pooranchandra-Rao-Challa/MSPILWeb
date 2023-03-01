@@ -55,7 +55,7 @@
             Bad Cane % <p-columnFilter type="text" field="badCane" display="menu"></p-columnFilter>
             <p-sortIcon field="badCane"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -87,7 +87,7 @@
           <td>{{vehicle.billingCapacity}}</td>
           <td>{{vehicle.bindingCane}}</td>
           <td>{{vehicle.badCane}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="vehicle.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
@@ -124,6 +124,10 @@
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please enter code.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                      Code min length is 2 .</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                      Code max length is 10.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
                       Code should contains only letters and integers.</div>
                   </span>

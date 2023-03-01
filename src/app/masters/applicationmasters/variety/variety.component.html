@@ -59,7 +59,7 @@
             Plant Suitability <p-columnFilter type="text" field="plantSuitability" display="menu"></p-columnFilter>
             <p-sortIcon field="plantSuitability"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -92,7 +92,7 @@
           <td>{{variety.ratoonAge}}</td>
           <td>{{variety.sugarContent}}</td>
           <td>{{variety.plantSuitability}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="variety.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
@@ -152,6 +152,10 @@
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please enter code.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                      Code min length is 2 .</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                      Code max length is 10.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
                       Code should contains only letters and integers.</div>
                   </span>

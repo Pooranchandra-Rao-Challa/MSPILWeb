@@ -7,7 +7,7 @@
         <h4>Bill Parameters</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Parameter" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Bill Parameter" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addBillParam()"></button>
       </ng-template>
     </p-toolbar>
@@ -59,7 +59,7 @@
             Priority <p-columnFilter type="text" field="priority" display="menu"></p-columnFilter>
             <p-sortIcon field="priority"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -92,7 +92,7 @@
           <td>{{billparam.caluclationType}}</td>
           <td>{{billparam.formula}}</td>
           <td>{{billparam.priority}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="billparam.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
@@ -212,11 +212,11 @@
           </div>
         </form>
       </div>
-      <ng-template pTemplate="footer">  
+      <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
             (click)="onSubmit()"></button>
-        </div>     
+        </div>
       </ng-template>
     </p-dialog>
 

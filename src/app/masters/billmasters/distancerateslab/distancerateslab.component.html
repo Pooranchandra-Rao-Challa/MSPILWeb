@@ -91,7 +91,7 @@
             Rate <p-columnFilter type="text" field="rate" display="menu"></p-columnFilter>
             <p-sortIcon field="rate"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -119,7 +119,7 @@
               (click)="editDistanceRate(distance)"></button></td>
           <td>{{distance.distance}}</td>
           <td>{{distance.rate}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="distance.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>

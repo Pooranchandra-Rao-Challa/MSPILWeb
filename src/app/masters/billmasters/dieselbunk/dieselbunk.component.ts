@@ -5,7 +5,7 @@ import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { MAX_LENGTH_6 } from 'src/app/_shared/regex';
+import { MAX_LENGTH_6, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { DieselBunkDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_EMAIL, RG_PHONE_NO } from 'src/app/_shared/regex';
@@ -48,7 +48,7 @@ export class DieselBunkComponent implements OnInit {
     this.fbDieselBunk = this.formbuilder.group({
       id: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: ['', (Validators.required)],
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       address: ['', (Validators.required)],
       pinCode: ['', (Validators.required)],
       phoneNo: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
