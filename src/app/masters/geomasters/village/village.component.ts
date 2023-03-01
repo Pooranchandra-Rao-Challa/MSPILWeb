@@ -8,6 +8,8 @@ import { CircleDto, CirclesViewDto, DivisionDto, VillageDto, VillagesViewDto, St
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-village',
@@ -17,12 +19,12 @@ import { JWTService } from 'src/app/_services/jwt.service';
 export class VillageComponent implements OnInit {
   display: boolean = false;
   villages: VillagesViewDto[] = [];
-  village: VillageDto ={};
-  selectedVillage: VillagesViewDto={};
+  village: VillageDto = {};
+  selectedVillage: VillagesViewDto = {};
   states: StateDto[] = [];
   loading: boolean = true;
   fbvillages!: FormGroup;
-  filter: any;
+  @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
   addFlag: boolean = true;
   divisions: DivisionDto[] = [];
@@ -30,20 +32,21 @@ export class VillageComponent implements OnInit {
   sections: SectionDto[] = [];
   mandals: MandalDto[] = [];
   districts: DistrictDto[] = [];
+  valSwitch: boolean = false;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-  ) {
+  ) { }
 
-  }
   InitVillage(village: VillagesViewDto) {
     this.fbvillages.reset();
     this.village = new VillageDto();
     this.selectedVillage = village;
     this.clearParents();
-    if(village.villageId){
+    if (village.villageId) {
       this.initCircles(village.divisionId);
       this.initSections(village.circleId);
       this.initDistricts(village.stateId);
@@ -79,20 +82,20 @@ export class VillageComponent implements OnInit {
       this.fbvillages.setValue(this.village);
       this.submitLabel = "Update Village";
       this.addFlag = false;
-    }else{
+    } else {
       this.submitLabel = "Add Village";
       this.addFlag = true;
     }
     this.display = true;
   }
 
-  clearParents(){
+  clearParents() {
     //this.states = [];
     this.districts = [];
     this.mandals = [];
-   // this.divisions = [];
+    // this.divisions = [];
     this.circles = [];
-    this.sections =[]
+    this.sections = []
   }
 
   get FormControls() {
@@ -105,10 +108,7 @@ export class VillageComponent implements OnInit {
 
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]
-      console.log(this.states );
-
     })
-
 
     this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[]
@@ -116,8 +116,8 @@ export class VillageComponent implements OnInit {
 
     this.fbvillages = this.formbuilder.group({
       villageId: [''],
-      divisionId:['', Validators.required],
-      circleId:['', Validators.required],
+      divisionId: ['', Validators.required],
+      circleId: ['', Validators.required],
       sectionId: ['', Validators.required],
       targetArea: ['', Validators.required],
       mandalId: ['', Validators.required],
@@ -125,10 +125,10 @@ export class VillageComponent implements OnInit {
       stateId: ['', Validators.required],
       address: ['', Validators.required],
       pinCode: ['', Validators.required],
-      code: ['', Validators.required],
-      name: ['', Validators.required],
-      inchargeName: ['',],
-      inchargePhoneNo: ['',],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      inchargeName: ['', Validators.pattern(RG_ALPHA_ONLY)],
+      inchargePhoneNo: ['', Validators.pattern(RG_PHONE_NO)],
       distance: ['', Validators.required],
       divertedDistance: ['', Validators.required],
       noOfEbservices: ['', Validators.required],
@@ -144,38 +144,38 @@ export class VillageComponent implements OnInit {
     });
 
   }
+
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[]
       this.loading = false;
     })
   }
+
   initCircles(division: any) {
     this.commonService.GetCirclesForDivision(division).subscribe((resp) => {
       this.circles = resp as unknown as CircleDto[]
     })
   }
+
   initSections(circleId: any) {
     this.commonService.GetSectionsForCircle(circleId).subscribe((resp) => {
       this.sections = resp as unknown as SectionDto[]
-      console.log(this.sections);
-
     })
   }
+
   initMandals(district: any) {
     this.commonService.GetMandalsForDistrict(district).subscribe((resp) => {
       this.mandals = resp as unknown as MandalDto[]
     })
   }
+
   initDistricts(states: any) {
     this.commonService.GetDistrictsForState(states).subscribe((resp) => {
       this.districts = resp as unknown as DistrictDto[]
     })
   }
 
-  private UpdateForm() {
-
-  }
   onClose() {
     this.fbvillages.reset();
   }
@@ -185,10 +185,8 @@ export class VillageComponent implements OnInit {
     else return this.geoMasterService.UpdateVillage(this.fbvillages.value)
   }
   onSubmit() {
-
-    console.log(this.fbvillages.value);
-    this.fbvillages.value.pinCode = this.fbvillages.value.pinCode+"";
-    this.fbvillages.value.inchargePhoneNo = this.fbvillages.value.inchargePhoneNo+"";
+    this.fbvillages.value.pinCode = this.fbvillages.value.pinCode + "";
+    this.fbvillages.value.inchargePhoneNo = this.fbvillages.value.inchargePhoneNo + "";
     if (this.fbvillages.valid) {
       this.saveVillage().subscribe(resp => {
         if (resp) {
@@ -199,7 +197,6 @@ export class VillageComponent implements OnInit {
       })
     }
     else {
-      // alert("please fill the fields")
       this.fbvillages.markAllAsTouched();
     }
   }
@@ -213,7 +210,15 @@ export class VillageComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-  valSwitch: boolean = true;
+  ngOnDestroy() {
+    this.states = [];
+    this.divisions = [];
+    this.villages = [];
+    this.circles = [];
+    this.sections = [];
+    this.mandals = [];
+    this.districts = [];
+  }
 
 }
 
