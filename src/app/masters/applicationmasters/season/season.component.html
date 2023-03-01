@@ -103,7 +103,8 @@
       <ng-template pTemplate="body" let-season>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editseason(season)"></button>
+              ></button>
+              <!-- (click)="editseason(season)" -->
 
           </td>
           <td>{{season.seasonId}}</td>
@@ -242,7 +243,7 @@
                                     <div class="field col-3 md:col-4" style="display:inline-block;">
                                       <label htmlFor="billPeram">bill Parameter:<sup class="p-error">*</sup></label>
                                       <p-dropdown [options]="billParams" optionLabel="name" formControlName="billParamId"
-                                        optionValue="billParamId" placeholder="Please"></p-dropdown>
+                                        optionValue="billParameterId" placeholder="Please"></p-dropdown>
                                     </div>
                                     <div class="field col-3 md:col-4" style="display:inline-block;">
                                       <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
@@ -254,7 +255,6 @@
                                       <input pInputText id="billCatetoryId" formControlName="billCatetoryId" type="hidden"
                                       [value]="billCategory.lookUpDetailId" />
                                     </div>
-
                                   </div>
                                 </div>
                               </ng-container>

@@ -326,29 +326,80 @@ export class SeasonViewDto{
 }
 
 export class SeasonDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
   seasonId?: number
-  code?:  string
-  name?:  string
-  plantFrom?:  Date
-  plantTo?:  Date
-  crushFrom?:  Date
-  crushTo?:  Date
-  burnCaneRate?:  number
-  caneRate?:  number
-  capacity?:  number
-  currentSeason?:  string
-  isActive?:  boolean
-  seasonBillingRates?:  SeasonBillingRateDto[]
+  code?: string
+  name?: string
+  plantFrom?: string
+  plantTo?: string
+  crushFrom?: string
+  crushTo?: string
+  burnCaneRate?: number
+  caneRate?: number
+  capacity?: number
+  currentSeason?: string
+  isActive?: boolean
+  farmerRates?: FarmerRate[]
+  transporterRates?: TransporterRate[]
+  seedRates?: SeedRate[]
+  harvestorRates?: HarvestorRate[]
 }
 
-export class SeasonBillingRateDto{
-  seasonBillingRateId?:  number
-  seasonId?:  number
-  billParameterId?:  number
-  rate?:  number
-  priority?:  number
-  isActive?:  boolean
+export interface FarmerRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
 }
+
+export interface TransporterRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
+}
+
+export interface SeedRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
+}
+
+export interface HarvestorRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
+}
+
 
 
 export class HglViewDto {
