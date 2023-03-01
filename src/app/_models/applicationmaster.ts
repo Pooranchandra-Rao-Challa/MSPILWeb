@@ -3,10 +3,6 @@ export class LookUpHeaderDto {
   code?: string;
   name?: string;
   isActive?: boolean;
-  updatedAt?: Date;
-  createdAt?: Date;
-  updatedBy?: string;
-  createdBy?: string;
   lookupDetails?: LookupDetailDto[];
 }
 
@@ -288,7 +284,7 @@ export class BranchViewDto {
 
 export class PlantSubTypeViewDto {
   plantSubTypeId?: number;
-  plantId?: number;
+  plantTypeId?: number;
   plantName?: string;
   code?: string;
   name?: string;
@@ -300,7 +296,7 @@ export class PlantSubTypeViewDto {
 }
 export class PlantSubTypeDto {
   plantSubTypeId?: number;
-  plantId?: number;
+  plantTypeId?: number;
   code?: string;
   name?: string;
   isActive: boolean = true;

@@ -24,7 +24,7 @@ export class BankComponent implements OnInit {
   filter: any;
   ShowbranchDetails: boolean = false;
   addfields: any;
-  loading: boolean = false;
+  loading: boolean = true;
   fbbank!: FormGroup
   fabranch!: FormArray;
   submitLabel!: string;
@@ -44,7 +44,7 @@ export class BankComponent implements OnInit {
   BankForm() {
     this.fbbank = this.formbuilder.group({
       bankId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name:new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY)]),
       abbr: [''],
       isActive: [true],
@@ -55,6 +55,7 @@ export class BankComponent implements OnInit {
     this.ShowbranchDetails = true;
     this.fabranch = this.fbbank.get("branches") as FormArray
     this.fabranch.push(this.generateRow())
+   
   }
   fabranchDetails() {
     return this.fbbank.get("branches") as FormArray
@@ -77,7 +78,7 @@ export class BankComponent implements OnInit {
   }
   addBank() {
     this.submitLabel = "Add Bank";
-    this.fbbank.reset();
+    this.onClose();
     this.addFlag = true;
     this.showDialog = true;
   }
@@ -93,8 +94,8 @@ export class BankComponent implements OnInit {
   }
   onClose() {
     this.fbbank.reset();
-    this.fabranchDetails().clear();
     this.ShowbranchDetails = false;
+    this.fabranchDetails().clear();
   }
   saveBank(): Observable<HttpEvent<BankDto>> {
     if (this.addFlag) return this.appMasterService.CreateBank(this.fbbank.value)
@@ -106,7 +107,7 @@ export class BankComponent implements OnInit {
       this.saveBank().subscribe(resp => {
         if (resp) {
           this.initBank();
-          this.fbbank.reset();
+          this.onClose();
           this.showDialog = false;
         }
       })
@@ -115,19 +116,20 @@ export class BankComponent implements OnInit {
       this.fbbank.markAllAsTouched();
     }
   }
-  showData() {
-    this.ShowbranchDetails = true;
-    this.addfields.push(this.fbbank.value);
-  }
+  // showData() {
+  //   this.ShowbranchDetails = true;
+  //   this.addfields.push(this.fbbank.value);
+  // }
   initBranch(bankId: number) {
     this.appMasterService.GetBranchDetails(bankId).subscribe((resp) => {
       this.branches = resp as unknown as BranchViewDto;
-      this. fabranchDetails().clear();
+      console.log(this.fbbank.value);
       this.branches.branches?.forEach((branches: BranchViewDto) => {
         this.fabranchDetails().push(this.generateRow(branches));
       })
     });
   }
+
   editBank(bank: BankViewDto) {
     this.initBranch(bank.bankId);
     this.bank.bankId = bank.bankId;
@@ -146,12 +148,14 @@ export class BankComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-  ngOnDestroy() {
-    this.Bank = [];
-    this.bank = new BankDto();
-  }
+  
+  // ngOnDestroy() {
+  //   this.Bank = [];
+  //   this.bank = new BankDto();
+  // }
 }

@@ -4,9 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table/table';
 import { Observable } from 'rxjs';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { plantTypeDto, plantTypeViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-planttype',
@@ -16,11 +18,12 @@ export class PlanttypeComponent implements OnInit {
   showDialog: boolean = false;
   plantType: plantTypeViewDto[] = [];
   plantTypes: plantTypeDto = new plantTypeDto();
-  loading: boolean = false;
+  loading: boolean = true;
   fbplantTypes!: FormGroup;
   filter: any;
   submitLabel!: string;
   addFlag: boolean = true;
+  mediumDate: string = MEDIUM_DATE;
   constructor(private formbuilder: FormBuilder,
     public jwtService: JWTService, private appMasterService: AppMasterService,
   ) { }
@@ -41,10 +44,10 @@ export class PlanttypeComponent implements OnInit {
   plantTypeForm() {
     this.fbplantTypes = this.formbuilder.group({
       plantTypeId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(('[a-zA-Z ]*'))]),
-      estimatedTon: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      loanEligible: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      code:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      name:new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY)]),
+      estimatedTon:['', (Validators.required)],
+      loanEligible: ['', (Validators.required)],
       isActive: [true],
     });
   }
