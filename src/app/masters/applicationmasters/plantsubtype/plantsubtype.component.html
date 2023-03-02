@@ -43,7 +43,8 @@
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['required']">Please enter code.</div>
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['code'].errors?.['pattern']">Code should contains only letters and integers.</div>
+                                            *ngIf="FormControls['code'].errors?.['pattern']">Code should contains only
+                                            letters and integers.</div>
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['minlength']">
                                             Code should contains minimum 2 letters or integers.</div>
@@ -64,7 +65,7 @@
                                             letters.</div>
                                     </span>
                                 </div>
-                                <div class="field col-12 md:col-6">
+                                <div class="field col-12 md:col-6 mt-2">
                                     <label>Is Active:</label><br>
                                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                                 </div>

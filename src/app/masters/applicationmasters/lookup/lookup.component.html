@@ -14,8 +14,7 @@
 
         <!-- dialog -->
         <p-dialog header="Lookup" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-         [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-            [style]="{width:'47vw'}" (onHide)="onClose()"> 
+            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width:'47vw'}" (onHide)="onClose()">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fblookup">
                     <div class="grid">
@@ -25,33 +24,33 @@
                                     <label>Code:<sup class="p-error">*</sup></label>
                                     <input pInputText id="code" type="text" formControlName="code"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                                        <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="FormControls['code'].errors?.['required']">
-                                                Please enter code.</div>
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="FormControls['code'].errors?.['pattern']">Code should contains only
-                                                letters and integers.</div>
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="FormControls['code'].errors?.['minlength']">
-                                                Code should contains minimum 2 letters or integers.</div>
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="FormControls['code'].errors?.['maxlength']">
-                                                Code should contains maximum 20 letters or integers.</div>
-                                        </span>
+                                    <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['code'].errors?.['required']">
+                                            Please enter code.</div>
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['code'].errors?.['pattern']">Code should contains only
+                                            letters and integers.</div>
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['code'].errors?.['minlength']">
+                                            Code should contains minimum 2 letters or integers.</div>
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['code'].errors?.['maxlength']">
+                                            Code should contains maximum 20 letters or integers.</div>
+                                    </span>
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>Name:<sup class="p-error">*</sup></label>
                                     <input pInputText id="name" type="text" formControlName="name"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                                        <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="FormControls['name'].errors?.['required']">
-                                                Please enter name.</div>
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="FormControls['name'].errors?.['pattern']">
-                                                Name should contains only letters.</div>
-                                        </span>
+                                    <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['name'].errors?.['required']">
+                                            Please enter name.</div>
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControls['name'].errors?.['pattern']">
+                                            Name should contains only letters.</div>
+                                    </span>
                                 </div>
                                 <div class="field col-12 md:col-8">
                                     <label>Is Active:</label><br>
@@ -70,79 +69,65 @@
                     <!-- lookupdetails -->
                     <div class="col-12" formArrayName="lookUpDetails" *ngIf="ShowlookupDetails">
                         <p-table #dt2 [value]=" falookupDetails().controls" dataKey="id" [rows]="10" [loading]="loading"
-                        [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                        [paginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
-                        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-                        <!-- <ng-template pTemplate="caption">
-                            <div class="flex justify-content-between flex-column sm:flex-row">
-                                <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                                    (click)="clear(dt1)"></button>
-                                <span class="p-input-icon-left mb-2">
-                                    <i class="pi pi-search"></i>
-                                    <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)"
-                                        placeholder="Search Keyword" class="w-full" />
-                                </span>
-                            </div>
-                        </ng-template> -->
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Code </th>
-                                <th>Name</th>
-                                <th>Remarks</th>
-                                <th>Listing Order</th>
-                                <th>Action</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body"  let-lookUp let-lookUpDetailsIndex="rowIndex" >
-                            <tr [formGroupName]="lookUpDetailsIndex">
-                                <td>
-                                <input pInputText class="form-control" formControlName="code" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
+                            [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+                            [paginator]="false"  [autoLayout]="true"
+                            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Code </th>
+                                    <th>Name</th>
+                                    <th>Remarks</th>
+                                    <th>Listing Order</th>
+                                    <th>Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
+                                <tr [formGroupName]="lookUpDetailsIndex">
+                                    <td>
+                                        <input pInputText class="form-control" formControlName="code" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
                                 formArrayControls(lookUpDetailsIndex, 'code')?.errors }">
-                                <span
-                                    *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched &&formArrayControls(lookUpDetailsIndex,'code')?.invalid">
-                                    <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['required']">
-                                        Please enter code.</div>
-                                    <!-- <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['minlength']">
-                                        Code should contains minimum 2 letters or integers.</div> -->
-                                    <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['maxlength']">
-                                        Code should contains maximum 20 letters or integers.</div>
-                                </span>
-                            </td>
-                                <td>
-                                    <input pInputText class="form-control" formControlName="name" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'name')?.touched &&
+                                        <span
+                                            *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched &&formArrayControls(lookUpDetailsIndex,'code')?.invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['required']">
+                                                Please enter code.</div>
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['maxlength']">
+                                                Code should contains maximum 20 letters or integers.</div>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <input pInputText class="form-control" formControlName="name" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'name')?.touched &&
                                     formArrayControls(lookUpDetailsIndex,'name')?.errors }">
-                                    <span
-                                        *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.touched &&formArrayControls(lookUpDetailsIndex,'name')?.invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.errors?.['required']">
-                                            Please enter name.</div>
-                                    </span>
-                                </td>
-                                <td>
-                                    <input pInputText class="form-control" formControlName="remarks">
-                                </td>
-                                <td>
-                                    <p-inputNumber class="form-control" formControlName="listingorder" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&
+                                        <span
+                                            *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.touched &&formArrayControls(lookUpDetailsIndex,'name')?.invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.errors?.['required']">
+                                                Please enter name.</div>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <input pInputText class="form-control" formControlName="remarks">
+                                    </td>
+                                    <td>
+                                        <p-inputNumber class="form-control" formControlName="listingorder" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&
                                     formArrayControls(lookUpDetailsIndex,'listingorder')?.errors }"></p-inputNumber>
-                                    <span
-                                        *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&formArrayControls(lookUpDetailsIndex,'listingorder')?.invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.errors?.['required']">
-                                            Please enter listing order.</div>
-                                    </span>
-                                </td>
-                                <td>
-                                    <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                                        *ngIf="!this.  falookupDetails().controls[lookUpDetailsIndex].get('lookUpDetailId')?.value"
-                                        (click)="  falookupDetails().removeAt(lookUpDetailsIndex)"></i>
-                                    <i class="pi pi-fw pi-verified text-3xl"
-                                        *ngIf="this.  falookupDetails().controls[lookUpDetailsIndex].get('lookUpDetailId')?.value"></i>
-                                </td>
-                            </tr>
-                        </ng-template>
+                                        <span
+                                            *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&formArrayControls(lookUpDetailsIndex,'listingorder')?.invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.errors?.['required']">
+                                                Please enter listing order.</div>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
+                                            *ngIf="!this.  falookupDetails().controls[lookUpDetailsIndex].get('lookUpDetailId')?.value"
+                                            (click)="  falookupDetails().removeAt(lookUpDetailsIndex)"></i>
+                                        <i class="pi pi-fw pi-verified text-3xl"
+                                            *ngIf="this.  falookupDetails().controls[lookUpDetailsIndex].get('lookUpDetailId')?.value"></i>
+                                    </td>
+                                </tr>
+                            </ng-template>
                         </p-table>
                     </div>
                 </form>
@@ -159,10 +144,10 @@
 
         <!-- table -->
 
-        <p-table #dt1 [value]="look" dataKey="id" [rows]="10" [rowHover]="true" [loading]="loading"
+        <p-table #dt1 [value]="lookups" dataKey="id" [rows]="10" [rowHover]="true" [loading]="loading"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="['lookupId','code','name','isActive','createdBy','updatedBy','createdAt','updatedAt']"
-            [autoLayout]="true" responsiveLayout="scroll"  [rowsPerPageOptions]="[10,25,50]">
+            [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -179,7 +164,7 @@
                 <tr>
                     <th></th>
                     <th pSortableColumn="code">
-                         Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+                        Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
                         <p-sortIcon field="code"></p-sortIcon>
                     </th>
                     <th pSortableColumn="name">
