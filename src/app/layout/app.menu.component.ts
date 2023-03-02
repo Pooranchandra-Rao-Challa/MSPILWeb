@@ -139,6 +139,14 @@ export class AppMenuComponent implements OnInit {
               }
             ]
           },
+          {
+            label: 'Monitoring',
+            icon: 'pi pi-fw pi-eye',
+            permission: true,
+            items: [
+              { label: 'Allotted Plot', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: true }
+            ]
+          }
         ]
       },
 
