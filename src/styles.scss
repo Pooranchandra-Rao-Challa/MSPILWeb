@@ -48,6 +48,6 @@ div.season-rates-tab-items{
   margin-top: 70px;
 }
 
-div.season-rates-tab-items:not:first-child(){
+div.season-rates-tab-items:not(:first-child){
   margin-top: 50px;
 }
