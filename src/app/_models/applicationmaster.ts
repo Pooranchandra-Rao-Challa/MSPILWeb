@@ -406,6 +406,8 @@ export class SeasonBillingRateViewDto {
   seasonName?: string
   billParameterId?: number
   billParameterName?: string
+  billCategoryId?:number
+  billCategoryName?:string
   rate?: number
   priority?: number
   isActive?: boolean

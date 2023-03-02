@@ -33,10 +33,6 @@
           <th></th>
 
           <th pSortableColumn="code">
-            Hgl Id <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
-            <p-sortIcon field="code"></p-sortIcon>
-          </th>
-          <th pSortableColumn="code">
             Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
             <p-sortIcon field="code"></p-sortIcon>
           </th>
@@ -173,7 +169,6 @@
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
             (click)="editHgl(hgl)" ></button></td>
            
-          <td>{{hgl.hglId}}</td>
           <td>{{hgl.code}}</td>
           <td>{{hgl.name}}</td>
           <td>{{hgl.gender}}</td>
@@ -457,7 +452,7 @@
               </div>
             </div>
             <!-- HGL Details -->
-            <div class="col-12" formArrayName="subHgls" *ngIf="showSuhgl">
+            <div class="col-12" formArrayName="subHgls" *ngIf="showSubHgl">
               <p-table #dt2 [value]="faSubHgl().controls" dataKey="id" [rows]="10" [loading]="loading"
                 [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                 [paginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
@@ -486,11 +481,15 @@
                     <th pSortableColumn="noOfPersons">NO Of Persons<p-sortIcon field="noOfPersons">
                       </p-sortIcon>
                     </th>
+
+                    <th pSortableColumn="Action">Action<p-sortIcon field="Action">
+                    </p-sortIcon>
+                  </th>
               
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-tpt let-tptDetailIndex="rowIndex">
-                  <tr [formGroupName]="tptDetailIndex">
+                <ng-template pTemplate="body" let-hgl let-subHglIndex="rowIndex">
+                  <tr [formGroupName]="subHglIndex">
                     <td>
                       <input pInputText class="form-control" formControlName="code">
                     </td>
@@ -504,6 +503,14 @@
                     </td>
                     <td>
                       <input pInputText class="form-control" formControlName="noOfPersons">
+                    </td>
+
+                    <td>
+                      <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
+                        *ngIf="!this.faSubHgl().controls[subHglIndex].get('hglId')?.value"
+                        (click)="faSubHgl().removeAt(subHglIndex)"></i>
+                      <i class="pi pi-fw pi-verified text-3xl"
+                        *ngIf="this.faSubHgl().controls[subHglIndex].get('hglId')?.value"></i>
                     </td>
                   </tr>
                 </ng-template>

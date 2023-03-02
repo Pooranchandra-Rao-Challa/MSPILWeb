@@ -30,7 +30,7 @@ export class HglComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   showDialog: boolean = false;
-  showSuhgl: boolean = false;
+  showSubHgl: boolean = false;
   relationTypes: any;
   banks: BankViewDto[] = [];
   bank: BankDto = new BankDto();
@@ -145,7 +145,7 @@ export class HglComponent implements OnInit {
   }
 
   addSubHgl() {
-    this.showSuhgl = true;
+    this.showSubHgl = true;
     this.faSubHgl().push(this.generateRow());
   }
 
@@ -196,7 +196,7 @@ export class HglComponent implements OnInit {
     this.addFlag = false;
     this.submitLabel = "Update Hgl";
     this.showDialog = true;
-    this.showSuhgl = true;
+    this.showSubHgl = true;
   }
 
   addHgl() {
@@ -245,7 +245,7 @@ export class HglComponent implements OnInit {
   onClose() {
     this.fbHgl.reset();
     this.faSubHgl().clear();
-    this.showSuhgl = false;
+    this.showSubHgl = false;
   }
 
 }

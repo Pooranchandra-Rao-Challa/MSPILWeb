@@ -446,7 +446,8 @@
                 <ng-template pTemplate="body" let-tpt let-tptDetailIndex="rowIndex">
                   <tr [formGroupName]="tptDetailIndex">
                     <td>
-                      <input pInputText class="form-control" formControlName="vehicleNo" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
+                      <input pInputText class="form-control" formControlName="vehicleNo" 
+                      [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
                         formArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
                       <span
                         *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.touched && formArrayControls(tptDetailIndex, 'vehicleNo')?.invalid">
