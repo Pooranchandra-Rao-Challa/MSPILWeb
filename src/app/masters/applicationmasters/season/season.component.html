@@ -30,10 +30,6 @@
         <tr>
           <th></th>
           <th pSortableColumn="code">
-            Tpt Id <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
-            <p-sortIcon field="code"></p-sortIcon>
-          </th>
-          <th pSortableColumn="code">
             Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
             <p-sortIcon field="code"></p-sortIcon>
           </th>
@@ -50,11 +46,11 @@
             <p-sortIcon field="relationName"></p-sortIcon>
           </th>
           <th pSortableColumn="gender">
-            CrushFrom <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
+            Crush From <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
             <p-sortIcon field="gender"></p-sortIcon>
           </th>
           <th pSortableColumn="address">
-            CrushTo <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
+            Crush To <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
           </th>
           <th pSortableColumn="pinCode">
@@ -66,12 +62,12 @@
             <p-sortIcon field="phoneNo"></p-sortIcon>
           </th>
           <th pSortableColumn="email">
-            capacity <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+            Capacity <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
             <p-sortIcon field="email"></p-sortIcon>
           </th>
 
           <th pSortableColumn="email">
-            currentSeason <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+            CurrentSeason <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
             <p-sortIcon field="email"></p-sortIcon>
           </th>
 
@@ -102,15 +98,13 @@
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" (click)="editseason(season)" 
               class="p-element p-ripple p-button-text p-button p-component"></button>
-            <!-- (click)="editseason(season)" -->
           </td>
-          <td>{{season.seasonId}}</td>
           <td>{{season.code}}</td>
           <td>{{season.name}}</td>
-          <td>{{season.plantFrom}}</td>
-          <td>{{season.plantTo}}</td>
-          <td>{{season.crushFrom}}</td>
-          <td>{{season.crushTo}}</td>
+          <td>{{season.plantFrom | date: mediumDate}}</td>
+          <td>{{season.plantTo | date: mediumDate}}</td>
+          <td>{{season.crushFrom | date: mediumDate}}</td>
+          <td>{{season.crushTo | date: mediumDate}}</td>
           <td>{{season.burnCaneRate}}</td>
           <td>{{season.caneRate}}</td>
           <td>{{season.capacity}}</td>
@@ -150,51 +144,114 @@
 
                  <div class="field col-12 md:col-4">
                    <label htmlFor="code"> Code:<sup class="p-error">*</sup></label>
-                   <input pInputText id="code" formControlName="code" type="text">
+                   <input pInputText id="code" formControlName="code" type="text"[ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                         Please enter code.</div>
+                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                         Code min length is 2 .</div>
+                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                         Code max length is 20.</div>
+                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                         Code should contains only letters and integers.</div>
+                   </span>
                  </div>
 
                  <div class="field col-12 md:col-4">
                    <label htmlFor="Name"> Name:<sup class="p-error">*</sup></label>
-                   <input pInputText id="name" formControlName="name" type="text">
+                   <input pInputText id="name" formControlName="name" type="text" [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
+                       Please enter name.</div>
+                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                       Name should contains only letters.</div>
+                   </span>
                  </div>
 
                  <div class="field col-12 md:col-4">
                    <label>Plant From:<sup class="p-error">*</sup></label>
-                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="plantFrom" mask="99/99/9999">
+                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="plantFrom" mask="99/99/9999"
+                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantFrom'].touched && FormControls['plantFrom'].errors }">
                    </p-calendar>
+                   <span *ngIf="FormControls['plantFrom'].touched && FormControls['plantFrom'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['plantFrom'].errors?.['required']">
+                      Please select plantFrom Date.</div>
+                  </span>
                  </div>
 
                  <div class="field col-12 md:col-4">
                    <label>Plant To:<sup class="p-error">*</sup></label>
-                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="plantTo" mask="99/99/9999">
-                   </p-calendar>
-                 </div>
+                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="plantTo" mask="99/99/9999"
+                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantTo'].touched && FormControls['plantTo'].errors }">
+                  </p-calendar>
+                  <span *ngIf="FormControls['plantTo'].touched && FormControls['plantTo'].invalid">
+                   <div class="ng-invalid ng-touched p-error"
+                     *ngIf="FormControls['plantTo'].errors?.['required']">
+                     Please select plantTo Date.</div>
+                 </span>
+                </div>
 
                  <div class="field col-12 md:col-4">
                    <label>Crush From:<sup class="p-error">*</sup></label>
-                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="crushFrom" mask="99/99/9999">
-                   </p-calendar>
-                 </div>
+                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="crushFrom" mask="99/99/9999" 
+                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushFrom'].touched && FormControls['crushFrom'].errors }">
+                  </p-calendar>
+                  <span *ngIf="FormControls['crushFrom'].touched && FormControls['crushFrom'].invalid">
+                   <div class="ng-invalid ng-touched p-error"
+                     *ngIf="FormControls['crushFrom'].errors?.['required']">
+                     Please select crushFrom Date.</div>
+                 </span>
+                </div>
 
                  <div class="field col-12 md:col-4">
                    <label>Crush To<sup class="p-error">*</sup></label>
-                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="crushTo" mask="99/99/9999">
-                   </p-calendar>
-                 </div>
+                   <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="crushTo" mask="99/99/9999"
+                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushTo'].touched && FormControls['crushTo'].errors }">
+                  </p-calendar>
+                  <span *ngIf="FormControls['crushTo'].touched && FormControls['crushTo'].invalid">
+                   <div class="ng-invalid ng-touched p-error"
+                     *ngIf="FormControls['crushTo'].errors?.['required']">
+                     Please select crushTo Date.</div>
+                 </span>
+                </div>
 
                  <div class="field col-12 md:col-4">
                    <label htmlFor="burnCaneRate"> Burn Cane Rate (₹):<sup class="p-error">*</sup></label>
-                   <input pInputText id="burnCaneRate" formControlName="burnCaneRate" type="text">
+                   <input pInputText id="burnCaneRate" formControlName="burnCaneRate" type="text"
+                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['burnCaneRate'].touched && FormControls['burnCaneRate'].errors }">
+                   <span *ngIf="FormControls['burnCaneRate'].touched && FormControls['burnCaneRate'].invalid">
+                     <div class="ng-invalid ng-touched p-error"
+                       *ngIf="FormControls['burnCaneRate'].errors?.['required']">
+                       Please enter burnCaneRate.</div>
+                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['burnCaneRate'].errors?.['pattern']">
+                      burnCaneRate  should contains only numbers.</div>
+                   </span>
                  </div>
 
                  <div class="field col-12 md:col-4">
                    <label htmlFor="caneRate">Cane Rate (₹):<sup class="p-error">*</sup></label>
-                   <input pInputText id="caneRate" formControlName="caneRate" type="text">
+                   <input pInputText id="caneRate" formControlName="caneRate" type="text"
+                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['caneRate'].touched && FormControls['caneRate'].errors }">
+                   <span *ngIf="FormControls['caneRate'].touched && FormControls['caneRate'].invalid">
+                     <div class="ng-invalid ng-touched p-error"
+                       *ngIf="FormControls['caneRate'].errors?.['required']">
+                       Please enter caneRate.</div>
+                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['caneRate'].errors?.['pattern']">
+                      burnCaneRate  should contains only numbers.</div>
+                   </span>
                  </div>
 
                  <div class="field col-12 md:col-4">
                    <label htmlFor="capacity"> Capacity(Tonnes):<sup class="p-error">*</sup></label>
-                   <input pInputText id="capacity" formControlName="capacity" type="text">
+                   <input pInputText id="capacity" formControlName="capacity" type="text"[ngClass]="{ 'is-invalid ng-dirty': FormControls['capacity'].touched && FormControls['capacity'].errors }">
+                   <span *ngIf="FormControls['capacity'].touched && FormControls['capacity'].invalid">
+                     <div class="ng-invalid ng-touched p-error"
+                       *ngIf="FormControls['capacity'].errors?.['required']">
+                       Please enter capacity.</div>
+                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['capacity'].errors?.['pattern']">
+                      Capacity should contains only numbers.</div>
+                   </span>
                  </div>
 
                  <div class="field col-12 md:col-3 ">
@@ -205,7 +262,6 @@
                  </div>
 
                  <div class="field col-12 md:col-12 ">
-                   {{this.fbseasons.getRawValue()|json}}
                    <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)">
                      <p-tabPanel *ngFor="let billCategory of billCategories; let i = index" [selected]="i == 0">
                        <ng-template pTemplate="header">
@@ -243,6 +299,7 @@
                             <input pInputText id="billCatetoryId" formControlName="billCatetoryId"
                             type="hidden" [value]="billCategory.lookUpDetailId" />
                            </div>
+
                            </div>
                           </div>
                           </ng-container>

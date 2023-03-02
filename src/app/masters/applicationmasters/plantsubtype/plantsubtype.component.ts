@@ -55,8 +55,8 @@ export class PlantsubtypeComponent implements OnInit {
 
   plantSubTypeForm() {
     this.fbplantsubtype = this.formbuilder.group({
-      plantSubTypeId: [],
-      plantTypeId:[ 0, [Validators.required]],
+      plantSubTypeId: [null],
+      plantTypeId:[ null, [Validators.required]],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY)]),
       isActive:[true]
@@ -75,7 +75,7 @@ export class PlantsubtypeComponent implements OnInit {
     this.fbplantsubtype.reset();
   }
   // post method
-  savePlantSubType(): Observable<HttpEvent<any>> {
+  savePlantSubType(): Observable<HttpEvent<PlantSubTypeDto>> {
     if (this.addFlag) 
       // this.fbplantsubtype.value.plantSubTypeId = 0;
       return this.appMasterService.CreatePlantSubType(this.fbplantsubtype.value)
@@ -116,4 +116,9 @@ export class PlantsubtypeComponent implements OnInit {
     this.showDialog = true;
   }
 
+  ngOnDestroy() {
+    this.plantSubTypes = [];
+    this.plantSubType = new PlantSubTypeDto();
+    this.planttype = [];
+  }
 }
