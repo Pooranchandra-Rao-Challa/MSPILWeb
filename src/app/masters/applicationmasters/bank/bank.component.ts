@@ -4,9 +4,9 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { BankDto, BankViewDto,BranchDto,BranchViewDto } from 'src/app/_models/applicationmaster';
+import { BankDto, BankViewDto, BranchDto, BranchViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import {  MAX_LENGTH_20,  MAX_LENGTH_25,  MAX_LENGTH_6,  MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-bank',
@@ -51,7 +51,7 @@ export class BankComponent implements OnInit {
     this.fbbank = this.formbuilder.group({
       bankId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name:new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       abbr: [''],
       isActive: [true],
       branches: this.formbuilder.array([]),
@@ -75,23 +75,23 @@ export class BankComponent implements OnInit {
     return this.formbuilder.group({
       bankId: [branchDetail.bankId],
       branchId: [branchDetail.branchId],
-      code:new FormControl(branchDetail.code,[Validators.required,Validators.minLength(MIN_LENGTH_2),Validators.maxLength(MAX_LENGTH_20)]),
-      name:[branchDetail.name,(Validators.required)],
-      ifsc: new FormControl(branchDetail.ifsc,[Validators.required,Validators.pattern(RG_ALPHA_NUMERIC),Validators.maxLength(MAX_LENGTH_25)]),
+      code: new FormControl(branchDetail.code, [Validators.required, Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: [branchDetail.name, (Validators.required)],
+      ifsc: new FormControl(branchDetail.ifsc, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_25)]),
       abbr: [""],
-      address:[branchDetail.address,(Validators.required)],
-      pinCode: new FormControl(branchDetail.pinCode,[Validators.required,Validators.pattern(RG_NUMERIC_ONLY),Validators.maxLength(MAX_LENGTH_6)]),
+      address: [branchDetail.address, (Validators.required)],
+      pinCode: new FormControl(branchDetail.pinCode, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.maxLength(MAX_LENGTH_6)]),
       phoneNo: [branchDetail.phoneNo],
       email: [branchDetail.email],
       isActive: [branchDetail.isActive],
     })
   }
- 
+
   formArrayControls(i: number, formControlName: string) {
     return this.fabranchDetails().controls[i].get(formControlName);
   }
   initBank() {
-     this.appMasterService.GetBanks().subscribe((resp) => {
+    this.appMasterService.GetBanks().subscribe((resp) => {
       this.banks = resp as unknown as BankViewDto[];
       console.log(this.banks);
       this.loading = false;
@@ -146,9 +146,9 @@ export class BankComponent implements OnInit {
     this.showDialog = true;
     this.ShowbranchDetails = true;
   }
- 
+
   ngOnDestroy() {
     this.banks = [];
-    this.branches= new BranchViewDto();
+    this.branches = new BranchViewDto();
   }
 }

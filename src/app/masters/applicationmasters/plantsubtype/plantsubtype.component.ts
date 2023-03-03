@@ -56,10 +56,10 @@ export class PlantsubtypeComponent implements OnInit {
   plantSubTypeForm() {
     this.fbplantsubtype = this.formbuilder.group({
       plantSubTypeId: [null],
-      plantTypeId:[ null, [Validators.required]],
+      plantTypeId: [null, [Validators.required]],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY)]),
-      isActive:[true]
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      isActive: [true]
     });
   }
 
@@ -76,12 +76,12 @@ export class PlantsubtypeComponent implements OnInit {
   }
   // post method
   savePlantSubType(): Observable<HttpEvent<PlantSubTypeDto>> {
-    if (this.addFlag) 
+    if (this.addFlag)
       // this.fbplantsubtype.value.plantSubTypeId = 0;
       return this.appMasterService.CreatePlantSubType(this.fbplantsubtype.value)
-      else return this.appMasterService.UpdatePlantSubType(this.fbplantsubtype.value)
+    else return this.appMasterService.UpdatePlantSubType(this.fbplantsubtype.value)
   }
-  onSubmit() {                                      
+  onSubmit() {
     if (this.fbplantsubtype.valid) {
       console.log(this.fbplantsubtype.value)
 
@@ -104,7 +104,7 @@ export class PlantsubtypeComponent implements OnInit {
     this.addFlag = true;
     this.showDialog = true;
   }
-  editPlantSubType( plantSubType: PlantSubTypeViewDto) {
+  editPlantSubType(plantSubType: PlantSubTypeViewDto) {
     this.plantSubType.plantSubTypeId = plantSubType.plantSubTypeId;
     this.plantSubType.plantTypeId = plantSubType.plantTypeId;
     this.plantSubType.code = plantSubType.code;

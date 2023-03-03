@@ -75,8 +75,8 @@
                     <div class="col-12" formArrayName="branches" *ngIf="ShowbranchDetails">
                         <p-table #dt2 [value]="fabranchDetails().controls" dataKey="id" [rows]="10" [loading]="loading"
                             [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                            [paginator]="false" [autoLayout]="true"
-                            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" responsiveLayout="scroll">
+                            [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
+                            [rowsPerPageOptions]="[10,25,50]" responsiveLayout="scroll">
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th>Code</th>
