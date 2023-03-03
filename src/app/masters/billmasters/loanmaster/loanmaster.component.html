@@ -2,10 +2,10 @@
   <div class="card">
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Loan SubType</h4>
+        <h4>Loan Types</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Loan SubType" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New LoanType" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addLoanType()"></button>
       </ng-template>
     </p-toolbar>
@@ -120,15 +120,15 @@
     </p-table>
 
     <!-- dialog box -->
-    <p-dialog header="Loan SubType" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()">  
+    <p-dialog header="Loan Type" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '45vw'}" (onHide)="onClose()">  
        
           <div class="container">
             <div class="grid p-fluid">
         <form [formGroup]="fbloantype" (ngSubmit)="onSubmit()">
    
           <div class="grid p-fluid">
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                <div class="field col-12 md:col-3">
                   <label>Code:<sup class="p-error">*</sup></label>
                   <input pInputText id="code" type="text" formControlName="code" [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
@@ -138,37 +138,59 @@
                       Code should contains only letters and integers.</div>
                   </span>
                 </div>
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                <div class="field col-12 md:col-3">
                   <label>Category:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Categories" optionLabel="name" [options]="billCategories"
-                    optionValue="lookUpDetailId" formControlName="categoryId" >
+                    optionValue="lookupDetailId" formControlName="categoryId"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
-                  <span *ngIf="FormControls['categoryId'].touched && !FormControls['categoryId'].valid">
+
+                  <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['categoryId'].errors?.['required']">
-                      Please select category.</div>
+                      Please select category .</div>
                   </span>
                 </div>
 
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
+                <div class="field col-12 md:col-3">
                   <label>Name:<sup class="p-error">*</sup></label>
-                  <input pInputText id="name" type="text" formControlName="name">
-                   
+                  <input pInputText id="name" type="text" formControlName="name"
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                  <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['name'].errors?.['required']">
+                      Please enter name.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                     Name  should contains only alphbets.</div>
+                  </span>               
                 </div>
                 
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
+                <div class="field col-12 md:col-3">
                   <label>interestRate:<sup class="p-error">*</sup></label>
-                  <input pInputText id="name" type="number" formControlName="interestRate">
-                  
-                   
+                  <input pInputText id="interestRate" type="number" formControlName="interestRate"
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['interestRate'].touched && FormControls['interestRate'].errors }">
+                  <span *ngIf="FormControls['interestRate'].touched && FormControls['interestRate'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['interestRate'].errors?.['required']">
+                      Please enter interestRate.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                     Name  should contains only alphbets.</div>
+                  </span>               
                 </div>
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                  
+                <div class="field col-12 md:col-3">
                   <label>priority:<sup class="p-error">*</sup></label>
-                  <input pInputText id="name" type="number" formControlName="priority">
-                   
+                  <input pInputText id="priority" type="number" formControlName="priority" [ngClass]="{ 'is-invalid ng-dirty': FormControls['interestRate'].touched && FormControls['interestRate'].errors }">
+                  <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['priority'].errors?.['required']">
+                      Please enter priority.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                     Name  should contains only alphbets.</div>
+                  </span>               
                 </div>
 
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                <div class="field col-12 md:col-3">
                   <label>GL Code:</label>
                   <input pInputText id="glcode" type="text" formControlName="glcode"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
@@ -179,7 +201,7 @@
                     GL code contains only letters and integers.</div>
                 </span>
                 </div>
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                <div class="field col-12 md:col-3">
                   <label>Sub Glcode:</label>
                   <input pInputText id="subGlcode" type="text" formControlName="subGlcode" [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
                   <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
@@ -189,14 +211,15 @@
                       GL code contains only letters and integers.</div>
                   </span>
                 </div>               
-               <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+               <div class="field col-12 md:col-3">
                   <label>Is Active:</label><br>
                   <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                 </div>
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5"></div>
-                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5"></div>
+                <div class="field col-12 md:col-3"></div>
+                <div class="field col-12 md:col-3"></div>   
+                <div class="field col-12 md:col-3"></div>
                             
-                <div class="field col-12 md:col-3 mt-5">
+                <div class="field col-12 md:col-3 mt-5 ">
                   <div class="button-container">
                     <button pButton pRipple type="button" label="Add SubloanType" class="p-button-raised p-button-success"
                     (click)="addLoanSubType()"></button>
@@ -240,7 +263,7 @@
                       <input pInputText class="form-control" type="number" formControlName="priority">
                     </td>
                     <td>
-                      <p-inputNumber inputId="interestRate" formControlName="interestRate" [showButtons]="true">
+                      <p-inputNumber inputId="priority" formControlName="priority" [showButtons]="true">
                       </p-inputNumber>
                     </td>
                     
@@ -257,7 +280,7 @@
 
                     <td>
                       <p-dropdown placeholder="Select a uomid" [options]="uom"
-                        formControlName="uomid" optionLabel="uomid" optionValue="lookUpDetailId" appendTo="body">
+                        formControlName="uomid" optionLabel="name" optionValue="lookupDetailId" appendTo="body">
                       </p-dropdown>
                     </td>
 

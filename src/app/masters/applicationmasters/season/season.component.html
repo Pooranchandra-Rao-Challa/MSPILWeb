@@ -157,8 +157,16 @@
                    </span>
                  </div>
                  <div class="field col-12 md:col-4">
-                   <label htmlFor="Name"> Name:<sup class="p-error">*</sup></label>
-                   <input pInputText id="name" formControlName="name" type="text" >                 
+                   <label htmlFor="name"> Name:<sup class="p-error">*</sup></label>
+                   <input pInputText id="name" formControlName="name" type="text" 
+                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                     <div class="ng-invalid ng-touched p-error"
+                       *ngIf="FormControls['name'].errors?.['required']">
+                       Please enter name.</div>
+                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                      Name  should contains only alphbets.</div>
+                   </span>               
                  </div>
                  <div class="field col-12 md:col-4">
                    <label>Plant From:<sup class="p-error">*</sup></label>
@@ -168,7 +176,7 @@
                    <span *ngIf="FormControls['plantFrom'].touched && FormControls['plantFrom'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['plantFrom'].errors?.['required']">
-                      Please select plantFrom Date.</div>
+                      Please select plantFrom date.</div>
                   </span>
                  </div>
                  <div class="field col-12 md:col-4">
@@ -179,7 +187,7 @@
                   <span *ngIf="FormControls['plantTo'].touched && FormControls['plantTo'].invalid">
                    <div class="ng-invalid ng-touched p-error"
                      *ngIf="FormControls['plantTo'].errors?.['required']">
-                     Please select plantTo Date.</div>
+                     Please select plantTo date.</div>
                  </span>
                 </div>
 
@@ -202,7 +210,7 @@
                   <span *ngIf="FormControls['crushTo'].touched && FormControls['crushTo'].invalid">
                    <div class="ng-invalid ng-touched p-error"
                      *ngIf="FormControls['crushTo'].errors?.['required']">
-                     Please select crushTo Date.</div>
+                     Please select crushTo date.</div>
                  </span>
                 </div>
                  <div class="field col-12 md:col-4">
@@ -269,46 +277,33 @@
                            style="margin-bottom: -30px;">
                            <div [formGroupName]="i" class="col-12">
 
-                           <div class="field col-3 md:col-3" style="display:inline-block;">
+                           <div class="field col-12 md:col-3" style="display:inline-block;">
                             <label htmlFor="billPeram">bill Parameter:<sup class="p-error">*</sup></label>
                             <p-dropdown [options]="billCategory.billParams" optionLabel="name"
                             formControlName="billParameterId" optionValue="billParameterId"
                             placeholder="Please"></p-dropdown>
                             <span
-                            *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
+                            *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'i')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
                             <div class="ng-invalid ng-touched p-error"
-                              *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">
+                              *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'i')?.errors?.['required']">
                               Please select  bill Parameter.</div>
                           </span>
                            </div>
-                            <div class="field col-3 md:col-3" style="display:inline-block;">
+                            <div class="field col-12 md:col-3" style="display:inline-block;">
                             <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
 
                             <input pInputText id="rate" formControlName="rate" type="text" />
-                            <span
-                            *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">
-                              Please Enter Rate.</div>
-                          </span>
-                           
                            </div>
-                           <div class="field col-3 md:col-3" style="display:inline-block;">
+                           <div class="field col-12 md:col-3" style="display:inline-block;">
                            <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>
                             <input pInputText id="priority" formControlName="priority" type="text" />
                             <input pInputText id="billCatetoryId" formControlName="billCatetoryId"
                             type="hidden" [value]="billCategory.lookupDetailId" />
-                            <span
-                            *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">
-                              Please Enter Priority</div>
-                          </span>    
                            </div>
-                           <div class="field col-3 md:col-3"style="display:inline-block;">
-                           <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                           (click)="ratesControls((billCategory.name?.toLowerCase())+'Rates').removeAt(i)"></i>
-                          </div>
+                                  <div class="field col-12 md:col-3" style="display:inline-block;">
+                                    <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
+                                    (click)="ratesControls((billCategory.name?.toLowerCase())+'Rates').removeAt(i)"></i>
+                                   </div>
                            </div>
                           </div>
                           </ng-container>

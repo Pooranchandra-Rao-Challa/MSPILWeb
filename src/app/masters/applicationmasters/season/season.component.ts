@@ -144,7 +144,7 @@ export class SeasonComponent implements OnInit {
       plantFrom: ['', Validators.required],
       plantTo: ['', Validators.required],
       crushFrom: ['', Validators.required],
-      crushTo: [Date, Validators.required],
+      crushTo: ['', Validators.required],
       burnCaneRate: new FormControl('', [
         Validators.required,
         Validators.pattern(RG_NUMERIC_ONLY),
