@@ -85,18 +85,18 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="8">No diesel rates found.</td>
+          <td class="text-center" colspan="8">No Diesel Rates Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="8">Loading diesel rates data. Please wait.</td>
+          <td class="text-center" colspan="8">Loading Diesel Rates Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
 
     <!-- dialog box -->
-    <p-dialog header="Diesel Rates" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+    <p-dialog header="Diesel Rate" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbDieselRate.reset()"
       [contentStyle]="{'overflow': 'visible'}">
       <div class="flex flex-column align-items-center justify-content-center">
@@ -111,7 +111,7 @@
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
-                      Please select from date.</div>
+                      Please Select From Date.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -122,12 +122,12 @@
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
-                      Please select to date.</div>
+                      Please Select To Date.</div>
                   </span>
                   <span>
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="fbDieselRate.value.fromDate > fbDieselRate.value.toDate">
-                      To date always greater than equals to from date</div>
+                      To Date Always Greater Than Equals To From Date</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -138,7 +138,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
-                      Please enter rate.</div>
+                      Please Enter Rate.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

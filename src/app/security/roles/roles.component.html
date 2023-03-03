@@ -76,12 +76,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="8">No roles found.</td>
+          <td class="text-center" colspan="8">No Roles Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="8">Loading roles data. Please wait.</td>
+          <td class="text-center" colspan="8">Loading Roles Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -98,13 +98,13 @@
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['code'].touched && roleFormControls['code'].errors }" />
                   <span *ngIf="roleFormControls['code'].touched && roleFormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['required']">
-                      Please enter code.</div>
+                      Please Enter Code.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['minlength']">
-                      Code min length is 2 .</div>
+                      Code Min Length Is 2 .</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['maxlength']">
-                      Code max length is 6.</div>
+                      Code Max Length Is 6.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['pattern']">
-                      Code should contains only characters.</div>
+                      Code Should Contains Only Characters.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -115,7 +115,7 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['pattern']">
-                      Name should contains only letters.</div>
+                      Name Should Contains Only Letters.</div>
                   </span>
                 </div>
                 <div class="field col-12">

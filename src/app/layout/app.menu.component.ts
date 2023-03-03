@@ -93,13 +93,13 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-id-card',
                 permission: this.GroupPermission('Geo Masters'),
                 items: [
-                  { label: 'State', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/state'], permission: this.jwtService.Permissions.CanViewStates },
-                  { label: 'District', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/districts'], permission: this.jwtService.Permissions.CanViewDistricts },
-                  { label: 'Mandal', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/mandal'], permission: this.jwtService.Permissions.CanViewMandals },
-                  { label: 'Division', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/division'], permission: this.jwtService.Permissions.CanViewDivisions },
-                  { label: 'Circle', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/circle'], permission: this.jwtService.Permissions.CanViewCircles },
-                  { label: 'Section', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/section'], permission: this.jwtService.Permissions.CanViewSections },
-                  { label: 'Village', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/village'], permission: this.jwtService.Permissions.CanViewVillages },
+                  { label: 'States', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/state'], permission: this.jwtService.Permissions.CanViewStates },
+                  { label: 'Districts', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/districts'], permission: this.jwtService.Permissions.CanViewDistricts },
+                  { label: 'Mandals', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/mandal'], permission: this.jwtService.Permissions.CanViewMandals },
+                  { label: 'Divisions', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/division'], permission: this.jwtService.Permissions.CanViewDivisions },
+                  { label: 'Circles', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/circle'], permission: this.jwtService.Permissions.CanViewCircles },
+                  { label: 'Sections', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/section'], permission: this.jwtService.Permissions.CanViewSections },
+                  { label: 'Villages', icon: 'pi pi-fw pi-circle', routerLink: ['/geomasters/village'], permission: this.jwtService.Permissions.CanViewVillages },
                 ]
               },
               {
@@ -107,15 +107,15 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-bitcoin text-lg',
                 permission: this.GroupPermission('Bill Masters'),
                 items: [
-                  { label: 'Bill Masters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billmaster'], permission: this.jwtService.Permissions.CanViewBills },
+                  { label: 'Bills', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billmaster'], permission: this.jwtService.Permissions.CanViewBills },
                   { label: 'Bill Parameters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billparameters'], permission: this.jwtService.Permissions.CanViewBillParameters },
                   { label: 'Loan Masters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'], permission: this.jwtService.Permissions.CanViewLoanMasters },
                   { label: 'Diesel Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselrates'], permission: this.jwtService.Permissions.CanViewDieselRates },
-                  { label: 'Distance Rate Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'], permission: this.jwtService.Permissions.CanViewDistanceRates },
+                  { label: 'Distance Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'], permission: this.jwtService.Permissions.CanViewDistanceRates },
                   { label: 'Village Param Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villageparamrates'], permission: this.jwtService.Permissions.CanViewVillageParamRates },
                   { label: 'Village TPT Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villagetptrate'], permission: this.jwtService.Permissions.CanViewVillagetptRates },
-                  { label: 'Diesel Bunk', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselbunk'], permission: this.jwtService.Permissions.CanViewDieselBunks },
-                  { label: 'Ware House', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'], permission: this.jwtService.Permissions.CanViewWareHouses },
+                  { label: 'Diesel Bunks', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselbunk'], permission: this.jwtService.Permissions.CanViewDieselBunks },
+                  { label: 'Ware Houses', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/warehouse'], permission: this.jwtService.Permissions.CanViewWareHouses },
                 ]
               },
               {
@@ -123,17 +123,17 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-align-justify text-lg',
                 permission: this.GroupPermission('Application Masters'),
                 items: [
-                  { label: 'Season', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
-                  { label: 'Farmer', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: true },
-                  { label: 'HGL', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: true },
-                  { label: 'TPT', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/tpt'], permission: this.jwtService.Permissions.CanViewTpts },
-                  { label: 'Plant Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
-                  { label: 'Plant Sub Type', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/plantsubtype'], permission: true },
-                  { label: 'Variety', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: this.jwtService.Permissions.CanViewVarieties },
-                  { label: 'Bank', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/bank'], permission: true },
-                  { label: 'Vehicle', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/vehicle'], permission: this.jwtService.Permissions.CanViewVehicleTypes },
-                  { label: 'Lookup', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
-                  { label: 'Shift', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Shift'], permission: true },
+                  { label: 'Seasons', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
+                  { label: 'Farmers', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: true },
+                  { label: 'HGLs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: true },
+                  { label: 'TPTs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/tpt'], permission: this.jwtService.Permissions.CanViewTpts },
+                  { label: 'Plant Types', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
+                  { label: 'Plant Sub Types', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/plantsubtype'], permission: true },
+                  { label: 'Varieties', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: this.jwtService.Permissions.CanViewVarieties },
+                  { label: 'Banks', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/bank'], permission: true },
+                  { label: 'Vehicles', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/vehicle'], permission: this.jwtService.Permissions.CanViewVehicleTypes },
+                  { label: 'Lookups', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
+                  { label: 'Shifts', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Shift'], permission: true },
                   { label: 'Sample Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Sample_Slabs'], permission: true },
                 ]
               }
@@ -144,7 +144,7 @@ export class AppMenuComponent implements OnInit {
             icon: 'pi pi-fw pi-eye',
             permission: true,
             items: [
-              { label: 'Allotted Plot', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: true }
+              { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: true }
             ]
           }
         ]
