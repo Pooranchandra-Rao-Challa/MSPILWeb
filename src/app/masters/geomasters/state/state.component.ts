@@ -35,7 +35,6 @@ export class StateComponent implements OnInit {
 
   InitState() {
     this.state = new StateDto();
-    this.fbstates.reset();
     this.submitLabel = "Add State";
     this.addFlag = true;
     this.display = true;
@@ -50,7 +49,7 @@ export class StateComponent implements OnInit {
     this.fbstates = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      isActive: new FormControl(true, Validators.required),
+      isActive: true,
       stateId: new FormControl(''),
     });
   }

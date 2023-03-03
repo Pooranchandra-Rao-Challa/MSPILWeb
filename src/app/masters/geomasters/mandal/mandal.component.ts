@@ -37,7 +37,6 @@ export class MandalComponent implements OnInit {
 
   InitMandal() {
     this.mandal = new MandalDto();
-    this.fbmandals.reset();
     this.submitLabel = "Add Mandal";
     this.addFlag = true;
     this.display = true;

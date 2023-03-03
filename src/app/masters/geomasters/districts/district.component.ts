@@ -37,7 +37,6 @@ export class DistrictComponent implements OnInit {
 
   InitDistrict() {
     this.district = new DistrictDto();
-    this.fbdistricts.reset();
     this.submitLabel = "Add District";
     this.addFlag = true;
     this.display = true;
@@ -53,11 +52,11 @@ export class DistrictComponent implements OnInit {
       this.states = resp as unknown as StateDto[]
     })
     this.fbdistricts = this.formbuilder.group({
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       stateId: ['', (Validators.required)],
       districtId: [''],
-      isActive: [Validators.required]
+      isActive: [true]
     });
   }
 

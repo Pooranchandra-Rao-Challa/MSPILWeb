@@ -59,8 +59,8 @@ export class LookupComponent implements OnInit {
     this.addfields = []
     this.fblookup = this.formbuilder.group({
       lookUpId: [null],
-      code:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name:new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       isActive: [true],
       lookUpDetails: this.formbuilder.array([]),
     });
@@ -71,22 +71,22 @@ export class LookupComponent implements OnInit {
     this.falookUpDetails = this.fblookup.get("lookUpDetails") as FormArray
     this.falookUpDetails.push(this.generaterow())
   }
-   falookupDetails(): FormArray {
+  falookupDetails(): FormArray {
     return this.fblookup.get("lookUpDetails") as FormArray
   }
   generaterow(lookupDetail: LookupDetailViewDto = new LookupDetailViewDto()): FormGroup {
     return this.formbuilder.group({
       lookupId: [lookupDetail.lookupId],
-      lookupDetailId:[lookupDetail.lookupDetailId],
-      code:new FormControl(lookupDetail.code,[Validators.required,Validators.maxLength(MAX_LENGTH_20)]),
-      name: [lookupDetail.name,(Validators.required)],
+      lookupDetailId: [lookupDetail.lookupDetailId],
+      code: new FormControl(lookupDetail.code, [Validators.required, Validators.maxLength(MAX_LENGTH_20)]),
+      name: [lookupDetail.name, (Validators.required)],
       remarks: [lookupDetail.remarks],
-      listingorder: [lookupDetail.listingorder,(Validators.required)],
+      listingorder: [lookupDetail.listingorder, (Validators.required)],
       isActive: [lookupDetail.isActive],
     })
   }
   formArrayControls(i: number, formControlName: string) {
-    return this. falookupDetails().controls[i].get(formControlName);
+    return this.falookupDetails().controls[i].get(formControlName);
   }
   //  post lookup 
   savelookup(): Observable<HttpEvent<LookUpHeaderDto>> {
@@ -126,14 +126,14 @@ export class LookupComponent implements OnInit {
       this.lookupDetails = resp as unknown as LookupDetailViewDto;
       console.log(this.lookupDetails);
       this.lookupDetails.lookupDetails?.forEach((lookupDetails: LookupDetailViewDto) => {
-        this. falookupDetails().push(this.generaterow(lookupDetails));
+        this.falookupDetails().push(this.generaterow(lookupDetails));
       })
     });
   }
   editLookUp(lookup: LookupViewDto) {
     this.initlookupDetails(lookup.id);
     this.lookup.lookUpId = lookup.id;
-    this.lookup. lookupDetailId= lookup.lookupDetailId;
+    this.lookup.lookupDetailId = lookup.lookupDetailId;
     this.lookup.code = lookup.code;
     this.lookup.name = lookup.name;
     this.lookup.isActive = lookup.isActive;

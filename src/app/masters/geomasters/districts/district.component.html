@@ -1,41 +1,39 @@
 <div class="col-12">
   <div class="card">
     <!-- dialog box -->
-    <p-dialog header="Districts" [(visible)]="display" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="onClose()" [modal]="true">
+    <p-dialog header="District" [(visible)]="display" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">
             <div class="grid">
               <div class="col-12 ">
                 <div class="p-fluid p-formgrid grid">
-                  <div class="field col-12 ">
+                  <div class="field col-12 md:col-6">
                     <label>Code:<sup class="p-error">*</sup></label>
-                    <input pInputText id="code" type="text" formControlName="code" placeholder="Enter District Code "
+                    <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Code "
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                        Please enter code.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-                        Code min length is 2 .</div>
+                        Please Enter Code.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-                        Code max length is 6.</div>
+                        Code Max Length Is 6.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                        Code should contains only letters and digits.</div>
+                        Code Should Contains Alphabets & Numbers.</div>
                     </span>
                   </div>
-                  <div class="field col-12">
+                  <div class="field col-12 md:col-6">
                     <label>Name:<sup class="p-error">*</sup></label>
-                    <input pInputText id="name" type="text" formControlName="name" placeholder="Enter District Name "
+                    <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Name "
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                        District name is required.</div>
+                        Please Enter Name.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">Name
-                        should only contains alphabets .</div>
+                        Should Contains Alphabets.</div>
                     </span>
                   </div>
-                  <div class="field col-12">
+                  <div class="field col-12 md:col-6">
                     <label>State:<sup class="p-error">*</sup></label>
                     <p-dropdown [options]="states" optionLabel="stateName" formControlName="stateId"
                       optionValue="stateId" placeholder="Select State"
@@ -43,17 +41,13 @@
                     </p-dropdown>
                     <span *ngIf="FormControls['stateId'].touched && FormControls['stateId'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['stateId'].errors?.['required']">
-                        State is required.
+                        Please Select State.
                       </div>
                     </span>
                   </div>
-                  <div class="field col-12">
-                    <label>Is Active?:<sup class="p-error">*</sup></label><br>
-                    &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-                    <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
-                      class="error-message p-error">
-                      Please Active
-                    </div>
+                  <div class="field col-12 md:col-6 mt-2">
+                    <label>Is Active?:</label><br>
+                    &nbsp;<p-inputSwitch formControlName="isActive"></p-inputSwitch>
                   </div>
                 </div>
               </div>
@@ -99,37 +93,34 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="districtId">District Id <p-columnFilter type="text" field="districtId" display="menu">
+          <th pSortableColumn="districtCode">Code<p-columnFilter type="text" field="districtCode" display="menu">
             </p-columnFilter>
-            <p-sortIcon field="districtId"></p-sortIcon>
-          </th>
-          <th pSortableColumn="districtName"> District Name<p-columnFilter type="text" field="districtName"
-              display="menu"></p-columnFilter>
-            <p-sortIcon field="districtName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="districtCode"> District Code<p-columnFilter type="text" field="districtCode"
-              display="menu"></p-columnFilter>
             <p-sortIcon field="districtCode"></p-sortIcon>
           </th>
-          <th class="text-center" pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive" display="menu">
+          <th pSortableColumn="districtName">Name<p-columnFilter type="text" field="districtName" display="menu">
             </p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
+            <p-sortIcon field="districtName"></p-sortIcon>
           </th>
-          <th pSortableColumn="stateName">State Name <p-columnFilter type="text" field="stateName" display="menu">
+          <th pSortableColumn="stateName">State<p-columnFilter type="text" field="stateName" display="menu">
             </p-columnFilter>
             <p-sortIcon field="stateName"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedAt">Updated At<p-columnFilter type="text" field="updatedAt" display="menu">
+          <th class="text-center" pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive"
+              display="menu">
             </p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
+            <p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="createAt">Create At<p-columnFilter type="text" field="createAt" display="menu">
+          <th pSortableColumn="createAt">Create Date<p-columnFilter type="text" field="createAt" display="menu">
             </p-columnFilter>
             <p-sortIcon field="createAt"></p-sortIcon>
           </th>
           <th pSortableColumn="createdBy"> Created By<p-columnFilter type="text" field="createdBy" display="menu">
             </p-columnFilter>
             <p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedAt">Updated Date<p-columnFilter type="text" field="updatedAt" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
           <th pSortableColumn="updatedBy"> Updated By <p-columnFilter type="text" field="updatedBy" display="menu">
             </p-columnFilter>
@@ -142,36 +133,27 @@
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editProduct(district)"></button></td>
-          <td>{{district.districtId}}</td>
-          <td>{{district.districtName}}</td>
           <td>{{district.districtCode}}</td>
+          <td>{{district.districtName}}</td>
+          <td>{{district.stateName}}</td>
           <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="district.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
-          <td>
-            {{district.stateName}}
-          </td>
-          <td>
-            {{district.updatedAt | date: mediumDate}}
-          </td>
           <td>{{district.createdAt | date: mediumDate}}</td>
-          <td>
-            {{district.createdBy}}
-          </td>
-          <td pFrozenColumn alignFrozen="right">
-            {{district.updatedBy}}
-          </td>
+          <td> {{district.createdBy}} </td>
+          <td> {{district.updatedAt | date: mediumDate}}</td>
+          <td>{{district.updatedBy}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="10">No Districts found.</td>
+          <td colspan="10">No Districts Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="10">Loading... District data. Please wait.</td>
+          <td colspan="10">Loading... District Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
