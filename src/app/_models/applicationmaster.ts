@@ -1,17 +1,17 @@
+import { BillParameterViewDto } from "./billingmaster";
+
 export class LookUpHeaderDto {
   lookUpId!: number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
-  updatedAt?: Date;
-  createdAt?: Date;
-  updatedBy?: string;
-  createdBy?: string;
-  lookupDetails?: LookupDetailDto[];
+  lookUpDetails?: LookupDetailDto[];
 }
 
 export class LookupViewDto {
   id!: number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
@@ -23,7 +23,7 @@ export class LookupViewDto {
 }
 
 export class LookupDetailDto {
-  lookUpDetailId?: number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   lookupId?: number;
@@ -35,10 +35,11 @@ export class LookupDetailDto {
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+  billParams: BillParameterViewDto[] =[];
 }
 export class LookupDetailViewDto {
   lookupId?: number;
-  lookUpDetailId?:number;
+  lookupDetailId?:number;
   code?: string;
   name?: string;
   remarks?: string;
@@ -288,7 +289,7 @@ export class BranchViewDto {
 
 export class PlantSubTypeViewDto {
   plantSubTypeId?: number;
-  plantId?: number;
+  plantTypeId?: number;
   plantName?: string;
   code?: string;
   name?: string;
@@ -300,7 +301,7 @@ export class PlantSubTypeViewDto {
 }
 export class PlantSubTypeDto {
   plantSubTypeId?: number;
-  plantId?: number;
+  plantTypeId?: number;
   code?: string;
   name?: string;
   isActive: boolean = true;
@@ -310,10 +311,10 @@ export class SeasonViewDto{
   seasonId?: number
   code?: string
   name?: string
-  plantFrom?: Date
-  plantTo?: Date
-  crushFrom?: Date
-  crushTo?: Date
+  plantFrom?: string
+  plantTo?: string
+  crushFrom?: string
+  crushTo?: string
   burnCaneRate?: number
   caneRate?: number
   capacity?: number
@@ -326,29 +327,99 @@ export class SeasonViewDto{
 }
 
 export class SeasonDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
   seasonId?: number
-  code?:  string
-  name?:  string
-  plantFrom?:  Date
-  plantTo?:  Date
-  crushFrom?:  Date
-  crushTo?:  Date
-  burnCaneRate?:  number
-  caneRate?:  number
-  capacity?:  number
-  currentSeason?:  string
-  isActive?:  boolean
-  seasonBillingRates?:  SeasonBillingRateDto[]
+  code?: string
+  name?: string
+  plantFrom?: string
+  plantTo?: string
+  crushFrom?: string
+  crushTo?: string
+  burnCaneRate?: number
+  caneRate?: number
+  capacity?: number
+  currentSeason?: string
+  isActive?: boolean
+  farmerRates?: FarmerRate[]
+  transporterRates?: TransporterRate[]
+  seedRates?: SeedRate[]
+  harvestorRates?: HarvestorRate[]
 }
 
-export class SeasonBillingRateDto{
-  seasonBillingRateId?:  number
-  seasonId?:  number
-  billParameterId?:  number
-  rate?:  number
-  priority?:  number
-  isActive?:  boolean
+export interface FarmerRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
 }
+
+export interface TransporterRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
+}
+
+export interface SeedRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
+}
+
+export interface HarvestorRate {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonBillingRateId?: number
+  seasonId?: number
+  billParameterId?: number
+  rate?: number
+  priority?: number
+  isActive?: boolean
+}
+
+
+export class SeasonBillingRateViewDto {
+  seasonBillingRateId?: number
+  seasonId?: number
+  seasonName?: string
+  billParameterId?: number
+  billParameterName?: string
+  billCategoryId?:number
+  billCategoryName?:string
+  rate?: number
+  priority?: number
+  isActive?: boolean
+  updatedAt?: string
+  createdAt?: string
+  updatedBy?: string
+  createdBy?: string
+  lookupDetailId: any;
+}
+
 
 
 export class HglViewDto {

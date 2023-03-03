@@ -145,12 +145,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="18">No users found.</td>
+          <td class="text-center" colspan="18">No Users Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="18">Loading users data. Please wait.</td>
+          <td class="text-center" colspan="18">Loading Users Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -174,7 +174,7 @@
                         <span *ngIf="userFormControls['userName'].touched && userFormControls['userName'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['userName'].errors?.['required']">
-                            Please enter user name.</div>
+                            Please Enter User Name.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -185,7 +185,7 @@
                         <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['password'].errors?.['required']">
-                            Please enter password.</div>
+                            Please Enter Password.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -196,10 +196,10 @@
                         <span *ngIf="userFormControls['firstName'].touched && userFormControls['firstName'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['firstName'].errors?.['required']">
-                            Please enter first name.</div>
+                            Please Enter First Name.</div>
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['firstName'].errors?.['pattern']">
-                            First name should contains only letters.</div>
+                            First Name Should Contains Only Letters.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -210,10 +210,10 @@
                         <span *ngIf="userFormControls['lastName'].touched && userFormControls['lastName'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['lastName'].errors?.['required']">
-                            Please enter last name.</div>
+                            Please Enter Last Name.</div>
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['lastName'].errors?.['pattern']">
-                            Last name should contains only letters.</div>
+                            Last Name Should Contains Only Letters.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -223,10 +223,10 @@
                         <span *ngIf="userFormControls['email'].touched && userFormControls['email'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['email'].errors?.['required']">
-                            Please enter email id.</div>
+                            Please Enter Email Id.</div>
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['email'].errors?.['pattern']">
-                            Email contains only letters, integers and periods(.)</div>
+                            Email Contains Only Letters, Integers And Periods(.)</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -238,10 +238,10 @@
                           *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['mobileNumber'].errors?.['required']">
-                            Please enter phone no.</div>
+                            Please Enter Mobile No.</div>
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['mobileNumber'].errors?.['pattern']">
-                            Pattern is in correct.</div>
+                            Pattern Is Incorrect.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -253,7 +253,7 @@
                         <span *ngIf="userFormControls['roleId'].touched && userFormControls['roleId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['roleId'].errors?.['required']">
-                            Please enter role.</div>
+                            Please Enter Role.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -267,7 +267,7 @@
                         <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['imeino'].errors?.['pattern']">
-                            IMEI No should contains only digits.</div>
+                            IMEI No Should Contains Only Digits.</div>
                         </span>
                       </div>
                     </div>

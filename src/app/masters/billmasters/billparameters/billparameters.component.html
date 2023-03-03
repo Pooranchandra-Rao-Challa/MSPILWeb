@@ -7,7 +7,7 @@
         <h4>Bill Parameters</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Parameter" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Bill Parameter" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addBillParam()"></button>
       </ng-template>
     </p-toolbar>
@@ -59,7 +59,7 @@
             Priority <p-columnFilter type="text" field="priority" display="menu"></p-columnFilter>
             <p-sortIcon field="priority"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -92,7 +92,7 @@
           <td>{{billparam.caluclationType}}</td>
           <td>{{billparam.formula}}</td>
           <td>{{billparam.priority}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="billparam.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
@@ -104,18 +104,18 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="13">No bill parameters found.</td>
+          <td class="text-center" colspan="13">No bill parameters found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="13">Loading bill parameters data. Please wait.</td>
+          <td class="text-center" colspan="13">Loading bill parameters data. Please wait.</td>
         </tr>
       </ng-template>
     </p-table>
 
     <!-- dialog box -->
-    <p-dialog header="Bill Parameters" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+    <p-dialog header="Bill Parameter" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbBillParameters.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbBillParameters" (ngSubmit)="onSubmit()">
@@ -130,7 +130,7 @@
                   </p-dropdown>
                   <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['categoryId'].errors?.['required']">
-                      Please select category.</div>
+                      Please Select Category.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -140,7 +140,7 @@
                   </p-dropdown>
                   <span *ngIf="FormControls['type'].touched && FormControls['type'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['type'].errors?.['required']">
-                      Please select type.</div>
+                      Please Select Type.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -149,13 +149,13 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                      Please enter code.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-                        Code min length is 2  .</div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-                          Code max length is 10.</div>
+                      Please Enter Code.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                      Code Min Length Is 2 .</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                      Code Max Length Is 10.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code should contains only characters.</div>
+                      Code Should Contains Only Alphabets And Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -164,9 +164,9 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                      Please enter name.</div>
+                      Please Enter Name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">Name
-                      should contains only characters.
+                      Should Contains Only Characters.
                     </div>
                   </span>
                 </div>
@@ -179,7 +179,7 @@
                   <span *ngIf="FormControls['caluclationType'].touched && FormControls['caluclationType'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['caluclationType'].errors?.['required']">
-                      Please select calc type.</div>
+                      Please Select Calc Type.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -188,9 +188,9 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['priority'].touched && FormControls['priority'].errors }">
                   <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
-                      Please enter priority.</div>
+                      Please Enter Priority.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['pattern']">
-                      Priority should contains only numbers.</div>
+                      Priority Should Contains Only Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -200,7 +200,7 @@
                     </textarea>
                   <span *ngIf="FormControls['formula'].touched && FormControls['formula'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['formula'].errors?.['required']">
-                      Please enter formula.</div>
+                      Please Enter Formula.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">
@@ -212,11 +212,11 @@
           </div>
         </form>
       </div>
-      <ng-template pTemplate="footer">  
+      <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
             (click)="onSubmit()"></button>
-        </div>     
+        </div>
       </ng-template>
     </p-dialog>
 

@@ -1,11 +1,11 @@
 import {
   VarietyViewDto, VarietyDto, VehicleTypeViewDto, VehicleTypeDto, PlantSubTypeViewDto, PlantSubTypeDto, BankViewDto, BankDto, SeasonViewDto, SeasonDto, HglViewDto,
-  HglDto, ShiftsViewDto, ShiftDto, SampleslabsViewDto, SampleSlabDto, TptViewDto, TptDto, TptdetailViewDto, LookupDetailViewDto, FarmersViewDto, FarmerDto, BranchViewDto
+  HglDto, ShiftsViewDto, ShiftDto, SampleslabsViewDto, SampleSlabDto, TptViewDto, TptDto, TptdetailViewDto, LookupDetailViewDto, FarmersViewDto, FarmerDto, BranchViewDto, SeasonBillingRateViewDto
 } from './../_models/applicationmaster';
 import { Injectable } from "@angular/core";
 import { LookUpHeaderDto, LookupViewDto, plantTypeDto, plantTypeViewDto, SubHglViewDto } from '../_models/applicationmaster';
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_FARMER_URI, GET_FARMERS_URI,GET_BRANCH_URI, GET_LOOKUP_DETAILS_URI, GET_SUBHGL_URI, UPDATE_FARMER_URI, } from './api.uri.service';
+import { CREATE_FARMER_URI, GET_FARMERS_URI,GET_BRANCH_URI, GET_LOOKUP_DETAILS_URI, GET_SUBHGL_URI, UPDATE_FARMER_URI, GET_BILLPARAMS_URI, GET_BILLPARAMSFORCATEGORY_URI, GET_GETSEASONBILLINGRATES_URI, } from './api.uri.service';
 import {
   CREATE_BANK_URI, CREATE_CreateTpt_URI, CREATE_HGL_URI, CREATE_LOOKUP_URI, CREATE_PLANTTYPE_URI, CREATE_PLANT_SUB_TYPE_URI, CREATE_SAMPLESLAB_URI, CREATE_SEASON_URI,
   CREATE_SHIFT_URI, CREATE_VARIETY_URI, CREATE_VEHICLE_TYPE_URI, GET_BANKS_URI, GET_BANK_URI, GET_HGL_URI, GET_LOOKUP_URI, GET_PLANTTYPE_URI, GET_PLANT_SUB_TYPE_URI,
@@ -13,6 +13,7 @@ import {
   UPDATE_LOOKUP_URI, UPDATE_PLANTTYPE_URI, UPDATE_PLANT_SUB_TYPE_URI, UPDATE_SAMPLESLAB_URI, UPDATE_SEASON_URI, UPDATE_SHIFT_URI, UPDATE_UpdateTpt_URI,
   UPDATE_VARIETY_URI, UPDATE_VEHICLE_TYPE_URI
 } from "./api.uri.service";
+import { BillParameterViewDto } from '../_models/billingmaster';
 
 
 @Injectable({ providedIn: 'root' })
@@ -97,8 +98,8 @@ public UpdatePlantType(plant: plantTypeDto) {
   public UpdatePlantSubType(PlantSubType: PlantSubTypeDto) {
     return this.post<PlantSubTypeDto>(UPDATE_PLANT_SUB_TYPE_URI, PlantSubType);
   }
-  public GetPlantTypeForPlantSubType(plantId?: number) {
-    if (plantId != null) return this.getWithId<plantTypeDto>(GET_PLANTTYPE_URI, plantId);
+  public GetPlantTypeForPlantSubType(plantTypeId?: number) {
+    if (plantTypeId != null) return this.getWithId<plantTypeDto>(GET_PLANTTYPE_URI, plantTypeId);
     else return this.get<plantTypeDto>(GET_PLANTTYPE_URI);
   }
   /* Bank */
@@ -195,6 +196,15 @@ public GetBranchDetails(bankId:number) {
   public UpdateFarmer(farmer:FarmerDto){
     return this.post<FarmerDto>(UPDATE_FARMER_URI, farmer);
   }
+
+  public BillParamsForCategory(categoryId:string) {
+    return this.get<BillParameterViewDto[]>(GET_BILLPARAMSFORCATEGORY_URI + categoryId);
+  }
+
+  public GetSeasonBillingRates(seasonId: number | undefined) {
+    return this.get<SeasonBillingRateViewDto[]>(GET_GETSEASONBILLINGRATES_URI + seasonId);
+  }
+
 
 }
 

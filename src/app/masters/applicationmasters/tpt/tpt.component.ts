@@ -116,7 +116,7 @@ export class TptComponent implements OnInit {
 
   tptForm() {
     this.fbTpt = this.formbuilder.group({
-      tptId: [0],
+      tptId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       relationTypeId: ['', (Validators.required)],
@@ -261,6 +261,13 @@ export class TptComponent implements OnInit {
     this.faTptDetails().clear();
     this.showTptDetails = false;
     this.IFSC = '';
+  }
+
+  ngOnDestroy() {
+    this.tpts = [];
+    this.tptDetails = [];
+    this.branches = [];
+    this.vehicleTypes = [];
   }
 
 }

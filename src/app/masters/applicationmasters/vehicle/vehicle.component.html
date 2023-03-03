@@ -4,7 +4,7 @@
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Vehicle</h4>
+        <h4>Vehicles</h4>
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Vehicle" icon="pi pi-plus" class="p-button-success p-mr-2"
@@ -55,7 +55,7 @@
             Bad Cane % <p-columnFilter type="text" field="badCane" display="menu"></p-columnFilter>
             <p-sortIcon field="badCane"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
+          <th class="text-center" pSortableColumn="isActive">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
@@ -87,7 +87,7 @@
           <td>{{vehicle.billingCapacity}}</td>
           <td>{{vehicle.bindingCane}}</td>
           <td>{{vehicle.badCane}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="vehicle.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
           </td>
@@ -99,12 +99,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="13">No vehicles found.</td>
+          <td class="text-center" colspan="13">No Vehicles Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="13">Loading vehicles data. Please wait.</td>
+          <td class="text-center" colspan="13">Loading Vehicles Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -123,9 +123,13 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                      Please enter code.</div>
+                      Please Enter Code.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                      Code Min Length Is 2 .</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                      Code Max Length Is 10.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code should contains only letters and integers.</div>
+                      Code Should Contains Only Alphabets And Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -134,9 +138,9 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                      Please enter name.</div>
+                      Please Enter Name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                      Name should contains only letters.</div>
+                      Name Should Contains Only Letters.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -147,7 +151,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['capacity'].touched && FormControls['capacity'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['capacity'].errors?.['required']">
-                      Please enter capacity.</div>
+                      Please Enter Capacity.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -159,7 +163,7 @@
                   <span *ngIf="FormControls['billingCapacity'].touched && FormControls['billingCapacity'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['billingCapacity'].errors?.['required']">
-                      Please enter billing capacity.</div>
+                      Please Enter Billing Capacity.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -170,7 +174,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['bindingCane'].touched && FormControls['bindingCane'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['bindingCane'].errors?.['required']">
-                      Please enter binding cane.</div>
+                      Please Enter Binding Cane.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -181,7 +185,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['badCane'].touched && FormControls['badCane'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['badCane'].errors?.['required']">
-                      Please select plant suitability.</div>
+                      Please Select Plant Suitability.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

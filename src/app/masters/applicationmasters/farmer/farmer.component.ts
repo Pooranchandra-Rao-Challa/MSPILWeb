@@ -25,7 +25,7 @@ export class FarmerComponent implements OnInit {
     filter: any;
     submitLabel!: string;
     addFlag: boolean = true;
-    
+    showDialog: boolean = false;
     uploadedFiles: any[] = [];
     villages: VillageDto[] = [];
 ;
@@ -57,7 +57,7 @@ export class FarmerComponent implements OnInit {
         this.fbfarmers.patchValue({sampleSlabId: 0})
         this.submitLabel = "Add Farmer";
         this.addFlag = true;
-        this.dialog = true;
+        this.showDialog = true;
     }
 
     get FormControls() {
@@ -141,29 +141,20 @@ export class FarmerComponent implements OnInit {
         })
       }
     editFarmer(farmers: FarmersViewDto) {
-     
-      debugger
-        // this.farmer.toArea = farmers.toArea;
-        // this.farmer.fromArea = farmers.fromArea;
-        // this.farmer.noOfSample = farmers.noOfSample;
-        // this.farmer.isActive = farmers.isActive;
-        // this.farmer.sampleSlabId = farmers.sampleSlabId;
-        // this.fbfarmers.setValue(this.farmer);
-        // this.submitLabel = "Update Sample Slab";
-        // this.addFlag = false;
-        // this.dialog = true;
-    }
-
-    private UpdateForm() {
+        this.fbfarmers.patchValue(farmers);
+        this.addFlag = false;
+        this.submitLabel = 'Update Season';
+        this.showDialog = true;
 
     }
+
     onClose() {
         this.fbfarmers.reset();
     }
 
     saveFarmer(): Observable<HttpEvent<SampleSlabDto>> {
-        if (this.addFlag) return this.appmasterservice.CreateSampleSlab(this.fbfarmers.value)
-        else return this.appmasterservice.UpdateSampleSlab(this.fbfarmers.value)
+        if (this.addFlag) return this.appmasterservice.CreateFarmer(this.fbfarmers.value)
+        else return this.appmasterservice.UpdateFarmer(this.fbfarmers.value)
     }
     onSubmit() {
       console.log(this.fbfarmers.valid);
@@ -172,7 +163,7 @@ export class FarmerComponent implements OnInit {
                 if (resp) {
                     this.initFarmers();
                     this.onClose();
-                    this.dialog = false;
+                    this.showDialog = false;
                 }
             })
         }

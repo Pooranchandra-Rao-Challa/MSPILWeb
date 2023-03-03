@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { PlantSubTypeDto, PlantSubTypeViewDto, plantTypeDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
 
 
@@ -22,9 +24,9 @@ export class PlantsubtypeComponent implements OnInit {
   planttype: plantTypeDto[] = [];
   submitLabel!: string;
   addFlag: boolean = true;
-  loading: boolean = false;
+  loading: boolean = true;
   filter: any;
-
+  mediumDate: string = MEDIUM_DATE;
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,) { }
 
@@ -53,11 +55,11 @@ export class PlantsubtypeComponent implements OnInit {
 
   plantSubTypeForm() {
     this.fbplantsubtype = this.formbuilder.group({
-      plantSubTypeId: [],
-      plantId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      isActive:[true]
+      plantSubTypeId: [null],
+      plantTypeId: [null, [Validators.required]],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      isActive: [true]
     });
   }
 
@@ -73,14 +75,13 @@ export class PlantsubtypeComponent implements OnInit {
     this.fbplantsubtype.reset();
   }
   // post method
-  savePlantSubType(): Observable<HttpEvent<any>> {
-    if (this.addFlag) 
+  savePlantSubType(): Observable<HttpEvent<PlantSubTypeDto>> {
+    if (this.addFlag)
       // this.fbplantsubtype.value.plantSubTypeId = 0;
       return this.appMasterService.CreatePlantSubType(this.fbplantsubtype.value)
-    
     else return this.appMasterService.UpdatePlantSubType(this.fbplantsubtype.value)
   }
-  onSubmit() {                                      
+  onSubmit() {
     if (this.fbplantsubtype.valid) {
       console.log(this.fbplantsubtype.value)
 
@@ -103,9 +104,9 @@ export class PlantsubtypeComponent implements OnInit {
     this.addFlag = true;
     this.showDialog = true;
   }
-  editPlantSubType( plantSubType: PlantSubTypeViewDto) {
+  editPlantSubType(plantSubType: PlantSubTypeViewDto) {
     this.plantSubType.plantSubTypeId = plantSubType.plantSubTypeId;
-    this.plantSubType.plantId = plantSubType.plantId;
+    this.plantSubType.plantTypeId = plantSubType.plantTypeId;
     this.plantSubType.code = plantSubType.code;
     this.plantSubType.name = plantSubType.name;
     this.plantSubType.isActive = plantSubType.isActive;
@@ -115,4 +116,9 @@ export class PlantsubtypeComponent implements OnInit {
     this.showDialog = true;
   }
 
+  ngOnDestroy() {
+    this.plantSubTypes = [];
+    this.plantSubType = new PlantSubTypeDto();
+    this.planttype = [];
+  }
 }

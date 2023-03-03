@@ -1,6 +1,6 @@
 <div class="col-12">
   <div class="card">
-    <p-dialog header="Farmer" [(visible)]="dialog" showEffect="fade"
+    <p-dialog header="Farmer" [(visible)]="showDialog" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" [modal]="true">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
@@ -60,7 +60,7 @@
                       <input pInputText inputId="villageId" formControlName="villageId" type="text" />
                       <div *ngIf="FormControls['villageId'].invalid &&  FormControls['villageId'].touched"
                         class="error-message p-error">
-                        Village Code required
+                        Village code required
                       </div>   
                     </div> -->
                     <div class="field col-12 md:col-3">
@@ -221,7 +221,7 @@
 
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Farmer</h4>
+        <h4>Farmers</h4>
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Farmer" icon="pi pi-plus" class="p-button-success p-mr-2"
@@ -254,31 +254,31 @@
           <th pSortableColumn="aliasName"><p-sortIcon field="aliasName"></p-sortIcon>Alias Name</th>
           <th pSortableColumn="gender"><p-sortIcon field="gender"></p-sortIcon>Gender</th>
           <th pSortableColumn="fatherName"><p-sortIcon field="fatherName"></p-sortIcon>Father Name</th>
-          <th pSortableColumn="casteId"><p-sortIcon field="casteId"></p-sortIcon>Cast ID</th>
-          <th pSortableColumn="caste"><p-sortIcon field="caste"></p-sortIcon>caste</th>
+          <th pSortableColumn="casteId"><p-sortIcon field="casteId"></p-sortIcon>Caste Id</th>
+          <th pSortableColumn="caste"><p-sortIcon field="caste"></p-sortIcon>Caste</th>
           <th pSortableColumn="address"><p-sortIcon field="address"></p-sortIcon>Address</th>
-          <th pSortableColumn="circleId"><p-sortIcon field="circleId"></p-sortIcon>circle Id </th>
-          <th pSortableColumn="circleName"><p-sortIcon field="circleName"></p-sortIcon>circle Name</th>
+          <th pSortableColumn="circleId"><p-sortIcon field="circleId"></p-sortIcon>Circle Id </th>
+          <th pSortableColumn="circleName"><p-sortIcon field="circleName"></p-sortIcon>Circle Name</th>
           <th pSortableColumn="divisionId"><p-sortIcon field="divisionId"></p-sortIcon>Division Id</th>
           <th pSortableColumn="divisionName"><p-sortIcon field="divisionName"></p-sortIcon>Division Name</th>
           <th pSortableColumn="sectionId"><p-sortIcon field="sectionId"></p-sortIcon>Section Id</th>
           <th pSortableColumn="SectionName"><p-sortIcon field="sectionName"></p-sortIcon>Section Name</th>
           <th pSortableColumn="districtId"><p-sortIcon field="districtId"></p-sortIcon>District Id</th>
-          <th pSortableColumn="districtName"><p-sortIcon field="sectionName"></p-sortIcon>districtName</th>
+          <th pSortableColumn="districtName"><p-sortIcon field="sectionName"></p-sortIcon>district Name</th>
           <th pSortableColumn="mandalId"><p-sortIcon field="mandalId"></p-sortIcon>Mandal Id</th>
           <th pSortableColumn="mandalName"><p-sortIcon field="mandalName"></p-sortIcon>Mandal Name</th>
           <th pSortableColumn="villageId"><p-sortIcon field="villageId"></p-sortIcon>Village Id</th>
           <th pSortableColumn="villageName"><p-sortIcon field="villageName"></p-sortIcon>Village Name</th>
-          <th pSortableColumn="pinCode"><p-sortIcon field="pinCode"></p-sortIcon>Pincode</th>
+          <th pSortableColumn="pinCode"><p-sortIcon field="pinCode"></p-sortIcon>Pin Code</th>
           <th pSortableColumn="phoneNo"><p-sortIcon field="phoneNo"></p-sortIcon>Phone No</th>
           <th pSortableColumn="email"><p-sortIcon field="email"></p-sortIcon>Email</th>
           <th pSortableColumn="panNo"><p-sortIcon field="panNo"></p-sortIcon>PAN No</th>
           <th pSortableColumn="aadharNo"><p-sortIcon field="aadharNo"></p-sortIcon>Aadhar Number</th>
           <th pSortableColumn="oldRyot"><p-sortIcon field="oldRyot"></p-sortIcon>Old Ryot</th>
           <th pSortableColumn="jfNo"><p-sortIcon field="jfNo"></p-sortIcon>JF No</th>
-          <th pSortableColumn="bankId"><p-sortIcon field="bankId"></p-sortIcon>Bank ID</th>
+          <th pSortableColumn="bankId"><p-sortIcon field="bankId"></p-sortIcon>Bank Id</th>
           <th pSortableColumn="bankName"><p-sortIcon field="bankName"></p-sortIcon>Bank Name</th>
-          <th pSortableColumn="branchId"><p-sortIcon field="branchId"></p-sortIcon>Branch ID</th>
+          <th pSortableColumn="branchId"><p-sortIcon field="branchId"></p-sortIcon>Branch dD</th>
           <th pSortableColumn="branchName"><p-sortIcon field="branchName"></p-sortIcon>Branch Name</th>
           <th pSortableColumn="ifsc"><p-sortIcon field="ifsc"></p-sortIcon>IFSC</th>
           <th pSortableColumn="accountNo"><p-sortIcon field="accountNo"></p-sortIcon>Account No</th>
@@ -289,10 +289,11 @@
           <th pSortableColumn="otherCode"><p-sortIcon field="otherCode"></p-sortIcon>Other Code</th>
           <th pSortableColumn="isRegistered"><p-sortIcon field="isRegistered"></p-sortIcon>Is Registered</th>
           <th pSortableColumn="isActive"><p-sortIcon field="isActive"></p-sortIcon>Is Active</th>
-          <th pSortableColumn="updatedAt"><p-sortIcon field="updatedAt"></p-sortIcon>Updated At</th>
-          <th pSortableColumn="createdAt"><p-sortIcon field="createdAt"></p-sortIcon>Created At</th>
+          <th pSortableColumn="createdBy"><p-sortIcon field="createdBy"></p-sortIcon>Created Date</th>
+          <th pSortableColumn="createdAt"><p-sortIcon field="createdAt"></p-sortIcon>Created By</th>
+          <th pSortableColumn="updatedAt"><p-sortIcon field="updatedAt"></p-sortIcon>Updated Date</th>
           <th pSortableColumn="updatedBy"><p-sortIcon field="updatedBy"></p-sortIcon>Updated By</th>
-          <th pSortableColumn="createdBy"><p-sortIcon field="createdBy"></p-sortIcon>Created By</th>
+       
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-farmer>

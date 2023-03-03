@@ -1,13 +1,15 @@
+import { RG_ALPHA_NUMERIC, MIN_LENGTH_2, MAX_LENGTH_6, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CirclesViewDto, DistrictDto, DistrictViewDto, StateDto } from 'src/app/_models/geomodels';
+import { DistrictDto, DistrictViewDto, StateDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-district',
@@ -15,28 +17,26 @@ import { JWTService } from 'src/app/_services/jwt.service';
   providers: [MessageService, ConfirmationService]
 })
 export class DistrictComponent implements OnInit {
-
-
+  valSwitch: boolean = true;
   display: boolean = false;
   districts: DistrictViewDto[] = [];
   district: DistrictDto = new DistrictDto();
   states: StateDto[] = [];
   loading: boolean = true;
   fbdistricts!: FormGroup;
-  filter: any;
+  @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
   addFlag: boolean = true;
+  mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-  ) {
+  ) { }
 
-  }
   InitDistrict() {
     this.district = new DistrictDto();
-    this.fbdistricts.reset();
     this.submitLabel = "Add District";
     this.addFlag = true;
     this.display = true;
@@ -47,24 +47,19 @@ export class DistrictComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.initDistricts();
-
     this.commonService.GetStates().subscribe((resp) => {
-      debugger
       this.states = resp as unknown as StateDto[]
     })
-
     this.fbdistricts = this.formbuilder.group({
-      code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-      name:new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      stateId: ['',(Validators.required)],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_6)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      stateId: ['', (Validators.required)],
       districtId: [''],
-      isActive: [ Validators.required]
+      isActive: [true]
     });
-
-
   }
+
   initDistricts() {
     this.geoMasterService.GetDistricts().subscribe((resp) => {
       this.districts = resp as unknown as DistrictViewDto[]
@@ -84,20 +79,16 @@ export class DistrictComponent implements OnInit {
     this.display = true;
   }
 
-  private UpdateForm() {
-
-  }
   onClose() {
     this.fbdistricts.reset();
   }
 
   saveDistrict(): Observable<HttpEvent<DistrictDto>> {
-
     if (this.addFlag) return this.geoMasterService.CreateDistrict(this.fbdistricts.value)
     else return this.geoMasterService.UpdateDistrict(this.fbdistricts.value)
   }
+
   onSubmit() {
-    debugger
     if (this.fbdistricts.valid) {
       this.saveDistrict().subscribe(resp => {
         if (resp) {
@@ -108,7 +99,6 @@ export class DistrictComponent implements OnInit {
       })
     }
     else {
-      // alert("please fill the fields")
       this.fbdistricts.markAllAsTouched();
     }
   }
@@ -122,8 +112,10 @@ export class DistrictComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-
-  valSwitch: boolean = true;
+  ngOnDestroy() {
+    this.districts = [];
+    this.states = [];
+  }
 
 }
 
