@@ -8,6 +8,8 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { SampleSlabDto, FarmersViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { VillageDto, VillagesViewDto } from 'src/app/_models/geomodels';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
 
 @Component({
     selector: 'app-farmer',
@@ -25,6 +27,8 @@ export class FarmerComponent implements OnInit {
     addFlag: boolean = true;
     
     uploadedFiles: any[] = [];
+    villages: VillageDto[] = [];
+;
 
    
 
@@ -39,6 +43,7 @@ export class FarmerComponent implements OnInit {
    
 
     constructor(private formbuilder: FormBuilder,
+        private geoMasterService: GeoMasterService,
         private appmasterservice: AppMasterService,
         private commonService: CommonService,
         public jwtService: JWTService,
@@ -60,6 +65,11 @@ export class FarmerComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.commonService.GetVillages().subscribe((resp) => {
+            this.villages = resp as unknown as VillageDto[]
+          })
+
+         
 
         this.initFarmers();
         this.fbfarmers = this.formbuilder.group({
@@ -119,10 +129,17 @@ export class FarmerComponent implements OnInit {
     initFarmers() {
         this.appmasterservice.GetFarmers().subscribe((resp) => {
             this.farmers = resp as unknown as FarmersViewDto[]
+           
             this.loading = false;
         })
     }
-
+    initVillages(villages: any) {
+        this.geoMasterService.GetVillage().subscribe((resp) => {
+          this.villages = resp as unknown as VillagesViewDto[]
+          this.division = resp as unknown as VillagesViewDto[]
+          this.loading = false;
+        })
+      }
     editFarmer(farmers: FarmersViewDto) {
      
       debugger

@@ -44,16 +44,28 @@
                 <p-fieldset legend="Village Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-3">
+                      <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
+                      <p-dropdown [options]="villages" optionLabel="villageName"
+                        optionValue="villageId" (onChange)="initVillages($event.value)" [autoDisplayFirst]="false"
+                        formControlName="villageId" placeholder="Select Village"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"></p-dropdown>
+                      <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageId'].errors?.['required']">Please Select
+                          Division.
+                        </div>
+                      </span>
+                    </div>
+                    <!-- <div class="field col-12 md:col-3">
                       <label for="code">Village:<sup class="p-error">*</sup></label>
                       <input pInputText inputId="villageId" formControlName="villageId" type="text" />
                       <div *ngIf="FormControls['villageId'].invalid &&  FormControls['villageId'].touched"
                         class="error-message p-error">
                         Village Code required
                       </div>   
-                    </div>
+                    </div> -->
                     <div class="field col-12 md:col-3">
                       <label htmlFor="name">Division:<sup class="p-error">*</sup></label>
-                      <input pInputText id="name" formControlName="name" type="text" /> 
+                      <input pInputText id="name" formControlName="division" type="text" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargeName">Circle:</label>
