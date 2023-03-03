@@ -77,7 +77,7 @@ export class LookupComponent implements OnInit {
   generaterow(lookupDetail: LookupDetailViewDto = new LookupDetailViewDto()): FormGroup {
     return this.formbuilder.group({
       lookupId: [lookupDetail.lookupId],
-      lookUpDetailId:[lookupDetail.lookUpDetailId],
+      lookupDetailId:[lookupDetail.lookupDetailId],
       code:new FormControl(lookupDetail.code,[Validators.required,Validators.maxLength(MAX_LENGTH_20)]),
       name: [lookupDetail.name,(Validators.required)],
       remarks: [lookupDetail.remarks],
@@ -133,10 +133,11 @@ export class LookupComponent implements OnInit {
   editLookUp(lookup: LookupViewDto) {
     this.initlookupDetails(lookup.id);
     this.lookup.lookUpId = lookup.id;
+    this.lookup. lookupDetailId= lookup.lookupDetailId;
     this.lookup.code = lookup.code;
     this.lookup.name = lookup.name;
     this.lookup.isActive = lookup.isActive;
-    this.lookup.lookupDetails = this.lookupDetails ? [] : this.lookupDetails;
+    this.lookup.lookUpDetails = this.lookupDetails ? [] : this.lookupDetails;
     this.fblookup.patchValue(this.lookup);
     this.addFlag = false;
     this.submitLabel = "Update Lookup";
