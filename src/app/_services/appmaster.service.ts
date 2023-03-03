@@ -98,8 +98,8 @@ public UpdatePlantType(plant: plantTypeDto) {
   public UpdatePlantSubType(PlantSubType: PlantSubTypeDto) {
     return this.post<PlantSubTypeDto>(UPDATE_PLANT_SUB_TYPE_URI, PlantSubType);
   }
-  public GetPlantTypeForPlantSubType(plantId?: number) {
-    if (plantId != null) return this.getWithId<plantTypeDto>(GET_PLANTTYPE_URI, plantId);
+  public GetPlantTypeForPlantSubType(plantTypeId?: number) {
+    if (plantTypeId != null) return this.getWithId<plantTypeDto>(GET_PLANTTYPE_URI, plantTypeId);
     else return this.get<plantTypeDto>(GET_PLANTTYPE_URI);
   }
   /* Bank */
