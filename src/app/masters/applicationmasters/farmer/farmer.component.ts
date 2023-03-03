@@ -137,9 +137,6 @@ export class FarmerComponent implements OnInit {
         // this.dialog = true;
     }
 
-    private UpdateForm() {
-
-    }
     onClose() {
         this.fbfarmers.reset();
     }

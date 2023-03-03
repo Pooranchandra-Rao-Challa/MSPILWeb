@@ -21,7 +21,7 @@ export class LookupViewDto {
 }
 
 export class LookupDetailDto {
-  lookUpDetailId?: number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   lookupId?: number;
@@ -415,6 +415,7 @@ export class SeasonBillingRateViewDto {
   createdAt?: string
   updatedBy?: string
   createdBy?: string
+  lookupDetailId: any;
 }
 
 

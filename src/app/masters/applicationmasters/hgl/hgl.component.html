@@ -11,7 +11,6 @@
           (click)="addHgl()"></button>
       </ng-template>
     </p-toolbar>
-
     <!-- table -->
     <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
@@ -142,10 +141,6 @@
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive" style="text-align:center">
-            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
-          </th>
           <th pSortableColumn="createdAt">
             Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
             <p-sortIcon field="createdAt"></p-sortIcon>
@@ -167,8 +162,7 @@
       <ng-template pTemplate="body" let-hgl>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-            (click)="editHgl(hgl)" ></button></td>
-           
+            (click)="editHgl(hgl)" ></button></td>          
           <td>{{hgl.code}}</td>
           <td>{{hgl.name}}</td>
           <td>{{hgl.gender}}</td>
@@ -196,7 +190,6 @@
           <td>{{hgl.accountNo}}</td>
           <td>{{hgl.glCode}}</td>
           <td>{{hgl.subGLCode}}</td>
-          <td>{{hgl.otherCode}}</td>
           <td style="text-align:center">
           <td>{{hgl.otherCode}}</td>
           <td>
@@ -220,7 +213,6 @@
         </tr>
       </ng-template>
     </p-table>
-
     <!-- dialog box -->
     <p-dialog header="HGL" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()" [modal]="true">
@@ -341,23 +333,30 @@
                   <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
                       Pan number contains only characters and integers.</div>
-                  </span>
+                    </span>
+                      <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['required']">
+                          Please Enter panNo.</div>
+                      </span>
+                 
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Aadhaar No:</label>
-                  <input pInputText id="panNo" type="text" formControlName="aadhaarNo"
+                  <input pInputText id="aadhaarNo" type="text" formControlName="aadhaarNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
                   <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
-                      aadhaarNo number contains only  integers.</div>
-                  </span>
+                      Pan number contains only characters and integers.</div>
+                    </span>
+                      <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
+                          Please Enter aadhaarNo.</div>
+                      </span>
                 </div>
                 <div class="col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>TDS:</label><br>
                   <p-inputSwitch formControlName="tds"></p-inputSwitch>
                 </div>
-
-
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Guarantor1:</label>
                   <input pInputText id="guarantor1" type="text" formControlName="guarantor1"
@@ -413,14 +412,14 @@
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Branch:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select a relation" optionLabel="name" [options]="branches"
-                    optionValue="branchId" formControlName="branchId">
+                    optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
                   </p-dropdown>
                   <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                    <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['bankId'].errors?.['required']">
+                    <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
                         Please Select Bank First.</div>
                     </div>
-                    <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].valid">
+                    <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
                         Please Select Branch.</div>
                     </div>
@@ -428,7 +427,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>IFSC:</label>
-                  <input pInputText id="ifsc" type="text" readonly>
+                  <input pInputText id="ifsc" type="text" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
+                  readonly>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Account Number:<sup class="p-error">*</sup></label>

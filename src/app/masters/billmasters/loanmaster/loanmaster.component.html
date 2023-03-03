@@ -1,336 +1,312 @@
 <div class="col-12">
-    <div class="card">
-      <p-toolbar styleClass="p-mb-4">
-        <ng-template pTemplate="left">
-          <h4>Loan SubType</h4>
-        </ng-template>
-        <ng-template pTemplate="right">
-          <button pButton pRipple label="New Loan SubType" icon="pi pi-plus" class="p-button-success p-mr-2"
-            (click)="addLoanType()"></button>
-        </ng-template>
-      </p-toolbar>
-  
-      <!-- table -->
-      <p-table #dt1 [value]="loanTypes" dataKey="id" [rows]="10" [rowHover]="true"
-        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-        [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-        [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
-        <ng-template pTemplate="caption">
-          <div class="flex justify-content-between flex-column sm:flex-row">
-            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-              (click)="clear(dt1)"></button>
-            <span class="p-input-icon-left mb-2">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
-                class="w-full" />
-            </span>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th></th>
-            <th pSortableColumn="code">
-              Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
-              <p-sortIcon field="code"></p-sortIcon>
-            </th>
-            
-            <th pSortableColumn="relationType">
-              Category Id <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
-              <p-sortIcon field="relationType"></p-sortIcon>
-            </th>
-            <th pSortableColumn="relationName">
-              Category Name <p-columnFilter type="text" field="relationName" display="menu"></p-columnFilter>
-              <p-sortIcon field="relationName"></p-sortIcon>
-            </th>
-            <th pSortableColumn="name">
-              Name <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
-              <p-sortIcon field="name"></p-sortIcon>
-            </th>
-            <th pSortableColumn="gender">
-              Interest Rate <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
-              <p-sortIcon field="gender"></p-sortIcon>
-            </th>
-            <th pSortableColumn="address">
-              Priority <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
-              <p-sortIcon field="address"></p-sortIcon>
-            </th>
-            <th pSortableColumn="pinCode">
-              GL Code <p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
-              <p-sortIcon field="pinCode"></p-sortIcon>
-            </th>
-            <th pSortableColumn="phoneNo">
-              Sub GLcode <p-columnFilter type="text" field="phoneNo" display="menu"></p-columnFilter>
-              <p-sortIcon field="phoneNo"></p-sortIcon>
-            </th>
-            <th pSortableColumn="email">
-              isActive <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
-              <p-sortIcon field="email"></p-sortIcon>
-            </th>
-           
-            <th pSortableColumn="createdAt">
-              Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
-              <p-sortIcon field="createdAt"></p-sortIcon>
-            </th>
-            <th pSortableColumn="createdBy">
-              Created By <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
-              <p-sortIcon field="createdBy"></p-sortIcon>
-            </th>
-            <th pSortableColumn="updatedAt">
-              Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
-              <p-sortIcon field="updatedAt"></p-sortIcon>
-            </th>
-            <th pSortableColumn="updatedBy">
-              Updated By <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter>
-              <p-sortIcon field="updatedBy"></p-sortIcon>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-loanType>
-          <tr>
-            <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-                (click)="editTpt(loanType)"></button></td>
-            <td>{{loanType.code}}</td>
-            <td>{{loanType.categoryId}}</td>
-            <td>{{loanType.categoryName}}</td>
-            <td>{{loanType.name}}</td>
-            <td>{{loanType.interestRate}}</td>
-            <td>{{loanType.priority}}</td>
-                   <td>{{loanType.glCode}}</td>
-            <td>{{loanType.subGLcode}}</td>
-            <td style="text-align:center">
-              <p-checkbox name="active" value="active" [(ngModel)]="loanType.isActive" [binary]="true" [disabled]="true">
-              </p-checkbox>
-            </td>
-            <td>{{loanType.createdAt | date: 'dd-MMM-yyyy'}}</td>
-            <td>{{loanType.createdBy}}</td>
-            <td>{{loanType.updatedAt | date: 'dd-MMM-yyyy'}}</td>
-            <td>{{loanType.updatedBy}}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="27">No loanTypes found.</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="loadingbody">
-          <tr>
-            <td colspan="27">Loading Loan SubTypes data. Please wait.</td>
-          </tr>
-        </ng-template>
-      </p-table>
-  
-      <!-- dialog box -->
-      <p-dialog header="Loan SubType" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-        [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()"> 
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Loan SubType</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New Loan SubType" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="addLoanType()"></button>
+      </ng-template>
+    </p-toolbar>
 
-        <form [formGroup]="fbloantype" (ngSubmit)="onSubmit()">
-        <div class="container">
-          <div class="grid p-fluid">
-
-            <div class="grid p-fluid">
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
-            <label>Code:<sup class="p-error">*</sup></label>
-            <input pInputText id="code" type="text" formControlName="code" [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-            <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                  Please enter code.</div>
-                <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-                  Code min length is 2 .</div>
-                <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-                  Code max length is 20.</div>
-                <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                  Code should contains only letters and integers.</div>
-            </span>
-          </div>
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
-            <label>Category:<sup class="p-error">*</sup></label>
-            <p-dropdown placeholder="Select Categories" optionLabel="name" [options]="billCategories"
-              optionValue="lookUpDetailId" formControlName="categoryId" [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
-            </p-dropdown>
-            <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
-              <div class="ng-invalid ng-touched p-error"
-                *ngIf="FormControls['categoryId'].errors?.['required']">
-                Please Select Category.</div>
-            </span>
-          </div>
-
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
-            <label>Name:<sup class="p-error">*</sup></label>
-            <input pInputText id="name" type="text" formControlName="name"[ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-            <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-              <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                Please enter name.</div>
-              <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                Name should contains only letters.</div>
-            </span>
-          </div>
-          
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
-            <label>Interest Rate:<sup class="p-error">*</sup></label>
-            <input pInputText id="name" type="number" formControlName="interestRate" [ngClass]="{ 'is-invalid ng-dirty': FormControls['interestRate'].touched && FormControls['priority'].errors }">
-            <span *ngIf="FormControls['interestRate'].touched && FormControls['interestRate'].invalid">
-              <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['interestRate'].errors?.['required']">
-                Please enter interestRate.</div>
-            </span>
-             
-          </div>
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
-            <label>Priority:<sup class="p-error">*</sup></label>
-            <input pInputText id="name" type="number" formControlName="priority"
-            [ngClass]="{ 'is-invalid ng-dirty': FormControls['priority'].touched && FormControls['priority'].errors }">
-            <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
-              <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
-                Please enter priority.</div>
-            </span>
-          </div>
-          
-
-
-
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
-            <label>GL Code:</label>
-            <input pInputText id="glCode" type="text" formControlName="glcode">
-          </div>
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
-            <label>Sub GLCode:</label>
-            <input pInputText id="subGlcode" type="text" formControlName="subGlcode">
-             
-          </div>
-          
-          <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
-            <label>Is Active:</label><br>
-            <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-          </div>
-          <div class="col-12 md:col-4 lg:col-3 xl:col-2 md:mt-5">
-            <button pButton pRipple type="button" label="Add loanType Details" class="p-button-raised p-button-success"
-              (click)="addLoanSubType()"></button>
-          </div>
-        </div> -->
-
-          
-      
-     
-            
-               
-         </div>
+    <!-- table -->
+    <p-table #dt1 [value]="loanTypes" dataKey="id" [rows]="10" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+              class="w-full" />
+          </span>
         </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th pSortableColumn="code">
+            Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+            <p-sortIcon field="code"></p-sortIcon>
+          </th>
+          
+          <th pSortableColumn="relationType">
+            Category Id <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
+            <p-sortIcon field="relationType"></p-sortIcon>
+          </th>
+          <th pSortableColumn="relationName">
+            Category Name <p-columnFilter type="text" field="relationName" display="menu"></p-columnFilter>
+            <p-sortIcon field="relationName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="name">
+            Name <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="gender">
+            Interest Rate <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
+            <p-sortIcon field="gender"></p-sortIcon>
+          </th>
+          <th pSortableColumn="address">
+            Priority <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
+            <p-sortIcon field="address"></p-sortIcon>
+          </th>
+          <th pSortableColumn="pinCode">
+            GL Code <p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
+            <p-sortIcon field="pinCode"></p-sortIcon>
+          </th>
+          <th pSortableColumn="phoneNo">
+            Sub GLcode <p-columnFilter type="text" field="phoneNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="phoneNo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email">
+            isActive <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+            <p-sortIcon field="email"></p-sortIcon>
+          </th>
+         
+          <th pSortableColumn="createdAt">
+            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdBy">
+            Created By <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedAt">
+            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedBy">
+            Updated By <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedBy"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-loanType>
+        <tr>
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editTpt(loanType)"></button></td>
+          <td>{{loanType.code}}</td>
+          <td>{{loanType.categoryId}}</td>
+          <td>{{loanType.categoryName}}</td>
+          <td>{{loanType.name}}</td>
+          <td>{{loanType.interestRate}}</td>
+          <td>{{loanType.priority}}</td>
+                 <td>{{loanType.glCode}}</td>
+          <td>{{loanType.subGLcode}}</td>
+          <td style="text-align:center">
+            <p-checkbox name="active" value="active" [(ngModel)]="loanType.isActive" [binary]="true" [disabled]="true">
+            </p-checkbox>
+          </td>
+          <td>{{loanType.createdAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{loanType.createdBy}}</td>
+          <td>{{loanType.updatedAt | date: 'dd-MMM-yyyy'}}</td>
+          <td>{{loanType.updatedBy}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="27">No loanTypes found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="27">Loading Loan SubTypes data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
 
-        <div class="container">
+    <!-- dialog box -->
+    <p-dialog header="Loan SubType" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" (onHide)="onClose()">  
+       
+          <div class="container">
+            <div class="grid p-fluid">
+        <form [formGroup]="fbloantype" (ngSubmit)="onSubmit()">
+   
           <div class="grid p-fluid">
-              <!-- loanType Details -->
-              <div formArrayName="loanSubTypes" *ngIf="showloantype">
-                <p-table #dt2 [value]="faLoanSubType().controls" dataKey="id" 
-                  [rowHover]="true" [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
-                  styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
-                  <div class="grid p-fluid">
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <th>Code</th>
-                      <th>Name</th>
-                      <th>Priority</th>
-                      <th>Intrest Rate</th>
-                      <th>Rate</th>
-                      <th>requestReq</th>
-                      <th>uomid</th>
-                      <th>loanQtyType</th>
-                      <th>GL Code </th>
-                      <th>SubGL Code </th>
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                  <label>Code:<sup class="p-error">*</sup></label>
+                  <input pInputText id="code" type="text" formControlName="code" [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                  <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                      Please enter code.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                      Code should contains only letters and integers.</div>
+                  </span>
+                </div>
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                  <label>Category:<sup class="p-error">*</sup></label>
+                  <p-dropdown placeholder="Select Categories" optionLabel="name" [options]="billCategories"
+                    optionValue="lookUpDetailId" formControlName="categoryId" >
+                  </p-dropdown>
+                  <span *ngIf="FormControls['categoryId'].touched && !FormControls['categoryId'].valid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['categoryId'].errors?.['required']">
+                      Please select category.</div>
+                  </span>
+                </div>
+
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
+                  <label>Name:<sup class="p-error">*</sup></label>
+                  <input pInputText id="name" type="text" formControlName="name">
+                   
+                </div>
+                
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5 ">
+                  <label>interestRate:<sup class="p-error">*</sup></label>
+                  <input pInputText id="name" type="number" formControlName="interestRate">
+                  
+                   
+                </div>
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                  <label>priority:<sup class="p-error">*</sup></label>
+                  <input pInputText id="name" type="number" formControlName="priority">
+                   
+                </div>
+
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                  <label>GL Code:</label>
+                  <input pInputText id="glcode" type="text" formControlName="glcode"
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
+                <span *ngIf="FormControls['glcode'].touched && FormControls['glcode'].invalid">
+                  <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['required']">
+                    Please enter glcode.</div>
+                  <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['pattern']">
+                    GL code contains only letters and integers.</div>
+                </span>
+                </div>
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                  <label>Sub Glcode:</label>
+                  <input pInputText id="subGlcode" type="text" formControlName="subGlcode" [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
+                  <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['required']">
+                      Please enter subGlcode.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
+                      GL code contains only letters and integers.</div>
+                  </span>
+                </div>               
+               <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5">
+                  <label>Is Active:</label><br>
+                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                </div>
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5"></div>
+                <div class="col-12 md:col-3 lg:col-3 xl:col-2 md:mt-5"></div>
+                            
+                <div class="field col-12 md:col-3 mt-5">
+                  <div class="button-container">
+                    <button pButton pRipple type="button" label="Add SubloanType" class="p-button-raised p-button-success"
+                    (click)="addLoanSubType()"></button>
+                  </div>
+              </div>
+                
+            <!-- loanType Details -->
+            <div formArrayName="loanSubTypes" *ngIf="showloantype">
+              <p-table #dt2 [value]="faLoanSubType().controls" dataKey="id" 
+                [rowHover]="true" [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
+                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+                
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Priority</th>
+                    <th>Intrest Rate</th>
+                    <th>Rate</th>
+                    <th>requestReq</th>
+                    <th>uomid</th>
+                    <th>loanQtyType</th>
+                    <th>GL Code </th>
+                    <th>SubGL Code </th>
+                   
+                    <th>Action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-loanType let-loanTypelIndex="rowIndex">
+                  <tr [formGroupName]="loanTypelIndex">
+                    <td>
+                      <input pInputText class="form-control" formControlName="code">
                      
-                      <th>Action</th>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-loanSubType let-loanSubTypeIndex="rowIndex">
-                    <tr [formGroupName]="loanSubTypeIndex">
-                      <td>
-                        <input pInputText class="form-control" formControlName="code">
-                       
-                      </td>
-
-                      <td>
-                        <input pInputText class="form-control" formControlName="name">
-                       
-                      </td> 
-                      <td>
-                        <input pInputText class="form-control" type="number" formControlName="priority">
-                      </td>
-                      <td>
-                        <p-inputNumber inputId="interestRate" formControlName="interestRate" [showButtons]="true">
-                        </p-inputNumber>
-                      </td>
-                      
-                      <td>
-                        <p-inputNumber inputId="rate" formControlName="rate" [showButtons]="true">
-                        </p-inputNumber>
-                      </td>
-                      
-                      <td>
-                        <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" [options]="defaults"
-                          formControlName="requestReq" appendTo="body">
-                        </p-dropdown>
-                      </td>
-
-                      <td>
-                        <p-dropdown placeholder="Select a vehicle" [options]="uom"
-                          formControlName="uomid" optionLabel="name" optionValue="lookUpDetailId" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanSubTypeIndex, 'uomid')?.touched &&
-                          formArrayControls(loanSubTypeIndex, 'uomid')?.errors }">
-                        </p-dropdown>
-                        <span
-                          *ngIf="formArrayControls(loanSubTypeIndex, 'uomid')?.touched && formArrayControls(loanSubTypeIndex, 'uomid')?.invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="formArrayControls(loanSubTypeIndex, 'uomid')?.errors?.['required']">
-                            Please select uomid.</div>
-                        </span>
-                      <td>           
-                        <input pInputText class="form-control" formControlName="loanQtyType">
-                      
                     </td>
 
                     <td>
-                        <input pInputText class="form-control" formControlName="glcode">
-                      </td>
-                      <td>
-                        <input pInputText class="form-control" formControlName="subGlcode">
-                      </td>
+                      <input pInputText class="form-control" formControlName="name">
+                     
+                    </td> 
+                    <td>
+                      <input pInputText class="form-control" type="number" formControlName="priority">
+                    </td>
+                    <td>
+                      <p-inputNumber inputId="interestRate" formControlName="interestRate" [showButtons]="true">
+                      </p-inputNumber>
+                    </td>
+                    
+                    <td>
+                      <p-inputNumber inputId="rate" formControlName="rate" [showButtons]="true">
+                      </p-inputNumber>
+                    </td>
+                    
+                    <td>
+                      <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" [options]="defaults"
+                        formControlName="requestReq" appendTo="body">
+                      </p-dropdown>
+                    </td>
 
-                      <td>
-                        <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                          *ngIf="!this.faLoanSubType().controls[loanSubTypeIndex].get('loanTypeId')?.value"
-                          (click)="faLoanSubType().removeAt(loanSubTypeIndex)"></i>
-                        <i class="pi pi-fw pi-verified text-3xl"
-                          *ngIf="this.faLoanSubType().controls[loanSubTypeIndex].get('loanTypeId')?.value"></i>
-                      </td>
-                    </tr>
-                  </ng-template>
-                </div>
-                  <ng-template pTemplate="emptymessage">
-                    <tr>
-                      <td colspan="8">No Loan SubType details found.</td>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="loadingbody">
-                    <tr>
-                      <td colspan="8">Loading Loan SubType details data. Please wait.</td>
-                    </tr>
-                  </ng-template>
-                </p-table>
-              </div>
+                    <td>
+                      <p-dropdown placeholder="Select a uomid" [options]="uom"
+                        formControlName="uomid" optionLabel="uomid" optionValue="lookUpDetailId" appendTo="body">
+                      </p-dropdown>
+                    </td>
 
+                    <td>           
+                      <input pInputText class="form-control" formControlName="loanQtyType">
+                    
+                  </td>
+
+                  <td>
+                      <input pInputText class="form-control" formControlName="glcode">
+                    </td>
+                    <td>
+                      <input pInputText class="form-control" formControlName="subGlcode">
+                    </td>
+
+                    <td>
+                      <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
+                        *ngIf="!this.faLoanSubType().controls[loanTypelIndex].get('loanTypeId')?.value"
+                        (click)="faLoanSubType().removeAt(loanTypelIndex)"></i>
+                      <i class="pi pi-fw pi-verified text-3xl"
+                        *ngIf="this.faLoanSubType().controls[loanTypelIndex].get('loanTypeId')?.value"></i>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="8">No Loan SubType details found.</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                  <tr>
+                    <td colspan="8">Loading Loan SubType details data. Please wait.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
             </div>
-          </div>
-          </form>
-    
 
- 
-        <ng-template pTemplate="footer">
-          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
-            (click)="onSubmit()"></button>
-        </ng-template>
-      </p-dialog>
-   
-    <!-- toolbar -->
-    <!-- toolbar -->
-   
+          </div>
+        </form>
+      </div>
     </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+          (click)="onSubmit()"></button>
+      </ng-template>
+    </p-dialog>
+ 
+  <!-- toolbar -->
+  <!-- toolbar -->
+ 
   </div>
-  
+</div>

@@ -1,15 +1,41 @@
-import {SeasonDto,LookupDetailDto,SeasonBillingRateViewDto,} from './../../../_models/applicationmaster';
+import {
+  SeasonDto,
+  LookupDetailDto,
+  SeasonBillingRateViewDto,
+} from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import {Component, ElementRef,Input, OnInit,TemplateRef,ViewChild,} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { Table } from 'primeng/table';
-import {FormGroup, FormBuilder,FormControl,Validators,FormArray,} from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+  FormArray,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
-import { BillParameterViewDto } from 'src/app/_models/billingmaster';
+import {
+  BillParameterDto,
+  BillParameterViewDto,
+} from 'src/app/_models/billingmaster';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import {MAX_LENGTH_20,MIN_LENGTH_2,RG_ALPHA_NUMERIC,RG_ALPHA_ONLY,RG_NUMERIC_ONLY,} from 'src/app/_shared/regex';
+import {
+  MAX_LENGTH_20,
+  MIN_LENGTH_2,
+  RG_ALPHA_NUMERIC,
+  RG_ALPHA_ONLY,
+  RG_NUMERIC_ONLY,
+} from 'src/app/_shared/regex';
 
 interface Temp {
   seasonBillingRateId: number;
@@ -30,8 +56,22 @@ export class SeasonComponent implements OnInit {
   seasons: SeasonViewDto[] = [];
   season: SeasonDto = new SeasonDto();
   loading: boolean = false;
-  globalFilterFields: string[] = ['code','name','relationType','relationName','gender','address','pinCode','phoneNo',
-    'email','panNo','tax','tds','guarantor1','glCode','subGLCode','isActive','createdAt','createdBy', 'updatedAt','updatedBy', ];
+  globalFilterFields: string[] = [
+    'code',
+    'name',
+    'plantFrom',
+    'plantTo',
+    'crushFrom',
+    'crushTo',
+    'burnCaneRate',
+    'caneRate',
+    'capacity',
+    'createdAt',
+    'isActive',
+    'createdBy',
+    'updatedAt',
+    'updatedBy',
+  ];
   @ViewChild('filter') filter!: ElementRef;
   fbseasons!: FormGroup;
   submitLabel!: string;
@@ -63,7 +103,7 @@ export class SeasonComponent implements OnInit {
     this.LookupService.BillCategories().subscribe((resp) => {
       this.billCategories = resp as unknown as LookupDetailDto[];
       this.initBillParamsForCategory(
-        this.billCategories[0].lookUpDetailId + ''
+        this.billCategories[0].lookupDetailId + ''
       );
     });
   }
@@ -72,10 +112,8 @@ export class SeasonComponent implements OnInit {
     this.appMasterService
       .BillParamsForCategory(categoryId)
       .subscribe((resp) => {
-        // this.billParams = resp as unknown as BillParameterViewDto[];
-        // console.log(this.billParams);
         this.billCategories.map((s) => {
-          if (s.lookUpDetailId?.toString() == categoryId.toString()) {
+          if (s.lookupDetailId?.toString() == categoryId.toString()) {
             s.billParams = [];
             s.billParams = resp as unknown as BillParameterViewDto[];
           }
@@ -84,11 +122,9 @@ export class SeasonComponent implements OnInit {
   }
 
   handleBillCategoryChange(sevent: any) {
-    console.log(this.fbseasons.controls['farmerRates'].getRawValue());
     var index = sevent.index;
-    // var billCategoryId = this.billCategories[index].lookUpDetailId
     this.initBillParamsForCategory(
-      this.billCategories[index].lookUpDetailId + ''
+      this.billCategories[index].lookupDetailId + ''
     );
   }
 
@@ -134,7 +170,7 @@ export class SeasonComponent implements OnInit {
       seasonBillingRateId: [],
       seasonId: [],
       billParameterId: ['', Validators.required],
-      billCatetoryId: [billCategory.lookUpDetailId, Validators.required],
+      billCatetoryId: [billCategory.lookupDetailId, Validators.required],
       rate: new FormControl('', [
         Validators.required,
         Validators.pattern(RG_NUMERIC_ONLY),
@@ -172,6 +208,12 @@ export class SeasonComponent implements OnInit {
     const formArray = this.fbseasons.get(formArrayName) as FormArray;
     formArray.push(this.createItem(billCategory));
   }
+  ratesControls(formArrayName: string): FormArray {
+    return this.fbseasons.get(formArrayName) as FormArray;
+  }
+  formArrayControls(formArrayName: string, i: number, formControlName: string) {
+    return this.ratesControls(formArrayName).controls[i].get(formControlName);
+  }
 
   get FormControls() {
     return this.fbseasons.controls;
@@ -194,7 +236,15 @@ export class SeasonComponent implements OnInit {
   }
 
   editseason(season: SeasonViewDto) {
+    this.seasonForm();
     this.fbseasons.patchValue(season);
+    this.fbseasons.patchValue({
+      plantFrom: new Date(season.plantFrom?.toString() + ''),
+      plantTo: new Date(season.plantTo?.toString() + ''),
+      crushFrom: new Date(season.crushFrom?.toString() + ''),
+      crushTo: new Date(season.crushTo?.toString() + ''),
+    });
+
     this.getSeasonBillingRatesBySeasonId(season.seasonId);
     this.addFlag = false;
     this.submitLabel = 'Update Season';
@@ -204,28 +254,25 @@ export class SeasonComponent implements OnInit {
   getSeasonBillingRatesBySeasonId(seasonId: number | undefined) {
     this.appMasterService.GetSeasonBillingRates(seasonId).subscribe((resp) => {
       let rates = resp as unknown as SeasonBillingRateViewDto[];
-  
       this.billCategories.forEach((billCategory) => {
         var categoryFormArray = this.fbseasons.get(
           billCategory.name?.toLowerCase() + 'Rates'
         ) as FormArray;
-
         rates
           .filter(
-            (element) => element.billCategoryId == billCategory.lookUpDetailId
+            (element) => element.billCategoryId == billCategory.lookupDetailId
           )
           .forEach((rateSeasonParam) =>
             categoryFormArray.push(this.createItemForEdit(rateSeasonParam))
           );
-
       });
     });
-    
   }
 
   addSeason() {
     this.submitLabel = 'Add Season';
     this.addFlag = true;
+    this.seasonForm();
     this.showDialog = true;
   }
   onGlobalFilter(table: Table, event: Event) {
@@ -241,13 +288,11 @@ export class SeasonComponent implements OnInit {
     else return this.appMasterService.UpdateSeason(this.fbseasons.value);
   }
   onSubmit() {
-    debugger;
-    console.log(this.fbseasons.valid);
     if (this.fbseasons.valid) {
       this.saveSeason().subscribe((resp) => {
         if (resp) {
           this.initSeasons();
-          this.fbseasons.reset();
+          this.seasonForm();
           this.showDialog = false;
         }
       });
@@ -257,14 +302,11 @@ export class SeasonComponent implements OnInit {
   }
   onClose() {
     this.fbseasons.reset();
- 
   }
 
   ngOnDestroy() {
     this.seasons = [];
-    this. billParams= [];
-    this.billCategories=[];
-
+    this.billParams = [];
+    this.billCategories = [];
   }
-
 }
