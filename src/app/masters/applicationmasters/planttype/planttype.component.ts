@@ -57,8 +57,8 @@ export class PlanttypeComponent implements OnInit {
   // post method
   savePlant(): Observable<HttpEvent<plantTypeDto>> {
     if (this.addFlag)
-      return this.appMasterService.CreatePlantType(this.fbplantType.value);
-    else return this.appMasterService.UpdatePlantType(this.fbplantType.value)
+      return this.appMasterService.CreatePlantType(this.fbplantType.getRawValue());
+    else return this.appMasterService.UpdatePlantType(this.fbplantType.getRawValue())
   }
   onSubmit() {
     if (this.fbplantType.valid) {
@@ -85,14 +85,14 @@ export class PlanttypeComponent implements OnInit {
     });
   }
 
-  editPlantType(plantTypes: plantTypeDto) {
+  editPlantType(plantTypes:plantTypeViewDto ) {
     this.plantType.plantTypeId = plantTypes.plantTypeId;
     this.plantType.code = plantTypes.code;
     this.plantType.name = plantTypes.name;
     this.plantType.estimatedTon = plantTypes.estimatedTon;
     this.plantType.loanEligible = plantTypes.loanEligible;
     this.plantType.isActive = plantTypes.isActive;
-    this.fbplantType.setValue(this.plantTypes)
+    this.fbplantType.setValue(this.plantType)
     this.addFlag = false;
     this.submitLabel = "Update Plant Type";
     this.showDialog = true;

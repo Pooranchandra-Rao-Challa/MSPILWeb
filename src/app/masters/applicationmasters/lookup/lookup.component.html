@@ -121,10 +121,10 @@
                                     </td>
                                     <td>
                                         <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                                            *ngIf="!this.  falookupDetails().controls[lookUpDetailsIndex].get('lookUpDetailId')?.value"
+                                            *ngIf="!this.  falookupDetails().controls[lookUpDetailsIndex].get('lookupId')?.value"
                                             (click)="  falookupDetails().removeAt(lookUpDetailsIndex)"></i>
                                         <i class="pi pi-fw pi-verified text-3xl"
-                                            *ngIf="this.  falookupDetails().controls[lookUpDetailsIndex].get('lookUpDetailId')?.value"></i>
+                                            *ngIf="this.  falookupDetails().controls[lookUpDetailsIndex].get('lookupId')?.value"></i>
                                     </td>
                                 </tr>
                             </ng-template>

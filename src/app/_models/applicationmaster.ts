@@ -2,14 +2,16 @@ import { BillParameterViewDto } from "./billingmaster";
 
 export class LookUpHeaderDto {
   lookUpId!: number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
-  lookupDetails?: LookupDetailDto[];
+  lookUpDetails?: LookupDetailDto[];
 }
 
 export class LookupViewDto {
   id!: number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   isActive?: boolean;
@@ -37,7 +39,7 @@ export class LookupDetailDto {
 }
 export class LookupDetailViewDto {
   lookupId?: number;
-  lookUpDetailId?:number;
+  lookupDetailId?:number;
   code?: string;
   name?: string;
   remarks?: string;
