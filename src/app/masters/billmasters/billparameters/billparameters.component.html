@@ -124,7 +124,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a bill category" [options]="billCategories" optionLabel="name"
+                  <p-dropdown placeholder="Select Bill Category" [options]="billCategories" optionLabel="name"
                     formControlName="categoryId" optionValue="lookUpDetailId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
@@ -135,7 +135,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a type" [options]="types" formControlName="type"
+                  <p-dropdown placeholder="Select Type" [options]="types" formControlName="type"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['type'].touched && FormControls['type'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['type'].touched && FormControls['type'].invalid">
@@ -145,7 +145,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code" type="text" formControlName="code"
+                  <input pInputText id="code" type="text" placeholder="Enter Code" formControlName="code"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
@@ -160,7 +160,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Name:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code" type="text" formControlName="name"
+                  <input pInputText id="code" type="text" placeholder="Enter Name" formControlName="name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
@@ -172,7 +172,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Calculation Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a calculation type" [options]="calTypes"
+                  <p-dropdown placeholder="Select Calculation Type" [options]="calTypes"
                     formControlName="caluclationType"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['caluclationType'].touched && FormControls['caluclationType'].errors }">
                   </p-dropdown>
@@ -184,7 +184,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Priority:<sup class="p-error">*</sup></label>
-                  <input pInputText id="priority" type="text" formControlName="priority"
+                  <input pInputText id="priority" type="text" placeholder="Enter Priority" formControlName="priority"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['priority'].touched && FormControls['priority'].errors }">
                   <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
@@ -195,7 +195,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Formula:<sup class="p-error">*</sup></label>
-                  <textarea pInputTextarea id="formula" type="text" formControlName="formula"
+                  <textarea pInputTextarea id="formula" type="text" placeholder="Enter Formula"
+                    formControlName="formula"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['formula'].touched && FormControls['formula'].errors }">
                     </textarea>
                   <span *ngIf="FormControls['formula'].touched && FormControls['formula'].invalid">

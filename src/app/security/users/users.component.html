@@ -218,7 +218,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Email Id:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="emailid" type="text" formControlName="email" placeholder="Enter Emaild ID"
+                        <input pInputText id="emailid" type="text" formControlName="email" placeholder="Enter Email Id"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['email'].touched && userFormControls['email'].errors }" />
                         <span *ngIf="userFormControls['email'].touched && userFormControls['email'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -231,7 +231,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
-                        <p-inputMask id="mobileNumber" mask="(999)-999-9999" formControlName="mobileNumber"
+                        <p-inputMask id="mobileNumber" placeholder="Enter Mobile Number" mask="(999)-999-9999" formControlName="mobileNumber"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }">
                         </p-inputMask>
                         <span
@@ -259,11 +259,11 @@
                       <div class="field col-12 md:col-6">
                         <label htmlFor="ipaddress">IP Address:</label>
                         <input pInputText id="ipaddress" type="text" formControlName="ipaddress"
-                          placeholder="IP Address" />
+                          placeholder="Enter IP Address" />
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="imeino">IMEI No:</label>
-                        <input pInputText id="imeino" type="text" formControlName="imeino" placeholder="IMEI Number" />
+                        <input pInputText id="imeino" type="text" formControlName="imeino" placeholder="Enter IMEI No" />
                         <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['imeino'].errors?.['pattern']">
