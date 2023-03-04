@@ -219,21 +219,21 @@ export class SeasonComponent implements OnInit {
     return this.fbseasons.controls;
   }
 
-  get farmerRatesControls(): FormArray {
-    return this.fbseasons.get('farmerRates') as FormArray;
-  }
+  // get farmerRatesControls(): FormArray {
+  //   return this.fbseasons.get('farmerRates') as FormArray;
+  // }
 
-  get harvesterRatesControls(): FormArray {
-    return this.fbseasons.get('harvesterRates') as FormArray;
-  }
+  // get harvesterRatesControls(): FormArray {
+  //   return this.fbseasons.get('harvesterRates') as FormArray;
+  // }
 
-  get transporterRatesControls(): FormArray {
-    return this.fbseasons.get('transporterRates') as FormArray;
-  }
+  // get transporterRatesControls(): FormArray {
+  //   return this.fbseasons.get('transporterRates') as FormArray;
+  // }
 
-  get seedRatesControls(): FormArray {
-    return this.fbseasons.get('seedRates') as FormArray;
-  }
+  // get seedRatesControls(): FormArray {
+  //   return this.fbseasons.get('seedRates') as FormArray;
+  // }
 
   editseason(season: SeasonViewDto) {
     this.seasonForm();

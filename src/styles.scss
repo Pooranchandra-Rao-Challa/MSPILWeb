@@ -45,9 +45,11 @@ $gutter: 1rem; //for primeflex grid system
 // }
 
 div.season-rates-tab-items{
-  margin-top: 70px;
+  padding-top: 60px;
+  margin-bottom: -50px;
 }
 
 div.season-rates-tab-items:not(:first-child){
-  margin-top: 50px;
+  padding-top: 5px;
+  margin-bottom: -50px;
 }
