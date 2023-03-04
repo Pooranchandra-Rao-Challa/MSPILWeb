@@ -125,7 +125,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a bill category" optionLabel="name" [options]="billCategories"
+                  <p-dropdown placeholder="Select Bill Category" optionLabel="name" [options]="billCategories"
                     optionValue="lookUpDetailId" formControlName="categoryId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
@@ -136,8 +136,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Season:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a season" optionLabel="name" [options]="seasons"
-                    optionValue="seasonId" formControlName="seasonsId"
+                  <p-dropdown placeholder="Select Season" optionLabel="name" [options]="seasons" optionValue="seasonId"
+                    formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonsId'].touched && FormControls['seasonsId'].invalid">
@@ -147,7 +147,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
-                  <p-calendar class="cursor-pointer" [readonlyInput]="true" [showIcon]="true" formControlName="fromDate"
+                  <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                    formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
@@ -157,8 +158,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="toDate"
-                    [minDate]="fbBillMaster.value.fromDate"
+                  <p-calendar placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                    formControlName="toDate" [minDate]="fbBillMaster.value.fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">

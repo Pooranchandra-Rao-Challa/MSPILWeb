@@ -197,7 +197,8 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code" type="text" formControlName="code" [readonly]="fbTpt.value.tptId"
+                  <input pInputText id="code" type="text" placeholder="Enter Code" formControlName="code"
+                    [readonly]="fbTpt.value.tptId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
@@ -212,7 +213,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Name:<sup class="p-error">*</sup></label>
-                  <input pInputText id="name" type="text" formControlName="name"
+                  <input pInputText id="name" type="text" placeholder="Enter Name" formControlName="name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
@@ -223,7 +224,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Relationship Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a relation" optionLabel="name" [options]="relationTypes"
+                  <p-dropdown placeholder="Select Relation Type" optionLabel="name" [options]="relationTypes"
                     optionValue="lookUpDetailId" formControlName="relationTypeId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
                   </p-dropdown>
@@ -235,7 +236,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Relationship Name:<sup class="p-error">*</sup></label>
-                  <input pInputText id="relationName" type="text" formControlName="relationName"
+                  <input pInputText id="relationName" type="text" placeholder="Enter Relation Name"
+                    formControlName="relationName"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }">
                   <span *ngIf="FormControls['relationName'].touched && FormControls['relationName'].invalid">
                     <div class="ng-invalid ng-touched p-error"
@@ -247,7 +249,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Gender:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a gender" [options]="genders" formControlName="gender"
+                  <p-dropdown placeholder="Select Gender" [options]="genders" formControlName="gender"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['gender'].touched && FormControls['gender'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['gender'].touched && FormControls['gender'].invalid">
@@ -277,7 +279,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Phone Number:</label>
-                  <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"
+                  <p-inputMask id="phoneNo" placeholder="Enter Phone Number" mask="(999)-999-9999"
+                    formControlName="phoneNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
                   </p-inputMask>
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
@@ -297,7 +300,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Email:</label>
-                  <input pInputText id="email" type="text" formControlName="email"
+                  <input pInputText id="email" type="text" placeholder="Enter Email" formControlName="email"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['email'].touched && FormControls['email'].errors }">
                   <span *ngIf="FormControls['email'].touched && FormControls['email'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['email'].errors?.['required']">
@@ -308,7 +311,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>PAN No:</label>
-                  <input pInputText id="panNo" type="text" formControlName="panNo"
+                  <input pInputText id="panNo" type="text" placeholder="Enter Pan No" formControlName="panNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
                   <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
@@ -321,7 +324,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Guarantor1:</label>
-                  <input pInputText id="guarantor1" type="text" formControlName="guarantor1"
+                  <input pInputText id="guarantor1" type="text" placeholder="Enter Guarantor1"
+                    formControlName="guarantor1"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor1'].touched && FormControls['guarantor1'].errors }">
                   <span *ngIf="FormControls['guarantor1'].touched && FormControls['guarantor1'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor1'].errors?.['pattern']">
@@ -330,7 +334,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Guarantor2:</label>
-                  <input pInputText id="guarantor2" type="text" formControlName="guarantor2"
+                  <input pInputText id="guarantor2" type="text" placeholder="Enter Guarantor2"
+                    formControlName="guarantor2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor2'].touched && FormControls['guarantor2'].errors }">
                   <span *ngIf="FormControls['guarantor2'].touched && FormControls['guarantor2'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor2'].errors?.['pattern']">
@@ -339,7 +344,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Guarantor3:</label>
-                  <input pInputText id="guarantor3" type="text" formControlName="guarantor3"
+                  <input pInputText id="guarantor3" type="text" placeholder="Enter Guarantor3"
+                    formControlName="guarantor3"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor3'].touched && FormControls['guarantor3'].errors }">
                   <span *ngIf="FormControls['guarantor3'].touched && FormControls['guarantor3'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor3'].errors?.['pattern']">
@@ -348,7 +354,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>GL Code:</label>
-                  <input pInputText id="glCode" type="text" formControlName="glCode"
+                  <input pInputText id="glCode" type="text" placeholder="Enter GL Code" formControlName="glCode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['glCode'].touched && FormControls['glCode'].errors }">
                   <span *ngIf="FormControls['glCode'].touched && FormControls['glCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glCode'].errors?.['pattern']">
@@ -356,8 +362,9 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Sub GLCode:</label>
-                  <input pInputText id="subGlcode" type="text" formControlName="subGlcode"
+                  <label>Sub GL Code:</label>
+                  <input pInputText id="subGlcode" type="text" placeholder="Enter Sub GL Code"
+                    formControlName="subGlcode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
                   <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
@@ -366,7 +373,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Other Code:</label>
-                  <input pInputText id="otherCode" type="text" formControlName="otherCode"
+                  <input pInputText id="otherCode" type="text" placeholder="Enter Other Code"
+                    formControlName="otherCode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['otherCode'].touched && FormControls['otherCode'].errors }">
                   <span *ngIf="FormControls['otherCode'].touched && FormControls['otherCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['otherCode'].errors?.['pattern']">
@@ -375,7 +383,7 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Bank:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a relation" optionLabel="name" [options]="banks" optionValue="bankId"
+                  <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
                     formControlName="bankId" (onChange)="getBranchByBankId($event.value)"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['bankId'].touched && FormControls['bankId'].errors }">
                   </p-dropdown>
@@ -386,8 +394,8 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Branch:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a relation" optionLabel="name" [options]="branches"
-                    optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
+                  <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches" optionValue="branchId"
+                    formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
                   </p-dropdown>
                   <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
                     <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
@@ -402,12 +410,13 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>IFSC:</label>
-                  <input pInputText id="ifsc" type="text" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
-                    readonly>
+                  <input pInputText id="ifsc" type="text" placeholder="Enter IFSC Code" [(ngModel)]="IFSC"
+                    [ngModelOptions]="{standalone: true}" readonly>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Account Number:<sup class="p-error">*</sup></label>
-                  <input pInputText id="accountNo" type="text" formControlName="accountNo"
+                  <input pInputText id="accountNo" type="text" placeholder="Enter Account Number"
+                    formControlName="accountNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }">
                   <span *ngIf="FormControls['accountNo'].touched && FormControls['accountNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['required']">
@@ -446,7 +455,7 @@
                 <ng-template pTemplate="body" let-tpt let-tptDetailIndex="rowIndex">
                   <tr [formGroupName]="tptDetailIndex">
                     <td>
-                      <input pInputText class="form-control" formControlName="vehicleNo" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
+                      <input pInputText class="form-control" placeholder="Enter Vehicle No" formControlName="vehicleNo" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
                         formArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
                       <span
                         *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.touched && formArrayControls(tptDetailIndex, 'vehicleNo')?.invalid">
@@ -456,7 +465,7 @@
                       </span>
                     </td>
                     <td>
-                      <p-dropdown placeholder="Select a vehicle" [options]="vehicleTypes"
+                      <p-dropdown placeholder="Select Vehicle" [options]="vehicleTypes"
                         formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId" appendTo="body"
                         [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched &&
                         formArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors }">
@@ -469,14 +478,14 @@
                       </span>
                     </td>
                     <td>
-                      <input pInputText class="form-control" formControlName="insuranceNo">
+                      <input pInputText class="form-control" placeholder="Enter Insurance No" formControlName="insuranceNo">
                     </td>
                     <td>
-                      <p-inputNumber inputId="receivableAmt" formControlName="receivableAmt" [showButtons]="true">
+                      <p-inputNumber inputId="receivableAmt" placeholder="Enter Receivable Amount" formControlName="receivableAmt" [showButtons]="true">
                       </p-inputNumber>
                     </td>
                     <td>
-                      <p-inputNumber inputId="receivedAmt" formControlName="receivedAmt" [showButtons]="true">
+                      <p-inputNumber inputId="receivedAmt" placeholder="Enter Received Amount" formControlName="receivedAmt" [showButtons]="true">
                       </p-inputNumber>
                     </td>
                     <td>

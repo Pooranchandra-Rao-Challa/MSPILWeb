@@ -134,7 +134,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code" type="text" formControlName="code"
+                  <input pInputText id="code" type="text" placeholder="Enter Code" formControlName="code"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
@@ -149,7 +149,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Name:<sup class="p-error">*</sup></label>
-                  <input pInputText id="name" type="text" formControlName="name"
+                  <input pInputText id="name" type="text" placeholder="Enter Name" formControlName="name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
@@ -161,7 +161,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Address:<sup class="p-error">*</sup></label>
-                  <textarea pInputTextarea id="address" type="text" formControlName="address"
+                  <textarea pInputTextarea id="address" type="text" placeholder="Enter Address"
+                    formControlName="address"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }">
                   </textarea>
                   <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
@@ -171,7 +172,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Pin Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="pinCode" type="text" formControlName="pinCode"
+                  <input pInputText id="pinCode" type="text" placeholder="Enter Pin Code" formControlName="pinCode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
                   <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
@@ -180,7 +181,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Phone No:</label>
-                  <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"
+                  <p-inputMask id="phoneNo" placeholder="Enter Phone No" mask="(999)-999-9999" formControlName="phoneNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
                   </p-inputMask>
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
@@ -192,19 +193,20 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Email:</label>
-                  <input pInputText id="email" type="email" formControlName="email">
+                  <input pInputText id="email" type="email" placeholder="Enter Email" formControlName="email">
                   <span *ngIf="FormControls['email'].touched && FormControls['email'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['email'].errors?.['pattern']">
                       Email Contains Only Letters, Integers And Periods(.)</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>GLCode:</label>
-                  <input pInputText id="gLcode" type="text" formControlName="gLcode">
+                  <label>GL Code:</label>
+                  <input pInputText id="gLcode" type="text" placeholder="Enter GL Code" formControlName="gLcode">
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>SubGLCode:</label>
-                  <input pInputText id="subGLcode" type="text" formControlName="subGLcode">
+                  <label>Sub GL Code:</label>
+                  <input pInputText id="subGLcode" type="text" placeholder="Enter Sub GL Code"
+                    formControlName="subGLcode">
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate(₹):<sup class="p-error">*</sup></label>

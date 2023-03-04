@@ -106,7 +106,8 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="fromDate"
+                  <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                    formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
@@ -116,8 +117,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
-                  <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="toDate" mask="99/99/9999"
-                    [minDate]="fbDieselRate.value.fromDate"
+                  <p-calendar placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                    formControlName="toDate" mask="99/99/9999" [minDate]="fbDieselRate.value.fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
@@ -132,8 +133,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate:<sup class="p-error">*</sup></label>
-                  <p-inputNumber formControlName="rate" mode="decimal" locale="en-IN" [minFractionDigits]="2"
-                    [maxFractionDigits]="2"
+                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="decimal" locale="en-IN"
+                    [minFractionDigits]="2" [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">

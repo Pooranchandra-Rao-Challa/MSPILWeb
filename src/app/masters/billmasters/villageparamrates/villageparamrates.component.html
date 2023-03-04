@@ -131,7 +131,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Season Code:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a season" optionLabel="name" [options]="seasons"
+                  <p-dropdown placeholder="Select Season" optionLabel="name" [options]="seasons"
                     optionValue="seasonId" formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
@@ -143,7 +143,7 @@
                 <div class="field col-12 md:col-6">
                   <label>Village:<sup class="p-error">*</sup></label>
                   <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
-                    filterBy="villageName,villageCode" formControlName="villageId" placeholder="Select a village"
+                    filterBy="villageName,villageCode" formControlName="villageId" placeholder="Select Village"
                     (onChange)="onSelectedVillage($event.value)"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }">
                     <ng-template let-village pTemplate="selectedItem">
@@ -169,7 +169,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Bill Param:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select a bill param" optionLabel="code" [options]="billParameters"
+                  <p-dropdown placeholder="Select Bill Param" optionLabel="code" [options]="billParameters"
                     optionValue="id" formControlName="billParameterId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['billParameterId'].touched && FormControls['billParameterId'].errors }">
                   </p-dropdown>
