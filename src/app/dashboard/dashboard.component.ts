@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
-        geoMasterService.GetDistricts().subscribe((resp)=>{ console.log(resp);})
+        //geoMasterService.GetDistricts().subscribe((resp)=>{ console.log(resp);})
 
     }
 
