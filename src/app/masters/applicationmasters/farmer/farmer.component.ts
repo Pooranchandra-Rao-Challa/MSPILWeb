@@ -154,13 +154,13 @@ export class FarmerComponent implements OnInit {
             this.address.setValue(this.village[0].address);
         }
     }
-    initBank() {
-        this.appMasterService.GetBanks().subscribe((resp) => {
-          this.banks = resp as unknown as BankViewDto[];
-          console.log(this.banks);
-          this.loading = false;
-        });
-      }
+//     initBank() {
+//     this.appMasterService.GetBanks().subscribe((resp) => {
+//       this.banks = resp as unknown as BankViewDto[];
+//       console.log(this.banks);
+//       this.loading = false;
+//     });
+//   }
     editFarmer(farmers: FarmersViewDto) {
         this.fbfarmers.patchValue(farmers);
         this.addFlag = false;
