@@ -23,7 +23,7 @@ export class LookupViewDto {
 }
 
 export class LookupDetailDto {
-  lookupDetailId?: number;
+  lookupDetailId?:number;
   code?: string;
   name?: string;
   lookupId?: number;

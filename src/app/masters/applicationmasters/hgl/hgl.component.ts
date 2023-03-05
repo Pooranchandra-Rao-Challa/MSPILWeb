@@ -104,7 +104,8 @@ export class HglComponent implements OnInit {
         Validators.required,
         Validators.pattern(RG_ALPHA_ONLY),
       ]),
-      relationTypeId: ['', Validators.required],
+      relationTypeId:new FormControl('', [
+        Validators.required]),
       relationName: new FormControl('', [
         Validators.required,
         Validators.pattern(RG_ALPHA_ONLY),
@@ -120,7 +121,7 @@ export class HglComponent implements OnInit {
       ]),
       panNo: new FormControl('', [
         Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
+        Validators.pattern(RG_ALPHA_NUMERIC),
       ]),
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -171,6 +172,7 @@ export class HglComponent implements OnInit {
   initRelationTypes() {
     this.LookupService.RelationTypes().subscribe((resp) => {
       this.relationTypes = resp;
+      console.log(this.relationTypes)
     });
   }
 

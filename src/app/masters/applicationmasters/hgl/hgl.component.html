@@ -77,7 +77,7 @@
             <p-sortIcon field="panNo"></p-sortIcon>
           </th>
           <th pSortableColumn="tax">
-            AadhaarNo <p-columnFilter type="text" field="tax" display="menu"></p-columnFilter>
+            Aadhaar No <p-columnFilter type="text" field="tax" display="menu"></p-columnFilter>
             <p-sortIcon field="tax"></p-sortIcon>
           </th>
           <th pSortableColumn="tax">
@@ -122,20 +122,16 @@
             <p-sortIcon field="accountNo"></p-sortIcon>
           </th>
           <th pSortableColumn="glCode">
-            GL Code <p-columnFilter type="text" field="glCode" display="menu"></p-columnFilter>
+            Gang Leader Code<p-columnFilter type="text" field="glCode" display="menu"></p-columnFilter>
             <p-sortIcon field="glCode"></p-sortIcon>
           </th>
           <th pSortableColumn="subGLCode">
-            Sub GL Code <p-columnFilter type="text" field="subGLCode" display="menu"></p-columnFilter>
+          Sub Gang Leader Code<p-columnFilter type="text" field="subGLCode" display="menu"></p-columnFilter>
             <p-sortIcon field="subGLCode"></p-sortIcon>
           </th>
           <th pSortableColumn="subGLCode">
             Other Code <p-columnFilter type="text" field="subGLCode" display="menu"></p-columnFilter>
             <p-sortIcon field="subGLCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isActive" style="text-align:center">
-            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
           </th>
           <th pSortableColumn="isActive" style="text-align:center">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
@@ -189,8 +185,7 @@
           <td>{{hgl.ifsc}}</td>
           <td>{{hgl.accountNo}}</td>
           <td>{{hgl.glCode}}</td>
-          <td>{{hgl.subGLCode}}</td>
-          <td style="text-align:center">
+          <td>{{hgl.subGLCode}}</td> 
           <td>{{hgl.otherCode}}</td>
           <td>
           <p-checkbox name="active" value="active" [(ngModel)]="hgl.isActive" [binary]="true" [disabled]="true">
@@ -204,12 +199,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="27">No HGLs found.</td>
+          <td colspan="27">No HGLs Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="27">Loading HGLs data. Please wait.</td>
+          <td colspan="27">Loading HGLs Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -229,7 +224,7 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please Enter Code.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code should contains only characters and integers.</div>
+                      Code Should Contains Only Characters And Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -246,13 +241,13 @@
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Relationship Type:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select a relation" optionLabel="name" [options]="relationTypes"
-                    optionValue="lookUpDetailId" formControlName="relationTypeId"
+                    optionValue="lookupId" formControlName="relationTypeId" 
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['relationTypeId'].touched && FormControls['relationTypeId'].invalid">
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['relationTypeId'].errors?.['required']">
-                      Please Select Relation.</div>
+                      Please Select Relation Type.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -264,7 +259,7 @@
                       *ngIf="FormControls['relationName'].errors?.['required']">
                       Please Enter Relationship Name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['relationName'].errors?.['pattern']">
-                      Relationship Name should contains only characters.</div>
+                      Relationship Name Should Contains Only Characters.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -294,7 +289,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
-                      Please Enter pincode.</div>
+                      Please Enter Pincode.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -304,7 +299,7 @@
                   </p-inputMask>
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
-                      Phone number is in correct.</div>
+                      Phone Number Is In Correct.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -332,11 +327,11 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
                   <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
-                      Pan number contains only characters and integers.</div>
+                      Pan Number Contains Only Characters And Integers.</div>
                     </span>
                       <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['required']">
-                          Please Enter panNo.</div>
+                          Please Enter PanNo.</div>
                       </span>
                  
                 </div>
@@ -346,11 +341,11 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
                   <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
-                      Pan number contains only characters and integers.</div>
+                      Pan Number Contains Only Characters And Integers.</div>
                     </span>
                       <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
-                          Please Enter aadhaarNo.</div>
+                          Please Enter AadhaarNo.</div>
                       </span>
                 </div>
                 <div class="col-12 md:col-4 lg:col-3 xl:col-2">
@@ -363,7 +358,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor1'].touched && FormControls['guarantor1'].errors }">
                   <span *ngIf="FormControls['guarantor1'].touched && FormControls['guarantor1'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor1'].errors?.['pattern']">
-                      Guarantor1 contains only characters and integers.</div>
+                      Guarantor1 Contains Only Characters And Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -372,7 +367,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor2'].touched && FormControls['guarantor2'].errors }">
                   <span *ngIf="FormControls['guarantor2'].touched && FormControls['guarantor2'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor2'].errors?.['pattern']">
-                      Guarantor2 contains only characters and integers.</div>
+                      Guarantor2 Contains Only Characters And Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -381,7 +376,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor3'].touched && FormControls['guarantor3'].errors }">
                   <span *ngIf="FormControls['guarantor3'].touched && FormControls['guarantor3'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor3'].errors?.['pattern']">
-                      Guarantor3 contains only characters and integers.</div>
+                      Guarantor3 Contains Only Characters And Integers.</div>
                   </span>
                 </div>
                 
@@ -391,7 +386,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
                   <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
-                      Sub glcode contains only characters and integers.</div>
+                      Sub Glcode Contains Only Characters And Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -400,7 +395,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['otherCode'].touched && FormControls['otherCode'].errors }">
                   <span *ngIf="FormControls['otherCode'].touched && FormControls['otherCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['otherCode'].errors?.['pattern']">
-                      Other code contains only characters and integers.</div>
+                      Other Code Contains only Characters And Integers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -438,7 +433,7 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['required']">
                       Please Enter Account Number.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['pattern']">
-                      Account number contains only integers.</div>
+                      Account Number Contains Only Integers.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-4 lg:col-3 xl:col-2">
