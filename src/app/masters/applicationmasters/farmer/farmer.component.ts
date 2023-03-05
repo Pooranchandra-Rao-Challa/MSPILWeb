@@ -6,7 +6,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { SampleSlabDto, FarmersViewDto, LookupDetailDto } from 'src/app/_models/applicationmaster';
+import { SampleSlabDto, FarmersViewDto, LookupDetailDto, BankDto, BranchDto, BankViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { VillageDto, VillagesViewDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
@@ -24,7 +24,12 @@ export class FarmerComponent implements OnInit {
     loading: boolean = true;
     fbfarmers!: FormGroup;
     filter: any;
+    valSwitch: boolean = true;
     submitLabel!: string;
+    banks: BankViewDto[] = [];
+    bank: BankDto = new BankDto();
+    branches: BranchDto[] = [];
+    IFSC?: string;
     addFlag: boolean = true;
     showDialog: boolean = false;
     uploadedFiles: any[] = [];
@@ -56,30 +61,16 @@ export class FarmerComponent implements OnInit {
     ) {
 
     }
-    InitFarmer() {
-        this.farmer = new SampleSlabDto();
-        this.fbfarmers.reset();
-        this.fbfarmers.patchValue({ sampleSlabId: 0 })
-        this.submitLabel = "Add Farmer";
-        this.addFlag = true;
-        this.showDialog = true;
-    }
-
-    get FormControls() {
-        return this.fbfarmers.controls;
-    }
-
     ngOnInit() {
-        this.commonService.GetVillages().subscribe((resp) => {
-            this.villages = resp as unknown as VillageDto[]
-        })
-        this.lookupService.Castes().subscribe((resp)=>{
-            this.casteDetails = resp as unknown as LookupDetailDto[]
-        })
         this.initFarmers();
+        this. farmerForm();
+         this.initcasteDetails();
+        this.initGetVillages();
+        this.initBanks();
+    }
+    farmerForm(){
         this.fbfarmers = this.formbuilder.group({
-
-            farmerId: [''],
+            farmerId: [0],
             code: [''],
             farmerName: [''],
             aliasName: [''],
@@ -93,7 +84,7 @@ export class FarmerComponent implements OnInit {
             panno: [''],
             aadhaarNo: [''],
             oldRyot: [''],
-            selfId: [''],
+            selfId: [0],
             jfno: [''],
             branchId: [''],
             accountNo: [''],
@@ -102,7 +93,7 @@ export class FarmerComponent implements OnInit {
             glcode: [''],
             subGlcode: [''],
             otherCode: [''],
-            imageUrl: [''],
+            imageUrl: ['c:/fakepath/file.jpg'],
             isRegistered: [''],
             isActive: [''],
             // sampleSlabId:  [0],
@@ -131,11 +122,25 @@ export class FarmerComponent implements OnInit {
 
         });
     }
+    initcasteDetails(){
+        this.lookupService.Castes().subscribe((resp)=>{
+            this.casteDetails = resp as unknown as LookupDetailDto[]
+        })
+    }
+
+    initGetVillages(){
+        this.commonService.GetVillages().subscribe((resp) => {
+            this.villages = resp as unknown as VillageDto[]
+        })
+    }
     initFarmers() {
         this.appmasterservice.GetFarmers().subscribe((resp) => {
             this.farmers = resp as unknown as FarmersViewDto[]
             this.loading = false;
         })
+    }
+    get FormControls() {
+        return this.fbfarmers.controls;
     }
     initVillages(villageId: any) {
         console.log(villageId);
@@ -154,6 +159,20 @@ export class FarmerComponent implements OnInit {
             this.address.setValue(this.village[0].address);
         }
     }
+    InitFarmer() {
+        this.farmer = new SampleSlabDto();
+        this.fbfarmers.reset();
+        this.fbfarmers.patchValue({ sampleSlabId: 0 })
+        this.submitLabel = "Add Farmer";
+        this.addFlag = true;
+        this.farmerForm()
+        this.showDialog = true;
+    }
+    initBanks() {
+        this.appmasterservice.GetBanks().subscribe((resp) => {
+          this.banks = resp as unknown as BankViewDto[];
+        });
+      }
 //     initBank() {
 //     this.appMasterService.GetBanks().subscribe((resp) => {
 //       this.banks = resp as unknown as BankViewDto[];
@@ -161,18 +180,38 @@ export class FarmerComponent implements OnInit {
 //       this.loading = false;
 //     });
 //   }
+    getBranchByBankId(Id: number) {
+    this.appmasterservice.GetBank(Id).subscribe((resp) => {
+      if (resp) {
+        this.bank = resp as unknown as BankDto;
+        this.branches = this.bank.branches as unknown as BranchDto[];
+      }
+    });
+  }
+  getIFSCByBranch(Id: number) {
+    let branch = this.branches.find((x) => x.branchId == Id);
+    if (branch) this.IFSC = branch.ifsc;
+    else this.IFSC = '';
+  }
+
+
+
+
+
+
     editFarmer(farmers: FarmersViewDto) {
+       this.farmerForm();
+       this.initVillages(farmers.villageId)
         this.fbfarmers.patchValue(farmers);
+        this.fbfarmers.patchValue({
+
+        })
         this.addFlag = false;
         this.submitLabel = 'Update Farmers';
         this.showDialog = true;
 
     }
-
-    onClose() {
-        this.fbfarmers.reset();
-    }
-
+    
     saveFarmer(): Observable<HttpEvent<SampleSlabDto>> {
         if (this.addFlag) return this.appmasterservice.CreateFarmer(this.fbfarmers.value)
         else return this.appmasterservice.UpdateFarmer(this.fbfarmers.value)
@@ -201,7 +240,14 @@ export class FarmerComponent implements OnInit {
         table.clear();
         this.filter.nativeElement.value = '';
     }
-    valSwitch: boolean = true;
+   
+    onClose() {
+        this.fbfarmers.reset();
+    }
+
+    ngOnDestroy() {
+        this.farmers = [];
+      }
 
 }
 

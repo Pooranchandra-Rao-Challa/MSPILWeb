@@ -12,19 +12,19 @@
                     <div class="grid col-12 md:col-8">
                       <div class="field col-12 md:col-6">
                         <label htmlFor="code">Farmer Code:<sup class="p-error">*</sup></label>
-                        <input pInputText id="code" formControlName="code" type="text" />  
+                        <input pInputText id="code"  placeholder="Enter Farmer Code" formControlName="code" type="text" />  
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="name">Farmer Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="name" formControlName="farmerName" type="text" />  
+                        <input pInputText id="name" placeholder="Enter Farmer Name" formControlName="farmerName" type="text" />  
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="aliasName">Alias Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="aliasName" formControlName="aliasName" type="text" />                       
+                        <input pInputText id="aliasName"  placeholder="Enter Alias Name" formControlName="aliasName" type="text" />                       
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="fatherName"> Father Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="fatherName" formControlName="fatherName" type="text" />  
+                        <input pInputText id="fatherName"  placeholder="Enter Father Name"formControlName="fatherName" type="text" />  
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="isRegistered">Is Registered?:<sup class="p-error">*</sup></label><br>
@@ -65,27 +65,27 @@
                     </div> -->
                     <div class="field col-12 md:col-3">
                       <label htmlFor="name">Division:<sup class="p-error">*</sup></label>
-                      <input pInputText id="name" [formControl]="divisionName" type="text" /> 
+                      <input pInputText id="name" [formControl]="divisionName"  placeholder="Enter Name" type="text" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargeName">Circle:</label>
-                      <input pInputText [formControl]="circleName" type="text" /> 
+                      <input pInputText [formControl]="circleName" type="text"  placeholder="Enter Circle" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargePhoneNo">Section:</label>
-                      <input pInputText [formControl]="sectionName" type="text" /> 
+                      <input pInputText [formControl]="sectionName" type="text"  placeholder="Enter Incharge Phone No" /> 
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address">District:</label>
-                      <input pInputText [formControl]="districtName" type="text" /> 
+                      <input pInputText [formControl]="districtName" type="text"  placeholder="Enter Address" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="PinCode">Mandal:</label>
-                      <input pInputText [formControl]="mandalName" type="text" /> 
+                      <input pInputText [formControl]="mandalName" type="text"  placeholder="Enter PinCode" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="distance">PinCode:<sup class="p-error">*</sup></label>
-                      <input pInputText [formControl]="pincode" type="text" /> 
+                      <input pInputText [formControl]="pincode" type="text"  placeholder="Enter distance" /> 
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address"> Address:</label>
@@ -98,19 +98,19 @@
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-3">
                       <label for="phoneNo"> Phone No:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="phoneNo" formControlName="phoneNo" type="text" /> 
+                      <input pInputText inputId="phoneNo" formControlName="phoneNo" type="text"  placeholder="Enter Phone No" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label htmlFor="name"> Email:<sup class="p-error">*</sup></label>
-                      <input pInputText id="email" formControlName="email" type="text" />
+                      <input pInputText id="email" formControlName="email" type="text"  placeholder="Enter Email" />
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="panno">PAN No:</label>
-                      <input pInputText id="panno" formControlName="panno" type="text">
+                      <input pInputText id="panno" formControlName="panno" type="text" placeholder="Enter PAN No">
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="aadhaarNo"> Aadhar No:</label>
-                      <input pInputText id="aadhaarNo" formControlName="aadhaarNo" type="text" ng-maxlength="12" ng-minlength="12"/>
+                      <input pInputText id="aadhaarNo" placeholder="Enter Aadhar No" formControlName="aadhaarNo" type="text" ng-maxlength="12" ng-minlength="12"/>
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address">Cast:</label>
@@ -120,17 +120,17 @@
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['casteId'].touched && FormControls['casteId'].errors }"></p-dropdown>
                       <span *ngIf="FormControls['casteId'].touched && FormControls['casteId'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['casteId'].errors?.['required']">Please Select
-                          cast.
+                          Caste.
                         </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="oldRyot">Old Ryot:</label>
-                      <input pInputText id="oldRyot" formControlName="oldRyot" type="text"/>
+                      <input pInputText id="oldRyot" formControlName="oldRyot" type="text"  placeholder="Enter Old Ryot"/>
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="jfno">JF No:<sup class="p-error">*</sup></label>
-                      <input pInputText id="jfno" formControlName="jfno" type="text"/>
+                      <input pInputText id="jfno" formControlName="jfno" type="text" placeholder="Enter JF No"/>
                     </div>
                   </div>
                 </p-fieldset>
@@ -138,12 +138,12 @@
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
                       <label for="totalArea">Total Area:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2">
+                      <p-inputNumber inputId="totalArea"  placeholder="Enter total Area" formControlName="totalArea" [minFractionDigits]="2">
                       </p-inputNumber>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="cultivatedArea">Cultivated Area:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="cultivatedArea" formControlName="cultivatedArea" [minFractionDigits]="2">
+                      <p-inputNumber inputId="cultivatedArea"  placeholder="Enter Cultivated Area"formControlName="cultivatedArea" [minFractionDigits]="2">
                       </p-inputNumber>
                     </div>
                   </div>
@@ -151,44 +151,47 @@
                 <p-fieldset legend="Bank Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-                      <label for="cultivableArea">Bank:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="cultivableArea" [minFractionDigits]="2">
-                      </p-inputNumber>
+                       <label>Bank:<sup class="p-error">*</sup></label>
+                      <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
+                      (onChange)="getBranchByBankId($event.value)">
+                      </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label for="branchId">Branch:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="branchId" formControlName="branchId" type="text" />
+                      <label>Branch:<sup class="p-error">*</sup></label>
+                      <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
+                        optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
+                      </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label for="potentialArea">IFSC:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="potentialArea"  mode="decimal"
-                        locale="en-US" [minFractionDigits]="2">
-                      </p-inputNumber>
+                      <label>IFSC:</label>
+                      <input pInputText id="ifsc"  placeholder=" IFSC Code" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
+                      readonly>
                     </div>
+
                     <div class="field col-12 md:col-4">
                       <label for="accountNo">Account No:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="accountNo" formControlName="accountNo" type="text" />
+                      <input pInputText inputId="accountNo"  placeholder="Enter Account No" formControlName="accountNo" type="text" />
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label for="glcode">GL Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="glcode" formControlName="glcode" type="text" />
+                      <input pInputText inputId="glcode"  placeholder="Enter GL Code" formControlName="glcode" type="text" />
                      
 
                       <div *ngIf="FormControls['glcode'].invalid &&  FormControls['glcode'].touched"
                         class="error-message p-error">
-                        Dry Area is required
+                        Dry Area Is Required
                       </div>
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label for="subGlcode">Sub GL Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="subGlcode" formControlName="subGlcode" type="text" />
+                      <input pInputText inputId="subGlcode"  placeholder="Enter Sub GL Code" formControlName="subGlcode" type="text" />
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label for="otherCode">Other Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="otherCode" formControlName="otherCode" type="text" />
+                      <input pInputText inputId="otherCode"  placeholder="Enter Other Code" formControlName="otherCode" type="text" />
                     </div>
 
                     </div>
