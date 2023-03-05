@@ -218,23 +218,6 @@ export class SeasonComponent implements OnInit {
   get FormControls() {
     return this.fbseasons.controls;
   }
-
-  // get farmerRatesControls(): FormArray {
-  //   return this.fbseasons.get('farmerRates') as FormArray;
-  // }
-
-  // get harvesterRatesControls(): FormArray {
-  //   return this.fbseasons.get('harvesterRates') as FormArray;
-  // }
-
-  // get transporterRatesControls(): FormArray {
-  //   return this.fbseasons.get('transporterRates') as FormArray;
-  // }
-
-  // get seedRatesControls(): FormArray {
-  //   return this.fbseasons.get('seedRates') as FormArray;
-  // }
-
   editseason(season: SeasonViewDto) {
     this.seasonForm();
     this.fbseasons.patchValue(season);
@@ -244,7 +227,6 @@ export class SeasonComponent implements OnInit {
       crushFrom: new Date(season.crushFrom?.toString() + ''),
       crushTo: new Date(season.crushTo?.toString() + ''),
     });
-
     this.getSeasonBillingRatesBySeasonId(season.seasonId);
     this.addFlag = false;
     this.submitLabel = 'Update Season';
