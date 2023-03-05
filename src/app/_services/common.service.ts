@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CircleDto, DistrictDto, DivisionDto, MandalDto, SectionDto, StateDto } from "../_models/geomodels";
+import { CircleDto, DistrictDto, DivisionDto, MandalDto, SectionDto, StateDto, VillageDto } from "../_models/geomodels";
 import { ApiHttpService } from "./api.http.service";
-import { GET_CIRCLES_URI, GET_DISTRICTS_URI, GET_DIVISION_URI, GET_MANDALS_URI, GET_SEASON_URI, GET_SECTIONS_URI, GET_STATES_URI, GET_WAREHOUSE_URI } from './api.uri.service';
+import { GET_CIRCLES_URI, GET_DISTRICTS_URI, GET_DIVISION_URI, GET_MANDALS_URI, GET_SEASON_URI, GET_SECTIONS_URI, GET_STATES_URI, GET_VILLAGES_URI, GET_WAREHOUSE_URI } from './api.uri.service';
 
 
 
@@ -37,6 +37,9 @@ export class CommonService extends ApiHttpService {
 
   GetSeasons() {
     return this.get<StateDto>(GET_SEASON_URI);
+  }
+  GetVillages() {
+    return this.get<VillageDto>(GET_VILLAGES_URI)
   }
 
 }
