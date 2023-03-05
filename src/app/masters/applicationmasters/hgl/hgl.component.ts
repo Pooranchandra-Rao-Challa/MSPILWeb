@@ -27,6 +27,7 @@ import {
   SubHglViewDto,
   HglDto,
 } from '../../../_models/applicationmaster';
+import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
 
 @Component({
   selector: 'app-hgl',
@@ -295,5 +296,11 @@ export class HglComponent implements OnInit {
     this.fbHgl.reset();
     this.faSubHgl().clear();
     this.showSubHgl = false;
+  }
+  ngOnDestroy() {
+    this.hgls = [];
+    this.subHgls =[];
+    this.vehicleTypes=[];
+    this.branches=[]
   }
 }
