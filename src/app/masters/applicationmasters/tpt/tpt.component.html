@@ -189,7 +189,7 @@
 
     <!-- dialog box -->
     <p-dialog header="TPT" [(visible)]="showDialog" [modal]="true" [responsive]="true" showEffect="fade"
-      [style]="{width: '70vw'}" (onHide)="onClose()">
+      (onHide)="onClose()" [style]="{width: '90%'}">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbTpt" (ngSubmit)="onSubmit()">
           <div class="grid">

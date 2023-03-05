@@ -16,7 +16,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="name">Farmer Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="name" formControlName="name" type="text" />  
+                        <input pInputText id="name" formControlName="farmerName" type="text" />  
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="aliasName">Alias Name:<sup class="p-error">*</sup></label>
@@ -32,8 +32,8 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Please Select Gender :</label><br>
-                        <p-radioButton name="gender" value="Male" label="Male"></p-radioButton>&nbsp;
-                        <p-radioButton name="gender" value="Female" label="Female"></p-radioButton>
+                        <p-radioButton formControlName="gender" value="M" label="Male"></p-radioButton>&nbsp;
+                        <p-radioButton formControlName="gender" value="F" label="Female"></p-radioButton>
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -65,35 +65,31 @@
                     </div> -->
                     <div class="field col-12 md:col-3">
                       <label htmlFor="name">Division:<sup class="p-error">*</sup></label>
-                      <input pInputText id="name" formControlName="division" type="text" /> 
+                      <input pInputText id="name" [formControl]="divisionName" type="text" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargeName">Circle:</label>
-                      <input pInputText id="inchargeName"  type="text" />
+                      <input pInputText [formControl]="circleName" type="text" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargePhoneNo">Section:</label>
-                      <p-inputNumber inputId="inchargePhoneNo" inputId="minmax"
-                        mode="decimal" [min]="0" [max]="100">
-                      </p-inputNumber>
+                      <input pInputText [formControl]="sectionName" type="text" /> 
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address">District:</label>
-                      <input pInputText id="name" type="text" />
+                      <input pInputText [formControl]="districtName" type="text" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="PinCode">Mandal:</label>
-                      <p-inputNumber inputId="pinCode" >
-                      </p-inputNumber>
+                      <input pInputText [formControl]="mandalName" type="text" /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="distance">PinCode:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="distance"  [minFractionDigits]="2">
-                      </p-inputNumber>
+                      <input pInputText [formControl]="pincode" type="text" /> 
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address"> Address:</label>
-                      <textarea rows="5" cols="30" formControlName="address" placeholder="Village Address"
+                      <textarea rows="5" cols="30" [formControl]="address" placeholder="Village Address"
                         pInputTextarea></textarea>
                     </div>
                   </div>
@@ -114,23 +110,27 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="aadhaarNo"> Aadhar No:</label>
-                      <p-inputNumber inputId="aadhaarNo" formControlName="aadhaarNo" inputId="minmax"
-                        mode="decimal" [min]="0" [max]="100">
-                      </p-inputNumber>
+                      <input pInputText id="aadhaarNo" formControlName="aadhaarNo" type="text" ng-maxlength="12" ng-minlength="12"/>
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address">Cast:</label>
-                      <input pInputText id="casteId" formControlName="casteId" type="text" />
+                      <p-dropdown [options]="casteDetails" optionLabel="name"
+                        optionValue="code"  [autoDisplayFirst]="false"
+                        formControlName="casteId" placeholder="Select Caste"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['casteId'].touched && FormControls['casteId'].errors }"></p-dropdown>
+                      <span *ngIf="FormControls['casteId'].touched && FormControls['casteId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['casteId'].errors?.['required']">Please Select
+                          cast.
+                        </div>
+                      </span>
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="oldRyot">Old Ryot:</label>
-                      <p-inputNumber inputId="oldRyot" formControlName="oldRyot">
-                      </p-inputNumber>
+                      <input pInputText id="oldRyot" formControlName="oldRyot" type="text"/>
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="jfno">JF No:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="jfno" formControlName="jfno" [minFractionDigits]="2">
-                      </p-inputNumber>
+                      <input pInputText id="jfno" formControlName="jfno" type="text"/>
                     </div>
                   </div>
                 </p-fieldset>
@@ -157,8 +157,7 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="branchId">Branch:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="branchId" formControlName="branchId" [minFractionDigits]="2">
-                      </p-inputNumber>
+                      <input pInputText inputId="branchId" formControlName="branchId" type="text" />
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="potentialArea">IFSC:<sup class="p-error">*</sup></label>
@@ -168,14 +167,13 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="accountNo">Account No:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="accountNo" formControlName="accountNo" [minFractionDigits]="2">
-                      </p-inputNumber>
+                      <input pInputText inputId="accountNo" formControlName="accountNo" type="text" />
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label for="glcode">GL Code:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="glcode" formControlName="glcode" [minFractionDigits]="2">
-                      </p-inputNumber>
+                      <input pInputText inputId="glcode" formControlName="glcode" type="text" />
+                     
 
                       <div *ngIf="FormControls['glcode'].invalid &&  FormControls['glcode'].touched"
                         class="error-message p-error">
@@ -185,16 +183,12 @@
 
                     <div class="field col-12 md:col-4">
                       <label for="subGlcode">Sub GL Code:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="subGlcode" formControlName="subGlcode" mode="decimal"
-                        locale="de-DE" [minFractionDigits]="2">
-                      </p-inputNumber>
-
+                      <input pInputText inputId="subGlcode" formControlName="subGlcode" type="text" />
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label for="otherCode">Other Code:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="otherCode" formControlName="otherCode" [minFractionDigits]="2">
-                      </p-inputNumber>     
+                      <input pInputText inputId="otherCode" formControlName="otherCode" type="text" />
                     </div>
 
                     </div>
