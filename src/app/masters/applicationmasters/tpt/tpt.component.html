@@ -225,7 +225,7 @@
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Relationship Type:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Relation Type" optionLabel="name" [options]="relationTypes"
-                    optionValue="lookUpDetailId" formControlName="relationTypeId"
+                    optionValue="lookupDetailId" formControlName="relationTypeId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['relationTypeId'].touched && FormControls['relationTypeId'].invalid">
