@@ -38,6 +38,20 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <!-- For Farmer Profile PIC -->
+
+                      <!-- <p-fileUpload mode="basic" name="demo[]" accept="image/*" [maxFileSize]="1000000" (onUpload)="onBasicUpload()"></p-fileUpload> -->
+                      <p-fileUpload
+                        #fileUpload
+                        accept="image/*"
+                        [customUpload]="true"
+                        (uploadHandler)="onUpload($event)"
+                      ></p-fileUpload>
+                        <!-- <ng-template pTemplate="content">
+                            <ul *ngIf="uploadedFiles.length">
+                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                            </ul>
+                        </ng-template> -->
+                      <!-- </p-fileUpload> -->
                     </div>
                   </div>
                 </p-fieldset>

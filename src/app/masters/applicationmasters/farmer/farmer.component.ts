@@ -44,12 +44,7 @@ export class FarmerComponent implements OnInit {
     pincode: FormControl = new FormControl();
     address: FormControl = new FormControl();
 
-    onUpload(event: any) {
-        for (const file of event.files) {
-            this.uploadedFiles.push(file);
-        }
-        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-    }
+    
 
     constructor(private formbuilder: FormBuilder,
         private geoMasterService: GeoMasterService,
@@ -235,6 +230,14 @@ export class FarmerComponent implements OnInit {
     }
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+    onUpload(event: any) {
+        for (const file of event.files) {
+            this.fbfarmers.patchValue({ imageUrl: file });
+            console.log(file);
+        }
+        console.log(this.uploadedFiles);
+        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
     }
     clear(table: Table) {
         table.clear();
