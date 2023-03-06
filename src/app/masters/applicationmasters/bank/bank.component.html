@@ -4,7 +4,7 @@
         <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
-                <h4>Bank</h4>
+                <h4>Banks</h4>
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Bank" icon="pi pi-plus" class="p-button-success p-mr-2"
@@ -14,7 +14,7 @@
 
         <!-- dialog -->
         <p-dialog header="Bank" [(visible)]="showDialog" [breakpoints]="{'500px': '750vw', '640px': '100vw'}"
-            [style]="{width:'77vw'}" (onHide)="onClose()" [modal]="true">
+            [style]="{width:'57vw'}" (onHide)="onClose()" [modal]="true">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbbank">
                     <div class="grid">
@@ -22,39 +22,38 @@
                             <div class="p-fluid p-formgrid grid">
                                 <div class="field col-12 md:col-6">
                                     <label>Code:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="code" type="text" formControlName="code"
+                                    <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Code"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['required']">
-                                            Please enter code.</div>
+                                            Please Enter Code.</div>
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['code'].errors?.['pattern']">Code should contains only
-                                            letters and integers.</div>
+                                            *ngIf="FormControls['code'].errors?.['pattern']">Code Should Contains Alphabets & Numbers.</div>
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['minlength']">
-                                            Code should contains minimum 2 letters or integers.</div>
+                                            Code Min Length Is 2.</div>
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['maxlength']">
-                                            Code should contains maximum 6 letters or integers.</div>
+                                            Code Max Length Is 6.</div>
                                     </span>
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>Name:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="name" type="text" formControlName="name"
+                                    <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Name"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['name'].errors?.['required']">
-                                            Please enter name.</div>
+                                            Please Enter Name.</div>
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['name'].errors?.['pattern']">
-                                            Name should contains only letters.</div>
+                                            Name Should Contains Alphabets.</div>
                                     </span>
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>Abbr:</label>
-                                    <input pInputText id="name" type="text" formControlName="abbr"
+                                    <input pInputText id="name" type="text" formControlName="abbr" placeholder="Enter Abbr"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['abbr'].touched && FormControls['abbr'].errors }">
                                 </div>
                                 <div class="field col-12 md:col-3">
@@ -250,12 +249,12 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="10" style="text-align:center;">No bank details found.</td>
+                    <td colspan="10" class="md:text-center">No bank details found.</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="loadingbody">
                 <tr>
-                    <td colspan="10" style="text-align:center;">Loading bank details. Please wait.</td>
+                    <td colspan="10" class="md:text-center">Loading bank details. Please wait.</td>
                 </tr>
             </ng-template>
         </p-table>

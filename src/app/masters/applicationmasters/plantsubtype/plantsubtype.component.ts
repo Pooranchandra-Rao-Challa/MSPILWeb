@@ -99,7 +99,6 @@ export class PlantsubtypeComponent implements OnInit {
   }
 
   initPlantsub() {
-    this.fbplantsubtype.reset();
     this.submitLabel = "Add Plant Sub Type";
     this.addFlag = true;
     this.showDialog = true;
