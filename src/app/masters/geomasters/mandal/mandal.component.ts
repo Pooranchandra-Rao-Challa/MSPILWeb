@@ -48,15 +48,16 @@ export class MandalComponent implements OnInit {
 
   ngOnInit() {
     this.initMandals();
-    this.commonService.GetDistrictsForState().subscribe((resp) => {
-      this.district = resp as unknown as DistrictDto[]
+
+    this.commonService.GetDistricts().subscribe((resp) => {
+      this. district = resp as unknown as DistrictDto[];
     });
 
     this.fbmandals = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       districtId:[null, [Validators.required]],
-      mandalId: [null],
+      mandalId: [0],
       isActive: new FormControl(true, Validators.required),
     });
   }
