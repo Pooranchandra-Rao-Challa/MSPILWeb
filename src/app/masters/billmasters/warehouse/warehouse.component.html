@@ -65,7 +65,7 @@
           <th></th>
 
           <th pSortableColumn="code">
-            WareHouse Code<p-columnFilter
+           Code<p-columnFilter
               type="text"
               field="code"
               display="menu"
@@ -74,7 +74,7 @@
             <p-sortIcon field="code"></p-sortIcon>
           </th>
           <th pSortableColumn="name">
-            WareHouse Name<p-columnFilter
+           Name<p-columnFilter
               type="text"
               field="name"
               display="menu"
@@ -97,7 +97,16 @@
             <p-sortIcon field="subGlcode"></p-sortIcon>
           </th>
 
-          <th style="text-align: center">Is Active</th>
+          <th pSortableColumn="isActive">
+            Is Active<p-columnFilter
+              type="text"
+              field="isActive"
+              display="menu"
+            >
+            </p-columnFilter>
+            <p-sortIcon field="subGlcode"></p-sortIcon>
+          </th>
+
           <th pSortableColumn="updatedAt">
             Created Date<p-columnFilter
               type="text"
@@ -294,7 +303,7 @@
                       class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['glcode'].errors?.['pattern']"
                     >
-                      GLCode should only contain Numbers .
+                      GLCode should Only contain Numbers .
                     </div>
                   </span>
                 </div>
@@ -328,7 +337,7 @@
                       class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['subGlcode'].errors?.['pattern']"
                     >
-                      SubGLCode should only contain Numbers .
+                      SubGLCode Should Only Contain Numbers .
                     </div>
                   </span>
                 </div>

@@ -11,6 +11,7 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { VillageDto, VillagesViewDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
+import { FarmerDto } from '../../../_models/applicationmaster';
 
 @Component({
     selector: 'app-farmer',
@@ -20,7 +21,7 @@ import { LookupService } from 'src/app/_services/lookup.service';
 export class FarmerComponent implements OnInit {
     dialog: boolean = false;
     farmers: FarmersViewDto[] = [];
-    farmer: SampleSlabDto = new SampleSlabDto();
+    farmer: FarmerDto = new FarmerDto();
     loading: boolean = true;
     fbfarmers!: FormGroup;
     filter: any;
@@ -96,30 +97,7 @@ export class FarmerComponent implements OnInit {
             imageUrl: ['c:/fakepath/file.jpg'],
             isRegistered: [''],
             isActive: [''],
-            // sampleSlabId:  [0],
-            // villageId: [''],
-            // sectionId: ['', Validators.required],
-            // targetArea: ['', Validators.required],
-            // mandalId: ['', Validators.required],
-            // address: ['', Validators.required],
-            // pinCode: ['', Validators.required],
-            // code: ['', Validators.required],
-            // name: ['', Validators.required],
-            // inchargeName: ['',],
-            // inchargePhoneNo: ['',],
-            // distance: ['', Validators.required],
-            // divertedDistance: ['', Validators.required],
-            // noOfEbservices: ['', Validators.required],
-            // tptrate: ['', Validators.required],
-            // cultivableArea: ['', Validators.required],
-            // totalArea: ['', Validators.required],
-            // irrigationArea: ['', Validators.required],
-            // dryArea: ['', Validators.required],
-            // potentialArea: ['', Validators.required],
-            // notSuitableArea: ['', Validators.required],
-            // listingOrder: ['', Validators.required],
-            // isActive: [Validators.required],
-
+            
         });
     }
     initcasteDetails(){
@@ -173,13 +151,6 @@ export class FarmerComponent implements OnInit {
           this.banks = resp as unknown as BankViewDto[];
         });
       }
-//     initBank() {
-//     this.appMasterService.GetBanks().subscribe((resp) => {
-//       this.banks = resp as unknown as BankViewDto[];
-//       console.log(this.banks);
-//       this.loading = false;
-//     });
-//   }
     getBranchByBankId(Id: number) {
     this.appmasterservice.GetBank(Id).subscribe((resp) => {
       if (resp) {
@@ -194,25 +165,17 @@ export class FarmerComponent implements OnInit {
     else this.IFSC = '';
   }
 
-
-
-
-
-
     editFarmer(farmers: FarmersViewDto) {
        this.farmerForm();
        this.initVillages(farmers.villageId)
         this.fbfarmers.patchValue(farmers);
         this.fbfarmers.patchValue({
-
         })
         this.addFlag = false;
         this.submitLabel = 'Update Farmers';
         this.showDialog = true;
-
-    }
-    
-    saveFarmer(): Observable<HttpEvent<SampleSlabDto>> {
+    } 
+    saveFarmer(): Observable<HttpEvent<FarmerDto>> {
         if (this.addFlag) return this.appmasterservice.CreateFarmer(this.fbfarmers.value)
         else return this.appmasterservice.UpdateFarmer(this.fbfarmers.value)
     }

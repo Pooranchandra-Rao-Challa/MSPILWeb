@@ -228,7 +228,10 @@
 
     <p-table #dt1 [value]="farmers" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="['name','country.name','representative.name','status']" [autoLayout]="true"
+      [globalFilterFields]="['code','farmerName','aliasName','gender','fatherName','casteId','caste','address','circleId',
+      'circleName','divisionId','divisionName','sectionId','sectionName','districtId','districtName','mandalId','mandalName',
+      'villageId','villageName','pinCode','phoneNo','email','panNoaadharNo','oldRyot','jfNo','bankId','bankName','branchId','branchName','ifsc',
+      'accountNo','totalArea','cultivatedArea','glCode','subGLCode','otherCode','isRegistered','isActive','createdAt','createdBy','updatedAt','updatedBy']" [autoLayout]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -245,59 +248,191 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="farmerId"><p-sortIcon field="farmerId"></p-sortIcon>Farmer Id</th>
-          <th pSortableColumn="code"><p-sortIcon field="code"></p-sortIcon>Farmer Code</th>
-          <th pSortableColumn="farmerName"><p-sortIcon field="farmerName"></p-sortIcon>Farmer Name</th>
-          <th pSortableColumn="aliasName"><p-sortIcon field="aliasName"></p-sortIcon>Alias Name</th>
-          <th pSortableColumn="gender"><p-sortIcon field="gender"></p-sortIcon>Gender</th>
-          <th pSortableColumn="fatherName"><p-sortIcon field="fatherName"></p-sortIcon>Father Name</th>
-          <th pSortableColumn="casteId"><p-sortIcon field="casteId"></p-sortIcon>Caste Id</th>
-          <th pSortableColumn="caste"><p-sortIcon field="caste"></p-sortIcon>Caste</th>
-          <th pSortableColumn="address"><p-sortIcon field="address"></p-sortIcon>Address</th>
-          <th pSortableColumn="circleId"><p-sortIcon field="circleId"></p-sortIcon>Circle Id </th>
-          <th pSortableColumn="circleName"><p-sortIcon field="circleName"></p-sortIcon>Circle Name</th>
-          <th pSortableColumn="divisionId"><p-sortIcon field="divisionId"></p-sortIcon>Division Id</th>
-          <th pSortableColumn="divisionName"><p-sortIcon field="divisionName"></p-sortIcon>Division Name</th>
-          <th pSortableColumn="sectionId"><p-sortIcon field="sectionId"></p-sortIcon>Section Id</th>
-          <th pSortableColumn="SectionName"><p-sortIcon field="sectionName"></p-sortIcon>Section Name</th>
-          <th pSortableColumn="districtId"><p-sortIcon field="districtId"></p-sortIcon>District Id</th>
-          <th pSortableColumn="districtName"><p-sortIcon field="sectionName"></p-sortIcon>district Name</th>
-          <th pSortableColumn="mandalId"><p-sortIcon field="mandalId"></p-sortIcon>Mandal Id</th>
-          <th pSortableColumn="mandalName"><p-sortIcon field="mandalName"></p-sortIcon>Mandal Name</th>
-          <th pSortableColumn="villageId"><p-sortIcon field="villageId"></p-sortIcon>Village Id</th>
-          <th pSortableColumn="villageName"><p-sortIcon field="villageName"></p-sortIcon>Village Name</th>
-          <th pSortableColumn="pinCode"><p-sortIcon field="pinCode"></p-sortIcon>Pin Code</th>
-          <th pSortableColumn="phoneNo"><p-sortIcon field="phoneNo"></p-sortIcon>Phone No</th>
-          <th pSortableColumn="email"><p-sortIcon field="email"></p-sortIcon>Email</th>
-          <th pSortableColumn="panNo"><p-sortIcon field="panNo"></p-sortIcon>PAN No</th>
-          <th pSortableColumn="aadharNo"><p-sortIcon field="aadharNo"></p-sortIcon>Aadhar Number</th>
-          <th pSortableColumn="oldRyot"><p-sortIcon field="oldRyot"></p-sortIcon>Old Ryot</th>
-          <th pSortableColumn="jfNo"><p-sortIcon field="jfNo"></p-sortIcon>JF No</th>
-          <th pSortableColumn="bankId"><p-sortIcon field="bankId"></p-sortIcon>Bank Id</th>
-          <th pSortableColumn="bankName"><p-sortIcon field="bankName"></p-sortIcon>Bank Name</th>
-          <th pSortableColumn="branchId"><p-sortIcon field="branchId"></p-sortIcon>Branch dD</th>
-          <th pSortableColumn="branchName"><p-sortIcon field="branchName"></p-sortIcon>Branch Name</th>
-          <th pSortableColumn="ifsc"><p-sortIcon field="ifsc"></p-sortIcon>IFSC</th>
-          <th pSortableColumn="accountNo"><p-sortIcon field="accountNo"></p-sortIcon>Account No</th>
-          <th pSortableColumn="totalArea"><p-sortIcon field="totalArea"></p-sortIcon>Total Area</th>
-          <th pSortableColumn="cultivatedArea"><p-sortIcon field="cultivatedArea"></p-sortIcon>Cultivated Area</th>
-          <th pSortableColumn="glCode"><p-sortIcon field="glCode"></p-sortIcon>GL Code</th>
-          <th pSortableColumn="subGLCode"><p-sortIcon field="subGLCode"></p-sortIcon>Sub GL Code</th>
-          <th pSortableColumn="otherCode"><p-sortIcon field="otherCode"></p-sortIcon>Other Code</th>
-          <th pSortableColumn="isRegistered"><p-sortIcon field="isRegistered"></p-sortIcon>Is Registered</th>
-          <th pSortableColumn="isActive"><p-sortIcon field="isActive"></p-sortIcon>Is Active</th>
-          <th pSortableColumn="createdBy"><p-sortIcon field="createdBy"></p-sortIcon>Created Date</th>
-          <th pSortableColumn="createdAt"><p-sortIcon field="createdAt"></p-sortIcon>Created By</th>
-          <th pSortableColumn="updatedAt"><p-sortIcon field="updatedAt"></p-sortIcon>Updated Date</th>
-          <th pSortableColumn="updatedBy"><p-sortIcon field="updatedBy"></p-sortIcon>Updated By</th>
-       
+          <th pSortableColumn="code">
+            Farmer Code<p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+            <p-sortIcon field="code"></p-sortIcon>
+          </th>
+          <th pSortableColumn="farmerName">
+            Farmer Name<p-columnFilter type="text" field="farmerName" display="menu"></p-columnFilter>
+            <p-sortIcon field="farmerName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="aliasName">
+            Alias Name<p-columnFilter type="text" field="aliasName" display="menu"></p-columnFilter>
+            <p-sortIcon field="aliasName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="gender">
+            Gender<p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
+            <p-sortIcon field="gender"></p-sortIcon>
+          </th>
+          <th pSortableColumn="fatherName">
+            Father Name<p-columnFilter type="text" field="fatherName" display="menu"></p-columnFilter>
+            <p-sortIcon field="fatherName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="Caste Id">
+            Caste Id<p-columnFilter type="text" field="Caste Id" display="menu"></p-columnFilter>
+            <p-sortIcon field="Caste Id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="caste">
+            Caste<p-columnFilter type="text" field="caste" display="menu"></p-columnFilter>
+            <p-sortIcon field="caste"></p-sortIcon>
+          </th>
+          <th pSortableColumn="address">
+            Address<p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
+            <p-sortIcon field="address"></p-sortIcon>
+          </th>
+          <th pSortableColumn="circleId">
+            Circle Id<p-columnFilter type="text" field="circleId" display="menu"></p-columnFilter>
+            <p-sortIcon field="circleId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="circleName">
+            Circle Name<p-columnFilter type="text" field="circleName" display="menu"></p-columnFilter>
+            <p-sortIcon field="circleName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="divisionId">
+            Division Id<p-columnFilter type="text" field="divisionId" display="menu"></p-columnFilter>
+            <p-sortIcon field="divisionId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="divisionName">
+            Division Name<p-columnFilter type="text" field="divisionName" display="menu"></p-columnFilter>
+            <p-sortIcon field="divisionName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="sectionId">
+            Section Id<p-columnFilter type="text" field="sectionId" display="menu"></p-columnFilter>
+            <p-sortIcon field="sectionId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="sectionName">
+            Section Name<p-columnFilter type="text" field="sectionName" display="menu"></p-columnFilter>
+            <p-sortIcon field="sectionName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="districtId">
+            District Id<p-columnFilter type="text" field="districtId" display="menu"></p-columnFilter>
+            <p-sortIcon field="districtId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="sectionName">
+            district Name<p-columnFilter type="text" field="sectionName" display="menu"></p-columnFilter>
+            <p-sortIcon field="sectionName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="mandalId">
+            Mandal Id<p-columnFilter type="text" field="mandalId" display="menu"></p-columnFilter>
+            <p-sortIcon field="mandalId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="mandalName">
+            Mandal Name<p-columnFilter type="text" field="mandalName" display="menu"></p-columnFilter>
+            <p-sortIcon field="mandalName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="villageId">
+            Village Id<p-columnFilter type="text" field="villageId" display="menu"></p-columnFilter>
+            <p-sortIcon field="villageId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="villageName">
+            Village Name<p-columnFilter type="text" field="villageName" display="menu"></p-columnFilter>
+            <p-sortIcon field="villageName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="pinCode">
+            PinCode<p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
+            <p-sortIcon field="pinCode"></p-sortIcon>
+          </th>
+          <th pSortableColumn="phoneNo">
+            Phone No<p-columnFilter type="text" field="phoneNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="phoneNo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email">
+            Email<p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+            <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="panNo">
+            PAN No<p-columnFilter type="text" field="panNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="panNo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="aadharNo">
+            Aadhar Number<p-columnFilter type="text" field="aadharNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="aadharNo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="oldRyot">
+            Old Ryot<p-columnFilter type="text" field="oldRyot" display="menu"></p-columnFilter>
+            <p-sortIcon field="oldRyot"></p-sortIcon>
+          </th>
+          <th pSortableColumn="jfNo">
+            JF No<p-columnFilter type="text" field="jfNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="jfNo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="bankId">
+            Bank Id<p-columnFilter type="text" field="bankId" display="menu"></p-columnFilter>
+            <p-sortIcon field="bankId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="bankName">
+            Bank Name<p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
+            <p-sortIcon field="bankName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="branchId">
+            Branch Id<p-columnFilter type="text" field="branchId" display="menu"></p-columnFilter>
+            <p-sortIcon field="branchId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="branchName">
+            Branch Name<p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
+            <p-sortIcon field="branchName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ifsc">
+            IFSC<p-columnFilter type="text" field="ifsc" display="menu"></p-columnFilter>
+            <p-sortIcon field="ifsc"></p-sortIcon>
+          </th>
+        
+          <th pSortableColumn="accountNo">
+            Account No<p-columnFilter type="text" field="accountNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="accountNo"></p-sortIcon>
+          </th>
+          
+          <th pSortableColumn="totalArea">
+            Total Area<p-columnFilter type="text" field="totalArea" display="menu"></p-columnFilter>
+            <p-sortIcon field="totalArea"></p-sortIcon>
+          </th>
+          <th pSortableColumn="cultivatedArea">
+            Cultivated Areae<p-columnFilter type="text" field="cultivatedArea" display="menu"></p-columnFilter>
+            <p-sortIcon field="cultivatedArea"></p-sortIcon>
+          </th>
+          <th pSortableColumn="glCode">
+            GL Code<p-columnFilter type="text" field="glCode" display="menu"></p-columnFilter>
+            <p-sortIcon field="glCode"></p-sortIcon>
+          </th>
+          <th pSortableColumn="subGLCode">
+            Sub GL Code <p-columnFilter type="text" field="subGLCode" display="menu"></p-columnFilter>
+            <p-sortIcon field="subGLCode"></p-sortIcon>
+          </th>
+          <th pSortableColumn="otherCode">
+            Other Code <p-columnFilter type="text" field="otherCode" display="menu"></p-columnFilter>
+            <p-sortIcon field="otherCode"></p-sortIcon>
+          </th>
+          
+          <th pSortableColumn="isRegistered">
+            Is Registered <p-columnFilter type="text" field="isRegistered" display="menu"></p-columnFilter>
+            <p-sortIcon field="isRegistered"></p-sortIcon>
+          </th>
+          <th pSortableColumn="isActive">
+            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+            <p-sortIcon field="isActive"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdAt">
+            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdBy">
+            Created By <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedAt">
+            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedBy">
+            Updated By <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter>
+            <p-sortIcon field="updatedBy"></p-sortIcon>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-farmer>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editFarmer(farmer)"></button></td>
-          <td>{{farmer.farmerId}}</td>
           <td>{{farmer.code}}</td>
           <td>{{farmer.farmerName}}</td>
           <td>{{farmer.aliasName}}</td>
@@ -336,23 +471,29 @@
           <td>{{farmer.glCode}}</td>
           <td>{{farmer.subGLCode}}</td>
           <td>{{farmer.otherCode}}</td>
-          <td>{{farmer.isRegistered}}</td>
-          <td>{{farmer.isActive}}</td>
-          <td>{{farmer.createdAt}}</td>
+          <td>
+            <p-checkbox name="active" value="active" [(ngModel)]="farmer.isRegistered" [binary]="true" [disabled]="true">
+              </p-checkbox>
+            </td>
+          <td>
+            <p-checkbox name="active" value="active" [(ngModel)]="farmer.isActive" [binary]="true" [disabled]="true">
+              </p-checkbox>
+            </td>
+          <td>{{farmer.createdAt  | date: 'dd-MMM-yyyy'}}</td>
           <td>{{farmer.createdBy}}</td>
-          <td>{{farmer.updatedAt}}</td>
+          <td>{{farmer.updatedAt  | date: 'dd-MMM-yyyy'}}</td>
           <td>{{farmer.updatedBy}}</td>
 
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="8">No Villages found.</td>
+          <td colspan="8">No Farmes Data. Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="8">Loading.. Villages data. Please wait.</td>
+          <td colspan="8">Loading.. Farmes Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
