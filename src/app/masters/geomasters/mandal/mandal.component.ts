@@ -55,8 +55,8 @@ export class MandalComponent implements OnInit {
     this.fbmandals = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      districtId: ['', (Validators.required)],
-      mandalId: [''],
+      districtId:[null, [Validators.required]],
+      mandalId: [null],
       isActive: new FormControl(true, Validators.required),
     });
   }
@@ -69,11 +69,11 @@ export class MandalComponent implements OnInit {
   }
 
   editProduct(mandal: MandalsViewDto) {
+    this.mandal.mandalId = mandal.mandalId;
     this.mandal.code = mandal.mandalCode;
     this.mandal.name = mandal.mandalName;
     this.mandal.districtId = mandal.districtId;
     this.mandal.isActive = mandal.isActive;
-    this.mandal.mandalId = mandal.mandalId;
     this.fbmandals.setValue(this.mandal);
     this.submitLabel = "Update Mandal";
     this.addFlag = false;

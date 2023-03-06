@@ -21,7 +21,7 @@ export class DistrictComponent implements OnInit {
   display: boolean = false;
   districts: DistrictViewDto[] = [];
   district: DistrictDto = new DistrictDto();
-  states: StateDto[] = [];
+  state: StateDto[] = [];
   loading: boolean = true;
   fbdistricts!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
@@ -48,14 +48,15 @@ export class DistrictComponent implements OnInit {
 
   ngOnInit() {
     this.initDistricts();
+
     this.commonService.GetStates().subscribe((resp) => {
-      this.states = resp as unknown as StateDto[]
+      this.state = resp as unknown as StateDto[]
     })
     this.fbdistricts = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      stateId: ['', (Validators.required)],
-      districtId: [''],
+      stateId: [null, (Validators.required)],
+      districtId: [null],
       isActive: [true]
     });
   }
@@ -114,7 +115,7 @@ export class DistrictComponent implements OnInit {
 
   ngOnDestroy() {
     this.districts = [];
-    this.states = [];
+    this.state = [];
   }
 
 }

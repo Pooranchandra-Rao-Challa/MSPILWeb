@@ -29,7 +29,6 @@ export class PlanttypeComponent implements OnInit {
   ) { }
 
   initPlant() {
-    this.fbplantType.reset();
     this.submitLabel = "Add Plant Type";
     this.addFlag = true;
     this.showDialog = true;
