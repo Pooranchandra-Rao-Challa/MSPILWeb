@@ -39,7 +39,7 @@
                         class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['divisionId'].errors?.['required']"
                       >
-                        Please Select Division Required.
+                         Division Is Required.
                       </div>
                     </span>
                   </div>
@@ -132,12 +132,7 @@
                       id="inchargePhoneNo"
                       mask="(999)-999-9999"
                       formControlName="inchargePhoneNo"
-                      [ngClass]="{
-                        'is-invalid ng-dirty':
-                          FormControls['inchargePhoneNo'].touched &&
-                          FormControls['inchargePhoneNo'].errors
-                      }"
-                    >
+                     >
                     </p-inputMask>
                     <span
                       *ngIf="
@@ -180,6 +175,8 @@
                       formControlName="listingOrder"
                       placeholder="Enter Listing Order"
                       type="text"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }"
+                      
                     />
                     <div
                       *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched && FormControls['listingOrder'].errors?.['required']"
@@ -204,6 +201,7 @@
                       formControlName="address"
                       placeholder="Address"
                       pInputTextarea
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"
                     ></textarea>
                     <div
                       *ngIf="
@@ -312,33 +310,19 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="circleId">
-            Circle Id<p-columnFilter
-              type="text"
-              field="circleId"
-              display="menu"
-            >
-            </p-columnFilter>
-            <p-sortIcon field="circleId"></p-sortIcon>
-          </th>
+         
 
           <th pSortableColumn="code">
-            Circle Code<p-columnFilter type="text" field="code" display="menu">
+            Code<p-columnFilter type="text" field="code" display="menu">
             </p-columnFilter>
             <p-sortIcon field="code"></p-sortIcon>
           </th>
 
           <th pSortableColumn="name">
-            Circle Name
+            Name
             <p-columnFilter type="text" field="name" display="menu">
             </p-columnFilter>
             <p-sortIcon field="name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="divisionId">
-            Division Id
-            <p-columnFilter type="text" field="divisionId" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="divisionId"></p-sortIcon>
           </th>
           <th pSortableColumn="divisionName">
             Division Name<p-columnFilter
@@ -433,10 +417,10 @@
               (click)="editProduct(circles)"
             ></button>
           </td>
-          <td>{{ circles.circleId }}</td>
+          
           <td>{{ circles.circleCode }}</td>
           <td>{{ circles.circleName }}</td>
-          <td>{{ circles.divisionId }}</td>
+
           <td>{{ circles.divisionName }}</td>
           <td>{{ circles.inchargeName }}</td>
           <td>{{ circles.inchargePhoneNo }}</td>

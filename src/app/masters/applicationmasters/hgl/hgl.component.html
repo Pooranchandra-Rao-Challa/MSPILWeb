@@ -43,10 +43,7 @@
             Gender <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
             <p-sortIcon field="relationType"></p-sortIcon>
           </th>
-          <th pSortableColumn="relationType">
-            RelationType Id <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
-            <p-sortIcon field="relationType"></p-sortIcon>
-          </th>
+        
           <th pSortableColumn="relationName">
             Relation Type <p-columnFilter type="text" field="relationName" display="menu"></p-columnFilter>
             <p-sortIcon field="relationName"></p-sortIcon>
@@ -100,11 +97,6 @@
             Guarantor3 <p-columnFilter type="text" field="guarantor3" display="menu"></p-columnFilter>
             <p-sortIcon field="guarantor3"></p-sortIcon>
           </th>
-          <th pSortableColumn="bankName">
-            Branch Id <p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
-            <p-sortIcon field="bankName"></p-sortIcon>
-          </th>
-       
           <th pSortableColumn="branchName">
             Branch Name <p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
             <p-sortIcon field="branchName"></p-sortIcon>
@@ -162,7 +154,6 @@
           <td>{{hgl.code}}</td>
           <td>{{hgl.name}}</td>
           <td>{{hgl.gender}}</td>
-          <td>{{hgl.relationTypeId}}</td>
           <td>{{hgl.relationType}}</td>
           <td>{{hgl.relationName}}</td>
           <td>{{hgl.address}}</td>
@@ -179,7 +170,6 @@
           <td>{{hgl.guarantor1}}</td>
           <td>{{hgl.guarantor2}}</td>
           <td>{{hgl.guarantor3}}</td>
-          <td>{{hgl.branchId}}</td>
           <td>{{hgl.branchName}}</td>
           <td>{{hgl.bankName}}</td>
           <td>{{hgl.ifsc}}</td>
@@ -464,7 +454,7 @@
                     <th pSortableColumn="vehicleTypeId">Vehicle Type<p-sortIcon field="vehicleTypeId"></p-sortIcon>
                     </th>
                     
-                    <th pSortableColumn="noOfPersons">NO Of Persons<p-sortIcon field="noOfPersons">
+                    <th pSortableColumn="noOfPersons">No Of Persons<p-sortIcon field="noOfPersons">
                       </p-sortIcon>
                     </th>
 

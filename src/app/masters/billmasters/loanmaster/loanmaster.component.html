@@ -65,15 +65,7 @@
             <p-sortIcon field="code"></p-sortIcon>
           </th>
 
-          <th pSortableColumn="relationType">
-            Category Id
-            <p-columnFilter
-              type="text"
-              field="relationType"
-              display="menu"
-            ></p-columnFilter>
-            <p-sortIcon field="relationType"></p-sortIcon>
-          </th>
+      
           <th pSortableColumn="relationName">
             Category Name
             <p-columnFilter
@@ -188,7 +180,6 @@
             ></button>
           </td>
           <td>{{ loanType.code }}</td>
-          <td>{{ loanType.categoryId }}</td>
           <td>{{ loanType.categoryName }}</td>
           <td>{{ loanType.name }}</td>
           <td>{{ loanType.interestRate }}</td>
@@ -213,12 +204,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="27">No loanTypes found.</td>
+          <td colspan="27">No LoanTypes Data Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="27">Loading Loan SubTypes data. Please wait.</td>
+          <td colspan="27">Loading LoanTypes data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -324,7 +315,7 @@
                     class="ng-invalid ng-touched p-error"
                     *ngIf="FormControls['name'].errors?.['required']"
                   >
-                    Please enter name.
+                    Please enter Name.
                   </div>
                   <div
                     class="ng-invalid ng-touched p-error"
@@ -358,7 +349,7 @@
                     class="ng-invalid ng-touched p-error"
                     *ngIf="FormControls['interestRate'].errors?.['required']"
                   >
-                    Please Enter InterestRate.
+                    Please Enter Interest Rate.
                   </div>
                   <div
                     class="ng-invalid ng-touched p-error"

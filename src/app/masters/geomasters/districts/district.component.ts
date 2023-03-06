@@ -74,6 +74,7 @@ export class DistrictComponent implements OnInit {
     this.district.districtId = district.districtId
     this.district.stateId = district.stateId;
     this.fbdistricts.setValue(this.district);
+
     this.submitLabel = "Update District";
     this.addFlag = false;
     this.display = true;
