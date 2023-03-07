@@ -126,7 +126,7 @@
                 <div class="field col-12 md:col-6">
                   <label>Bill Category:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Bill Category" optionLabel="name" [options]="billCategories"
-                    optionValue="lookUpDetailId" formControlName="categoryId"
+                    optionValue="lookupDetailId" formControlName="categoryId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">

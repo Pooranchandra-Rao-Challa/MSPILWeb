@@ -12,6 +12,8 @@ import { VillageDto, VillagesViewDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { FarmerDto } from '../../../_models/applicationmaster';
+import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
+
 
 @Component({
     selector: 'app-farmer',
@@ -66,34 +68,62 @@ export class FarmerComponent implements OnInit {
     }
     farmerForm(){
         this.fbfarmers = this.formbuilder.group({
-            farmerId: [0],
-            code: [''],
-            farmerName: [''],
-            aliasName: [''],
-            gender: [''],
-            fatherName: [''],
-            casteId: [''],
-            address: [''],
-            villageId: [''],
+            farmerId: [null],
+            code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+            name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+            aliasName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+            gender:  ['', (Validators.required)],
+            fatherName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+            casteId: ['', (Validators.required)],
+            address:['', (Validators.required)],
+            villageId:  ['', (Validators.required)],
             phoneNo: [''],
-            email: [''],
-            panno: [''],
-            aadhaarNo: [''],
-            oldRyot: [''],
-            selfId: [0],
-            jfno: [''],
-            branchId: [''],
-            accountNo: [''],
-            totalArea: [''],
-            cultivatedArea: [''],
-            glcode: [''],
-            subGlcode: [''],
-            otherCode: [''],
+            email: ['', (Validators.pattern(RG_EMAIL))],
+            panno: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+            aadhaarNo:  new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+            oldRyot:  new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+            selfId: [null],
+            jfno: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+            branchId: ['', (Validators.required)],
+            accountNo:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+            totalArea: ['', (Validators.required)],
+            cultivatedArea: ['', (Validators.required)],
+            glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+            subGlcode:  ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+            otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
             imageUrl: ['c:/fakepath/file.jpg'],
-            isRegistered: [''],
-            isActive: [''],
+            isRegistered: [true],
+            isActive: [true],
             
         });
+
+
+
+
+
+        // code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+        // name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+        // relationTypeId: ['', (Validators.required)],
+        // relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+        // gender: ['', (Validators.required)],
+        // address: ['', (Validators.required)],
+        // pinCode: ['', (Validators.required)],
+        // phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
+        // tax: ['', (Validators.required)],
+        // email: ['', (Validators.pattern(RG_EMAIL))],
+        // panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+        // tds: [false],
+        // guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+        // guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+        // guarantor3: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+        // glCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+        // subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+        // otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+        // bankId: ['', (Validators.required)],
+        // branchId: ['', (Validators.required)],
+        // accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+        // isActive: [true],
+        // tptdetails: this.formbuilder.array([]),
     }
     initcasteDetails(){
         this.lookupService.Castes().subscribe((resp)=>{
@@ -164,13 +194,11 @@ export class FarmerComponent implements OnInit {
        this.farmerForm();
        this.initVillages(farmers.villageId)
         this.fbfarmers.patchValue(farmers);
-        this.fbfarmers.patchValue({
-        })
         this.addFlag = false;
         this.submitLabel = 'Update Farmers';
         this.showDialog = true;
     } 
-    saveFarmer(): Observable<HttpEvent<FarmerDto>> {
+    saveFarmer(): Observable<HttpEvent<any>> {
         if (this.addFlag) return this.appmasterservice.CreateFarmer(this.fbfarmers.value)
         else return this.appmasterservice.UpdateFarmer(this.fbfarmers.value)
     }

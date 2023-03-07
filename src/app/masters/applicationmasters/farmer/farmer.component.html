@@ -10,21 +10,54 @@
                 <p-fieldset legend="Farmer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="grid col-12 md:col-8">
+
                       <div class="field col-12 md:col-6">
-                        <label htmlFor="code">Farmer Code:<sup class="p-error">*</sup></label>
-                        <input pInputText id="code"  placeholder="Enter Farmer Code" formControlName="code" type="text" />  
+                        <label htmlFor="code">Code:<sup class="p-error">*</sup></label>
+                        <input pInputText id="code"  placeholder="Enter Code" formControlName="code" type="text"  
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                        <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                            Please Enter Code.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                            Code Min Length Is 2 .</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                            Code Max Length Is 20.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                            Code Should Contains Only Letters And Integers.</div>
+                        </span>
                       </div>
                       <div class="field col-12 md:col-6">
-                        <label htmlFor="name">Farmer Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="name" placeholder="Enter Farmer Name" formControlName="farmerName" type="text" />  
+                        <label htmlFor="name">Name:<sup class="p-error">*</sup></label>
+                        <input pInputText id="name" placeholder="Enter Name" formControlName="name" type="text"  
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                        <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
+                            Please Enter Name.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                            Name Should Contains Only Alphbets.</div>
+                        </span>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="aliasName">Alias Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="aliasName"  placeholder="Enter Alias Name" formControlName="aliasName" type="text" />                       
+                        <input pInputText id="aliasName"  placeholder="Enter Alias Name" formControlName="aliasName" type="text" 
+                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['aliasName'].touched && FormControls['aliasName'].errors }">
+                        <span *ngIf="FormControls['aliasName'].touched && FormControls['aliasName'].invalid">
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aliasName'].errors?.['required']">
+                            Please Enter Alias Name.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aliasName'].errors?.['pattern']">
+                            Alias Name Should Contains Only Alphbets.</div>
+                        </span>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="fatherName"> Father Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="fatherName"  placeholder="Enter Father Name"formControlName="fatherName" type="text" />  
+                        <input pInputText id="fatherName"  placeholder="Enter Father Name"formControlName="fatherName" type="text"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['fatherName'].touched && FormControls['fatherName'].errors }">
+                        <span *ngIf="FormControls['fatherName'].touched && FormControls['fatherName'].invalid">
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fatherName'].errors?.['required']">
+                            Please Enter Name.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fatherName'].errors?.['pattern']">
+                            Father Name Should Contains Only Alphbets.</div>
+                        </span>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="isRegistered">Is Registered?:<sup class="p-error">*</sup></label><br>
@@ -58,14 +91,14 @@
                 <p-fieldset legend="Village Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-3">
-                      <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
+                      <label htmlFor="age1">Village:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="villages" optionLabel="villageName"
                         optionValue="villageId" (onChange)="initVillages($event.value)" [autoDisplayFirst]="false"
                         formControlName="villageId" placeholder="Select Village"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"></p-dropdown>
                       <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageId'].errors?.['required']">Please Select
-                          Division.
+                          Village.
                         </div>
                       </span>
                     </div>
@@ -78,8 +111,9 @@
                       </div>   
                     </div> -->
                     <div class="field col-12 md:col-3">
-                      <label htmlFor="name">Division:<sup class="p-error">*</sup></label>
-                      <input pInputText id="name" [formControl]="divisionName"  placeholder="Enter Name" type="text" /> 
+                      <label htmlFor="divisionName">Division:<sup class="p-error">*</sup></label>
+                      <input pInputText id="divisionName" [formControl]="divisionName"  placeholder="" type="text">
+                    
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargeName">Circle:</label>
@@ -94,25 +128,26 @@
                       <input pInputText [formControl]="districtName" type="text"  placeholder="Enter Address" /> 
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label for="PinCode">Mandal:</label>
-                      <input pInputText [formControl]="mandalName" type="text"  placeholder="Enter PinCode" /> 
+                      <label for="mandalName">Mandal:</label>
+                      <input pInputText [formControl]="mandalName" type="text"  placeholder="Enter Mandal" /> 
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label for="distance">PinCode:<sup class="p-error">*</sup></label>
-                      <input pInputText [formControl]="pincode" type="text"  placeholder="Enter distance" /> 
+                      <label for="pincode">PinCode:<sup class="p-error">*</sup></label>
+                      <input pInputText [formControl]="pincode" type="text"  placeholder="Enter PinCode">
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address"> Address:</label>
-                      <textarea rows="5" cols="30" [formControl]="address" placeholder="Village Address"
-                        pInputTextarea></textarea>
-                    </div>
+                      <textarea rows="5" cols="30" formControlName="address" placeholder="Village Address" ></textarea>
+                </div>
                   </div>
+
                 </p-fieldset>
                 <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-3">
                       <label for="phoneNo"> Phone No:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="phoneNo" formControlName="phoneNo" type="text"  placeholder="Enter Phone No" /> 
+                      <input pInputText inputId="phoneNo" formControlName="phoneNo" type="text"  placeholder="Enter Phone No" >
+                      
                     </div>
                     <div class="field col-12 md:col-3">
                       <label htmlFor="name"> Email:<sup class="p-error">*</sup></label>
@@ -123,11 +158,11 @@
                       <input pInputText id="panno" formControlName="panno" type="text" placeholder="Enter PAN No">
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label for="aadhaarNo"> Aadhar No:</label>
+                      <label for="aadhaarNo"> Aadhaar No:</label>
                       <input pInputText id="aadhaarNo" placeholder="Enter Aadhar No" formControlName="aadhaarNo" type="text" ng-maxlength="12" ng-minlength="12"/>
                     </div>
                     <div class="field col-8 md:col-3">
-                      <label htmlFor="address">Cast:</label>
+                      <label htmlFor="casteId">Caste:</label>
                       <p-dropdown [options]="casteDetails" optionLabel="name"
                         optionValue="code"  [autoDisplayFirst]="false"
                         formControlName="casteId" placeholder="Select Caste"
@@ -194,7 +229,7 @@
 
                       <div *ngIf="FormControls['glcode'].invalid &&  FormControls['glcode'].touched"
                         class="error-message p-error">
-                        Dry Area Is Required
+                        Gl Code Is Required
                       </div>
                     </div>
 
@@ -263,11 +298,11 @@
         <tr>
           <th></th>
           <th pSortableColumn="code">
-            Farmer Code<p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+           Code<p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
             <p-sortIcon field="code"></p-sortIcon>
           </th>
           <th pSortableColumn="farmerName">
-            Farmer Name<p-columnFilter type="text" field="farmerName" display="menu"></p-columnFilter>
+           Name<p-columnFilter type="text" field="farmerName" display="menu"></p-columnFilter>
             <p-sortIcon field="farmerName"></p-sortIcon>
           </th>
           <th pSortableColumn="aliasName">
@@ -282,10 +317,7 @@
             Father Name<p-columnFilter type="text" field="fatherName" display="menu"></p-columnFilter>
             <p-sortIcon field="fatherName"></p-sortIcon>
           </th>
-          <th pSortableColumn="Caste Id">
-            Caste Id<p-columnFilter type="text" field="Caste Id" display="menu"></p-columnFilter>
-            <p-sortIcon field="Caste Id"></p-sortIcon>
-          </th>
+        
           <th pSortableColumn="caste">
             Caste<p-columnFilter type="text" field="caste" display="menu"></p-columnFilter>
             <p-sortIcon field="caste"></p-sortIcon>
@@ -294,56 +326,37 @@
             Address<p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
           </th>
-          <th pSortableColumn="circleId">
-            Circle Id<p-columnFilter type="text" field="circleId" display="menu"></p-columnFilter>
-            <p-sortIcon field="circleId"></p-sortIcon>
-          </th>
+        
           <th pSortableColumn="circleName">
             Circle Name<p-columnFilter type="text" field="circleName" display="menu"></p-columnFilter>
             <p-sortIcon field="circleName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="divisionId">
-            Division Id<p-columnFilter type="text" field="divisionId" display="menu"></p-columnFilter>
-            <p-sortIcon field="divisionId"></p-sortIcon>
           </th>
           <th pSortableColumn="divisionName">
             Division Name<p-columnFilter type="text" field="divisionName" display="menu"></p-columnFilter>
             <p-sortIcon field="divisionName"></p-sortIcon>
           </th>
-          <th pSortableColumn="sectionId">
-            Section Id<p-columnFilter type="text" field="sectionId" display="menu"></p-columnFilter>
-            <p-sortIcon field="sectionId"></p-sortIcon>
-          </th>
+
           <th pSortableColumn="sectionName">
             Section Name<p-columnFilter type="text" field="sectionName" display="menu"></p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
-          <th pSortableColumn="districtId">
-            District Id<p-columnFilter type="text" field="districtId" display="menu"></p-columnFilter>
-            <p-sortIcon field="districtId"></p-sortIcon>
-          </th>
+        
           <th pSortableColumn="sectionName">
-            district Name<p-columnFilter type="text" field="sectionName" display="menu"></p-columnFilter>
+            District Name<p-columnFilter type="text" field="sectionName" display="menu"></p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
-          <th pSortableColumn="mandalId">
-            Mandal Id<p-columnFilter type="text" field="mandalId" display="menu"></p-columnFilter>
-            <p-sortIcon field="mandalId"></p-sortIcon>
-          </th>
+          
           <th pSortableColumn="mandalName">
             Mandal Name<p-columnFilter type="text" field="mandalName" display="menu"></p-columnFilter>
             <p-sortIcon field="mandalName"></p-sortIcon>
           </th>
-          <th pSortableColumn="villageId">
-            Village Id<p-columnFilter type="text" field="villageId" display="menu"></p-columnFilter>
-            <p-sortIcon field="villageId"></p-sortIcon>
-          </th>
+         
           <th pSortableColumn="villageName">
             Village Name<p-columnFilter type="text" field="villageName" display="menu"></p-columnFilter>
             <p-sortIcon field="villageName"></p-sortIcon>
           </th>
           <th pSortableColumn="pinCode">
-            PinCode<p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
+            Pin Code<p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
             <p-sortIcon field="pinCode"></p-sortIcon>
           </th>
           <th pSortableColumn="phoneNo">
@@ -359,7 +372,7 @@
             <p-sortIcon field="panNo"></p-sortIcon>
           </th>
           <th pSortableColumn="aadharNo">
-            Aadhar Number<p-columnFilter type="text" field="aadharNo" display="menu"></p-columnFilter>
+            Aadhaar Number<p-columnFilter type="text" field="aadharNo" display="menu"></p-columnFilter>
             <p-sortIcon field="aadharNo"></p-sortIcon>
           </th>
           <th pSortableColumn="oldRyot">
@@ -370,17 +383,10 @@
             JF No<p-columnFilter type="text" field="jfNo" display="menu"></p-columnFilter>
             <p-sortIcon field="jfNo"></p-sortIcon>
           </th>
-          <th pSortableColumn="bankId">
-            Bank Id<p-columnFilter type="text" field="bankId" display="menu"></p-columnFilter>
-            <p-sortIcon field="bankId"></p-sortIcon>
-          </th>
+          
           <th pSortableColumn="bankName">
             Bank Name<p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
             <p-sortIcon field="bankName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="branchId">
-            Branch Id<p-columnFilter type="text" field="branchId" display="menu"></p-columnFilter>
-            <p-sortIcon field="branchId"></p-sortIcon>
           </th>
           <th pSortableColumn="branchName">
             Branch Name<p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
@@ -452,20 +458,13 @@
           <td>{{farmer.aliasName}}</td>
           <td>{{farmer.gender}}</td>
           <td>{{farmer.fatherName}}</td>
-          <td>{{farmer.casteId}}</td>
           <td>{{farmer.caste}}</td>
           <td>{{farmer.address}}</td>
-          <td>{{farmer.circleId}}</td>
           <td>{{farmer.circleName}}</td>
-          <td>{{farmer.divisionId}}</td>
           <td>{{farmer.divisionName}}</td>
-         <td>{{farmer.sectionId}}</td>
           <td>{{farmer.sectionName}}</td>
-          <td>{{farmer.districtId}}</td>
           <td>{{farmer.districtName}}</td>
-          <td>{{farmer.mandalId}}</td>
           <td>{{farmer.mandalName}}</td>
-          <td>{{farmer.villageId}}</td>
           <td>{{farmer.villageName}}</td>
           <td>{{farmer.pinCode}}</td>
           <td>{{farmer.phoneNo}}</td>
@@ -474,9 +473,7 @@
           <td>{{farmer.aadharNo}}</td>
           <td>{{farmer.oldRyot}}</td>
           <td>{{farmer.jfNo}}</td>
-          <td>{{farmer.bankId}}</td>
           <td>{{farmer.bankName}}</td>
-          <td>{{farmer.branchId}}</td>
           <td>{{farmer.branchName}}</td>
           <td>{{farmer.ifsc}}</td>
           <td>{{farmer.accountNo}}</td>

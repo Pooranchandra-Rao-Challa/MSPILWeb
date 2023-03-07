@@ -1,6 +1,5 @@
 <div class="col-12">
   <div class="card">
-
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
@@ -43,10 +42,7 @@
             Gender <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
             <p-sortIcon field="relationType"></p-sortIcon>
           </th>
-          <th pSortableColumn="relationType">
-            RelationType Id <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
-            <p-sortIcon field="relationType"></p-sortIcon>
-          </th>
+        
           <th pSortableColumn="relationName">
             Relation Type <p-columnFilter type="text" field="relationName" display="menu"></p-columnFilter>
             <p-sortIcon field="relationName"></p-sortIcon>
@@ -100,11 +96,6 @@
             Guarantor3 <p-columnFilter type="text" field="guarantor3" display="menu"></p-columnFilter>
             <p-sortIcon field="guarantor3"></p-sortIcon>
           </th>
-          <th pSortableColumn="bankName">
-            Branch Id <p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
-            <p-sortIcon field="bankName"></p-sortIcon>
-          </th>
-       
           <th pSortableColumn="branchName">
             Branch Name <p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
             <p-sortIcon field="branchName"></p-sortIcon>
@@ -162,7 +153,6 @@
           <td>{{hgl.code}}</td>
           <td>{{hgl.name}}</td>
           <td>{{hgl.gender}}</td>
-          <td>{{hgl.relationTypeId}}</td>
           <td>{{hgl.relationType}}</td>
           <td>{{hgl.relationName}}</td>
           <td>{{hgl.address}}</td>
@@ -179,7 +169,6 @@
           <td>{{hgl.guarantor1}}</td>
           <td>{{hgl.guarantor2}}</td>
           <td>{{hgl.guarantor3}}</td>
-          <td>{{hgl.branchId}}</td>
           <td>{{hgl.branchName}}</td>
           <td>{{hgl.bankName}}</td>
           <td>{{hgl.ifsc}}</td>
@@ -209,26 +198,29 @@
       </ng-template>
     </p-table>
     <!-- dialog box -->
-    <p-dialog header="HGL" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '90%'}" (onHide)="onClose()" [modal]="true">
+    <p-dialog header="HGLs" [(visible)]="showDialog" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" [modal]="true">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
-          <div class="grid">
-            <div class="col-12">
-              <div class="p-fluid p-formgrid grid">
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code"  type="text" placeholder=" Enter Code" formControlName="code"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                  <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                      Please Enter Code.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code Should Contains Only Characters And Integers.</div>
-                  </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Name:<sup class="p-error">*</sup></label>
+        <div class="container">
+          <div class="grid p-fluid">
+            <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
+              <p-fieldset legend="HGL" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <div class="grid p-fluid">
+
+                  <div class="field col-12 md:col-4">
+                    <label>Code:<sup class="p-error">*</sup></label>
+                    <input pInputText id="code"  type="text" placeholder=" Enter Code" formControlName="code"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                    <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                        Please Enter Code.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                        Code Should Contains Only Characters And Integers.</div>
+                    </span>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name"  type="text" placeholder=" Enter Name" formControlName="name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
@@ -237,9 +229,10 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
                       Name should contains only characters.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Relationship Type:<sup class="p-error">*</sup></label>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Relationship Type:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Relationship Type" optionLabel="name" [options]="relationTypes"
                     optionValue="lookupId" formControlName="relationTypeId" 
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
@@ -249,9 +242,10 @@
                       *ngIf="FormControls['relationTypeId'].errors?.['required']">
                       Please Select Relation Type.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Relationship Name:<sup class="p-error">*</sup></label>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Relationship Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="relationName"  type="text" placeholder=" Enter Relationship Name" formControlName="relationName"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }">
                   <span *ngIf="FormControls['relationName'].touched && FormControls['relationName'].invalid">
@@ -261,9 +255,10 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['relationName'].errors?.['pattern']">
                       Relationship Name Should Contains Only Characters.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Gender:<sup class="p-error">*</sup></label>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Gender:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Gender" [options]="genders" formControlName="gender"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['gender'].touched && FormControls['gender'].errors }">
                   </p-dropdown>
@@ -271,19 +266,20 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['gender'].errors?.['required']">
                       Please Select Gender.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Address:<sup class="p-error">*</sup></label>
-                  <textarea pInputTextarea formControlName="address" placeholder="Address"
-                    style="height: 42px; resize: vertical;"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
-                  <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
-                      Please Enter Address.</div>
-                  </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>PinCode:<sup class="p-error">*</sup></label>
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Address:<sup class="p-error">*</sup></label>
+                    <textarea pInputTextarea formControlName="address" placeholder="Address"
+                      style="height: 42px; resize: vertical;"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                    <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
+                        Please Enter Address.</div>
+                    </span>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>PinCode:<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="pinCode" formControlName="pinCode" [maxlength]="6"
                   placeholder=" Enter PinCode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
@@ -292,19 +288,21 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
                       Please Enter Pincode.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Phone Number:</label>
-                  <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"  placeholder=" Enter Phone Number"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
-                  </p-inputMask>
-                  <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
-                      Phone Number Is In Correct.</div>
-                  </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Tax(%):<sup class="p-error">*</sup></label>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Phone Number:</label>
+                    <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"  placeholder=" Enter Phone Number"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
+                    </p-inputMask>
+                    <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
+                        Phone Number Is In Correct.</div>
+                    </span>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Tax(%):<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="tax" formControlName="tax" [maxlength]="3" placeholder=" Enter Tax(%)"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['tax'].touched && FormControls['tax'].errors }">
                   </p-inputNumber>
@@ -312,48 +310,49 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['tax'].errors?.['required']">
                       Please Enter Tax.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Email:</label>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>Email:</label>
                   <input pInputText id="email"  type="text" placeholder=" Enter Email" formControlName="email"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['email'].touched && FormControls['email'].errors }">
                   <span *ngIf="FormControls['email'].touched && FormControls['email'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['email'].errors?.['required']">
                       Please Enter Email.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>PAN No:</label>
-                  <input pInputText id="panNo"  type="text" placeholder=" Enter PAN No" formControlName="panNo"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
-                  <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
-                      Pan Number Contains Only Characters And Integers.</div>
-                    </span>
-                      <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['required']">
-                          Please Enter PanNo.</div>
+                   
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>PAN No:</label>
+                    <input pInputText id="panNo"  type="text" placeholder=" Enter PAN No" formControlName="panNo"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
+                    <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
+                        Pan Number Contains Only Characters And Integers.</div>
                       </span>
-                 
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Aadhaar No:</label>
-                  <input pInputText id="aadhaarNo"  placeholder=" Enter Aadhaar No" formControlName="aadhaarNo"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
-                  <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
-                      Pan Number Contains Only Characters And Integers.</div>
-                    </span>
-                      <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
-                          Please Enter AadhaarNo.</div>
+                        <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['required']">
+                            Please Enter PanNo.</div>
+                        </span>
+                       </div>
+
+                  <div class="field col-12 md:col-4">
+                    <label>Aadhaar No:</label>
+                    <input pInputText id="aadhaarNo"  placeholder=" Enter Aadhaar No" formControlName="aadhaarNo"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
+                    <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
+                        Pan Number Contains Only Characters And Integers.</div>
                       </span>
-                </div>
-                <div class="col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>TDS:</label><br>
-                  <p-inputSwitch formControlName="tds"></p-inputSwitch>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
+                        <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
+                            Please Enter AadhaarNo.</div>
+                        </span>
+
+                  </div>
+
+                  
+                <div class="field col-12 md:col-4">
                   <label>Guarantor1:</label>
                   <input pInputText id="guarantor1"  type="text" placeholder=" Enter Guarantor1" formControlName="guarantor1"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor1'].touched && FormControls['guarantor1'].errors }">
@@ -361,72 +360,99 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor1'].errors?.['pattern']">
                       Guarantor1 Contains Only Characters And Integers.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Guarantor2:</label>
+
+                  </div>
+
+                  <div class="field col-12 md:col-4">
+                    <label>Guarantor2:</label>
                   <input pInputText id="guarantor2"  type="text" placeholder=" Enter Guarantor2" formControlName="guarantor2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor2'].touched && FormControls['guarantor2'].errors }">
                   <span *ngIf="FormControls['guarantor2'].touched && FormControls['guarantor2'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor2'].errors?.['pattern']">
                       Guarantor2 Contains Only Characters And Integers.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Guarantor3:</label>
+
+                  </div>
+
+                  <div class="field col-12 md:col-4">
+                    <label>Guarantor3:</label>
                   <input pInputText id="guarantor3"  type="text" placeholder=" Enter Guarantor3" formControlName="guarantor3"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor3'].touched && FormControls['guarantor3'].errors }">
                   <span *ngIf="FormControls['guarantor3'].touched && FormControls['guarantor3'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor3'].errors?.['pattern']">
                       Guarantor3 Contains Only Characters And Integers.</div>
                   </span>
-                </div>
-                
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Sub GLCode:</label>
-                  <input pInputText id="subGlcode"  type="text" placeholder=" Enter Sub GLCode" formControlName="subGlcode"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
-                  <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
-                      Sub Glcode Contains Only Characters And Integers.</div>
-                  </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Other Code:</label>
+
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label>GL Code:</label>
+                    <input pInputText id="glcode"  type="text" placeholder=" Enter Sub GLCode" formControlName="glcode"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
+                    <span *ngIf="FormControls['glcode'].touched && FormControls['glcode'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['pattern']">
+                        Sub Glcode Contains Only Characters And Integers.</div>
+                    </span>
+
+                  </div>
+
+                  <div class="field col-12 md:col-4">
+                    <label>SubGL Code:</label>
+                    <input pInputText id="subGlcode"  type="text" placeholder=" Enter Sub GLCode" formControlName="subGlcode"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
+                    <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
+                        Sub Glcode Contains Only Characters And Integers.</div>
+                    </span>
+
+                  </div>
+
+
+                  <div class="field col-12 md:col-4">
+                    <label>Other Code:</label>
                   <input pInputText id="otherCode"  type="text" placeholder=" Enter Other Code" formControlName="otherCode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['otherCode'].touched && FormControls['otherCode'].errors }">
                   <span *ngIf="FormControls['otherCode'].touched && FormControls['otherCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['otherCode'].errors?.['pattern']">
                       Other Code Contains only Characters And Integers.</div>
                   </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Bank:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
-                  (onChange)="getBranchByBankId($event.value)">
-                  </p-dropdown>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Branch:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
-                    optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
-                  </p-dropdown>
-                  <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                    <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
-                        Please Select Bank First.</div>
-                    </div>
-                    <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
-                        Please Select Branch.</div>
-                    </div>
-                  </span>
-                </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>IFSC:</label>
+
+                  </div>
+
+
+                  <div class="field col-12 md:col-4">
+                    <label>Bank:<sup class="p-error">*</sup></label>
+                    <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
+                    (onChange)="getBranchByBankId($event.value)">
+                    </p-dropdown>
+
+                  </div>
+
+
+                  <div class="field col-12 md:col-4">
+                    <label>Branch:<sup class="p-error">*</sup></label>
+                    <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
+                      optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
+                    </p-dropdown>
+                    <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
+                      <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
+                          Please Select Bank First.</div>
+                      </div>
+                      <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
+                          Please Select Branch.</div>
+                      </div>
+                    </span>
+
+                  </div>
+
+
+                  <div class="field col-12 md:col-4">
+                     <label>IFSC:</label>
                   <input pInputText id="ifsc"  placeholder=" IFSC Code" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
                   readonly>
                 </div>
-                <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
+                <div class="field col-12 md:col-4">
                   <label>Account Number:<sup class="p-error">*</sup></label>
                   <input pInputText id="accountNo"  placeholder=" Enter Number" formControlName="accountNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }">
@@ -436,85 +462,103 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['pattern']">
                       Account Number Contains Only Integers.</div>
                   </span>
-                </div>
-                <div class="col-12 md:col-4 lg:col-3 xl:col-2">
-                  <label>Is Active:</label><br>
-                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-                </div>
-                <div class="col-12 md:col-4 lg:col-3 xl:col-2 md:mt-5">
-                  <button pButton pRipple type="button" label="Add HGL Details" class="p-button-raised p-button-success"
-                    (click)="addSubHgl()"></button>
-                </div>
-              </div>
-            </div>
-            <!-- HGL Details -->
-            <div class="col-12" formArrayName="subHgls" *ngIf="showSubHgl">
-              <p-table #dt2 [value]="faSubHgl().controls" dataKey="id" [rows]="10" [loading]="loading"
-                [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                [paginator]="false"  [autoLayout]="true"
-                responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-               
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon>
-                    </th>
+                  </div>   
 
-                    <th pSortableColumn="vehicleTypeId">Vehicle Type<p-sortIcon field="vehicleTypeId"></p-sortIcon>
-                    </th>
+                  <div class="field col-12 md:col-4">
+                    <label>TDS:</label><br>
+                  <p-inputSwitch formControlName="tds"></p-inputSwitch>
+                </div>
+
+                  <div class="field col-12 md:col-4">
+                    <label>Is Active:</label><br>
+                    <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                  </div>
+            
+                </div>
+              </p-fieldset>
+              <!-- //formArray -->
+              <p-fieldset legend="Sub Hgl" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <div class="grid p-fluid">
+          
+                  <div class="col-12  ">
+                    <button pButton pRipple type="button" label="Add HGL Details" class="p-button-raised p-button-success md:col-4 lg:col-3 xl:col-2 md:mt-5 align-self-end " 
+                      (click)="addSubHgl()"></button>
+                  </div>
+                  
+                  <div class="col-12" formArrayName="subHgls" *ngIf="showSubHgl">
+                    <p-table #dt2 [value]="faSubHgl().controls" dataKey="id" [rows]="10" [loading]="loading"
+                      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+                      [paginator]="false"  [autoLayout]="true"
+                      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                     
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon>
+                          </th>
+                          <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon>
+                          </th>
+      
+                          <th pSortableColumn="vehicleTypeId">Vehicle Type<p-sortIcon field="vehicleTypeId"></p-sortIcon>
+                          </th>
+                          
+                          <th pSortableColumn="noOfPersons">No Of Persons<p-sortIcon field="noOfPersons">
+                            </p-sortIcon>
+                          </th>
+      
+                          <th pSortableColumn="Action">Action<p-sortIcon field="Action">
+                          </p-sortIcon>
+                        </th>
                     
-                    <th pSortableColumn="noOfPersons">NO Of Persons<p-sortIcon field="noOfPersons">
-                      </p-sortIcon>
-                    </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-hgl let-subHglIndex="rowIndex">
+                        <tr [formGroupName]="subHglIndex">
+                          <td>
+                            <input pInputText class="form-control" type="text" placeholder=" Enter Code" formControlName="code">
+                          </td>
+                          <td>
+                            <input pInputText class="form-control"  type="text" placeholder=" Enter Name"formControlName="name">
+                          </td>
+                          <td>
+                            <p-dropdown placeholder="Select Vehicle" [options]="vehicleTypes"
+                              formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId" appendTo="body">
+                            </p-dropdown>
+                          </td>
+                          <td>
+                            <input pInputText class="form-control" type="number" placeholder=" Enter No Of Persons" formControlName="noOfPersons">
+                          </td>
+      
+                          <td>
+                            <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
+                              *ngIf="!this.faSubHgl().controls[subHglIndex].get('hglId')?.value"
+                              (click)="faSubHgl().removeAt(subHglIndex)"></i>
+                            <i class="pi pi-fw pi-verified text-3xl"
+                              *ngIf="this.faSubHgl().controls[subHglIndex].get('hglId')?.value"></i>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="7">No HGL details found.</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="loadingbody">
+                        <tr>
+                          <td colspan="7">Loading HGL details data. Please wait.</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
 
-                    <th pSortableColumn="Action">Action<p-sortIcon field="Action">
-                    </p-sortIcon>
-                  </th>
-              
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-hgl let-subHglIndex="rowIndex">
-                  <tr [formGroupName]="subHglIndex">
-                    <td>
-                      <input pInputText class="form-control" type="text" placeholder=" Enter Code" formControlName="code">
-                    </td>
-                    <td>
-                      <input pInputText class="form-control"  type="text" placeholder=" Enter Name"formControlName="name">
-                    </td>
-                    <td>
-                      <p-dropdown placeholder="Select Vehicle" [options]="vehicleTypes"
-                        formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId" appendTo="body">
-                      </p-dropdown>
-                    </td>
-                    <td>
-                      <input pInputText class="form-control" type="number" placeholder=" Enter No Of Persons" formControlName="noOfPersons">
-                    </td>
 
-                    <td>
-                      <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                        *ngIf="!this.faSubHgl().controls[subHglIndex].get('hglId')?.value"
-                        (click)="faSubHgl().removeAt(subHglIndex)"></i>
-                      <i class="pi pi-fw pi-verified text-3xl"
-                        *ngIf="this.faSubHgl().controls[subHglIndex].get('hglId')?.value"></i>
-                    </td>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                  <tr>
-                    <td colspan="7">No HGL details found.</td>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="loadingbody">
-                  <tr>
-                    <td colspan="7">Loading HGL details data. Please wait.</td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </div>
+                </div>
+
+              </p-fieldset>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
+
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
           <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
@@ -522,6 +566,7 @@
         </div>
       </ng-template>
     </p-dialog>
+
 
   </div>
 </div>
