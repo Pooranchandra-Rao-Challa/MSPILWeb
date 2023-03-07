@@ -97,33 +97,6 @@ export class FarmerComponent implements OnInit {
             
         });
 
-
-
-
-
-        // code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-        // name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-        // relationTypeId: ['', (Validators.required)],
-        // relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-        // gender: ['', (Validators.required)],
-        // address: ['', (Validators.required)],
-        // pinCode: ['', (Validators.required)],
-        // phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
-        // tax: ['', (Validators.required)],
-        // email: ['', (Validators.pattern(RG_EMAIL))],
-        // panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-        // tds: [false],
-        // guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-        // guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-        // guarantor3: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-        // glCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-        // subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-        // otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-        // bankId: ['', (Validators.required)],
-        // branchId: ['', (Validators.required)],
-        // accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
-        // isActive: [true],
-        // tptdetails: this.formbuilder.array([]),
     }
     initcasteDetails(){
         this.lookupService.Castes().subscribe((resp)=>{

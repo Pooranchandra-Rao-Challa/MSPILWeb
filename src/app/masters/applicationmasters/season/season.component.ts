@@ -1,41 +1,16 @@
-import {
-  SeasonDto,
-  LookupDetailDto,
-  SeasonBillingRateViewDto,
-} from './../../../_models/applicationmaster';
+import {SeasonDto,LookupDetailDto,SeasonBillingRateViewDto} from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewChild,
+import { Component,ElementRef,Input, OnInit, TemplateRef, ViewChild,
 } from '@angular/core';
 import { Table } from 'primeng/table';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-  FormArray,
-} from '@angular/forms';
+import { FormGroup,FormBuilder,FormControl,Validators,FormArray} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
-import {
-  BillParameterDto,
-  BillParameterViewDto,
-} from 'src/app/_models/billingmaster';
+import {BillParameterDto,BillParameterViewDto,} from 'src/app/_models/billingmaster';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import {
-  MAX_LENGTH_20,
-  MIN_LENGTH_2,
-  RG_ALPHA_NUMERIC,
-  RG_ALPHA_ONLY,
-  RG_NUMERIC_ONLY,
-} from 'src/app/_shared/regex';
+import {MAX_LENGTH_20,MIN_LENGTH_2,RG_ALPHA_NUMERIC,RG_ALPHA_ONLY,RG_NUMERIC_ONLY,} from 'src/app/_shared/regex';
 
 interface Temp {
   seasonBillingRateId: number;
@@ -56,22 +31,7 @@ export class SeasonComponent implements OnInit {
   seasons: SeasonViewDto[] = [];
   season: SeasonDto = new SeasonDto();
   loading: boolean = false;
-  globalFilterFields: string[] = [
-    'code',
-    'name',
-    'plantFrom',
-    'plantTo',
-    'crushFrom',
-    'crushTo',
-    'burnCaneRate',
-    'caneRate',
-    'capacity',
-    'createdAt',
-    'isActive',
-    'createdBy',
-    'updatedAt',
-    'updatedBy',
-  ];
+  globalFilterFields: string[] = ['code', 'name','plantFrom','plantTo','crushFrom','crushTo','burnCaneRate','caneRate','capacity','createdAt','isActive','createdBy','updatedAt','updatedBy',]
   @ViewChild('filter') filter!: ElementRef;
   fbseasons!: FormGroup;
   submitLabel!: string;
@@ -131,32 +91,15 @@ export class SeasonComponent implements OnInit {
   seasonForm() {
     this.fbseasons = this.formbuilder.group({
       seasonId: [null],
-      code: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_NUMERIC),
-        Validators.minLength(MIN_LENGTH_2),
-        Validators.maxLength(MAX_LENGTH_20),
-      ]),
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_ONLY),
-      ]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2),Validators.maxLength(MAX_LENGTH_20),]),
+      name: new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY),]),
       plantFrom: ['', Validators.required],
       plantTo: ['', Validators.required],
       crushFrom: ['', Validators.required],
       crushTo: ['', Validators.required],
-      burnCaneRate: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
-      caneRate: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
-      capacity: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
+      burnCaneRate: new FormControl('', [ Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      caneRate: new FormControl('', [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
+      capacity: new FormControl('', [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
       currentSeason: [''],
       isActive: [true],
       farmerRates: this.formbuilder.array([]),
@@ -171,14 +114,8 @@ export class SeasonComponent implements OnInit {
       seasonId: [],
       billParameterId: ['', Validators.required],
       billCatetoryId: [billCategory.lookupDetailId, Validators.required],
-      rate: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
-      priority: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
+      rate: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      priority: new FormControl('', [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
       isActive: [true],
     });
   }
@@ -189,14 +126,8 @@ export class SeasonComponent implements OnInit {
       seasonId: [billParam.seasonId],
       billParameterId: [billParam.billParameterId, Validators.required],
       billCatetoryId: [billParam.billCategoryId, Validators.required],
-      rate: new FormControl(billParam.rate, [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
-      priority: new FormControl(billParam.priority, [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
+      rate: new FormControl(billParam.rate, [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
+      priority: new FormControl(billParam.priority, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
       isActive: [billParam.isActive],
     });
   }

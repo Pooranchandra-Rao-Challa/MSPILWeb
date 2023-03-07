@@ -188,12 +188,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="27">No HGLs Found.</td>
+          <td colspan="14" class="md:text-center">No HGLs Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="27">Loading HGLs Data. Please Wait.</td>
+          <td colspan="14" class="md:text-center">Loading HGLs Data Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -204,9 +204,9 @@
         <div class="container">
           <div class="grid p-fluid">
             <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
+              
               <p-fieldset legend="HGL" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-
                   <div class="field col-12 md:col-4">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code"  type="text" placeholder=" Enter Code" formControlName="code"
@@ -216,9 +216,9 @@
                         Please Enter Code.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
                         Code Should Contains Only Characters And Integers.</div>
-                    </span>
-                   
+                    </span>                  
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name"  type="text" placeholder=" Enter Name" formControlName="name"
@@ -229,8 +229,8 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
                       Name should contains only characters.</div>
                   </span>
-                   
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>Relationship Type:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Relationship Type" optionLabel="name" [options]="relationTypes"
@@ -241,9 +241,9 @@
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['relationTypeId'].errors?.['required']">
                       Please Select Relation Type.</div>
-                  </span>
-                   
+                  </span>                   
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>Relationship Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="relationName"  type="text" placeholder=" Enter Relationship Name" formControlName="relationName"
@@ -254,9 +254,9 @@
                       Please Enter Relationship Name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['relationName'].errors?.['pattern']">
                       Relationship Name Should Contains Only Characters.</div>
-                  </span>
-                   
+                  </span>                 
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>Gender:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Gender" [options]="genders" formControlName="gender"
@@ -267,6 +267,7 @@
                       Please Select Gender.</div>
                   </span>
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>Address:<sup class="p-error">*</sup></label>
                     <textarea pInputTextarea formControlName="address" placeholder="Address"
@@ -275,9 +276,9 @@
                     <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                         Please Enter Address.</div>
-                    </span>
-                   
+                    </span>                  
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>PinCode:<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="pinCode" formControlName="pinCode" [maxlength]="6"
@@ -287,9 +288,9 @@
                   <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
                       Please Enter Pincode.</div>
-                  </span>
-                   
+                  </span>                 
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>Phone Number:</label>
                     <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"  placeholder=" Enter Phone Number"
@@ -299,8 +300,8 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
                         Phone Number Is In Correct.</div>
                     </span>
-                   
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>Tax(%):<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="tax" formControlName="tax" [maxlength]="3" placeholder=" Enter Tax(%)"
@@ -348,7 +349,6 @@
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
                             Please Enter AadhaarNo.</div>
                         </span>
-
                   </div>
 
                   
@@ -360,7 +360,6 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor1'].errors?.['pattern']">
                       Guarantor1 Contains Only Characters And Integers.</div>
                   </span>
-
                   </div>
 
                   <div class="field col-12 md:col-4">
@@ -371,7 +370,6 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor2'].errors?.['pattern']">
                       Guarantor2 Contains Only Characters And Integers.</div>
                   </span>
-
                   </div>
 
                   <div class="field col-12 md:col-4">
@@ -382,8 +380,8 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['guarantor3'].errors?.['pattern']">
                       Guarantor3 Contains Only Characters And Integers.</div>
                   </span>
-
                   </div>
+
                   <div class="field col-12 md:col-4">
                     <label>GL Code:</label>
                     <input pInputText id="glcode"  type="text" placeholder=" Enter Sub GLCode" formControlName="glcode"
@@ -392,9 +390,7 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['pattern']">
                         Sub Glcode Contains Only Characters And Integers.</div>
                     </span>
-
                   </div>
-
                   <div class="field col-12 md:col-4">
                     <label>SubGL Code:</label>
                     <input pInputText id="subGlcode"  type="text" placeholder=" Enter Sub GLCode" formControlName="subGlcode"
@@ -403,9 +399,7 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
                         Sub Glcode Contains Only Characters And Integers.</div>
                     </span>
-
                   </div>
-
 
                   <div class="field col-12 md:col-4">
                     <label>Other Code:</label>
@@ -415,18 +409,14 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['otherCode'].errors?.['pattern']">
                       Other Code Contains only Characters And Integers.</div>
                   </span>
-
                   </div>
-
 
                   <div class="field col-12 md:col-4">
                     <label>Bank:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
                     (onChange)="getBranchByBankId($event.value)">
                     </p-dropdown>
-
                   </div>
-
 
                   <div class="field col-12 md:col-4">
                     <label>Branch:<sup class="p-error">*</sup></label>
@@ -549,10 +539,7 @@
                       </ng-template>
                     </p-table>
                   </div>
-
-
                 </div>
-
               </p-fieldset>
             </form>
           </div>
