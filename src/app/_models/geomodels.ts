@@ -17,8 +17,8 @@ export class DistrictDto {
   name?: string;
   isActive?: boolean;
   stateId?: number;
+  stateName?: string;
 }
-
 
 export interface DivisonsViewDto{
   divisionId: number,
