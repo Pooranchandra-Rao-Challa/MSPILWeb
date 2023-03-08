@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [RouterModule.forChild([
-    { path: 'allottedplot', component: AllottedplotComponent },
+    { path: 'allottedplot/:paramUrl', component: AllottedplotComponent },
   ])],
   exports: [RouterModule]
 })

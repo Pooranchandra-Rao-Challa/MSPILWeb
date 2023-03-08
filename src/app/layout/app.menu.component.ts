@@ -144,7 +144,8 @@ export class AppMenuComponent implements OnInit {
             icon: 'pi pi-fw pi-eye',
             permission: true,
             items: [
-              { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: true }
+              { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:notapproval'], permission: true },
+              { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:canapproval'], permission: true }
             ]
           }
         ]
