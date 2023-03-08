@@ -70,8 +70,9 @@ export class VillageComponent implements OnInit {
     if (village.villageId) {
       this.initCircles(village.divisionId);
       this.initSections(village.circleId);
-      this.initDistricts(village.stateId);
       this.initMandals(village.districtId);
+      this.initDistricts(village.stateId);
+     
       this.village.villageId = village.villageId;
       this.village.code = village.villageCode;
       this.village.name = village.villageName;
@@ -113,6 +114,7 @@ export class VillageComponent implements OnInit {
     this.mandals = [];
     this.circles = [];
     this.sections = [];
+ 
   }
   get FormControls() {
     return this.fbvillages.controls;
@@ -190,8 +192,8 @@ export class VillageComponent implements OnInit {
     });
   }
 
-  initDistricts(states: any) {
-    this.commonService.GetDistrictsForState(states).subscribe((resp) => {
+  initDistricts(stateId: any) {
+    this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {
       this.districts = resp as unknown as DistrictDto[];
     });
   }

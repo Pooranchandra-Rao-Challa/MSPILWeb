@@ -37,40 +37,38 @@
             Name <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="relationType">
-            Plant From <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
-            <p-sortIcon field="relationType"></p-sortIcon>
+          <th pSortableColumn="plantFrom">
+            Plant From <p-columnFilter type="text" field="plantFrom" display="menu"></p-columnFilter>
+            <p-sortIcon field="plantFrom"></p-sortIcon>
           </th>
-          <th pSortableColumn="relationName">
-            Plant To <p-columnFilter type="text" field="relationName" display="menu"></p-columnFilter>
-            <p-sortIcon field="relationName"></p-sortIcon>
+          <th pSortableColumn="plantTo">
+            Plant To <p-columnFilter type="text" field="plantTo" display="menu"></p-columnFilter>
+            <p-sortIcon field="plantTo"></p-sortIcon>
           </th>
-          <th pSortableColumn="gender">
-            Crush From <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
-            <p-sortIcon field="gender"></p-sortIcon>
+          <th pSortableColumn="crushFrom">
+            Crush From <p-columnFilter type="text" field="crushFrom" display="menu"></p-columnFilter>
+            <p-sortIcon field="gencrushFromder"></p-sortIcon>
           </th>
-          <th pSortableColumn="address">
-            Crush To <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
-            <p-sortIcon field="address"></p-sortIcon>
+          <th pSortableColumn="crushTo">
+            Crush To <p-columnFilter type="text" field="crushTo" display="menu"></p-columnFilter>
+            <p-sortIcon field="crushTo"></p-sortIcon>
           </th>
-          <th pSortableColumn="pinCode">
-            BurnCane Rate <p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="pinCode"></p-sortIcon>
+          <th pSortableColumn="burnCaneRate">
+            Burn Cane Rate <p-columnFilter type="text" field="burnCaneRate" display="menu"></p-columnFilter>
+            <p-sortIcon field="burnCaneRate"></p-sortIcon>
           </th>
-          <th pSortableColumn="phoneNo">
-            Cane Rate<p-columnFilter type="text" field="phoneNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="phoneNo"></p-sortIcon>
+          <th pSortableColumn="caneRate">
+            Cane Rate<p-columnFilter type="text" field="caneRate" display="menu"></p-columnFilter>
+            <p-sortIcon field="caneRate"></p-sortIcon>
           </th>
-          <th pSortableColumn="email">
-            Capacity <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
-            <p-sortIcon field="email"></p-sortIcon>
+          <th pSortableColumn="capacity">
+            Capacity <p-columnFilter type="text" field="capacity" display="menu"></p-columnFilter>
+            <p-sortIcon field="capacity"></p-sortIcon>
           </th>
-
-          <th pSortableColumn="email">
-            CurrentSeason <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
-            <p-sortIcon field="email"></p-sortIcon>
+          <th pSortableColumn="currentSeason">
+            Current Season <p-columnFilter type="text" field="currentSeason" display="menu"></p-columnFilter>
+            <p-sortIcon field="currentSeason"></p-sortIcon>
           </th>
-
           <th pSortableColumn="isActive" style="text-align:center">
             Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
@@ -93,7 +91,6 @@
           </th>
         </tr>
       </ng-template>
-
       <ng-template pTemplate="body" let-season>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" (click)="editseason(season)"
@@ -119,13 +116,11 @@
           <td>{{season.updatedBy}}</td>
         </tr>
       </ng-template>
-
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="27">No Seasons Data Found.</td>
         </tr>
       </ng-template>
-
       <ng-template pTemplate="loadingbody">
         <tr>
           <td colspan="27">Loading Seasons Data. Please Wait.</td>
@@ -175,7 +170,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['plantFrom'].touched && FormControls['plantFrom'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantFrom'].errors?.['required']">
-                        Please Select Plant From Date.</div>
+                       Select Plant From Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -185,7 +180,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['plantTo'].touched && FormControls['plantTo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantTo'].errors?.['required']">
-                        Please Select Plant To Date.</div>
+                       Select Plant To Date.</div>
                     </span>
                   </div>
 
@@ -196,7 +191,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['crushFrom'].touched && FormControls['crushFrom'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['crushFrom'].errors?.['required']">
-                        Please Select Crush From Date.</div>
+                       Select Crush From Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -206,7 +201,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['crushTo'].touched && FormControls['crushTo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['crushTo'].errors?.['required']">
-                        Please Select Crush To Date.</div>
+                       Select Crush To Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -317,10 +312,6 @@
                 </div>
 
               </p-fieldset>
-
-
-
-
             </form>
           </div>
         </div>

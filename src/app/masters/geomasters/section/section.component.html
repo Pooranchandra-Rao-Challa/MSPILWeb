@@ -82,8 +82,7 @@
 
                   <div class="field col-12 md:col-6">
                     <label htmlFor="Incharge PhoneNo">Incharge PhoneNo:</label>
-                    <p-inputMask id="inchargePhoneNo" mask="(999)-999-9999" formControlName="inchargePhoneNo"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].errors }">
+                    <p-inputMask id="inchargePhoneNo" mask="(999)-999-9999"  placeholder="Enter Incharge Phone No" formControlName="inchargePhoneNo">
                     </p-inputMask>
                     <span *ngIf="FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].invalid">
                       <div class="ng-invalid ng-touched p-error"
@@ -95,7 +94,8 @@
                   <div class="field col-12 md:col-6">
                     <label htmlFor="address">Address:<sup class="p-error">*</sup></label>
                     <textarea rows="5" cols="30" class="form-control" formControlName="address" placeholder="Adddress"
-                      pInputTextarea></textarea>
+                      pInputTextarea
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
                     <div *ngIf="FormControls['address'].invalid &&  FormControls['address'].touched"
                       class="error-message p-error">
                       Address Is Required
@@ -171,30 +171,21 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="sectionId">Section Id<p-columnFilter type="text" field="sectionId" display="menu">
+         
+          <th pSortableColumn="sectionId">Code<p-columnFilter type="text" field="sectionId" display="menu">
             </p-columnFilter>
             <p-sortIcon field="sectionId"></p-sortIcon>
           </th>
-          <th pSortableColumn="sectionId">Section Code<p-columnFilter type="text" field="sectionId" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="sectionId"></p-sortIcon>
-          </th>
-          <th pSortableColumn="sectionName">Section Name <p-columnFilter type="text" field="sectionName" display="menu">
+          <th pSortableColumn="sectionName">Name <p-columnFilter type="text" field="sectionName" display="menu">
             </p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
-          <th pSortableColumn="circleId">Circle Id <p-columnFilter type="text" field="circleId" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="circleId"></p-sortIcon>
-          </th>
+         
           <th pSortableColumn="circleName">Circle Name <p-columnFilter type="text" field="circleName" display="menu">
             </p-columnFilter>
             <p-sortIcon field="circleName"></p-sortIcon>
           </th>
-          <th pSortableColumn="divisionId">Division Id <p-columnFilter type="text" field="divisionId" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="divisionId"></p-sortIcon>
-          </th>
+         
           <th pSortableColumn="divisionName">Division Name <p-columnFilter type="text" field="divisionName"
               display="menu"></p-columnFilter>
             <p-sortIcon field="divisionName"></p-sortIcon>
@@ -241,12 +232,10 @@
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editProduct(section)"></button></td>
-          <td>{{section.sectionId}}</td>
+      
           <td>{{section.sectionCode}}</td>
           <td>{{section.sectionName}}</td>
-          <td>{{section.circleId}}</td>
           <td>{{section.circleName}}</td>
-          <td>{{section.divisionId}}</td>
           <td>{{section.divisionName}}</td>
           <td>{{section.inchargeName}}</td>
           <td>{{section.inchargePhoneNo}}</td>

@@ -50,7 +50,7 @@ export class StateComponent implements OnInit {
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       isActive: true,
-      stateId: new FormControl(''),
+      stateId: new FormControl(null),
     });
   }
 

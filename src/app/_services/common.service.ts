@@ -30,7 +30,9 @@ export class CommonService extends ApiHttpService {
   GetDivision() {
     return this.get<DivisionDto>(GET_DIVISION_URI);
   }
-
+  GetDistricts(){
+    return this.get<DistrictDto>(GET_DISTRICTS_URI);
+  }
   GetStates() {
     return this.get<StateDto>(GET_STATES_URI);
   }

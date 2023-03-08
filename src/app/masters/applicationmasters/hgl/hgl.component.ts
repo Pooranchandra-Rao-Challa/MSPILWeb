@@ -1,32 +1,15 @@
 import { BankDto, BranchDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import {
-  RG_PHONE_NO,
-  RG_NUMERIC_ONLY,
-  RG_EMAIL,
-} from './../../../_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {
-  BankViewDto,
-  VehicleTypeViewDto,
-} from 'src/app/_models/applicationmaster';
+import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-  FormArray,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, FormArray, Validators, } from '@angular/forms';
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import {
-  HglViewDto,
-  SubHglViewDto,
-  HglDto,
-} from '../../../_models/applicationmaster';
+import { HglViewDto, SubHglViewDto, HglDto, } from '../../../_models/applicationmaster';
 import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
 
 @Component({
@@ -97,33 +80,17 @@ export class HglComponent implements OnInit {
   hglform() {
     this.fbHgl = this.formbuilder.group({
       hglId: [0],
-      code: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_NUMERIC),
-      ]),
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_ONLY),
-      ]),
-      relationTypeId:new FormControl('', [
-        Validators.required]),
-      relationName: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_ONLY),
-      ]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC),]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),]),
+      relationTypeId: new FormControl('', [Validators.required]),
+      relationName: new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY),]),
       gender: ['', Validators.required],
       address: ['', Validators.required],
       pinCode: ['', Validators.required],
       phoneNo: ['', Validators.pattern(RG_PHONE_NO)],
       tax: ['', Validators.required],
-      email: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_EMAIL),
-      ]),
-      panNo: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_NUMERIC),
-      ]),
+      email: new FormControl('', [Validators.required,Validators.pattern(RG_EMAIL),]),
+      panNo: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC),]),
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -132,14 +99,8 @@ export class HglComponent implements OnInit {
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       branchId: ['', Validators.required],
-      accountNo: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
-      aadhaarNo: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
+      accountNo: new FormControl('', [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
+      aadhaarNo: new FormControl('', [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
       isActive: [false],
       subHgls: this.formbuilder.array([]),
     });
@@ -173,7 +134,7 @@ export class HglComponent implements OnInit {
   initRelationTypes() {
     this.LookupService.RelationTypes().subscribe((resp) => {
       this.relationTypes = resp;
-      console.log(this.relationTypes)
+      console.log(this.relationTypes);
     });
   }
 
@@ -225,6 +186,7 @@ export class HglComponent implements OnInit {
     else this.IFSC = '';
   }
   editHgl(hgl: HglViewDto) {
+    this.hglform();
     this.initsubHgls(hgl.hglId);
     setTimeout(() => {
       this.getIFSCByBranch(hgl.branchId || 0);
@@ -264,6 +226,7 @@ export class HglComponent implements OnInit {
   addHgl() {
     this.submitLabel = 'Add Hgl';
     this.addFlag = true;
+    this.hglform();
     this.showDialog = true;
   }
   onGlobalFilter(table: Table, event: Event) {
@@ -283,7 +246,7 @@ export class HglComponent implements OnInit {
       this.saveHgl().subscribe((resp) => {
         if (resp) {
           this.inithgls();
-          this.fbHgl.reset();
+          this.hglform();
           this.showDialog = false;
         }
       });
@@ -299,8 +262,8 @@ export class HglComponent implements OnInit {
   }
   ngOnDestroy() {
     this.hgls = [];
-    this.subHgls =[];
-    this.vehicleTypes=[];
-    this.branches=[]
+    this.subHgls = [];
+    this.vehicleTypes = [];
+    this.branches = [];
   }
 }

@@ -1,29 +1,14 @@
 import { LookupDetailDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import {
-  RG_NUMERIC_ONLY,
-  RG_VEHICLE,
-  MIN_LENGTH_2,
-  MAX_LENGTH_20,
-} from './../../../_shared/regex';
+import {RG_NUMERIC_ONLY,RG_VEHICLE,MIN_LENGTH_2, MAX_LENGTH_20,} from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-  FormArray,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl,Validators,FormArray,} from '@angular/forms';
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import {
-  LoanTypeViewDto,
-  LoanTypeDto,
-  LoanSubTypeViewDto,
-} from '../../../_models/billingmaster';
+import { LoanTypeViewDto, LoanTypeDto, LoanSubTypeViewDto, } from '../../../_models/billingmaster';
 import { BillMasterService } from '../../../_services/billmaster.service';
 
 @Component({
@@ -37,21 +22,7 @@ export class LoanMasterComponent implements OnInit {
   loanSubTypes: LoanSubTypeViewDto[] = [];
   loading: boolean = true;
   loadingLoanType: boolean = true;
-  globalFilterFields: string[] = [
-    'code',
-    'categoryId',
-    'categoryName',
-    'name',
-    'interestRate',
-    'priority',
-    'glCode',
-    'subGLcode',
-    'isActive',
-    'createdAt',
-    'createdBy',
-    'updatedAt',
-    'updatedBy',
-  ];
+  globalFilterFields: string[] = ['code', 'categoryId', 'categoryName', 'name', 'interestRate', 'priority', 'glCode', 'subGLcode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy',];
   @ViewChild('filter') filter!: ElementRef;
   fbloantype!: FormGroup;
   submitLabel!: string;
@@ -110,20 +81,11 @@ export class LoanMasterComponent implements OnInit {
   loanTypesForm() {
     this.fbloantype = this.formbuilder.group({
       loanTypeId: [0],
-      code: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_NUMERIC),
-        Validators.minLength(MIN_LENGTH_2),
-        Validators.maxLength(MAX_LENGTH_20),]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20),]),
       categoryId: ['', Validators.required],
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_ONLY),]),
-      interestRate: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),]),
-      priority: new FormControl('', [
-        Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),]),
+      interestRate: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       isActive: [false],
@@ -148,7 +110,7 @@ export class LoanMasterComponent implements OnInit {
     this.loadingLoanType = false;
   }
   generateRow(
-    loanSubTypes: LoanSubTypeViewDto = new LoanSubTypeViewDto()): 
+    loanSubTypes: LoanSubTypeViewDto = new LoanSubTypeViewDto()):
     FormGroup {
     if (!this.addFlag) loanSubTypes.loanTypeId = this.loanType.loanTypeId;
     return this.formbuilder.group({
@@ -157,26 +119,19 @@ export class LoanMasterComponent implements OnInit {
       code: [loanSubTypes.code, Validators.pattern(RG_ALPHA_NUMERIC)],
       name: [loanSubTypes.name, Validators.pattern(RG_ALPHA_NUMERIC)],
       requestReq: [loanSubTypes.requestReq, Validators.required],
-      priority: new FormControl(
-        loanSubTypes.priority,
-        Validators.pattern(RG_ALPHA_NUMERIC)
-      ),
-      interestRate: new FormControl(loanSubTypes.interestRate, [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
-      rate: new FormControl(loanSubTypes.rate, [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
+      priority: new FormControl(loanSubTypes.priority,Validators.pattern(RG_ALPHA_NUMERIC)),
+      interestRate: new FormControl(loanSubTypes.interestRate, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      rate: new FormControl(loanSubTypes.rate, [ Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
       uomid: [loanSubTypes.uomId, Validators.required],
       loanQtyType: [loanSubTypes.loanQtyType],
       glcode: [loanSubTypes.glCode, Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: [loanSubTypes.subGLcode, Validators.pattern(RG_ALPHA_NUMERIC)],
-      isActive: (loanSubTypes.isActive = true),});
+      isActive: (loanSubTypes.isActive = true),
+    });
   }
 
   editTpt(loanType: LoanTypeViewDto) {
+    this.loanTypesForm();
     this.initLoanSubtype(loanType.loanTypeId);
     this.loanType.loanTypeId = loanType.loanTypeId;
     this.loanType.code = loanType.code;
@@ -200,6 +155,7 @@ export class LoanMasterComponent implements OnInit {
   addLoanType() {
     this.submitLabel = 'Add Loan SubType';
     this.addFlag = true;
+    this.loanTypesForm();
     this.showDialog = true;
   }
   onGlobalFilter(table: Table, event: Event) {
@@ -220,7 +176,7 @@ export class LoanMasterComponent implements OnInit {
       this.saveLoantype().subscribe((resp) => {
         if (resp) {
           this.initLoanTypes();
-          this.fbloantype.reset();
+          this.loanTypesForm();
           this.showDialog = false;
         }
       });
