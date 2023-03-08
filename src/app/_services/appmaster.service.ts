@@ -5,7 +5,7 @@ import {
 import { Injectable } from "@angular/core";
 import { LookUpHeaderDto, LookupViewDto, plantTypeDto, plantTypeViewDto, SubHglViewDto } from '../_models/applicationmaster';
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_FARMER_URI, GET_FARMERS_URI,GET_BRANCH_URI, GET_LOOKUP_DETAILS_URI, GET_SUBHGL_URI, UPDATE_FARMER_URI, GET_BILLPARAMS_URI, GET_BILLPARAMSFORCATEGORY_URI, GET_GETSEASONBILLINGRATES_URI, } from './api.uri.service';
+import { CREATE_FARMER_URI, GET_FARMERS_URI, GET_BRANCH_URI, GET_LOOKUP_DETAILS_URI, GET_SUBHGL_URI, UPDATE_FARMER_URI, GET_BILLPARAMS_URI, GET_BILLPARAMSFORCATEGORY_URI, GET_GETSEASONBILLINGRATES_URI, CURRENT_SEASON_URI, } from './api.uri.service';
 import {
   CREATE_BANK_URI, CREATE_CreateTpt_URI, CREATE_HGL_URI, CREATE_LOOKUP_URI, CREATE_PLANTTYPE_URI, CREATE_PLANT_SUB_TYPE_URI, CREATE_SAMPLESLAB_URI, CREATE_SEASON_URI,
   CREATE_SHIFT_URI, CREATE_VARIETY_URI, CREATE_VEHICLE_TYPE_URI, GET_BANKS_URI, GET_BANK_URI, GET_HGL_URI, GET_LOOKUP_URI, GET_PLANTTYPE_URI, GET_PLANT_SUB_TYPE_URI,
@@ -18,32 +18,30 @@ import { BillParameterViewDto } from '../_models/billingmaster';
 
 @Injectable({ providedIn: 'root' })
 export class AppMasterService extends ApiHttpService {
- // lookup
- public GetlookUp() {
-  return this.get<LookupViewDto[]>(GET_LOOKUP_URI);
-}
-public Createlookup(lookup: LookUpHeaderDto) {
-  debugger
-  return this.post<LookUpHeaderDto>(CREATE_LOOKUP_URI, lookup);
-}
-public Updatelookup(lookup: LookUpHeaderDto) {
-  debugger;
-  return this.post<LookUpHeaderDto>(UPDATE_LOOKUP_URI, lookup);
-}
-// Lookup Details
-public GetlookupDetails(lookupId:number) {
-  return this.get<LookupDetailViewDto[]>(GET_LOOKUP_DETAILS_URI+lookupId);
-}
-// plant type
-public GetPlantType() {
-  return this.get<plantTypeViewDto[]>(GET_PLANTTYPE_URI);
-}
-public CreatePlantType(plant: plantTypeDto) {
-  return this.post<plantTypeDto>(CREATE_PLANTTYPE_URI, plant);
-}
-public UpdatePlantType(plant: plantTypeDto) {
-  return this.post<plantTypeDto>(UPDATE_PLANTTYPE_URI, plant);
-}
+  // lookup
+  public GetlookUp() {
+    return this.get<LookupViewDto[]>(GET_LOOKUP_URI);
+  }
+  public Createlookup(lookup: LookUpHeaderDto) {
+    return this.post<LookUpHeaderDto>(CREATE_LOOKUP_URI, lookup);
+  }
+  public Updatelookup(lookup: LookUpHeaderDto) {
+    return this.post<LookUpHeaderDto>(UPDATE_LOOKUP_URI, lookup);
+  }
+  // Lookup Details
+  public GetlookupDetails(lookupId: number) {
+    return this.get<LookupDetailViewDto[]>(GET_LOOKUP_DETAILS_URI + lookupId);
+  }
+  // plant type
+  public GetPlantType() {
+    return this.get<plantTypeViewDto[]>(GET_PLANTTYPE_URI);
+  }
+  public CreatePlantType(plant: plantTypeDto) {
+    return this.post<plantTypeDto>(CREATE_PLANTTYPE_URI, plant);
+  }
+  public UpdatePlantType(plant: plantTypeDto) {
+    return this.post<plantTypeDto>(UPDATE_PLANTTYPE_URI, plant);
+  }
 
   /* Variety */
 
@@ -75,7 +73,6 @@ public UpdatePlantType(plant: plantTypeDto) {
     return this.get<TptViewDto[]>(GET_TPTS_URI);
   }
   public CreateTpt(tpt: TptDto) {
-    debugger
     return this.post<TptDto>(CREATE_CreateTpt_URI, tpt);
   }
   public UpdateTpt(tpt: TptDto) {
@@ -115,17 +112,20 @@ public UpdatePlantType(plant: plantTypeDto) {
   public UpdateBank(bank: BankDto) {
     return this.post<BankDto>(UPDATE_BANK_URI, bank);
   }
-       // Branch Details
-public GetBranchDetails(bankId:number) {
-  return this.get<BranchViewDto[]>(GET_BRANCH_URI+bankId);
-}
+  // Branch Details
+  public GetBranchDetails(bankId: number) {
+    return this.get<BranchViewDto[]>(GET_BRANCH_URI + bankId);
+  }
   // season
   public Getseason() {
     return this.get<SeasonViewDto[]>(GET_SEASON_URI);
   }
 
+  public CurrentSeason(currentSeason: string) {
+    return this.getWithParam<SeasonDto[]>(CURRENT_SEASON_URI, currentSeason);
+  }
+
   public CreateSeason(season: SeasonDto) {
-    debugger;
     return this.post<SeasonDto>(CREATE_SEASON_URI, season);
   }
 
@@ -134,13 +134,12 @@ public GetBranchDetails(bankId:number) {
     return this.post<SeasonDto>(UPDATE_SEASON_URI, season);
   }
 
- // Hgl
+  // Hgl
   public GetHgls() {
     return this.get<HglViewDto[]>(GET_HGL_URI);
   }
 
   public CreateHgl(hgl: HglDto) {
-    debugger;
     return this.post<HglDto>(CREATE_HGL_URI, hgl);
   }
 
@@ -150,9 +149,8 @@ public GetBranchDetails(bankId:number) {
   }
 
   // SubHgl
-  public GetSubHgl(hglId : number) {
-    debugger;
-    return this.get<SubHglViewDto[]>(GET_SUBHGL_URI + hglId );
+  public GetSubHgl(hglId: number) {
+    return this.get<SubHglViewDto[]>(GET_SUBHGL_URI + hglId);
   }
 
   // shift
@@ -176,7 +174,6 @@ public GetBranchDetails(bankId:number) {
   }
 
   public CreateSampleSlab(sampleslab: SampleSlabDto) {
-    debugger
     return this.post<SampleSlabDto>(CREATE_SAMPLESLAB_URI, sampleslab);
   }
 
@@ -190,14 +187,14 @@ public GetBranchDetails(bankId:number) {
   public GetFarmers() {
     return this.get<FarmersViewDto[]>(GET_FARMERS_URI);
   }
-  public CreateFarmer(farmer:FarmerDto){
+  public CreateFarmer(farmer: FarmerDto) {
     return this.post<FarmerDto>(CREATE_FARMER_URI, farmer);
   }
-  public UpdateFarmer(farmer:FarmerDto){
+  public UpdateFarmer(farmer: FarmerDto) {
     return this.post<FarmerDto>(UPDATE_FARMER_URI, farmer);
   }
 
-  public BillParamsForCategory(categoryId:string) {
+  public BillParamsForCategory(categoryId: string) {
     return this.get<BillParameterViewDto[]>(GET_BILLPARAMSFORCATEGORY_URI + categoryId);
   }
 
