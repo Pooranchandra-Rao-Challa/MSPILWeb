@@ -95,9 +95,7 @@ export class SectionComponent implements OnInit {
       address: new FormControl('', Validators.required),
       circleId: new FormControl('', Validators.required),
       divisionId: new FormControl('', [
-        Validators.required,
-        Validators.pattern('[a-zA-Z ]*'),
-      ]),
+        Validators.required,]),
       inchargePhoneNo: new FormControl('', [
         Validators.required,
         Validators.pattern(RG_PHONE_NO),
@@ -116,8 +114,8 @@ export class SectionComponent implements OnInit {
       this.loading = false;
     });
   }
-  initCircles(division: any) {
-    this.commonService.GetCirclesForDivision(division).subscribe((resp) => {
+  initCircles(divisionId: any) {
+    this.commonService.GetCirclesForDivision(divisionId).subscribe((resp) => {
       this.circles = resp as unknown as CircleDto[];
     });
   }

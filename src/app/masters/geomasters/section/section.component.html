@@ -15,12 +15,11 @@
                       optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
                       placeholder="Select Division "
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }">
-                    </p-dropdown>
-                    <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['divisionId'].errors?.['required']"> Select Division.
-                      </div>
-                    </span>
+                  </p-dropdown>
+                  <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['divisionId'].errors?.['required']">
+                      Please Select Division.</div>
+                  </span>
                   </div>
 
                   <div class="field col-12 md:col-6">
@@ -171,6 +170,11 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
+
+          <th pSortableColumn="divisionName">Division Name <p-columnFilter type="text" field="divisionName"
+            display="menu"></p-columnFilter>
+          <p-sortIcon field="divisionName"></p-sortIcon>
+        </th>
          
           <th pSortableColumn="sectionId">Code<p-columnFilter type="text" field="sectionId" display="menu">
             </p-columnFilter>
@@ -186,10 +190,7 @@
             <p-sortIcon field="circleName"></p-sortIcon>
           </th>
          
-          <th pSortableColumn="divisionName">Division Name <p-columnFilter type="text" field="divisionName"
-              display="menu"></p-columnFilter>
-            <p-sortIcon field="divisionName"></p-sortIcon>
-          </th>
+          
           <th pSortableColumn="inchargeName">Incharge Name <p-columnFilter type="text" field="inchargeName"
               display="menu"></p-columnFilter>
             <p-sortIcon field="inchargeName"></p-sortIcon>
@@ -232,11 +233,12 @@
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editProduct(section)"></button></td>
-      
+
+              <td>{{section.divisionName}}</td>
           <td>{{section.sectionCode}}</td>
           <td>{{section.sectionName}}</td>
           <td>{{section.circleName}}</td>
-          <td>{{section.divisionName}}</td>
+          
           <td>{{section.inchargeName}}</td>
           <td>{{section.inchargePhoneNo}}</td>
           <td>{{section.address}}</td>
@@ -257,12 +259,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="17">No Sections Found.</td>
+          <td class="md:text-center" colspan="13">No Sections Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="17">Loading... Sections Data. Please Wait.</td>
+          <td class="md:text-center" colspan="13">Loading... Sections Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>

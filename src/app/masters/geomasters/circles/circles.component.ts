@@ -87,9 +87,7 @@ export class CirclesComponent implements OnInit {
         Validators.minLength(MIN_LENGTH_2),
         Validators.maxLength(MAX_LENGTH_6),
       ]),
-      inchargePhoneNo: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_PHONE_NO),
+      inchargePhoneNo: new FormControl('', [Validators.pattern(RG_PHONE_NO),
       ]),
       address: ['', Validators.required],
       circleId: [''],
