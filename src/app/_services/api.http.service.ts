@@ -2,7 +2,7 @@ import { JWTService } from './jwt.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { URI_ENDPOINT, URI_ENDPOINT_WITH_ID } from 'src/environments/environment';
+import { URI_ENDPOINT, URI_ENDPOINT_WITH_ID, URI_ENDPOINT_WITH_IDANDPARAM1, URI_ENDPOINT_WITH_PARAM } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
 import { ResponseModel } from '../_models/account/account.model';
 const httpOptions = {
@@ -61,6 +61,36 @@ export class ApiHttpService {
           }
           // this.router.navigate(["error"])// Add Redirect to default page
           return throwError(error);
+        })
+      );
+  }
+  public getWithIdAndParam1<T>(uri: string,id: any,param1: string, options?: any) {
+    return this.http.get<T>(URI_ENDPOINT_WITH_IDANDPARAM1(uri,id,param1), options)
+      .pipe(
+        catchError(error => {
+          let errorMsg: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMsg = `Error: ${error.error.message}`;
+          } else {
+            errorMsg = this.getServerErrorMessage(error);
+          }
+          // Add Redirect to default page
+          return throwError(errorMsg);
+        })
+      );
+  }
+  public getWithParam<T>(uri: string,param: any, options?: any) {
+    return this.http.get<T>(URI_ENDPOINT_WITH_PARAM(uri,param), options)
+      .pipe(
+        catchError(error => {
+          let errorMsg: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMsg = `Error: ${error.error.message}`;
+          } else {
+            errorMsg = this.getServerErrorMessage(error);
+          }
+          // Add Redirect to default page
+          return throwError(errorMsg);
         })
       );
   }

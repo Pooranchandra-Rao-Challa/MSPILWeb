@@ -26,27 +26,28 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { MonitoringService } from 'src/app/_services/monitoring.service';
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        ToastModule
-    ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,
-        // Application services,
-        AccountService, JWTService, GeoMasterService,CommonService,BillMasterService,
-        AppMasterService, MessageService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent, NotfoundComponent
+  ],
+  imports: [
+    AppRoutingModule,
+    AppLayoutModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    ToastModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    CountryService, CustomerService, EventService, IconService, NodeService,
+    PhotoService, ProductService,
+    // Application services,
+    AccountService, JWTService, GeoMasterService, CommonService, BillMasterService,
+    AppMasterService, MessageService, MonitoringService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
