@@ -17,14 +17,19 @@ export class MonitoringService extends ApiHttpService {
     return this.post<AllottedPlotDto>(UPDATE_ALLOTTEDPLOT_URI, allottedPlot);
   }
 
-  public GetAllottedPlots(seasonId: number, param1 = null) {
+  public GetAllottedPlots(seasonId: number, forapproval: boolean,param1 = null) {
+    let arr : any[] =[];
+    arr.push(seasonId);
+    arr.push(forapproval);
+    if(param1!= null)arr.push(param1);
     if (param1 == null) {
-      return this.getWithId<IAllottedPlotViewDto[]>(GET_ALLOTTEDPLOTS_URI, seasonId);
+      return this.getWithParams<IAllottedPlotViewDto[]>(GET_ALLOTTEDPLOTS_URI, arr);
     }
     else {
-      return this.getWithIdAndParam1<IAllottedPlotViewDto[]>(GET_ALLOTTEDPLOTS_URI, seasonId, param1);
+      return this.getWithParams<IAllottedPlotViewDto[]>(GET_ALLOTTEDPLOTS_URI, arr);
     }
   }
+
   public IsNewFarmer(farmerId: number) {
     return this.getWithId<boolean>(IS_NEW_FARMAR_URI, farmerId);
   }

@@ -6,7 +6,7 @@
       <ng-template pTemplate="left">
         <h4>Allotted Plot</h4>
       </ng-template>
-      <ng-template pTemplate="right">
+      <ng-template pTemplate="right" *ngIf="!forapproval">
         <button pButton pRipple label="New Allotted Plot" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addAllottedPlot()"></button>
       </ng-template>
@@ -46,7 +46,10 @@
       <ng-template pTemplate="body" let-allottedPlot>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editAllottedPlot(allottedPlot)"></button></td>
+              (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"></button>
+              <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editAllottedPlot(allottedPlot)" *ngIf="forapproval"></button>
+            </td>
           <td *ngFor="let col of headers">
             <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{allottedPlot[col.field]}}</span>
             <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">

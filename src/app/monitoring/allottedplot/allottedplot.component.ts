@@ -46,13 +46,13 @@ export class AllottedplotComponent implements OnInit {
   plantTypes: plantTypeViewDto[] = [];
   varieties: VarietyViewDto[] = [];
   resonForNotPlanting: any;
-  canapproval: string = '';
+  forapproval: boolean = false;
   // varietyTypes: any;
   headers: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
     { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
-    { field: 'farmerId', header: 'farmerId', label: 'Farmer Code' },
+    { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
@@ -82,13 +82,17 @@ export class AllottedplotComponent implements OnInit {
     this.initReasonForNotPlanting();
     this.allottedPlotForm();
     this.disabledFormControls();
-    this.canapproval = this.activatedRoute.snapshot.params['paramUrl'];
+    this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
+    console.log(this.forapproval);
+
   }
 
   initAllottedPlots(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetAllottedPlots(seasonId, param1).subscribe((resp) => {
+    this.monitoringService.GetAllottedPlots(seasonId,this.forapproval, param1).subscribe((resp) => {
       this.allottedPlots = resp as unknown as IAllottedPlotViewDto[];
+      console.log(this.allottedPlots);
+
     });
   }
 
@@ -190,7 +194,7 @@ export class AllottedplotComponent implements OnInit {
     this.fbAllottedPlot.controls['seasonId'].enable();
     this.fbAllottedPlot.controls['villageId'].enable();
     this.fbAllottedPlot.controls['farmerId'].enable();
-    // this.fbAllottedPlot.controls['ryotName'].disable();
+    this.fbAllottedPlot.controls['isNewFarmer'].setValue(false);
     this.showDialog = true;
   }
 
@@ -268,6 +272,7 @@ export class AllottedplotComponent implements OnInit {
     this.allottedPlot.varietyId = allottedPlot.varietyId;
     this.allottedPlot.reasonForNotPlantingId = allottedPlot.reasonForNotPlantingId;
     this.allottedPlot.isActive = allottedPlot.isActive;
+    this.allottedPlot.isNewFarmer = allottedPlot.isNewFarmer;
     this.fbAllottedPlot.patchValue(this.allottedPlot);
     this.fbAllottedPlot.controls['ryotName'].setValue(allottedPlot.farmerName);
     this.fbAllottedPlot.controls['fatherName'].setValue(allottedPlot.fatherName);
