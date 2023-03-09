@@ -144,13 +144,10 @@ export class AppMenuComponent implements OnInit {
             icon: 'pi pi-fw pi-eye',
             permission: true,
             items: [
-<<<<<<< HEAD
               { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: true },
-              { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true }
-=======
-              { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:notapproval'], permission: true },
+              { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true },
+              // { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:notapproval'], permission: true },
               { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:canapproval'], permission: true }
->>>>>>> d3294811ab22cade5333f7e0bec962cc88e450ed
             ]
           }
         ]
