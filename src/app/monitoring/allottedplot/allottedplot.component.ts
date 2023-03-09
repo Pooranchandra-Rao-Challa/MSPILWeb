@@ -47,6 +47,7 @@ export class AllottedplotComponent implements OnInit {
   varieties: VarietyViewDto[] = [];
   resonForNotPlanting: any;
   forapproval: boolean = false;
+  isApproved: boolean = false; // for ture value use this icon class' pi-thumbs-up-fill' else ' pi-thumbs-up'
   // varietyTypes: any;
   headers: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
@@ -73,23 +74,28 @@ export class AllottedplotComponent implements OnInit {
 
   ngOnInit(): void {
     let currentSeason = '2020-21';
-    this.initCurrentSeason(currentSeason);
-    this.initSeasons();
-    this.initFarmers();
-    this.initVillages();
-    this.initPlantType();
-    this.initVarieties();
-    this.initReasonForNotPlanting();
-    this.allottedPlotForm();
-    this.disabledFormControls();
     this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
+    this.initSeasons();
+    //if (this.forapproval == false) {
+
+      this.initCurrentSeason(currentSeason);
+      this.initFarmers();
+      this.initVillages();
+      this.initPlantType();
+      this.initVarieties();
+      this.initReasonForNotPlanting();
+      this.allottedPlotForm();
+    //}
+
+
+    this.disabledFormControls();
     console.log(this.forapproval);
 
   }
 
   initAllottedPlots(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetAllottedPlots(seasonId,this.forapproval, param1).subscribe((resp) => {
+    this.monitoringService.GetAllottedPlots(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.allottedPlots = resp as unknown as IAllottedPlotViewDto[];
       console.log(this.allottedPlots);
 

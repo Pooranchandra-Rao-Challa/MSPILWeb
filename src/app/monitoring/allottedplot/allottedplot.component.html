@@ -47,8 +47,8 @@
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"></button>
-              <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editAllottedPlot(allottedPlot)" *ngIf="forapproval"></button>
+              <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
+              *ngIf="forapproval"></button> <!-- (click)="editAllottedPlot(allottedPlot)" -->
             </td>
           <td *ngFor="let col of headers">
             <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{allottedPlot[col.field]}}</span>
