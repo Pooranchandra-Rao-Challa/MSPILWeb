@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PlotTransfersComponent } from './plot-transfers/plot-transfers.component';
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
+import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
 
 @NgModule({
   imports: [RouterModule.forChild([
@@ -10,6 +11,7 @@ import { CompletedPlotsComponent } from './completed-plots/completed-plots.compo
     { path: 'PlotTransfers', component: PlotTransfersComponent },
     { path: 'CompletedPlots', component: CompletedPlotsComponent },
     { path: 'allottedplot/:paramUrl', component: AllottedplotComponent },
+    { path: 'plotassesment', component: PlotassesmentComponent},
   ])],
   exports: [RouterModule]
 })

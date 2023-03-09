@@ -4,6 +4,7 @@ import { MonitoringRoutingModule } from 'src/app/monitoring/monitoring-routing.m
 import { AllottedplotComponent } from './allottedplot/allottedplot.component';
 import { PlotTransfersComponent } from './plot-transfers/plot-transfers.component';
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
+import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { CompletedPlotsComponent } from './completed-plots/completed-plots.compo
     AllottedplotComponent,
     PlotTransfersComponent,
     CompletedPlotsComponent,
+    PlotassesmentComponent
   ],
   imports: [
     PrimeNgModule,
