@@ -143,26 +143,31 @@ export class AllottedplotComponent implements OnInit {
   }
 
   getNewOfferNo(seasonId: number) {
-    this.monitoringService.GetNewOfferNo(seasonId).subscribe((resp) => {
-      if (resp) this.fbAllottedPlot.controls['offerNo'].setValue(resp);
-    });
+    console.log(this.allottedPlot.allottedPlotId);
+
+    if (this.allottedPlot.allottedPlotId == null)
+      this.monitoringService.GetNewOfferNo(seasonId).subscribe((resp) => {
+        if (resp) this.fbAllottedPlot.controls['offerNo'].setValue(resp);
+      });
   }
+
+  get IsAdd(): boolean { return this.allottedPlot?.allottedPlotId == null; }
 
   allottedPlotForm() {
     this.fbAllottedPlot = this.formbuilder.group({
       allottedPlotId: [null],
-      seasonId: [null, (Validators.required)],
-      offerNo: [''],
+      seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
+      offerNo: [{ value: '' }],
       offerDate: ['', (Validators.required)],
-      isNewFarmer: [true],
-      farmerId: ['', (Validators.required)], /* Here farmerId is ryotNo */
+      isNewFarmer: [false],
+      farmerId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here farmerId is ryotNo */
       ryotName: [''],
       fatherName: [''],
       farmerVillage: [''],
       farmerDivision: [''],
       farmerCircle: [''],
       farmerSection: [''],
-      villageId: ['', (Validators.required)], /* Here villageId is plotVillageId */
+      villageId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here villageId is plotVillageId */
       plotDivision: [''],
       plotCircle: [''],
       plotSection: [''],
@@ -181,6 +186,10 @@ export class AllottedplotComponent implements OnInit {
 
   addAllottedPlot() {
     this.submitLabel = 'Add Allotted Plot';
+
+    this.fbAllottedPlot.controls['seasonId'].enable();
+    this.fbAllottedPlot.controls['villageId'].enable();
+    this.fbAllottedPlot.controls['farmerId'].enable();
     // this.fbAllottedPlot.controls['ryotName'].disable();
     this.showDialog = true;
   }
@@ -199,6 +208,7 @@ export class AllottedplotComponent implements OnInit {
   }
 
   onSelectedFarmer(farmerId: number) {
+    this.fbAllottedPlot.controls['isNewFarmer'].setValue(this.IsNewFarmer(farmerId));
     this.farmers.forEach((value) => {
       if (value.farmerId == farmerId) {
         this.fbAllottedPlot.controls['ryotName'].setValue(value.farmerName);
@@ -211,6 +221,16 @@ export class AllottedplotComponent implements OnInit {
     });
   }
 
+  IsNewFarmer(farmerId: number): boolean {
+    var returnvalue = false;
+    this.monitoringService.IsNewFarmer(farmerId).subscribe(
+      (resp) => {
+        returnvalue = resp as unknown as boolean;
+        return returnvalue;
+      }
+    )
+    return returnvalue;
+  }
   onSelectedVillage(villageId: number) {
     this.villages.forEach((value) => {
       if (value.villageId == villageId) {
@@ -234,11 +254,14 @@ export class AllottedplotComponent implements OnInit {
   editAllottedPlot(allottedPlot: IAllottedPlotViewDto) {
     this.allottedPlot.allottedPlotId = allottedPlot.allottedPlotId;
     this.allottedPlot.seasonId = allottedPlot.seasonId;
+    this.fbAllottedPlot.controls['seasonId'].disable();
     this.allottedPlot.offerNo = allottedPlot.offerNo;
     this.allottedPlot.offerDate = new Date(allottedPlot.offerDate?.toString() + "");
     this.allottedPlot.isNewFarmer = allottedPlot.isNewFarmer;
     this.allottedPlot.farmerId = allottedPlot.farmerId;
+    this.fbAllottedPlot.controls['farmerId'].disable();
     this.allottedPlot.villageId = allottedPlot.plotVillageId;
+    this.fbAllottedPlot.controls['villageId'].disable();
     this.allottedPlot.expectedArea = allottedPlot.expectedArea;
     this.allottedPlot.plantTypeId = allottedPlot.plantTypeId;
     this.allottedPlot.plantingDate = new Date(allottedPlot.plantingDate?.toString() + "");
