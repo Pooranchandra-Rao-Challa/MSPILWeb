@@ -151,3 +151,5 @@ export const GET_OFFERCODE_URI = "Monitoring/GetNewOfferNo/";
 export const CREATE_ALLOTTEDPLOT_URI = "Monitoring/CreateAllottedPlot";
 export const UPDATE_ALLOTTEDPLOT_URI = "Monitoring/UpdateAllottedPlot";
 export const GET_ALLOTTEDPLOTS_URI = "Monitoring/GetAllottedPlots"
+export const IS_NEW_FARMAR_URI = "Monitoring/IsNewFarmer"
+

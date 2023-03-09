@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AllottedPlotDto, IAllottedPlotViewDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI } from "./api.uri.service";
+import { CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI,IS_NEW_FARMAR_URI } from "./api.uri.service";
 
 @Injectable({ providedIn: 'root' })
 export class MonitoringService extends ApiHttpService {
@@ -24,6 +24,9 @@ export class MonitoringService extends ApiHttpService {
     else {
       return this.getWithIdAndParam1<IAllottedPlotViewDto[]>(GET_ALLOTTEDPLOTS_URI, seasonId, param1);
     }
+  }
+  public IsNewFarmer(farmerId: number) {
+    return this.getWithId<boolean>(IS_NEW_FARMAR_URI, farmerId);
   }
 
 }

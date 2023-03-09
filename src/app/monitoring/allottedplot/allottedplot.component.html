@@ -79,7 +79,7 @@
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
                       <label>Season:<sup class="p-error">*</sup></label>
-                      <p-dropdown placeholder="Select Season" optionLabel="name" [options]="seasons"
+                      <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
                         optionValue="seasonId" formControlName="seasonId" (onChange)="getNewOfferNo($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                       </p-dropdown>
@@ -105,10 +105,6 @@
                           *ngIf="FormControls['offerDate'].errors?.['required']">
                           Please Select From Date.</div>
                       </span>
-                    </div>
-                    <div class="field col-12 md:col-4">
-                      <label>Is New Farmer:</label><br>
-                      <p-inputSwitch formControlName="isNewFarmer"> </p-inputSwitch>
                     </div>
                   </div>
                 </p-fieldset>
@@ -158,6 +154,10 @@
                       <label>Farmer Section:</label>
                       <input pInputText id="farmerSection" type="text" formControlName="farmerSection" readonly>
                     </div>
+                    <div class="field col-12 md:col-4">
+                      <label>Is New Farmer:</label><br>
+                      <p-inputSwitch formControlName="isNewFarmer"> </p-inputSwitch>
+                    </div>
                   </div>
                 </p-fieldset>
                 <p-fieldset legend="Plot Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
@@ -196,7 +196,7 @@
                     </div>
                   </div>
                 </p-fieldset>
-                <p-fieldset legend="Expected" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <p-fieldset legend="Cultivable Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
                       <label>Expected Area:<sup class="p-error">*</sup></label>
