@@ -22,6 +22,7 @@ export interface IAllottedPlotViewDto {
   offerNo: number;
   offerDate: Date;
   farmerId: number;
+  farmerCode:string;
   farmerName: string;
   fatherName: string;
   farmerVillageId: number;

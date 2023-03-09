@@ -122,7 +122,9 @@ export class AppMasterService extends ApiHttpService {
   }
 
   public CurrentSeason(currentSeason: string) {
-    return this.getWithParam<SeasonDto[]>(CURRENT_SEASON_URI, currentSeason);
+    var arr : any[] = [];
+    arr.push(currentSeason)
+    return this.getWithParams<SeasonDto[]>(CURRENT_SEASON_URI, arr);
   }
 
   public CreateSeason(season: SeasonDto) {
