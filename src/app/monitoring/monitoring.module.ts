@@ -6,6 +6,7 @@ import { PlotTransfersComponent } from './plot-transfers/plot-transfers.componen
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
 import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
 import { SampleEntryComponent } from './sampleentry/sampleentry.component';
+import { PlotreportsComponent } from './plotreports/plotreports.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SampleEntryComponent } from './sampleentry/sampleentry.component';
     CompletedPlotsComponent,
     PlotassesmentComponent,
     SampleEntryComponent,
+    PlotreportsComponent,
   ],
   imports: [
     PrimeNgModule,

@@ -4,7 +4,7 @@
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Allotted Plot</h4>
+        <h4>Allotted Plots</h4>
       </ng-template>
       <ng-template pTemplate="right" *ngIf="!forapproval">
         <button pButton pRipple label="New Allotted Plot" icon="pi pi-plus" class="p-button-success p-mr-2"
@@ -47,9 +47,10 @@
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"></button>
-              <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
-              *ngIf="forapproval"></button> <!-- (click)="editAllottedPlot(allottedPlot)" -->
-            </td>
+            <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editApproval(allottedPlot)" *ngIf="forapproval"></button>
+            <!-- (click)="editAllottedPlot(allottedPlot)" -->
+          </td>
           <td *ngFor="let col of headers">
             <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{allottedPlot[col.field]}}</span>
             <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
@@ -70,7 +71,7 @@
       </ng-template>
     </p-table>
 
-    <!-- dialog box -->
+    <!-- Allotted Plots Dialog -->
     <p-dialog header="Allotted Plot" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="fbAllottedPlot.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
@@ -199,7 +200,8 @@
                     </div>
                   </div>
                 </p-fieldset>
-                <p-fieldset legend="Cultivable Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <p-fieldset legend="Cultivable Details" class="col-12" [toggleable]="true"
+                  [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
                       <label>Expected Area:<sup class="p-error">*</sup></label>
@@ -278,6 +280,60 @@
         <div class="col-4" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
             (click)="onSubmit()"></button>
+        </div>
+      </ng-template>
+    </p-dialog>
+
+    <!-- Allotted Plots Approval Dialog -->
+    <p-dialog header="State" [(visible)]="showApprovalDialog" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}" [modal]="true"
+      (onHide)="fbAllottedPlot.reset()">
+      <ng-template pTemplate="content">
+        <div class="flex flex-column align-items-center justify-content-center">
+          <form [formGroup]="fbAllottedPlot" (ngSubmit)="onSubmit()">
+            <div class="grid">
+              <div class="col-12">
+                <div class="p-fluid p-formgrid grid">
+                  <div class="field col-12 md:col-6">
+                    <label>Season:<sup class="p-error">*</sup></label>
+                    <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
+                      optionValue="seasonId" formControlName="seasonId" (onChange)="getNewOfferNo($event.value)"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
+                    </p-dropdown>
+                    <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['seasonId'].errors?.['required']">
+                        Please Select Season.</div>
+                    </span>
+                  </div>
+                  <div class="field col-12 md:col-6">
+                    <label>Offer No:</label>
+                    <input pInputText id="offerNo" type="text" formControlName="offerNo" readonly>
+                  </div>
+                  <div class="field col-12 md:col-6">
+                    <label>Ryot Name:</label>
+                    <input pInputText id="ryotName" type="text" formControlName="ryotName" readonly>
+                  </div>
+                  <div class="field col-12 md:col-6">
+                    <label>Remarks:</label>
+                    <input pInputText id="remarks" type="text" formControlName="remarks"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['remarks'].touched && FormControls['remarks'].errors }">
+                    <span *ngIf="FormControls['remarks'].touched && FormControls['remarks'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['remarks'].errors?.['required']">
+                        Remarks is required when you click on denied.</div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="col-12" style="float:right">
+          <button pButton pRipple type="submit" label="Approval" class="p-button-raised p-button-success"
+            (click)="onApprovalSubmit('approve')"></button>
+          <button pButton pRipple type="submit" label="Denied" class="p-button-raised p-button-success"
+            (click)="onApprovalSubmit('denied')"></button>
         </div>
       </ng-template>
     </p-dialog>

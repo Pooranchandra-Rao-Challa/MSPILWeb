@@ -31,11 +31,12 @@ export interface IHeader {
 export class AllottedplotComponent implements OnInit {
   allottedPlots: IAllottedPlotViewDto[] = [];
   allottedPlot: AllottedPlotDto = new AllottedPlotDto();
-  loading: boolean = false;
+  loading: boolean = true;
   globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
+  showApprovalDialog: boolean = false;
   addFlag: boolean = true;
   submitLabel!: string;
   fbAllottedPlot!: FormGroup;
@@ -76,29 +77,21 @@ export class AllottedplotComponent implements OnInit {
     let currentSeason = '2020-21';
     this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
     this.initSeasons();
-    //if (this.forapproval == false) {
-
-      this.initCurrentSeason(currentSeason);
-      this.initFarmers();
-      this.initVillages();
-      this.initPlantType();
-      this.initVarieties();
-      this.initReasonForNotPlanting();
-      this.allottedPlotForm();
-    //}
-
-
+    this.initCurrentSeason(currentSeason);
+    this.initFarmers();
+    this.initVillages();
+    this.initPlantType();
+    this.initVarieties();
+    this.initReasonForNotPlanting();
+    this.allottedPlotForm();
     this.disabledFormControls();
-    console.log(this.forapproval);
-
   }
 
   initAllottedPlots(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetAllottedPlots(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.allottedPlots = resp as unknown as IAllottedPlotViewDto[];
-      console.log(this.allottedPlots);
-
+      this.loading = false;
     });
   }
 
@@ -109,14 +102,12 @@ export class AllottedplotComponent implements OnInit {
   initFarmers() {
     this.appMasterservice.GetFarmers().subscribe((resp) => {
       this.farmers = resp as unknown as FarmersViewDto[];
-      this.loading = false;
     })
   }
 
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
-      this.loading = false;
     });
   }
 
@@ -153,8 +144,6 @@ export class AllottedplotComponent implements OnInit {
   }
 
   getNewOfferNo(seasonId: number) {
-    console.log(this.allottedPlot.allottedPlotId);
-
     if (this.allottedPlot.allottedPlotId == null)
       this.monitoringService.GetNewOfferNo(seasonId).subscribe((resp) => {
         if (resp) this.fbAllottedPlot.controls['offerNo'].setValue(resp);
@@ -186,7 +175,8 @@ export class AllottedplotComponent implements OnInit {
       plantingDate: ['', (Validators.required)],
       varietyId: ['', (Validators.required)],
       reasonForNotPlantingId: ['', (Validators.required)],
-      isActive: [false]
+      isActive: [false],
+      remarks: ['']
     });
   }
 
@@ -296,13 +286,18 @@ export class AllottedplotComponent implements OnInit {
     this.showDialog = true;
   }
 
+  editApproval(allottedPlot: IAllottedPlotViewDto) {
+    this.editAllottedPlot(allottedPlot);
+    this.showDialog = false;
+    this.showApprovalDialog = true;
+  }
+
   saveAllottedPlot(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.monitoringService.CreateAllottedPlot(this.fbAllottedPlot.value)
     else return this.monitoringService.UpdateAllottedPlot(this.fbAllottedPlot.value)
   }
 
   onSubmit() {
-    console.log(this.fbAllottedPlot.value);
     if (this.fbAllottedPlot.valid) {
       this.fbAllottedPlot.value.offerDate = FORMAT_DATE(this.fbAllottedPlot.value.offerDate);
       this.fbAllottedPlot.value.plantingDate = FORMAT_DATE(this.fbAllottedPlot.value.plantingDate);
@@ -317,6 +312,14 @@ export class AllottedplotComponent implements OnInit {
     else {
       this.fbAllottedPlot.markAllAsTouched();
     }
+  }
+
+  onApprovalSubmit(data: string) {
+    if (data == 'denied') {
+      this.fbAllottedPlot.controls['remarks'].setValidators(Validators.required);
+      this.fbAllottedPlot.controls['remarks'].updateValueAndValidity();
+    }
+    this.onSubmit();
   }
 
 }
