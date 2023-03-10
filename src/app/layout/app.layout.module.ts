@@ -19,6 +19,11 @@ import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppLayoutComponent } from "./app.layout.component";
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenuModule } from 'primeng/menu';
+import { PaginatorModule } from 'primeng/paginator';
+import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { FieldsetModule } from 'primeng/fieldset';
+import { PrimeNgModule } from '../_shared/primeng.module';
 
 @NgModule({
     declarations: [
@@ -42,9 +47,14 @@ import { MenuModule } from 'primeng/menu';
         RippleModule,
         RouterModule,
         AppConfigModule,
-        SplitButtonModule,
-        
+        SplitButtonModule,        
+        PaginatorModule,
         MenuModule,
+        CommonModule,
+        FormsModule,
+        DialogModule,
+        FieldsetModule,
+        PrimeNgModule,
     ],
     exports: [AppLayoutComponent]
 })
