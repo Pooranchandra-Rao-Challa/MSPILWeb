@@ -18,7 +18,8 @@ export class AppTopBarComponent {
   @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
 
   @ViewChild('topbarmenu') menu!: ElementRef;
-  dialog: boolean = false;
+  app_config_dialog: boolean = false;
+  lookup_dialog: boolean = false;
   application_contsants!: FormGroup;
   submitLabel!: string;
 
@@ -40,7 +41,8 @@ export class AppTopBarComponent {
     
     this.items = [
       { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['changepassword'] },
-      { label: 'Application Constants', icon: 'pi pi-external-link', command: (e) => { this.dialog = true; this.submitLabel = 'Add Apllication Contstraints'; } },
+      { label: 'App Config', icon: 'pi pi-external-link', command: (e) => { this.app_config_dialog = true; this.submitLabel = 'Update Application Constants'; } },
+      { label: 'Lookup', icon: 'pi pi-external-link', command: (e) => { this.lookup_dialog = true; this.submitLabel = 'Update lookups'; } },
       {
         label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
           console.log(this.jwtService.Logout());
@@ -48,8 +50,6 @@ export class AppTopBarComponent {
         }
       }
     ];
-    
-
   }
   
   onSubmit() {
