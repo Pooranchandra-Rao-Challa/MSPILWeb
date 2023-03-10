@@ -98,6 +98,7 @@ export const LOOKUP_WB_MACHINES_URI = "Lookup/WBMachines";
 export const LOOKUP_WEED_STATUSES_URI = "Lookup/WeedStatuses";
 export const LOOKUP_WEEDS_URI = "Lookup/Weeds";
 export const LOOKUP_SEED_MATERIAL_USED_URI = "Lookup/SeedMaterialUsed";
+export const APP_CONSTANTS = "Lookup/AppConstants";
 export const GET_LOOKUP_URI = "ApplicationMaster/GetLookUps"
 export const GET_LOOKUP_DETAILS_URI = "ApplicationMaster/GetLookUp/"
 export const CREATE_LOOKUP_URI = "ApplicationMaster/CreateLookUp"

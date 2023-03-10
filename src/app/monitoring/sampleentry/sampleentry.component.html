@@ -1,0 +1,65 @@
+<div class="col-12">
+  <div class="card">
+
+      <!-- toolbar -->
+      <p-toolbar styleClass="p-mb-4">
+          <ng-template pTemplate="left">
+              <h4>Sample Entry</h4>
+          </ng-template>
+          <ng-template pTemplate="right">
+              <button pButton pRipple label="Sample Entry" icon="pi pi-plus" class="p-button-success p-mr-2"
+                  ></button> <!-- (click)="addCompletedPlot()"-->
+          </ng-template>
+      </p-toolbar>
+
+
+      <!-- table -->
+      <p-table #dt1 [value]="sampleDto" dataKey="id" [rows]="10" [rowHover]="true"
+            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
+            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                       ></button> <!--  (click)="clear(dt1)"-->
+                    <div>
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter  placeholder="Search Keyword"
+                                pTooltip="Search By Farmer Name, Village Name, Plot No" class="w-full" />
+                                <!-- (input)="onSearch()"-->
+                        </span>
+                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                            optionValue="seasonId">
+                        </p-dropdown> <!-- [options]="seasons"-->
+                    </div>
+                </div>
+            </ng-template>
+
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th></th>
+                <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+                  {{col?.label}} <p-sortIcon field="code">
+                  </p-sortIcon>
+                  <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-allottedPlot>
+              <tr><!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
+                <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+                    ></button>
+                  </td>
+                <td *ngFor="let col of headers">
+                  <span *ngIf="col?.field != 'DocDate' && col?.field != 'CreatedAt' && col?.field != 'UpdatedAt' ">{{allottedPlot[col.field]}}</span>
+                  <span *ngIf="col?.field == 'DocDate' || col?.field == 'CreatedAt' || col?.field == 'UpdatedAt'">
+                    {{allottedPlot[col.field] | date: 'dd-MM-yyyy'}}
+                  </span>
+                </td>
+              </tr>
+            </ng-template>
+
+      </p-table>
+    </div>
+  </div>
