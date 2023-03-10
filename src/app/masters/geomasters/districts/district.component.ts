@@ -69,13 +69,18 @@ export class DistrictComponent implements OnInit {
   }
 
   editProduct(district: DistrictViewDto) {
-    this.district.code = district.districtCode;
-    this.district.name = district.districtName
-    this.district.isActive = district.isActive;
-    this.district.districtId = district.districtId
-    this.district.stateId = district.stateId;
-    this.fbdistricts.setValue(this.district);
-
+    // this.district.code = district.districtCode;
+    // this.district.name = district.districtName
+    // this.district.isActive = district.isActive;
+    // this.district.districtId = district.districtId
+    // this.district.stateId = district.stateId;
+    this.fbdistricts.setValue({
+      code : district.districtCode,
+      name : district.districtName,
+      isActive : district.isActive,
+      districtId : district.districtId,
+      stateId : district.stateId.toString(),
+    });
     this.submitLabel = "Update District";
     this.addFlag = false;
     this.display = true;

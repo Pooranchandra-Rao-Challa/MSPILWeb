@@ -95,7 +95,7 @@ export class UsersComponent implements OnInit {
       this.user.isAdmin = false;
       this.userForm.get("password")?.enable();
       this.securityService.GetAllSections().subscribe(resp => {
-        this.user.userSections = resp as unknown as UserSectionDto[];
+       this.user.userSections = resp as unknown as UserSectionDto[];
       })
     }
   }

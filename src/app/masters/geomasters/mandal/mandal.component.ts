@@ -70,12 +70,18 @@ export class MandalComponent implements OnInit {
   }
 
   editProduct(mandal: MandalsViewDto) {
-    this.mandal.mandalId = mandal.mandalId;
-    this.mandal.code = mandal.mandalCode;
-    this.mandal.name = mandal.mandalName;
-    this.mandal.districtId = mandal.districtId;
-    this.mandal.isActive = mandal.isActive;
-    this.fbmandals.setValue(this.mandal);
+    // this.mandal.mandalId = mandal.mandalId;
+    // this.mandal.code = mandal.mandalCode;
+    // this.mandal.name = mandal.mandalName;
+    // this.mandal.districtId = mandal.districtId;
+    // this.mandal.isActive = mandal.isActive;
+    this.fbmandals.setValue({
+      mandalId : mandal.mandalId,
+      code : mandal.mandalCode,
+      name : mandal.mandalName,
+      districtId : mandal.districtId.toString(),
+      isActive : mandal.isActive
+    })
     this.submitLabel = "Update Mandal";
     this.addFlag = false;
     this.display = true;

@@ -22,7 +22,6 @@ export interface IAllottedPlotViewDto {
   offerNo: number;
   offerDate: Date;
   farmerId: number;
-  farmerCode:string;
   farmerName: string;
   fatherName: string;
   farmerVillageId: number;
@@ -52,3 +51,17 @@ export interface IAllottedPlotViewDto {
   updatedAt: Date;
   updatedBy: string;
 }
+export class WeedicideDto{ 
+  lookupDetailId?: number;
+  code?: number;
+  name?: string;
+  lookupId?: number;
+  remarks?: string;
+  listingorder?: number;
+  isActive?: boolean;
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+}
+
