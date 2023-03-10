@@ -10,109 +10,121 @@ import { SampleSlabDto, SampleslabsViewDto } from 'src/app/_models/applicationma
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 
 @Component({
-    selector: 'app-sampleslab',
-    templateUrl: './sampleslab.component.html',
-    providers: [MessageService, ConfirmationService]
+  selector: 'app-sampleslab',
+  templateUrl: './sampleslab.component.html',
+  providers: [MessageService, ConfirmationService]
 })
 export class SampleslabsComponent implements OnInit {
-    dialog: boolean = false;
-    sampleslabs: SampleslabsViewDto[] = [];
-    sampleslab: SampleSlabDto = new SampleSlabDto();
-    loading: boolean = true;
-    fbsampleslabs!: FormGroup;
-    filter: any;
-    submitLabel!: string;
-    addFlag: boolean = true;
+  dialog: boolean = false;
+  sampleslabs: SampleslabsViewDto[] = [];
+  sampleslab: SampleSlabDto = new SampleSlabDto();
+  loading: boolean = true;
+  fbsampleslabs!: FormGroup;
+  filter: any;
+  submitLabel!: string;
+  addFlag: boolean = true;
+  maxAreaThatUsedInRecods: number = 1.2;
+  lastSampleSize:number = 0;
 
-    constructor(private formbuilder: FormBuilder,
-        private appmasterservice: AppMasterService,
-        private commonService: CommonService,
-        public jwtService: JWTService,
-    ) {
 
-    }
-    InitSampleslab() {
-        this.sampleslab = new SampleSlabDto();
-        this.fbsampleslabs.reset();
-        this.fbsampleslabs.patchValue({sampleSlabId: 0})
-        this.submitLabel = "Add Sample Slab";
-        this.addFlag = true;
-        this.dialog = true;
-    }
+  constructor(private formbuilder: FormBuilder,
+    private appmasterservice: AppMasterService,
+    private commonService: CommonService,
+    public jwtService: JWTService,
+  ) {
 
-    get FormControls() {
-        return this.fbsampleslabs.controls;
-    }
+  }
+  InitSampleslab() {
+    this.sampleslab = new SampleSlabDto();
+    this.fbsampleslabs.reset();
+    this.fbsampleslabs.patchValue({ sampleSlabId: 0 })
+    this.submitLabel = "Add Sample Slab";
+    this.maxAreaThatUsedInRecods = this.maxAreaThatUsedInRecods+0.0050000000000000000000+0.0050000000000000000000
+    this.fbsampleslabs.controls["fromArea"].patchValue(this.maxAreaThatUsedInRecods);
+    this.fbsampleslabs.controls["noOfSample"].patchValue(this.lastSampleSize+1);
+    this.addFlag = true;
+    this.dialog = true;
+  }
 
-    ngOnInit() {
+  get FormControls() {
+    return this.fbsampleslabs.controls;
+  }
 
-        this.initSampleslabs();
-        this.fbsampleslabs = this.formbuilder.group({
-            sampleSlabId:  [0],
-            toArea: new FormControl('', [Validators.required,Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
-            fromArea: new FormControl('', [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
-            noOfSample: new FormControl('', [Validators.required,  Validators.pattern(/^[0-9]+$/)]),
-            isActive: [ Validators.required],
-          
-        });
-    }
-    initSampleslabs() {
-        this.appmasterservice.GetSampleSlabs().subscribe((resp) => {
-            this.sampleslabs = resp as unknown as SampleslabsViewDto[]
-            this.loading = false;
-        })
-    }
+  ngOnInit() {
 
-    editProduct(sampleslabs: SampleslabsViewDto) {
-     
-      debugger
-        this.sampleslab.toArea = sampleslabs.toArea;
-        this.sampleslab.fromArea = sampleslabs.fromArea;
-        this.sampleslab.noOfSample = sampleslabs.noOfSample;
-        this.sampleslab.isActive = sampleslabs.isActive;
-        this.sampleslab.sampleSlabId = sampleslabs.sampleSlabId;
-        this.fbsampleslabs.setValue(this.sampleslab);
-        this.submitLabel = "Update Sample Slab";
-        this.addFlag = false;
-        this.dialog = true;
-    }
+    this.initSampleslabs();
 
-    private UpdateForm() {
 
-    }
-    onClose() {
-        this.fbsampleslabs.reset();
-    }
+    this.fbsampleslabs = this.formbuilder.group({
+      sampleSlabId: [0],
+      toArea: new FormControl('', [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
+      fromArea: new FormControl({ value: this.maxAreaThatUsedInRecods, disabled: true }, [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
+      noOfSample: new FormControl({ value: this.lastSampleSize, disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/)]),
+      isActive: [Validators.required],
 
-    saveSampleslab(): Observable<HttpEvent<SampleSlabDto>> {
-        if (this.addFlag) return this.appmasterservice.CreateSampleSlab(this.fbsampleslabs.value)
-        else return this.appmasterservice.UpdateSampleSlab(this.fbsampleslabs.value)
-    }
-    onSubmit() {
-      console.log(this.fbsampleslabs.valid);
-        if (this.fbsampleslabs.valid) {
-            this.saveSampleslab().subscribe(resp => {
-                if (resp) {
-                    this.initSampleslabs();
-                    this.onClose();
-                    this.dialog = false;
-                }
-            })
+    });
+  }
+  initSampleslabs() {
+    this.appmasterservice.GetSampleSlabs().subscribe((resp) => {
+      this.sampleslabs = resp as unknown as SampleslabsViewDto[]
+      this.sampleslabs.forEach((slab) => {
+        this.maxAreaThatUsedInRecods = Math.max(this.maxAreaThatUsedInRecods, slab.toArea!)
+        this.lastSampleSize = Math.max(this.lastSampleSize, slab.noOfSample!)
+      })
+      this.loading = false;
+    })
+  }
+
+
+
+  editProduct(sampleslabs: SampleslabsViewDto) {
+    this.sampleslab.toArea = sampleslabs.toArea;
+    this.sampleslab.fromArea = sampleslabs.fromArea;
+    this.sampleslab.noOfSample = sampleslabs.noOfSample;
+    this.sampleslab.isActive = sampleslabs.isActive;
+    this.sampleslab.sampleSlabId = sampleslabs.sampleSlabId;
+    this.fbsampleslabs.setValue(this.sampleslab);
+    this.submitLabel = "Update Sample Slab";
+    this.addFlag = false;
+    this.dialog = true;
+  }
+
+  private UpdateForm() {
+
+  }
+  onClose() {
+    this.fbsampleslabs.reset();
+  }
+
+  saveSampleslab(): Observable<HttpEvent<SampleSlabDto>> {
+    if (this.addFlag) return this.appmasterservice.CreateSampleSlab(this.fbsampleslabs.value)
+    else return this.appmasterservice.UpdateSampleSlab(this.fbsampleslabs.value)
+  }
+  onSubmit() {
+    console.log(this.fbsampleslabs.valid);
+    if (this.fbsampleslabs.valid) {
+      this.saveSampleslab().subscribe(resp => {
+        if (resp) {
+          this.initSampleslabs();
+          this.onClose();
+          this.dialog = false;
         }
-        else {
-            // alert("please fill the fields")
-            this.fbsampleslabs.markAllAsTouched();
-        }
+      })
     }
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    else {
+      // alert("please fill the fields")
+      this.fbsampleslabs.markAllAsTouched();
     }
-    clear(table: Table) {
-        table.clear();
-        this.filter.nativeElement.value = '';
-    }
-    valSwitch: boolean = true;
-    
+  }
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
+  valSwitch: boolean = true;
+
 }
 
 
