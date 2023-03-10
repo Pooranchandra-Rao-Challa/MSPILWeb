@@ -5,6 +5,7 @@ import { AllottedplotComponent } from './allottedplot/allottedplot.component';
 import { PlotTransfersComponent } from './plot-transfers/plot-transfers.component';
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
 import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
+import { PlotreportsComponent } from './plotreports/plotreports.component';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PlotassesmentComponent } from './plotassesment/plotassesment.component'
     AllottedplotComponent,
     PlotTransfersComponent,
     CompletedPlotsComponent,
-    PlotassesmentComponent
+    PlotassesmentComponent,
+    PlotreportsComponent
   ],
   imports: [
     PrimeNgModule,
