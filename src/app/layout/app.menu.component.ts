@@ -151,6 +151,7 @@ export class AppMenuComponent implements OnInit {
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
               { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:forapproval'], permission: true },
               { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: true },
+              { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: true },
             ]
           }
         ]

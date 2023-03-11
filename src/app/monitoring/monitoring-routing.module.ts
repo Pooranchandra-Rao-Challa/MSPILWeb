@@ -6,6 +6,7 @@ import { PlotTransfersComponent } from './plot-transfers/plot-transfers.componen
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
 import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
 import { SampleEntryComponent } from './sampleentry/sampleentry.component';
+import { ProppingComponent } from './propping/propping.component';
 
 @NgModule({
   imports: [RouterModule.forChild([
@@ -16,6 +17,7 @@ import { SampleEntryComponent } from './sampleentry/sampleentry.component';
     { path: 'plotassesment', component: PlotassesmentComponent},
     { path: 'sampleentry', component: SampleEntryComponent},
     { path: 'plotreports', component: PlotreportsComponent},
+    { path: 'propping', component: ProppingComponent},
   ])],
   exports: [RouterModule]
 })
