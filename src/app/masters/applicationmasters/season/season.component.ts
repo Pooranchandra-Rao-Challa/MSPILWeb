@@ -229,7 +229,7 @@ export class SeasonComponent implements OnInit {
   onClose() {
     this.fbseasons.reset();
   }
-
+  
   ngOnDestroy() {
     this.seasons = [];
     this.billParams = [];

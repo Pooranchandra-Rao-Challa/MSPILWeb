@@ -154,3 +154,5 @@ export const UPDATE_ALLOTTEDPLOT_URI = "Monitoring/UpdateAllottedPlot";
 export const GET_ALLOTTEDPLOTS_URI = "Monitoring/GetAllottedPlots"
 export const IS_NEW_FARMAR_URI = "Monitoring/IsNewFarmer"
 
+export const GET_PLOTASSESSMENT_URI = "Monitoring/GetPlotAssessements";
+
