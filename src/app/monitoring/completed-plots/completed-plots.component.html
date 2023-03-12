@@ -1,221 +1,206 @@
 <div class="col-12">
     <div class="card">
-
-        <!-- toolbar -->
-        <p-toolbar styleClass="p-mb-4">
-            <ng-template pTemplate="left">
-                <h4>Completed Plots</h4>
-            </ng-template>
-            <ng-template pTemplate="right">
-                <button pButton pRipple label="New Plot Transfer" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    (click)="addCompletedPlot()"></button>
-            </ng-template>
-        </p-toolbar>
-
-        <!-- dialog -->
-        <p-dialog header="Completed Plots" [(visible)]="showDialog" [modal]="true"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
-            <div class="flex flex-column  justify-content-center">
-                <form [formGroup]="getCompletedPlot" (ngSubmit)="onSubmit()">
-                    <div class="grid">
-                        <div class="col-12">
-                            <div class="p-fluid p-formgrid grid">
-                                <div class="field col-12 md:col-4">
-                                    <label>Season:<sup class="p-error">*</sup></label>
-                                    <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
-                                        [options]="seasons" [showClear]="true"
-                                        (onChange)="getCompletedPlotBySeason($event.value)" optionValue="seasonId">
-                                    </p-dropdown>
-                                </div>
-                                <div class="field col-12 md:col-4">
-                                    <label>Doc No:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="name" type="text" placeholder="Enter Doc No">
-                                </div>
-                                <div class="field col-12 md:col-4">
-                                    <label>Doc Date:<sup class="p-error">*</sup></label>
-                                    <p-calendar placeholder="Select Doc Date" [readonlyInput]="true" [showIcon]="true">
-                                    </p-calendar>
-                                </div>
-                                <div class="field col-12 md:col-4">
-                                    <label>Farmer Code:<sup class="p-error">*</sup></label>
-                                    <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId"
-                                        [filter]="true" filterBy="villageName,villageCode" 
-                                        placeholder="Select Farmer Code">
-                                        <ng-template let-village pTemplate="selectedItem">
-                                            <div>{{village.villageCode}}</div>
-                                        </ng-template>
-                                        <ng-template let-village pTemplate="item">
-                                            <div>{{village.villageCode}}</div>
-                                            <div>Code: {{village.villageCode}} Name:{{village.villageName}}</div>
-                                        </ng-template>
-                                    </p-dropdown>
-                                </div>
-                                <div class="field col-12 md:col-4">
-                                    <label>Farmer Name :<sup class="p-error">*</sup></label>
-                                    <input pInputText  placeholder="Enter Farmer Name"
-                                        readonly>
-                                </div>
-
-                                <div class="field col-12 md:col-4">
-                                    <label> Plot No:<sup class="p-error">*</sup></label>
-                                    <p-dropdown class="ml-2" placeholder="Select Plot No" optionLabel="name"
-                                        [options]="villages" [showClear]="true" optionValue="seasonId">
-                                    </p-dropdown>
-
-                                </div>
-                                <div class="field col-12 md:col-4">
-                                    <label> Estimated Ton:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="name" type="text" placeholder="Enter Estimated Ton">
-                                </div>
-                                <div class="field col-12 md:col-4">
-                                    <label> Supplied Ton:<sup class="p-error">*</sup></label>
-                                    <p-dropdown optionValue="districtId" placeholder="Select Supplied Ton">
-                                    </p-dropdown>
-                                </div>
-
-                                <div class="field col-12 md:col-4">
-                                    <label>Net Area:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="name" type="text" placeholder="Enter Net Area">
-                                </div>
-
-                                <div class="field col-12 md:col-4">
-                                    <label>Last Weighment Date:<sup class="p-error">*</sup></label>
-                                    <p-calendar placeholder="Select Last Weighment Date" [readonlyInput]="true"
-                                        [showIcon]="true">
-                                    </p-calendar>
-                                </div>
-
-                                <div class="field col-12 md:col-2 mt-5">
-                                    <label>Is Over:</label><br>
-                                    <p-inputSwitch></p-inputSwitch>
-                                </div>
-
-                                <div class="field col-12 md:col-2 mt-5">
-                                    <label>Is Left Over?:</label><br>
-                                    <p-inputSwitch></p-inputSwitch>
-                                </div>
-
-                                <div class="field col-12 md:col-2 mt-5">
-                                    <label>Is Ratoon?:</label><br>
-                                    <p-inputSwitch></p-inputSwitch>
-                                </div>
-
-                            </div>
+  
+      <!-- toolbar -->
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <h4>Compleated Plots</h4>
+        </ng-template>
+        <ng-template pTemplate="right">
+          <button pButton pRipple label="New Compleated Plot" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="addCompleatedPlot()"></button>
+        </ng-template>
+      </p-toolbar>
+  
+      <!-- dialog -->
+      <p-dialog header="Compleated Plot"  [(visible)]="showDialog" [modal]="true"
+        [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
+        <div class="flex flex-column  justify-content-center">
+          <form [formGroup]="fbplotTransfer" (ngSubmit)="onSubmit()">
+            <div class="grid">
+              <div class="col-12">
+                <div class="p-fluid p-formgrid grid">
+                  <p-fieldset legend="Season Info"class="col-12"[toggleable]="true" [transitionOptions]="'500ms'">
+                    <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-4">
+                      <label>Season:<sup class="p-error">*</sup></label>
+                          <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
+                            optionValue="seasonId" formControlName="seasonId" (onChange)="getNewDocNo($event.value)"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
+                          </p-dropdown>
+                          <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="FormControls['seasonId'].errors?.['required']">
+                              Please Select Season.</div>
+                          </span>
+                        </div>
+                        <!-- (onChange)="getNewOfferNo($event.value)" -->
+                        <div class="field col-12 md:col-4">
+                          <label>Doc No:</label>
+                          <input pInputText id="offerNo" type="text" placeholder="Doc No" formControlName="docNo" readonly>
+                        </div>
+                    <div class="field col-12 md:col-4">
+                      <label>Doc Date:<sup class="p-error">*</sup></label>
+                      <p-calendar formControlName="docDate" placeholder="Select Doc Date" [readonlyInput]="true" [showIcon]="true"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['docDate'].touched && FormControls['docDate'].errors }">
+                      </p-calendar>
+                      <span *ngIf="FormControls['docDate'].touched && FormControls['docDate'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['docDate'].errors?.['required']">
+                          Please Select Doc Date.</div>
+                      </span>
+  
+                  </div>
+  
+                </div>
+                </p-fieldset>
+  
+                 
+                <p-fieldset legend="Transfer From Farmer" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="p-fluid p-formgrid grid">
+                  <div class="field col-12 md:col-4">
+                      <label>Farmer Code:<sup class="p-error">*</sup></label>
+                      <p-dropdown optionLabel="code" [options]="toFarmers" formControlName="toFarmerId" optionValue="farmerId" [filter]="true"
+                      filterBy="code,farmerName," placeholder="Select Farmer"
+                      (onChange)="onSelectedToFarmer($event.value)"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['toFarmerId'].touched && FormControls['toFarmerId'].errors }" >
+                      <ng-template let-farmer pTemplate="selectedItem">
+                        <div>{{farmer.code}}</div>
+                      </ng-template>
+                      <ng-template let-farmer pTemplate="item">
+                        <div>{{farmer.code}}</div>
+                        <div>Code: {{farmer.code}} Name:{{farmer.farmerName}}</div>
+                      </ng-template>
+                    </p-dropdown>
+                    <span *ngIf="FormControls['toFarmerId'].touched && FormControls['toFarmerId'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['toFarmerId'].errors?.['required']">
+                        Please Select To Farmer.</div>
+                    </span>
+                  </div>
+              
+                  <div class="field col-12 md:col-4">
+                    <label>To Farmer Name:</label>
+                    <input pInputText id="toFarmerName" placeholder="Farmer Name" formControlName="toFarmerName" type="text" readonly>
+                  </div>
+                    
+                    <div class="field col-12 md:col-4">
+                      <label> Plot No:<sup class="p-error">*</sup></label>
+                   <input pInputText id="name" type="number"formControlName='plotAssessmentId' placeholder="Enter Plot No">
+                    </div>
+                  </div>
+                  </p-fieldset>
+  
+                  <p-fieldset legend="Plot Transfer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12 md:col-4">
+                            <label> Estimated Ton:<sup class="p-error">*</sup></label>
+                            <input pInputText id="name" type="text" placeholder="Enter Estimated Ton">
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label> Supplied Ton:<sup class="p-error">*</sup></label>
+                            <input pInputText id="name" type="text" placeholder="EnterSupplied Ton">
                         </div>
 
-                    </div>
-                </form>
+                        <div class="field col-12 md:col-4">
+                            <label>Net Area:<sup class="p-error">*</sup></label>
+                            <input pInputText id="name" type="text" placeholder="Enter Net Area">
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label>Last Weighment Date:<sup class="p-error">*</sup></label>
+                            <p-calendar placeholder="Select Last Weighment Date" [readonlyInput]="true"
+                                [showIcon]="true">
+                            </p-calendar>
+                        </div>
+                  
+                  <div class="field col-12 md:col-2 mt-5">
+                    <label>Is Over:</label><br>
+                    <p-inputSwitch></p-inputSwitch>
+                </div>
+
+                <div class="field col-12 md:col-2 mt-5">
+                    <label>Is Left Over?:</label><br>
+                    <p-inputSwitch></p-inputSwitch>
+                </div>
+
+                <div class="field col-12 md:col-2 mt-5">
+                    <label>Is Ratoon?:</label><br>
+                    <p-inputSwitch></p-inputSwitch>
+                </div>
 
             </div>
-
-            <ng-template pTemplate="footer">
-                <div class="col-12">
-                    <div class="col-4" style="float:right">
-                        <button pButton pRipple type="submit" label="{{submitLabel}}"
-                            class="p-button-raised p-button-success"></button>
-                    </div>
+                 
+                  </p-fieldset>
+                  
                 </div>
-            </ng-template>
-        </p-dialog>
-        <!-- table -->
-        <p-table #dt1 dataKey="id" [rows]="10" [rowHover]="true"
-            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
-            <ng-template pTemplate="caption">
-                <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                        (click)="clear(dt1)"></button>
-                    <div>
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                                pTooltip="Search By Farmer Name, Village Name, Plot No" class="w-full" />
-                        </span>
-                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                            optionValue="seasonId">
-                        </p-dropdown>
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th></th>
-                    <th pSortableColumn="season">Season<p-columnFilter type="text" field="season" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="season"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="croptype">Plot No<p-columnFilter type="text" field="croptype" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="croptype"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="farmercode">Doc No<p-columnFilter type="text" field="farmercode"
-                            display="menu"></p-columnFilter>
-                        <p-sortIcon field="farmercode"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="farmername">Doc Date<p-columnFilter type="text" field="farmername"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="farmername"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="fathername">Is Over<p-columnFilter type="text" field="fathername"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="fathername"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="village">Is Active<p-columnFilter type="text" field="village" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="village"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="canevillage">Created Date<p-columnFilter type="text" field="canevillage"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="canevillage"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="plotTransfer">Created By<p-columnFilter type="text" field="plotTransfer"
-                            display="menu"></p-columnFilter>
-                        <p-sortIcon field="plotTransfer"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="plotno">Updated Date<p-columnFilter type="text" field="plotno" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="plotno"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="createdAt">
-                        Updated By
-                        <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
-                        <p-sortIcon field="createdAt"></p-sortIcon>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-CompletedPlots>
-                <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil"
-                            class="p-element p-ripple p-button-text p-button p-component"></button></td>
-                    <td>{{CompletedPlots.code}}</td>
-                    <td>{{CompletedPlots.name}}</td>
-                    <td>{{CompletedPlots.estimatedTon}}</td>
-                    <td>{{CompletedPlots.loanEligible}}</td>
-                    <td style="text-align:center">
-                        <p-checkbox name="isActive" value="isActive" [(ngModel)]="CompletedPlots.isActive"
-                            [binary]="true" [disabled]="true">
-                        </p-checkbox>
-                    </td>
-                    <td>{{CompletedPlots.createdAt }}</td>
-                    <td>{{CompletedPlots.createdBy}}</td>
-                    <td>{{CompletedPlots.updatedAt }}</td>
-                    <td>{{CompletedPlots.updatedBy}}</td>
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="20" class="md:text-center">No Completed Plots Found.</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
-                <tr>
-                    <td colspan="20" class="md:text-center">Loading Completed Plots Data. Please Wait.</td>
-                </tr>
-            </ng-template>
-        </p-table>
+              </div>
+            </div>
+          </form>
+        </div>
+        <ng-template pTemplate="footer">
+          <div class="col-12">
+            <div class="col-4" style="float:right">
+              <button pButton pRipple type="submit" label="{{submitLabel}}"
+              (click)="onSubmit()" class="p-button-raised p-button-success"></button>
+            </div>
+          </div>
+        </ng-template>
+      </p-dialog>
+  
+      <!-- table -->
+      <p-table #dt1 dataKey="id" [value]="plotTransfers" [columns]="headers" [rows]="10" [rowHover]="true"
+        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
+        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+              (click)="clear(dt1)"></button>
+            <div>
+              <span class="p-input-icon-left mb-2">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                  pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
+              </span>
+              <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+                [(ngModel)]="currentSeason.seasonId" (onChange)="initCompleatedPlot($event.value)" optionValue="seasonId">
+              </p-dropdown>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th></th>
+            <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+              {{col?.label}} <p-sortIcon field="code">
+              </p-sortIcon>
+              <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-PlotTransfer>
+          <tr>
+            <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+                (click)="editCompleatedPlot(plotTransfer)"></button>
+            </td>
+            <td *ngFor="let col of headers">
+              <span *ngIf="col?.field != 'docDate' && col?.field != 'plantingDate'">{{PlotTransfer[col.field]}}</span>
+              <span *ngIf="col?.field == 'docDate' || col?.field == 'plantingDate'">
+                {{PlotTransfer[col.field] | date: 'dd-MM-yyyy'}}
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="20" class="md:text-center">No Plot Transfers Found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="20" class="md:text-center">Loading Plot Transfers Data. Please wait.</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
-</div>
+  </div>
