@@ -191,3 +191,44 @@ export class PlotAssessmentViewDto {
   updatedAt?: Date;
   updatedBy?: string;
 }
+export class PlotTransferDto {
+  plotTransferId?: number
+  seasonId?: number
+  plotAssessmentId?: number
+  docNo?: number
+  docDate?: string
+  plotTransferTypeId?: number
+  fromFarmerId?: number
+  transferArea?: number
+  toFarmerId?: number
+  plotTransferReasonId?: number
+  isActive?: boolean
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+}
+export class PlotTransferViewDto {
+  plotTransferId?: number
+  seasonId?: number
+  SeasonName?: string
+  plotAssessmentId?: number
+  docNo?: number
+  docDate?: string
+  plotTransferTypeId?: number
+  plotTransferType?: string
+  fromFarmerId?: number
+  fromFarmerCode?: number
+  fromFarmerName?: string
+  transferArea?: number
+  toFarmerId?: number
+  toFarmerCode?: number
+  toFarmerName?: string
+  plotTransferReasonId?: number
+  plotTransferReason?: string
+  isActive?: boolean
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+} 
