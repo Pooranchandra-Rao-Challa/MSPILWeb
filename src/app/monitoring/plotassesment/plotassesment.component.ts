@@ -4,7 +4,6 @@ import { Table } from 'primeng/table';
 import { FarmersViewDto, LookupDetailDto, plantTypeDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
 import { PlotAssessmentViewDto, plotAssessmentWeedicidesDto, PlotReportDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import { CommonService } from 'src/app/_services/common.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
@@ -15,6 +14,7 @@ import { CURRENT_SEASON } from 'src/environments/environment';
   selector: 'app-plotassesment',
   templateUrl: './plotassesment.component.html',
   styles: [
+
   ]
 })
 export class PlotassesmentComponent implements OnInit {
@@ -38,14 +38,13 @@ export class PlotassesmentComponent implements OnInit {
   weedicides:LookupDetailDto[] =[]
   plotReports: PlotReportDto[] =[];
   currentSeasonCode?: string;
-
+  pests?:LookupDetailDto[] =[];
+  faPestsDetails!: FormArray;
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private lookupService: LookupService,
     private monitoringService: MonitoringService) { }
-
-
-
+    
   initPlotAssesment() {
     this.submitLabel = "Add Assesment";
     this.addFlag = true;
@@ -90,12 +89,12 @@ export class PlotassesmentComponent implements OnInit {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
       console.log(this.currentSeason);
-      this.initPlotReports(this.currentSeason);
+      this.initPlotReports(this.currentSeason.seasonId!);
     });
   }
 
-  initPlotReports(season: SeasonDto){
-    this.monitoringService.GetPlotReportsInSeason(season.seasonId!).subscribe((resp)=>{
+  initPlotReports(season: number){
+    this.monitoringService.GetPlotReportsInSeason(season).subscribe((resp)=>{
       console.log(resp);
 
       this.plotReports = resp as unknown as PlotReportDto[];
@@ -144,6 +143,11 @@ export class PlotassesmentComponent implements OnInit {
       this.weedicides = resp as unknown as LookupDetailDto[];
     });
   }
+  initPests(){
+    this.lookupService.Pests().subscribe((resp) => {
+      this.pests = resp as unknown as LookupDetailDto[];
+    });
+  }
   // initCurrentSeason(seasonCode: string) {
   //   this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
   //     this.currentSeason = resp as SeasonDto;
@@ -166,7 +170,7 @@ export class PlotassesmentComponent implements OnInit {
     this.fbPlotAssesment = this.formbuilder.group({
       seasonId: ['', Validators.required],
       plotReportId: ['',Validators.required],
-      croptype: [],
+      croptype: ['',Validators.required],
       crop: [],
       offeredno: [],
       farmerId: [],
@@ -179,7 +183,7 @@ export class PlotassesmentComponent implements OnInit {
       plotareavillage: [],
       planttype: [],
       plottype: [],
-       surveyno: [],
+      surveyno: [],
       reportedarea: [],
       plantingdate: [],
       variety: [],
@@ -196,12 +200,31 @@ export class PlotassesmentComponent implements OnInit {
       micronutrientdeficiency: [true],
       trashmulching: [true],
       gapfillingdone: [true],
-      weedicides:this.formbuilder.array([])
+      weedicides:this.formbuilder.array([]),
+      pests:this.formbuilder.array([]),
     })
   }
 
   getFormArrayControl(formGroupName: string):FormArray{
     return this.fbPlotAssesment.controls[formGroupName] as FormArray
+  }
+
+  faPests(): FormArray {
+    return this.fbPlotAssesment.get("pests") as FormArray
+  }
+  addPests() {
+    this.faPestsDetails = this.fbPlotAssesment.get("pests") as FormArray
+    this.faPestsDetails.push(this.generaterow())
+  }
+  generaterow(){
+    return this.formbuilder.group({
+      lookupId: [],
+      lookupDetailId: [],
+      name: [],
+      remarks: [],
+      identifieddate:[],
+      controldate:[],
+    })
   }
 
   createWeed(weed: LookupDetailDto,plotAssessmentWeeds?:any): FormGroup {

@@ -34,7 +34,6 @@
                         <label>Plot No:</label>
                         <!-- <input pInputText type="text" formControlName="plotReportId"
                                                     placeholder="Enter Plot No"> -->
-
                         <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
                           [options]="plotReports" optionValue="plotReportId" formControlName="plotReportId">
                         </p-dropdown>
@@ -100,7 +99,7 @@
                         <label>Crop:<sup class="p-error">*</sup></label>
                         <input pInputText type="text" formControlName="crop" placeholder="Enter Crop">
                       </div>
-                      <hr size="6" width="100%" color="black">
+                      <hr size="4" width="100%" >
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Reported Area:<sup class="p-error">*</sup></label>
                         <input pInputText type="text" formControlName="reportedarea" placeholder="Enter Reported Area">
@@ -229,25 +228,25 @@
               </div>
             </div>
             <p-tabView orientation="left">
-              <p-tabPanel header="Weedicide Used" class="col-12">
+              <p-tabPanel header="Weedicide">
                 <div class="grid col-12">
-                  <div formArrayName='weedicides'>
+                        <div formArrayName='weedicides'  class="checkboxList">
                     <ng-container *ngIf="this.fbPlotAssesment.controls['weedicides'] as formArray">
-                      <div class="field col-12 md:col-3"
+                      <div 
                         *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index">
-                        <div [formGroupName]="i" class="col-12" style="padding-left:unset">
+                        <div [formGroupName]="i"  style="padding-left:unset">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
-
                           </p-inputSwitch>{{item.value.name}}
                         </div>
                       </div>
                     </ng-container>
                   </div>
-                </div>
+                </div>  
               </p-tabPanel>
+           
               <p-tabPanel header="Pests" class="col-12">
-                <div class="col-12">
-                  <p-table #dt2 dataKey="id" [rows]="10" [rowHover]="true"
+                <div class="col-12" >
+                  <p-table #dt2 dataKey="id" [value]="faPests().controls" [rows]="10" [rowHover]="true"   
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
                     [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
                     <ng-template pTemplate="header">
@@ -258,23 +257,23 @@
                         <th>Remarks</th>
                       </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
-                      <tr [formGroupName]="lookUpDetailsIndex">
+                    <ng-template pTemplate="body" let-pests let-PestsIndex="rowIndex">
+                      <tr [formGroupName]="PestsIndex" >
                         <td>
-                          <input pInputText class="form-control">
+                          <input pInputText class="form-control" formControlName="name">
                         </td>
                         <td>
-                          <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                          <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="identifieddate" mask="99/99/9999"
                             placeholder=" Please Select planting Date">
                           </p-calendar>
                         </td>
                         <td>
-                          <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                          <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="controldate" mask="99/99/9999"
                             placeholder=" Please Select planting Date">
                           </p-calendar>
                         </td>
                         <td>
-                          <input pInputText class="form-control">
+                          <input pInputText class="form-control" formControlName="remarks" >
                         </td>
                       </tr>
                     </ng-template>
