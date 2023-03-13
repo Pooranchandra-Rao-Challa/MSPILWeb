@@ -230,10 +230,10 @@
             <p-tabView orientation="left">
               <p-tabPanel header="Weedicide">
                 <div class="grid col-12">
-                        <div formArrayName='weedicides'  class="checkboxList">
+                        <div formArrayName='weedicides'  class="checkboxList grid">
                     <ng-container *ngIf="this.fbPlotAssesment.controls['weedicides'] as formArray">
                       <div 
-                        *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index">
+                        *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index" class="col-2">
                         <div [formGroupName]="i"  style="padding-left:unset">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
                           </p-inputSwitch>{{item.value.name}}
