@@ -16,3 +16,5 @@ function convertParamsToUrlString(params:any[]):any{
   )
   return str;
 }
+
+export const CURRENT_SEASON = () => { return `${new Date().getFullYear()-1}-${(new Date().getFullYear()).toString().substring(2,4)}`}

@@ -18,6 +18,7 @@ import { SeedComponent } from './seed/seed.component';
     { path: 'plotassesment', component: PlotassesmentComponent},
     { path: 'sampleentry', component: SampleEntryComponent},
     { path: 'plotreports', component: PlotreportsComponent},
+    { path: 'plotreports/:paramUrl', component: PlotreportsComponent },
     { path: 'propping', component: ProppingComponent},
     { path: 'seed', component: SeedComponent},
   ])],
