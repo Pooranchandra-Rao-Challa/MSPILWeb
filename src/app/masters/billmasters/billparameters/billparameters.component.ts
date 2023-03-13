@@ -99,7 +99,7 @@ export class BillParametersComponent implements OnInit {
   }
 
   addBillParam() {
-    this.submitLabel = "Add Bill";
+    this.submitLabel = "Add Bill Parameter";
     this.addFlag = true;
     this.showDialog = true;
   }
@@ -116,7 +116,7 @@ export class BillParametersComponent implements OnInit {
     this.billParam.isActive = billParam.isActive;
     this.fbBillParameters.setValue(this.billParam);
     this.addFlag = false;
-    this.submitLabel = "Update Bill";
+    this.submitLabel = "Update Bill Parameter";
     this.showDialog = true;
   }
 
