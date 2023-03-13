@@ -36,7 +36,8 @@
     >
      <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-            <p-table #dt [value]="app_config" dataKey="vin" editMode="row">
+            <p-table #dt dataKey="vin" editMode="row">
+                 <!-- [value]="app_config" -->
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Name</th>
@@ -67,9 +68,12 @@
                             </p-cellEditor>
                         </td>
                         <td style="text-align:center">
-                            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
-                            <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
-                            <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" ></button>
+                            <!-- (click)="onRowEditInit(rowData)" -->
+                            <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em"></button>
+                            <!-- (click)="onRowEditSave(rowData)" -->
+                            <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger"></button>
+                            <!-- (click)="onRowEditCancel(rowData, ri)" -->
                         </td>
                     </tr>
                 </ng-template>
