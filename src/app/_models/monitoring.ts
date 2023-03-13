@@ -51,7 +51,7 @@ export interface IAllottedPlotViewDto {
   updatedAt: Date;
   updatedBy: string;
 }
-export class WeedicideDto{ 
+export class WeedicideDto {
   lookupDetailId?: number;
   code?: number;
   name?: string;
@@ -65,3 +65,115 @@ export class WeedicideDto{
   updatedBy?: string;
 }
 
+export class PlotReportDto {
+  plotReportId?: number;
+  seasonId?: number;
+  allottedPlotId?: number;
+  cropTypeId?: number;
+  plantTypeId?: number;
+  plotNumber?: string;
+  surveyNo?: string;
+  reportedArea?: number;
+  plantingDate?: Date;
+  plantSubTypeId?: number;
+  varietyId?: number;
+  fieldName?: string;
+  birnumber?: string;
+  birdate?: Date;
+  plotTypeId?: number;
+  demoPlotArea?: number;
+  seedMaterialUsedId?: number;
+  soilTypeId?: number;
+  spacingId?: number;
+  isNeedHotWaterTreatment?: boolean;
+  isDustingApplied?: boolean;
+  isTrashMulchingDone?: boolean;
+  isPreviouslyRedPlot?: boolean;
+  isBasalFertilization?: boolean;
+  previousCropId?: number;
+  sourceOfIrrigationId?: number;
+  isCompositeFormYard?: boolean;
+  isFilterPressMud?: boolean;
+  isGreenManures?: boolean;
+  profile?: string;
+  totalArea?: number;
+  cultivatedArea?: number;
+  methodOfIrrigationId?: number;
+  distanceFromPlot?: number;
+  plantingMethodId?: number;
+  isActive?: boolean;
+}
+
+export interface IPlotReportViewDto {
+  plotReportId?: number;
+  seasonId?: number;
+  season?: string;
+  cropTypeId?: number;
+  cropType?: string;
+  allottedPlotId?: number;
+  offerNo?: number;
+  farmerId?: number;
+  farmerCode?: string;
+  farmerName?: string;
+  fatherName?: string;
+  farmerVillageId?: number;
+  farmerVillageName?: string;
+  farmerDivisionName?: string;
+  farmerCircleName?: string;
+  farmerSectionName?: string;
+  plotVillageId?: number;
+  plotVillageName?: string;
+  plotDivisionName?: string;
+  plotCircleName?: string;
+  plotSectionName?: string;
+  plantTypeId?: number;
+  plantType?: string;
+  plotNumber?: string;
+  surveyNo?: string;
+  reportedArea?: number;
+  plantingDate?: Date;
+  plantSubTypeId?: number;
+  plantSubType?: string;
+  varietyId?: number;
+  varietyName?: string;
+  expectedVariety?: string;
+  fieldName?: string;
+  bIRNumber?: string;
+  bIRDate?: Date;
+  plotTypeId?: number;
+  plotType?: string;
+  demoPlotArea?: number;
+  seedMaterialUsedId?: string;
+  seedMaterialUsed?: string;
+  soilTypeId?: number;
+  soilType?: string;
+  spacingId?: number;
+  spacing?: string;
+  isNeedHotWaterTreatment?: boolean;
+  isDustingApplied?: boolean;
+  isTrashMulchingDone?: boolean;
+  isPreviouslyRedPlot?: boolean;
+  isBasalFertilization?: boolean;
+  previousCropId?: number;
+  previousCrop?: string;
+  sourceOfIrrigationId?: string;
+  sourceOfIrrigation?: string;
+  isCompositeFormYard?: boolean;
+  isFilterPressMud?: boolean;
+  isGreenManures?: boolean;
+  profile?: string;
+  cultivatedArea?: number;
+  methodOfIrrigationId?: number;
+  methodOfIrrigation?: string;
+  distanceFromPlot?: number;
+  plantingMethodId?: number;
+  plantingMethod?: string;
+  approvedAt?: Date;
+  forApproval?: boolean;
+  dataSyncedAt?: Date;
+  isActive?: boolean;
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+}
