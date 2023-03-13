@@ -20,7 +20,6 @@ export interface IHeader {
   header: string;
   label: string;
 }
-
 @Component({
   selector: 'app-plot-transfers',
   templateUrl: './plot-transfers.component.html',
@@ -57,10 +56,13 @@ export class PlotTransfersComponent implements OnInit {
     { field: 'transferArea', header: 'transferArea', label: 'Transfer Area' },
     { field: 'toFarmerName', header: 'toFarmerName', label: 'To Farmer Name' },
     { field: 'plotTransferReason', header: 'plotTransferReason', label: 'Plot Transfer Reason' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By'},
+
+
   ];
-
-
-
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private commonService: CommonService,
@@ -69,7 +71,6 @@ export class PlotTransfersComponent implements OnInit {
     private LookupService:LookupService,
    
   ) { }
-
   ngOnInit(): void {
     let currentSeason = '2020-21';
     this.initDefaults();
@@ -81,13 +82,11 @@ export class PlotTransfersComponent implements OnInit {
    this.initPlotTransferTypes()
 
   }
-
-  
   plotTransferForm() {
     this.fbplotTransfer = this.formbuilder.group({
       plotTransferId:[0],
       seasonId: ['',(Validators.required)], 
-      plotAssessmentId:[''],
+      plotAssessmentId:[2],
       docNo:  [{ value: '' }],
       docDate:['' ,(Validators.required)],
       plotTransferTypeId:['', (Validators.required)],
@@ -95,9 +94,9 @@ export class PlotTransfersComponent implements OnInit {
       fromFarmerName:['', ],
       transferArea: ['', (Validators.required)],
       toFarmerId:['', (Validators.required)],
-      farmerName:[''],
+      toFarmerName:[''],
       plotTransferReasonId:['', (Validators.required)],
-      "isActive": true
+      isActive: [false],
     });
   }
  
@@ -170,7 +169,6 @@ export class PlotTransfersComponent implements OnInit {
       
     });
   }
- 
 
   onSelectedFarmer(farmerId: number) {
     this.farmers.forEach((value) => {
@@ -189,9 +187,6 @@ export class PlotTransfersComponent implements OnInit {
       }
     });
   }
-
-
-
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
@@ -214,26 +209,32 @@ export class PlotTransfersComponent implements OnInit {
       });
   }
   editPlotTransfer(plotTransfer:PlotTransferViewDto){
-    // this.plotTransfer.plotTransferId = plotTransfer.plotTransferId;
-    // this.plotTransfer.seasonId = plotTransfer.seasonId;
-    // this.fbplotTransfer.controls['seasonId'].disable();
-    // this.plotTransfer.plotAssessmentId = plotTransfer.plotAssessmentId;
-    // this.plotTransfer.docNo = plotTransfer.docNo;
-    // // this.plotTransfer.docDate = new Date(plotTransfer.docDate?.toString() + "");
-    // this.plotTransfer.plotTransferTypeId = plotTransfer.plotTransferTypeId;
-    // this.plotTransfer.fromFarmerId = plotTransfer.fromFarmerId;
-    // this.plotTransfer.transferArea = plotTransfer.transferArea;
-    // this.plotTransfer.toFarmerId = plotTransfer.toFarmerId;
-    // this.plotTransfer.plotTransferReasonId = plotTransfer.plotTransferReasonId;
-    // this.plotTransfer.isActive = plotTransfer.isActive;
-    this.fbplotTransfer.patchValue(plotTransfer);
+    this.fbplotTransfer.patchValue({
+      plotTransferId: plotTransfer.plotTransferId,
+      seasonId: plotTransfer.seasonId,
+      plotAssessmentId: plotTransfer.plotAssessmentId=2,
+      docNo: plotTransfer.docNo,
+      docDate: plotTransfer.docDate,
+      plotTransferTypeId: plotTransfer.plotTransferTypeId,
+      fromFarmerId: plotTransfer.fromFarmerId,
+      fromFarmerName: plotTransfer.fromFarmerName,
+      transferArea: plotTransfer.transferArea,
+      toFarmerId: plotTransfer.toFarmerId,
+      farmerName: plotTransfer.toFarmerName,
+      plotTransferReasonId: plotTransfer.plotTransferReasonId,
+      isActive: plotTransfer.isActive
+    });
+    this.fbplotTransfer.patchValue({
+      docDate: new Date(plotTransfer.docDate?.toString() + ''),
+    });
+   
     this.addFlag = false;
     this.submitLabel = 'Update Plot Transfer';
     this.showDialog = true;
-
   }
 
   savePlotTransfer(): Observable<HttpEvent<any>> {
+    debugger;
     if (this.addFlag) return this.monitoringService.CreatePlotTransfer(this.fbplotTransfer.value)
     else return this.monitoringService.UpdatePlotTransfer(this.fbplotTransfer.value)
   }
