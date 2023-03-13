@@ -65,6 +65,7 @@ export class LookupComponent implements OnInit {
       lookUpDetails: this.formbuilder.array([]),
     });
   }
+  
   // add lookupdtls fields
   addLookupDetails() {
     this.ShowlookupDetails = true;
@@ -112,7 +113,6 @@ export class LookupComponent implements OnInit {
       this.fblookup.markAllAsTouched();
     }
   }
-
   // getmethod
   GetLookUp() {
     this.appMasterService.GetlookUp().subscribe((resp) => {

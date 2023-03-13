@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { LookupDetailViewDto } from "src/app/_models/applicationmaster";
 import { ApiHttpService } from "src/app/_services/api.http.service";
 import {
+  APP_CONSTANTS,
   LOOKUP_ACTIONPLANS_URI, LOOKUP_BILLCATEGORIES_URI, LOOKUP_CASTE_URI, LOOKUP_CROPS_URI, LOOKUP_CROPTYPES_URI, LOOKUP_DEPARTMENTS_URI, LOOKUP_DESIGNATIONS_URI,
   LOOKUP_DISEASES_URI, LOOKUP_FERTILIZERS_URI, LOOKUP_GRADES_URI, LOOKUP_HGL_TYPES_URI, LOOKUP_LOAN_TRANSFER_REASONS_URI, LOOKUP_LOAN_TRANSFER_TYPES_URI,
   LOOKUP_METHOD_OF_IRRIGATIONS_URI, LOOKUP_NOT_PLANING_RESONS_URI, LOOKUP_PAYMENT_MODES_URI, LOOKUP_PERISHABLE_REASONS_URI, LOOKUP_PESTS_URI,
@@ -123,5 +124,7 @@ export class LookupService extends ApiHttpService {
   public SeedMaterialUsed() {
     return this.get<LookupDetailViewDto[]>(LOOKUP_SEED_MATERIAL_USED_URI);
   }
-
+  public AppConstants() {
+    return this.get<LookupDetailViewDto[]>(APP_CONSTANTS);
+  }
 }

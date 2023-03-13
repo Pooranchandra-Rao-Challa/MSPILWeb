@@ -98,6 +98,7 @@ export const LOOKUP_WB_MACHINES_URI = "Lookup/WBMachines";
 export const LOOKUP_WEED_STATUSES_URI = "Lookup/WeedStatuses";
 export const LOOKUP_WEEDS_URI = "Lookup/Weeds";
 export const LOOKUP_SEED_MATERIAL_USED_URI = "Lookup/SeedMaterialUsed";
+export const APP_CONSTANTS = "Lookup/AppConstants";
 export const GET_LOOKUP_URI = "ApplicationMaster/GetLookUps"
 export const GET_LOOKUP_DETAILS_URI = "ApplicationMaster/GetLookUp/"
 export const CREATE_LOOKUP_URI = "ApplicationMaster/CreateLookUp"
@@ -156,3 +157,11 @@ export const CREATE_PLOT_REPORT_URI = "Monitoring/CreatePlotReport";
 export const UPDATE_PLOT_REPORT_URI = "Monitoring/UpdatePlotReport";
 export const GET_PLOT_ALLOTMENTS_IN_SEASON_URI = "Monitoring/PlotAllotmentsInSeason";
 export const GET_PLOT_REPORTS_URI = "Monitoring/GetPlotReports";
+export const GET_PLOT_REORT_IN_SEASON_URI = "Monitoring/PlotReportsInSeason";
+export const GET_PLOTASSESSMENT_URI = "Monitoring/GetPlotAssessements";
+export const GET_DOCCODE_URI = "Monitoring/GetNewDocNo/";
+export const CREATE_PLOTTRANSFER_URI = "Monitoring/CreatePlotTransfer";
+export const UPDATE_PLOTTRANSFER_URI = "Monitoring/UpdatePlotTransfer";
+export const GET_PLOTTRANSFER_URI = "Monitoring/GetPlotTransfers";
+
+

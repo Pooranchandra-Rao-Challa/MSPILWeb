@@ -5,16 +5,20 @@ import { AllottedplotComponent } from './allottedplot/allottedplot.component';
 import { PlotTransfersComponent } from './plot-transfers/plot-transfers.component';
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
 import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
+import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { PlotreportsComponent } from './plotreports/plotreports.component';
+import { ProppingComponent } from './propping/propping.component';
 
 @NgModule({
   declarations: [
-  
+
     AllottedplotComponent,
     PlotTransfersComponent,
     CompletedPlotsComponent,
     PlotassesmentComponent,
-    PlotreportsComponent
+    SampleEntryComponent,
+    PlotreportsComponent,
+    ProppingComponent,
   ],
   imports: [
     PrimeNgModule,

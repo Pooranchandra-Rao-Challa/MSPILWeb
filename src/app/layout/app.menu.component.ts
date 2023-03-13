@@ -145,11 +145,14 @@ export class AppMenuComponent implements OnInit {
             permission: true,
             items: [
               { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: true },
+              { label: 'Plot Assesment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassesment'], permission: true },
               { label: 'Plot Reports', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports'], permission: true },
               { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true },
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
               { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:forapproval'], permission: true },
               { label: 'Plot Assesment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassesment'], permission: true },
+              { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: true },
+              { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: true },
               { label: 'Plot Report Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports/:forapproval'], permission: true },
             ]
           }
