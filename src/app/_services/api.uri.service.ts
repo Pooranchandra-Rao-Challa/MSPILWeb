@@ -153,6 +153,7 @@ export const CREATE_ALLOTTEDPLOT_URI = "Monitoring/CreateAllottedPlot";
 export const UPDATE_ALLOTTEDPLOT_URI = "Monitoring/UpdateAllottedPlot";
 export const GET_ALLOTTEDPLOTS_URI = "Monitoring/GetAllottedPlots"
 export const IS_NEW_FARMAR_URI = "Monitoring/IsNewFarmer"
+export const GET_PLOT_REORT_IN_SEASON_URI = "Monitoring/PlotReportsInSeason";
 export const GET_PLOTASSESSMENT_URI = "Monitoring/GetPlotAssessements";
 export const GET_DOCCODE_URI = "Monitoring/GetNewDocNo/";
 export const CREATE_PLOTTRANSFER_URI = "Monitoring/CreatePlotTransfer";

@@ -231,4 +231,10 @@ export class PlotTransferViewDto {
   createdAt?: string
   updatedBy?: string
   updatedAt?: string
-} 
+}
+
+
+export class PlotReportDto{
+  plotReportId?:number;
+  PlotNumber?: string;
+}

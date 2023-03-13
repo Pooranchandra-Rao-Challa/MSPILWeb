@@ -1,132 +1,128 @@
 <div class="col-12">
-    <div class="card">
+  <div class="card">
 
-        <!-- toolbar -->
-        <p-toolbar styleClass="p-mb-4">
-            <ng-template pTemplate="left">
-                <h4>Plot Assesments</h4>
-            </ng-template>
-            <ng-template pTemplate="right">
-                <button pButton pRipple label="New Plot Assesment" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    (click)="initAssesments()"></button>
-            </ng-template>
-        </p-toolbar>
+    <!-- toolbar -->
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <h4>Plot Assesments</h4>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="New Plot Assesment" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="initPlotAssesment()"></button>
+      </ng-template>
+    </p-toolbar>
 
-        <!-- dialog -->
-        <p-dialog header="Plot Assesment" [(visible)]="showDialog" [modal]="true"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
-            <form [formGroup]="fbPlotAssesment" (ngSubmit)="onSubmit()">
-                <p-tabView orientation="left">
-                    <p-tabPanel header="Plot Assesment" class="col-12">
-                        <div class="flex flex-column  justify-content-center">
-                            <div class="grid">
-                                <div class="col-12">
-                                    <p-fieldset legend="Season" [toggleable]="true" class="line-height-3 m-0"
-                                        [transitionOptions]="'500ms'">
-                                        <div class="p-fluid p-formgrid grid">
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Season:</label>
-                                                <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                                                 optionValue="seasonId">
-                                             </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Plot No:</label>
-                                                <input pInputText type="text" formControlName="plotReportId"
-                                                    placeholder="Enter Plot No">
-                                            </div>
-                                        </div>
-                                    </p-fieldset>
-                                    <p-fieldset legend="Farmer Info" [toggleable]="true" class="col-12 mt-2"
-                                        [transitionOptions]="'500ms'">
-                                        <div class="p-fluid p-formgrid grid">
-                                            <!-- <div class="field col-12 md:col-4 lg:col-3 ">
+    <!-- dialog -->
+    <p-dialog header="Plot Assesment" [(visible)]="showDialog" [modal]="true"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
+      <form [formGroup]="fbPlotAssesment" (ngSubmit)="onSubmit()">
+        <p-tabView orientation="left">
+          <p-tabPanel header="Plot Assesment" class="col-12">
+            <div class="flex flex-column  justify-content-center">
+              <div class="grid">
+                <div class="col-12">
+                  <p-fieldset legend="Season" [toggleable]="true" class="line-height-3 m-0"
+                    [transitionOptions]="'500ms'">
+                    <div class="p-fluid p-formgrid grid">
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Season:</label>
+                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+                          optionValue="seasonId" formControlName="seasonId" (onChange)="initPlotReports($event.value)">
+                        </p-dropdown>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Plot No:</label>
+                        <!-- <input pInputText type="text" formControlName="plotReportId"
+                                                    placeholder="Enter Plot No"> -->
+
+                        <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
+                          [options]="plotReports" optionValue="plotReportId" formControlName="plotReportId">
+                        </p-dropdown>
+                      </div>
+                    </div>
+                  </p-fieldset>
+                  <p-fieldset legend="Farmer Info" [toggleable]="true" class="col-12 mt-2"
+                    [transitionOptions]="'500ms'">
+                    <div class="p-fluid p-formgrid grid">
+                      <!-- <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Offered No:<sup class="p-error">*</sup></label>
                                                 <input pInputText type="text" formControlName="offeredno"
                                                     placeholder="Enter Offered No">
                                             </div> -->
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Farmer Code:<sup class="p-error">*</sup></label>
-                                                <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
-                                                filterBy="code,aliasName,villageName" formControlName="farmerId" placeholder="Select Farmer"
-                                                (onChange)="onSelectedFarmer($event.value)">
-                                                <ng-template let-farmer pTemplate="selectedItem">
-                                                  <div>{{farmer.code}}</div>
-                                                </ng-template>
-                                                <ng-template let-farmer pTemplate="item">
-                                                  <div>{{farmer.code}}</div>
-                                                  <div>Code: {{farmer.code}} Name:{{farmer.aliasName}} Village:{{farmer.villageName}}</div>
-                                                </ng-template>
-                                              </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Farmer Name:<sup class="p-error">*</sup></label>
-                                                <input pInputText type="text" formControlName="farmername" readonly
-                                                    placeholder="Enter Farmer Name" >
-                                            </div>
-                                            <!-- <div class="field col-12 md:col-4 lg:col-3">
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Farmer Code:<sup class="p-error">*</sup></label>
+                        <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
+                          filterBy="code,aliasName,villageName" formControlName="farmerId" placeholder="Select Farmer"
+                          (onChange)="onSelectedFarmer($event.value)">
+                          <ng-template let-farmer pTemplate="selectedItem">
+                            <div>{{farmer.code}}</div>
+                          </ng-template>
+                          <ng-template let-farmer pTemplate="item">
+                            <div>{{farmer.code}}</div>
+                            <div>Code: {{farmer.code}} Name:{{farmer.aliasName}} Village:{{farmer.villageName}}</div>
+                          </ng-template>
+                        </p-dropdown>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Farmer Name:<sup class="p-error">*</sup></label>
+                        <input pInputText type="text" formControlName="farmername" readonly
+                          placeholder="Enter Farmer Name">
+                      </div>
+                      <!-- <div class="field col-12 md:col-4 lg:col-3">
                                                 <label>Father Name:<sup class="p-error">*</sup></label>
                                                 <input pInputText type="text" formControlName="fathername" readonly
                                                     placeholder="Enter Father Name">
                                             </div> -->
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Farmer Village:<sup class="p-error">*</sup></label>
-                                                <input pInputText type="text" formControlName="farmervillage" readonly
-                                                    placeholder="Enter Farmer Village">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Division:</label>
-                                                <input pInputText type="text" formControlName="division" readonly
-                                                    placeholder="Enter Division">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Circle:</label>
-                                                <input pInputText type="text" formControlName="circle" readonly
-                                                    placeholder="Enter  Circle">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Section:</label>
-                                                <input pInputText type="text" formControlName="section" readonly
-                                                    placeholder="Enter Section">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Crop Type:<sup class="p-error">*</sup></label>
-                                                <p-dropdown optionLabel="name" [options]="crops"  optionValue="lookupDetailId"
-                                                    formControlName="croptype" [autoDisplayFirst]="false" 
-                                                    placeholder="Select Crop Type"></p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Crop:<sup class="p-error">*</sup></label>
-                                                <input pInputText type="text" formControlName="crop"
-                                                    placeholder="Enter Crop">
-                                            </div>
-                                            <hr size="6" width="100%" color="black">
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Reported Area:<sup class="p-error">*</sup></label>
-                                                <input pInputText type="text" formControlName="reportedarea"
-                                                    placeholder="Enter Reported Area">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Field Name:</label>
-                                                <input pInputText type="text" formControlName="fieldname"
-                                                    placeholder="Enter Field Name">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>BIR Number:</label>
-                                                <input pInputText type="text" formControlName="birnumber"
-                                                    placeholder="Enter BIR Number">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>BIR Date:</label>
-                                                <input pInputText type="text" formControlName="birdate"
-                                                    placeholder="Enter BIR Date">
-                                            </div>
-                                        </div>
-                                    </p-fieldset>
-                                    <p-fieldset legend="Cultivable Info" [toggleable]="true" class="col-12 mt-2"
-                                        [transitionOptions]="'500ms'">
-                                        <div class="p-fluid p-formgrid grid">
-                                            <!-- <div class="field col-12 md:col-4 lg:col-3 ">
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Farmer Village:<sup class="p-error">*</sup></label>
+                        <input pInputText type="text" formControlName="farmervillage" readonly
+                          placeholder="Enter Farmer Village">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Division:</label>
+                        <input pInputText type="text" formControlName="division" readonly placeholder="Enter Division">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Circle:</label>
+                        <input pInputText type="text" formControlName="circle" readonly placeholder="Enter  Circle">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Section:</label>
+                        <input pInputText type="text" formControlName="section" readonly placeholder="Enter Section">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Crop Type:<sup class="p-error">*</sup></label>
+                        <p-dropdown optionLabel="name" [options]="crops" optionValue="lookupDetailId"
+                          formControlName="croptype" [autoDisplayFirst]="false"
+                          placeholder="Select Crop Type"></p-dropdown>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Crop:<sup class="p-error">*</sup></label>
+                        <input pInputText type="text" formControlName="crop" placeholder="Enter Crop">
+                      </div>
+                      <hr size="6" width="100%" color="black">
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Reported Area:<sup class="p-error">*</sup></label>
+                        <input pInputText type="text" formControlName="reportedarea" placeholder="Enter Reported Area">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Field Name:</label>
+                        <input pInputText type="text" formControlName="fieldname" placeholder="Enter Field Name">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>BIR Number:</label>
+                        <input pInputText type="text" formControlName="birnumber" placeholder="Enter BIR Number">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>BIR Date:</label>
+                        <input pInputText type="text" formControlName="birdate" placeholder="Enter BIR Date">
+                      </div>
+                    </div>
+                  </p-fieldset>
+                  <p-fieldset legend="Cultivable Info" [toggleable]="true" class="col-12 mt-2"
+                    [transitionOptions]="'500ms'">
+                    <div class="p-fluid p-formgrid grid">
+                      <!-- <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Division:</label>
                                                 <input pInputText type="text" formControlName="division"
                                                     placeholder="Enter Division">
@@ -146,213 +142,211 @@
                                                 <input pInputText type="text" formControlName="farmervillage"
                                                     placeholder="Enter Plot Area Village">
                                             </div> -->
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Plant Type:<sup class="p-error">*</sup></label>
-                                                <p-dropdown optionLabel="name" optionValue="plantTypeId"  [options]="planttypes"
-                                                    placeholder="Select Plant Type"></p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Survey No:<sup class="p-error">*</sup></label>
-                                                <input pInputText type="text" formControlName="surveyno"
-                                                    placeholder="Enter Survey No">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Planting Date:<sup class="p-error">*</sup></label>
-                                                <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                                                    formControlName="plantingdate"
-                                                    placeholder=" Please Select planting Date"></p-calendar>
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Variety:<sup class="p-error">*</sup></label>
-                                                <p-dropdown optionLabel="name" optionValue="lookupDetailId"  [options]="varitytype"
-                                                    formControlName="variety" [autoDisplayFirst]="false"
-                                                    placeholder="Select Variety"></p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Agreed Ton:<sup class="p-error">*</sup></label>
-                                                <input pInputText type="text" formControlName="agreedton"
-                                                    placeholder="Enter Agreed Ton">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Plot Type:<sup class="p-error">*</sup></label>
-                                                <p-dropdown optionLabel="name" optionValue="lookupDetailId"  [options]="plottype"
-                                                    formControlName="plottype" [autoDisplayFirst]="false"
-                                                    placeholder="Select Plot Type"></p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Measure Area:<sup class="p-error">*</sup></label>
-                                                <input pInputText type="text" formControlName="measurearea"
-                                                    placeholder="Enter Measure Area">
-                                            </div>
-                                            <div class="field col-12 md:col-4 lg:col-3">
-                                                <label>Inspection Date:<sup class="p-error">*</sup></label>
-                                                <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                                                    formControlName="inspectiondate"
-                                                    placeholder=" Please Select Inspection Date"></p-calendar>
-                                            </div>
-                                            <div class="field col-12 md:col-6  lg:col-3 ">
-                                                <label>Demo Plot Area:</label><br>
-                                                <p-inputSwitch formControlName="demoplotarea"></p-inputSwitch>
-                                            </div>
-                                            <div class="field col-12 md:col-6  lg:col-3 ">
-                                                <label>Is Active:</label><br>
-                                                <p-inputSwitch formControlName="isactive"></p-inputSwitch>
-                                            </div>
-                                        </div>
-                                    </p-fieldset>
-                                </div>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="Weedicide" class="line-height-3 m-0">
-                        <div class="flex flex-column  justify-content-center">
-                            <div class="grid">
-                                <div class="col-12">
-                                    <div class="p-fluid p-formgrid grid">
-                                        <div class="field col-12 md:col-4 lg:col-3 ">
-                                            <label>Weed Status:</label>
-                                            <p-dropdown optionLabel="name" optionValue="lookupDetailId"  [options]="weedstatus"
-                                                formControlName="weedstatus" [autoDisplayFirst]="false"
-                                                placeholder="Select Weed Status"></p-dropdown>
-                                        </div>
-                                        <div class="field col-12 md:col-4 lg:col-3 ">
-                                            <label>Inter Croping:</label>
-                                            <p-dropdown  optionLabel="name" [options]="cropstypes"  optionValue="lookupDetailId"
-                                                formControlName="intercroping" [autoDisplayFirst]="false"
-                                                placeholder="Select Inter Croping"></p-dropdown>
-                                        </div>
-                                        <div class="field col-12 md:col-6  lg:col-3 ">
-                                            <label>Micronutrient Deficiency:</label><br>
-                                            <p-inputSwitch formControlName="micronutrientdeficiency"></p-inputSwitch>
-                                        </div>
-                                        <div class="field col-12 md:col-6  lg:col-3 ">
-                                            <label>Trash Mulching:</label><br>
-                                            <p-inputSwitch formControlName="trashmulching"></p-inputSwitch>
-                                        </div>
-                                        <div class="field col-12 md:col-6  lg:col-3 ">
-                                            <label>Gap Filing Done:</label><br>
-                                            <p-inputSwitch formControlName="gapfillingdone"></p-inputSwitch>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p-tabView orientation="left">
-                            <p-tabPanel header="Weedicide Used" class="col-12">   
-                                <div class="grid col-12">
-                                    <!-- <div class="col-3" *ngFor="let Weedicide of weed.Weedicide">
-                                      <div class="field-checkbox">
-                                        <p-inputSwitch [(ngModel)]="Weedicide.isActive" [ngModelOptions]="{standalone: true}">
-                                        </p-inputSwitch>
-                                        <label for="ny">{{Weedicide.name}}</label>
-                                      </div>
-                                    </div> -->
-                                  </div>
-                            </p-tabPanel>
-                            <p-tabPanel header="Pests" class="col-12">
-                                <div class="col-12">
-                                    <p-table #dt2 dataKey="id" [rows]="10" [rowHover]="true"
-                                        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                                        [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
-                                        [rowsPerPageOptions]="[10,25,50]">
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Identified Date</th>
-                                                <th>Control Date</th>
-                                                <th>Remarks</th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
-                                            <tr [formGroupName]="lookUpDetailsIndex">
-                                                <td>
-                                                    <input pInputText class="form-control">
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" [showIcon]="true"
-                                                        mask="99/99/9999" placeholder=" Please Select planting Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" [showIcon]="true"
-                                                        mask="99/99/9999" placeholder=" Please Select planting Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <input pInputText class="form-control">
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                            </p-tabPanel>
-                        </p-tabView>
-                    </p-tabPanel>
-                    <p-tabPanel header="Fertilizer/Disease" class="line-height-3 m-0">
-                        <p-tabView orientation="left">
-                            <p-tabPanel header="Bio Fertilizers Applied" class="col-12">    
-                            </p-tabPanel>
-                            <p-tabPanel header="Diseases" class="col-12">
-                                <div class="col-12">
-                                    <p-table #dt2 dataKey="id" [rows]="10" [rowHover]="true"
-                                        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                                        [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
-                                        [rowsPerPageOptions]="[10,25,50]">>
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Identified Date</th>
-                                                <th>Control Date</th>
-                                                <th>Remarks</th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
-                                            <tr [formGroupName]="lookUpDetailsIndex">
-                                                <td>
-                                                    <input pInputText class="form-control">
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" formControlName="plantTo"
-                                                        mask="99/99/9999" placeholder=" Please Select planting Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" formControlName="plantTo"
-                                                        mask="99/99/9999" placeholder=" Please Select planting Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <input pInputText class="form-control">
-                                                </td>
-
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                            </p-tabPanel>
-                        </p-tabView>
-                    </p-tabPanel>
-                </p-tabView>
-            </form>
-            <ng-template pTemplate="footer">
-                <div class="col-12">
-                    <div class="col-4" style="float:right">
-                        <button pButton pRipple type="submit" label="{{submitLabel}}"
-                            class="p-button-raised p-button-success"></button>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Plant Type:<sup class="p-error">*</sup></label>
+                        <p-dropdown optionLabel="name" optionValue="plantTypeId" [options]="planttypes"
+                          placeholder="Select Plant Type"></p-dropdown>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Survey No:<sup class="p-error">*</sup></label>
+                        <input pInputText type="text" formControlName="surveyno" placeholder="Enter Survey No">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Planting Date:<sup class="p-error">*</sup></label>
+                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                          formControlName="plantingdate" placeholder=" Please Select planting Date"></p-calendar>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Variety:<sup class="p-error">*</sup></label>
+                        <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="varitytype"
+                          formControlName="variety" [autoDisplayFirst]="false"
+                          placeholder="Select Variety"></p-dropdown>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Agreed Ton:<sup class="p-error">*</sup></label>
+                        <input pInputText type="text" formControlName="agreedton" placeholder="Enter Agreed Ton">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Plot Type:<sup class="p-error">*</sup></label>
+                        <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="plottype"
+                          formControlName="plottype" [autoDisplayFirst]="false"
+                          placeholder="Select Plot Type"></p-dropdown>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label>Measure Area:<sup class="p-error">*</sup></label>
+                        <input pInputText type="text" formControlName="measurearea" placeholder="Enter Measure Area">
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3">
+                        <label>Inspection Date:<sup class="p-error">*</sup></label>
+                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                          formControlName="inspectiondate" placeholder=" Please Select Inspection Date"></p-calendar>
+                      </div>
+                      <div class="field col-12 md:col-6  lg:col-3 ">
+                        <label>Demo Plot Area:</label><br>
+                        <p-inputSwitch formControlName="demoplotarea"></p-inputSwitch>
+                      </div>
+                      <div class="field col-12 md:col-6  lg:col-3 ">
+                        <label>Is Active:</label><br>
+                        <p-inputSwitch formControlName="isactive"></p-inputSwitch>
+                      </div>
                     </div>
+                  </p-fieldset>
                 </div>
-            </ng-template>
-        </p-dialog>
-        <!-- table -->
-        <p-table #dt1 dataKey="id" [rows]="10" [rowHover]="true"
-            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
-            <ng-template pTemplate="caption">
-                <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                        (click)="clear(dt1)"></button>
-                    <span class="p-input-icon-center mb-2">
-                     <!-- <p-dropdown optionLabel="aliasName" [options]="farmers" optionValue="farmerId" [filter]="true"
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Weedicide" class="line-height-3 m-0">
+            <div class="flex flex-column  justify-content-center">
+              <div class="grid">
+                <div class="col-12">
+                  <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-4 lg:col-3 ">
+                      <label>Weed Status:</label>
+                      <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="weedstatus"
+                        formControlName="weedstatus" [autoDisplayFirst]="false"
+                        placeholder="Select Weed Status"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-4 lg:col-3 ">
+                      <label>Inter Croping:</label>
+                      <p-dropdown optionLabel="name" [options]="cropstypes" optionValue="lookupDetailId"
+                        formControlName="intercroping" [autoDisplayFirst]="false"
+                        placeholder="Select Inter Croping"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-6  lg:col-3 ">
+                      <label>Micronutrient Deficiency:</label><br>
+                      <p-inputSwitch formControlName="micronutrientdeficiency"></p-inputSwitch>
+                    </div>
+                    <div class="field col-12 md:col-6  lg:col-3 ">
+                      <label>Trash Mulching:</label><br>
+                      <p-inputSwitch formControlName="trashmulching"></p-inputSwitch>
+                    </div>
+                    <div class="field col-12 md:col-6  lg:col-3 ">
+                      <label>Gap Filing Done:</label><br>
+                      <p-inputSwitch formControlName="gapfillingdone"></p-inputSwitch>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p-tabView orientation="left">
+              <p-tabPanel header="Weedicide Used" class="col-12">
+                <div class="grid col-12">
+                  <div formArrayName='weedicides'>
+                    <ng-container *ngIf="this.fbPlotAssesment.controls['weedicides'] as formArray">
+                      <div class="field col-12 md:col-3"
+                        *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index">
+                        <div [formGroupName]="i" class="col-12" style="padding-left:unset">
+                          <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
+
+                          </p-inputSwitch>{{item.value.name}}
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </p-tabPanel>
+              <p-tabPanel header="Pests" class="col-12">
+                <div class="col-12">
+                  <p-table #dt2 dataKey="id" [rows]="10" [rowHover]="true"
+                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
+                    [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>Name</th>
+                        <th>Identified Date</th>
+                        <th>Control Date</th>
+                        <th>Remarks</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
+                      <tr [formGroupName]="lookUpDetailsIndex">
+                        <td>
+                          <input pInputText class="form-control">
+                        </td>
+                        <td>
+                          <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                            placeholder=" Please Select planting Date">
+                          </p-calendar>
+                        </td>
+                        <td>
+                          <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                            placeholder=" Please Select planting Date">
+                          </p-calendar>
+                        </td>
+                        <td>
+                          <input pInputText class="form-control">
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </p-tabPanel>
+            </p-tabView>
+          </p-tabPanel>
+          <p-tabPanel header="Fertilizer/Disease" class="line-height-3 m-0">
+            <p-tabView orientation="left">
+              <p-tabPanel header="Bio Fertilizers Applied" class="col-12">
+              </p-tabPanel>
+              <p-tabPanel header="Diseases" class="col-12">
+                <div class="col-12">
+                  <p-table #dt2 dataKey="id" [rows]="10" [rowHover]="true"
+                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
+                    [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">>
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>Name</th>
+                        <th>Identified Date</th>
+                        <th>Control Date</th>
+                        <th>Remarks</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
+                      <tr [formGroupName]="lookUpDetailsIndex">
+                        <td>
+                          <input pInputText class="form-control">
+                        </td>
+                        <td>
+                          <p-calendar [readonlyInput]="true" formControlName="plantTo" mask="99/99/9999"
+                            placeholder=" Please Select planting Date">
+                          </p-calendar>
+                        </td>
+                        <td>
+                          <p-calendar [readonlyInput]="true" formControlName="plantTo" mask="99/99/9999"
+                            placeholder=" Please Select planting Date">
+                          </p-calendar>
+                        </td>
+                        <td>
+                          <input pInputText class="form-control">
+                        </td>
+
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </p-tabPanel>
+            </p-tabView>
+          </p-tabPanel>
+        </p-tabView>
+      </form>
+      <ng-template pTemplate="footer">
+        <div class="col-12">
+          <div class="col-4" style="float:right">
+            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-success"
+              (click)="onSubmit()"></button>
+          </div>
+        </div>
+      </ng-template>
+    </p-dialog>
+    <!-- table -->
+    <p-table #dt1 dataKey="id" [rows]="10" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-center mb-2">
+            <!-- <p-dropdown optionLabel="aliasName" [options]="farmers" optionValue="farmerId" [filter]="true"
                      filterBy="aliasName,code" placeholder="Select Farmer"
                      (onChange)="onSelectedFarmer($event.value)">
                      <ng-template let-farmer pTemplate="selectedItem">
@@ -364,36 +358,35 @@
                      </ng-template>
                    </p-dropdown>
                         <input pInputText id="code" type="text" placeholder="Farmer Code" formControlName="code"> -->
-                    </span>
-                    <div>
-                    <span class="p-input-icon-left mb-2">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)"
-                            placeholder="Search Keyword" class="w-full">
-                    </span>  
-                    <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                    [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssesments($event.value)" optionValue="seasonId">
-                  </p-dropdown>
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th></th>
-                    <th pSortableColumn="crop">Crop<p-columnFilter type="text" field="crop" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="crop"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="season">Season<p-columnFilter type="text" field="season" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="season"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="offeredno">Offered No<p-columnFilter type="text" field="offeredno"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="offeredno"></p-sortIcon>
-                    </th>
-                    <!-- <th pSortableColumn="croptype">Crop Type<p-columnFilter type="text" field="croptype" display="menu">
+          </span>
+          <div>
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+                class="w-full">
+            </span>
+            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssesments($event.value)" optionValue="seasonId">
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th pSortableColumn="crop">Crop<p-columnFilter type="text" field="crop" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="crop"></p-sortIcon>
+          </th>
+          <th pSortableColumn="season">Season<p-columnFilter type="text" field="season" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="season"></p-sortIcon>
+          </th>
+          <th pSortableColumn="offeredno">Offered No<p-columnFilter type="text" field="offeredno" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="offeredno"></p-sortIcon>
+          </th>
+          <!-- <th pSortableColumn="croptype">Crop Type<p-columnFilter type="text" field="croptype" display="menu">
                         </p-columnFilter>
                         <p-sortIcon field="croptype"></p-sortIcon>
                     </th>
@@ -401,112 +394,105 @@
                             display="menu"></p-columnFilter>
                         <p-sortIcon field="farmercode"></p-sortIcon>
                     </th> -->
-                    <th pSortableColumn="farmername">Farmer Name<p-columnFilter type="text" field="farmername"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="farmername"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="fathername">Father Name<p-columnFilter type="text" field="fathername"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="fathername"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="village">Village<p-columnFilter type="text" field="village" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="village"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="canevillage">Cane Village<p-columnFilter type="text" field="canevillage"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="canevillage"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="planttype">Plant Type<p-columnFilter type="text" field="planttype"
-                            display="menu"></p-columnFilter>
-                        <p-sortIcon field="planttype"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="plotno">Plot No<p-columnFilter type="text" field="plotno" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="plotno"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="surveyno">Survey No<p-columnFilter type="text" field="surveyno" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="surveyno"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="plantingdate">Planting Date<p-columnFilter type="text" field="plantingdate"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="plantingdate"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="variety">Variety<p-columnFilter type="text" field="variety" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="variety"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="fieldname">Field Name<p-columnFilter type="text" field="fieldname"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="fieldname"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="plottype">Plot Type<p-columnFilter type="text" field="plottype" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="plottype"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="measurearea">Measure Area<p-columnFilter type="text" field="measurearea"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="measurearea"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="inspectiondate">Inspection Date<p-columnFilter type="text"
-                            field="inspectiondate" display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="inspectiondate"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="settstype">Setts Type<p-columnFilter type="text" field="settstype"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="settstype"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="weedstatus">Weed Status<p-columnFilter type="text" field="weedstatus"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="weedstatus"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="intercroping">Inter Croping<p-columnFilter type="text" field="intercroping"
-                            display="menu">
-                        </p-columnFilter>
-                        <p-sortIcon field="intercroping"></p-sortIcon>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-planttype>
-                <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil"
-                            class="p-element p-ripple p-button-text p-button p-component"></button></td>
-                    <td>{{planttype.code}}</td>
-                    <td>{{planttype.name}}</td>
-                    <td>{{planttype.estimatedTon}}</td>
-                    <td>{{planttype.loanEligible}}</td>
-                    <td style="text-align:center">
-                        <p-checkbox name="isActive" value="isActive" [(ngModel)]="planttype.isActive" [binary]="true"
-                            [disabled]="true">
-                        </p-checkbox>
-                    </td>
-                    <td>{{planttype.createdAt }}</td>
-                    <td>{{planttype.createdBy}}</td>
-                    <td>{{planttype.updatedAt }}</td>
-                    <td>{{planttype.updatedBy}}</td>
+          <th pSortableColumn="farmername">Farmer Name<p-columnFilter type="text" field="farmername" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="farmername"></p-sortIcon>
+          </th>
+          <th pSortableColumn="fathername">Father Name<p-columnFilter type="text" field="fathername" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="fathername"></p-sortIcon>
+          </th>
+          <th pSortableColumn="village">Village<p-columnFilter type="text" field="village" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="village"></p-sortIcon>
+          </th>
+          <th pSortableColumn="canevillage">Cane Village<p-columnFilter type="text" field="canevillage" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="canevillage"></p-sortIcon>
+          </th>
+          <th pSortableColumn="planttype">Plant Type<p-columnFilter type="text" field="planttype"
+              display="menu"></p-columnFilter>
+            <p-sortIcon field="planttype"></p-sortIcon>
+          </th>
+          <th pSortableColumn="plotno">Plot No<p-columnFilter type="text" field="plotno" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="plotno"></p-sortIcon>
+          </th>
+          <th pSortableColumn="surveyno">Survey No<p-columnFilter type="text" field="surveyno" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="surveyno"></p-sortIcon>
+          </th>
+          <th pSortableColumn="plantingdate">Planting Date<p-columnFilter type="text" field="plantingdate"
+              display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="plantingdate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="variety">Variety<p-columnFilter type="text" field="variety" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="variety"></p-sortIcon>
+          </th>
+          <th pSortableColumn="fieldname">Field Name<p-columnFilter type="text" field="fieldname" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="fieldname"></p-sortIcon>
+          </th>
+          <th pSortableColumn="plottype">Plot Type<p-columnFilter type="text" field="plottype" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="plottype"></p-sortIcon>
+          </th>
+          <th pSortableColumn="measurearea">Measure Area<p-columnFilter type="text" field="measurearea" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="measurearea"></p-sortIcon>
+          </th>
+          <th pSortableColumn="inspectiondate">Inspection Date<p-columnFilter type="text" field="inspectiondate"
+              display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="inspectiondate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="settstype">Setts Type<p-columnFilter type="text" field="settstype" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="settstype"></p-sortIcon>
+          </th>
+          <th pSortableColumn="weedstatus">Weed Status<p-columnFilter type="text" field="weedstatus" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="weedstatus"></p-sortIcon>
+          </th>
+          <th pSortableColumn="intercroping">Inter Croping<p-columnFilter type="text" field="intercroping"
+              display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="intercroping"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-planttype>
+        <tr>
+          <td><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component"></button></td>
+          <td>{{planttype.code}}</td>
+          <td>{{planttype.name}}</td>
+          <td>{{planttype.estimatedTon}}</td>
+          <td>{{planttype.loanEligible}}</td>
+          <td style="text-align:center">
+            <p-checkbox name="isActive" value="isActive" [(ngModel)]="planttype.isActive" [binary]="true"
+              [disabled]="true">
+            </p-checkbox>
+          </td>
+          <td>{{planttype.createdAt }}</td>
+          <td>{{planttype.createdBy}}</td>
+          <td>{{planttype.updatedAt }}</td>
+          <td>{{planttype.updatedBy}}</td>
 
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="20" class="md:text-center">No Plot Assesment Found.</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
-                <tr>
-                    <td colspan="20" class="md:text-center">Loading Plot Assesment Data. Please wait.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="20" class="md:text-center">No Plot Assesment Found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="20" class="md:text-center">Loading Plot Assesment Data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>

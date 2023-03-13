@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { AllottedPlotDto, IAllottedPlotViewDto, PlotTransferDto, PlotTransferViewDto,  } from "src/app/_models/monitoring";
+import { AllottedPlotDto, IAllottedPlotViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto,  } from "src/app/_models/monitoring";
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI,IS_NEW_FARMAR_URI, LOOKUP_WEEDS_URI, GET_PLOTASSESSMENT_URI, CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_DOCCODE_URI, GET_PLOTTRANSFER_URI } from "./api.uri.service";
+import { CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI,IS_NEW_FARMAR_URI, LOOKUP_WEEDS_URI, GET_PLOTASSESSMENT_URI, CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_DOCCODE_URI, GET_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI } from "./api.uri.service";
 
 @Injectable({ providedIn: 'root' })
 export class MonitoringService extends ApiHttpService {
@@ -32,7 +32,7 @@ export class MonitoringService extends ApiHttpService {
   public IsNewFarmer(farmerId: number) {
     return this.getWithId<boolean>(IS_NEW_FARMAR_URI, farmerId);
   }
- 
+
   // plot assessment
   public GetPlotAssessments(seasonId: number,param1 = null) {
     let arr : any[] =[];
@@ -68,5 +68,8 @@ export class MonitoringService extends ApiHttpService {
   public UpdatePlotTransfer(plotTransfer: PlotTransferDto) {
     return this.post<PlotTransferDto>(UPDATE_PLOTTRANSFER_URI,plotTransfer);
   }
-  
+
+  public GetPlotReportsInSeason(seasonId: number){
+    return this.getWithId<PlotReportDto>(GET_PLOT_REORT_IN_SEASON_URI,seasonId);
+  }
 }
