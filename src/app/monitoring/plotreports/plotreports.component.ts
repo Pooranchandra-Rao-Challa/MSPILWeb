@@ -1,12 +1,18 @@
+import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import { GeoMasterService } from './../../_services/geomaster.service';
-import { LookupService } from './../../_services/lookup.service';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { LookupService } from 'src/app/_services/lookup.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CommonService } from './../../_services/common.service';
+import { CommonService } from 'src/app/_services/common.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { PlantSubTypeViewDto, plantTypeViewDto, SeasonDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
+import { LookupDetailViewDto, PlantSubTypeViewDto, plantTypeViewDto, SeasonDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
 import { VillagesViewDto } from 'src/app/_models/geomodels';
+import { Observable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
+import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
+import { IAllottedPlotViewDto } from 'src/app/_models/monitoring';
+import { ActivatedRoute } from '@angular/router';
 
 export interface IHeader {
   field: string;
@@ -21,12 +27,12 @@ export interface IHeader {
   ]
 })
 export class PlotreportsComponent implements OnInit {
-  plotReports: any;
+  plotReports: IAllottedPlotViewDto[] = [];
   loading: boolean = false;
+  addFlag: boolean = true;
   globalFilterFields: any;
   @ViewChild('filter') filter!: ElementRef;
-  seasons!: any[];
-  cropTypes!: any[];
+  seasons!: any;
   currentSeason: SeasonDto = {};
   showDialog: boolean = false;
   fbPlotReport!: FormGroup;
@@ -34,44 +40,50 @@ export class PlotreportsComponent implements OnInit {
   villages: VillagesViewDto[] = [];
   plantTypes: plantTypeViewDto[] = [];
   varieties: VarietyViewDto[] = [];
-  plotTypes: any;
-  seedMaterialUsed: any;
+  soilTypes: LookupDetailViewDto[] = [];
+  spacingInfo: LookupDetailViewDto[] = [];
+  sourceofIrrigations: LookupDetailViewDto[] = [];
+  methodofIrrigations: LookupDetailViewDto[] = [];
+  plantingMethods: LookupDetailViewDto[] = [];
+  crops: LookupDetailViewDto[] = [];
+  plotTypes: LookupDetailViewDto[] = [];
+  seedMaterialUsed: LookupDetailViewDto[] = [];
   plantSubTypes: PlantSubTypeViewDto[] = [];
-  /* Later I will create model for lookups dropdown */
-  soilTypes: any;
-  spacingInfo: any;
-  sourceofIrrigations: any;
-  methodofIrrigations: any;
-  plantingMethods: any;
+  cropTypes: LookupDetailViewDto[] = [];
+  forapproval: boolean = false;
+  offeredNo: any;
   headers: IHeader[] = [
-    { field: 'crop', header: 'crop', label: 'Crop' },
+    { field: 'previousCrop', header: 'previousCrop', label: 'Crop' },
     { field: 'season', header: 'season', label: 'Season' },
     { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'offeredNo', header: 'offeredNo', label: 'Offered No' },
+    { field: 'offerNo', header: 'offerNo', label: 'Offered No' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
-    { field: 'farmerVillage', header: 'farmerVillage', label: 'Farmer Village' },
+    { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'plotNo', header: 'plotNo', label: 'Plot No' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
     { field: 'plotType', header: 'plotType', label: 'Plot Type' },
     { field: 'isActive', header: 'isActive', label: 'Is Active' },
-    { field: 'createdDate', header: 'createdDate', label: 'Created Date' },
-    { field: 'updatedDate', header: 'updatedDate', label: 'Updated Date' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'createdBy', header: 'createdBy', label: 'Created By' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
   constructor(private formbuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
     private commonService: CommonService,
     private appMasterService: AppMasterService,
     private lookupService: LookupService,
-    private geoMasterService: GeoMasterService) { }
+    private geoMasterService: GeoMasterService,
+    private monitoringService: MonitoringService) { }
 
   ngOnInit() {
     let currentSeason = '2020-21';
+    this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
     this.initSeasons();
     this.initCropTypes();
     this.initVillages();
@@ -82,11 +94,18 @@ export class PlotreportsComponent implements OnInit {
     this.initPlantSubTypes();
     this.initSoilTypes();
     this.initSpacingInfo();
+    this.initCrops();
     this.initSourceofIrrigations();
     this.initMethodofIrrigations();
     this.initPlantingMethods();
     this.initCurrentSeason(currentSeason);
     this.allottedPlotForm();
+  }
+
+  getPlotAllotmentsInSeason(seasonId: number) {
+    this.monitoringService.GetPlotAllotmentsInSeason(seasonId).subscribe((resp) => {
+      this.offeredNo = resp;
+    });
   }
 
   initSeasons() {
@@ -97,7 +116,7 @@ export class PlotreportsComponent implements OnInit {
 
   initCropTypes() {
     this.lookupService.CropTypes().subscribe((resp) => {
-      this.cropTypes = resp as any;
+      this.cropTypes = resp as unknown as LookupDetailViewDto[];
     });
   }
 
@@ -121,13 +140,13 @@ export class PlotreportsComponent implements OnInit {
 
   initPlotTypes() {
     this.lookupService.PlotTypes().subscribe((resp) => {
-      this.plotTypes = resp as any;
+      this.plotTypes = resp as unknown as LookupDetailViewDto[];
     });
   }
 
   initSeedMaterialUsed() {
     this.lookupService.SeedMaterialUsed().subscribe((resp) => {
-      this.seedMaterialUsed = resp as any;
+      this.seedMaterialUsed = resp as unknown as LookupDetailViewDto[];
     });
   }
 
@@ -139,31 +158,38 @@ export class PlotreportsComponent implements OnInit {
 
   initSoilTypes() {
     this.lookupService.SoilTypes().subscribe((resp) => {
-      this.soilTypes = resp as any;
+      this.soilTypes = resp as unknown as LookupDetailViewDto[];
     });
   }
 
   initSpacingInfo() {
     this.lookupService.SpacingInfo().subscribe((resp) => {
-      this.spacingInfo = resp as any;
+      this.spacingInfo = resp as unknown as LookupDetailViewDto[];
+    });
+  }
+
+  initCrops() {
+    /* Here Crops means Previous Land Use */
+    this.lookupService.Crops().subscribe((resp) => {
+      this.crops = resp as unknown as LookupDetailViewDto[];
     });
   }
 
   initSourceofIrrigations() {
     this.lookupService.SourceofIrrigations().subscribe((resp) => {
-      this.sourceofIrrigations = resp as any;
+      this.sourceofIrrigations = resp as unknown as LookupDetailViewDto[];
     });
   }
 
   initMethodofIrrigations() {
     this.lookupService.MethodofIrrigations().subscribe((resp) => {
-      this.methodofIrrigations = resp as any;
+      this.methodofIrrigations = resp as unknown as LookupDetailViewDto[];
     });
   }
 
   initPlantingMethods() {
     this.lookupService.PlantingMethods().subscribe((resp) => {
-      this.plantingMethods = resp as any;
+      this.plantingMethods = resp as unknown as LookupDetailViewDto[];
     });
   }
 
@@ -175,7 +201,17 @@ export class PlotreportsComponent implements OnInit {
     });
   }
 
-  initPlotReports(seasonId: number) { }
+  initPlotReports(seasonId: number) {
+    let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
+    this.monitoringService.GetPlotReports(seasonId, this.forapproval, param1).subscribe((resp) => {
+      this.plotReports = resp as unknown as IAllottedPlotViewDto[];
+      this.loading = false;
+    });
+  }
+
+  onSearch() {
+    this.initPlotReports(this.currentSeason.seasonId!);
+  }
 
   allottedPlotForm() {
     this.fbPlotReport = this.formbuilder.group({
@@ -196,7 +232,7 @@ export class PlotreportsComponent implements OnInit {
       plotVillage: [''],
       caneAreaVillageId: ['', (Validators.required)],
       plantTypeId: ['', (Validators.required)],
-      plotNo: ['', (Validators.required)],
+      plotNumber: ['', (Validators.required)],
       surveyNo: ['', (Validators.required)],
       reportedArea: ['', (Validators.required)],
       plantingDate: ['', (Validators.required)],
@@ -204,30 +240,33 @@ export class PlotreportsComponent implements OnInit {
       varietyId: ['', (Validators.required)],
       agreed: [''],
       fieldName: [''],
-      birNo: ['', (Validators.required)],
-      birDate: ['', (Validators.required)],
+      birnumber: ['', (Validators.required)],
+      birdate: ['', (Validators.required)],
       plotTypeId: ['', (Validators.required)],
       demoPlotArea: [''],
       seedMaterialUsedId: ['', (Validators.required)],
-      soilType: ['', (Validators.required)],
-      settsHotWaterTreatment: [''],
-      dustApplied: [''],
-      trashMulching: [''],
+      soilTypeId: ['', (Validators.required)],
+      isNeedHotWaterTreatment: [''],
+      isDustingApplied: [''],
+      isTrashMulchingDone: [''],
       spacingId: [''],
-      previousRedPlot: [''],
-      basalFertilization: [''],
-      previousLandUseId: ['', (Validators.required)],
+      isPreviouslyRedPlot: [''],
+      isBasalFertilization: [''],
+      previousCropId: ['', (Validators.required)], /* previousLandUseId name is changed To previousCropId */
       sourceOfIrrigationId: [''],
-      compositeFormYard: [''],
-      filterPressMud: [''],
-      greenManures: [''],
+      isCompositeFormYard: [''],
+      isFilterPressMud: [''],
+      isGreenManures: [''],
       profile: [''],
       totalArea: [''],
       cultivatedArea: [''],
       isActive: [''],
       methodOfIrrigationId: ['', (Validators.required)],
       distanceFromPlot: [''],
-      plantingMethodId: ['', (Validators.required)]
+      plantingMethodId: ['', (Validators.required)],
+
+      allottedPlotId: [''],
+
     });
   }
 
@@ -239,18 +278,38 @@ export class PlotreportsComponent implements OnInit {
     this.showDialog = true;
   }
 
-  onSearch() { }
+  editPlotReport(plotReport: any) {
+    this.addFlag = false;
+    this.submitLabel = 'Update Plot Report';
+    this.showDialog = true;
+  }
 
-  editPlotReport(plotReport: any) { }
+  editApproval(plotReport: any) {
+
+  }
 
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
 
+  savePlotReport(): Observable<HttpEvent<any>> {
+    if (this.addFlag) return this.monitoringService.CreatePlotReport(this.fbPlotReport.value)
+    else return this.monitoringService.UpdatePlotReport(this.fbPlotReport.value)
+  }
+
   onSubmit() {
     if (this.fbPlotReport.valid) {
-
+      this.fbPlotReport.value.plantingDate = FORMAT_DATE(this.fbPlotReport.value.plantingDate);
+      this.fbPlotReport.value.offerDate = FORMAT_DATE(this.fbPlotReport.value.birdate);
+      return
+      this.savePlotReport().subscribe(resp => {
+        if (resp) {
+          // this.initPlotReports(this.currentSeason.seasonId!);
+          this.fbPlotReport.reset();
+          this.showDialog = false;
+        }
+      })
     }
     else {
       this.fbPlotReport.markAllAsTouched();

@@ -17,6 +17,7 @@ import { ProppingComponent } from './propping/propping.component';
     { path: 'plotassesment', component: PlotassesmentComponent},
     { path: 'sampleentry', component: SampleEntryComponent},
     { path: 'plotreports', component: PlotreportsComponent},
+    { path: 'plotreports/:paramUrl', component: PlotreportsComponent },
     { path: 'propping', component: ProppingComponent},
   ])],
   exports: [RouterModule]
