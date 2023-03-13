@@ -36,40 +36,52 @@
     >
      <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-            <form [formGroup]="application_contsants" (ngSubmit)="onSubmit()">
-                <div class="container">
-                    <div class="grid p-fluid">
-                        <div class="field col-12 md:col-6">
-                        <label htmlFor="code">Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="name"  placeholder="Enter Name" formControlName="name" type="text"  
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                        <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                            Please Enter Name.</div>
-                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                            Name Should Contains Only Alphbets.</div>
-                        </span>
-                        </div>
-                        <div class="field col-12 md:col-6">
-                        <label htmlFor="value">Value:<sup class="p-error">*</sup></label>
-                        <input pInputText id="value" placeholder="Enter Value" formControlName="name" type="text"  
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['value'].touched && FormControls['value'].errors }">
-                        <span *ngIf="FormControls['value'].touched && FormControls['value'].invalid">
-                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['value'].errors?.['required']">
-                            Please Enter Value.</div>
-                        </span>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <p-table #dt [value]="app_config" dataKey="vin" editMode="row">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th style="width:8em"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                    <tr [pEditableRow]="rowData">
+                        <td>
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="rowData.name" required>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{rowData.name}}
+                            </ng-template>
+                        </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="rowData.value" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{rowData.value}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td style="text-align:center">
+                            <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)"></button>
+                            <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>
+                            <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
      </ng-template>
-     <ng-template pTemplate="footer">  
+     <!-- <ng-template pTemplate="footer">  
         <div class="col-4" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
             (click)="onSubmit()"></button>
         </div>     
-    </ng-template>
+    </ng-template> -->
 </p-dialog>
 
 <p-dialog
