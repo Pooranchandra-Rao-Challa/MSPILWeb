@@ -14,6 +14,7 @@ import { PlotassesmentComponent } from './plotassesment/plotassesment.component'
     { path: 'allottedplot/:paramUrl', component: AllottedplotComponent },
     { path: 'plotassesment', component: PlotassesmentComponent},
     { path: 'plotreports', component: PlotreportsComponent},
+    { path: 'plotreports/:paramUrl', component: PlotreportsComponent },
   ])],
   exports: [RouterModule]
 })
