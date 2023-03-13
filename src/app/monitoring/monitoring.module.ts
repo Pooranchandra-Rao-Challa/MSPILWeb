@@ -8,6 +8,7 @@ import { PlotassesmentComponent } from './plotassesment/plotassesment.component'
 import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { PlotreportsComponent } from './plotreports/plotreports.component';
 import { ProppingComponent } from './propping/propping.component';
+import { SeedComponent } from './seed/seed.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ProppingComponent } from './propping/propping.component';
     SampleEntryComponent,
     PlotreportsComponent,
     ProppingComponent,
+    SeedComponent,
   ],
   imports: [
     PrimeNgModule,
