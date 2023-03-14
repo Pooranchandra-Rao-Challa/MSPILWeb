@@ -96,8 +96,9 @@
                 </div>
                 <div class="field col-12 md:col-3">
                   <label>Offered No:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Offered No" optionLabel="code" [options]="offeredNo"
-                    optionValue="seasonId" formControlName="offerNo"
+                  <p-dropdown placeholder="Select Offered No" optionLabel="offerNo"
+                    [options]="offeredNo" formControlName="offerNo" optionValue="offerNo"
+                    (onChange)="getAllottedPlotByAllottedPlotId($event.value)"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['offerNo'].touched && FormControls['offerNo'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['offerNo'].touched && FormControls['offerNo'].invalid">
@@ -110,11 +111,11 @@
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-4">
                     <label>Ryot No:</label>
-                    <input pInputText id="ryotNo" type="text" formControlName="ryotNo" readonly>
+                    <input pInputText id="farmerId" type="text" formControlName="farmerId" readonly>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Ryot Name:</label>
-                    <input pInputText id="ryotName" type="text" formControlName="ryotName" readonly>
+                    <input pInputText id="farmerName" type="text" formControlName="farmerName" readonly>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Father Name:</label>
@@ -153,10 +154,10 @@
                     <input pInputText id="plotSection" type="text" formControlName="plotSection" readonly>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Plot Village:</label>
-                    <input pInputText id="plotVillage" type="text" formControlName="plotVillage" readonly>
+                    <label>Cane Area Village:</label>
+                    <input pInputText id="plotVillageName" type="text" formControlName="plotVillageName" readonly>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <!-- <div class="field col-12 md:col-4">
                     <label>Cane Area Village:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Cane Area Village" optionLabel="villageName" [options]="villages"
                       optionValue="villageId" formControlName="caneAreaVillageId">
@@ -167,7 +168,7 @@
                         *ngIf="FormControls['caneAreaVillageId'].errors?.['required']">
                         Please Select Cane Area Village.</div>
                     </span>
-                  </div>
+                  </div> -->
                   <div class="field col-12 md:col-4">
                     <label>Plant Type:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Plant Type" optionLabel="name" [options]="plantTypes"
@@ -185,10 +186,12 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Survey No:<sup class="p-error">*</sup></label>
-                    <p-inputNumber id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo" mode="decimal"
+                    <!-- <p-inputNumber id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo" mode="decimal"
                       locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
-                    </p-inputNumber>
+                    </p-inputNumber> -->
+                    <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
                     <span *ngIf="FormControls['surveyNo'].touched && FormControls['surveyNo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['required']">
                         Please Enter Survey No.</div>
@@ -249,10 +252,12 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>BIR Number:<sup class="p-error">*</sup></label>
-                    <p-inputNumber id="birnumber" placeholder="Enter BIR No" formControlName="birnumber" mode="decimal"
+                    <!-- <p-inputNumber id="birnumber" placeholder="Enter BIR No" formControlName="birnumber" mode="decimal"
                       locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['birnumber'].touched && FormControls['birnumber'].errors }">
-                    </p-inputNumber>
+                    </p-inputNumber> -->
+                    <input pInputText id="birnumber" placeholder="Enter BIR No" formControlName="birnumber"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['birnumber'].touched && FormControls['birnumber'].errors }">
                     <span *ngIf="FormControls['birnumber'].touched && FormControls['birnumber'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['birnumber'].errors?.['required']">
                         Please Select BIR No.</div>
@@ -422,7 +427,7 @@
                     <label>Method Of Irrigation:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Method of Irrigation" optionLabel="name"
                       [options]="methodofIrrigations" optionValue="lookupDetailId"
-                      formControlName="methodOfIrrigationId"
+                      formControlName="methodOfIrrigationId" appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['methodOfIrrigationId'].touched && FormControls['methodOfIrrigationId'].errors }">
                     </p-dropdown>
                     <span
@@ -441,7 +446,7 @@
                   <div class="field col-12 md:col-3">
                     <label>Planting Method:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Planting Method" optionLabel="name" [options]="plantingMethods"
-                      optionValue="lookupDetailId" formControlName="plantingMethodId"
+                      optionValue="lookupDetailId" formControlName="plantingMethodId" appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingMethodId'].touched && FormControls['plantingMethodId'].errors }">
                     </p-dropdown>
                     <span *ngIf="FormControls['plantingMethodId'].touched && FormControls['plantingMethodId'].invalid">

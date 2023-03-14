@@ -274,7 +274,7 @@ export class PlotReportDto {
 
 export interface IPlotReportViewDto {
   plotReportId?: number;
-  seasonId?: number;
+  seasonId: number;
   season?: string;
   cropTypeId?: number;
   cropType?: string;
@@ -306,12 +306,12 @@ export interface IPlotReportViewDto {
   varietyName?: string;
   expectedVariety?: string;
   fieldName?: string;
-  bIRNumber?: string;
-  bIRDate?: Date;
+  birNumber?: string;
+  birDate?: Date;
   plotTypeId?: number;
   plotType?: string;
   demoPlotArea?: number;
-  seedMaterialUsedId?: string;
+  seedMaterialUsedId?: number;
   seedMaterialUsed?: string;
   soilTypeId?: number;
   soilType?: string;
@@ -324,7 +324,7 @@ export interface IPlotReportViewDto {
   isBasalFertilization?: boolean;
   previousCropId?: number;
   previousCrop?: string;
-  sourceOfIrrigationId?: string;
+  sourceOfIrrigationId?: number;
   sourceOfIrrigation?: string;
   isCompositeFormYard?: boolean;
   isFilterPressMud?: boolean;

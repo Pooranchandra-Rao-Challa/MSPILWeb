@@ -163,5 +163,5 @@ export const GET_DOCCODE_URI = "Monitoring/GetNewDocNo/";
 export const CREATE_PLOTTRANSFER_URI = "Monitoring/CreatePlotTransfer";
 export const UPDATE_PLOTTRANSFER_URI = "Monitoring/UpdatePlotTransfer";
 export const GET_PLOTTRANSFER_URI = "Monitoring/GetPlotTransfers";
-
-
+export const GET_ALLOTTED_PLOT_URI = "Monitoring/AllottedPlot";
+export const GET_PLOT_NUMBER_URI = "Monitoring/GetPlotNumber";

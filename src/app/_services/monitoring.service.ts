@@ -5,7 +5,7 @@ import { ApiHttpService } from "src/app/_services/api.http.service";
 import {
   CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
   UPDATE_PLOT_REPORT_URI, GET_PLOT_ALLOTMENTS_IN_SEASON_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_PLOTTRANSFER_URI, GET_DOCCODE_URI,
-  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI
+  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_ALLOTTED_PLOT_URI, GET_PLOT_NUMBER_URI
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -93,6 +93,14 @@ export class MonitoringService extends ApiHttpService {
 
   public GetPlotAllotmentsInSeason(seasonId: number) {
     return this.getWithId<any>(GET_PLOT_ALLOTMENTS_IN_SEASON_URI, seasonId);
+  }
+
+  public GetAllottedPlotByAllottedPlotId(allotedPlotId: number) {
+    return this.getWithId<any>(GET_ALLOTTED_PLOT_URI, allotedPlotId);
+  }
+
+  public GetPlotNumber(allotedPlotId: number) {
+    return this.getWithId<any>(GET_PLOT_NUMBER_URI, allotedPlotId, {responseType: 'text'});
   }
 
   public GetPlotReports(seasonId: number, forapproval: boolean, param1 = null) {
