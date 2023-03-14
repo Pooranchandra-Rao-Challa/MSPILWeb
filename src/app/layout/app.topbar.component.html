@@ -30,38 +30,61 @@
     </div>
 </div>
 <p-dialog header="Application Constants" [(visible)]="app_config_dialog" showEffect="fade"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '40vw' }" [modal]="true">
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" [modal]="true">
     <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-            <form [formGroup]="application_contsants" (ngSubmit)="onSubmit()">
-                <div class="container">
-                    <div class="grid p-fluid">
-                        <div class="field col-12 md:col-6">
-                            <label htmlFor="code">Name:<sup class="p-error">*</sup></label>
-                            <input pInputText id="name" placeholder="Enter Name" formControlName="name" type="text"
-                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                            <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                                <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['name'].errors?.['required']">
-                                    Please Enter Name.</div>
-                                <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['name'].errors?.['pattern']">
-                                    Name Should Contains Only Alphbets.</div>
-                            </span>
-                        </div>
-                        <div class="field col-12 md:col-6">
-                            <label htmlFor="value">Value:<sup class="p-error">*</sup></label>
-                            <input pInputText id="value" placeholder="Enter Value" formControlName="name" type="text"
-                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['value'].touched && FormControls['value'].errors }">
-                            <span *ngIf="FormControls['value'].touched && FormControls['value'].invalid">
-                                <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['value'].errors?.['required']">
-                                    Please Enter Value.</div>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <div class="col align-self-end">
+                <button pButton pRipple type="button" label="Add Application Constant"
+                    class="p-button-raised p-button-success    align-self-end "
+                    (click)="addAppConfig()"></button>
+
+            </div>
+            <!-- <div formArrayName="appArray"> -->
+                <p-table #dt dataKey="vin" editMode="row" [value]="appConfig" [tableStyle]="{ width: 'max-content'}">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:15em">Name</th>
+                            <th style="width:15em">Value</th>
+                            <th style="width:20em"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-appConfig let-editing="editing" let-ri="rowIndex">
+                        <tr [pEditableRow]="appConfig">
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="appConfig.Name" required>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{appConfig.Name}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="appConfig.Value" required>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{appConfig.Value}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td style="text-align:center">
+                                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                                    class="ui-button-info p-button-outlined"></button>
+                                <!-- (click)="onRowEditInit(rowData)" -->
+                                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                                    class="ui-button-success p-button-outlined" style="margin-right: .5em"></button>
+                                <!-- (click)="onRowEditSave(rowData)" -->
+                                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                                    class="ui-button-danger p-button-outlined"></button>
+                                <!-- (click)="onRowEditCancel(rowData, ri)" -->
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
@@ -78,7 +101,7 @@
         <div class="flex flex-column align-items-left justify-content-left">
             <form [formGroup]="application_contsants" (ngSubmit)="onSubmit()">
                 <div class="grid p-fluid">
-                    <div class="field col-4 md:col-4">
+                    <div class="field col-4 md:col-4 align-self-start">
                         <label>Code:<sup class="p-error">*</sup></label>
                         <p-dropdown placeholder="Select Code" optionLabel="name" [options]="lookupCode"
                             optionValue="code" formControlName="code" appendTo="body"
@@ -91,15 +114,18 @@
                                 Please Select code.</div>
                         </span>
                     </div>
-
-
-                    <div class="col align-self-end" formArrayName="lookupArray" *ngIf="showlookup">
-                        <div class="col-4 align-self-end">
+                    <div class="field col-4 md:col-4 align-self-end">
+                        <div class="col ">
                             <button pButton pRipple type="button" label="Add Lookup"
-                                class="p-button-raised p-button-success col-6  md:col-6  align-self-end "
+                                class="p-button-raised p-button-success  align-self-end "
                                 (click)="addLookup()"></button>
 
                         </div>
+                    </div>
+
+
+                    <div class="col-12" formArrayName="lookupArray" *ngIf="showlookup">
+                        
                         <p-table #dt2 [value]="lookupFrom().controls" dataKey="id" [rows]="10" [rowHover]="true"
                             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
                             [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">>
