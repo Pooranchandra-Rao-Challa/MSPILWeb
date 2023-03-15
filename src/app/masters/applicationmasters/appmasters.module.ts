@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PrimeNgModule } from 'src/app/_shared/primeng.module';
+import { SharedModule } from 'src/app/_shared/shared.module';
 import { AppMastersRoutingModule } from './appmasters-routing.module';
 import { SeasonComponent } from './season/season.component';
 import { WeedComponent } from './weed/weed.component';
@@ -39,7 +39,7 @@ import { SampleslabsComponent } from './sampleslab/sampleslab.component';
     SampleslabsComponent,
   ],
   imports: [
-    PrimeNgModule,
+    SharedModule,
     AppMastersRoutingModule
   ],
 })

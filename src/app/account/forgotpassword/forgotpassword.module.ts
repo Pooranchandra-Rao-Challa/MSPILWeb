@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PrimeNgModule } from 'src/app/_shared/primeng.module';
+import { SharedModule } from 'src/app/_shared/shared.module';
 import { ForgotpasswordComponent } from 'src/app/account/forgotpassword/forgotpassword.component';
 import { RequestforgotpasswordComponent } from 'src/app/account/forgotpassword/requestforgotpassword/requestforgotpassword.component';
 import { ForgotPasswordRoutingModule } from 'src/app/account/forgotpassword/forgotpassword-routing.module';
@@ -12,7 +12,7 @@ import { ForgotPasswordRoutingModule } from 'src/app/account/forgotpassword/forg
   ],
   imports: [
     ForgotPasswordRoutingModule,
-    PrimeNgModule,
+    SharedModule,
   ],
 })
 export class ForgotPasswordModule { }
