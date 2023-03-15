@@ -58,8 +58,8 @@ export class VarietyComponent implements OnInit {
       varietyTypeId: ['', (Validators.required)],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      plantAge: ['', (Validators.required)],
-      ratoonAge: ['', (Validators.required)],
+      plantAge: [null, (Validators.required)],
+      ratoonAge: [null, (Validators.required)],
       sugarContent: ['', (Validators.required)],
       plantSuitability: ['', (Validators.required)],
       isActive: [true]
