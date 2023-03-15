@@ -15,6 +15,7 @@ export interface IHeader {
   label: string;
 }
 
+
 export class SampleDto {
   DocNo?: string;
   DocDate?: Date;
