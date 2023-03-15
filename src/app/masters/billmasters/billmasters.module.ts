@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PrimeNgModule } from 'src/app/_shared/primeng.module';
+import { SharedModule } from 'src/app/_shared/shared.module';
 import { BillMastersRoutingModule } from './billmasters-routing.module';
 import { BillMasterComponent } from './billmaster/billmaster.component';
 import { BillParametersComponent } from './billparameters/billparameters.component';
@@ -25,7 +25,7 @@ import { DatePipe } from '@angular/common';
     WareHouseComponent,
   ],
   imports: [
-    PrimeNgModule,
+    SharedModule,
     BillMastersRoutingModule
   ],
   providers: [

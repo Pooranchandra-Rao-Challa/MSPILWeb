@@ -23,7 +23,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
-import { PrimeNgModule } from '../_shared/primeng.module';
+import { SharedModule } from 'src/app/_shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -47,14 +47,14 @@ import { PrimeNgModule } from '../_shared/primeng.module';
         RippleModule,
         RouterModule,
         AppConfigModule,
-        SplitButtonModule,        
+        SplitButtonModule,
         PaginatorModule,
         MenuModule,
         CommonModule,
         FormsModule,
         DialogModule,
         FieldsetModule,
-        PrimeNgModule,
+        SharedModule,
     ],
     exports: [AppLayoutComponent]
 })
