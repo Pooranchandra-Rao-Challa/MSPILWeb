@@ -1,4 +1,4 @@
-import { IPlotReportViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
+import { IPlotReportViewDto, PlotAssessmentViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { AllottedPlotDto, IAllottedPlotViewDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "src/app/_services/api.http.service";
@@ -41,18 +41,15 @@ export class MonitoringService extends ApiHttpService {
   }
 
   // plot assessment
-  public GetPlotAssessments(seasonId: number, param1 = null) {
+  public GetPlotAssessments(seasonId: number) {
     let arr: any[] = [];
     arr.push(seasonId);
-    if (param1 != null) arr.push(param1);
-    if (param1 == null) {
-      return this.getWithParams<IAllottedPlotViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
-    }
-    else {
-      return this.getWithParams<IAllottedPlotViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
-    }
+    return this.getWithParams<PlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
   }
 
+  public GetPlotAllotmentsInSeason(seasonId: number) {
+    return this.getWithId<any>(GET_PLOT_ALLOTMENTS_IN_SEASON_URI, seasonId);
+  }
   // Plot Transfers
   public GetAllPlotsTransfers(seasonId: number, param1 = null) {
     let arr: any[] = [];
@@ -91,10 +88,7 @@ export class MonitoringService extends ApiHttpService {
     return this.post<PlotReportDto>(UPDATE_PLOT_REPORT_URI, plotReport);
   }
 
-  public GetPlotAllotmentsInSeason(seasonId: number) {
-    return this.getWithId<any>(GET_PLOT_ALLOTMENTS_IN_SEASON_URI, seasonId);
-  }
-
+ 
   public GetAllottedPlotByAllottedPlotId(allotedPlotId: number) {
     return this.getWithId<any>(GET_ALLOTTED_PLOT_URI, allotedPlotId);
   }
