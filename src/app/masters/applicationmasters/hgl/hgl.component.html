@@ -188,26 +188,25 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="14" class="md:text-center">No HGLs Found.</td>
+          <td  class="md:text-center" colspan="50%">No HGLs Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="14" class="md:text-center">Loading HGLs Data Please Wait.</td>
+          <td  class="md:text-center" colspan="50%">Loading HGLs Data Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
     <!-- dialog box -->
     <p-dialog header="HGLs" [(visible)]="showDialog" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" [modal]="true">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" [modal]="true">
       <div class="flex flex-column align-items-center justify-content-center">
         <div class="container">
           <div class="grid p-fluid">
             <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
-              
-              <p-fieldset legend="HGL" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+              <p-fieldset legend="HGL Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code"  type="text" placeholder=" Enter Code" formControlName="code"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -219,7 +218,7 @@
                     </span>                  
                   </div>
 
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name"  type="text" placeholder=" Enter Name" formControlName="name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -231,7 +230,7 @@
                   </span>
                   </div>
 
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>Relationship Type:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Relationship Type" optionLabel="name" [options]="relationTypes"
                     optionValue="lookupId" formControlName="relationTypeId" 
@@ -244,7 +243,7 @@
                   </span>                   
                   </div>
 
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>Relationship Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="relationName"  type="text" placeholder=" Enter Relationship Name" formControlName="relationName"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }">
@@ -257,7 +256,7 @@
                   </span>                 
                   </div>
 
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>Gender:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Gender" [options]="genders" formControlName="gender"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['gender'].touched && FormControls['gender'].errors }">
@@ -268,7 +267,7 @@
                   </span>
                   </div>
 
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>Address:<sup class="p-error">*</sup></label>
                     <textarea pInputTextarea formControlName="address" placeholder="Address"
                       style="height: 42px; resize: vertical;"
@@ -279,7 +278,7 @@
                     </span>                  
                   </div>
 
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>PinCode:<sup class="p-error">*</sup></label>
                   <p-inputNumber inputId="pinCode" formControlName="pinCode" [maxlength]="6"
                   placeholder=" Enter PinCode"
@@ -291,7 +290,7 @@
                   </span>                 
                   </div>
 
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>Phone Number:</label>
                     <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"  placeholder=" Enter Phone Number"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
@@ -302,18 +301,13 @@
                     </span>
                   </div>
 
-                  <div class="field col-12 md:col-4">
-                    <label>Tax(%):<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="tax" formControlName="tax" [maxlength]="3" placeholder=" Enter Tax(%)"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['tax'].touched && FormControls['tax'].errors }">
-                  </p-inputNumber>
-                  <span *ngIf="FormControls['tax'].touched && FormControls['tax'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['tax'].errors?.['required']">
-                      Please Enter Tax.</div>
-                  </span>
-                   
-                  </div>
-                  <div class="field col-12 md:col-4">
+                 
+                </div>
+                </p-fieldset>
+                <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="grid p-fluid">
+                
+                  <div class="field col-12 md:col-3">
                     <label>Email:</label>
                   <input pInputText id="email"  type="text" placeholder=" Enter Email" formControlName="email"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['email'].touched && FormControls['email'].errors }">
@@ -323,7 +317,7 @@
                   </span>
                    
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>PAN No:</label>
                     <input pInputText id="panNo"  type="text" placeholder=" Enter PAN No" formControlName="panNo"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
@@ -336,8 +330,8 @@
                             Please Enter PanNo.</div>
                         </span>
                        </div>
-
-                  <div class="field col-12 md:col-4">
+  
+                  <div class="field col-12 md:col-3">
                     <label>Aadhaar No:</label>
                     <input pInputText id="aadhaarNo"  placeholder=" Enter Aadhaar No" formControlName="aadhaarNo"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
@@ -350,9 +344,9 @@
                             Please Enter AadhaarNo.</div>
                         </span>
                   </div>
-
+  
                   
-                <div class="field col-12 md:col-4">
+                <div class="field col-12 md:col-3">
                   <label>Guarantor1:</label>
                   <input pInputText id="guarantor1"  type="text" placeholder=" Enter Guarantor1" formControlName="guarantor1"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor1'].touched && FormControls['guarantor1'].errors }">
@@ -361,8 +355,8 @@
                       Guarantor1 Contains Only Characters And Integers.</div>
                   </span>
                   </div>
-
-                  <div class="field col-12 md:col-4">
+  
+                  <div class="field col-12 md:col-3">
                     <label>Guarantor2:</label>
                   <input pInputText id="guarantor2"  type="text" placeholder=" Enter Guarantor2" formControlName="guarantor2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor2'].touched && FormControls['guarantor2'].errors }">
@@ -371,8 +365,8 @@
                       Guarantor2 Contains Only Characters And Integers.</div>
                   </span>
                   </div>
-
-                  <div class="field col-12 md:col-4">
+  
+                  <div class="field col-12 md:col-3">
                     <label>Guarantor3:</label>
                   <input pInputText id="guarantor3"  type="text" placeholder=" Enter Guarantor3" formControlName="guarantor3"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['guarantor3'].touched && FormControls['guarantor3'].errors }">
@@ -381,8 +375,8 @@
                       Guarantor3 Contains Only Characters And Integers.</div>
                   </span>
                   </div>
-
-                  <div class="field col-12 md:col-4">
+  
+                  <div class="field col-12 md:col-3">
                     <label>GL Code:</label>
                     <input pInputText id="glcode"  type="text" placeholder=" Enter Sub GLCode" formControlName="glcode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
@@ -391,7 +385,7 @@
                         Sub Glcode Contains Only Characters And Integers.</div>
                     </span>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 md:col-3">
                     <label>SubGL Code:</label>
                     <input pInputText id="subGlcode"  type="text" placeholder=" Enter Sub GLCode" formControlName="subGlcode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
@@ -400,8 +394,8 @@
                         Sub Glcode Contains Only Characters And Integers.</div>
                     </span>
                   </div>
-
-                  <div class="field col-12 md:col-4">
+  
+                  <div class="field col-12 md:col-3">
                     <label>Other Code:</label>
                   <input pInputText id="otherCode"  type="text" placeholder=" Enter Other Code" formControlName="otherCode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['otherCode'].touched && FormControls['otherCode'].errors }">
@@ -410,67 +404,92 @@
                       Other Code Contains only Characters And Integers.</div>
                   </span>
                   </div>
-
-                  <div class="field col-12 md:col-4">
-                    <label>Bank:<sup class="p-error">*</sup></label>
-                    <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
-                    (onChange)="getBranchByBankId($event.value)">
-                    </p-dropdown>
-                  </div>
-
-                  <div class="field col-12 md:col-4">
-                    <label>Branch:<sup class="p-error">*</sup></label>
-                    <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
-                      optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
-                    </p-dropdown>
-                    <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                      <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
-                          Please Select Bank First.</div>
-                      </div>
-                      <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
-                          Please Select Branch.</div>
-                      </div>
-                    </span>
-
-                  </div>
-
-
-                  <div class="field col-12 md:col-4">
-                     <label>IFSC:</label>
-                  <input pInputText id="ifsc"  placeholder=" IFSC Code" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
-                  readonly>
+  
                 </div>
-                <div class="field col-12 md:col-4">
-                  <label>Account Number:<sup class="p-error">*</sup></label>
-                  <input pInputText id="accountNo"  placeholder=" Enter Number" formControlName="accountNo"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }">
-                  <span *ngIf="FormControls['accountNo'].touched && FormControls['accountNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['required']">
-                      Please Enter Account Number.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['pattern']">
-                      Account Number Contains Only Integers.</div>
+                
+                </p-fieldset>   
+              <p-fieldset legend="Bank Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <div class="grid p-fluid">
+                <div class="field col-12 md:col-3">
+                  <label>Bank:<sup class="p-error">*</sup></label>
+                  <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
+                  (onChange)="getBranchByBankId($event.value)">
+                  </p-dropdown>
+                </div>
+
+                <div class="field col-12 md:col-3">
+                  <label>Branch:<sup class="p-error">*</sup></label>
+                  <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
+                    optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
+                    <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
+                        Please Select Bank First.</div>
+                    </div>
+                    <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['branchId'].errors?.['required']">
+                        Please Select Branch.</div>
+                    </div>
                   </span>
-                  </div>   
 
-                  <div class="field col-12 md:col-4">
-                    <label>TDS:</label><br>
-                  <p-inputSwitch formControlName="tds"></p-inputSwitch>
                 </div>
 
-                  <div class="field col-12 md:col-4">
-                    <label>Is Active:</label><br>
-                    <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-                  </div>
-            
+
+                <div class="field col-12 md:col-3">
+                   <label>IFSC:</label>
+                <input pInputText id="ifsc"  placeholder=" IFSC Code" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
+                readonly>
+              </div>
+              <div class="field col-12 md:col-3">
+                <label>Account Number:<sup class="p-error">*</sup></label>
+                <input pInputText id="accountNo"  placeholder=" Enter Number" formControlName="accountNo"
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }">
+                <span *ngIf="FormControls['accountNo'].touched && FormControls['accountNo'].invalid">
+                  <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['required']">
+                    Please Enter Account Number.</div>
+                  <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['pattern']">
+                    Account Number Contains Only Integers.</div>
+                </span>
+                </div>   
+                <div class="field col-12 md:col-3">
+                  <label>Tax(%):<sup class="p-error">*</sup></label>
+                <p-inputNumber inputId="tax" formControlName="tax" [maxlength]="3" placeholder=" Enter Tax(%)"
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['tax'].touched && FormControls['tax'].errors }">
+                </p-inputNumber>
+                <span *ngIf="FormControls['tax'].touched && FormControls['tax'].invalid">
+                  <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['tax'].errors?.['required']">
+                    Please Enter Tax.</div>
+                </span>
+                 
                 </div>
+
+                <div class="field col-12 md:col-2 mt-3">
+                  <label>TDS:</label><br>
+                <p-inputSwitch formControlName="tds"></p-inputSwitch>
+              </div>
+
+                <div class="field col-12 md:col-2 mt-3">
+                  <label>Is Active:</label><br>
+                  <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+                </div>
+          
+              </div>
+              
               </p-fieldset>
+
+
+              
+  
+  
+
+
               <!-- //formArray -->
               <p-fieldset legend="Sub Hgl" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-          
-                  <div class="col-12  ">
+                  <div class="field col-12 md:col-9 "></div>
+              
+                  <div class="field col-12 md:col-3">
                     <button pButton pRipple type="button" label="Add HGL Details" class="p-button-raised p-button-success md:col-4 lg:col-3 xl:col-2 md:mt-5 align-self-end " 
                       (click)="addSubHgl()"></button>
                   </div>
@@ -483,22 +502,11 @@
                      
                       <ng-template pTemplate="header">
                         <tr>
-                          <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon>
-                          </th>
-                          <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon>
-                          </th>
-      
-                          <th pSortableColumn="vehicleTypeId">Vehicle Type<p-sortIcon field="vehicleTypeId"></p-sortIcon>
-                          </th>
-                          
-                          <th pSortableColumn="noOfPersons">No Of Persons<p-sortIcon field="noOfPersons">
-                            </p-sortIcon>
-                          </th>
-      
-                          <th pSortableColumn="Action">Action<p-sortIcon field="Action">
-                          </p-sortIcon>
-                        </th>
-                    
+                          <th>Code</th>
+                          <th>Name</th>
+                          <th>Vehicle Type</th>
+                          <th>No Of Persons</th>
+                          <th>Action</th>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-hgl let-subHglIndex="rowIndex">
@@ -529,12 +537,12 @@
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
                         <tr>
-                          <td colspan="7">No HGL details found.</td>
+                          <td  class="md:text-center" colspan="50%">No Sub HGL Details Found.</td>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="loadingbody">
                         <tr>
-                          <td colspan="7">Loading HGL details data. Please wait.</td>
+                          <td  class="md:text-center" colspan="50%">Loading Sub HGL details Data. Please Wait.</td>
                         </tr>
                       </ng-template>
                     </p-table>

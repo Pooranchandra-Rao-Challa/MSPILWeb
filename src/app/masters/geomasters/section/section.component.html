@@ -171,25 +171,25 @@
         <tr>
           <th></th>
 
-          <th pSortableColumn="divisionName">Division Name <p-columnFilter type="text" field="divisionName"
+          <th pSortableColumn="divisionName">Division<p-columnFilter type="text" field="divisionName"
             display="menu"></p-columnFilter>
           <p-sortIcon field="divisionName"></p-sortIcon>
         </th>
+
+        <th pSortableColumn="circleName">Circle<p-columnFilter type="text" field="circleName" display="menu">
+        </p-columnFilter>
+        <p-sortIcon field="circleName"></p-sortIcon>
+      </th>
+     
          
-          <th pSortableColumn="sectionId">Code<p-columnFilter type="text" field="sectionId" display="menu">
+          <th pSortableColumn="sectionId">Section Code<p-columnFilter type="text" field="sectionId" display="menu">
             </p-columnFilter>
             <p-sortIcon field="sectionId"></p-sortIcon>
           </th>
-          <th pSortableColumn="sectionName">Name <p-columnFilter type="text" field="sectionName" display="menu">
+          <th pSortableColumn="sectionName">Section Name <p-columnFilter type="text" field="sectionName" display="menu">
             </p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
-         
-          <th pSortableColumn="circleName">Circle Name <p-columnFilter type="text" field="circleName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="circleName"></p-sortIcon>
-          </th>
-         
           
           <th pSortableColumn="inchargeName">Incharge Name <p-columnFilter type="text" field="inchargeName"
               display="menu"></p-columnFilter>
@@ -199,14 +199,17 @@
               display="menu"></p-columnFilter>
             <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
           </th>
+
+          <th pSortableColumn="listingOrder">Order <p-columnFilter type="text" field="listingOrder"
+            display="menu"></p-columnFilter>
+          <p-sortIcon field="listingOrder"></p-sortIcon>
+        </th>
+         
           <th pSortableColumn="address">Address <p-columnFilter type="text" field="address" display="menu">
             </p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
           </th>
-          <th pSortableColumn="listingOrder">Listing Order <p-columnFilter type="text" field="listingOrder"
-              display="menu"></p-columnFilter>
-            <p-sortIcon field="listingOrder"></p-sortIcon>
-          </th>
+        
           <th class="text-center" pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive"
               display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
@@ -235,14 +238,14 @@
               (click)="editProduct(section)"></button></td>
 
               <td>{{section.divisionName}}</td>
+              <td>{{section.circleName}}</td>
           <td>{{section.sectionCode}}</td>
           <td>{{section.sectionName}}</td>
-          <td>{{section.circleName}}</td>
-          
           <td>{{section.inchargeName}}</td>
           <td>{{section.inchargePhoneNo}}</td>
-          <td>{{section.address}}</td>
           <td>{{section.listingOrder}}</td>
+          <td>{{section.address}}</td>
+     
           <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="section.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
@@ -259,12 +262,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="13">No Sections Found.</td>
+          <td class="md:text-center"colspan="16" >No Sections Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td class="md:text-center" colspan="13">Loading... Sections Data. Please Wait.</td>
+          <td class="md:text-center" colspan="16">Loading... Sections Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>

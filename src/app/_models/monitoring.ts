@@ -345,3 +345,48 @@ export interface IPlotReportViewDto {
   updatedAt?: Date;
   updatedBy?: string;
 }
+export class CompletedPlotDto {
+  createdBy?:  string
+  createdAt?:  string
+  updatedBy?:  string
+  updatedAt?:  string
+  completedPlotId?:  number
+  seasonId?:  number
+  docNo?:  number
+  docDate?:  string
+  plotAssessmentId?:  number
+  isCompleted?:  boolean
+  isLeftCultivation?:  boolean
+  isUsedForRatoon?:  boolean
+  isActive?:  boolean
+
+}
+export class CompletedPlotViewDto {
+  completedPlotId?: number
+  seasonId?: number
+  season?: string
+  docNo?: number
+  docDate?: string
+  plotAssessmentId?: number
+  farmerId?: number
+  farmerName?: string
+  farmerCode?: string
+  plotNumber?: string
+  estimatedTon?: number
+  netArea?: number
+  isCompleted?: boolean
+  isLeftCultivation?: boolean
+  isUsedForRatoon?: boolean
+  isActive?: boolean
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+}
+
+
+
+
+
+
+

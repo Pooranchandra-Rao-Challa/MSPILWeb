@@ -259,9 +259,10 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Address:<sup class="p-error">*</sup></label>
-                  <textarea pInputTextarea formControlName="address" placeholder="Address"
+                  <p-inputTextarea formControlName="address" placeholder="Address"
                     style="height: 42px; resize: vertical;"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                    maxLength="255"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></p-inputTextarea>
                   <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                       Please Enter Address.</div>
