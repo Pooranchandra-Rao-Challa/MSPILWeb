@@ -2,7 +2,7 @@
   <div class="card">
     <!-- dailog box -->
     <p-dialog header="Mandal" [(visible)]="display" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [modal]="true" (onHide)="onClose()">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw',height:'27vw'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="fbmandals" (ngSubmit)="onSubmit()">
@@ -11,8 +11,11 @@
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-6">
                     <label>Code:<sup class="p-error">*</sup></label>&nbsp;
-                    <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Code"
+                    <input pInputText id="code" type="text" #code formControlName="code" alphaNumeric placeholder="Enter Code" [maxlength]="6"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                      <div class="text-right">
+                        <small>{{code.value.length}}/6</small>
+                      </div>
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                         Please Enter Code.</div>
@@ -26,8 +29,11 @@
                   </div>
                   <div class="field col-12 md:col-6">
                     <label>Name:<sup class="p-error">*</sup></label>&nbsp;
-                    <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Name"
+                    <input pInputText id="name" type="text" #name formControlName="name" alphaOnly placeholder="Enter Name"  maxlength="50"
                       [ngClass]="{ 'is-invalid  ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                      <div class="text-right">
+                        <small>{{name.value.length}}/50</small>
+                      </div>
                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                         Please Enter Name.</div>
@@ -38,7 +44,7 @@
                   <div class="field col-12 md:col-6">
                     <label>District:<sup class="p-error">*</sup></label>&nbsp;
                     <p-dropdown [options]="district" optionLabel="districtName" formControlName="districtId"
-                      optionValue="districtId" placeholder="Select District"
+                      optionValue="districtId" placeholder="Select District" appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['districtId'].touched && FormControls['districtId'].errors }">
                     </p-dropdown>
                     <span *ngIf="FormControls['districtId'].touched && FormControls['districtId'].invalid">
@@ -59,7 +65,7 @@
       <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-            (click)="onSubmit()"></button>
+          [disabled]="fbmandals.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

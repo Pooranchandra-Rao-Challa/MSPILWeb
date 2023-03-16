@@ -1,8 +1,10 @@
+import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
-import { FarmersViewDto, LookupDetailDto, plantTypeDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
-import { PlotAssessmentViewDto, plotAssessmentWeedicidesDto, PlotReportDto } from 'src/app/_models/monitoring';
+import { Observable } from 'rxjs/internal/Observable';
+import { FarmersViewDto, LookupDetailDto, plantTypeDto, SeasonDto, SeasonViewDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
+import { IPlotReportViewDto, PlotAssessmentViewDto, plotAssessmentWeedicidesDto, PlotReportDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -18,7 +20,6 @@ export interface IHeader {
   selector: 'app-plotassesment',
   templateUrl: './plotassesment.component.html',
   styles: [
-
   ]
 })
 
@@ -35,7 +36,7 @@ export class PlotassesmentComponent implements OnInit {
   crops: LookupDetailDto[] = [];
   cropstypes: LookupDetailDto[] = [];
   planttypes: plantTypeDto[] = [];
-  varitytype: LookupDetailDto[] = [];
+  varieties: VarietyViewDto[] = [];
   plottype: LookupDetailDto[] = [];
   weedstatus: LookupDetailDto[] = [];
   weedicideId: plotAssessmentWeedicidesDto[] = [];
@@ -46,7 +47,9 @@ export class PlotassesmentComponent implements OnInit {
   pests:LookupDetailDto[] =[];
   fertilizers:LookupDetailDto[] =[];
   Diseases:LookupDetailDto[] =[];
-  
+  plotReportsinfo:IPlotReportViewDto[] =[];
+  offeredNo: any[] = [];
+  allottedPlotByAllottedPlotId: any;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -65,8 +68,8 @@ export class PlotassesmentComponent implements OnInit {
       { field: 'variety', header: 'variety', label: 'Variety' },
       { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
       { field: 'plotType', header: 'plotType', label: 'plot Type'},
-      { field: 'assessedArea', header: 'assessedArea', label: 'Measured Area' },
-      { field: 'assessedDate', header: 'assessedDate', label: 'Measured Date'},
+      { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
+      { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date'},
   
     ];
   initPlotAssesment() {
@@ -129,7 +132,7 @@ export class PlotassesmentComponent implements OnInit {
     this.initVarity();
     this.initplottype();
     this.initweedstatus();
-    this.disabledFormControls();
+    // this.disabledFormControls();
     this.initWeedicides();
     this.initPests();
     this.initFertlizers();
@@ -158,7 +161,30 @@ export class PlotassesmentComponent implements OnInit {
       this.plotReports = resp as unknown as PlotReportDto[];
     })
   }
-
+  getAllottedPlotByAllottedPlotId(offerNo: number) {
+    this.offeredNo.forEach((value) => {
+      if (value.offerNo == offerNo) {
+        this.fbPlotAssesment.controls['allottedPlotId'].setValue(value.allottedPlotId);
+      }
+    });
+    this.monitoringService.GetAllottedPlotByAllottedPlotId(this.fbPlotAssesment.controls['allottedPlotId'].value).subscribe((resp) => {
+      this.allottedPlotByAllottedPlotId = resp as any;
+      if (this.allottedPlotByAllottedPlotId) {
+        this.fbPlotAssesment.controls['farmerId'].setValue(this.allottedPlotByAllottedPlotId[0]?.farmerCode);
+        this.fbPlotAssesment.controls['farmername'].setValue(this.allottedPlotByAllottedPlotId[0]?.farmerName);
+        this.fbPlotAssesment.controls['division'].setValue(this.allottedPlotByAllottedPlotId[0]?.divisionName);
+        this.fbPlotAssesment.controls['circle'].setValue(this.allottedPlotByAllottedPlotId[0]?.circleName);
+        this.fbPlotAssesment.controls['section'].setValue(this.allottedPlotByAllottedPlotId[0]?.sectionName);
+        this.fbPlotAssesment.controls['farmervillage'].setValue(this.allottedPlotByAllottedPlotId[0]?.villageName);
+        this.fbPlotAssesment.controls['croptype'].setValue(this.allottedPlotByAllottedPlotId[0]?.cropType);
+        this.fbPlotAssesment.controls['crop'].setValue(this.allottedPlotByAllottedPlotId[0]?.crop);
+        this.fbPlotAssesment.controls['fieldname'].setValue(this.allottedPlotByAllottedPlotId[0]?.fieldName);
+        this.fbPlotAssesment.controls['birnumber'].setValue(this.allottedPlotByAllottedPlotId[0]?.birNumber);
+        this.fbPlotAssesment.controls['birdate'].setValue(this.allottedPlotByAllottedPlotId[0]?.birDate);
+        this.initPlotReports(this.fbPlotAssesment.controls['allottedPlotId'].value);
+      }
+    });
+  }
   initFarmers() {
     this.appMasterService.GetFarmers().subscribe((resp) => {
       this.farmers = resp as unknown as FarmersViewDto[];
@@ -181,8 +207,8 @@ export class PlotassesmentComponent implements OnInit {
     });
   }
   initVarity() {
-    this.lookupService.VarietyTypes().subscribe((resp) => {
-      this.varitytype = resp as unknown as LookupDetailDto[];
+    this.appMasterService.GetVarieties().subscribe((resp) => {
+      this.varieties = resp as unknown as VarietyViewDto[];
     });
   }
   initplottype() {
@@ -225,15 +251,14 @@ initDisease(){
       console.log(resp)
     })
   }
- 
   onSearch() {
     this.initPlotAssesments(this.currentSeason.seasonId!);
   }
 
   plotAssesmentForm() {
     this.fbPlotAssesment = this.formbuilder.group({
-      seasonId: ['', Validators.required],
-      plotReportId: ['',Validators.required],
+      seasonId:[{ value: this.currentSeason.seasonId }, (Validators.required)],
+      plotReportId:[,(Validators.required)],
       croptype: ['',Validators.required],
       crop: [],
       offeredno: [],
@@ -245,22 +270,22 @@ initDisease(){
       section: [],
       farmervillage: [],
       plotareavillage: [],
-      planttype: [],
-      plottype: [],
-      surveyno: [],
+      plantTypeId: ['',Validators.required],
+      plotTypeId: ['',Validators.required],
+      surveyNo: ['',Validators.required],
       reportedarea: [],
-      plantingdate: [],
-      variety: [],
-      agreedton: [],
+      plantingDate: ['',Validators.required],
+      varietyId: ['',Validators.required],
+      // agreedton: [],
       fieldname: [],
       birnumber: [],
       birdate: [],
-      measurearea: [],
-      inspectiondate: [],
+      assessedArea: ['',Validators.required],
+      assessedDate: ['',Validators.required],
       demoplotarea: [true],
       isactive: [true],
-      weedstatus: [],
-      intercroping: [],
+      weedStatusId: ['',Validators.required],
+      interCropId: ['',Validators.required],
       micronutrientdeficiency: [true],
       trashmulching: [true],
       gapfillingdone: [true],
@@ -269,6 +294,10 @@ initDisease(){
       fertilizers:this.formbuilder.array([]),
       diseases:this.formbuilder.array([]),
     })
+  }
+
+  get FormControls() {
+    return this.fbPlotAssesment.controls;
   }
 
   getFormArrayControl(formGroupName: string):FormArray{
@@ -311,29 +340,38 @@ initDisease(){
       // controldate:[],
     })
   }
-  onSelectedFarmer(farmerId: number) {
-    this.farmers.forEach((value) => {
-      if (value.farmerId == farmerId) {
-        this.fbPlotAssesment.controls['farmername'].setValue(value.farmerName);
-        this.fbPlotAssesment.controls['fathername'].setValue(value.fatherName);
-        this.fbPlotAssesment.controls['farmervillage'].setValue(value.villageName);
-        this.fbPlotAssesment.controls['division'].setValue(value.divisionName);
-        this.fbPlotAssesment.controls['circle'].setValue(value.circleName);
-        this.fbPlotAssesment.controls['section'].setValue(value.sectionName);
-      }
-    });
-  }
-  disabledFormControls() {
-    this.fbPlotAssesment.controls['farmername'].disable();
-    this.fbPlotAssesment.controls['fathername'].disable();
-    this.fbPlotAssesment.controls['farmervillage'].disable();
-    this.fbPlotAssesment.controls['division'].disable();
-    this.fbPlotAssesment.controls['circle'].disable();
-    this.fbPlotAssesment.controls['section'].disable();
+  // getAllottedPlotByPlotAssessment(plotReportId: number) {
+  //   this.plotReportsinfo.forEach((value) => {
+  //     if (value.plotReportId == plotReportId) {
+  //       this.fbPlotAssesment.controls['farmername'].setValue(value.farmerName);
+  //       this.fbPlotAssesment.controls['fathername'].setValue(value.fatherName);
+  //       this.fbPlotAssesment.controls['farmervillage'].setValue(value.villageName);
+  //       this.fbPlotAssesment.controls['division'].setValue(value.divisionName);
+  //       this.fbPlotAssesment.controls['circle'].setValue(value.circleName);
+  //       this.fbPlotAssesment.controls['section'].setValue(value.sectionName);
+  //     }
+  //   });
+  // }
+  // disabledFormControls() {
+  //   this.fbPlotAssesment.controls['farmername'].disable();
+  //   this.fbPlotAssesment.controls['fathername'].disable();
+  //   this.fbPlotAssesment.controls['farmervillage'].disable();
+  //   this.fbPlotAssesment.controls['division'].disable();
+  //   this.fbPlotAssesment.controls['circle'].disable();
+  //   this.fbPlotAssesment.controls['section'].disable();
+  // }
+
+  savePlotAssessment(): Observable<HttpEvent<any>> {
+    if (this.addFlag) return this.monitoringService.CreatePlotReport(this.fbPlotAssesment.value)
+    else return this.monitoringService.UpdatePlotReport(this.fbPlotAssesment.value)
   }
   onSubmit() {
-    console.log(this.fbPlotAssesment.value);
+    if(this.fbPlotAssesment.value){
 
+    }
+ else {
+      this.fbPlotAssesment.markAllAsTouched();
+    }
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

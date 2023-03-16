@@ -1,4 +1,4 @@
-import { IPlotReportViewDto, PlotAssessmentViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
+import { IPlotReportViewDto, PlotAssessmentDto, PlotAssessmentViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { AllottedPlotDto, IAllottedPlotViewDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "src/app/_services/api.http.service";
@@ -6,7 +6,7 @@ import { CompletedPlotDto, CompletedPlotViewDto } from '../_models/monitoring';
 import {
   CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
   UPDATE_PLOT_REPORT_URI, GET_PLOT_ALLOTMENTS_IN_SEASON_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_PLOTTRANSFER_URI, GET_DOCCODE_URI,
-  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI, UPDATE_COMPLETED_PLOT_URI, GET_ALLOTTED_PLOT_URI, GET_PLOT_NUMBER_URI
+  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI, UPDATE_COMPLETED_PLOT_URI, GET_ALLOTTED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_PLOT_REPORTINFO_URI
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -47,9 +47,17 @@ export class MonitoringService extends ApiHttpService {
     arr.push(seasonId);
     return this.getWithParams<PlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
   }
-
+  public CreatePlotAssessment(plotAssessment: PlotAssessmentDto) {
+    return this.post<PlotAssessmentDto>(CREATE_PLOTTRANSFER_URI,plotAssessment);
+  }
+  public UpdatePlotAssessment(plotAssessment: PlotAssessmentDto) {
+    return this.post<PlotAssessmentDto>(UPDATE_PLOTTRANSFER_URI,plotAssessment);
+  }
   public GetPlotAllotmentsInSeason(seasonId: number) {
     return this.getWithId<any>(GET_PLOT_ALLOTMENTS_IN_SEASON_URI, seasonId);
+  }
+  public GetPlotReportsforassessments(plotNumber: number) {
+    return this.getWithId<any>(GET_PLOT_REPORTINFO_URI, plotNumber);
   }
   // Plot Transfers
   public GetAllPlotsTransfers(seasonId: number, param1 = null) {
