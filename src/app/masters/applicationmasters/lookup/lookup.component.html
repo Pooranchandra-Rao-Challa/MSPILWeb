@@ -86,7 +86,7 @@
                                         <input pInputText class="form-control" formControlName="code" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
                                 formArrayControls(lookUpDetailsIndex, 'code')?.errors }">
                                         <span
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched &&formArrayControls(lookUpDetailsIndex,'code')?.invalid">
+                                            *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched && formArrayControls(lookUpDetailsIndex,'code')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
                                                 *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['required']">
                                                 Please enter code.</div>

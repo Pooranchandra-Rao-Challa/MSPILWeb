@@ -9,7 +9,11 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 
 
-
+export interface IHeader {
+  field: string;
+  header: string;
+  label: string;
+}
 @Component({
   selector: 'app-plotassesment',
   templateUrl: './plotassesment.component.html',
@@ -17,6 +21,7 @@ import { CURRENT_SEASON } from 'src/environments/environment';
 
   ]
 })
+
 export class PlotassesmentComponent implements OnInit {
   showDialog: boolean = false;
   submitLabel!: string;
@@ -38,13 +43,32 @@ export class PlotassesmentComponent implements OnInit {
   weedicides:LookupDetailDto[] =[]
   plotReports: PlotReportDto[] =[];
   currentSeasonCode?: string;
-  pests?:LookupDetailDto[] =[];
-  faPestsDetails!: FormArray;
+  pests:LookupDetailDto[] =[];
+  fertilizers:LookupDetailDto[] =[];
+  Diseases:LookupDetailDto[] =[];
+  
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private lookupService: LookupService,
     private monitoringService: MonitoringService) { }
-    
+    headers: IHeader[] = [
+      { field: 'cropType', header: 'cropType', label: 'Crop' },
+      { field: 'season', header: 'season', label:'Season' },
+      { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
+      { field: 'farmerCode', header: 'farmerCode', label: 'farmer Name' },
+      { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' },
+      { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+      { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
+      { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
+      { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+      { field: 'variety', header: 'variety', label: 'Variety' },
+      { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
+      { field: 'plotType', header: 'plotType', label: 'plot Type'},
+      { field: 'assessedArea', header: 'assessedArea', label: 'Measured Area' },
+      { field: 'assessedDate', header: 'assessedDate', label: 'Measured Date'},
+  
+    ];
   initPlotAssesment() {
     this.submitLabel = "Add Assesment";
     this.addFlag = true;
@@ -57,15 +81,46 @@ export class PlotassesmentComponent implements OnInit {
 
       formArray.push(this.createWeed(weed));
     })
-
+  this.pest();
+  this.Fertilizer();
+  this.Disease();
   }
 
+  pest(){
+  this.fbPlotAssesment.patchValue({"seasonId":this.currentSeason.seasonId});
+    const formArray = this.fbPlotAssesment.get("pests") as FormArray;
+    this.pests.forEach(pest =>{
+      console.log(pest);
+
+      formArray.push(this.createpests(pest));
+    })
+  }
+  Fertilizer(){
+    this.fbPlotAssesment.patchValue({"seasonId":this.currentSeason.seasonId});
+    const formArray = this.fbPlotAssesment.get("fertilizers") as FormArray;
+    this.fertilizers.forEach(fertilizer=>{
+      console.log(fertilizer);
+
+      formArray.push(this.createFertlizer(fertilizer));
+    })
+  }
+  Disease(){
+    this.fbPlotAssesment.patchValue({"seasonId":this.currentSeason.seasonId});
+    const formArray = this.fbPlotAssesment.get("diseases") as FormArray;
+    this.Diseases.forEach(diseases=>{
+      console.log(diseases);
+
+      formArray.push(this.createDisease(diseases));
+    })
+  }
+  
   ngOnInit(): void {
     this.currentSeasonCode = CURRENT_SEASON()
     console.log(this.currentSeasonCode);
-
-    this.initCurrentSeasons();
+   
+   
     this.plotAssesmentForm();
+    this.initCurrentSeasons();
     this.initSeasons();
     this.initFarmers();
     this.initCrop();
@@ -76,12 +131,14 @@ export class PlotassesmentComponent implements OnInit {
     this.initweedstatus();
     this.disabledFormControls();
     this.initWeedicides();
+    this.initPests();
+    this.initFertlizers();
+    this.initDisease();
   }
 
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
-
     });
   }
 
@@ -90,6 +147,7 @@ export class PlotassesmentComponent implements OnInit {
       this.currentSeason = resp as unknown as SeasonDto;
       console.log(this.currentSeason);
       this.initPlotReports(this.currentSeason.seasonId!);
+      this.initPlotAssesments(this.currentSeason.seasonId!);
     });
   }
 
@@ -146,22 +204,28 @@ export class PlotassesmentComponent implements OnInit {
   initPests(){
     this.lookupService.Pests().subscribe((resp) => {
       this.pests = resp as unknown as LookupDetailDto[];
+      // console.log(resp)
     });
   }
-  // initCurrentSeason(seasonCode: string) {
-  //   this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
-  //     this.currentSeason = resp as SeasonDto;
-  //     this.initSeasons();
-  //     this.initPlotAssesments(this.currentSeason.seasonId!);
-  //   });
-  // }
+  initFertlizers(){
+    this.lookupService.Fertilizers().subscribe((resp) => {
+      this.fertilizers = resp as unknown as LookupDetailDto[];
+      // console.log(resp)
+  })
+}
+initDisease(){
+  this.lookupService.Diseases().subscribe((resp) => {
+    this.Diseases = resp as unknown as LookupDetailDto[];
+    // console.log(resp)
+  })
+}
   initPlotAssesments(seasonId: number) {
-    let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
+    this.monitoringService.GetPlotAssessments(seasonId).subscribe((resp) => {
       this.plotAssessments = resp as unknown as PlotAssessmentViewDto[];
-      console.log(this.plotAssessments);
-    });
+      console.log(resp)
+    })
   }
+ 
   onSearch() {
     this.initPlotAssesments(this.currentSeason.seasonId!);
   }
@@ -202,31 +266,25 @@ export class PlotassesmentComponent implements OnInit {
       gapfillingdone: [true],
       weedicides:this.formbuilder.array([]),
       pests:this.formbuilder.array([]),
+      fertilizers:this.formbuilder.array([]),
+      diseases:this.formbuilder.array([]),
     })
   }
 
   getFormArrayControl(formGroupName: string):FormArray{
     return this.fbPlotAssesment.controls[formGroupName] as FormArray
   }
-
-  faPests(): FormArray {
-    return this.fbPlotAssesment.get("pests") as FormArray
-  }
-  addPests() {
-    this.faPestsDetails = this.fbPlotAssesment.get("pests") as FormArray
-    this.faPestsDetails.push(this.generaterow())
-  }
-  generaterow(){
+  
+  createpests(pest:LookupDetailDto,plotAssessmentpests?:any):  FormGroup {
     return this.formbuilder.group({
-      lookupId: [],
-      lookupDetailId: [],
-      name: [],
-      remarks: [],
-      identifieddate:[],
-      controldate:[],
+      pestsId: [pest.lookupId],
+      plotAssessmentpestsId:[plotAssessmentpests?.pestid==pest.lookupId ? plotAssessmentpests?.id:''],
+      name :[pest.name],
+      remarks: [pest.remarks],
+      // identifieddate:[],
+      // controldate:[],
     })
   }
-
   createWeed(weed: LookupDetailDto,plotAssessmentWeeds?:any): FormGroup {
     return this.formbuilder.group({
       weedicideId: [weed.lookupDetailId],
@@ -235,7 +293,24 @@ export class PlotassesmentComponent implements OnInit {
       checked:[plotAssessmentWeeds?.weedid==weed.lookupId],
     });
   }
-
+  createFertlizer(fertlizer: LookupDetailDto,plotAssessmentfertlizers?:any): FormGroup {
+    return this.formbuilder.group({
+      fertlizerId: [fertlizer.lookupDetailId],
+      plotAssessmentfertlizerId: [plotAssessmentfertlizers?.fertlizerid==fertlizer.lookupId ? plotAssessmentfertlizers?.id:''],
+      name: [fertlizer.name],
+      checked:[plotAssessmentfertlizers?.fertlizerid==fertlizer.lookupId],
+    });
+  }
+  createDisease(disease:LookupDetailDto,plotAssessmentdiseases?:any):  FormGroup {
+    return this.formbuilder.group({
+      diseaseId: [disease.lookupId],
+      plotAssessmentdiseasesId:[plotAssessmentdiseases?. diseaseId==disease.lookupId ? plotAssessmentdiseases?.id:''],
+      name :[disease.name],
+      remarks: [disease.remarks],
+      // identifieddate:[],
+      // controldate:[],
+    })
+  }
   onSelectedFarmer(farmerId: number) {
     this.farmers.forEach((value) => {
       if (value.farmerId == farmerId) {

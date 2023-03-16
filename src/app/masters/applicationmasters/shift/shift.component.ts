@@ -46,11 +46,12 @@ export class ShiftsComponent implements OnInit {
 
     ngOnInit() {
         this.initShifts();
-        this.fbshifts = this.formbuilder.group({            
+        this.fbshifts = this.formbuilder.group({   
+            shiftId: [null],         
             name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
             code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-            fromTime: new FormControl('', [Validators.required]),
-            toTime: new FormControl('', [Validators.required]),
+            FromTime: new FormControl('', [Validators.required]),
+            ToTime: new FormControl('', [Validators.required]),
             isNextDay: [ Validators.required],
             isActive: [ Validators.required],
         });
@@ -80,12 +81,24 @@ export class ShiftsComponent implements OnInit {
     }
 
     saveShift(): Observable<HttpEvent<ShiftDto>> {
-      debugger
+        // var test = this.fbshifts.value;
+        // console.log(test);
+        // test.FromTime = this.convertstrTimetoTimeobject(test.FromTime)
+        // test.ToTime = this.convertstrTimetoTimeobject(test.ToTime)
+        // console.log(test);
+
+
         if (this.addFlag) return this.appmasterservice.CreateShift(this.fbshifts.value)
         else return this.appmasterservice.UpdateShift(this.fbshifts.value)
     }
+
+    // convertstrTimetoTimeobject(time:string){
+    //     return{hours:Number(time.split(':')[0]), minutes: Number(time.split(':')[1]) }
+    // }
+
     onSubmit() {
-      debugger
+ 
+        
         if (this.fbshifts.valid) {
             this.saveShift().subscribe(resp => {
                 if (resp) {

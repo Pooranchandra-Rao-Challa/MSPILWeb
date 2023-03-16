@@ -172,3 +172,5 @@ export const GET_COMPLETED_PLOT_IN_SEASON_URI= "Monitoring/PlotAllotmentsInSeaso
 
 
 
+export const GET_ALLOTTED_PLOT_URI = "Monitoring/AllottedPlot";
+export const GET_PLOT_NUMBER_URI = "Monitoring/GetPlotNumber";

@@ -1,4 +1,4 @@
-import { IPlotReportViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
+import { IPlotReportViewDto, PlotAssessmentViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { AllottedPlotDto, IAllottedPlotViewDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "src/app/_services/api.http.service";
@@ -6,7 +6,7 @@ import { CompletedPlotDto, CompletedPlotViewDto } from '../_models/monitoring';
 import {
   CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
   UPDATE_PLOT_REPORT_URI, GET_PLOT_ALLOTMENTS_IN_SEASON_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_PLOTTRANSFER_URI, GET_DOCCODE_URI,
-  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI, UPDATE_COMPLETED_PLOT_URI
+  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI, UPDATE_COMPLETED_PLOT_URI, GET_ALLOTTED_PLOT_URI, GET_PLOT_NUMBER_URI
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -42,18 +42,15 @@ export class MonitoringService extends ApiHttpService {
   }
 
   // plot assessment
-  public GetPlotAssessments(seasonId: number, param1 = null) {
+  public GetPlotAssessments(seasonId: number) {
     let arr: any[] = [];
     arr.push(seasonId);
-    if (param1 != null) arr.push(param1);
-    if (param1 == null) {
-      return this.getWithParams<IAllottedPlotViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
-    }
-    else {
-      return this.getWithParams<IAllottedPlotViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
-    }
+    return this.getWithParams<PlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
   }
 
+  public GetPlotAllotmentsInSeason(seasonId: number) {
+    return this.getWithId<any>(GET_PLOT_ALLOTMENTS_IN_SEASON_URI, seasonId);
+  }
   // Plot Transfers
   public GetAllPlotsTransfers(seasonId: number, param1 = null) {
     let arr: any[] = [];
@@ -92,8 +89,13 @@ export class MonitoringService extends ApiHttpService {
     return this.post<PlotReportDto>(UPDATE_PLOT_REPORT_URI, plotReport);
   }
 
-  public GetPlotAllotmentsInSeason(seasonId: number) {
-    return this.getWithId<any>(GET_PLOT_ALLOTMENTS_IN_SEASON_URI, seasonId);
+ 
+  public GetAllottedPlotByAllottedPlotId(allotedPlotId: number) {
+    return this.getWithId<any>(GET_ALLOTTED_PLOT_URI, allotedPlotId);
+  }
+
+  public GetPlotNumber(allotedPlotId: number) {
+    return this.getWithId<any>(GET_PLOT_NUMBER_URI, allotedPlotId, {responseType: 'text'});
   }
 
   public GetPlotReports(seasonId: number, forapproval: boolean, param1 = null) {

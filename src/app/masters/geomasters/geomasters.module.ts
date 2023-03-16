@@ -8,7 +8,7 @@ import { MandalComponent } from './mandal/mandal.component';
 import { SectionComponent } from './section/section.component';
 import { StateComponent } from './state/state.component';
 import { VillageComponent } from './village/village.component';
-import { PrimeNgModule } from '../../_shared/primeng.module';
+import { SharedModule } from 'src/app/_shared/shared.module';
 
 @NgModule({
 	declarations: [
@@ -24,10 +24,10 @@ import { PrimeNgModule } from '../../_shared/primeng.module';
 	imports: [
 		CommonModule,
 		GeoMastersRoutingModule,
-		PrimeNgModule
+		SharedModule
 	],
 	providers: [
-		
+
 	  ]
 })
 export class GeoMastersModule { }

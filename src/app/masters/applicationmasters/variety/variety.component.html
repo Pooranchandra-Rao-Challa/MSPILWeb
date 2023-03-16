@@ -162,7 +162,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Plant Age(Months):<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="plantAge" formControlName="plantAge" [maxlength]="2"
+                  <p-inputNumber placeholder="Enter Plant Age" inputId="plantAge" formControlName="plantAge" [maxlength]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantAge'].touched && FormControls['plantAge'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['plantAge'].touched && FormControls['plantAge'].invalid">
@@ -172,7 +172,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Ratoon Age(Months):<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="ratoonAge" formControlName="ratoonAge" [maxlength]="2"
+                  <p-inputNumber placeholder="Enter Ratoon Age" inputId="ratoonAge" formControlName="ratoonAge" [maxlength]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['ratoonAge'].touched && FormControls['ratoonAge'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['ratoonAge'].touched && FormControls['ratoonAge'].invalid">

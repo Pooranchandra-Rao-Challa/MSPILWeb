@@ -1,15 +1,17 @@
+import { RG_PANNO, MIN_ACCNO } from './../../../_shared/regex';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
-import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL } from 'src/app/_shared/regex';
+import { RG_ADDRESS, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL } from 'src/app/_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { BankDto, BranchDto, TptdetailViewDto } from 'src/app/_models/applicationmaster';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_VEHICLE, MIN_LENGTH_2, MAX_LENGTH_20 } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-tpt',
@@ -41,6 +43,7 @@ export class TptComponent implements OnInit {
   defaults: { name: string; id: boolean; }[];
   IFSC?: string;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -74,9 +77,14 @@ export class TptComponent implements OnInit {
     this.appMasterService.GetTptDetails(tptId).subscribe((resp) => {
       this.tptDetails = resp as unknown as TptdetailViewDto[];
       this.faTptDetails().clear();
-      this.tptDetails.forEach((tptDetail) => {
-        this.faTptDetails().push(this.generateRow(tptDetail));
-      });
+      if (this.tptDetails.length > 0) {
+        this.tptDetails.forEach((tptDetail) => {
+          this.faTptDetails().push(this.generateRow(tptDetail));
+        });
+      }
+      else {
+        this.addTptDetail();
+      }
       this.loadingTptDetails = false;
     });
   }
@@ -118,16 +126,16 @@ export class TptComponent implements OnInit {
     this.fbTpt = this.formbuilder.group({
       tptId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       relationTypeId: ['', (Validators.required)],
-      relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       gender: ['', (Validators.required)],
-      address: ['', (Validators.required)],
-      pinCode: ['', (Validators.required)],
+      address: new FormControl('', [Validators.required, Validators.pattern(RG_ADDRESS)]),
+      pinCode: [null, (Validators.required)],
       phoneNo: ['', (Validators.pattern(RG_PHONE_NO))],
-      tax: ['', (Validators.required)],
+      tax: [null, (Validators.required)],
       email: ['', (Validators.pattern(RG_EMAIL))],
-      panNo: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      panNo: ['', Validators.pattern(RG_PANNO)],
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -137,7 +145,7 @@ export class TptComponent implements OnInit {
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       bankId: ['', (Validators.required)],
       branchId: ['', (Validators.required)],
-      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
       isActive: [true],
       tptdetails: this.formbuilder.array([]),
     });
@@ -168,7 +176,7 @@ export class TptComponent implements OnInit {
     return this.formbuilder.group({
       id: tptDetail.tptdetailId,
       tptId: tptDetail.tptId,
-      vehicleNo: new FormControl(tptDetail.vehicleNo, [Validators.pattern(RG_VEHICLE)]),
+      vehicleNo: new FormControl(tptDetail.vehicleNo == null ? '' : tptDetail.vehicleNo, [Validators.pattern(RG_VEHICLE)]),
       vehicleTypeId: [tptDetail.vehicleTypeId, (Validators.required)],
       insuranceNo: [tptDetail.insuranceNo, (Validators.pattern(RG_ALPHA_NUMERIC))],
       receivableAmt: [tptDetail.receivableAmt],
@@ -218,6 +226,7 @@ export class TptComponent implements OnInit {
   }
 
   addTPT() {
+    this.addTptDetail();
     this.submitLabel = "Add TPT";
     this.addFlag = true;
     this.showDialog = true;
