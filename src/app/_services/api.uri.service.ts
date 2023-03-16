@@ -158,10 +158,23 @@ export const UPDATE_PLOT_REPORT_URI = "Monitoring/UpdatePlotReport";
 export const GET_PLOT_ALLOTMENTS_IN_SEASON_URI = "Monitoring/PlotAllotmentsInSeason";
 export const GET_PLOT_REPORTS_URI = "Monitoring/GetPlotReports";
 export const GET_PLOT_REORT_IN_SEASON_URI = "Monitoring/PlotReportsInSeason";
+
 export const GET_PLOTASSESSMENT_URI = "Monitoring/GetPlotAssessements";
-export const GET_DOCCODE_URI = "Monitoring/GetNewDocNo/";
+export const CREATE_PLOTASSESSMENT_URI = "Monitoring/CreateAssessedArea";
+export const UPDATE_PLOTASSESSMENT_URI = "Monitoring/UpdateAssessedArea";
+export  const GET_PLOT_REPORTINFO_URI ="Monitoring/PlotReportInfo";
+export const GET_DOCCODE_URI = "Monitoring/GetNewDocNoForPlotTransfer/";
 export const CREATE_PLOTTRANSFER_URI = "Monitoring/CreatePlotTransfer";
 export const UPDATE_PLOTTRANSFER_URI = "Monitoring/UpdatePlotTransfer";
 export const GET_PLOTTRANSFER_URI = "Monitoring/GetPlotTransfers";
+
+export const CREATE_COMPLETED_PLOT_URI = "Monitoring/CreateCompletedPlot";
+export const UPDATE_COMPLETED_PLOT_URI = "Monitoring/UpdateCompletedPlot";
+export const GET_COMPLETED_PLOTS_URI = "Monitoring/GetCompletedPlots";
+export const GET_DONOFORCOMPLETEDPLOTS_URI = "Monitoring/GetNewDocNoForCompletedPlots/";
+export const GET_COMPLETED_PLOT_IN_SEASON_URI= "Monitoring/PlotAllotmentsInSeason";
+
+
+
 export const GET_ALLOTTED_PLOT_URI = "Monitoring/AllottedPlot";
 export const GET_PLOT_NUMBER_URI = "Monitoring/GetPlotNumber";

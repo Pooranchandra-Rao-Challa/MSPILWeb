@@ -27,7 +27,7 @@ export class StateComponent implements OnInit {
   addFlag: boolean = true;
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
-
+  globalFilterFields: string[] = ['stateCode','stateName', 'isActive', 'createdAt', 'createdByUser','updatedAt', 'updatedByUser'];
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     public jwtService: JWTService,
@@ -49,7 +49,7 @@ export class StateComponent implements OnInit {
     this.fbstates = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      isActive: true,
+      isActive: [true],
       stateId: new FormControl(null),
     });
   }
@@ -96,9 +96,11 @@ export class StateComponent implements OnInit {
     }
   }
 
+  
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
 
   clear(table: Table) {
     table.clear();

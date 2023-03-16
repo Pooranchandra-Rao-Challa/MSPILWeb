@@ -1,6 +1,6 @@
 import { BankDto, BranchDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, } from './../../../_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { HglViewDto, SubHglViewDto, HglDto, } from '../../../_models/applicationmaster';
 import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
+import { MaxLength } from 'src/app/_models/common';
+import { MIN_LENGTH_6 } from '../../../_shared/regex';
 
 @Component({
   selector: 'app-hgl',
@@ -65,6 +67,8 @@ export class HglComponent implements OnInit {
   genders: { label: string; value: string }[];
   vehicleTypes: VehicleTypeViewDto[] = [];
   IFSC?: string;
+  maxLength: MaxLength = new MaxLength();
+ 
 
   constructor(
     private formbuilder: FormBuilder,
@@ -80,17 +84,18 @@ export class HglComponent implements OnInit {
   hglform() {
     this.fbHgl = this.formbuilder.group({
       hglId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC),]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       relationTypeId: new FormControl('', [Validators.required]),
-      relationName: new FormControl('', [Validators.required,Validators.pattern(RG_ALPHA_ONLY),]),
+      relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       gender: ['', Validators.required],
       address: ['', Validators.required],
-      pinCode: ['', Validators.required],
+      pinCode: new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_6)]),
       phoneNo: ['', Validators.pattern(RG_PHONE_NO)],
       tax: ['', Validators.required],
-      email: new FormControl('', [Validators.required,Validators.pattern(RG_EMAIL),]),
-      panNo: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC),]),
+      email: ['', (Validators.pattern(RG_EMAIL))],
+      panNo:new FormControl('', [ Validators.pattern(RG_PANNO)
+      ]),
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -99,8 +104,8 @@ export class HglComponent implements OnInit {
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       branchId: ['', Validators.required],
-      accountNo: new FormControl('', [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
-      aadhaarNo: new FormControl('', [Validators.required,Validators.pattern(RG_NUMERIC_ONLY),]),
+      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
+      aadhaarNo:  new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
       isActive: [false],
       subHgls: this.formbuilder.array([]),
     });

@@ -9,7 +9,8 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
+import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ADDRESS, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-division',
@@ -28,7 +29,9 @@ export class DivisionsComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
-
+  globalFilterFields: string[] =['divisionId','divisionCode','divisionName','inchargeName','address','inchargePhoneNo','inchargePhoneNo',
+  'listingOrder','isActive','createdByUser','updatedByUser','createdAt','updatedAt']
+  maxLength: MaxLength = new MaxLength();
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
@@ -54,11 +57,11 @@ export class DivisionsComponent implements OnInit {
     this.fbdivisions = this.formbuilder.group({
       divisionId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      inchargeName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      listingOrder: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+      inchargeName: new FormControl('',[Validators.pattern(RG_ALPHA_ONLY)]),
+      listingOrder: new FormControl(null,[Validators.required]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      inchargePhoneNo: new FormControl('',[Validators.required,Validators.pattern(RG_PHONE_NO)]),
-      address: new FormControl(null, [Validators.required, Validators.pattern("[a-zA-Z0-9.,/#&-]+")]),
+      inchargePhoneNo: new FormControl('',[Validators.pattern(RG_PHONE_NO)]),
+      address: new FormControl(null, [Validators.required,Validators.pattern(RG_ADDRESS)]),
       isActive: new FormControl(true, Validators.required),
     });
 

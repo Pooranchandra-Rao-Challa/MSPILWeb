@@ -13,6 +13,7 @@ import { AppMasterService } from '../../_services/appmaster.service';
 import { LookupService } from '../../_services/lookup.service';
 import { PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
 import { ActivatedRoute } from '@angular/router';
+import { CompletedPlotViewDto, CompletedPlotDto } from '../../_models/monitoring';
 
 
 export interface IHeader {
@@ -28,18 +29,17 @@ export interface IHeader {
 })
 export class CompletedPlotsComponent implements OnInit {
 
-  plotTransfers: PlotTransferViewDto[] = [];
-  plotTransfer: PlotTransferDto = new PlotTransferDto();
+  completedPlots: CompletedPlotViewDto[] = [];
+  completedPlot: CompletedPlotDto = new CompletedPlotDto();
   showDialog: boolean = false;
   loading: boolean = true;
   addFlag: boolean = true;
   globalFilterFields: string[] = ['seasonName', 'divisionName', 'circleName', 'sectionName', 'villageName', 'billParameterName', 'rate', 'isActive',
     'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
-  fbplotTransfer!: FormGroup;
+  fbCompletedPlots!: FormGroup;
   seasons: any;
-  farmers: FarmersViewDto[] = [];
-  toFarmers:FarmersViewDto[] = [];
+  toFarmers:CompletedPlotViewDto[] = [];
   transferResons:LookupDetailDto[] = [];
   plotTransferTypes:LookupDetailDto[] = [];
   billParameters: BillParameterViewDto[] = [];
@@ -48,14 +48,16 @@ export class CompletedPlotsComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
 
   headers: IHeader[] = [
-    { field: 'SeasonName', header: 'SeasonName', label: 'Season' },
+    { field: 'season', header: 'season', label: 'Season' },
     { field: 'docNo', header: 'docNo', label:'Doc No' },
     { field: 'docDate', header: 'docDate', label: 'Doc Date' },
-    // { field: 'plotTransferType', header: 'plotTransferType', label: 'Plot Transfer Type' },
-    { field: 'fromFarmerName', header: 'fromFarmerName', label: 'From Farmer Name' },
-    { field: 'transferArea', header: 'transferArea', label: 'Transfer Area' },
-    { field: 'toFarmerName', header: 'toFarmerName', label: 'To Farmer Name' },
-    // { field: 'plotTransferReason', header: 'plotTransferReason', label: 'Plot Transfer Reason' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
+    { field: 'netArea', header: 'netArea', label: 'Net Area' },
+    { field: 'isCompleted', header: 'isCompleted', label: 'Is Completed' },
+    { field: 'createdAt', header: 'createdAt', label: 'created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
 
 
@@ -82,25 +84,24 @@ export class CompletedPlotsComponent implements OnInit {
 
   
   compleatedPlotsForm() {
-    this.fbplotTransfer = this.formbuilder.group({
-      plotTransferId:[0],
+    this.fbCompletedPlots = this.formbuilder.group({
+      completedPlotId:[0],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)], 
-      plotAssessmentId:[''],
+      plotAssessmentId:[2],
       docNo:  [{ value: '' }],
+      farmerId:[''],
       docDate:['' ,(Validators.required)],
-      plotTransferTypeId:['', (Validators.required)],
-      fromFarmerId:['', (Validators.required)],
-      fromFarmerName:['', ],
-      transferArea: ['', (Validators.required)],
-      toFarmerId:['', (Validators.required)],
+      isCompleted:['', (Validators.required)],
+      isLeftCultivation:['', (Validators.required)],
+      isUsedForRatoon:['', ],
       toFarmerName:[''],
-      plotTransferReasonId:['', (Validators.required)],
+      estimatedTon:[''],
       "isActive": true
     });
   }
  
   get FormControls() {
-    return this.fbplotTransfer.controls;
+    return this.fbCompletedPlots.controls;
   }
 
   onSearch() {
@@ -109,8 +110,8 @@ export class CompletedPlotsComponent implements OnInit {
 
   initCompleatedPlot(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetAllPlotsTransfers(seasonId, param1).subscribe((resp) => {
-      this.plotTransfers = resp as unknown as PlotTransferViewDto[];
+    this.monitoringService.GeAllCompletedPlots(seasonId, param1).subscribe((resp) => {
+      this.completedPlots = resp as unknown as CompletedPlotViewDto[];
       this.loading = false;
     });
   }
@@ -152,6 +153,8 @@ export class CompletedPlotsComponent implements OnInit {
   }
 
   
+
+  
   initCompleatedPlots() {
     this.LookupService.PlotTransferTypes().subscribe((resp) => {
       this.plotTransferTypes = resp as unknown as LookupDetailDto[];
@@ -161,22 +164,14 @@ export class CompletedPlotsComponent implements OnInit {
   }
  
 
-  onSelectedFarmer(farmerId: number) {
-    this.farmers.forEach((value) => {
-      if (value.farmerId == farmerId) {
-        this.fbplotTransfer.controls['fromFarmerName'].setValue(value.farmerName)
-      }
-    });
-  }
+
   onSelectedToFarmer(farmerId: number) {
     this.toFarmers.forEach((value) => {
       if (value.farmerId == farmerId) {
-        this.fbplotTransfer.controls['toFarmerName'].setValue(value.farmerName);
+        this.fbCompletedPlots.controls['toFarmerName'].setValue(value.farmerName);
       }
     });
   }
-
-
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -194,49 +189,53 @@ export class CompletedPlotsComponent implements OnInit {
   }
 
   getNewDocNo(seasonId: number) {
-    if (this.plotTransfer.plotTransferId == null)
-      this.monitoringService.GetNewDocNo(seasonId).subscribe((resp) => {
-        if (resp) this.fbplotTransfer.controls['docNo'].setValue(resp);
+    if (this.completedPlot.completedPlotId == null)
+      this.monitoringService.GetNewDocNoForCompletedPlots(seasonId).subscribe((resp) => {
+        if (resp) this.fbCompletedPlots.controls['docNo'].setValue(resp);
       });
   }
-  editCompleatedPlot(plotTransfer:PlotTransferViewDto){
-    // this.plotTransfer.plotTransferId = plotTransfer.plotTransferId;
-    // this.plotTransfer.seasonId = plotTransfer.seasonId;
-    // this.fbplotTransfer.controls['seasonId'].disable();
-    // this.plotTransfer.plotAssessmentId = plotTransfer.plotAssessmentId;
-    // this.plotTransfer.docNo = plotTransfer.docNo;
-    // // this.plotTransfer.docDate = new Date(plotTransfer.docDate?.toString() + "");
-    // this.plotTransfer.plotTransferTypeId = plotTransfer.plotTransferTypeId;
-    // this.plotTransfer.fromFarmerId = plotTransfer.fromFarmerId;
-    // this.plotTransfer.transferArea = plotTransfer.transferArea;
-    // this.plotTransfer.toFarmerId = plotTransfer.toFarmerId;
-    // this.plotTransfer.plotTransferReasonId = plotTransfer.plotTransferReasonId;
-    // this.plotTransfer.isActive = plotTransfer.isActive;
-    this.fbplotTransfer.patchValue(plotTransfer);
+  editCompleatedPlot(completedPlot:CompletedPlotViewDto){
+       this.fbCompletedPlots.patchValue({
+      completedPlotId: completedPlot.completedPlotId,
+      seasonId: completedPlot.seasonId,
+      plotAssessmentId: completedPlot.plotAssessmentId=2,
+      docNo: completedPlot.docNo,
+      docDate: completedPlot.docDate?.toString(),
+      isCompleted: completedPlot.isCompleted,
+      isLeftCultivation: completedPlot.isLeftCultivation,
+      isUsedForRatoon: completedPlot.isUsedForRatoon,
+      isActive: completedPlot.isActive
+    });
+
+    this.fbCompletedPlots.patchValue({
+      docDate : new Date(completedPlot.docDate?.toString() + "")
+
+    });
+
     this.addFlag = false;
     this.submitLabel = 'Update Compleated Plot';
     this.showDialog = true;
 
   }
 
-  savePlotTransfer(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.monitoringService.CreatePlotTransfer(this.fbplotTransfer.value)
-    else return this.monitoringService.UpdatePlotTransfer(this.fbplotTransfer.value)
+  saveCompletedPlot(): Observable<HttpEvent<any>> {
+    if (this.addFlag) return this.monitoringService.CreateCompletedPlot(this.fbCompletedPlots.value)
+    else return this.monitoringService.UpdateCompletedPlot(this.fbCompletedPlots.value)
   }
 
   onSubmit() {
-    console.log(this.fbplotTransfer.value);
-    if (this.fbplotTransfer.valid) {
-      this.savePlotTransfer().subscribe(resp => {
+    console.log(this.fbCompletedPlots.value);
+    if (this.fbCompletedPlots.valid) {
+      this.saveCompletedPlot().subscribe(resp => {
         if (resp) {
           this.initCompleatedPlot(this.currentSeason.seasonId!);
-          this.fbplotTransfer.reset();
+          this.fbCompletedPlots.reset();
           this.showDialog = false; 
         }
       })
     }
     else {
-      this.fbplotTransfer.markAllAsTouched();
+      this.fbCompletedPlots.markAllAsTouched();
     }
 
   }

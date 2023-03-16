@@ -157,11 +157,11 @@
 
                     <div class="field col-12 md:col-3">
                       <label htmlFor="name">Village Name:<sup class="p-error">*</sup></label>
-                      <input pInputText id="name" formControlName="name" type="text" placeholder="Enter Village Name" />
+                      <input pInputText id="name" formControlName="name" type="text" placeholder="Enter Village Name" maxlength="50" />
                       <span *ngIf="
                           FormControls['name'].touched &&
                           FormControls['name'].invalid
-                        ">
+                        "> 
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                           Name Is Required
                         </div>
@@ -173,7 +173,7 @@
 
                     <div class="field col-12 md:col-3">
                       <label for="inchargeName">Incharge Name:</label>
-                      <input pInputText id="inchargeName" formControlName="inchargeName"
+                      <input pInputText id="inchargeName" formControlName="inchargeName" maxlength="50"
                         placeholder="Enter Incharge Name" type="text" />
                       <span *ngIf="
                           FormControls['inchargeName'].touched &&
@@ -207,8 +207,8 @@
 
                     <div class="field col-8 md:col-3">
                       <label htmlFor="address">Address:</label>
-                      <textarea rows="6" cols="30" formControlName="address" placeholder="Village Address"
-                        pInputTextarea></textarea>
+                      <textarea rows="6" cols="30" formControlName="address" placeholder="Village Address"  maxlength="255"
+                        pInputTextarea   maxlength="255"></textarea>
                     </div>
                     <div class="col-8 md:col-9">
                       <div class="grid">
@@ -409,10 +409,37 @@
 
     <p-table #dt1 [value]="villages" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="[
-        'name',
+        'divisionName',
+        'circleName',
+        'sectionName',
+        'districtName',
+        'mandalName',
+        'mandalName',
+        'address',
+        'villageName',
+        'villageCode',
+        'inchargeName',
         'country.name',
-        'representative.name',
-        'status'
+        'inchargePhoneNo',
+        'distance',
+        'divertedDistance',
+        'noOfEbservices',
+        'tptRate',
+        'totalArea',
+        'cultivableArea',
+        'irrigationArea',
+        'dryArea',
+        'potentialArea',
+        'notSuitableArea',
+        'tptRate',
+        'targetTons',
+        'listingOrder',
+        'updatedAt',
+        'updatedAt',
+        'updatedBy',
+        'updatedBy',
+      
+
       ]" [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10, 25, 50]"
       [tableStyle]="{ width: 'max-content' }">
       <ng-template pTemplate="caption">
@@ -430,6 +457,42 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
+          <th pSortableColumn="divisionName">
+            Division<p-columnFilter type="text" field="divisionName" display="menu"></p-columnFilter>
+            <p-sortIcon field="divisionName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="circleName">
+            Circle<p-columnFilter type="text" field="circleName" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="circleName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="sectionName">
+            Section<p-columnFilter type="text" field="sectionName" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="sectionName"></p-sortIcon>
+          </th>
+             
+          <th pSortableColumn="districtName">
+            District<p-columnFilter type="text" field="districtName" display="menu"></p-columnFilter>
+            <p-sortIcon field="districtName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="mandalName">
+            Mandal<p-columnFilter type="text" field="mandalName" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="mandalName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="address">
+            Address<p-columnFilter type="text" field="address" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="address"></p-sortIcon>
+          </th>
+          
+          <th pSortableColumn="pinCode">
+            Pincode<p-columnFilter type="text" field="pinCode" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="pinCode"></p-sortIcon>
+          </th>
+         
           <th pSortableColumn="villageCode">
             Code<p-columnFilter type="text" field="villageCode" display="menu">
             </p-columnFilter>
@@ -441,34 +504,7 @@
             <p-sortIcon field="villageName"></p-sortIcon>
           </th>
          
-          <th pSortableColumn="sectionName">
-            Section Name<p-columnFilter type="text" field="sectionName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="sectionName"></p-sortIcon>
-          </th>
-         
-          <th pSortableColumn="mandalName">
-            Mandal Name<p-columnFilter type="text" field="mandalName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="mandalName"></p-sortIcon>
-          </th>
-          
-          <th pSortableColumn="districtName">
-            District Name<p-columnFilter type="text" field="districtName" display="menu"></p-columnFilter>
-            <p-sortIcon field="districtName"></p-sortIcon>
-          </th>
-          
-          <th pSortableColumn="divisionName">
-            Division Name<p-columnFilter type="text" field="divisionName" display="menu"></p-columnFilter>
-            <p-sortIcon field="divisionName"></p-sortIcon>
-          </th>
-         
-          <th pSortableColumn="circleName">
-            Circle Name<p-columnFilter type="text" field="circleName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="circleName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="inchargeName">
+      <th pSortableColumn="inchargeName">
             Incharge Name<p-columnFilter type="text" field="inchargeName" display="menu"></p-columnFilter>
             <p-sortIcon field="inchargeName"></p-sortIcon>
           </th>
@@ -476,16 +512,8 @@
             InchargePhone No<p-columnFilter type="text" field="inchargePhoneNo" display="menu"></p-columnFilter>
             <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
           </th>
-          <th pSortableColumn="address">
-            Address<p-columnFilter type="text" field="address" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="address"></p-sortIcon>
-          </th>
-          <th pSortableColumn="pinCode">
-            Pincode<p-columnFilter type="text" field="pinCode" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="pinCode"></p-sortIcon>
-          </th>
+         
+          
           <th pSortableColumn="distance">
             Distance<p-columnFilter type="text" field="distance" display="menu">
             </p-columnFilter>
@@ -537,7 +565,7 @@
             <p-sortIcon field="targetTons"></p-sortIcon>
           </th>
           <th pSortableColumn="listingOrder">
-            Listing Order<p-columnFilter type="text" field="listingOrder" display="menu"></p-columnFilter>
+        Order<p-columnFilter type="text" field="listingOrder" display="menu"></p-columnFilter>
             <p-sortIcon field="listingOrder"></p-sortIcon>
           </th>
           <th class="text-center" pSortableColumn="isActive">
@@ -549,7 +577,7 @@
             <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
           <th pSortableColumn="createdAt">
-            Created By<p-columnFilter type="text" field="createdAt" display="menu">
+            Created By<p-columnFilter type="text" field="updatedAt" display="menu">
             </p-columnFilter>
             <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
@@ -571,17 +599,22 @@
             <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="InitVillage(village)"></button>
           </td>
-          <td>{{ village.villageCode }}</td>
-          <td>{{ village.villageName }}</td>
-          <td>{{ village.sectionName }}</td>
-          <td>{{ village.mandalName }}</td>
-          <td>{{ village.districtName }}</td>
           <td>{{ village.divisionName }}</td>
           <td>{{ village.circleName }}</td>
-          <td>{{ village.inchargeName }}</td>
-          <td>{{ village.inchargePhoneNo }}</td>
+          <td>{{ village.sectionName }}</td>
+          <td>{{ village.districtName }}</td>
+          <td>{{ village.mandalName }}</td>
           <td>{{ village.address }}</td>
           <td>{{ village.pinCode }}</td>
+          <td>{{ village.villageCode }}</td>
+          <td>{{ village.villageName }}</td>
+          
+        
+         
+          <td>{{ village.inchargeName }}</td>
+          <td>{{ village.inchargePhoneNo }}</td>
+          
+          
           <td>{{ village.distance }}</td>
           <td>{{ village.divertedDistance }}</td>
           <td>{{ village.noOfEbservices }}</td>
@@ -606,12 +639,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="35">No Villages Found.</td>
+          <td class="md:text-center" colspan="50%">No Villages Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="35">Loading.. Villages Data. Please Wait.</td>
+          <td class="md:text-center" colspan="25" >Loading.. Villages Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
