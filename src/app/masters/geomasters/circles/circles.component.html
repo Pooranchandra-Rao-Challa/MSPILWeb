@@ -47,9 +47,9 @@
                     <label>Name:<sup class="p-error">*</sup></label>
                     <input
                       pInputText
-                      id="address1"
+                      id="Name"
                       type="text"
-                      formControlName="name"
+                      formControlName="name"maxLength="50"
                       placeholder="Enter Circle Name"
                       [ngClass]="{
                         'is-invalid ng-dirty':
@@ -131,7 +131,7 @@
                     <label htmlFor="inchargeName">Incharge Name:</label>
                     <input
                       pInputText
-                      id="inchargeName"
+                      id="inchargeName"maxLength="50"
                       formControlName="inchargeName"
                       placeholder="Enter Incharge Name"
                       type="text"
@@ -192,7 +192,7 @@
                       rows="5"
                       cols="30"
                       formControlName="address"
-                      placeholder="Address"
+                      placeholder="Address"  maxLength="255"
                       pInputTextarea
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"
                     ></textarea>
@@ -268,7 +268,7 @@
         <th></th>
 
         <th pSortableColumn="divisionName">
-          Division Name<p-columnFilter
+          Division<p-columnFilter
             type="text"
             field="divisionName"
             display="menu"
@@ -283,23 +283,24 @@
           </p-columnFilter>
           <p-sortIcon field="circleName"></p-sortIcon>
         </th>
-        <th pSortableColumn="divisionName">Incharge Name<p-columnFilter type="text" field="divisionName"
-            display="menu"></p-columnFilter>
-          <p-sortIcon field="divisionName"></p-sortIcon>
-        </th>
-        <th pSortableColumn="inchargeName">Incharge PhoneNo<p-columnFilter type="text" field="inchargeName"
+        <th pSortableColumn="inchargeName">Incharge Name<p-columnFilter type="text" field="inchargeName"
             display="menu"></p-columnFilter>
           <p-sortIcon field="inchargeName"></p-sortIcon>
         </th>
+        <th pSortableColumn="inchargePhoneNo">Incharge PhoneNo<p-columnFilter type="text" field="inchargePhoneNo"
+            display="menu"></p-columnFilter>
+          <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
+        </th>
+        <th pSortableColumn="listingOrder">Order <p-columnFilter type="text" field="listingOrder"
+          display="menu"></p-columnFilter>
+        <p-sortIcon field="listingOrder"></p-sortIcon>
+      </th>
+    
         <th pSortableColumn="address">Address<p-columnFilter type="text" field="address" display="menu">
         </p-columnFilter>
         <p-sortIcon field="address"></p-sortIcon>
       </th>
 
-        <th pSortableColumn="inchargePhoneNo"> Listing Order <p-columnFilter type="text" field="inchargePhoneNo"
-            display="menu"></p-columnFilter>
-          <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
-        </th>
       
         <th class="text-center" pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive"
             display="menu"></p-columnFilter>
@@ -333,16 +334,15 @@
             <td>{{ circles.circleName }}</td>
             <td>{{ circles.inchargeName }}</td>
             <td>{{ circles.inchargePhoneNo }}</td>
-            <td>{{ circles.address }}</td>
             <td>{{ circles.listingOrder }}</td>
+            <td>{{ circles.address }}</td>
             <td class="text-center">
               <p-checkbox
                 name="active"
                 value="active"
                 [(ngModel)]="circles.isActive"
                 [binary]="true"
-                [disabled]="true"
-              >
+                [disabled]="true">
               </p-checkbox>
             </td>
             <td>{{ circles.createdAt | date : mediumDate }}</td>
@@ -354,12 +354,12 @@
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td class="md:text-center" colspan="16">No Division found.</td>
+        <td class="md:text-center" colspan="50%">No Circles Found.</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="loadingbody">
       <tr>
-        <td class="md:text-center" colspan="16">Loading.... Divisions data. Please wait.</td>
+        <td class="md:text-center" colspan="16">Loading.... Circles Data. Please Wait.</td>
       </tr>
     </ng-template>
   </p-table>

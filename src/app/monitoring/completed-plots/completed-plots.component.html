@@ -16,7 +16,7 @@
       <p-dialog header="Compleated Plot"  [(visible)]="showDialog" [modal]="true"
         [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
         <div class="flex flex-column  justify-content-center">
-          <form [formGroup]="fbplotTransfer" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbCompletedPlots" (ngSubmit)="onSubmit()">
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
@@ -34,6 +34,12 @@
                               Please Select Season.</div>
                           </span>
                         </div>
+                    
+                        <div class="field col-12 md:col-4">
+                          <label> Plot No:<sup class="p-error">*</sup></label>
+                       <input pInputText id="name" type="number"formControlName='plotAssessmentId' placeholder="Enter Plot No">
+                        </div>
+                        <div class="field col-12 md:col-4"></div>
                         <!-- (onChange)="getNewOfferNo($event.value)" -->
                         <div class="field col-12 md:col-4">
                           <label>Doc No:</label>
@@ -56,27 +62,22 @@
                 </p-fieldset>
   
                  
-                <p-fieldset legend="Transfer From Farmer" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <p-fieldset legend="Farmer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-4">
                       <label>Farmer Code:<sup class="p-error">*</sup></label>
-                      <p-dropdown optionLabel="code" [options]="toFarmers" formControlName="toFarmerId" optionValue="farmerId" [filter]="true"
+                      <p-dropdown optionLabel="code" [options]="toFarmers" formControlName="farmerId" optionValue="farmerId" [filter]="true"
                       filterBy="code,farmerName," placeholder="Select Farmer"
-                      (onChange)="onSelectedToFarmer($event.value)"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['toFarmerId'].touched && FormControls['toFarmerId'].errors }" >
-                      <ng-template let-farmer pTemplate="selectedItem">
-                        <div>{{farmer.code}}</div>
+                      (onChange)="onSelectedToFarmer($event.value)">
+                      <ng-template let-toFarmers pTemplate="selectedItem">
+                        <div>{{toFarmers.code}}</div>
                       </ng-template>
-                      <ng-template let-farmer pTemplate="item">
-                        <div>{{farmer.code}}</div>
-                        <div>Code: {{farmer.code}} Name:{{farmer.farmerName}}</div>
+                      <ng-template let-toFarmers pTemplate="item">
+                        <div>{{toFarmers.code}}</div>
+                        <div>Code: {{toFarmers.code}} Name:{{toFarmers.toFarmerName}} Estimated Ton: {{toFarmers.estimatedTon}}</div>
                       </ng-template>
                     </p-dropdown>
-                    <span *ngIf="FormControls['toFarmerId'].touched && FormControls['toFarmerId'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['toFarmerId'].errors?.['required']">
-                        Please Select To Farmer.</div>
-                    </span>
+                    
                   </div>
               
                   <div class="field col-12 md:col-4">
@@ -85,53 +86,42 @@
                   </div>
                     
                     <div class="field col-12 md:col-4">
-                      <label> Plot No:<sup class="p-error">*</sup></label>
-                   <input pInputText id="name" type="number"formControlName='plotAssessmentId' placeholder="Enter Plot No">
-                    </div>
+                      <label> Estimated Ton:<sup class="p-error">*</sup></label>
+                      <input pInputText id="estimatedTon" type="text" formControlName="estimatedTon" placeholder="Enter Estimated Ton" readonly>
                   </div>
-                  </p-fieldset>
-  
-                  <p-fieldset legend="Plot Transfer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
-                    <div class="p-fluid p-formgrid grid">
-                        <div class="field col-12 md:col-4">
-                            <label> Estimated Ton:<sup class="p-error">*</sup></label>
-                            <input pInputText id="name" type="text" placeholder="Enter Estimated Ton">
-                        </div>
-                        <div class="field col-12 md:col-4">
-                            <label> Supplied Ton:<sup class="p-error">*</sup></label>
-                            <input pInputText id="name" type="text" placeholder="EnterSupplied Ton">
-                        </div>
+                  <div class="field col-12 md:col-4">
+                      <label> Supplied Ton:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" type="text" placeholder="EnterSupplied Ton">
+                  </div>
 
-                        <div class="field col-12 md:col-4">
-                            <label>Net Area:<sup class="p-error">*</sup></label>
-                            <input pInputText id="name" type="text" placeholder="Enter Net Area">
-                        </div>
+                  <div class="field col-12 md:col-4">
+                      <label>Net Area:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" type="text" placeholder="Enter Net Area">
+                  </div>
 
-                        <div class="field col-12 md:col-4">
-                            <label>Last Weighment Date:<sup class="p-error">*</sup></label>
-                            <p-calendar placeholder="Select Last Weighment Date" [readonlyInput]="true"
-                                [showIcon]="true">
-                            </p-calendar>
-                        </div>
-                  
-                  <div class="field col-12 md:col-2 mt-5">
-                    <label>Is Over:</label><br>
-                    <p-inputSwitch></p-inputSwitch>
-                </div>
+                  <div class="field col-12 md:col-4">
+                      <label>Last Weighment Date:<sup class="p-error">*</sup></label>
+                      <p-calendar placeholder="Select Last Weighment Date" [readonlyInput]="true"
+                          [showIcon]="true">
+                      </p-calendar>
+                  </div>
+            
+            <div class="field col-12 md:col-2 mt-5">
+              <label>Is Over:</label><br>
+              <p-inputSwitch formControlName="isCompleted"></p-inputSwitch>
+          </div>
 
-                <div class="field col-12 md:col-2 mt-5">
-                    <label>Is Left Over?:</label><br>
-                    <p-inputSwitch></p-inputSwitch>
-                </div>
+          <div class="field col-12 md:col-2 mt-5">
+              <label>Is Left Over?:</label><br>
+              <p-inputSwitch formControlName="isLeftCultivation"></p-inputSwitch>
+          </div>
 
-                <div class="field col-12 md:col-2 mt-5">
-                    <label>Is Ratoon?:</label><br>
-                    <p-inputSwitch></p-inputSwitch>
-                </div>
-
-            </div>
-                 
-                  </p-fieldset>
+          <div class="field col-12 md:col-2 mt-5">
+              <label>Is Ratoon?:</label><br>
+              <p-inputSwitch formControlName="isUsedForRatoon"></p-inputSwitch>
+          </div>
+                  </div>
+                 </p-fieldset>                
                   
                 </div>
               </div>
@@ -149,7 +139,7 @@
       </p-dialog>
   
       <!-- table -->
-      <p-table #dt1 dataKey="id" [value]="plotTransfers" [columns]="headers" [rows]="10" [rowHover]="true"
+      <p-table #dt1 dataKey="id" [value]="completedPlots" [columns]="headers" [rows]="10" [rowHover]="true"
         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
         responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
         <ng-template pTemplate="caption">
@@ -178,15 +168,15 @@
             </th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-PlotTransfer>
+        <ng-template pTemplate="body" let-completedPlot>
           <tr>
             <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-                (click)="editCompleatedPlot(plotTransfer)"></button>
+                (click)="editCompleatedPlot(completedPlot)"></button>
             </td>
             <td *ngFor="let col of headers">
-              <span *ngIf="col?.field != 'docDate' && col?.field != 'plantingDate'">{{PlotTransfer[col.field]}}</span>
+              <span *ngIf="col?.field != 'docDate' && col?.field != 'plantingDate'">{{completedPlot[col.field]}}</span>
               <span *ngIf="col?.field == 'docDate' || col?.field == 'plantingDate'">
-                {{PlotTransfer[col.field] | date: 'dd-MM-yyyy'}}
+                {{completedPlot[col.field] | date: 'dd-MM-yyyy'}}
               </span>
             </td>
           </tr>
