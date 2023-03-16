@@ -7,20 +7,34 @@ export class AlphaDirective {
 
   private regex: RegExp = new RegExp(/^[a-zA-Z ]*$/);
 
-  private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
+  private specialKeys: Array<string> = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'End', 'Home'];
   constructor(private el: ElementRef) {
 
-   }
+  }
+  /* Key board action */
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     // Allow Backspace, tab, end, and home keys
     if (this.specialKeys.indexOf(event.key) !== -1) {
-        return;
+      return;
     }
     let current: string = this.el.nativeElement.value;
     let next: string = current.concat(event.key);
     if (next && !String(next).match(this.regex)) {
-        event.preventDefault();
+      event.preventDefault();
     }
   }
+
+  /* Copy paste action */
+  @HostListener('paste', ['$event'])
+  onPaste(event: any) {
+    const clipboardData = (event.originalEvent || event).clipboardData.getData("text/plain");
+    if (clipboardData) {
+      if (!this.regex.test(clipboardData)) {
+        event.preventDefault();
+      }
+    }
+    return
+  }
+
 }
