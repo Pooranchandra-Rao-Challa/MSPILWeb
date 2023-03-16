@@ -1,13 +1,13 @@
 <div class="col-12">
     <div class="card">
-        <p-dialog header="Shift" [(visible)]="dialog" showEffect="fade" 
+        <p-dialog header="Shift" [(visible)]="dialog" showEffect="fade"
             [modal]="true" [style]="{width: '60%'}">
                 <ng-template pTemplate="content">
                 <div class="flex flex-column align-items-center justify-content-center">
                     <form [formGroup]="fbshifts" (ngSubmit)="onSubmit()">
                     <div class="grid">
                         <div class="col-12">
-                        <div class="p-fluid p-formgrid grid">     
+                        <div class="p-fluid p-formgrid grid">
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="code">Shift Code:<sup class="p-error">*</sup></label>
                                     <input pInputText id="code" formControlName="code" type="text" placeholder="Enter Shift Code"
@@ -17,7 +17,7 @@
                                         class="error-message p-error">
                                         Code is required
                                     </div>
-                                    
+
                                     <div class="ng-invalid ng-touched p-error"
                                     *ngIf="FormControls['code'].errors?.['pattern']">Code Should Only Contain Names & Numbers .
                                     </div>
@@ -34,26 +34,27 @@
                                     </div>
                                     <div class="ng-invalid ng-touched p-error"
                                     *ngIf="FormControls['name'].errors?.['pattern']">Name Should Only Contain Alphabets .
-                                    </div>  
+                                    </div>
                                 </div>
-                                
+
                                 <div class="field col-12 md:col-6">
                                     <label>From Time:<sup class="p-error">*</sup></label>
-                                    <p-calendar class="cursor-pointer" [timeOnly]="true"   [showSeconds]="false" dataType="string" [readonlyInput]="true" [showIcon]="true" formControlName="FromTime"
-                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['FromTime'].touched && FormControls['FromTime'].errors }">
+                                    <p-calendar class="cursor-pointer" [timeOnly]="true"   [showSeconds]="false" dataType="string" [readonlyInput]="true" [showIcon]="true"
+                                    formControlName="strFromTime"
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['strFromTime'].touched && FormControls['strFromTime'].errors }">
                                     </p-calendar>
-                                    <span *ngIf="FormControls['FromTime'].touched && FormControls['FromTime'].invalid">
-                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['FromTime'].errors?.['required']">
+                                    <span *ngIf="FormControls['strFromTime'].touched && FormControls['strFromTime'].invalid">
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['strFromTime'].errors?.['required']">
                                         Please Select From Time.</div>
                                     </span>
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>To Time:<sup class="p-error">*</sup></label>
-                                    <p-calendar [readonlyInput]="true" [timeOnly]="true"   [showSeconds]="false" dataType="string" [showIcon]="true" formControlName="ToTime"
-                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['ToTime'].touched && FormControls['ToTime'].errors }">
+                                    <p-calendar [readonlyInput]="true" [timeOnly]="true"   [showSeconds]="false" dataType="string" [showIcon]="true" formControlName="strToTime"
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['strToTime'].touched && FormControls['strToTime'].errors }">
                                     </p-calendar>
-                                    <span *ngIf="FormControls['ToTime'].touched && FormControls['ToTime'].invalid">
-                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['ToTime'].errors?.['required']">
+                                    <span *ngIf="FormControls['strToTime'].touched && FormControls['strToTime'].invalid">
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['strToTime'].errors?.['required']">
                                         Please Select To Time.</div>
                                     </span>
                                 </div>
@@ -61,13 +62,13 @@
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="isNextDay">Is Next day?:</label><br>
                                     <p-inputSwitch [(ngModel)]="nextSwitch" formControlName="isNextDay"></p-inputSwitch>
-                            
+
                                 </div>
 
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="isActive">Is Active?:</label><br>
                                     <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
-                            
+
                                 </div>
                             </div>
                         </div>
@@ -75,12 +76,12 @@
                     </form>
                 </div>
             </ng-template>
-                        
-            <ng-template pTemplate="footer">  
+
+            <ng-template pTemplate="footer">
                 <div class="col-4" style="float:right">
                   <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
                     (click)="onSubmit()"></button>
-                </div>     
+                </div>
               </ng-template>
         </p-dialog>
         <p-toolbar styleClass="p-mb-4">
@@ -130,7 +131,7 @@
                     </th>
                     <th pSortableColumn="isActive">Is Active  <p-columnFilter type="text" field="isActive"
                         display="menu"></p-columnFilter><p-sortIcon field="isActive"></p-sortIcon>
-                    </th>                
+                    </th>
                     <th pSortableColumn="createdAt">Created Date <p-columnFilter type="text" field="createdAt"
                         display="menu"></p-columnFilter><p-sortIcon field="createdAt"></p-sortIcon>
                     </th>
@@ -143,7 +144,7 @@
                     <th pSortableColumn="updatedBy">Updated By <p-columnFilter type="text" field="updatedBy"
                         display="menu"></p-columnFilter><p-sortIcon field="updatedBy"></p-sortIcon>
                     </th>
-                    
+
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-shifts>
@@ -171,7 +172,7 @@
 
                 </tr>
             </ng-template>
-            
+
             <ng-template pTemplate="emptymessage">
                 <tr>
                     <td colspan="11" class="md:text-center">No Shifts Found.</td>
