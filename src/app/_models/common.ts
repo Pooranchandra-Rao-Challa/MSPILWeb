@@ -6,3 +6,14 @@ export class MaxLength {
   phoneNo: number = 10;
   accountNo: number = 18;
 }
+export class ApplicationConstantDto {
+
+  Id?: number;
+  Name?: string;
+  Value?: string;
+  CreatedBy?: string;
+  CreatedAt?: Date;
+  UpdatedBy?: string;
+  UpdatedAt?: Date;
+
+}

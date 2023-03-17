@@ -52,26 +52,26 @@
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="appConfig.Name" required>
+                                        <input pInputText type="text" [(ngModel)]="appConfig.name" required>
                                     </ng-template>
                                     <ng-template pTemplate="output">
-                                        {{appConfig.Name}}
+                                        {{appConfig.name}}
                                     </ng-template>
                                 </p-cellEditor>
                             </td>
                             <td>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="appConfig.Value" required>
+                                        <input pInputText type="text" [(ngModel)]="appConfig.value" required>
                                     </ng-template>
                                     <ng-template pTemplate="output">
-                                        {{appConfig.Value}}
+                                        {{appConfig.value}}
                                     </ng-template>
                                 </p-cellEditor>
                             </td>
                             <td style="text-align:center">
                                 <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
-                                    class="ui-button-info p-button-outlined"></button>
+                                    class="ui-button-info p-button-outlined" (click)="onRowEditInit(appConfig)"></button>
                                 <!-- (click)="onRowEditInit(rowData)" -->
                                 <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
                                     class="ui-button-success p-button-outlined" style="margin-right: .5em"></button>

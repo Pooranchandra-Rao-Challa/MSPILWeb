@@ -8,6 +8,8 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { ShiftDto, ShiftsViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { MAX_LENGTH_20, MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
 
 @Component({
     selector: 'app-shift',
@@ -24,6 +26,7 @@ export class ShiftsComponent implements OnInit {
     filter: any;
     submitLabel!: string;
     addFlag: boolean = true;
+    maxLength: MaxLength = new MaxLength();
 
     constructor(private formbuilder: FormBuilder,
         private appmasterservice: AppMasterService,
@@ -47,13 +50,13 @@ export class ShiftsComponent implements OnInit {
     ngOnInit() {
         this.initShifts();
         this.fbshifts = this.formbuilder.group({
-            shiftId: [null],
-            name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-            code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
+            // shiftId: [null],
+            name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+            code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
             strFromTime: new FormControl('', [Validators.required]),
             strToTime: new FormControl('', [Validators.required]),
-            isNextDay: [ Validators.required],
-            isActive: [ Validators.required],
+            isNextDay: [true],
+            isActive:  [true],
         });
     }
     initShifts() {
@@ -86,7 +89,7 @@ export class ShiftsComponent implements OnInit {
         // test.FromTime = this.convertstrTimetoTimeobject(test.FromTime)
         // test.ToTime = this.convertstrTimetoTimeobject(test.ToTime)
         // console.log(test);
-
+debugger
 
         if (this.addFlag) return this.appmasterservice.CreateShift(this.fbshifts.value)
         else return this.appmasterservice.UpdateShift(this.fbshifts.value)
@@ -97,7 +100,7 @@ export class ShiftsComponent implements OnInit {
     // }
 
     onSubmit() {
-
+debugger
 
         if (this.fbshifts.valid) {
             this.saveShift().subscribe(resp => {
