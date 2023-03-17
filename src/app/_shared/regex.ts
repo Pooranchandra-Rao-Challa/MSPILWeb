@@ -26,6 +26,7 @@ export const RG_AADHAAR = '[0-9]*';
 
 
 /* Min and Max lengths */
+export const MIN_LENGTH_11 = 11;
 export const MIN_LENGTH_2 = 2;
 export const MIN_LENGTH_6 = 6;
 export const MIN_ACCNO = 9;

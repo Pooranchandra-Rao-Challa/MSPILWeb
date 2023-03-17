@@ -10,6 +10,7 @@ import { StateDto, StatesViewDto, } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-state',
@@ -31,7 +32,7 @@ export class StateComponent implements OnInit {
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     public jwtService: JWTService,
-  ) { }
+    private alertMessage: AlertMessage) { }
 
   InitState() {
     this.state = new StateDto();
@@ -88,6 +89,7 @@ export class StateComponent implements OnInit {
           this.initStates();
           this.onClose();
           this.display = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMGMST001" : "SMGMST002"]);
         }
       })
     }

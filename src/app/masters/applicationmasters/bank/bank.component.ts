@@ -1,12 +1,14 @@
 import { HttpEvent } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { BankDto, BankViewDto, BranchDto, BranchViewDto } from 'src/app/_models/applicationmaster';
+import { MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_11, MIN_LENGTH_2, MIN_LENGTH_6, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-bank',
@@ -20,7 +22,7 @@ export class BankComponent implements OnInit {
   bank: BankDto = new BankDto()
   banks: BankViewDto[] = [];
   branches: BranchViewDto = new BranchViewDto();
-  filter: any;
+  @ViewChild('filter') filter!: ElementRef;
   ShowbranchDetails: boolean = false;
   addfields: any;
   loading: boolean = true;
@@ -29,13 +31,18 @@ export class BankComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
+  
   constructor(private formbuilder: FormBuilder,
-    private appMasterService: AppMasterService,) { }
+    private appMasterService: AppMasterService,
+    private alertMessage: AlertMessage) { }
 
   get FormControls() {
     return this.fbbank.controls;
   }
+
   onGlobalFilter(table: Table, event: Event) {
+    
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
@@ -51,8 +58,8 @@ export class BankComponent implements OnInit {
     this.fbbank = this.formbuilder.group({
       bankId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      abbr: [''],
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      abbr: ['',[ Validators.minLength(MIN_LENGTH_2)]],
       isActive: [true],
       branches: this.formbuilder.array([]),
     });
@@ -66,6 +73,7 @@ export class BankComponent implements OnInit {
     return this.fbbank.get("branches") as FormArray
   }
   initBankdailog() {
+    this.addBranches();
     this.submitLabel = "Add Bank";
     this.addFlag = true;
     this.showDialog = true;
@@ -76,11 +84,11 @@ export class BankComponent implements OnInit {
       bankId: [branchDetail.bankId],
       branchId: [branchDetail.branchId],
       code: new FormControl(branchDetail.code, [Validators.required, Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name: [branchDetail.name, (Validators.required)],
-      ifsc: new FormControl(branchDetail.ifsc, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_25)]),
+      name: new FormControl(branchDetail.name, [Validators.required, Validators.minLength(MIN_LENGTH_2)]),
+      ifsc: new FormControl(branchDetail.ifsc, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_25),Validators.minLength(MIN_LENGTH_11)]),
       abbr: [""],
       address: [branchDetail.address, (Validators.required)],
-      pinCode: new FormControl(branchDetail.pinCode, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.maxLength(MAX_LENGTH_6)]),
+      pinCode: new FormControl(branchDetail.pinCode, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.maxLength(MIN_LENGTH_6)]),
       phoneNo: [branchDetail.phoneNo],
       email: [branchDetail.email],
       isActive: [branchDetail.isActive],
@@ -114,6 +122,7 @@ export class BankComponent implements OnInit {
           this.initBank();
           this.onClose();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMBA001" : "SMAMBA002"]);
         }
       })
     }

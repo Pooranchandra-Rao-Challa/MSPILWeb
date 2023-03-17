@@ -127,5 +127,18 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Vehicle Message
   'SMAMVE001': 'Vehicle Added Successfully',
   'SMAMVE002': 'Vehicle Updated Successfully',
+ 
+  // Bank
+
+  'SMAMBA001':'Bank Added Successfully',
+  'SMAMBA002':'Bank Updated Successfully',
+
+  // planttype
+  'SMAMPT001':'Plant Type Added Successfully',
+  'SMAMPT002':'Plant Type Updated Successfully',
+
+  //State
+  'SMGMST001':'State Added Successfully',
+  'SMGMST002':'State Updated Successfully',
 
 }
