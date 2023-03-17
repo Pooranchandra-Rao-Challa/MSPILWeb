@@ -5,6 +5,7 @@ export class MaxLength {
   pinCode: number = 6;
   phoneNo: number = 10;
   accountNo: number = 18;
+  aadhaarNo:number =12;
 }
 export class ApplicationConstantDto {
 

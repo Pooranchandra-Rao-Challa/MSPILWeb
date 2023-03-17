@@ -443,6 +443,7 @@ export class HglViewDto {
   guarantor2?: string
   guarantor3?: string
   branchId?: number
+  bankId?:number
   branchName?: string
   bankName?: string
   ifsc?: string
@@ -481,12 +482,14 @@ export class HglDto {
   guarantor2?: string
   guarantor3?: string
   branchId?: number
+  bankId?:number
   accountNo?: string
   glcode?: string
   subGlcode?: string
   otherCode?: string
   isActive?: boolean
   subHgls?: SubHglDto[]
+
 }
 
 export class SubHglDto {

@@ -145,16 +145,16 @@
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
-                        Name Min Characters Is 2.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
+                      Name Min Characters Is 2.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
                       Name Should Contains Only Letters.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Capacity (Tons):<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="capacity" placeholder="Enter Capacity" formControlName="capacity" mode="decimal" [minFractionDigits]="2"
-                    [maxFractionDigits]="2"
+                  <p-inputNumber inputId="capacity" placeholder="Enter Capacity" formControlName="capacity"
+                    mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['capacity'].touched && FormControls['capacity'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['capacity'].touched && FormControls['capacity'].invalid">
@@ -164,8 +164,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Billing Capacity (Tons):<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="billingCapacity" placeholder="Enter Billing Capacity" formControlName="billingCapacity" mode="decimal"
-                    [minFractionDigits]="2" [maxFractionDigits]="2"
+                  <p-inputNumber inputId="billingCapacity" placeholder="Enter Billing Capacity"
+                    formControlName="billingCapacity" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['billingCapacity'].touched && FormControls['billingCapacity'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['billingCapacity'].touched && FormControls['billingCapacity'].invalid">
@@ -176,8 +176,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Binding %:<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="bindingCane" placeholder="Enter Binding" formControlName="bindingCane" mode="decimal"
-                    [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" [max]="100"
+                  <p-inputNumber inputId="bindingCane" placeholder="Enter Binding" formControlName="bindingCane"
+                    mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" [max]="100"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['bindingCane'].touched && FormControls['bindingCane'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['bindingCane'].touched && FormControls['bindingCane'].invalid">
@@ -187,8 +187,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Bad Cane %:<sup class="p-error">*</sup></label>
-                  <p-inputNumber inputId="badCane" placeholder="Enter Bad Cane" formControlName="badCane" mode="decimal" [minFractionDigits]="2"
-                    [maxFractionDigits]="2" [min]="0" [max]="100"
+                  <p-inputNumber inputId="badCane" placeholder="Enter Bad Cane" formControlName="badCane" mode="decimal"
+                    [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" [max]="100"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['badCane'].touched && FormControls['badCane'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['badCane'].touched && FormControls['badCane'].invalid">
@@ -208,7 +208,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
           <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
-            (click)="onSubmit()"></button>
+            [disabled]="fbVehicleType.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

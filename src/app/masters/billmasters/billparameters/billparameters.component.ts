@@ -1,3 +1,5 @@
+import { AlertMessage, ALERT_CODES } from './../../../_alerts/alertMessage';
+import { MessageService } from 'primeng/api';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
@@ -9,6 +11,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { MaxLength } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-billparameters',
@@ -31,10 +34,12 @@ export class BillParametersComponent implements OnInit {
   types: { label: string; value: string; }[];
   calTypes: { label: string; value: string; }[];
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,
-    private lookupService: LookupService) {
+    private lookupService: LookupService,
+    private alertMessage: AlertMessage) {
     this.calTypes = [
       { label: 'FIXED', value: 'Fixed' },
       { label: 'NETWEIGHT', value: 'NetWeight' },
@@ -77,10 +82,10 @@ export class BillParametersComponent implements OnInit {
       categoryId: ['', (Validators.required)],
       type: ['', (Validators.required)],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       caluclationType: ['', Validators.required],
       priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
-      formula: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      formula: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [true]
     });
   }
@@ -105,7 +110,7 @@ export class BillParametersComponent implements OnInit {
   }
 
   editBillParam(billParam: BillParameterViewDto) {
-    this.billParam.billParameterId = billParam.billParamId;
+    this.billParam.billParameterId = billParam.id;
     this.billParam.categoryId = billParam.billCategoryId;
     this.billParam.type = billParam.type
     this.billParam.code = billParam.code;
@@ -132,6 +137,8 @@ export class BillParametersComponent implements OnInit {
           this.initBillParams();
           this.fbBillParameters.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMBP001" : "SMBMBP002"]);
+          // this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
         }
       })
     }

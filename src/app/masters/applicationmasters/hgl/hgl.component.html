@@ -38,9 +38,9 @@
             Name <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="relationType">
-            Gender <p-columnFilter type="text" field="relationType" display="menu"></p-columnFilter>
-            <p-sortIcon field="relationType"></p-sortIcon>
+          <th pSortableColumn="gender">
+            Gender <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
+            <p-sortIcon field="gender"></p-sortIcon>
           </th>
         
           <th pSortableColumn="relationName">
@@ -72,9 +72,9 @@
             Pan No <p-columnFilter type="text" field="panNo" display="menu"></p-columnFilter>
             <p-sortIcon field="panNo"></p-sortIcon>
           </th>
-          <th pSortableColumn="tax">
-            Aadhaar No <p-columnFilter type="text" field="tax" display="menu"></p-columnFilter>
-            <p-sortIcon field="tax"></p-sortIcon>
+          <th pSortableColumn="aadhaarNo">
+            Aadhaar No <p-columnFilter type="text" field="aadhaarNo" display="menu"></p-columnFilter>
+            <p-sortIcon field="aadhaarNo"></p-sortIcon>
           </th>
           <th pSortableColumn="tax">
             Tax <p-columnFilter type="text" field="tax" display="menu"></p-columnFilter>
@@ -246,15 +246,15 @@
 
                   <div class="field col-12 md:col-3">
                     <label>Relationship Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Relationship Type" optionLabel="name" [options]="relationTypes"
-                    optionValue="lookupId" formControlName="relationTypeId" 
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
-                  </p-dropdown>
-                  <span *ngIf="FormControls['relationTypeId'].touched && FormControls['relationTypeId'].invalid">
-                    <div class="ng-invalid ng-touched p-error"
-                      *ngIf="FormControls['relationTypeId'].errors?.['required']">
-                      Please Select Relation Type.</div>
-                  </span>                   
+                    <p-dropdown placeholder="Select Relation Type" optionLabel="name" [options]="relationTypes"
+                      optionValue="lookupDetailId" formControlName="relationTypeId"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
+                    </p-dropdown>
+                    <span *ngIf="FormControls['relationTypeId'].touched && FormControls['relationTypeId'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['relationTypeId'].errors?.['required']">
+                        Please Select Relation.</div>
+                    </span>          
                   </div>
 
                   <div class="field col-12 md:col-3">
@@ -364,15 +364,19 @@
   
                   <div class="field col-12 md:col-3">
                     <label>Aadhaar No:</label>
-                    <input pInputText id="aadhaarNo"  placeholder=" Enter Aadhaar No" formControlName="aadhaarNo" maxlength="12"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
-                    <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
-                        Pan Number Contains Only Characters And Integers.</div>
-                      </span>
+                    <input pInputText id="aadhaarNo"  placeholder=" Enter Aadhaar No"  #aadhaarNo formControlName="aadhaarNo"   maxlength="12"
+                    [maxlength]="maxLength.aadhaarNo" numericOnly
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
+                    <div class="text-right">
+                      <small> {{aadhaarNo.value.length}}/{{maxLength.aadhaarNo}} </small>
+                    </div>
                         <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
-                            Please Enter AadhaarNo.</div>
+                            Please Enter AadhaarNo</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['minlength']">
+                            AadhaarNo Number Min Length Is 12.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
+                            AadhaarNo Number Contains Only Characters And Integers.</div>
                         </span>
 
 
