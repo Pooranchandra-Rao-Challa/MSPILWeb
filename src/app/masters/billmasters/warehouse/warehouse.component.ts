@@ -11,6 +11,10 @@ import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
+import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { AlertMessage } from '../../../_alerts/alertMessage';
 
 @Component({
   selector: 'app-warehouse',
@@ -27,10 +31,12 @@ export class WareHouseComponent implements OnInit {
   addFlag: boolean = true;
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(
     private formbuilder: FormBuilder,
-    private billmasterService: BillMasterService
+    private billmasterService: BillMasterService,
+    private alertMessage:AlertMessage
   ) {}
 
   ngOnInit(): void {
@@ -54,23 +60,11 @@ export class WareHouseComponent implements OnInit {
   warehouseform() {
     this.fbwarehouse = this.formbuilder.group({
       id: [0],
-      code: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\d+$/),
-      ]),
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern('[a-zA-Z ]*'),
-      ]),
+      code:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: new FormControl(true, Validators.required),
-      glcode: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\d+$/),
-      ]),
-      subGlcode: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\d+$/),
-      ]),
+      glcode:['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      subGlcode:['', Validators.pattern(RG_ALPHA_NUMERIC)],
     });
   }
 
@@ -114,6 +108,8 @@ export class WareHouseComponent implements OnInit {
           this.loadwarehouses();
           this.fbwarehouse.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMWH001" : "SMBMWH002"]);
+          // this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
         }
       });
     } else {

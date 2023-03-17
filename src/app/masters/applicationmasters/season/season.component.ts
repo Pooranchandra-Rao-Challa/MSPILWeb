@@ -12,6 +12,8 @@ import { SeasonViewDto } from '../../../_models/applicationmaster';
 import { BillParameterDto, BillParameterViewDto, } from 'src/app/_models/billingmaster';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, } from 'src/app/_shared/regex';
+import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { AlertMessage } from '../../../_alerts/alertMessage';
 
 interface Temp {
   seasonBillingRateId: number;
@@ -47,7 +49,8 @@ export class SeasonComponent implements OnInit {
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
-    private LookupService: LookupService
+    private LookupService: LookupService,
+    private alertMessage:AlertMessage
   ) { }
 
   ngOnInit(): void {
@@ -100,8 +103,9 @@ export class SeasonComponent implements OnInit {
   seasonForm() {
     this.fbseasons = this.formbuilder.group({
       seasonId: [null],
-      code: new FormControl({value:'',disabled:true}, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20),]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),]),
+     
+      code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       plantFrom: ['', Validators.required],
       plantTo: ['', Validators.required],
       crushFrom: ['', Validators.required],
@@ -220,6 +224,8 @@ export class SeasonComponent implements OnInit {
           this.initSeasons();
           this.seasonForm();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMWH001" : "SMBMWH002"]);
+          // this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
         }
       });
     } else {

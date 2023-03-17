@@ -13,6 +13,7 @@ import { HglViewDto, SubHglViewDto, HglDto, } from '../../../_models/application
 import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
 import { MaxLength } from 'src/app/_models/common';
 import { MIN_LENGTH_6 } from '../../../_shared/regex';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-hgl',
@@ -75,7 +76,8 @@ export class HglComponent implements OnInit {
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
-    private LookupService: LookupService
+    private LookupService: LookupService,
+    private alertMessage: AlertMessage
   ) {
     this.genders = [
       { label: 'Male', value: 'M' },
@@ -264,6 +266,8 @@ export class HglComponent implements OnInit {
           this.inithgls();
           this.hglform();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMHG001" : "SMAMHG002"]);
+          // this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
         }
       });
     } else {
@@ -272,7 +276,7 @@ export class HglComponent implements OnInit {
   }
 
   onClose() {
-    this.fbHgl.reset();
+    this.hglform();
     this.faSubHgl().clear();
     this.showSubHgl = false;
   }

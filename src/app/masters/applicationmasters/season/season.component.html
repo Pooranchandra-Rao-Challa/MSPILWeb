@@ -1,5 +1,6 @@
 <div class="col-12">
   <div class="card">
+    <p-toast key="tst"></p-toast>
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
@@ -47,7 +48,7 @@
           </th>
           <th pSortableColumn="crushFrom">
             Crush From <p-columnFilter type="text" field="crushFrom" display="menu"></p-columnFilter>
-            <p-sortIcon field="gencrushFromder"></p-sortIcon>
+            <p-sortIcon field="crushFrom"></p-sortIcon>
           </th>
           <th pSortableColumn="crushTo">
             Crush To <p-columnFilter type="text" field="crushTo" display="menu"></p-columnFilter>
@@ -65,13 +66,9 @@
             Capacity <p-columnFilter type="text" field="capacity" display="menu"></p-columnFilter>
             <p-sortIcon field="capacity"></p-sortIcon>
           </th>
-          <th pSortableColumn="currentSeason">
-            Current Season <p-columnFilter type="text" field="currentSeason" display="menu"></p-columnFilter>
-            <p-sortIcon field="currentSeason"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isActive" style="text-align:center">
-            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
+        
+          <th style="text-align:center">Is Active
+            <p-sortIcon field="isActive">  </p-sortIcon>
           </th>
           <th pSortableColumn="createdAt">
             Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
@@ -105,7 +102,6 @@
           <td>{{season.burnCaneRate}}</td>
           <td>{{season.caneRate}}</td>
           <td>{{season.capacity}}</td>
-          <td>{{season.currentSeason}}</td>
           <td style="text-align:center">
             <p-checkbox name="tds" value="tds" [(ngModel)]="season.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
@@ -118,12 +114,12 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="27">No Seasons Data Found.</td>
+          <td class="md:text-center" colspan="50%">No Seasons Data Found.</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td colspan="27">Loading Seasons Data. Please Wait.</td>
+          <td class="md:text-center" colspan="50%">Loading Seasons Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -138,9 +134,13 @@
                 <div class="grid p-fluid">
 
                   <div class="field col-12 md:col-4">
-                    <label htmlFor="code"> Code:<sup class="p-error">*</sup></label>
-                    <input pInputText id="code" formControlName="code" type="text" placeholder="Enter Code"
+                    <label>Code:<sup class="p-error">*</sup></label>
+                    <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
+                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="20"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                    <div class="text-right">
+                      <small>{{code.value.length}}/20</small>
+                    </div>
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                         Please Enter Code.</div>
@@ -149,7 +149,7 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
                         Code Max Length Is 20.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                        Code Should Contains Only Letters And Integers.</div>
+                        Code Should Contains Only Alpha Numeric.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -165,43 +165,57 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plant From:<sup class="p-error">*</sup></label>
-                    <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="plantFrom" mask="99/99/9999"  placeholder=" Please Select Plant From"
+                    <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                      formControlName="plantFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantFrom'].touched && FormControls['plantFrom'].errors }">
                     </p-calendar>
                     <span *ngIf="FormControls['plantFrom'].touched && FormControls['plantFrom'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantFrom'].errors?.['required']">
-                       Select Plant From Date.</div>
+                        Please Select From Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plant To:<sup class="p-error">*</sup></label>
-                    <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="plantTo" mask="99/99/9999" placeholder=" Please Select Plant To"
+                    <p-calendar placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                      formControlName="plantTo" [minDate]="fbseasons.value.plantFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantTo'].touched && FormControls['plantTo'].errors }">
                     </p-calendar>
                     <span *ngIf="FormControls['plantTo'].touched && FormControls['plantTo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantTo'].errors?.['required']">
-                       Select Plant To Date.</div>
+                        Please Select To Date.</div>
+                    </span>
+                    <span>
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="fbseasons.value.plantFrom > fbseasons.value.plantTo">
+                        To Date Always Greater Than Equals To From Date</div>
                     </span>
                   </div>
 
                   <div class="field col-12 md:col-4">
                     <label>Crush From:<sup class="p-error">*</sup></label>
-                    <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="crushFrom" mask="99/99/9999" placeholder=" Please Select Crush From "
+                    <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                      formControlName="crushFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushFrom'].touched && FormControls['crushFrom'].errors }">
                     </p-calendar>
                     <span *ngIf="FormControls['crushFrom'].touched && FormControls['crushFrom'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['crushFrom'].errors?.['required']">
-                       Select Crush From Date.</div>
+                        Please Select From Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Crush To<sup class="p-error">*</sup></label>
-                    <p-calendar [readonlyInput]="true" [showIcon]="true" formControlName="crushTo" mask="99/99/9999"placeholder=" Please Select Crush To "
+                    <p-calendar placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                      formControlName="crushTo" [minDate]="fbseasons.value.crushFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushTo'].touched && FormControls['crushTo'].errors }">
                     </p-calendar>
                     <span *ngIf="FormControls['crushTo'].touched && FormControls['crushTo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['crushTo'].errors?.['required']">
-                       Select Crush To Date.</div>
+                        Please Select To Date.</div>
+                    </span>
+                    <span>
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="fbseasons.value.crushFrom > fbseasons.value.crushTo">
+                        To Date Always Greater Than Equals To From Date</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -276,14 +290,8 @@
                                       <label htmlFor="billPeram">Bill Parameter:<sup class="p-error">*</sup></label>
                                       <p-dropdown [options]="billCategory.billParams" optionLabel="name"
                                         formControlName="billParameterId" optionValue="billParameterId"
-                                        placeholder="Please Select Bill Parameter"
-                                        [ngClass]="{ 'is-invalid ng-dirty': formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'i')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'i')?.errors }"></p-dropdown>
-                                      <span
-                                        *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'billParameterId')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                          *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'billParameterId')?.errors?.['required']">
-                                          Please Select Bill Parameter.</div>
-                                      </span>
+                                        placeholder="Please Select Bill Parameter"></p-dropdown>
+                                     
                                     </div>
                                     <div class="field col-12 md:col-3" style="display:inline-block;">
                                       <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>

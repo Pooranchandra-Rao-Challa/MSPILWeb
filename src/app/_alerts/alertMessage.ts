@@ -55,10 +55,10 @@ export class AlertMessage {
  *
  * Application Masters
  *
- * Seasons
+ * Seasons:SE
  * Farmers
- * HGLs
- * TPTs
+ * HGLs :HG
+ * TPTs 
  * Plant Types
  * Plant Sub Types
  * Varieties
@@ -86,5 +86,18 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Bill Parameter Message
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
+
+  //Application Master => HGLs Message
+  'SMAMHG001': 'HGL Added Successfully',
+  'SMAMHG002': 'HGL Updated Successfully',
+
+  //Application Master => HGLs Message
+  'SMAMSE001': 'HGL Added Successfully',
+  'SMAMSE002': 'HGL Updated Successfully',
+
+
+  //Billing Master => Seasons 
+  'SMBMWH001': 'Season Added Successfully',
+  'SMBMWH002': 'Season  Updated Successfully',
 
 }
