@@ -1,3 +1,4 @@
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -26,7 +27,8 @@ export class DistanceRateSlabComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
-    private billMasterService: BillMasterService) { }
+    private billMasterService: BillMasterService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.initDistanceRates();
@@ -43,8 +45,8 @@ export class DistanceRateSlabComponent implements OnInit {
   distanceRateForm() {
     this.fbDistanceRate = this.formbuilder.group({
       id: [null],
-      distance: ['', (Validators.required)],
-      rate: ['', (Validators.required)],
+      distance: [null, (Validators.required)],
+      rate: [null, (Validators.required)],
       isActive: [true]
     });
   }
@@ -91,6 +93,7 @@ export class DistanceRateSlabComponent implements OnInit {
           this.initDistanceRates();
           this.fbDistanceRate.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMDTR001" : "SMBMDTR002"]);
         }
       })
     }

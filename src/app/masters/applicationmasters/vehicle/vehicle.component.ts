@@ -1,3 +1,4 @@
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MaxLength } from './../../../_models/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
@@ -30,7 +31,8 @@ export class VehicleComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder,
-    private appMasterService: AppMasterService) { }
+    private appMasterService: AppMasterService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.initVehicleTypes();
@@ -105,6 +107,7 @@ export class VehicleComponent implements OnInit {
           this.initVehicleTypes();
           this.fbVehicleType.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMVE001" : "SMAMVE002"]);
         }
       })
     }

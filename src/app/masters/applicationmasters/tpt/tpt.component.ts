@@ -1,3 +1,4 @@
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { RG_PANNO, MIN_ACCNO } from './../../../_shared/regex';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
@@ -47,7 +48,8 @@ export class TptComponent implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
-    private LookupService: LookupService) {
+    private LookupService: LookupService,
+    private alertMessage: AlertMessage) {
     this.defaults = [
       { name: 'Yes', id: true },
       { name: 'No', id: false }
@@ -256,6 +258,7 @@ export class TptComponent implements OnInit {
           this.initTpts();
           this.fbTpt.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMT001" : "SMAMT002"]);
         }
       })
     }

@@ -1,5 +1,6 @@
 <div class="col-12">
   <div class="card">
+    <p-toast key="tst"></p-toast>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -123,7 +124,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Distance:<sup class="p-error">*</sup></label>
-                  <p-inputNumber formControlName="distance" mode="decimal" locale="en-IN" [minFractionDigits]="2"
+                  <p-inputNumber placeholder="Enter Distance" formControlName="distance" mode="decimal" locale="en-IN" [minFractionDigits]="2"
                     [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
                   </p-inputNumber>
@@ -134,7 +135,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate:(₹)<sup class="p-error">*</sup></label>
-                  <p-inputNumber formControlName="rate" mode="currency" currency="INR" locale="en-IN"
+                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="currency" currency="INR" locale="en-IN"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">

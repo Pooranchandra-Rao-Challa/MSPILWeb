@@ -1,5 +1,6 @@
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { DieselRateViewDto, DieselRateDto } from 'src/app/_models/billingmaster';
@@ -19,14 +20,15 @@ export class DieselRatesComponent implements OnInit {
   dieselRate: DieselRateDto = new DieselRateDto();
   loading: boolean = false;
   addFlag: boolean = true;
-  filter: any;
+  @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   fbDieselRate!: FormGroup;
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
 
   constructor(private formbuilder: FormBuilder,
-    private billMasterService: BillMasterService) { }
+    private billMasterService: BillMasterService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.initDieselRates();
@@ -94,6 +96,7 @@ export class DieselRatesComponent implements OnInit {
           this.initDieselRates();
           this.fbDieselRate.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMDR001" : "SMBMDR002"]);
         }
       })
     }

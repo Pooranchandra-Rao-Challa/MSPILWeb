@@ -1,3 +1,4 @@
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
@@ -30,7 +31,8 @@ export class BillMasterComponent implements OnInit {
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private billmasterService: BillMasterService,
-    private lookupService: LookupService) { }
+    private lookupService: LookupService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.initBills();
@@ -101,6 +103,7 @@ export class BillMasterComponent implements OnInit {
           this.initBills();
           this.fbBillMaster.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SMBMB001"]);
         }
       })
     }

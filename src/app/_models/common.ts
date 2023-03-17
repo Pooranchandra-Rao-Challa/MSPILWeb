@@ -7,3 +7,14 @@ export class MaxLength {
   accountNo: number = 18;
   aadhaarNo:number =12;
 }
+export class ApplicationConstantDto {
+
+  Id?: number;
+  Name?: string;
+  Value?: string;
+  CreatedBy?: string;
+  CreatedAt?: Date;
+  UpdatedBy?: string;
+  UpdatedAt?: Date;
+
+}
