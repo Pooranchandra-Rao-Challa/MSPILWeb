@@ -10,31 +10,40 @@
                         <div class="p-fluid p-formgrid grid">
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="code">Shift Code:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="code" formControlName="code" type="text" placeholder="Enter Shift Code"
+                                    <input pInputText id="code" #code formControlName="code" type="text" placeholder="Enter Shift Code"
                                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"/>
-
-                                    <div *ngIf="FormControls['code'].invalid &&  FormControls['code'].touched && FormControls['code'].errors?.['required']"
-                                        class="error-message p-error">
-                                        Code is required
-                                    </div>
-
-                                    <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['code'].errors?.['pattern']">Code Should Only Contain Names & Numbers .
-                                    </div>
+                                    <div class="text-right">
+                                        <small>{{code.value.length}}/20</small>
+                                      </div>
+                                      <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                                          Please Enter Code.</div>
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                                          Code Min Length Is 2 .</div>
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                                          Code Max Length Is 20.</div>
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                                          Code Should Contains Only Alpha Numeric.</div>
+                                      </span>
+                                   
                                 </div>
 
                                 <div class="field col-12 md:col-6">
                                     <label>Shift Name:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="address1" type="text" formControlName="name" placeholder="Enter Shift Name"
-                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }"/>
+                                            <input pInputText id="address1" #name type="text" formControlName="name" placeholder="Enter Shift Name"  alphaOnly [maxlength]="maxLength.name"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }" />
 
-                                    <div *ngIf="FormControls['name'].invalid &&  FormControls['name'].touched && FormControls['name'].errors?.['required']"
-                                        class="error-message p-error">
-                                        Name is required
-                                    </div>
-                                    <div class="ng-invalid ng-touched p-error"
-                                    *ngIf="FormControls['name'].errors?.['pattern']">Name Should Only Contain Alphabets .
-                                    </div>
+                                            <div class="text-right">
+                                                <small>{{name.value.length}}/{{maxLength.name}}</small>
+                                              </div>
+                                              <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
+                                                  Please Enter Name.</div>
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
+                                                  Name Min Characters Is 2.</div>
+                                                <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                                                  Name Should Contains Only Alphabets.</div>
+                                              </span>
                                 </div>
 
                                 <div class="field col-12 md:col-6">

@@ -6,6 +6,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { MAX_LENGTH_20, RG_ALPHA_ONLY } from '../_shared/regex';
 import { LookupDetailDto, LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } from '../_models/applicationmaster';
 import { AppMasterService } from '../_services/appmaster.service';
+import { ApplicationConstantDto } from '../_models/common';
+import { CommonService } from '../_services/common.service';
 
 export class AppConfig {
   Name?: string;
@@ -40,10 +42,15 @@ export class AppTopBarComponent {
   appConfigFrom!: FormArray;
   lookupCode: LookupViewDto[] = [];
   lookupMenuCode: LookUpHeaderDto[] = [];
+
   lookupDetails: LookupDetailDto[] = [];
-  appConfig: AppConfig[] = [];
+  appConfig: ApplicationConstantDto[] = [];
   app_config_dialog: boolean = false;
-  constructor(public layoutService: LayoutService, private jwtService: JWTService, private formbuilder: FormBuilder, private appMasterservice: AppMasterService,) {
+
+  clonedProducts: { [s: string]: ApplicationConstantDto; } = {};
+
+
+  constructor(public layoutService: LayoutService, private jwtService: JWTService, private formbuilder: FormBuilder, private appMasterservice: AppMasterService, private commomService: CommonService) {
     console.log(this.jwtService.GivenName)
     this.loggedInUser = this.jwtService.GivenName;
   }
@@ -81,7 +88,7 @@ export class AppTopBarComponent {
       isActive: [lookupArray.isActive],
     })
   }
-  appConfigGeneraterow(appArray: AppConfig = new AppConfig()): FormGroup {
+  appConfigGeneraterow(appArray: ApplicationConstantDto = new ApplicationConstantDto()): FormGroup {
     return this.formbuilder.group({
       Name: [appArray.Name],
       Value: [appArray.Value],
@@ -95,8 +102,8 @@ export class AppTopBarComponent {
     this.appConfigFrom.push(this.appConfigGeneraterow())
   }
   ngOnInit() {
-
-    this.fillData();
+debugger
+    this.initAppConstants();
     this.initLookupCode();
     this.initLookupMenuCode();
     this.application_contsants = this.formbuilder.group({
@@ -148,21 +155,21 @@ export class AppTopBarComponent {
     });
   }
 
+  initAppConstants() {
+    debugger
+    this.commomService.GetApplicationConstant().subscribe((resp) => {
+      this.appConfig = resp as unknown as ApplicationConstantDto[];
 
-  fillData() {
-    for (var i of [1, 2]) {
-      this.appConfig.push(
-        {
-          Name: 'DocNo' + i,
-          Value: i,
-          CreatedAt: new Date(),
-          CreatedBy: 'CreatedBy' + i,
-          UpdatedAt: new Date(),
-          UpdatedBy: 'UpdatedBy' + i,
-        }
-      )
-    }
+      console.log(this.appConfig);
+      
+    });
   }
+
+  onRowEditInit(appConfig: ApplicationConstantDto) {
+    // this.clonedProducts[appConfig.Id] = {...appConfig};
+}
+
+
 
 
   onSubmit() {

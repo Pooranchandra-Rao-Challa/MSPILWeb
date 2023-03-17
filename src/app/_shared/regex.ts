@@ -8,6 +8,8 @@ export const RG_EMAIL = /^(?!\.)(?!.*\.$)(?!.*\.\.)[a-zA-Z0-9.]{1,}@[a-zA-Z.]{2,
 export const RG_ADDRESS = /^[-a-zA-Z0-9-/]+(\s+[-a-zA-Z0-9-/]+)*$/;
 export const RG_PANNO = '^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$';
 export const RG_PINCODE = '^[1-9][0-9]{5}$';
+export const RG_AADHAAR = '[0-9]*';
+
 
 
 
@@ -27,6 +29,7 @@ export const RG_PINCODE = '^[1-9][0-9]{5}$';
 export const MIN_LENGTH_2 = 2;
 export const MIN_LENGTH_6 = 6;
 export const MIN_ACCNO = 9;
+export const MIN_AADHAAR = 12;
 export const MAX_LENGTH_6 = 6;
 export const MAX_LENGTH_10 = 10;
 export const MAX_LENGTH_20 = 20;
