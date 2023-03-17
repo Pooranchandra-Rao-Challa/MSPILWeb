@@ -27,7 +27,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
-
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
   exports: [
@@ -59,6 +59,7 @@ import { PasswordModule } from 'primeng/password';
     FileUploadModule,
     RadioButtonModule,
     PasswordModule,
+    ProgressSpinnerModule,
   ]
 })
 export class PrimeNgModule { }

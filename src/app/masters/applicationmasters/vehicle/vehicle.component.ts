@@ -1,3 +1,4 @@
+import { MaxLength } from './../../../_models/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
@@ -26,6 +27,7 @@ export class VehicleComponent implements OnInit {
   addFlag: boolean = true;
   showDialog: boolean = false;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService) { }
@@ -45,12 +47,12 @@ export class VehicleComponent implements OnInit {
   vehicleTypeForm() {
     this.fbVehicleType = this.formbuilder.group({
       vehicleTypeId: [null],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      capacity: ['', (Validators.required)],
-      billingCapacity: ['', (Validators.required)],
-      bindingCane: ['', (Validators.required)],
-      badCane: ['', (Validators.required)],
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      capacity: new FormControl(null, [Validators.required]),
+      billingCapacity: new FormControl(null, [Validators.required]),
+      bindingCane: new FormControl(null, [Validators.required]),
+      badCane: new FormControl(null, [Validators.required]),
       isActive: [true]
     });
   }
@@ -95,6 +97,8 @@ export class VehicleComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.fbVehicleType.value);
+
     if (this.fbVehicleType.valid) {
       this.saveVehicleType().subscribe(resp => {
         if (resp) {

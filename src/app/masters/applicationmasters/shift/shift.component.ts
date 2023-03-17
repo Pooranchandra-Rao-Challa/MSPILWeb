@@ -46,12 +46,12 @@ export class ShiftsComponent implements OnInit {
 
     ngOnInit() {
         this.initShifts();
-        this.fbshifts = this.formbuilder.group({   
-            shiftId: [null],         
+        this.fbshifts = this.formbuilder.group({
+            shiftId: [null],
             name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
             code: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]),
-            FromTime: new FormControl('', [Validators.required]),
-            ToTime: new FormControl('', [Validators.required]),
+            strFromTime: new FormControl('', [Validators.required]),
+            strToTime: new FormControl('', [Validators.required]),
             isNextDay: [ Validators.required],
             isActive: [ Validators.required],
         });
@@ -97,8 +97,8 @@ export class ShiftsComponent implements OnInit {
     // }
 
     onSubmit() {
- 
-        
+
+
         if (this.fbshifts.valid) {
             this.saveShift().subscribe(resp => {
                 if (resp) {

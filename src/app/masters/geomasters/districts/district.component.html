@@ -2,7 +2,7 @@
   <div class="card">
     <!-- dialog box -->
     <p-dialog header="District" [(visible)]="display" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [modal]="true" (onHide)="onClose()">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw',height:'27vw'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">
@@ -11,8 +11,11 @@
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-6">
                     <label>Code:<sup class="p-error">*</sup></label>
-                    <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Code "
+                    <input pInputText id="code" type="text" #code formControlName="code" placeholder="Enter Code " alphaNumeric maxlength="6"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                      <div class="text-right">
+                        <small>{{code.value.length}}/6</small>
+                      </div>
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                         Please Enter Code.</div>
@@ -24,18 +27,20 @@
                   </div>
                   <div class="field col-12 md:col-6">
                     <label>Name:<sup class="p-error">*</sup></label>
-                    <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Name "
+                    <input pInputText id="name" type="text" #name formControlName="name" alphaOnly placeholder="Enter Name "  maxlength="50"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                      <div class="text-right">
+                        <small>{{name.value.length}}/50</small>
+                      </div>
                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                         Please Enter Name.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">Name
-                        Should Contains Alphabets.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">Name Should Contains Alphabets.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
                     <label>State:<sup class="p-error">*</sup></label>
-                    <p-dropdown [options]="state" optionLabel="stateName" formControlName="stateId"
+                    <p-dropdown [options]="state" optionLabel="stateName" formControlName="stateId" appendTo="body"
                       optionValue="stateId" placeholder="Select State"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors }">
                     </p-dropdown>
@@ -57,8 +62,8 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-            (click)="onSubmit()"></button>
+          <button pButton pRipple type="submit" [label]="submitLabel" [disabled]="fbdistricts.invalid"
+          class="p-button-raised p-button-success" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>
@@ -109,7 +114,7 @@
             </p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="createAt">Create Date<p-columnFilter type="text" field="createAt" display="menu">
+          <th pSortableColumn="createAt">Created Date<p-columnFilter type="text" field="createAt" display="menu">
             </p-columnFilter>
             <p-sortIcon field="createAt"></p-sortIcon>
           </th>
@@ -152,7 +157,7 @@
       </ng-template>
       <ng-template pTemplate="loadingbody">
         <tr>
-          <td class="md:text-center" colspan="10">Loading... District Data. Please Wait.</td>
+          <td class="md:text-center" colspan="10">Loading Districts Data. Please Wait.</td>
         </tr>
       </ng-template>
     </p-table>
