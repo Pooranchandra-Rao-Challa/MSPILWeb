@@ -3,11 +3,12 @@ import { Table } from 'primeng/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { MAX_LENGTH_10, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, MAX_LENGTH_6 } from 'src/app/_shared/regex';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { VarietyViewDto, VarietyDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
+import { MaxLength } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-variety',
@@ -20,7 +21,7 @@ export class VarietyComponent implements OnInit {
   varieties: VarietyViewDto[] = [];
   variety: VarietyDto = new VarietyDto();
   loading: boolean = true;
-  globalFilterFields: string[] = ['varietyType', 'code', 'name', 'plantAge', 'ratoonAge', 'sugarContent', 'plantSuitability', 'isActive', 'createdAt', 'createdBy',
+  globalFilterFields: string[] = ['varietyName', 'code', 'name', 'plantAge', 'ratoonAge', 'sugarContent', 'plantSuitability', 'isActive', 'createdAt', 'createdBy',
     'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -28,6 +29,7 @@ export class VarietyComponent implements OnInit {
   showDialog: boolean = false;
   fbVariety!: FormGroup;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder,
     private lookupService: LookupService,
@@ -56,8 +58,8 @@ export class VarietyComponent implements OnInit {
     this.fbVariety = this.formbuilder.group({
       varietyId: [null],
       varietyTypeId: ['', (Validators.required)],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       plantAge: [null, (Validators.required)],
       ratoonAge: [null, (Validators.required)],
       sugarContent: ['', (Validators.required)],
@@ -107,6 +109,8 @@ export class VarietyComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.fbVariety.value);
+
     if (this.fbVariety.valid) {
       this.saveVariety().subscribe(resp => {
         if (resp) {

@@ -101,8 +101,8 @@
                 <div class="grid p-fluid">
                     <div class="field col-4 md:col-4 align-self-start">
                         <label>Code:<sup class="p-error">*</sup></label>
-                        <p-dropdown placeholder="Select Code" optionLabel="name" [options]="lookupCode"
-                            optionValue="code" formControlName="code" appendTo="body"
+                        <p-dropdown placeholder="Select Code" optionLabel="code" [options]="lookupMenuCode"
+                            optionValue="lookupId" formControlName="code" appendTo="body"
                             (onChange)="getLookupDetailsByLookupId($event.value)"
                             [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                         </p-dropdown>
@@ -122,9 +122,9 @@
                     </div>
 
 
-                    <div class="col-12" formArrayName="lookupArray" *ngIf="showlookup">
+                    <div class="col-12" formArrayName="lookUpArray" *ngIf="showlookup">
                         
-                        <p-table #dt2 [value]="lookupFrom().controls" dataKey="id" [rows]="10" [rowHover]="true"
+                        <p-table #dt2 [value]="faLookupFrom().controls" dataKey="id" [rows]="10" [rowHover]="true"
                             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
                             [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">>
                             <ng-template pTemplate="header">
@@ -136,7 +136,7 @@
                                     <th>Action</th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
+                            <ng-template pTemplate="body" let-lookupDetails let-lookUpDetailsIndex="rowIndex">
                                 <tr [formGroupName]="lookUpDetailsIndex">
                                     <td>
                                         <input pInputText class="form-control" formControlName="code" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&

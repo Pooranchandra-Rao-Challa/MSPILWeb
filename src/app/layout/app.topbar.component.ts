@@ -4,10 +4,8 @@ import { LayoutService } from "./service/app.layout.service";
 import { JWTService } from '../_services/jwt.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAX_LENGTH_20, RG_ALPHA_ONLY } from '../_shared/regex';
-import { LookupDetailViewDto, LookupViewDto } from '../_models/applicationmaster';
+import { LookupDetailDto, LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } from '../_models/applicationmaster';
 import { AppMasterService } from '../_services/appmaster.service';
-
-
 
 export class AppConfig {
   Name?: string;
@@ -18,18 +16,14 @@ export class AppConfig {
   UpdatedBy?: string;
 }
 
-
-
 @Component({
   selector: 'app-topbar',
   templateUrl: './app.topbar.component.html'
 })
 
 
-
-
 export class AppTopBarComponent {
-  showlookup: boolean = true;
+  showlookup: boolean = false;
   items!: MenuItem[];
   loggedInUser: String = "";
   @ViewChild('menubutton') menuButton!: ElementRef;
@@ -37,26 +31,22 @@ export class AppTopBarComponent {
   @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
 
   @ViewChild('topbarmenu') menu!: ElementRef;
-  
+
   lookup_dialog: boolean = false;
   application_contsants!: FormGroup;
   submitLabel!: string;
 
-
   lookUpFrom!: FormArray;
-
   appConfigFrom!: FormArray;
-
   lookupCode: LookupViewDto[] = [];
-
-  lookupDetails: LookupDetailViewDto= new LookupDetailViewDto();
+  lookupMenuCode: LookUpHeaderDto[] = [];
+  lookupDetails: LookupDetailDto[] = [];
   appConfig: AppConfig[] = [];
   app_config_dialog: boolean = false;
-  constructor(public layoutService: LayoutService, private jwtService: JWTService, private formbuilder: FormBuilder,private appMasterservice: AppMasterService,) {
+  constructor(public layoutService: LayoutService, private jwtService: JWTService, private formbuilder: FormBuilder, private appMasterservice: AppMasterService,) {
     console.log(this.jwtService.GivenName)
     this.loggedInUser = this.jwtService.GivenName;
   }
-
   get FormControls() {
     return this.application_contsants.controls;
   }
@@ -67,55 +57,55 @@ export class AppTopBarComponent {
     });
   }
 
-     /* Form Array For hgl Details */
-     lookupFrom(): FormArray {
-      return this.application_contsants.get('lookupArray') as FormArray;
-    }
+  /* Form Array For lookup Details */
+  faLookupFrom(): FormArray {
+    return this.application_contsants.get('lookUpArray') as FormArray;
+  }
+  formArrayControls(i: number, formControlName: string) {
+    return this.faLookupFrom().controls[i].get(formControlName);
+  }
+  addLookup() {
+    this.lookUpFrom = this.application_contsants.get("lookupArray") as FormArray
+    this.faLookupFrom().push(this.generateRow());
+    this.showlookup = true;
+  }
 
-    formArrayControls(i: number, formControlName: string) {
-      return this.lookupFrom().controls[i].get(formControlName);
-    }
+  generateRow(lookupArray: LookupDetailDto = new LookupDetailDto()): FormGroup {
+    return this.formbuilder.group({
+      lookupId: [lookupArray.lookupId],
+      lookupDetailId: [lookupArray.lookupDetailId],
+      code: new FormControl(lookupArray.code, [Validators.required, Validators.maxLength(MAX_LENGTH_20)]),
+      name: [lookupArray.name, (Validators.required)],
+      remarks: [lookupArray.remarks],
+      listingorder: [lookupArray.listingorder, (Validators.required)],
+      isActive: [lookupArray.isActive],
+    })
+  }
+  appConfigGeneraterow(appArray: AppConfig = new AppConfig()): FormGroup {
+    return this.formbuilder.group({
+      Name: [appArray.Name],
+      Value: [appArray.Value],
+    })
+  }
 
-    generaterow(lookupArray: LookupDetailViewDto = new LookupDetailViewDto()): FormGroup {
-      return this.formbuilder.group({
-        
-        lookupId: [lookupArray.lookupId],
-        lookupDetailId: [lookupArray.lookupDetailId],
-        code: new FormControl(lookupArray.code, [Validators.required, Validators.maxLength(MAX_LENGTH_20)]),
-        name: [lookupArray.name, (Validators.required)],
-        remarks: [lookupArray.remarks],
-        listingorder: [lookupArray.listingorder, (Validators.required)],
-        isActive: [lookupArray.isActive],
-      })
-    }
-    appConfigGeneraterow(appArray: AppConfig = new AppConfig()): FormGroup {
-      return this.formbuilder.group({
-        Name: [appArray.Name],
-        Value: [appArray.Value],
-      })
-    }
 
-    addLookup(){
-      this.showlookup= true;
-      this.lookUpFrom = this.application_contsants.get("lookupArray") as FormArray  
-      this.lookUpFrom.push(this.generaterow())
-    }
-    addAppConfig(){
-      
-      this.appConfigFrom = this.application_contsants.get("appArray") as FormArray  
-      this.appConfigFrom.push(this.appConfigGeneraterow())
-    }
+  addAppConfig() {
+
+    this.appConfigFrom = this.application_contsants.get("appArray") as FormArray
+    this.appConfigFrom.push(this.appConfigGeneraterow())
+  }
   ngOnInit() {
 
     this.fillData();
     this.initLookupCode();
+    this.initLookupMenuCode();
     this.application_contsants = this.formbuilder.group({
-      lookupArray: this.formbuilder.array([]),
+      lookUpArray: this.formbuilder.array([]),
       // name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       code: ['', (Validators.required)],
-      value:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      value: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
     });
-    
+
 
     this.items = [
       { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['changepassword'] },
@@ -130,15 +120,34 @@ export class AppTopBarComponent {
     ];
   }
 
-  getLookupDetailsByLookupId(code: number) {
+  getLookupDetailsByLookupId(lookupId: number) {
     debugger
-    this.appMasterservice.GetlookupDetails(code).subscribe((resp) => {
+    this.appMasterservice.GetLookupDetailsforMenu(lookupId).subscribe((resp) => {
       if (resp) {
-        this.lookupDetails = resp as unknown as LookupDetailViewDto;
-        // this.branches = this.bank.branches as unknown as BranchDto[];
+        this.lookupDetails = resp as unknown as LookupDetailDto[];
+        // this.addLookup();
+        this.faLookupFrom().clear();
+        if (this.lookupDetails.length > 0) {
+          this.lookupDetails.forEach((lookupDetail) => {
+            this.faLookupFrom().push(this.generateRow(lookupDetail));
+          });
+          this.showlookup = true;
+        }
+        else {
+          this.addLookup();
+        }
+
       }
     });
   }
+
+  initLookupMenuCode() {
+    debugger
+    this.appMasterservice.GetLookupsforMenu().subscribe((resp) => {
+      this.lookupMenuCode = resp as unknown as LookUpHeaderDto[];
+    });
+  }
+
 
   fillData() {
     for (var i of [1, 2]) {
@@ -155,7 +164,7 @@ export class AppTopBarComponent {
     }
   }
 
-  
+
   onSubmit() {
 
   }
