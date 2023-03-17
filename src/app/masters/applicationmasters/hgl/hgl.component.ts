@@ -1,6 +1,6 @@
 import { BankDto, BranchDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, } from './../../../_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
@@ -47,6 +47,7 @@ export class HglComponent implements OnInit {
     'accountNo',
     'glCode',
     'subGLCode',
+    'aadhaarNo',
     'otherCode',
     'isActive',
     'createdAt',
@@ -68,6 +69,7 @@ export class HglComponent implements OnInit {
   vehicleTypes: VehicleTypeViewDto[] = [];
   IFSC?: string;
   maxLength: MaxLength = new MaxLength();
+
  
 
   constructor(
@@ -103,10 +105,11 @@ export class HglComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      bankId:['', Validators.required],
       branchId: ['', Validators.required],
       accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
-      aadhaarNo:  new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
-      isActive: [false],
+      aadhaarNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_AADHAAR)]),
+      isActive: [true],
       subHgls: this.formbuilder.array([]),
     });
   }
@@ -193,10 +196,16 @@ export class HglComponent implements OnInit {
   editHgl(hgl: HglViewDto) {
     this.hglform();
     this.initsubHgls(hgl.hglId);
+    this.initRelationTypes();
+
+    setTimeout(() => {
+    this.getBranchByBankId(hgl.bankId || 0);
+  }, 5000);
+
     setTimeout(() => {
       this.getIFSCByBranch(hgl.branchId || 0);
     }, 5000);
-    this.hgl.hglId = hgl.hglId;
+    this.hgl.hglId = hgl.hglId
     this.hgl.code = hgl.code;
     this.hgl.name = hgl.name;
     this.hgl.relationTypeId = hgl.relationTypeId;
@@ -216,6 +225,7 @@ export class HglComponent implements OnInit {
     this.hgl.subGlcode = hgl.subGLCode;
     this.hgl.otherCode = hgl.otherCode;
     this.hgl.branchId = hgl.branchId;
+    this.hgl.bankId = hgl.bankId;
     this.hgl.accountNo = hgl.accountNo;
     this.hgl.aadhaarNo = hgl.aadhaarNo;
     this.hgl.isActive = hgl.isActive;
@@ -223,6 +233,7 @@ export class HglComponent implements OnInit {
     setTimeout(() => {
       this.fbHgl.setValue(this.hgl);
     }, 5000);
+
     this.addFlag = false;
     this.submitLabel = 'Update Hgl';
     this.showDialog = true;
