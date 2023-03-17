@@ -7,6 +7,7 @@ export const RG_VEHICLE = '^[a-zA-Z]{2}[0-9]{2}[- ]{1}[a-zA-Z]{2}[- ]{1}[0-9]{4}
 export const RG_EMAIL = /^(?!\.)(?!.*\.$)(?!.*\.\.)[a-zA-Z0-9.]{1,}@[a-zA-Z.]{2,9}[.]{1}[a-zA-Z]{2,3}$/;
 export const RG_ADDRESS = /^[-a-zA-Z0-9-/]+(\s+[-a-zA-Z0-9-/]+)*$/;
 export const RG_PANNO = '^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$';
+export const RG_PINCODE = '^[1-9][0-9]{5}$';
 
 
 

@@ -58,12 +58,12 @@ export class AlertMessage {
  * Seasons
  * Farmers
  * HGLs
- * TPTs
+ * TPTs : T
  * Plant Types
  * Plant Sub Types
- * Varieties
+ * Varieties : VA
  * Banks
- * Vehicles
+ * Vehicles : VE
  * Lookups
  * Shift
  * Sample Slabs
@@ -83,8 +83,35 @@ export class AlertMessage {
 
 export const ALERT_CODES: { [key: string]: string } = {
 
+  // Bill Message
+  'SMBMB001': 'Bill Added Successfully',
+
   // Bill Parameter Message
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
+
+  // Diesel Rate Message
+  'SMBMDR001': 'Diesel Rate Added Successfully',
+  'SMBMDR002': 'Diesel Rate Updated Successfully',
+
+  // Distance Rate Message
+  'SMBMDTR001': 'Distance Rate Added Successfully',
+  'SMBMDTR002': 'Distance Rate Updated Successfully',
+
+  // Diesel Bunk Message
+  'SMBMDB001': 'Diesel Bunk Added Successfully',
+  'SMBMDB002': 'Diesel Bunk Updated Successfully',
+
+  // TPT Message
+  'SMAMT001': 'TPT Added Successfully',
+  'SMAMT002': 'TPT Updated Successfully',
+
+  // Variety Message
+  'SMAMVA001': 'Variety Added Successfully',
+  'SMAMVA002': 'Variety Updated Successfully',
+
+  // Vehicle Message
+  'SMAMVE001': 'Vehicle Added Successfully',
+  'SMAMVE002': 'Vehicle Updated Successfully',
 
 }

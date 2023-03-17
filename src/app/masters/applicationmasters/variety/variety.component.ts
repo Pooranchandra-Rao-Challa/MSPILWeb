@@ -1,3 +1,4 @@
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -33,7 +34,8 @@ export class VarietyComponent implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
     private lookupService: LookupService,
-    private appMasterService: AppMasterService) { }
+    private appMasterService: AppMasterService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.initVarieties();
@@ -117,6 +119,7 @@ export class VarietyComponent implements OnInit {
           this.initVarieties();
           this.fbVariety.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMVA001" : "SMAMVA002"]);
         }
       })
     }

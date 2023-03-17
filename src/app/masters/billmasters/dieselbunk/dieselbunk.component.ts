@@ -1,3 +1,4 @@
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
@@ -5,10 +6,11 @@ import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { MAX_LENGTH_6, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_6, RG_ADDRESS, RG_ALPHA_ONLY, RG_PINCODE } from 'src/app/_shared/regex';
 import { DieselBunkDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_EMAIL, RG_PHONE_NO } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-dieselbunk',
@@ -28,9 +30,11 @@ export class DieselBunkComponent implements OnInit {
     'updatedAt', 'updatedBy'];
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder,
-    private billmasterService: BillMasterService) { }
+    private billmasterService: BillMasterService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.initDieselBunks();
@@ -49,13 +53,13 @@ export class DieselBunkComponent implements OnInit {
       id: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      address: ['', (Validators.required)],
-      pinCode: ['', (Validators.required)],
+      address: new FormControl('', [Validators.required, Validators.pattern(RG_ADDRESS)]),
+      pinCode: new FormControl('', [Validators.required, Validators.pattern(RG_PINCODE)]),
       phoneNo: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
       email: new FormControl('', [Validators.pattern(RG_EMAIL)]),
       gLcode: [''],
       subGLcode: [''],
-      rate: ['', (Validators.required)],
+      rate: [null, (Validators.required)],
       isActive: [true]
     });
   }
@@ -109,6 +113,7 @@ export class DieselBunkComponent implements OnInit {
           this.initDieselBunks();
           this.fbDieselBunk.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMDB001" : "SMBMDB002"]);
         }
       })
     }
