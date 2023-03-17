@@ -1,11 +1,11 @@
 import {
   VarietyViewDto, VarietyDto, VehicleTypeViewDto, VehicleTypeDto, PlantSubTypeViewDto, PlantSubTypeDto, BankViewDto, BankDto, SeasonViewDto, SeasonDto, HglViewDto,
-  HglDto, ShiftsViewDto, ShiftDto, SampleslabsViewDto, SampleSlabDto, TptViewDto, TptDto, TptdetailViewDto, LookupDetailViewDto, FarmersViewDto, FarmerDto, BranchViewDto, SeasonBillingRateViewDto
+  HglDto, ShiftsViewDto, ShiftDto, SampleslabsViewDto, SampleSlabDto, TptViewDto, TptDto, TptdetailViewDto, LookupDetailViewDto, FarmersViewDto, FarmerDto, BranchViewDto, SeasonBillingRateViewDto, LookupDetailDto
 } from './../_models/applicationmaster';
 import { Injectable } from "@angular/core";
 import { LookUpHeaderDto, LookupViewDto, plantTypeDto, plantTypeViewDto, SubHglViewDto } from '../_models/applicationmaster';
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_FARMER_URI, GET_FARMERS_URI, GET_BRANCH_URI, GET_LOOKUP_DETAILS_URI, GET_SUBHGL_URI, UPDATE_FARMER_URI, GET_BILLPARAMS_URI, GET_BILLPARAMSFORCATEGORY_URI, GET_GETSEASONBILLINGRATES_URI, CURRENT_SEASON_URI, } from './api.uri.service';
+import { CREATE_FARMER_URI, GET_FARMERS_URI, GET_BRANCH_URI, GET_LOOKUP_DETAILS_URI, GET_LOOKUP_DETAILS_FOR_MENU_URI, GET_LOOKUP_FOR_MENU_URI, GET_SUBHGL_URI, UPDATE_FARMER_URI, GET_BILLPARAMS_URI, GET_BILLPARAMSFORCATEGORY_URI, GET_GETSEASONBILLINGRATES_URI, CURRENT_SEASON_URI, } from './api.uri.service';
 import {
   CREATE_BANK_URI, CREATE_CreateTpt_URI, CREATE_HGL_URI, CREATE_LOOKUP_URI, CREATE_PLANTTYPE_URI, CREATE_PLANT_SUB_TYPE_URI, CREATE_SAMPLESLAB_URI, CREATE_SEASON_URI,
   CREATE_SHIFT_URI, CREATE_VARIETY_URI, CREATE_VEHICLE_TYPE_URI, GET_BANKS_URI, GET_BANK_URI, GET_HGL_URI, GET_LOOKUP_URI, GET_PLANTTYPE_URI, GET_PLANT_SUB_TYPE_URI,
@@ -18,7 +18,7 @@ import { BillParameterViewDto } from '../_models/billingmaster';
 
 @Injectable({ providedIn: 'root' })
 export class AppMasterService extends ApiHttpService {
-  // lookup
+  // lookup 
   public GetlookUp() {
     return this.get<LookupViewDto[]>(GET_LOOKUP_URI);
   }
@@ -31,6 +31,13 @@ export class AppMasterService extends ApiHttpService {
   // Lookup Details
   public GetlookupDetails(lookupId: number) {
     return this.get<LookupDetailViewDto[]>(GET_LOOKUP_DETAILS_URI + lookupId);
+  }
+
+  public GetLookupsforMenu() {
+    return this.get<LookUpHeaderDto[]>(GET_LOOKUP_FOR_MENU_URI);
+  }
+  public GetLookupDetailsforMenu(lookupId: number) {
+    return this.get<LookupDetailDto[]>(GET_LOOKUP_DETAILS_FOR_MENU_URI + lookupId);
   }
   // plant type
   public GetPlantType() {
