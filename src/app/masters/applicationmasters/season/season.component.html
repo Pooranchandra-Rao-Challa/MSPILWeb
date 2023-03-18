@@ -329,7 +329,7 @@
         <div class="col-12">
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-              (click)="onSubmit()"></button>
+            [disabled]="fbseasons.invalid" (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>

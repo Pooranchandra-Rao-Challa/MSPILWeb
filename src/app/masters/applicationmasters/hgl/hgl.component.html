@@ -452,7 +452,7 @@
                 <div class="grid p-fluid">
                 <div class="field col-12 md:col-3">
                   <label>Bank:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
+                  <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" formControlName="bankId" optionValue="bankId"
                   (onChange)="getBranchByBankId($event.value)">
                   </p-dropdown>
                 </div>
@@ -478,7 +478,7 @@
 
                 <div class="field col-12 md:col-3">
                    <label>IFSC:</label>
-                <input pInputText id="ifsc"  placeholder=" IFSC Code" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
+                <input pInputText id="ifsc" placeholder=" IFSC Code" [(ngModel)]="IFSC" [ngModelOptions]="{standalone: true}"
                 readonly>
               </div>
               <div class="field col-12 md:col-3">
@@ -598,7 +598,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
           <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
-            (click)="onSubmit()"></button>
+          [disabled]="fbHgl.invalid"  (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

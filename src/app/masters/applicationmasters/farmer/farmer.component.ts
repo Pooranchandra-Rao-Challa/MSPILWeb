@@ -12,7 +12,10 @@ import { VillageDto, VillagesViewDto } from 'src/app/_models/geomodels';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { FarmerDto } from '../../../_models/applicationmaster';
-import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MIN_AADHAAR, MIN_ACCNO, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PANNO, RG_PHONE_NO } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
+import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { AlertMessage } from '../../../_alerts/alertMessage';
 
 
 @Component({
@@ -46,6 +49,7 @@ export class FarmerComponent implements OnInit {
     mandalName: FormControl = new FormControl();
     pincode: FormControl = new FormControl();
     address: FormControl = new FormControl();
+    maxLength: MaxLength = new MaxLength();
 
     
 
@@ -56,6 +60,7 @@ export class FarmerComponent implements OnInit {
         private lookupService: LookupService,
         public jwtService: JWTService,
         private messageService: MessageService,
+        private alertMessage:AlertMessage
     ) {
 
     }
@@ -69,23 +74,23 @@ export class FarmerComponent implements OnInit {
     farmerForm(){
         this.fbfarmers = this.formbuilder.group({
             farmerId: [null],
-            code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-            name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-            aliasName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+            code:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+            name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+            aliasName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
             gender:  ['', (Validators.required)],
-            fatherName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+            fatherName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
             casteId: ['', (Validators.required)],
             address:['', (Validators.required)],
             villageId:  ['', (Validators.required)],
-            phoneNo: [''],
-            email: ['', (Validators.pattern(RG_EMAIL))],
-            panno: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-            aadhaarNo:  new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+            phoneNo:  ['', Validators.pattern(RG_PHONE_NO)],
+            email:['', (Validators.pattern(RG_EMAIL))],
+            panno: new FormControl('', [ Validators.pattern(RG_PANNO)]),
+            aadhaarNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_AADHAAR)]),
             oldRyot:  new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
             selfId: [null],
             jfno: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
             branchId: ['', (Validators.required)],
-            accountNo:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+            accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
             totalArea: ['', (Validators.required)],
             cultivatedArea: ['', (Validators.required)],
             glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -184,6 +189,7 @@ export class FarmerComponent implements OnInit {
                     this.initFarmers();
                     this.onClose();
                     this.showDialog = false;
+                    this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMFA001" : "SMAMFA002"]);
                 }
             })
         }

@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { LoanTypeViewDto, LoanTypeDto, LoanSubTypeViewDto, } from '../../../_models/billingmaster';
 import { BillMasterService } from '../../../_services/billmaster.service';
+import { MaxLength } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-loanmaster',
@@ -32,6 +33,7 @@ export class LoanMasterComponent implements OnInit {
   uom: LookupDetailDto[] = [];
   defaults: { name: string; id: boolean }[];
   billCategories: any;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(
     private formbuilder: FormBuilder,
@@ -81,13 +83,13 @@ export class LoanMasterComponent implements OnInit {
   loanTypesForm() {
     this.fbloantype = this.formbuilder.group({
       loanTypeId: [0],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20),]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       categoryId: ['', Validators.required],
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),]),
+      name:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       interestRate: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
       priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
+      subGlcode:['', Validators.pattern(RG_ALPHA_NUMERIC)],
       isActive: [false],
       loanSubTypes: this.formbuilder.array([]),
     });
@@ -143,9 +145,8 @@ export class LoanMasterComponent implements OnInit {
     this.loanType.subGlcode = loanType.subGLcode;
     this.loanType.isActive = loanType.isActive;
     this.loanType.loanSubTypes = this.loanSubTypes ? this.loanSubTypes : [];
-    setTimeout(() => {
-      this.fbloantype.setValue(this.loanType);
-    }, 5000);
+      this.fbloantype.patchValue(this.loanType);
+    
     this.addFlag = false;
     this.submitLabel = 'Update loanType';
     this.showDialog = true;

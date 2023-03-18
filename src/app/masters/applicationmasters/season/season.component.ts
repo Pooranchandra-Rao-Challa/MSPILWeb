@@ -224,8 +224,7 @@ export class SeasonComponent implements OnInit {
           this.initSeasons();
           this.seasonForm();
           this.showDialog = false;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMWH001" : "SMBMWH002"]);
-          // this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMSE001" : "SMAMSE002"]);
         }
       });
     } else {

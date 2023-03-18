@@ -464,31 +464,31 @@ export class HglDto {
   createdAt?: string
   updatedBy?: string
   updatedAt?: string
-  hglId?: number
-  code?: string
-  name?: string
-  gender?: string
-  relationTypeId?: number
-  relationName?: string
-  address?: string
-  pinCode?: string
-  phoneNo?: string
-  email?: string
-  panNo?: string
-  aadhaarNo?: string
-  tax?: number
-  tds?: boolean
-  guarantor1?: string
-  guarantor2?: string
-  guarantor3?: string
-  branchId?: number
-  bankId?:number
-  accountNo?: string
-  glcode?: string
-  subGlcode?: string
-  otherCode?: string
-  isActive?: boolean
-  subHgls?: SubHglDto[]
+  hglId?: number;
+  code?: string;
+  name?: string;
+  gender?: string;
+  relationTypeId?: number;
+  relationName?: string;
+  address?: string;
+  pinCode?: string;
+  phoneNo?: string;
+  email?: string;
+  panNo?: string;
+  aadhaarNo?: string;
+  tax?: number;
+  tds?: boolean;
+  guarantor1?: string;
+  guarantor2?: string;
+  guarantor3?: string;
+  branchId?: number;
+  bankId?: number;
+  accountNo?: string;
+  glcode?: string;
+  subGlcode?: string;
+  otherCode?: string;
+  isActive?: boolean;
+  subHgls?: SubHglDto[];
 
 }
 

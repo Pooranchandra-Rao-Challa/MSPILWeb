@@ -139,7 +139,7 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-warehouses>
+      <ng-template pTemplate="body" let-warehouse>
         <tr>
           <td>
             <button
@@ -147,27 +147,27 @@
               pRipple
               icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editWarehouse(warehouses)"
+              (click)="editWarehouse(warehouse)"
             ></button>
           </td>
-          <td>{{ warehouses.code }}</td>
-          <td>{{ warehouses.name }}</td>
-          <td>{{ warehouses.glcode }}</td>
-          <td>{{ warehouses.subGlcode }}</td>
+          <td>{{ warehouse.code }}</td>
+          <td>{{ warehouse.name }}</td>
+          <td>{{ warehouse.glcode }}</td>
+          <td>{{ warehouse.subGlcode }}</td>
           <td style="text-align: center">
             <p-checkbox
               name="active"
               value="active"
-              [(ngModel)]="warehouses.isActive"
+              [(ngModel)]="warehouse.isActive"
               [binary]="true"
               [disabled]="true"
             >
             </p-checkbox>
           </td>
-          <td>{{ warehouses.createdAt | date : mediumDate }}</td>
-          <td>{{ warehouses.createdByUser }}</td>
-          <td>{{ warehouses.updatedAt | date : mediumDate }}</td>
-          <td>{{ warehouses.updatedByUser }}</td>
+          <td>{{ warehouse.createdAt | date : mediumDate }}</td>
+          <td>{{ warehouse.createdByUser }}</td>
+          <td>{{ warehouse.updatedAt | date : mediumDate }}</td>
+          <td>{{ warehouse.updatedByUser }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -281,7 +281,7 @@
             type="submit"
             [label]="submitLabel"
             class="p-button-raised p-button-success"
-            (click)="onSubmit()"
+            [disabled]="fbwarehouse.invalid" (click)="onSubmit()"
           ></button>
         </div>
       </ng-template>

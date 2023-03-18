@@ -1,5 +1,6 @@
 <div class="col-12">
   <div class="card">
+    <p-toast key="tst"></p-toast>
     <p-dialog header="Village" [(visible)]="display" showEffect="fade"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '70vw' }" [modal]="true">
       <ng-template pTemplate="content">
@@ -132,60 +133,61 @@
 
                 <p-fieldset legend="Village Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
-                    <div class="field col-12 md:col-3">
-                      <label for="code">Village Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="code" formControlName="code" type="text"
-                        placeholder="Enter Village Code" />
-                      <span *ngIf="
-                          FormControls['code'].touched &&
-                          FormControls['code'].invalid
-                        ">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                          Please Enter Code.
-                        </div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-                          Code Min Length Is 2 .
-                        </div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-                          Code Max Length Is 6.
-                        </div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                          Code Should Contains Only Letters And Digits.
-                        </div>
-                      </span>
+                    <div class="field col-12 md:col-4">
+                     
+			  <label>Code:<sup class="p-error">*</sup></label>
+        <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
+          alphaNumeric [readonly]="fbvillages.value.tptId" [maxlength]="20"
+          [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+        <div class="text-right">
+          <small>{{code.value.length}}/20</small>
+        </div>
+        <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+            Please Enter Code.</div>
+          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+            Code Min Length Is 2 .</div>
+          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+            Code Max Length Is 20.</div>
+          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+            Code Should Contains Only Alpha Numeric.</div>
+        </span>
                     </div>
 
-                    <div class="field col-12 md:col-3">
-                      <label htmlFor="name">Village Name:<sup class="p-error">*</sup></label>
-                      <input pInputText id="name" formControlName="name" type="text" placeholder="Enter Village Name" maxlength="50" />
-                      <span *ngIf="
-                          FormControls['name'].touched &&
-                          FormControls['name'].invalid
-                        "> 
+                    <div class="field col-12 md:col-4">
+                      <label>Name:<sup class="p-error">*</sup></label>
+                      <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
+                        alphaOnly [maxlength]="maxLength.name"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                      <div class="text-right">
+                        <small>{{name.value.length}}/{{maxLength.name}}</small>
+                      </div>
+                      <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                          Name Is Required
-                        </div>
+                          Please Enter Name.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
+                          Name Min Characters Is 2.</div>
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                          Name Should Only Contains Alphabets .
-                        </div>
+                          Name Should Contains Only Alphabets.</div>
                       </span>
+              
                     </div>
 
-                    <div class="field col-12 md:col-3">
-                      <label for="inchargeName">Incharge Name:</label>
-                      <input pInputText id="inchargeName" formControlName="inchargeName" maxlength="50"
-                        placeholder="Enter Incharge Name" type="text" />
-                      <span *ngIf="
-                          FormControls['inchargeName'].touched &&
-                          FormControls['inchargeName'].invalid
-                        ">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['inchargeName'].errors?.['pattern']">
-                          Incharge Name Should Only Contains Alphabets .
-                        </div>
-                      </span>
+                    <div class="field col-12 md:col-4">
+                      <label>Incharge Name:</label>
+                    <input pInputText type="text" #inchargeName formControlName="inchargeName" alphaOnly placeholder="Enter Incharge Name" [maxlength]="50">
+                      <div class="text-right">
+                        <small>{{inchargeName.value.length}}/50</small>
+                      </div>
+                    <span *ngIf="FormControls['inchargeName'].touched && FormControls['inchargeName'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['inchargeName'].errors?.['pattern']">Incharge Name Should Contains
+                        Alphabets.</div>
+                    </span>
                     </div>
-                    <div class="field col-12 md:col-3">
+
+                   
+                    <div class="field col-12 md:col-4">
                       <label for="inchargePhoneNo">Incharge Phone No.:</label>
                       <p-inputMask id="inchargePhoneNo" mask="(999)-999-9999" formControlName="inchargePhoneNo"
                         [ngClass]="{
@@ -205,23 +207,32 @@
                       </span>
                     </div>
 
-                    <div class="field col-8 md:col-3">
-                      <label htmlFor="address">Address:</label>
-                      <textarea rows="6" cols="30" formControlName="address" placeholder="Village Address"  maxlength="255"
-                        pInputTextarea   maxlength="255"></textarea>
-                    </div>
-                    <div class="col-8 md:col-9">
-                      <div class="grid">
+                   
+                     
                         <div class="field col-12 md:col-4">
-                          <label for="PinCode">Pin Code:</label>
-                          <p-inputNumber inputId="pinCode" formControlName="pinCode" mode="decimal"
-                            [useGrouping]="false" [size]="6" [maxlength]="6" placeholder="Pin Code">
-                          </p-inputNumber>
+                          <label>PinCode:<sup class="p-error">*</sup></label>
+                          <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
+                          formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
+                        <div class="text-right">
+                          <small>
+                            {{pinCode.value.length}}/{{maxLength.pinCode}}
+                          </small>
                         </div>
+                        <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
+                          <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['pinCode'].errors?.['minlength']">
+                          Please Enter 6 Digits PinCode .</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
+                            Please Enter Pin Code.</div>
+                        </span>  
+                </div>
+              
                         <div class="field col-12 md:col-4">
                           <label for="distance">Distance:<sup class="p-error">*</sup></label>
                           <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2"
-                            placeholder="Enter Distance">
+                            placeholder="Enter Distance"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
                           </p-inputNumber>
                           <div *ngIf="
                               FormControls['distance'].invalid &&
@@ -233,7 +244,8 @@
                         <div class="field col-12 md:col-4">
                           <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
                           <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
-                            [minFractionDigits]="2" placeholder="Enter Diverted Distance">
+                            [minFractionDigits]="2" placeholder="Enter Diverted Distance"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['divertedDistance'].touched && FormControls['divertedDistance'].errors }">
                           </p-inputNumber>
                           <div *ngIf="
                               FormControls['divertedDistance'].invalid &&
@@ -242,17 +254,13 @@
                             Diverted Distance Required
                           </div>
                         </div>
-                        <div class="field col-12 md:col-4">
-                          <div class="col-6">
-                            <label htmlFor="isActive">Is Active?:</label><br />
-                            <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
-                          </div>
-                        </div>
+                       
                         <div class="field col-12 md:col-4">
                           <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
                           <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
                             locale="en-IN" [useGrouping]="false" [size]="6" [maxlength]="6"
-                            placeholder="Enter Listing Order">
+                            placeholder="Enter Listing Order"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
                           </p-inputNumber>
                           <div *ngIf="
                               FormControls['listingOrder'].invalid &&
@@ -261,14 +269,35 @@
                             Listing Order Is Required
                           </div>
                         </div>
-                      </div>
-                    </div>
+
+                        <div class="field col-8 md:col-4">
+                          <label>Address:<sup class="p-error">*</sup></label>
+                        <textarea rows="5" cols="30" placeholder="Enter Address"#address pInputTextarea formControlName="address" [maxlength]="maxLength.address"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                          <div class="text-right">
+                            <small>{{address.value.length}}/{{maxLength.address}} </small>
+                          </div>
+                          <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
+                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
+                              Please Enter Address.</div>
+                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
+                              Address Is Incorrect.</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                          <div class="col-6">
+                            <label htmlFor="isActive">Is Active?:</label><br />
+                            <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                          </div>
+                        </div>
+                    
+                   
                   </div>
                 </p-fieldset>
 
                 <p-fieldset legend="Land Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
-                    <div class="field col-12 md:col-3">
+                    <div class="field col-12 md:col-4">
                       <label for="cultivableArea">Cultivatable Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2"
                         placeholder="Enter Cultivable Area(Acres)">
@@ -281,7 +310,7 @@
                       </div>
                     </div>
 
-                    <div class="field col-12 md:col-3">
+                    <div class="field col-12 md:col-4">
                       <label for="irrigationArea">Irrigation Area(In Peek Summer):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2"
                         placeholder="Enter Irrigation Area">
@@ -294,7 +323,7 @@
                         Irrigation area is required
                       </div>
                     </div>
-                    <div class="field col-12 md:col-3">
+                    <div class="field col-12 md:col-4">
                       <label for="potentialArea">Suitable Area For Cane(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="potentialArea" formControlName="potentialArea" mode="decimal"
                         placeholder="Suitable Area" locale="en-US" placeholder="Enter Suitable Area"
@@ -309,7 +338,7 @@
                       </div>
                     </div>
 
-                    <div class="field col-12 md:col-3">
+                    <div class="field col-12 md:col-4">
                       <label for="totalArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2"
                         placeholder="Total Area">
@@ -392,7 +421,7 @@
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-            (click)="onSubmit()"></button>
+          [disabled]="fbvillages.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>
@@ -608,13 +637,8 @@
           <td>{{ village.pinCode }}</td>
           <td>{{ village.villageCode }}</td>
           <td>{{ village.villageName }}</td>
-          
-        
-         
           <td>{{ village.inchargeName }}</td>
           <td>{{ village.inchargePhoneNo }}</td>
-          
-          
           <td>{{ village.distance }}</td>
           <td>{{ village.divertedDistance }}</td>
           <td>{{ village.noOfEbservices }}</td>

@@ -68,7 +68,7 @@ export class HglComponent implements OnInit {
   branches: BranchDto[] = [];
   genders: { label: string; value: string }[];
   vehicleTypes: VehicleTypeViewDto[] = [];
-  IFSC?: string;
+  IFSC?: any;
   maxLength: MaxLength = new MaxLength();
 
  
@@ -98,8 +98,7 @@ export class HglComponent implements OnInit {
       phoneNo: ['', Validators.pattern(RG_PHONE_NO)],
       tax: ['', Validators.required],
       email: ['', (Validators.pattern(RG_EMAIL))],
-      panNo:new FormControl('', [ Validators.pattern(RG_PANNO)
-      ]),
+      panNo:new FormControl('', [ Validators.pattern(RG_PANNO)]),
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -199,14 +198,8 @@ export class HglComponent implements OnInit {
     this.hglform();
     this.initsubHgls(hgl.hglId);
     this.initRelationTypes();
-
-    setTimeout(() => {
     this.getBranchByBankId(hgl.bankId || 0);
-  }, 5000);
-
-    setTimeout(() => {
       this.getIFSCByBranch(hgl.branchId || 0);
-    }, 5000);
     this.hgl.hglId = hgl.hglId
     this.hgl.code = hgl.code;
     this.hgl.name = hgl.name;
@@ -232,10 +225,7 @@ export class HglComponent implements OnInit {
     this.hgl.aadhaarNo = hgl.aadhaarNo;
     this.hgl.isActive = hgl.isActive;
     this.hgl.subHgls = this.subHgls ? this.subHgls : [];
-    setTimeout(() => {
-      this.fbHgl.setValue(this.hgl);
-    }, 5000);
-
+      this.fbHgl.patchValue(this.hgl);
     this.addFlag = false;
     this.submitLabel = 'Update Hgl';
     this.showDialog = true;
@@ -267,7 +257,7 @@ export class HglComponent implements OnInit {
           this.hglform();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMHG001" : "SMAMHG002"]);
-          // this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
+         
         }
       });
     } else {

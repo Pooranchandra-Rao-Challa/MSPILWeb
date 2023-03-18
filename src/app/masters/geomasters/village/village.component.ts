@@ -25,12 +25,18 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import {
+  MAX_LENGTH_20,
   MAX_LENGTH_6,
   MIN_LENGTH_2,
+  MIN_LENGTH_6,
+  RG_ADDRESS,
   RG_ALPHA_NUMERIC,
   RG_ALPHA_ONLY,
   RG_PHONE_NO,
 } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
+import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { AlertMessage } from '../../../_alerts/alertMessage';
 @Component({
   selector: 'app-village',
   templateUrl: './village.component.html',
@@ -54,12 +60,14 @@ export class VillageComponent implements OnInit {
   districts: DistrictDto[] = [];
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
-    public jwtService: JWTService
+    public jwtService: JWTService,
+    private alertMessage: AlertMessage
   ) {}
 
   InitVillage(village: VillagesViewDto) {
@@ -101,6 +109,9 @@ export class VillageComponent implements OnInit {
       this.village.tptrate = village.tptRate;
       this.village.targetArea = 0;
       this.fbvillages.setValue(this.village);
+      this.fbvillages.patchValue({
+        stateId:village.stateId?.toString()
+      });
       this.submitLabel = 'Update Village';
       this.addFlag = false;
     } else {
@@ -138,19 +149,11 @@ export class VillageComponent implements OnInit {
       mandalId: ['', Validators.required],
       districtId: ['', Validators.required],
       stateId: ['', Validators.required],
-      address: ['', Validators.required],
-      pinCode: ['', Validators.required],
-      code: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_NUMERIC),
-        Validators.minLength(MIN_LENGTH_2),
-        Validators.maxLength(MAX_LENGTH_6),
-      ]),
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_ONLY),
-      ]),
-      inchargeName: ['', Validators.pattern(RG_ALPHA_ONLY)],
+      address: new FormControl('', [Validators.required,Validators.pattern(RG_ADDRESS)]),
+      pinCode: new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_6)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      inchargeName:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       inchargePhoneNo: ['', Validators.pattern(RG_PHONE_NO)],
       distance: ['', Validators.required],
       divertedDistance: ['', Validators.required],
@@ -166,6 +169,8 @@ export class VillageComponent implements OnInit {
       isActive: [''],
     });
   }
+
+  
 
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
@@ -217,6 +222,7 @@ export class VillageComponent implements OnInit {
           this.initVillages();
           this.onClose();
           this.display = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMMGMVI001" : "SMMGMVI002"]);
         }
       });
     } else {

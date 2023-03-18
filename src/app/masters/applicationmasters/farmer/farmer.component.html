@@ -12,9 +12,13 @@
                     <div class="grid col-12 md:col-8">
 
                       <div class="field col-12 md:col-6">
-                        <label htmlFor="code">Code:<sup class="p-error">*</sup></label>
-                        <input pInputText id="code"  placeholder="Enter Code" formControlName="code" type="text"  
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                        <label>Code:<sup class="p-error">*</sup></label>
+                        <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
+                          alphaNumeric [readonly]="fbfarmers.value.tptId" [maxlength]="20"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                        <div class="text-right">
+                          <small>{{code.value.length}}/20</small>
+                        </div>
                         <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                             Please Enter Code.</div>
@@ -23,40 +27,62 @@
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
                             Code Max Length Is 20.</div>
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                            Code Should Contains Only Letters And Integers.</div>
+                            Code Should Contains Only Alpha Numeric.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
-                        <label htmlFor="name">Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="name" placeholder="Enter Name" formControlName="name" type="text"  
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                        <label>Name:<sup class="p-error">*</sup></label>
+                        <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
+                          alphaOnly [maxlength]="maxLength.name"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                        <div class="text-right">
+                          <small>{{name.value.length}}/{{maxLength.name}}</small>
+                        </div>
                         <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                             Please Enter Name.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
+                            Name Min Characters Is 2.</div>
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                            Name Should Contains Only Alphbets.</div>
+                            Name Should Contains Only Alphabets.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="aliasName">Alias Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="aliasName"  placeholder="Enter Alias Name" formControlName="aliasName" type="text" 
-                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['aliasName'].touched && FormControls['aliasName'].errors }">
+                        <input pInputText id="aliasName" #aliasName type="text" placeholder="Enter Relation Name"
+                          formControlName="aliasName" alphaOnly [maxlength]="maxLength.name"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['aliasName'].touched && FormControls['aliasName'].errors }">
+                        <div class="text-right">
+                          <small> {{aliasName.value.length}}/{{maxLength.name}} </small>
+                        </div>
                         <span *ngIf="FormControls['aliasName'].touched && FormControls['aliasName'].invalid">
-                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aliasName'].errors?.['required']">
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['aliasName'].errors?.['required']">
                             Please Enter Alias Name.</div>
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['aliasName'].errors?.['minlength']">
+                            Alias Name Min Characters Is 2.</div>
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aliasName'].errors?.['pattern']">
-                            Alias Name Should Contains Only Alphbets.</div>
+                            Alias Name Should Contains Only Alphabets.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
-                        <label htmlFor="fatherName"> Father Name:<sup class="p-error">*</sup></label>
-                        <input pInputText id="fatherName"  placeholder="Enter Father Name"formControlName="fatherName" type="text"
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['fatherName'].touched && FormControls['fatherName'].errors }">
+                        <label htmlFor="fatherName">Father Name:<sup class="p-error">*</sup></label>
+                        <input pInputText id="fatherName" #fatherName type="text" placeholder="Enter Relation Name"
+                          formControlName="fatherName" alphaOnly [maxlength]="maxLength.name"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['fatherName'].touched && FormControls['fatherName'].errors }">
+                        <div class="text-right">
+                          <small> {{fatherName.value.length}}/{{maxLength.name}} </small>
+                        </div>
                         <span *ngIf="FormControls['fatherName'].touched && FormControls['fatherName'].invalid">
-                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fatherName'].errors?.['required']">
-                            Please Enter  Father Name</div>
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['fatherName'].errors?.['required']">
+                            Please Enter Father Name.</div>
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['fatherName'].errors?.['minlength']">
+                            Father Name Min Characters Is 2.</div>
                           <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fatherName'].errors?.['pattern']">
-                            Father Name Should Contains Only Alphbets.</div>
+                            Father Name Should Contains Only Alphabets.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -112,7 +138,7 @@
                       <input pInputText [formControl]="circleName" type="text"  placeholder="Enter Circle" /> 
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label for="inchargePhoneNo">Section:</label>
+                      <label for="sectionName">Section:</label>
                       <input pInputText [formControl]="sectionName" type="text"  placeholder="Enter Incharge Phone No" /> 
                     </div>
                     <div class="field col-8 md:col-3">
@@ -129,13 +155,17 @@
                     </div>
 
                     <div class="field col-8 md:col-3">
-                      <label htmlFor="address"> Address:</label>
-                      <textarea rows="5" cols="30" pInputTextarea formControlName="address" placeholder="Village Address" 
-                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }">
-                      </textarea>
+                      <label>Address:<sup class="p-error">*</sup></label>
+                    <textarea rows="5" cols="30" placeholder="Enter Address"#address pInputTextarea formControlName="address" [maxlength]="maxLength.address"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                      <div class="text-right">
+                        <small>{{address.value.length}}/{{maxLength.address}} </small>
+                      </div>
                       <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                           Please Enter Address.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
+                          Address Is Incorrect.</div>
                       </span>
                   </div>
                 </div>
@@ -168,24 +198,30 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="panno">PAN No:</label>
-                      <input pInputText id="panNo" type="text" placeholder="Enter Pan No" formControlName="panno"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['panno'].touched && FormControls['panno'].errors }">
-                  <span *ngIf="FormControls['panno'].touched && FormControls['panno'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panno'].errors?.['pattern']">
-                      Pan Number Contains Only Alphabets And Integers.</div>
-                  </span>
+                    <input pInputText id="panno" type="text" placeholder="Enter PAN No" formControlName="panno" maxLength="10" style="text-transform:uppercase"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['panno'].touched && FormControls['panno'].invalid }">
+                    <div *ngIf="FormControls['panno'].touched && FormControls['panno'].invalid">
+                      <small class="form-text text-danger" *ngIf="FormControls['panno'].errors?.['pattern']">
+                        Invalid PAN number format, eg: ABCDE1234X.
+                      </small>
+                    </div>
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label for="aadhaarNo"> Aadhaar No:<sup class="p-error">*</sup></label>
-                      <input pInputText id="aadhaarNo" type="text" placeholder="Enter Account Number"
-                    formControlName="aadhaarNo"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
-                  <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
-                      Please Enter Aadhaar Number.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
-                      Aadhaar Number Contains Only Integers.</div>
-                  </span>
+                      <label>Aadhaar No:</label>
+                      <input pInputText id="aadhaarNo"  placeholder=" Enter Aadhaar No"  #aadhaarNo formControlName="aadhaarNo"   maxlength="12"
+                      [maxlength]="maxLength.aadhaarNo" numericOnly
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
+                      <div class="text-right">
+                        <small> {{aadhaarNo.value.length}}/{{maxLength.aadhaarNo}} </small>
+                      </div>
+                          <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
+                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
+                              Please Enter AadhaarNo</div>
+                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['minlength']">
+                              AadhaarNo Number Min Length Is 12.</div>
+                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
+                              AadhaarNo Number Contains Only Characters And Integers.</div>
+                          </span>
                 </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="casteId">Caste:<sup class="p-error">*</sup></label>
@@ -249,35 +285,63 @@
                     </div>
 
                     <div class="field col-12 md:col-4">
-                      <label for="accountNo">Account No:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="accountNo"  placeholder="Enter Account No" formControlName="accountNo" type="text" [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }">
+                      <label>Account Number:<sup class="p-error">*</sup></label>
+                      <input pInputText id="accountNo" #accountNo type="text" placeholder="Enter Account Number"
+                        formControlName="accountNo" [maxlength]="maxLength.accountNo" numericOnly
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }">
+                      <div class="text-right">
+                        <small> {{accountNo.value.length}}/{{maxLength.accountNo}} </small>
+                      </div>
                       <span *ngIf="FormControls['accountNo'].touched && FormControls['accountNo'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['required']">
                           Please Enter Account Number.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['minlength']">
+                          Account Number Min Length Is 9.</div>
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['accountNo'].errors?.['pattern']">
                           Account Number Contains Only Integers.</div>
                       </span>
                     </div>
 
                     <div class="field col-12 md:col-4">
-                      <label for="glcode">GL Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="glcode"  placeholder="Enter GL Code" formControlName="glcode" type="text" />
-                     
-
-                      <div *ngIf="FormControls['glcode'].invalid &&  FormControls['glcode'].touched"
-                        class="error-message p-error">
-                        Gl Code Is Required
+                      <label>GL Code:</label>
+                      <input pInputText id="glcode" #glcode type="text" placeholder="Enter GL Code" formControlName="glcode"
+                        alphaNumeric [maxlength]="20"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
+                      <div class="text-right">
+                        <small> {{glcode.value.length}}/20 </small>
                       </div>
+                      <span *ngIf="FormControls['glcode'].touched && FormControls['glcode'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['pattern']">
+                          GL Code Contains Only Alphabets And Integers.</div>
+                      </span>
                     </div>
 
                     <div class="field col-12 md:col-4">
-                      <label for="subGlcode">Sub GL Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="subGlcode"  placeholder="Enter Sub GL Code" formControlName="subGlcode" type="text" />
+                      <label>Sub GL Code:</label>
+                  <input pInputText id="subGlcode" #subGlcode type="text" placeholder="Enter Sub GL Code"
+                    formControlName="subGlcode" alphaNumeric [maxlength]="20"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
+                  <div class="text-right">
+                    <small> {{subGlcode.value.length}}/20 </small>
+                  </div>
+                  <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
+                     Other Code Contains Only Alphabets .</div>
+                  </span>
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label for="otherCode">Other Code:<sup class="p-error">*</sup></label>
-                      <input pInputText inputId="otherCode"  placeholder="Enter Other Code" formControlName="otherCode" type="text" />
+                      <input pInputText id="otherCode" #otherCode type="text" placeholder="Enter Sub GL Code"
+                    formControlName="otherCode" alphaNumeric [maxlength]="20"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['otherCode'].touched && FormControls['otherCode'].errors }">
+                  <div class="text-right">
+                    <small> {{otherCode.value.length}}/20 </small>
+                  </div>
+                  <span *ngIf="FormControls['otherCode'].touched && FormControls['otherCode'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['otherCode'].errors?.['pattern']">
+                     Other CodeContains Only Alphabets .</div>
+                  </span>
                     </div>
 
                     </div>
@@ -297,7 +361,7 @@
       <ng-template pTemplate="footer">  
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-              (click)="onSubmit()"></button>
+            [disabled]="fbfarmers.invalid"  (click)="onSubmit()"></button>
           </div>     
       </ng-template>
     </p-dialog>

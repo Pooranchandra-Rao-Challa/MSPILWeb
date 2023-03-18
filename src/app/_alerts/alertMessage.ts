@@ -38,9 +38,9 @@ export class AlertMessage {
  * Districts : DIS
  * Mandals : M
  * Divisions : DIV
- * Circles : C
- * Sections : SE
- * Villages : V
+ * Circles : CI
+ * Sections : SEC
+ * Villages : VI
  *
  * Bill Masters
  *
@@ -56,10 +56,9 @@ export class AlertMessage {
  * Application Masters
  *
  * Seasons:SE
- * Farmers
+ * Farmers:FA
  * HGLs :HG
  * TPTs 
- * HGLs
  * TPTs : T
  * Plant Types
  * Plant Sub Types
@@ -92,34 +91,50 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
 
-  //Application Master => HGLs Message
-  'SMAMHG001': 'HGL Added Successfully',
-  'SMAMHG002': 'HGL Updated Successfully',
+ 
 
-  //Application Master => HGLs Message
-  'SMAMSE001': 'HGL Added Successfully',
-  'SMAMSE002': 'HGL Updated Successfully',
+  //Application Master => 
+
+  //Seasons Message
+  'SMAMSE001': 'Season Added Successfully',
+  'SMAMSE002': 'Season Updated Successfully',
+
+   // HGLs Message
+   'SMAMHG001': 'HGL Added Successfully',
+   'SMAMHG002': 'HGL Updated Successfully',
+   //Farmers
+   'SMAMFA001': 'Farmer Added Successfully',
+   'SMAMFA002': 'Farmer Updated Successfully',
+
+   //Geo Master => 
+
+   //Villages Message
+  'SMMGMVI001':'Village Added Successfully',
+  'SMMGMVI002':'Village Updated Successfully',
+
+   //Sections Message
+   'SMGMSEC001':'Section Added Successfully',
+   'SMGMSEC002':'Section Updated Successfully',
+
+    //Circles Circles
+  'SMGMCI001':'Circle Added Successfully',
+  'SMGMCI002':'Circle Updated Successfully',
 
 
-  //Billing Master => Seasons 
-  'SMBMWH001': 'Season Added Successfully',
-  'SMBMWH002': 'Season  Updated Successfully',
+
+
   // Diesel Rate Message
   'SMBMDR001': 'Diesel Rate Added Successfully',
   'SMBMDR002': 'Diesel Rate Updated Successfully',
-
   // Distance Rate Message
   'SMBMDTR001': 'Distance Rate Added Successfully',
   'SMBMDTR002': 'Distance Rate Updated Successfully',
-
   // Diesel Bunk Message
   'SMBMDB001': 'Diesel Bunk Added Successfully',
   'SMBMDB002': 'Diesel Bunk Updated Successfully',
-
   // TPT Message
   'SMAMT001': 'TPT Added Successfully',
   'SMAMT002': 'TPT Updated Successfully',
-
   // Variety Message
   'SMAMVA001': 'Variety Added Successfully',
   'SMAMVA002': 'Variety Updated Successfully',

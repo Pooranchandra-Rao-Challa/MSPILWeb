@@ -19,6 +19,8 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import {
+  MAX_LENGTH_20,
+  MAX_LENGTH_50,
   MAX_LENGTH_6,
   MIN_LENGTH_2,
   RG_ALPHA_NUMERIC,
@@ -26,6 +28,8 @@ import {
   RG_NUMERIC_ONLY,
   RG_PHONE_NO,
 } from 'src/app/_shared/regex';
+import { MaxLength } from 'src/app/_models/common';
+import { AlertMessage, ALERT_CODES } from '../../../_alerts/alertMessage';
 
 @Component({
   selector: 'app-circle',
@@ -45,11 +49,13 @@ export class CirclesComponent implements OnInit {
   divisions: DivisionDto[] = [];
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
-    public jwtService: JWTService
+    public jwtService: JWTService,
+    private AlertMessage:AlertMessage
   ) {}
   InitCircle() {
     this.circle = new CircleDto();
@@ -66,27 +72,19 @@ export class CirclesComponent implements OnInit {
     this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[];
     });
+
     this.fbcircles = this.formbuilder.group({
       divisionId: ['', Validators.required],
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_ONLY),
-      ]),
-      inchargeName: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_ONLY),
-      ]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      inchargeName:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+    
       listingOrder: new FormControl('', [
         Validators.required,
         Validators.pattern(RG_NUMERIC_ONLY),
       ]),
       isActive: [Validators.required],
-      code: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_ALPHA_NUMERIC),
-        Validators.minLength(MIN_LENGTH_2),
-        Validators.maxLength(MAX_LENGTH_6),
-      ]),
+     
       inchargePhoneNo: new FormControl('', [Validators.pattern(RG_PHONE_NO),
       ]),
       address: ['', Validators.required],
@@ -129,6 +127,7 @@ export class CirclesComponent implements OnInit {
           this.initCircles();
           this.onClose();
           this.dialog = false;
+          this.AlertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMMGMVI001" : "SMMGMVI002"]);
         }
       });
     } else {

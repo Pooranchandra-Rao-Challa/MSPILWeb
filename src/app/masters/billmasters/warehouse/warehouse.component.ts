@@ -81,13 +81,13 @@ export class WareHouseComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-  editWarehouse(warehouses: WareHouseViewDto) {
-    this.warehouse.id = warehouses.id;
-    this.warehouse.code = warehouses.code;
-    this.warehouse.name = warehouses.name;
-    this.warehouse.glcode = warehouses.glcode;
-    this.warehouse.subGlcode = warehouses.subGlcode;
-    this.warehouse.isActive = warehouses.isActive;
+  editWarehouse(warehouse: WareHouseViewDto) {
+    this.warehouse.id = warehouse.id;
+    this.warehouse.code = warehouse.code;
+    this.warehouse.name = warehouse.name;
+    this.warehouse.glcode = warehouse.glcode;
+    this.warehouse.subGlcode = warehouse.subGlcode;
+    this.warehouse.isActive = warehouse.isActive;
     this.fbwarehouse.setValue(this.warehouse);
     this.addFlag = false;
     this.showDialog = true;
@@ -95,21 +95,18 @@ export class WareHouseComponent implements OnInit {
   }
 
   saveWarehouse(): Observable<HttpEvent<any>> {
-    if (this.addFlag)
-      return this.billmasterService.CreateWareHouse(this.fbwarehouse.value);
+    if (this.addFlag) return this.billmasterService.CreateWareHouse(this.fbwarehouse.value);
     else return this.billmasterService.UpdateWareHouse(this.fbwarehouse.value);
   }
 
   onSubmit() {
     if (this.fbwarehouse.valid) {
-      console.log(this.fbwarehouse.value);
       this.saveWarehouse().subscribe((resp) => {
         if (resp) {
           this.loadwarehouses();
           this.fbwarehouse.reset();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMWH001" : "SMBMWH002"]);
-          // this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Message sent' });
         }
       });
     } else {
