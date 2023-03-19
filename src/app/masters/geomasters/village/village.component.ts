@@ -40,7 +40,7 @@ import { AlertMessage } from '../../../_alerts/alertMessage';
 @Component({
   selector: 'app-village',
   templateUrl: './village.component.html',
-  providers: [MessageService, ConfirmationService],
+  // providers: [MessageService, ConfirmationService],
 })
 export class VillageComponent implements OnInit {
   display: boolean = false;

@@ -67,6 +67,14 @@ export class SeasonComponent implements OnInit {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
       this.loading = false;
+      this.seasons.forEach(
+        season => {
+          season.plantFrom = new Date(season.plantFrom)
+          season.plantTo = new Date(season.plantTo)
+          season.crushFrom = new Date(season.crushFrom)
+          season.crushTo = new Date(season.crushTo)
+          }
+      );
       this.existCurrentSeasonRecord =
         this.seasons.filter((sesaon) => sesaon.code == this.cSeasonCode).length == 1
     });

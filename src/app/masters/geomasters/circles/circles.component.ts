@@ -34,7 +34,6 @@ import { AlertMessage, ALERT_CODES } from '../../../_alerts/alertMessage';
 @Component({
   selector: 'app-circle',
   templateUrl: './circles.component.html',
-  providers: [MessageService, ConfirmationService],
 })
 export class CirclesComponent implements OnInit {
   
@@ -127,7 +126,7 @@ export class CirclesComponent implements OnInit {
           this.initCircles();
           this.onClose();
           this.dialog = false;
-          this.AlertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMMGMVI001" : "SMMGMVI002"]);
+          this.AlertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMGMCI001" : "SMGMCI002"]);
         }
       });
     } else {

@@ -311,10 +311,10 @@ export class SeasonViewDto{
   seasonId?: number
   code?: string
   name?: string
-  plantFrom?: string
-  plantTo?: string
-  crushFrom?: string
-  crushTo?: string
+  plantFrom?: any
+  plantTo?: any
+  crushFrom?: any
+  crushTo?: any
   burnCaneRate?: number
   caneRate?: number
   capacity?: number

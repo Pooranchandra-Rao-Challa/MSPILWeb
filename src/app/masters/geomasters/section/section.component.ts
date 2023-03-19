@@ -38,7 +38,6 @@ import { AlertMessage } from '../../../_alerts/alertMessage';
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  providers: [MessageService, ConfirmationService],
 })
 export class SectionComponent implements OnInit {
   display: boolean = false;
@@ -151,7 +150,7 @@ export class SectionComponent implements OnInit {
           this.initSections();
           this.onClose();
           this.display = false;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMMGMVI001" : "SMMGMVI002"]);
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMGMSEC001" : "SMGMSEC001"]);
         }
       });
     } else {
