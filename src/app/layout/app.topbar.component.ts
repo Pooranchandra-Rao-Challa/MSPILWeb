@@ -58,7 +58,6 @@ export class AppTopBarComponent {
     return this.application_contsants.controls;
   }
   initLookupCode() {
-    debugger
     this.appMasterservice.GetlookUp().subscribe((resp) => {
       this.lookupCode = resp as unknown as LookupViewDto[];
     });
@@ -102,7 +101,6 @@ export class AppTopBarComponent {
     this.appConfigFrom.push(this.appConfigGeneraterow())
   }
   ngOnInit() {
-debugger
     this.initAppConstants();
     this.initLookupCode();
     this.initLookupMenuCode();
@@ -128,7 +126,6 @@ debugger
   }
 
   getLookupDetailsByLookupId(lookupId: number) {
-    debugger
     this.appMasterservice.GetLookupDetailsforMenu(lookupId).subscribe((resp) => {
       if (resp) {
         this.lookupDetails = resp as unknown as LookupDetailDto[];
@@ -149,19 +146,17 @@ debugger
   }
 
   initLookupMenuCode() {
-    debugger
     this.appMasterservice.GetLookupsforMenu().subscribe((resp) => {
       this.lookupMenuCode = resp as unknown as LookUpHeaderDto[];
     });
   }
 
   initAppConstants() {
-    debugger
     this.commomService.GetApplicationConstant().subscribe((resp) => {
       this.appConfig = resp as unknown as ApplicationConstantDto[];
 
       console.log(this.appConfig);
-      
+
     });
   }
 

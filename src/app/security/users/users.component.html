@@ -231,9 +231,9 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
-                        <p-inputMask id="mobileNumber" placeholder="Enter Mobile Number" mask="(999)-999-9999" formControlName="mobileNumber"
+                        <input pInputText id="mobileNumber" placeholder="Enter Mobile No" formControlName="mobileNumber"
+                          numericOnly [maxlength]="10"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }">
-                        </p-inputMask>
                         <span
                           *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -241,7 +241,7 @@
                             Please Enter Mobile No.</div>
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['mobileNumber'].errors?.['pattern']">
-                            Pattern Is Incorrect.</div>
+                            First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
@@ -263,7 +263,8 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="imeino">IMEI No:</label>
-                        <input pInputText id="imeino" type="text" formControlName="imeino" placeholder="Enter IMEI No" />
+                        <input pInputText id="imeino" type="text" formControlName="imeino"
+                          placeholder="Enter IMEI No" />
                         <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="userFormControls['imeino'].errors?.['pattern']">

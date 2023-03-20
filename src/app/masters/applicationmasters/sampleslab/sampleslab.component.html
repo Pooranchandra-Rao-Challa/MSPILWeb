@@ -26,28 +26,21 @@
                   </div>
                   <div class="field col-12 md:col-6">
                     <label htmlFor="toArea">To Area:<sup class="p-error">*</sup></label>
-                    <input pInputText  #toArea  formControlName="toArea" type="text" placeholder="Enter to Area"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['toArea'].touched && FormControls['toArea'].errors }" />
-
-                      <div class="text-right">
-                        <small>{{toArea.value.length}}/20</small>
-                      </div>
-                      <span *ngIf="FormControls['toArea'].touched && FormControls['toArea'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toArea'].errors?.['required']">
-                          Please Enter To Area.</div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toArea'].errors?.['minlength']">
-                          Area Min Length Is 2 .</div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toArea'].errors?.['maxlength']">
-                          Area Max Length Is 20.</div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toArea'].errors?.['pattern']">
-                          Area Should Contains Only Numeric.</div>
-                      </span>
+                    <p-inputNumber #toArea  formControlName="toArea" type="text" placeholder="Enter To Area" mode="decimal" [minFractionDigits]="2" 
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['toArea'].touched && FormControls['toArea'].errors }" ></p-inputNumber>
+                    <div
+                      *ngIf="FormControls['toArea'].invalid &&  FormControls['toArea'].touched && FormControls['toArea'].errors?.['required']"
+                      class="error-message p-error">
+                      Area is required
+                    </div>
+                     
+                     
                   </div>
                   <div class="field col-12 md:col-6">
                     <label htmlFor="noOfSample">No of Sample:<sup class="p-error">*</sup></label>
-                    <input pInputText id="noOfSample" formControlName="noOfSample" type="text"
+                    <p-inputNumber id="noOfSample" formControlName="noOfSample"  [minFractionDigits]="2" [min]="0" [max]="100"
                       placeholder="No of Sample"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfSample'].touched && FormControls['noOfSample'].errors }" />
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfSample'].touched && FormControls['noOfSample'].errors }" ></p-inputNumber>
 
                     <div
                       *ngIf="FormControls['noOfSample'].invalid &&  FormControls['noOfSample'].touched && FormControls['noOfSample'].errors?.['required']"

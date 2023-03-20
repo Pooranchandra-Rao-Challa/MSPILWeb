@@ -19,7 +19,7 @@ export class AppMenuComponent implements OnInit {
       case 'Security':
         return this.jwtService.Permissions.CanViewUsers || this.jwtService.Permissions.CanViewRoles
       case 'Masters':
-        return this.GroupPermission('Geo Masters') || this.GroupPermission('Bill Masters')
+        return this.GroupPermission('Geo Masters') || this.GroupPermission('Bill Masters') || this.GroupPermission('Application Masters')
       case 'Geo Masters':
         return this.jwtService.Permissions.CanViewStates || this.jwtService.Permissions.CanViewDistricts
           || this.jwtService.Permissions.CanViewMandals || this.jwtService.Permissions.CanViewDivisions
@@ -28,12 +28,14 @@ export class AppMenuComponent implements OnInit {
       case 'Bill Masters':
         return this.jwtService.Permissions.CanViewBills || this.jwtService.Permissions.CanViewBillParameters
           || this.jwtService.Permissions.CanViewDieselBunks || this.jwtService.Permissions.CanViewDieselRates
-          || this.jwtService.Permissions.CanViewDistanceRates || this.jwtService.Permissions.CanViewLoanMasters
+          || this.jwtService.Permissions.CanViewDistanceRates || this.jwtService.Permissions.CanViewLoanTypes
           || this.jwtService.Permissions.CanViewVillageParamRates || this.jwtService.Permissions.CanViewVillagetptRates
           || this.jwtService.Permissions.CanViewWareHouses
       case 'Application Masters':
         return this.jwtService.Permissions.CanViewTpts || this.jwtService.Permissions.CanViewVarieties
           || this.jwtService.Permissions.CanViewVehicleTypes
+      case 'Monitoring':
+        return this.jwtService.Permissions.CanViewAllottedPlots || this.jwtService.Permissions.CanViewPlotReports
       default: return false;
     }
   }
@@ -109,7 +111,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                   { label: 'Bills', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billmaster'], permission: this.jwtService.Permissions.CanViewBills },
                   { label: 'Bill Parameters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billparameters'], permission: this.jwtService.Permissions.CanViewBillParameters },
-                  { label: 'Loan Masters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'], permission: this.jwtService.Permissions.CanViewLoanMasters },
+                  { label: 'Loan Types', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'], permission: this.jwtService.Permissions.CanViewLoanTypes },
                   { label: 'Diesel Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselrates'], permission: this.jwtService.Permissions.CanViewDieselRates },
                   { label: 'Distance Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'], permission: this.jwtService.Permissions.CanViewDistanceRates },
                   { label: 'Village Param Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villageparamrates'], permission: this.jwtService.Permissions.CanViewVillageParamRates },
@@ -144,17 +146,17 @@ export class AppMenuComponent implements OnInit {
             icon: 'pi pi-fw pi-eye',
             permission: true,
             items: [
-              { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: true },
+              { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: this.jwtService.Permissions.CanViewAllottedPlots },
               { label: 'Plot Assesment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassesment'], permission: true },
-              { label: 'Plot Reports', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports'], permission: true },
+              { label: 'Plot Reports', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports'], permission: this.jwtService.Permissions.CanViewPlotReports },
               { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true },
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
-              { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:forapproval'], permission: true },
+              { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:forapproval'], permission: this.jwtService.Permissions.CanViewAllottedPlots },
               // { label: 'Plot Assesment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassesment'], permission: true },
               { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: true },
               { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: true },
               { label: 'Seed', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/seed'], permission: true },
-              { label: 'Plot Report Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports/:forapproval'], permission: true },
+              { label: 'Plot Report Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
             ]
           }
         ]

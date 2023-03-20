@@ -113,7 +113,6 @@ export class BillMasterService extends ApiHttpService {
     return this.get<LoanTypeViewDto[]>(GET_LOANTYPE_URI);
   }
   public CreateLoanType(loantype: LoanTypeDto){
-    debugger;
     return this.post<LoanTypeDto>(CREATE_LOANTYPE_URI,loantype);
   }
   public UpdateLoanType(loantype: LoanTypeDto){
@@ -122,7 +121,7 @@ export class BillMasterService extends ApiHttpService {
   public GetSubHgl(hglId: number) {
     return this.get<SubHglViewDto[]>(GET_SUBHGL_URI + hglId);
   }
-  
+
   public GetLoanSubTypes(loanTypeId: number) {
   return this.get<LoanSubTypeViewDto[]>(GET_LOANSUBTYPES_URI + loanTypeId);
 }

@@ -103,11 +103,14 @@ export class TptComponent implements OnInit {
     });
   }
 
-  getBranchByBankId(Id: number) {
+  getBranchByBankId(Id: number, edit: boolean = false) {
     this.appMasterService.GetBank(Id).subscribe(resp => {
       if (resp) {
         this.bank = resp as unknown as BankDto;
         this.branches = this.bank.branches as unknown as BranchDto[];
+        if (edit) {
+          this.getIFSCByBranch(this.fbTpt.value.branchId);
+        }
       }
     });
   }
@@ -168,6 +171,7 @@ export class TptComponent implements OnInit {
   }
 
   addTptDetail() {
+    this.branches = [];
     this.showTptDetails = true;
     this.faTptDetails().push(this.generateRow());
     this.loadingTptDetails = false;
@@ -191,10 +195,7 @@ export class TptComponent implements OnInit {
 
   editTpt(tpt: TptViewDto) {
     this.initTptDetails(tpt.tptId);
-    this.getBranchByBankId(tpt.bankId || 0);
-    setTimeout(() => {
-      this.getIFSCByBranch(tpt.branchId || 0);
-    }, 5000);
+    this.getBranchByBankId(tpt.bankId || 0, true);
     // this.getIFSCByBranch(tpt.branchId || 0);
     this.tpt.tptId = tpt.tptId;
     this.tpt.code = tpt.code;
@@ -220,7 +221,7 @@ export class TptComponent implements OnInit {
     this.tpt.accountNo = tpt.accountNo;
     this.tpt.isActive = tpt.isActive;
     this.tpt.tptdetails = this.tptDetails ? [] : this.tptDetails;
-    this.fbTpt.setValue(this.tpt);
+    this.fbTpt.patchValue(this.tpt);
     this.addFlag = false;
     this.submitLabel = "Update TPT";
     this.showDialog = true;
