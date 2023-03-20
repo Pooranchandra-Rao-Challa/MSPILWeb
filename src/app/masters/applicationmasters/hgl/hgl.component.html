@@ -12,7 +12,7 @@
       </ng-template>
     </p-toolbar>
     <!-- table -->
-    <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+    <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
@@ -532,7 +532,7 @@
                   </div>
                   
                   <div class="col-12" formArrayName="subHgls" *ngIf="showSubHgl">
-                    <p-table #dt2 [value]="faSubHgl().controls" dataKey="id" [rows]="10" [loading]="loading"
+                    <p-table #dt2 [value]="faSubHgl().controls" dataKey="id" [rows]="10"
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false"  [autoLayout]="true"
                       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">

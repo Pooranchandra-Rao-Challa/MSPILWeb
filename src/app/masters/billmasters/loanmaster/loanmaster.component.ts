@@ -23,7 +23,6 @@ export class LoanMasterComponent implements OnInit {
   loanTypes: LoanTypeViewDto[] = [];
   loanType: LoanTypeDto = new LoanTypeDto();
   loanSubTypes: LoanSubTypeViewDto[] = [];
-  loading: boolean = true;
   loadingLoanType: boolean = true;
   globalFilterFields: string[] = ['code', 'categoryId', 'categoryName', 'name', 'interestRate', 'priority', 'glCode', 'subGLcode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy',];
   @ViewChild('filter') filter!: ElementRef;

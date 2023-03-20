@@ -23,7 +23,6 @@ export class HglComponent implements OnInit {
   hgls: HglViewDto[] = [];
   hgl: HglDto = new HglDto();
   subHgls: SubHglViewDto[] = [];
-  loading: boolean = true;
   globalFilterFields: string[] = [
     'code',
     'name',
@@ -124,7 +123,6 @@ export class HglComponent implements OnInit {
   inithgls() {
     this.appMasterService.GetHgls().subscribe((resp) => {
       this.hgls = resp as unknown as HglViewDto[];
-      this.loading = false;
     });
   }
 
@@ -135,7 +133,6 @@ export class HglComponent implements OnInit {
       this.subHgls.forEach((subHgl) => {
         this.faSubHgl().push(this.generateRow(subHgl));
       });
-      this.loading = false;
     });
   }
 

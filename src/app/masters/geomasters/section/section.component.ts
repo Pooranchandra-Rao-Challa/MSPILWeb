@@ -44,7 +44,6 @@ export class SectionComponent implements OnInit {
   sections: SectionsViewDto[] = [];
   section: SectionDto = new SectionDto();
   states: StateDto[] = [];
-  loading: boolean = true;
   fbsections!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -106,7 +105,7 @@ export class SectionComponent implements OnInit {
   initSections() {
     this.geoMasterService.GetSections().subscribe((resp) => {
       this.sections = resp as unknown as SectionsViewDto[];
-      this.loading = false;
+    
     });
   }
   initCircles(divisionId: any) {

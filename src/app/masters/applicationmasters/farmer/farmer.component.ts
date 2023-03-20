@@ -27,7 +27,6 @@ export class FarmerComponent implements OnInit {
     dialog: boolean = false;
     farmers: FarmersViewDto[] = [];
     farmer: FarmerDto = new FarmerDto();
-    loading: boolean = true;
     fbfarmers!: FormGroup;
     filter: any;
     valSwitch: boolean = true;
@@ -117,7 +116,6 @@ export class FarmerComponent implements OnInit {
     initFarmers() {
         this.appmasterservice.GetFarmers().subscribe((resp) => {
             this.farmers = resp as unknown as FarmersViewDto[]
-            this.loading = false;
         })
     }
     get FormControls() {
