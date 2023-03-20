@@ -55,7 +55,7 @@ export class DieselBunkComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
       address: new FormControl('', [Validators.required, Validators.pattern(RG_ADDRESS)]),
       pinCode: new FormControl('', [Validators.required, Validators.pattern(RG_PINCODE)]),
-      phoneNo: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
+      phoneNo: new FormControl(null, [Validators.required, Validators.pattern(RG_PHONE_NO)]),
       email: new FormControl('', [Validators.pattern(RG_EMAIL)]),
       gLcode: [''],
       subGLcode: [''],

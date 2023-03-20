@@ -28,7 +28,7 @@ export class AppMenuComponent implements OnInit {
       case 'Bill Masters':
         return this.jwtService.Permissions.CanViewBills || this.jwtService.Permissions.CanViewBillParameters
           || this.jwtService.Permissions.CanViewDieselBunks || this.jwtService.Permissions.CanViewDieselRates
-          || this.jwtService.Permissions.CanViewDistanceRates || this.jwtService.Permissions.CanViewLoanMasters
+          || this.jwtService.Permissions.CanViewDistanceRates || this.jwtService.Permissions.CanViewLoanTypes
           || this.jwtService.Permissions.CanViewVillageParamRates || this.jwtService.Permissions.CanViewVillagetptRates
           || this.jwtService.Permissions.CanViewWareHouses
       case 'Application Masters':
@@ -111,7 +111,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                   { label: 'Bills', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billmaster'], permission: this.jwtService.Permissions.CanViewBills },
                   { label: 'Bill Parameters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/billparameters'], permission: this.jwtService.Permissions.CanViewBillParameters },
-                  { label: 'Loan Masters', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'], permission: this.jwtService.Permissions.CanViewLoanMasters },
+                  { label: 'Loan Types', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/loanmaster'], permission: this.jwtService.Permissions.CanViewLoanTypes },
                   { label: 'Diesel Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/dieselrates'], permission: this.jwtService.Permissions.CanViewDieselRates },
                   { label: 'Distance Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/distancerateslab'], permission: this.jwtService.Permissions.CanViewDistanceRates },
                   { label: 'Village Param Rates', icon: 'pi pi-fw pi-circle', routerLink: ['/billmasters/villageparamrates'], permission: this.jwtService.Permissions.CanViewVillageParamRates },
