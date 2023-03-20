@@ -23,7 +23,7 @@ export class LookupViewDto {
 }
 
 export class LookupDetailDto {
-  lookupDetailId?:number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   lookupId?: number;
@@ -35,11 +35,11 @@ export class LookupDetailDto {
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
-  billParams: BillParameterViewDto[] =[];
+  billParams: BillParameterViewDto[] = [];
 }
 export class LookupDetailViewDto {
   lookupId?: number;
-  lookupDetailId?:number;
+  lookupDetailId?: number;
   code?: string;
   name?: string;
   remarks?: string;
@@ -307,7 +307,7 @@ export class PlantSubTypeDto {
   isActive: boolean = true;
 }
 
-export class SeasonViewDto{
+export class SeasonViewDto {
   seasonId?: number
   code?: string
   name?: string
@@ -408,8 +408,8 @@ export class SeasonBillingRateViewDto {
   seasonName?: string
   billParameterId?: number
   billParameterName?: string
-  billCategoryId?:number
-  billCategoryName?:string
+  billCategoryId?: number
+  billCategoryName?: string
   rate?: number
   priority?: number
   isActive?: boolean
@@ -443,7 +443,7 @@ export class HglViewDto {
   guarantor2?: string
   guarantor3?: string
   branchId?: number
-  bankId?:number
+  bankId?: number
   branchName?: string
   bankName?: string
   ifsc?: string
@@ -519,19 +519,18 @@ export class SubHglViewDto {
 }
 
 
-export class ShiftsViewDto{
-
-    shiftId?: number
-    code?: string
-    name?: string
-    fromTime?: string
-    toTime?: string
-    isNextDay?: boolean
-    isActive?: boolean
-    createdAt?: string
-    createdBy?: string
-    updatedAt?: string
-    updatedBy?: string
+export class ShiftsViewDto {
+  shiftId?: number
+  code?: string
+  name?: string
+  fromTime?: string
+  toTime?: string
+  isNextDay?: boolean
+  isActive?: boolean
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
 }
 
 export class ShiftDto {
@@ -544,8 +543,8 @@ export class ShiftDto {
   name?: string
   fromTime?: string
   toTime?: string
-  strFromTime?:any
-  strToTime?:any
+  strFromTime?: any
+  strToTime?: any
   isNextDay?: boolean
   isActive?: boolean
 }
@@ -568,8 +567,8 @@ export class ToTime {
   seconds?: number
 }
 
-export class SampleslabsViewDto{
-  
+export class SampleslabsViewDto {
+
   sampleSlabId?: number;
   fromArea?: number;
   toArea?: number;
@@ -583,7 +582,7 @@ export class SampleslabsViewDto{
 
 
 
-export class FarmersViewDto{
+export class FarmersViewDto {
   farmerId?: number;
   code?: string;
   farmerName?: string;
@@ -632,7 +631,7 @@ export class FarmersViewDto{
   updatedBy?: string;
 }
 
-export class FarmerDto{
+export class FarmerDto {
   createdBy?: string;
   createdAt?: string;
   updatedBy?: string;

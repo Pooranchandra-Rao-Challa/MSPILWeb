@@ -69,7 +69,7 @@ export class PlotTransfersComponent implements OnInit {
     private AppMasterService: AppMasterService,
     private monitoringService: MonitoringService,
     private LookupService:LookupService,
-   
+
   ) { }
   ngOnInit(): void {
     let currentSeason = '2020-21';
@@ -85,7 +85,7 @@ export class PlotTransfersComponent implements OnInit {
   plotTransferForm() {
     this.fbplotTransfer = this.formbuilder.group({
       plotTransferId:[0],
-      seasonId: ['',(Validators.required)], 
+      seasonId: ['',(Validators.required)],
       plotAssessmentId:[2],
       docNo:  [{ value: '' }],
       docDate:['' ,(Validators.required)],
@@ -99,7 +99,7 @@ export class PlotTransfersComponent implements OnInit {
       isActive: [false],
     });
   }
- 
+
   get FormControls() {
     return this.fbplotTransfer.controls;
   }
@@ -152,7 +152,7 @@ export class PlotTransfersComponent implements OnInit {
   initTofarmers() {
     this.AppMasterService.GetFarmers().subscribe((resp) => {
       this.tofarmers = resp as unknown as FarmersViewDto[];
-  
+
     });
   }
   initPlotTransferReasons(){
@@ -161,12 +161,12 @@ export class PlotTransfersComponent implements OnInit {
       console.log(this.transferResons)
     });
   }
-  
+
   initPlotTransferTypes() {
     this.LookupService.PlotTransferTypes().subscribe((resp) => {
       this.plotTransferTypes = resp as unknown as LookupDetailDto[];
       console.log(this.plotTransferTypes);
-      
+
     });
   }
 
@@ -174,7 +174,7 @@ export class PlotTransfersComponent implements OnInit {
     this.farmers.forEach((value) => {
       if (value.farmerId == farmerId) {
         this.fbplotTransfer.controls['fromFarmerName'].setValue(value.farmerName);
-    
+
 
         console.log(value.farmerName)
       }
@@ -227,14 +227,13 @@ export class PlotTransfersComponent implements OnInit {
     this.fbplotTransfer.patchValue({
       docDate: new Date(plotTransfer.docDate?.toString() + ''),
     });
-   
+
     this.addFlag = false;
     this.submitLabel = 'Update Plot Transfer';
     this.showDialog = true;
   }
 
   savePlotTransfer(): Observable<HttpEvent<any>> {
-    debugger;
     if (this.addFlag) return this.monitoringService.CreatePlotTransfer(this.fbplotTransfer.value)
     else return this.monitoringService.UpdatePlotTransfer(this.fbplotTransfer.value)
   }
@@ -244,7 +243,7 @@ export class PlotTransfersComponent implements OnInit {
     if (this.fbplotTransfer.valid) {
       this.savePlotTransfer().subscribe(resp => {
         if (resp) {
-        
+
           this.fbplotTransfer.reset();
           this.showDialog = false;
         }
@@ -256,7 +255,7 @@ export class PlotTransfersComponent implements OnInit {
 
   }
 
-  
+
 
 
 }
