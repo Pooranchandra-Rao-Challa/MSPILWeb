@@ -20,7 +20,6 @@ export class RolesComponent implements OnInit {
   role: RoleDto = {}
   permissions: RolePermissionDto[] = [];
   screens: string[] = []
-  loading: boolean = true;
   dialog: boolean = false;
   roleForm!: FormGroup;
   submitLabel!: string;
@@ -60,7 +59,6 @@ export class RolesComponent implements OnInit {
   intiRoles() {
     this.securityService.GetRoles().subscribe(resp => {
       this.roles = resp as unknown as RoleViewDto[];
-      this.loading = false;
     });
   }
   initPermissoins() {
