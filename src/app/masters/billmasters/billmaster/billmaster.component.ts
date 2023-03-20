@@ -18,7 +18,6 @@ export class BillMasterComponent implements OnInit {
   bills: BillViewDto[] = [];
   globalFilterFields: string[] = ["billCategoryName", "billNo", "seasonName", "fromDate", "toDate", "runDate", "isFinal", "isActive", "createdAt", "createdBy",
     "updatedAt", "updatedBy"];
-  loading: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   submitLabel!: string;
@@ -53,7 +52,6 @@ export class BillMasterComponent implements OnInit {
   initBills() {
     this.billmasterService.GetBills().subscribe((resp) => {
       this.bills = resp as unknown as BillViewDto[];
-      this.loading = false;
     });
   }
 
