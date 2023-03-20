@@ -85,3 +85,20 @@ div.season-rates-tab-items:not(:first-child) {
 .p-datatable-table {
   min-width:100% !important;
 }
+::ng-deep div.ui-datepicker .ui-timepicker{
+  padding:initial;
+  font-size:smaller;
+}
+.p-datepicker table td > span{
+  width:1.5rem;
+  height:1.5rem;
+}
+.p-datepicker table td{
+  padding:1px;
+}
+.p-datepicker .p-datepicker-header{
+  padding:2px;
+}
+.p-datepicker table{
+  margin:1px 0;
+}
