@@ -117,11 +117,7 @@
           <td class="md:text-center" colspan="50%">No Seasons Data Found.</td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="loadingbody">
-        <tr>
-          <td class="md:text-center" colspan="50%">Loading Seasons Data. Please Wait.</td>
-        </tr>
-      </ng-template>
+  
     </p-table>
     <!-- dialog box -->
     <p-dialog header="Season With Billing Rate" [(visible)]="showDialog" showEffect="fade"
@@ -165,7 +161,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plant From:<sup class="p-error">*</sup></label>
-                    <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="plantFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantFrom'].touched && FormControls['plantFrom'].errors }">
                     </p-calendar>
@@ -176,7 +172,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plant To:<sup class="p-error">*</sup></label>
-                    <p-calendar placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="plantTo" [minDate]="fbseasons.value.plantFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantTo'].touched && FormControls['plantTo'].errors }">
                     </p-calendar>
@@ -193,7 +189,7 @@
 
                   <div class="field col-12 md:col-4">
                     <label>Crush From:<sup class="p-error">*</sup></label>
-                    <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="crushFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushFrom'].touched && FormControls['crushFrom'].errors }">
                     </p-calendar>
@@ -204,7 +200,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Crush To<sup class="p-error">*</sup></label>
-                    <p-calendar placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="crushTo" [minDate]="fbseasons.value.crushFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushTo'].touched && FormControls['crushTo'].errors }">
                     </p-calendar>
