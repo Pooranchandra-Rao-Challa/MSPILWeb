@@ -21,7 +21,6 @@ export class VarietyComponent implements OnInit {
   varietyTypes: any;
   varieties: VarietyViewDto[] = [];
   variety: VarietyDto = new VarietyDto();
-  loading: boolean = true;
   globalFilterFields: string[] = ['varietyName', 'code', 'name', 'plantAge', 'ratoonAge', 'sugarContent', 'plantSuitability', 'isActive', 'createdAt', 'createdBy',
     'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
@@ -52,7 +51,6 @@ export class VarietyComponent implements OnInit {
   initVarieties() {
     this.appMasterService.GetVarieties().subscribe((resp) => {
       this.varieties = resp as unknown as VarietyViewDto[];
-      this.loading = false;
     });
   }
 

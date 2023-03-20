@@ -21,7 +21,6 @@ import { MaxLength } from 'src/app/_models/common';
 export class DieselBunkComponent implements OnInit {
   dieselBunks: DieselBunkViewDto[] = [];
   dieselBunk: DieselBunkDto = new DieselBunkDto();
-  loading: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   fbDieselBunk!: FormGroup;
@@ -44,7 +43,6 @@ export class DieselBunkComponent implements OnInit {
   initDieselBunks() {
     this.billmasterService.GetDieselBunks().subscribe((resp) => {
       this.dieselBunks = resp as unknown as DieselBunkViewDto[];
-      this.loading = false;
     });
   }
 

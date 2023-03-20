@@ -31,7 +31,6 @@ export interface IHeader {
 export class AllottedplotComponent implements OnInit {
   allottedPlots: IAllottedPlotViewDto[] = [];
   allottedPlot: AllottedPlotDto = new AllottedPlotDto();
-  loading: boolean = true;
   globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
   @ViewChild('filter') filter!: ElementRef;
@@ -91,7 +90,6 @@ export class AllottedplotComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetAllottedPlots(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.allottedPlots = resp as unknown as IAllottedPlotViewDto[];
-      this.loading = false;
     });
   }
 

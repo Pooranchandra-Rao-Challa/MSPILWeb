@@ -19,7 +19,6 @@ export class VillageParamRatesComponent implements OnInit {
   villageParamRates: VillageParamRateViewDto[] = [];
   villageParamRate: VillageParamRateDto = new VillageParamRateDto();
   showDialog: boolean = false;
-  loading: boolean = true;
   addFlag: boolean = true;
   globalFilterFields: string[] = ['seasonName', 'divisionName', 'circleName', 'sectionName', 'villageName', 'billParameterName', 'rate', 'isActive',
     'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
@@ -46,7 +45,6 @@ export class VillageParamRatesComponent implements OnInit {
   initVillageParamRates() {
     this.billMasterService.GetVillageParamRates().subscribe((resp) => {
       this.villageParamRates = resp as unknown as VillageParamRateViewDto[];
-      this.loading = false;
     });
   }
 
@@ -54,7 +52,6 @@ export class VillageParamRatesComponent implements OnInit {
     var seasonId = seasonId ? seasonId : 0;
     this.billMasterService.GetVillageParamRatesBySeasonId(seasonId).subscribe((resp) => {
       this.villageParamRates = resp as unknown as VillageParamRateViewDto[];
-      this.loading = false;
     });
   }
 

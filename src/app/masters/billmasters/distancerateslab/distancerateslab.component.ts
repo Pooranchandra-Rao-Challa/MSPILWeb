@@ -18,7 +18,6 @@ export class DistanceRateSlabComponent implements OnInit {
   distanceRates: DistanceRateViewDto[] = [];
   distanceRate: DistanceRateDto = new DistanceRateDto();
   showDialog: boolean = false;
-  loading: boolean = true;
   globalFilterFields: string[] = ['distance', 'rate', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
   fbDistanceRate!: FormGroup;
@@ -38,7 +37,6 @@ export class DistanceRateSlabComponent implements OnInit {
   initDistanceRates() {
     this.billMasterService.GetDistanceRates().subscribe((resp) => {
       this.distanceRates = resp as unknown as DistanceRateViewDto[];
-      this.loading = false;
     });
   }
 

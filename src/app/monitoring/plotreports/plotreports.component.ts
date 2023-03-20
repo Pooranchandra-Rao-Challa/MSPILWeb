@@ -29,7 +29,6 @@ export interface IHeader {
 export class PlotreportsComponent implements OnInit {
   plotReports: IPlotReportViewDto[] = [];
   plotReport: PlotReportDto = new PlotReportDto();
-  loading: boolean = true;
   addFlag: boolean = true;
   globalFilterFields: any;
   @ViewChild('filter') filter!: ElementRef;
@@ -236,11 +235,9 @@ export class PlotreportsComponent implements OnInit {
   }
 
   initPlotReports(seasonId: number) {
-    this.loading = true;
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotReports(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotReports = resp as unknown as IPlotReportViewDto[];
-      this.loading = false;
     });
   }
 
