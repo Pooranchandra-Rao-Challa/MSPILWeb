@@ -136,11 +136,11 @@
                 <div class="field col-12 md:col-6">
                   <label>Code:<sup class="p-error">*</sup></label>
                   <input pInputText id="code" #code type="text" placeholder="Enter Code" formControlName="code"
-                  alphaNumeric [maxlength]="6"
+                    alphaNumeric [maxlength]="6"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                    <div class="text-right">
-                      <small>{{code.value.length}}/6</small>
-                    </div>
+                  <div class="text-right">
+                    <small>{{code.value.length}}/6</small>
+                  </div>
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please Enter Code.</div>
@@ -153,11 +153,11 @@
                 <div class="field col-12 md:col-6">
                   <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
-                  alphaOnly [maxlength]="maxLength.name"
+                    alphaOnly [maxlength]="maxLength.name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                    <div class="text-right">
-                      <small>{{name.value.length}}/{{maxLength.name}}</small>
-                    </div>
+                  <div class="text-right">
+                    <small>{{name.value.length}}/{{maxLength.name}}</small>
+                  </div>
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
@@ -178,8 +178,8 @@
                   <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                       Please Enter Address.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
-                        Address Is Incorrect.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
+                      Address Is Incorrect.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -193,22 +193,25 @@
                   <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
                       Please Enter Pin Code.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['minlength']">
-                        Pin Code Min Length Is 6.</div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['pattern']">
-                          Pin Code Should Not Start With Zero And Contains 6 Digits.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['minlength']">
+                      Pin Code Min Length Is 6.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['pattern']">
+                      Pin Code Should Not Start With Zero And Contains 6 Digits.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Mobile No:</label>
-                  <p-inputMask id="phoneNo" placeholder="Enter Mobile No" mask="(999)-999-9999" formControlName="phoneNo"
+                  <input pInputText id="phoneNo" #phoneNo placeholder="Enter Mobile No" formControlName="phoneNo"
+                    numericOnly [maxlength]="maxLength.phoneNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
-                  </p-inputMask>
+                  <div class="text-right">
+                    <small> {{phoneNo.value.length}}/{{maxLength.phoneNo}} </small>
+                  </div>
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['required']">
                       Please Enter Mobile No.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
-                      Pattern Is Incorrect.</div>
+                      First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -221,7 +224,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>GL Code:</label>
-                  <input pInputText id="gLcode" type="text" placeholder="Enter GL Code" formControlName="gLcode" [maxlength]="6">
+                  <input pInputText id="gLcode" type="text" placeholder="Enter GL Code" formControlName="gLcode"
+                    [maxlength]="6">
                   <div class="text-right">
                     <small>{{code.value.length}}/6</small>
                   </div>
@@ -230,13 +234,14 @@
                   <label>Sub GL Code:</label>
                   <input pInputText id="subGLcode" type="text" placeholder="Enter Sub GL Code"
                     formControlName="subGLcode" [maxlength]="6">
-                    <div class="text-right">
-                      <small>{{code.value.length}}/6</small>
-                    </div>
+                  <div class="text-right">
+                    <small>{{code.value.length}}/6</small>
+                  </div>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate(₹):<sup class="p-error">*</sup></label>
-                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="currency" currency="INR" locale="en-IN"
+                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="currency" currency="INR"
+                    locale="en-IN"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
@@ -255,8 +260,8 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success" [disabled]="fbDieselBunk.invalid"
-            (click)="onSubmit()"></button>
+          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+            [disabled]="fbDieselBunk.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

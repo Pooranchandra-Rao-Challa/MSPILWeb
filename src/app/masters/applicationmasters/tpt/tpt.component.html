@@ -306,13 +306,15 @@
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Phone Number:</label>
-                  <p-inputMask id="phoneNo" #phoneNo placeholder="Enter Phone Number" mask="(999)-999-9999"
-                    formControlName="phoneNo"
+                  <input pInputText id="phoneNo" #phoneNo placeholder="Enter Mobile No" formControlName="phoneNo"
+                    numericOnly [maxlength]="maxLength.phoneNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
-                  </p-inputMask>
+                  <div class="text-right">
+                    <small> {{phoneNo.value.length}}/{{maxLength.phoneNo}} </small>
+                  </div>
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
-                      Phone Number Is Incorrect.</div>
+                      First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
@@ -431,7 +433,7 @@
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Bank:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
-                    formControlName="bankId" (onChange)="getBranchByBankId($event.value)"
+                    formControlName="bankId" (onChange)="getBranchByBankId($event.value)" appendTo="body"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['bankId'].touched && FormControls['bankId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
@@ -442,7 +444,7 @@
                 <div class="field col-12 md:col-4 lg:col-3 xl:col-2">
                   <label>Branch:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches" optionValue="branchId"
-                    formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
+                    formControlName="branchId" (onChange)="getIFSCByBranch($event.value)" appendTo="body">
                   </p-dropdown>
                   <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
                     <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
