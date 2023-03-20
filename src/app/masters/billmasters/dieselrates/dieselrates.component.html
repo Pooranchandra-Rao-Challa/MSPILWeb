@@ -107,7 +107,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
-                  <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                  <p-calendar appendTo="body" placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
                     formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
-                  <p-calendar placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                  <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
                     formControlName="toDate" mask="99/99/9999" [minDate]="fbDieselRate.value.fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
