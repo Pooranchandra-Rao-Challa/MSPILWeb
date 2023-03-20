@@ -37,7 +37,6 @@ export class LoginComponent {
     }
 
     onSubmit() {
-        debugger
         this.submitted = true;
         this.accountService.Authenticate(this.loginForm.value as LoginModel)
         .subscribe(
@@ -45,7 +44,7 @@ export class LoginComponent {
             setTimeout(() => {
                 this.router.navigate(['dashboard']);
             }, 1000);
-            
+
         },
           (error) => {
             console.log(error);

@@ -48,7 +48,6 @@ export class VillageComponent implements OnInit {
   village: VillageDto = {};
   selectedVillage: VillagesViewDto = {};
   states: StateDto[] = [];
-  loading: boolean = true;
   fbvillages!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -175,7 +174,6 @@ export class VillageComponent implements OnInit {
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
-      this.loading = false;
     });
   }
 
@@ -200,7 +198,7 @@ export class VillageComponent implements OnInit {
   initDistricts(stateId: any) {
     this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {
       this.districts = resp as unknown as DistrictDto[];
-    });
+    }); 
   }
 
   onClose() {

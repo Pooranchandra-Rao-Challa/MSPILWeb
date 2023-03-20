@@ -40,7 +40,6 @@ export class CirclesComponent implements OnInit {
   dialog: boolean = false;
   circles: CirclesViewDto[] = [];
   circle: CircleDto = new CircleDto();
-  loading: boolean = true;
   fbcircles!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -93,7 +92,6 @@ export class CirclesComponent implements OnInit {
   initCircles() {
     this.geoMasterService.GetCircles().subscribe((resp) => {
       this.circles = resp as unknown as CirclesViewDto[];
-      this.loading = false;
     });
   }
   editProduct(circle: CirclesViewDto) {

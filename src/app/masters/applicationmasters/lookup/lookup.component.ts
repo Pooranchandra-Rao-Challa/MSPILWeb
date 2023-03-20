@@ -1,12 +1,14 @@
 import { HttpEvent } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } from 'src/app/_models/applicationmaster';
+import { MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_2, MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY} from 'src/app/_shared/regex';
 
 
 
@@ -16,12 +18,11 @@ import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'sr
 
 })
 export class LookupComponent implements OnInit {
-
+  @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   lookups: LookupViewDto[] = [];
   lookupDetails: LookupDetailViewDto = new LookupDetailViewDto();
   lookup: LookUpHeaderDto = new LookUpHeaderDto();
-  filter: any;
   dataShown: boolean = false;
   ShowlookupDetails: boolean = false;
   addfields: any;
@@ -31,8 +32,11 @@ export class LookupComponent implements OnInit {
   addFlag: boolean = true;
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
+
   constructor(private formbuilder: FormBuilder,
-    private appMasterService: AppMasterService,) { }
+    private appMasterService: AppMasterService,
+    private alertMessage: AlertMessage) { }
 
   get FormControls() {
     return this.fblookup.controls;
@@ -46,6 +50,7 @@ export class LookupComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
   addLookupDialog() {
+   this.addLookupDetails();
     this.submitLabel = "Add Lookup";
     this.addFlag = true;
     this.showDialog = true;
@@ -59,8 +64,8 @@ export class LookupComponent implements OnInit {
     this.addfields = []
     this.fblookup = this.formbuilder.group({
       lookUpId: [null],
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [true],
       lookUpDetails: this.formbuilder.array([]),
     });
@@ -79,10 +84,10 @@ export class LookupComponent implements OnInit {
     return this.formbuilder.group({
       lookupId: [lookupDetail.lookupId],
       lookupDetailId: [lookupDetail.lookupDetailId],
-      code: new FormControl(lookupDetail.code, [Validators.required, Validators.maxLength(MAX_LENGTH_20)]),
-      name: [lookupDetail.name, (Validators.required)],
-      remarks: [lookupDetail.remarks],
-      listingorder: [lookupDetail.listingorder, (Validators.required)],
+      code: new FormControl(lookupDetail.code, [Validators.required,Validators.pattern(RG_ALPHA_NUMERIC),]),
+      name:new FormControl(lookupDetail.name, [Validators.required,Validators.minLength(MIN_LENGTH_2)]),
+      remarks:new FormControl (lookupDetail.remarks,[Validators.pattern(RG_ALPHA_NUMERIC),Validators.minLength(MIN_LENGTH_2)]),
+      listingorder: new FormControl (lookupDetail.listingorder,[Validators.required,Validators.minLength(MAX_LENGTH_2),]),
       isActive: [lookupDetail.isActive],
     })
   }
@@ -106,6 +111,7 @@ export class LookupComponent implements OnInit {
           this.GetLookUp();
           this.onClose();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMLU001" : "SMAMLU002"]);
         }
       })
     }

@@ -8,11 +8,11 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addHgl()"></button>
+          (click)="addHgl()" (click)="addSubHgl()"></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->
-    <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+    <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
@@ -320,13 +320,18 @@
                   </div>
 
                   <div class="field col-12 md:col-3">
-                    <label>Phone Number:</label>
-                    <p-inputMask id="phoneNo" mask="(999)-999-9999" formControlName="phoneNo"  placeholder=" Enter Phone Number"
+                    <label>Mobile No:</label>
+                    <input pInputText id="phoneNo" #phoneNo placeholder="Enter Mobile No" formControlName="phoneNo"
+                      numericOnly [maxlength]="maxLength.phoneNo"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
-                    </p-inputMask>
+                    <div class="text-right">
+                      <small> {{phoneNo.value.length}}/{{maxLength.phoneNo}} </small>
+                    </div>
                     <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['required']">
+                        Please Enter Mobile No.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
-                        Phone Number Is In Correct.</div>
+                        First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                     </span>
                   </div>
 
@@ -365,27 +370,23 @@
   
                   <div class="field col-12 md:col-3">
                     <label>Aadhaar No:</label>
-                    <input pInputText id="aadhaarNo"  placeholder=" Enter Aadhaar No"  #aadhaarNo formControlName="aadhaarNo"   maxlength="12"
+                    <input pInputText id="aadhaarNo" #aadhaarNo placeholder=" Enter Aadhaar No"  formControlName="aadhaarNo"   maxlength="12"
                     [maxlength]="maxLength.aadhaarNo" numericOnly
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
+      
                     <div class="text-right">
                       <small> {{aadhaarNo.value.length}}/{{maxLength.aadhaarNo}} </small>
                     </div>
-                        <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
-                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
-                            Please Enter AadhaarNo</div>
-                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['minlength']">
-                            AadhaarNo Number Min Length Is 12.</div>
-                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
-                            AadhaarNo Number Contains Only Characters And Integers.</div>
-                        </span>
-
-
-                       
+                    <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
+                        Please Enter Aadhaar No.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['minlength']">
+                        Aadhaar No Min Length Is 12.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
+                        Please Enter Valid Aadhaar No.</div>
+                    </span>
                        
                   </div>
-  
-                  
                 <div class="field col-12 md:col-3">
                   <label>Guarantor1:</label>
                   <input pInputText id="guarantor1"  type="text" placeholder=" Enter Guarantor1" formControlName="guarantor1"
@@ -531,7 +532,7 @@
                   </div>
                   
                   <div class="col-12" formArrayName="subHgls" *ngIf="showSubHgl">
-                    <p-table #dt2 [value]="faSubHgl().controls" dataKey="id" [rows]="10" [loading]="loading"
+                    <p-table #dt2 [value]="faSubHgl().controls" dataKey="id" [rows]="10"
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false"  [autoLayout]="true"
                       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
@@ -562,7 +563,7 @@
                             <input pInputText class="form-control" type="number" placeholder=" Enter No Of Persons" formControlName="noOfPersons">
                           </td>
       
-                          <td>
+                          <td *ngIf="fbHgl.controls['subHgls'].value.length > 1">
                             <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
                               *ngIf="!this.faSubHgl().controls[subHglIndex].get('hglId')?.value"
                               (click)="faSubHgl().removeAt(subHglIndex)"></i>

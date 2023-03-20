@@ -11,6 +11,8 @@ import { HttpEvent } from '@angular/common/http';
 import { LoanTypeViewDto, LoanTypeDto, LoanSubTypeViewDto, } from '../../../_models/billingmaster';
 import { BillMasterService } from '../../../_services/billmaster.service';
 import { MaxLength } from 'src/app/_models/common';
+import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { AlertMessage } from '../../../_alerts/alertMessage';
 
 @Component({
   selector: 'app-loanmaster',
@@ -21,7 +23,6 @@ export class LoanMasterComponent implements OnInit {
   loanTypes: LoanTypeViewDto[] = [];
   loanType: LoanTypeDto = new LoanTypeDto();
   loanSubTypes: LoanSubTypeViewDto[] = [];
-  loading: boolean = true;
   loadingLoanType: boolean = true;
   globalFilterFields: string[] = ['code', 'categoryId', 'categoryName', 'name', 'interestRate', 'priority', 'glCode', 'subGLcode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy',];
   @ViewChild('filter') filter!: ElementRef;
@@ -39,7 +40,8 @@ export class LoanMasterComponent implements OnInit {
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService,
-    private BillMasterService: BillMasterService
+    private BillMasterService: BillMasterService,
+    private alertMessage:AlertMessage
   ) {
     this.defaults = [
       { name: 'Yes', id: true },
@@ -179,6 +181,7 @@ export class LoanMasterComponent implements OnInit {
           this.initLoanTypes();
           this.loanTypesForm();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMLM001" : "SMBMLM002"]);
         }
       });
     } else {

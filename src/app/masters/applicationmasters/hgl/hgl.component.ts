@@ -1,6 +1,6 @@
 import { BankDto, BranchDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, } from './../../../_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, RG_AADHAAR, } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
@@ -9,8 +9,7 @@ import { FormGroup, FormBuilder, FormControl, FormArray, Validators, } from '@an
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { HglViewDto, SubHglViewDto, HglDto, } from '../../../_models/applicationmaster';
-import { TRISTATECHECKBOX_VALUE_ACCESSOR } from 'primeng/tristatecheckbox';
+import { HglViewDto, SubHglViewDto, HglDto, } from '../../../_models/applicationmaster'
 import { MaxLength } from 'src/app/_models/common';
 import { MIN_LENGTH_6 } from '../../../_shared/regex';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
@@ -24,7 +23,6 @@ export class HglComponent implements OnInit {
   hgls: HglViewDto[] = [];
   hgl: HglDto = new HglDto();
   subHgls: SubHglViewDto[] = [];
-  loading: boolean = true;
   globalFilterFields: string[] = [
     'code',
     'name',
@@ -109,7 +107,7 @@ export class HglComponent implements OnInit {
       bankId:['', Validators.required],
       branchId: ['', Validators.required],
       accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
-      aadhaarNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_AADHAAR)]),
+      aadhaarNo: new FormControl('', [ Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
       isActive: [true],
       subHgls: this.formbuilder.array([]),
     });
@@ -125,7 +123,6 @@ export class HglComponent implements OnInit {
   inithgls() {
     this.appMasterService.GetHgls().subscribe((resp) => {
       this.hgls = resp as unknown as HglViewDto[];
-      this.loading = false;
     });
   }
 
@@ -136,7 +133,6 @@ export class HglComponent implements OnInit {
       this.subHgls.forEach((subHgl) => {
         this.faSubHgl().push(this.generateRow(subHgl));
       });
-      this.loading = false;
     });
   }
 
@@ -232,6 +228,7 @@ export class HglComponent implements OnInit {
     this.showSubHgl = true;
   }
   addHgl() {
+    this.addSubHgl();
     this.submitLabel = 'Add Hgl';
     this.addFlag = true;
     this.hglform();

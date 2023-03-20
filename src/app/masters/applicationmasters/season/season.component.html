@@ -8,11 +8,11 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Season" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addSeason()"></button>
+          (click)="addSeason()" (onChange)="handleBillCategoryChange($event)" ></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->
-    <p-table #dt1 [value]="seasons" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+    <p-table #dt1 [value]="seasons" dataKey="id" [rows]="10"  [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
