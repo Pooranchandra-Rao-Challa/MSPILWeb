@@ -14,7 +14,7 @@ import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 @Component({
   selector: 'app-sampleslab',
   templateUrl: './sampleslab.component.html',
-  providers: [MessageService, ConfirmationService]
+  // providers: [MessageService, ConfirmationService]
 })
 export class SampleslabsComponent implements OnInit {
   dialog: boolean = false;

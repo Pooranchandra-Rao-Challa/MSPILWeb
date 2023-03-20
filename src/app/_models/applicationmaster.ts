@@ -544,6 +544,8 @@ export class ShiftDto {
   name?: string
   fromTime?: string
   toTime?: string
+  strFromTime?:any
+  strToTime?:any
   isNextDay?: boolean
   isActive?: boolean
 }

@@ -15,7 +15,7 @@ import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 @Component({
     selector: 'app-shift',
     templateUrl: './shift.component.html',
-    providers: [MessageService, ConfirmationService]
+    // providers: [MessageService, ConfirmationService]
 })
 export class ShiftsComponent implements OnInit {
 
@@ -72,8 +72,8 @@ export class ShiftsComponent implements OnInit {
         this.shift.name = shifts.name;
         this.shift.isActive = shifts.isActive;
         this.shift.isNextDay = shifts.isNextDay;
-        this.shift.fromTime= shifts.fromTime
-        this.shift.toTime = shifts.toTime;
+        this.shift.strFromTime= new Date(shifts.fromTime?.toString() + "");
+        this.shift.strToTime = new Date(shifts.toTime?.toString() + "");
         this.fbshifts.setValue(this.shift);
         this.submitLabel = "Update Shift";
         this.addFlag = false;
