@@ -174,15 +174,20 @@
                 <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-3">
-                      <label>Phone Number:</label>
-                  <p-inputMask id="phoneNo" placeholder="Enter Phone Number" mask="(999)-999-9999"
-                    formControlName="phoneNo"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
-                  </p-inputMask>
-                  <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
-                      Phone Number Is Incorrect.</div>
-                  </span>
+                      <label>Mobile No:</label>
+                    <input pInputText id="phoneNo" #phoneNo placeholder="Enter Mobile No" formControlName="phoneNo"
+                      numericOnly [maxlength]="maxLength.phoneNo"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
+                    <div class="text-right">
+                      <small> {{phoneNo.value.length}}/{{maxLength.phoneNo}} </small>
+                    </div>
+                    <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['required']">
+                        Please Enter Mobile No.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
+                        First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
+                    </span>
+                
                       
                     </div>
                     <div class="field col-12 md:col-3">

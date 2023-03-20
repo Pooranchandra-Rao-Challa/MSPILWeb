@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Season" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addSeason()"></button>
+          (click)="addSeason()" (onChange)="handleBillCategoryChange($event)" ></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->

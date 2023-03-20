@@ -150,6 +150,10 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Vehicle Message
   'SMAMVE001': 'Vehicle Added Successfully',
   'SMAMVE002': 'Vehicle Updated Successfully',
+
+  //Loan Types
+   'SMBMLM001': 'Loan Type Rate Added Successfully',
+   'SMBMLM002': 'Loan Type Rate Updated Successfully',
  
   // Bank
 
