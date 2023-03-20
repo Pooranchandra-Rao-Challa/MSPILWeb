@@ -82,3 +82,6 @@ div.season-rates-tab-items:not(:first-child) {
   height: 100%;
   background-color: rgba(0, 0, 0, .2);
 }
+.p-datatable-table {
+  min-width:100% !important;
+}

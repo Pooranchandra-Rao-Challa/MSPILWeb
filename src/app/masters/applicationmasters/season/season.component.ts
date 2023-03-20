@@ -33,7 +33,7 @@ interface Temp {
 export class SeasonComponent implements OnInit {
   seasons: SeasonViewDto[] = [];
   season: SeasonDto = new SeasonDto();
-  loading: boolean = false;
+
   globalFilterFields: string[] = ['code', 'name', 'plantFrom', 'plantTo', 'crushFrom', 'crushTo', 'burnCaneRate', 'caneRate', 'capacity', 'createdAt', 'isActive', 'createdBy', 'updatedAt', 'updatedBy',]
   @ViewChild('filter') filter!: ElementRef;
   fbseasons!: FormGroup;
@@ -66,7 +66,6 @@ export class SeasonComponent implements OnInit {
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
-      this.loading = false;
       this.seasons.forEach(
         season => {
           season.plantFrom = new Date(season.plantFrom)

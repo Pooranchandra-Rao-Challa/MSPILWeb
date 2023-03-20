@@ -24,7 +24,6 @@ import { AlertMessage } from '../../../_alerts/alertMessage';
 export class WareHouseComponent implements OnInit {
   warehouses: WareHouseViewDto[] = [];
   warehouse: WareHouseDto = new WareHouseDto();
-  loading: boolean = true;
   filter: any;
   showDialog: boolean = false;
   fbwarehouse!: FormGroup;
@@ -48,7 +47,6 @@ export class WareHouseComponent implements OnInit {
     this.billmasterService.GetWareHouse().subscribe((resp) => {
       this.warehouses = resp as unknown as WareHouseViewDto[];
       console.log(this.warehouses);
-      this.loading = false;
     });
   }
   addwarehouse() {

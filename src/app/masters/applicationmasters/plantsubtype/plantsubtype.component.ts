@@ -1,10 +1,12 @@
 import { HttpEvent } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { PlantSubTypeDto, PlantSubTypeViewDto, plantTypeDto } from 'src/app/_models/applicationmaster';
+import { MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
@@ -17,6 +19,7 @@ import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src
   ]
 })
 export class PlantsubtypeComponent implements OnInit {
+  @ViewChild('filter') filter!: ElementRef;
   fbplantsubtype!: FormGroup;
   showDialog: boolean = false;
   plantSubTypes: PlantSubTypeViewDto[] = [];
@@ -25,10 +28,12 @@ export class PlantsubtypeComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   loading: boolean = true;
-  filter: any;
   mediumDate: string = MEDIUM_DATE;
+  maxLength: MaxLength = new MaxLength();
+
   constructor(private formbuilder: FormBuilder,
-    private appMasterService: AppMasterService,) { }
+    private appMasterService: AppMasterService,
+    private alertMessage: AlertMessage) { }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -90,6 +95,7 @@ export class PlantsubtypeComponent implements OnInit {
           this.PlantSubType();
           this.onClose();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMPST001" : "SMAMPST002"]);
         }
       })
     }
@@ -114,7 +120,7 @@ export class PlantsubtypeComponent implements OnInit {
     this.submitLabel = "Update Plant Sub Type";
     this.showDialog = true;
   }
-
+  
   ngOnDestroy() {
     this.plantSubTypes = [];
     this.plantSubType = new PlantSubTypeDto();
