@@ -8,6 +8,8 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { SampleSlabDto, SampleslabsViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { MIN_LENGTH_2, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-sampleslab',
@@ -31,6 +33,7 @@ export class SampleslabsComponent implements OnInit {
     private appmasterservice: AppMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
+    private alertMessage:AlertMessage
   ) {
 
   }
@@ -57,9 +60,9 @@ export class SampleslabsComponent implements OnInit {
 
     this.fbsampleslabs = this.formbuilder.group({
       sampleSlabId: [0],
-      toArea: new FormControl('', [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
+      toArea:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       fromArea: new FormControl({ value: this.maxAreaThatUsedInRecods, disabled: true }, [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
-      noOfSample: new FormControl({ value: this.lastSampleSize, disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/)]),
+      noOfSample: new FormControl({ value: this.lastSampleSize, disabled: true }, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [Validators.required],
 
     });
@@ -108,6 +111,7 @@ export class SampleslabsComponent implements OnInit {
           this.initSampleslabs();
           this.onClose();
           this.dialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMSS001" : "SMAMSS002"]);
         }
       })
     }

@@ -66,8 +66,8 @@ export class AlertMessage {
  * Banks
  * Vehicles : VE
  * Lookups
- * Shift
- * Sample Slabs
+ * Shift:SH
+ * Sample Slabs:SS
  *
  * -------------------------------------
  * If the screens has more funcitonal items then
@@ -98,6 +98,14 @@ export const ALERT_CODES: { [key: string]: string } = {
   //Seasons Message
   'SMAMSE001': 'Season Added Successfully',
   'SMAMSE002': 'Season Updated Successfully',
+
+  //Sample Slab Message
+  'SMAMSS001': 'Shift Added Successfully',
+  'SMAMSS002': 'Shift Updated Successfully',
+
+  //Shift Message
+  'SMAMSH001': 'Shift Added Successfully',
+  'SMAMSH002': 'Shift Updated Successfully',
 
    // HGLs Message
    'SMAMHG001': 'HGL Added Successfully',

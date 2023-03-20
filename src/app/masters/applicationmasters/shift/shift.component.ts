@@ -10,6 +10,7 @@ import { ShiftDto, ShiftsViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { MAX_LENGTH_20, MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
     selector: 'app-shift',
@@ -32,6 +33,7 @@ export class ShiftsComponent implements OnInit {
         private appmasterservice: AppMasterService,
         private commonService: CommonService,
         public jwtService: JWTService,
+        private alertMessage:AlertMessage
     ) {
 
     }
@@ -108,6 +110,7 @@ debugger
                     this.initShifts();
                     this.onClose();
                     this.dialog = false;
+                    this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMSH001" : "SMAMSH002"]);
                 }
             })
         }
