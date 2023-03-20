@@ -10,11 +10,11 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-mandal',
   templateUrl: './mandal.component.html',
-  providers: [MessageService, ConfirmationService]
 })
 export class MandalComponent implements OnInit {
   display: boolean = false;
@@ -33,7 +33,7 @@ export class MandalComponent implements OnInit {
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-  ) { }
+    private alertMessage: AlertMessage) { }
 
   InitMandal() {
     this.mandal = new MandalDto();
@@ -55,7 +55,7 @@ export class MandalComponent implements OnInit {
 
     this.fbmandals = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       districtId:[null, [Validators.required]],
       mandalId: [0],
       isActive: new FormControl(true, Validators.required),
@@ -103,6 +103,7 @@ export class MandalComponent implements OnInit {
           this.initMandals();
           this.onClose();
           this.display = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMGMM001" : "SMGMM002"]);
         }
       })
     }

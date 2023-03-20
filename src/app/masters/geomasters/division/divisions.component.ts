@@ -11,11 +11,12 @@ import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ADDRESS, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-division',
   templateUrl: './divisions.component.html',
-  providers: [MessageService, ConfirmationService]
+
 })
 export class DivisionsComponent implements OnInit {
   valSwitch: boolean = false;
@@ -36,7 +37,7 @@ export class DivisionsComponent implements OnInit {
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-  ) { }
+    private alertMessage: AlertMessage) { }
 
   InitDivision() {
     this.division = new DivisionDto();
@@ -57,9 +58,9 @@ export class DivisionsComponent implements OnInit {
     this.fbdivisions = this.formbuilder.group({
       divisionId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      inchargeName: new FormControl('',[Validators.pattern(RG_ALPHA_ONLY)]),
+      inchargeName: new FormControl('',[Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       listingOrder: new FormControl(null,[Validators.required]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       inchargePhoneNo: new FormControl('',[Validators.pattern(RG_PHONE_NO)]),
       address: new FormControl(null, [Validators.required,Validators.pattern(RG_ADDRESS)]),
       isActive: new FormControl(true, Validators.required),
@@ -105,6 +106,7 @@ export class DivisionsComponent implements OnInit {
           this.initDivisions();
           this.onClose();
           this.display = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMGMDIV001" : "SMGMDIV002"]);
         }
       })
     }
