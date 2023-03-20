@@ -10,11 +10,11 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-district',
   templateUrl: './district.component.html',
-  providers: [MessageService, ConfirmationService]
 })
 export class DistrictComponent implements OnInit {
   valSwitch: boolean = true;
@@ -33,7 +33,7 @@ export class DistrictComponent implements OnInit {
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-  ) { }
+    private alertMessage: AlertMessage) { }
 
   InitDistrict() {
     this.district = new DistrictDto();
@@ -54,7 +54,7 @@ export class DistrictComponent implements OnInit {
     })
     this.fbdistricts = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       stateId: [null, (Validators.required)],
       districtId: [null],
       isActive: [true]
@@ -102,6 +102,7 @@ export class DistrictComponent implements OnInit {
           this.initDistricts();
           this.onClose();
           this.display = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMGMDIS001" : "SMGMDIS002"]);
         }
       })
     }

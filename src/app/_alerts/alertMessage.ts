@@ -7,7 +7,7 @@ export class AlertMessage {
   constructor(private service: MessageService) { }
 
   displayAlertMessage(message: string) {
-    this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: message, life:30000 });
+    this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: message, life: 30000 });
   }
 
 }
@@ -91,7 +91,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
 
- 
+
 
   //Application Master => 
 
@@ -107,26 +107,38 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMAMSH001': 'Shift Added Successfully',
   'SMAMSH002': 'Shift Updated Successfully',
 
-   // HGLs Message
-   'SMAMHG001': 'HGL Added Successfully',
-   'SMAMHG002': 'HGL Updated Successfully',
-   //Farmers
-   'SMAMFA001': 'Farmer Added Successfully',
-   'SMAMFA002': 'Farmer Updated Successfully',
+  // HGLs Message
+  'SMAMHG001': 'HGL Added Successfully',
+  'SMAMHG002': 'HGL Updated Successfully',
+  //Farmers
+  'SMAMFA001': 'Farmer Added Successfully',
+  'SMAMFA002': 'Farmer Updated Successfully',
 
-   //Geo Master => 
+  //Geo Master => 
+  //State
+  'SMGMST001': 'State Added Successfully',
+  'SMGMST002': 'State Updated Successfully',
 
-   //Villages Message
-  'SMMGMVI001':'Village Added Successfully',
-  'SMMGMVI002':'Village Updated Successfully',
+  // Divisions
+  'SMGMDIV001': 'Division Added Successfully',
+  'SMGMDIV002': 'Division Updated Successfully',
+  // Districts
+  'SMGMDIS001': 'District Added Successfully',
+  'SMGMDIS002': 'District Updated Successfully',
+  // Mandals
+  'SMGMM001': 'Mandal Added Successfully',
+  'SMGMM002': 'Mandal Updated Successfully',
+  //Villages Message
+  'SMMGMVI001': 'Village Added Successfully',
+  'SMMGMVI002': 'Village Updated Successfully',
 
-   //Sections Message
-   'SMGMSEC001':'Section Added Successfully',
-   'SMGMSEC002':'Section Updated Successfully',
+  //Sections Message
+  'SMGMSEC001': 'Section Added Successfully',
+  'SMGMSEC002': 'Section Updated Successfully',
 
-    //Circles Circles
-  'SMGMCI001':'Circle Added Successfully',
-  'SMGMCI002':'Circle Updated Successfully',
+  //Circles Circles
+  'SMGMCI001': 'Circle Added Successfully',
+  'SMGMCI002': 'Circle Updated Successfully',
 
 
 
@@ -152,20 +164,23 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMAMVE002': 'Vehicle Updated Successfully',
 
   //Loan Types
-   'SMBMLM001': 'Loan Type Rate Added Successfully',
-   'SMBMLM002': 'Loan Type Rate Updated Successfully',
- 
+  'SMBMLM001': 'Loan Type Rate Added Successfully',
+  'SMBMLM002': 'Loan Type Rate Updated Successfully',
+
   // Bank
 
-  'SMAMBA001':'Bank Added Successfully',
-  'SMAMBA002':'Bank Updated Successfully',
+  'SMAMBA001': 'Bank Added Successfully',
+  'SMAMBA002': 'Bank Updated Successfully',
 
   // planttype
-  'SMAMPT001':'Plant Type Added Successfully',
-  'SMAMPT002':'Plant Type Updated Successfully',
+  'SMAMPT001': 'Plant Type Added Successfully',
+  'SMAMPT002': 'Plant Type Updated Successfully',
+  // plantsubtype
+  'SMAMPST001': 'Plant Sub Type Added Successfully',
+  'SMAMPST002': 'Plant Sub Type Updated Successfully',
+  // Lookup
+  'SMAMLU001': 'Lookup Added Successfully',
+  'SMAMLU002': 'Lookup Updated Successfully',
 
-  //State
-  'SMGMST001':'State Added Successfully',
-  'SMGMST002':'State Updated Successfully',
 
 }

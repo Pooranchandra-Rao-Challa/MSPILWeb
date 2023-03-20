@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="card">
-
+     <p-toast key="tst"></p-toast>
         <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
@@ -22,8 +22,11 @@
                             <div class="p-fluid p-formgrid grid">
                                 <div class="field col-12 md:col-6">
                                     <label>Code:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Code"
+                                    <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Code" #code [maxlength]="20"  alphaNumeric
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                                        <div class="text-right">
+                                            <small>{{code.value.length}}/6</small>
+                                          </div>
                                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['required']">
@@ -35,13 +38,16 @@
                                             Code Min Length Is 2.</div>
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['maxlength']">
-                                            Code Max Length Is 6.</div>
+                                            Code Max Length Is 20.</div>
                                     </span>
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>Name:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="name" type="text" formControlName="name"  placeholder="Enter Name"
+                                    <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Name" #name alphaOnly [maxlength]="maxLength.name"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                                        <div class="text-right">
+                                            <small>{{name.value.length}}/{{maxLength.name}}</small>
+                                          </div>
                                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['name'].errors?.['required']">
@@ -49,6 +55,8 @@
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['name'].errors?.['pattern']">
                                             Name Should Contains Alphabets.</div>
+                                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
+                                                Name Min Length Is 2.</div>
                                     </span>
                                 </div>
                                 <div class="field col-12 md:col-8">
@@ -73,52 +81,76 @@
                             [rowsPerPageOptions]="[10,25,50]">>
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th>Code </th>
-                                    <th>Name</th>
+                                    <th>Code<sup class="p-error">*</sup> </th>
+                                    <th>Name <sup class="p-error">*</sup></th>
                                     <th>Remarks</th>
-                                    <th>Listing Order</th>
-                                    <th>Action</th>
+                                    <th>Listing Order<sup class="p-error">*</sup></th>
+                                    <th *ngIf="fblookup.controls['lookUpDetails'].value.length > 1"></th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
                                 <tr [formGroupName]="lookUpDetailsIndex">
                                     <td>
-                                        <input pInputText class="form-control" formControlName="code" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
+                                        <input pInputText class="form-control" formControlName="code" placeholder="Enter Code" [maxlength]="20"  alphaNumeric
+                                        [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
                                 formArrayControls(lookUpDetailsIndex, 'code')?.errors }">
                                         <span
                                             *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched && formArrayControls(lookUpDetailsIndex,'code')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
                                                 *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['required']">
-                                                Please enter code.</div>
+                                                Please Enter Code.</div>
                                             <div class="ng-invalid ng-touched p-error"
                                                 *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['maxlength']">
-                                                Code should contains maximum 20 letters or integers.</div>
+                                                Code Max Length Is 20 </div>
+                                             <!-- <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['minlength']">
+                                                Code Min Length Is 2.</div> -->
+                                             <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['pattern']">
+                                                Code Should Contains Alphabets & Numbers.</div>
                                         </span>
                                     </td>
                                     <td>
-                                        <input pInputText class="form-control" formControlName="name" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'name')?.touched &&
+                                        <input pInputText class="form-control" formControlName="name" placeholder="Enter Name" alphaNumeric [maxlength]="maxLength.name"
+                                         [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'name')?.touched &&
                                     formArrayControls(lookUpDetailsIndex,'name')?.errors }">
                                         <span
                                             *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.touched &&formArrayControls(lookUpDetailsIndex,'name')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
                                                 *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.errors?.['required']">
-                                                Please enter name.</div>
+                                                Please Enter Name.</div>
+                                                <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.errors?.['minlength']">
+                                                Name Min Length Is 2.</div>
+                                                <!-- <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.errors?.['pattern']">
+                                                Name Should Contains Alphabets & Numbers.</div> -->
                                         </span>
                                     </td>
                                     <td>
-                                        <input pInputText class="form-control" formControlName="remarks">
+                                        <input pInputText class="form-control" formControlName="remarks"  placeholder="Enter Remarks" alphaNumeric  [maxlength]="maxLength.name">
+                                        <div class="ng-invalid ng-touched p-error"
+                                        *ngIf="formArrayControls(lookUpDetailsIndex,'remarks')?.errors?.['minlength']">
+                                        Remarks Min Length Is 2.</div>
+                                        <div class="ng-invalid ng-touched p-error"
+                                        *ngIf="formArrayControls(lookUpDetailsIndex,'remarks')?.errors?.['pattern']">
+                                        Remarks Should Contains Alphabets & Numbers.</div>
                                     </td>
                                     <td>
-                                        <p-inputNumber class="form-control" formControlName="listingorder" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&
+                                        <p-inputNumber class="form-control" formControlName="listingorder"  placeholder="Enter Listing Order" [maxlength]="2"
+                                        [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&
                                     formArrayControls(lookUpDetailsIndex,'listingorder')?.errors }"></p-inputNumber>
                                         <span
                                             *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&formArrayControls(lookUpDetailsIndex,'listingorder')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
                                                 *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.errors?.['required']">
-                                                Please enter listing order.</div>
+                                                Please Enter Listing Order.</div>
+                                                <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.errors?.['maxlength']">
+                                                Listing Order Max Length Is 2.</div>
                                         </span>
                                     </td>
-                                    <td>
+                                    <td  *ngIf="fblookup.controls['lookUpDetails'].value.length > 1">
                                         <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
                                             *ngIf="!this.  falookupDetails().controls[lookUpDetailsIndex].get('lookupId')?.value"
                                             (click)="  falookupDetails().removeAt(lookUpDetailsIndex)"></i>
@@ -134,7 +166,7 @@
             <ng-template pTemplate="footer">
                 <div class="col-12">
                     <div class="col-4" style="float:right">
-                        <button pButton pRipple type="submit" label="{{submitLabel}}"
+                        <button pButton pRipple type="submit" label="{{submitLabel}}"  [disabled]="fblookup.invalid"
                             class="p-button-raised p-button-success" (click)="onSubmit()"></button>
                     </div>
                 </div>
@@ -212,12 +244,12 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td class="md:text-center" colspan="8">No Lookup found.</td>
+                    <td class="md:text-center" colspan="8">No Lookup Found.</td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="loadingbody">
                 <tr>
-                    <td class="md:text-center" colspan="8">Loading lookup data. Please wait.</td>
+                    <td class="md:text-center" colspan="8">Loading lLookup Data. Please Wait.</td>
                 </tr>
             </ng-template>
         </p-table>

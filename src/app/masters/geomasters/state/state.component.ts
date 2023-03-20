@@ -15,7 +15,6 @@ import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 @Component({
   selector: 'app-state',
   templateUrl: './state.component.html',
-  providers: [MessageService, ConfirmationService]
 })
 export class StateComponent implements OnInit {
   display: boolean = false;
@@ -49,7 +48,7 @@ export class StateComponent implements OnInit {
     this.initStates();
     this.fbstates = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       isActive: [true],
       stateId: new FormControl(null),
     });
