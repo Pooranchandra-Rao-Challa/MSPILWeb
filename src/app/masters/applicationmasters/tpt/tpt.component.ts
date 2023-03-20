@@ -24,8 +24,6 @@ export class TptComponent implements OnInit {
   tpts: TptViewDto[] = [];
   tpt: TptDto = new TptDto();
   tptDetails: TptdetailViewDto[] = [];
-  loading: boolean = true;
-  loadingTptDetails: boolean = true;
   globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
     'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   globalFilterFieldsTptDetails: string[] = ['vehicleNo', 'vehicleTypeId', 'insuranceNo', 'receivableAmt', 'receivedAmt', 'gateEntryFreeze', 'transporterFreeze'];
@@ -71,7 +69,6 @@ export class TptComponent implements OnInit {
   initTpts() {
     this.appMasterService.GetTpts().subscribe((resp) => {
       this.tpts = resp as unknown as TptViewDto[];
-      this.loading = false;
     });
   }
 
@@ -87,7 +84,6 @@ export class TptComponent implements OnInit {
       else {
         this.addTptDetail();
       }
-      this.loadingTptDetails = false;
     });
   }
 
@@ -174,7 +170,6 @@ export class TptComponent implements OnInit {
     this.branches = [];
     this.showTptDetails = true;
     this.faTptDetails().push(this.generateRow());
-    this.loadingTptDetails = false;
   }
 
   generateRow(tptDetail: TptdetailViewDto = new TptdetailViewDto()): FormGroup {

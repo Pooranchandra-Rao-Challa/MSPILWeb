@@ -20,21 +20,24 @@ $gutter: 1rem; //for primeflex grid system
   margin: 9px !important;
 }
 
-  .p-dropdown-panel .p-dropdown-items{
-    padding:0px;
-  }
-.p-dialog .p-dialog-header{
-    background-color: var(--surface-ground);
+.p-dropdown-panel .p-dropdown-items {
+  padding: 0px;
 }
-.p-dialog .p-dialog-footer{
+
+.p-dialog .p-dialog-header {
   background-color: var(--surface-ground);
-  padding:0px;
+}
+
+.p-dialog .p-dialog-footer {
+  background-color: var(--surface-ground);
+  padding: 0px;
   // height: calc(100vh - 100px);
   display: block;
   // width: 800px;
 }
-.p-dialog .p-dialog-content{
-  padding-top:10px;
+
+.p-dialog .p-dialog-content {
+  padding-top: 10px;
 }
 
 .p-dropdown-panel .p-dropdown-items {
@@ -45,19 +48,19 @@ $gutter: 1rem; //for primeflex grid system
 //   width: calc(70vw - 120px);
 // }
 
-div.season-rates-tab-items{
+div.season-rates-tab-items {
   padding-top: 60px;
   margin-bottom: -50px;
 }
 
-div.season-rates-tab-items:not(:first-child){
+div.season-rates-tab-items:not(:first-child) {
   padding-top: 5px;
   margin-bottom: -50px;
 }
 
 .progress-spinner {
   position: fixed;
-  z-index: 999999999;
+  z-index: 9999;
   height: 2em;
   width: 2em;
   overflow: show;
@@ -70,15 +73,32 @@ div.season-rates-tab-items:not(:first-child){
 
 /* Transparent Overlay */
 .progress-spinner:before {
-content: '';
-display: block;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0,0,0,0.53);
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .2);
 }
 .p-datatable-table {
   min-width:100% !important;
+}
+::ng-deep div.ui-datepicker .ui-timepicker{
+  padding:initial;
+  font-size:smaller;
+}
+.p-datepicker table td > span{
+  width:1.5rem;
+  height:1.5rem;
+}
+.p-datepicker table td{
+  padding:1px;
+}
+.p-datepicker .p-datepicker-header{
+  padding:2px;
+}
+.p-datepicker table{
+  margin:1px 0;
 }

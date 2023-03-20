@@ -41,7 +41,7 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
     CountryService, CustomerService, EventService, IconService, NodeService,
     PhotoService, ProductService,
     // Application services,

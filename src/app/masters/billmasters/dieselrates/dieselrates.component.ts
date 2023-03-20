@@ -18,7 +18,6 @@ export class DieselRatesComponent implements OnInit {
   globalFilterFields: string[] = ['fromDate', 'toDate', 'rate', 'isActive', 'createdAt', 'createdByUser', 'updatedAt', 'updatedByUser'];
   dieselRates: DieselRateViewDto[] = [];
   dieselRate: DieselRateDto = new DieselRateDto();
-  loading: boolean = false;
   addFlag: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;

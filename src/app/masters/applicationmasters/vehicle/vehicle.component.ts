@@ -20,7 +20,6 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 export class VehicleComponent implements OnInit {
   vehicleTypes: VehicleTypeViewDto[] = [];
   vehicleType: VehicleTypeDto = new VehicleTypeDto();
-  loading: boolean = true;
   globalFilterFields: string[] = ['code', 'name', 'capacity', 'billingCapacity', 'bindingCane', 'badCane', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
   fbVehicleType!: FormGroup;
@@ -42,7 +41,6 @@ export class VehicleComponent implements OnInit {
   initVehicleTypes() {
     this.appMasterService.GetVehicleTypes().subscribe((resp) => {
       this.vehicleTypes = resp as unknown as VehicleTypeViewDto[];
-      this.loading = false;
     });
   }
 

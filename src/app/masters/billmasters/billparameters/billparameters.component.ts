@@ -22,7 +22,6 @@ import { MaxLength } from 'src/app/_models/common';
 export class BillParametersComponent implements OnInit {
   billParameters: BillParameterViewDto[] = [];
   billParam: BillParameterDto = new BillParameterDto();
-  loading: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   fbBillParameters!: FormGroup;
@@ -72,7 +71,6 @@ export class BillParametersComponent implements OnInit {
   initBillParams() {
     this.billmasterService.GetBillParameters().subscribe((resp) => {
       this.billParameters = resp as unknown as BillParameterViewDto[];
-      this.loading = false;
     });
   }
 
