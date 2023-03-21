@@ -1,4 +1,4 @@
-export class AllottedPlotDto {
+export class PlotOfferDto {
   allottedPlotId?: number;
   seasonId?: number;
   offerNo?: number;
@@ -13,7 +13,7 @@ export class AllottedPlotDto {
   reasonForNotPlantingId?: number;
   isActive?: boolean;
 }
-export interface IAllottedPlotViewDto {
+export interface IPlotOfferViewDto {
   allottedPlotId: number;
   seasonId: number;
   seasonName: string;
