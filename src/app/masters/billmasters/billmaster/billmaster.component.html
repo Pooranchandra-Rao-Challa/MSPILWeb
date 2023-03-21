@@ -149,7 +149,7 @@
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
                   <p-calendar  placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
-                    formControlName="fromDate"
+                    formControlName="fromDate" [maxDate]="fbBillMaster.value.toDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
@@ -167,11 +167,11 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
                       Please Select To Date.</div>
                   </span>
-                  <span>
+                  <!-- <span>
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="fbBillMaster.value.fromDate > fbBillMaster.value.toDate">
                       To Date Always Greater Than Equals To From Date</div>
-                  </span>
+                  </span> -->
                 </div>
                 <div class="col-12">
                   <label>Is Final:</label><br>
