@@ -48,6 +48,7 @@ export class CirclesComponent implements OnInit {
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
+
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -75,7 +76,7 @@ export class CirclesComponent implements OnInit {
       divisionId: ['', Validators.required],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      inchargeName:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      inchargeName:  new FormControl(null, [Validators.required, Validators.pattern(RG_PHONE_NO)]),
     
       listingOrder: new FormControl('', [
         Validators.required,

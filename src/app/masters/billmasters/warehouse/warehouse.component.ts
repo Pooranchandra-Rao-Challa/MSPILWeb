@@ -13,8 +13,7 @@ import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
-import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { AlertMessage } from '../../../_alerts/alertMessage';
+import { AlertMessage,ALERT_CODES  } from '../../../_alerts/alertMessage';
 
 @Component({
   selector: 'app-warehouse',
