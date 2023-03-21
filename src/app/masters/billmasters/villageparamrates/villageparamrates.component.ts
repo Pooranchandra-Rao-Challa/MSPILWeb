@@ -76,7 +76,7 @@ export class VillageParamRatesComponent implements OnInit {
       villageName: ['', (Validators.required)],
       villageId: ['', (Validators.required)],
       billParameterId: ['', (Validators.required)],
-      rate: ['', Validators.required],
+      rate: [null, Validators.required],
       isActive: [true]
     });
   }
