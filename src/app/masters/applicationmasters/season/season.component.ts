@@ -81,6 +81,11 @@ export class SeasonComponent implements OnInit {
   initBillCategories() {
     this.LookupService.BillCategories().subscribe((resp) => {
       this.billCategories = resp as unknown as LookupDetailDto[];
+      this.billCategories[0].aliasName = 'farmer';
+      this.billCategories[1].aliasName = 'transporter';
+      this.billCategories[2].aliasName = 'harvester';
+      this.billCategories[3].aliasName = 'seed';
+
       this.initBillParamsForCategory(
         this.billCategories[0].lookupDetailId + ''
       );
@@ -188,8 +193,9 @@ export class SeasonComponent implements OnInit {
     this.appMasterService.GetSeasonBillingRates(seasonId).subscribe((resp) => {
       let rates = resp as unknown as SeasonBillingRateViewDto[];
       this.billCategories.forEach((billCategory) => {
+        
         var categoryFormArray = this.fbseasons.get(
-          billCategory.name?.toLowerCase() + 'Rates'
+          billCategory.aliasName?.toLowerCase() + 'Rates'
         ) as FormArray;
         rates
           .filter(
