@@ -20,7 +20,6 @@ export class StateComponent implements OnInit {
   display: boolean = false;
   states: StatesViewDto[] = [];
   state: StateDto = new StateDto();
-  loading: boolean = true;
   fbstates!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -57,7 +56,6 @@ export class StateComponent implements OnInit {
   initStates() {
     this.geoMasterService.GetState().subscribe((resp) => {
       this.states = resp as unknown as StatesViewDto[]
-      this.loading = false;
     })
   }
 

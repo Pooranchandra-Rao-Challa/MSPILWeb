@@ -21,7 +21,6 @@ export class MandalComponent implements OnInit {
   mandals: MandalsViewDto[] = [];
   mandal: MandalDto = new MandalDto();
   district: DistrictDto[] = [];
-  loading: boolean = true;
   fbmandals!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -65,7 +64,6 @@ export class MandalComponent implements OnInit {
   initMandals() {
     this.geoMasterService.GetMandals().subscribe((resp) => {
       this.mandals = resp as unknown as MandalsViewDto[]
-      this.loading = false;
     })
   }
 

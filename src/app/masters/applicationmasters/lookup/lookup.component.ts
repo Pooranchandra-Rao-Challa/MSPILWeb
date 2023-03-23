@@ -26,7 +26,6 @@ export class LookupComponent implements OnInit {
   dataShown: boolean = false;
   ShowlookupDetails: boolean = false;
   addfields: any;
-  loading: boolean = true;
   fblookup!: FormGroup;
   falookUpDetails!: FormArray;
   addFlag: boolean = true;
@@ -124,7 +123,6 @@ export class LookupComponent implements OnInit {
     this.appMasterService.GetlookUp().subscribe((resp) => {
       this.lookups = resp as unknown as LookupViewDto[];
       console.log(this.lookups);
-      this.loading = false;
     })
   }
   initlookupDetails(lookupId: number) {
