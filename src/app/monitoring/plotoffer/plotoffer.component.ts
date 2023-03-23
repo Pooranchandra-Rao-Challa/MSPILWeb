@@ -7,7 +7,7 @@ import { CommonService } from '../../_services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { PlotOfferDto, IPlotOfferViewDto } from 'src/app/_models/monitoring';
+import { PlotOfferDto, IPlotOfferViewDto, IFarmerInPlotOfferDto, IFarmerPlotOffersViewDto } from 'src/app/_models/monitoring';
 import { FarmersViewDto, plantTypeViewDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
 import { VillagesViewDto } from 'src/app/_models/geomodels';
 import { Observable } from 'rxjs';
@@ -29,7 +29,7 @@ export interface IHeader {
 })
 
 export class PlotofferComponent implements OnInit {
-  plotOffers: IPlotOfferViewDto[] = [];
+  plotOffers: IFarmerInPlotOfferDto[] = [];
   plotOffer: PlotOfferDto = new PlotOfferDto();
   globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
@@ -49,18 +49,32 @@ export class PlotofferComponent implements OnInit {
   forapproval: boolean = false;
   isApproved: boolean = false; // for ture value use this icon class' pi-thumbs-up-fill' else ' pi-thumbs-up'
   // varietyTypes: any;
-  headers: IHeader[] = [
+  farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
-    { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
-    { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
+    // { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
+    // { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
-    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'expectedArea', header: 'expectedArea', label: 'Area' },
-    { field: 'varietyId', header: 'varietyId', label: 'Variety' },
-    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    // { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+    // { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    // { field: 'expectedArea', header: 'expectedArea', label: 'Area' },
+    // { field: 'varietyId', header: 'varietyId', label: 'Variety' },
+    // { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+  ];
+
+  plotHeaders: IHeader[] = [
+    // { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    { field: 'OfferNo', header: 'OfferNo', label: 'Offer No' },
+    { field: 'OfferDate', header: 'OfferDate', label: 'Offer Date' },
+    // { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
+    // { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    // { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
+    { field: 'PlotVillageName', header: 'PlotVillageName', label: 'Plot Village' },
+    { field: 'PlantType', header: 'PlantType', label: 'Plant Type' },
+    { field: 'ExpectedArea', header: 'ExpectedArea', label: 'Area' },
+    { field: 'VarietyId', header: 'VarietyId', label: 'Variety' },
+    { field: 'PlantingDate', header: 'PlantingDate', label: 'Planting Date' },
   ];
 
   constructor(private formbuilder: FormBuilder,
@@ -89,7 +103,12 @@ export class PlotofferComponent implements OnInit {
   initPlotOffers(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
-      this.plotOffers = resp as unknown as IPlotOfferViewDto[];
+      this.plotOffers = resp as unknown as IFarmerInPlotOfferDto[];
+      this.plotOffers.forEach((value)=>{
+        value.ObjOfferedPlots = JSON.parse(value.offeredPlots) as IFarmerPlotOffersViewDto[];
+      });
+      console.log(this.plotOffers);
+
     });
   }
 
@@ -152,7 +171,7 @@ export class PlotofferComponent implements OnInit {
 
   plotOfferForm() {
     this.fbPlotOffer = this.formbuilder.group({
-      allottedPlotId: [null],
+      plotOfferId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       offerNo: [{ value: '' }],
       offerDate: ['', (Validators.required)],
@@ -183,7 +202,7 @@ export class PlotofferComponent implements OnInit {
   }
 
   addPlotOffer() {
-    this.submitLabel = 'Add Plot Offer';
+    this.submitLabel = 'Add Allotted Plot';
 
     this.fbPlotOffer.controls['seasonId'].enable();
     this.fbPlotOffer.controls['villageId'].enable();
@@ -249,8 +268,8 @@ export class PlotofferComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-  editPlotOffer(plotOffer: IPlotOfferViewDto) {
-    this.plotOffer.allottedPlotId = plotOffer.allottedPlotId;
+  editPlotOffer(plotOffer: IFarmerInPlotOfferDto) {
+    // this.plotOffer.plotOfferId = plotOffer.plotOfferId;
     this.plotOffer.seasonId = plotOffer.seasonId;
     this.fbPlotOffer.controls['seasonId'].disable();
     this.plotOffer.offerNo = plotOffer.offerNo;
@@ -258,14 +277,14 @@ export class PlotofferComponent implements OnInit {
     this.plotOffer.isNewFarmer = plotOffer.isNewFarmer;
     this.plotOffer.farmerId = plotOffer.farmerId;
     this.fbPlotOffer.controls['farmerId'].disable();
-    this.plotOffer.villageId = plotOffer.plotVillageId;
+    // this.plotOffer.villageId = plotOffer.plotVillageId;
     this.fbPlotOffer.controls['villageId'].disable();
-    this.plotOffer.expectedArea = plotOffer.expectedArea;
-    this.plotOffer.plantTypeId = plotOffer.plantTypeId;
-    this.plotOffer.plantingDate = new Date(plotOffer.plantingDate?.toString() + "");
-    this.plotOffer.varietyId = plotOffer.varietyId;
-    this.plotOffer.reasonForNotPlantingId = plotOffer.reasonForNotPlantingId;
-    this.plotOffer.isActive = plotOffer.isActive;
+    // this.plotOffer.expectedArea = plotOffer.expectedArea;
+    // this.plotOffer.plantTypeId = plotOffer.plantTypeId;
+    // this.plotOffer.plantingDate = new Date(plotOffer.plantingDate?.toString() + "");
+    // this.plotOffer.varietyId = plotOffer.varietyId;
+    // this.plotOffer.reasonForNotPlantingId = plotOffer.reasonForNotPlantingId;
+    // this.plotOffer.isActive = plotOffer.isActive;
     this.plotOffer.isNewFarmer = plotOffer.isNewFarmer;
     this.fbPlotOffer.patchValue(this.plotOffer);
     this.fbPlotOffer.controls['ryotName'].setValue(plotOffer.farmerName);
@@ -275,22 +294,22 @@ export class PlotofferComponent implements OnInit {
     this.fbPlotOffer.controls['farmerCircle'].setValue(plotOffer.farmerCircleName);
     this.fbPlotOffer.controls['farmerSection'].setValue(plotOffer.farmerSectionName);
 
-    this.fbPlotOffer.controls['plotDivision'].setValue(plotOffer.plotDivisionName);
-    this.fbPlotOffer.controls['plotCircle'].setValue(plotOffer.plotCircleName);
-    this.fbPlotOffer.controls['plotSection'].setValue(plotOffer.plotSectionName);
+    // this.fbPlotOffer.controls['plotDivision'].setValue(plotOffer.plotDivisionName);
+    // this.fbPlotOffer.controls['plotCircle'].setValue(plotOffer.plotCircleName);
+    // this.fbPlotOffer.controls['plotSection'].setValue(plotOffer.plotSectionName);
 
     this.addFlag = false;
-    this.submitLabel = 'Update Plot Offer';
+    this.submitLabel = 'Update Allotted Plot';
     this.showDialog = true;
   }
 
-  editApproval(plotOffer: IPlotOfferViewDto) {
+  editApproval(plotOffer: IFarmerInPlotOfferDto) {
     this.editPlotOffer(plotOffer);
     this.showDialog = false;
     this.showApprovalDialog = true;
   }
 
-  savePlotOffer(): Observable<HttpEvent<any>> {
+  saveAllottedPlot(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.monitoringService.CreatePlotOffer(this.fbPlotOffer.value)
     else return this.monitoringService.UpdatePlotOffer(this.fbPlotOffer.value)
   }
@@ -299,7 +318,7 @@ export class PlotofferComponent implements OnInit {
     if (this.fbPlotOffer.valid) {
       this.fbPlotOffer.value.offerDate = FORMAT_DATE(this.fbPlotOffer.value.offerDate);
       this.fbPlotOffer.value.plantingDate = FORMAT_DATE(this.fbPlotOffer.value.plantingDate);
-      this.savePlotOffer().subscribe(resp => {
+      this.saveAllottedPlot().subscribe(resp => {
         if (resp) {
           this.initPlotOffers(this.currentSeason.seasonId!);
           this.fbPlotOffer.reset();

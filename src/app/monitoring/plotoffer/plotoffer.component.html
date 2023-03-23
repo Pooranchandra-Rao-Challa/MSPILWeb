@@ -13,7 +13,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dt1 [value]="plotOffers" [columns]="headers" dataKey="id" [rows]="10"
+    <p-table #dt1 [value]="plotOffers" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10"
       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
@@ -35,32 +35,73 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
-          <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+          <th style="width: 5rem"></th>
+          <th *ngFor="let col of farmerHeaders" [pSortableColumn]="col.header">
             {{col?.label}} <p-sortIcon field="code">
             </p-sortIcon>
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-plotOffer>
+
+      <ng-template pTemplate="body" let-farmer let-expanded="expanded">
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editPlotOffer(plotOffer)" *ngIf="!forapproval"></button>
-            <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editApproval(plotOffer)" *ngIf="forapproval"></button>
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="farmer" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-          <td *ngFor="let col of headers">
-            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotOffer[col.field]}}</span>
+          <td *ngFor="let col of farmerHeaders">
+            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{farmer[col.field]}}</span>
             <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
-              {{plotOffer[col.field] | date: 'dd-MM-yyyy'}}
+              {{farmer[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="rowexpansion" let-farmer>
+        <tr>
+          <td colspan="5">
+              <div class="p-3">
+                  <p-table [value]="farmer.ObjOfferedPlots" [columns]="plotHeaders"  dataKey="plotOfferId">
+                      <ng-template pTemplate="header">
+                          <tr>
+                            <th></th>
+                            <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
+                              {{col?.label}} <p-sortIcon field="code">
+                              </p-sortIcon>
+                              <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                            </th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-plotOffer>
+                          <tr>
+                            <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+                              (click)="editPlotOffer(plotOffer)" *ngIf="!forapproval"></button>
+                            <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
+                              (click)="editApproval(plotOffer)" *ngIf="forapproval"></button>
+                            <!-- (click)="editAllottedPlot(allottedPlot)" -->
+                          </td>
+                          <td *ngFor="let col of plotHeaders">
+
+                            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotOffer[col.field]}}</span>
+                            <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
+                              {{plotOffer[col.field] | date: 'dd-MM-yyyy'}}
+                            </span>
+                          </td>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                          <tr>
+                              <td colspan="6">There are no plots for this farmer yet.</td>
+                          </tr>
+                      </ng-template>
+                  </p-table>
+              </div>
+          </td>
+      </tr>
+      </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="12">No Plot Offer Found.</td>
+          <td class="md:text-center" colspan="12">No Allotted Plots Found.</td>
         </tr>
       </ng-template>
     </p-table>

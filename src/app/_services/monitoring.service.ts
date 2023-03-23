@@ -1,4 +1,4 @@
-import { IPlotReportViewDto, PlotAssessmentDto, PlotAssessmentViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
+import { IFarmerInPlotOfferDto, IPlotReportViewDto, PlotAssessmentDto, PlotAssessmentViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto, IPlotOfferViewDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "src/app/_services/api.http.service";
@@ -31,10 +31,10 @@ export class MonitoringService extends ApiHttpService {
     arr.push(forapproval);
     if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<IPlotOfferViewDto[]>(GET_PLOT_OFFERS_URI, arr);
+      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, arr);
     }
     else {
-      return this.getWithParams<IPlotOfferViewDto[]>(GET_PLOT_OFFERS_URI, arr);
+      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, arr);
     }
   }
 
