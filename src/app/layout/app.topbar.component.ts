@@ -1,3 +1,4 @@
+
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
@@ -8,7 +9,7 @@ import { LookupDetailDto, LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } 
 import { AppMasterService } from '../_services/appmaster.service';
 import { ApplicationConstantDto } from '../_models/common';
 import { CommonService } from '../_services/common.service';
-
+import {  Table } from 'primeng/table';
 export class AppConfig {
   Name?: string;
   Value?: number;
@@ -20,10 +21,10 @@ export class AppConfig {
 
 @Component({
   selector: 'app-topbar',
-  templateUrl: './app.topbar.component.html'
+  templateUrl: './app.topbar.component.html',
+  // standalone:true,
+  // imports:[TableModule]
 })
-
-
 export class AppTopBarComponent {
   showlookup: boolean = false;
   items!: MenuItem[];
@@ -34,46 +35,40 @@ export class AppTopBarComponent {
 
   @ViewChild('topbarmenu') menu!: ElementRef;
 
+  @ViewChild('dtConfig') dtConfig!: Table;
+  @ViewChild('lookupDetail') lookupDetail!: Table;
+
   lookup_dialog: boolean = false;
-  application_contsants!: FormGroup;
   submitLabel!: string;
 
-  lookUpFrom!: FormArray;
-  appConfigFrom!: FormArray;
-  lookupCode: LookupViewDto[] = [];
-  lookupMenuCode: LookUpHeaderDto[] = [];
-
-  lookupDetails: LookupDetailDto[] = [];
-  appConfig: ApplicationConstantDto[] = [];
+  lookups: LookupViewDto[] = [];
+  lookupDetails: LookupDetailViewDto[] = [];
+  appConfigItems: ApplicationConstantDto[] = [];
   app_config_dialog: boolean = false;
 
-  clonedProducts: { [s: string]: ApplicationConstantDto; } = {};
+  selectedConfig: { [s: number]: ApplicationConstantDto; } = {};
+  selectedLookupDetail: { [s: number]: LookupDetailViewDto; } = {};
 
-
-  constructor(public layoutService: LayoutService, private jwtService: JWTService, private formbuilder: FormBuilder, private appMasterservice: AppMasterService, private commomService: CommonService) {
-    console.log(this.jwtService.GivenName)
+  constructor(public layoutService: LayoutService,
+    private jwtService: JWTService,
+    private formbuilder: FormBuilder,
+    private appMasterservice: AppMasterService,
+    private commomService: CommonService) {
     this.loggedInUser = this.jwtService.GivenName;
   }
-  get FormControls() {
-    return this.application_contsants.controls;
-  }
-  initLookupCode() {
-    this.appMasterservice.GetlookUp().subscribe((resp) => {
-      this.lookupCode = resp as unknown as LookupViewDto[];
-    });
-  }
 
-  /* Form Array For lookup Details */
-  faLookupFrom(): FormArray {
-    return this.application_contsants.get('lookUpArray') as FormArray;
-  }
-  formArrayControls(i: number, formControlName: string) {
-    return this.faLookupFrom().controls[i].get(formControlName);
-  }
+
+
   addLookup() {
-    this.lookUpFrom = this.application_contsants.get("lookupArray") as FormArray
-    this.faLookupFrom().push(this.generateRow());
-    this.showlookup = true;
+    let data = {
+      lookupDetailId: this.lookupDetails.length * -1,
+      name:"",
+      value:"",
+      listingorder:undefined
+    }
+    this.lookupDetails.push(data)
+    this.lookupDetail.editingRowKeys[data.lookupDetailId.toString()] = true;
+    this.selectedLookupDetail[data.lookupDetailId] = data;
   }
 
   generateRow(lookupArray: LookupDetailDto = new LookupDetailDto()): FormGroup {
@@ -87,31 +82,20 @@ export class AppTopBarComponent {
       isActive: [lookupArray.isActive],
     })
   }
-  appConfigGeneraterow(appArray: ApplicationConstantDto = new ApplicationConstantDto()): FormGroup {
-    return this.formbuilder.group({
-      Name: [appArray.Name],
-      Value: [appArray.Value],
-    })
-  }
-
 
   addAppConfig() {
-
-    this.appConfigFrom = this.application_contsants.get("appArray") as FormArray
-    this.appConfigFrom.push(this.appConfigGeneraterow())
+    let data = {
+      id: this.appConfigItems.length * -1,
+      name:"",
+      value:"",
+    }
+    this.appConfigItems.push(data)
+    this.dtConfig.editingRowKeys[data.id.toString()] = true;
+    this.selectedConfig[data.id] = data;
   }
   ngOnInit() {
     this.initAppConstants();
-    this.initLookupCode();
-    this.initLookupMenuCode();
-    this.application_contsants = this.formbuilder.group({
-      lookUpArray: this.formbuilder.array([]),
-      // name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      code: ['', (Validators.required)],
-      value: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-    });
-
-
+    this.initLookups();
     this.items = [
       { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['changepassword'] },
       { label: 'App Config', icon: 'pi pi-external-link', command: (e) => { this.app_config_dialog = true; this.submitLabel = 'Update Application Constants'; } },
@@ -119,55 +103,64 @@ export class AppTopBarComponent {
       {
         label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
           console.log(this.jwtService.Logout());
-          // logic
+
         }
       }
     ];
   }
 
-  getLookupDetailsByLookupId(lookupId: number) {
-    this.appMasterservice.GetLookupDetailsforMenu(lookupId).subscribe((resp) => {
-      if (resp) {
-        this.lookupDetails = resp as unknown as LookupDetailDto[];
-        // this.addLookup();
-        this.faLookupFrom().clear();
-        if (this.lookupDetails.length > 0) {
-          this.lookupDetails.forEach((lookupDetail) => {
-            this.faLookupFrom().push(this.generateRow(lookupDetail));
-          });
-          this.showlookup = true;
-        }
-        else {
-          this.addLookup();
-        }
+  getLookupDetailsByLookupId(lookupId:number) {
+    this.appMasterservice.GetLookupDetailsforMenu(lookupId).subscribe((resp)=>{
+      this.lookupDetails = resp as unknown as LookupDetailViewDto[];
+    })
+   }
 
-      }
+  initLookups() {
+    this.appMasterservice.GetlookUp().subscribe((resp) => {
+      this.lookups = resp as unknown as LookupViewDto[];
     });
   }
 
-  initLookupMenuCode() {
-    this.appMasterservice.GetLookupsforMenu().subscribe((resp) => {
-      this.lookupMenuCode = resp as unknown as LookUpHeaderDto[];
-    });
-  }
+
 
   initAppConstants() {
     this.commomService.GetApplicationConstant().subscribe((resp) => {
-      this.appConfig = resp as unknown as ApplicationConstantDto[];
-
-      console.log(this.appConfig);
-
+      this.appConfigItems = resp as unknown as ApplicationConstantDto[];
     });
   }
 
-  onRowEditInit(appConfig: ApplicationConstantDto) {
-    // this.clonedProducts[appConfig.Id] = {...appConfig};
-}
+  onConstantEditInit(config: ApplicationConstantDto) {
+    this.selectedConfig[config.id!] = { ...config };
+  }
 
+  onConstantEditSave(config: ApplicationConstantDto, ri: number) {
+    // saving that row item and update local object
+  }
+  onConstantEditCancel(config: ApplicationConstantDto, ri: number) {
+    if(Number(config.id!) < 0 ){
+      this.appConfigItems.splice(ri,1);
+    }else{
+      this.appConfigItems[ri] = this.selectedConfig[config.id!];
+    }
+    delete this.selectedConfig[config.id!];
+  }
 
+  onLookupDetailEdit(lookupDetail:LookupDetailViewDto){
+    this.selectedLookupDetail[lookupDetail.lookupDetailId!] = { ...lookupDetail };
+  }
 
+  onRowLookupDetailSave(lookupDetail:LookupDetailViewDto,ri:number){
 
-  onSubmit() {
 
   }
+  onRowLookupDetailCancel(lookupDetail:LookupDetailViewDto,ri:number){
+    if(Number(lookupDetail.lookupDetailId!) < 0 ){
+      this.lookupDetails.splice(ri,1);
+    }else{
+      this.lookupDetails[ri] = this.selectedConfig[lookupDetail.lookupDetailId!];
+    }
+    delete this.selectedLookupDetail[lookupDetail.lookupDetailId!];
+
+  }
+
 }

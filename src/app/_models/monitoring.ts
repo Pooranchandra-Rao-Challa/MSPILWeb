@@ -1,4 +1,4 @@
-export class AllottedPlotDto {
+export class PlotOfferDto {
   allottedPlotId?: number;
   seasonId?: number;
   offerNo?: number;
@@ -13,7 +13,7 @@ export class AllottedPlotDto {
   reasonForNotPlantingId?: number;
   isActive?: boolean;
 }
-export interface IAllottedPlotViewDto {
+export interface IPlotOfferViewDto {
   allottedPlotId: number;
   seasonId: number;
   seasonName: string;
@@ -21,6 +21,7 @@ export interface IAllottedPlotViewDto {
   offerNo: number;
   offerDate: Date;
   farmerId: number;
+  farmerCode: string;
   farmerName: string;
   fatherName: string;
   farmerVillageId: number;
@@ -28,6 +29,8 @@ export interface IAllottedPlotViewDto {
   farmerDivisionName: string;
   farmerCircleName: string;
   farmerSectionName: string;
+  offeredPlots: string;
+  ObjOfferedPlots:IFarmerPlotOffersViewDto[];
   plotVillageId: number;
   plotVillageName: string;
   plotDivisionName: string;
@@ -50,6 +53,52 @@ export interface IAllottedPlotViewDto {
   updatedAt: Date;
   updatedBy: string;
 }
+
+
+export interface IFarmerInPlotOfferDto {
+  plotOfferId: number;
+  seasonId: number;
+  seasonName: string;
+  isNewFarmer: boolean;
+  offerNo: number;
+  offerDate: Date;
+  farmerId: number;
+  farmerCode: string;
+  farmerName: string;
+  fatherName: string;
+  farmerVillageId: number;
+  farmerVillageName: string;
+  farmerDivisionName: string;
+  farmerCircleName: string;
+  farmerSectionName: string;
+  offeredPlots: string;
+  ObjOfferedPlots:IFarmerPlotOffersViewDto[];
+}
+export interface IFarmerPlotOffersViewDto{
+  plotOfferId: number;
+  plotVillageId: number;
+  plotVillageName: string;
+  plotDivisionName: string;
+  plotCircleName: string;
+  plotSectionName: string;
+  plantTypeId: number;
+  plantType: string;
+  varietyId: number;
+  expectedVariety: string;
+  plantingDate: Date;
+  expectedArea: number;
+  reasonForNotPlantingId: number;
+  reasonForNotPlanting: string;
+  forApproval: boolean;
+  approvedAt: Date;
+  dataSyncedAt: Date;
+  isActive: boolean;
+  createdAt: Date;
+  createdBy: string;
+  updatedAt: Date;
+  updatedBy: string;
+}
+
 export class PlotAssessmentDto {
   createdAt?: Date;
   createdBy?: string;

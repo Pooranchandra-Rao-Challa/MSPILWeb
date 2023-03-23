@@ -24,7 +24,6 @@ export class DivisionsComponent implements OnInit {
   divisions: DivisonsViewDto[] = [];
   division: DivisionDto = new DivisionDto();
   states: StateDto[] = [];
-  loading: boolean = true;
   fbdivisions!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -71,7 +70,6 @@ export class DivisionsComponent implements OnInit {
   initDivisions() {
     this.geoMasterService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisonsViewDto[]
-      this.loading = false;
     })
   }
 

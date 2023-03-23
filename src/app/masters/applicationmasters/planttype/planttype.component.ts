@@ -20,7 +20,6 @@ export class PlanttypeComponent implements OnInit {
   showDialog: boolean = false;
   plantTypes: plantTypeViewDto[] = [];
   plantType: plantTypeDto = new plantTypeDto();
-  loading: boolean = true;
   fbplantType!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -87,7 +86,6 @@ export class PlanttypeComponent implements OnInit {
     this.appMasterService.GetPlantType().subscribe((resp) => {
       this.plantTypes = resp as unknown as plantTypeViewDto[];
       console.log(this.plantType);
-      this.loading = false;
     });
   }
 

@@ -20,7 +20,6 @@ export class UsersComponent implements OnInit {
   selectedUser: UserViewDto = {};
   user: UserDto = {};
   roles: RoleDto[] = [];
-  loading: boolean = true;
   dialog: boolean = false;
   submitLabel!: string;
   globalFilters: string[] = ["UserId", "UserName", "FirstName", "LastName", "EmailId", "MobileNo", "Role", "IMEINo", "IPAddress", "IPRestriction",
@@ -30,7 +29,6 @@ export class UsersComponent implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
     private securityService: SecurityService) {
-    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -62,6 +60,8 @@ export class UsersComponent implements OnInit {
     this.securityService.GetUsers().subscribe(resp => {
       this.users = resp as unknown as UserViewDto[];
       this.users.sort((a,b)=> (a.userName||"").localeCompare(b.userName||""))
+      console.log(this.users);
+
     })
   }
 

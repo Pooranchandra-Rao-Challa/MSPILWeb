@@ -123,7 +123,7 @@ export class BillMasterService extends ApiHttpService {
   }
 
   public GetLoanSubTypes(loanTypeId: number) {
-  return this.get<LoanSubTypeViewDto[]>(GET_LOANSUBTYPES_URI + loanTypeId);
+  return this.getWithId<LoanSubTypeViewDto[]>(GET_LOANSUBTYPES_URI , loanTypeId);
 }
 
 

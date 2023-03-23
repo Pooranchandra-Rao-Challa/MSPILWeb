@@ -25,7 +25,6 @@ export class BankComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   ShowbranchDetails: boolean = false;
   addfields: any;
-  loading: boolean = true;
   fbbank!: FormGroup
   fabranch!: FormArray;
   submitLabel!: string;
@@ -102,7 +101,6 @@ export class BankComponent implements OnInit {
     this.appMasterService.GetBanks().subscribe((resp) => {
       this.banks = resp as unknown as BankViewDto[];
       console.log(this.banks);
-      this.loading = false;
     });
   }
   onClose() {

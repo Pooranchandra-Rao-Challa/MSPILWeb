@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
 import { LookupDetailDto, SeasonDto } from 'src/app/_models/applicationmaster';
 import { VillagesViewDto } from 'src/app/_models/geomodels';
-import { IAllottedPlotViewDto } from 'src/app/_models/monitoring';
+import { IPlotOfferViewDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
@@ -44,8 +44,8 @@ export class SubSeedDto {
     Qty?: number;
     Rate?: number;
     Amount?: number;
-    
-    
+
+
   }
 
 
@@ -64,7 +64,7 @@ export class SeedComponent implements OnInit {
 
     uom: LookupDetailDto[] = [];
 
-    allottedPlots: IAllottedPlotViewDto[] = [];
+    allottedPlots: IPlotOfferViewDto[] = [];
     currentSeason: SeasonDto = {};
     loading: boolean = true;
     seasons!: any[];
@@ -85,7 +85,7 @@ export class SeedComponent implements OnInit {
     seedDto: SeedDto[] = [];
 
     headers: IHeader[] = [
-        
+
         // { field: 'SeasonId', header: 'SeasonId', label: 'Season' },
         { field: 'SeasonId', header: 'SeasonId', label: 'Season' },
         { field: 'FarmerCode', header: 'FarmerCode', label: 'Farmer' },
@@ -107,7 +107,7 @@ export class SeedComponent implements OnInit {
           SeasonId: new FormControl('', [Validators.required]),
           FarmerCode: new FormControl('', [Validators.required]),
           PlotNo: new FormControl('', [Validators.required]),
-          
+
           DocNo: new FormControl('', [Validators.required]),
           DocDate: ['', Validators.required],
           SeedSupplyType: ['', Validators.required],
@@ -139,7 +139,7 @@ export class SeedComponent implements OnInit {
       Rate: [subSeeds.Rate, Validators.required],
       Amount: subSeeds.Amount,
     });
-    
+
   }
   addSubSeed() {
     this.showSubSeed = true;
@@ -152,8 +152,8 @@ export class SeedComponent implements OnInit {
     }
     initAllottedPlots(seasonId: number) {
         let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-        this.monitoringService.GetAllottedPlots(seasonId, this.forapproval, param1).subscribe((resp) => {
-            this.allottedPlots = resp as unknown as IAllottedPlotViewDto[];
+        this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
+            this.allottedPlots = resp as unknown as IPlotOfferViewDto[];
             this.loading = false;
         });
     }

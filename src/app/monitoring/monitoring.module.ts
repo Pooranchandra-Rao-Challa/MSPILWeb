@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { MonitoringRoutingModule } from 'src/app/monitoring/monitoring-routing.module';
-import { AllottedplotComponent } from './allottedplot/allottedplot.component';
+import { PlotofferComponent } from './plotoffer/plotoffer.component';
 import { PlotTransfersComponent } from './plot-transfers/plot-transfers.component';
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
 import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
@@ -12,8 +12,7 @@ import { SeedComponent } from './seed/seed.component';
 
 @NgModule({
   declarations: [
-
-    AllottedplotComponent,
+    PlotofferComponent,
     PlotTransfersComponent,
     CompletedPlotsComponent,
     PlotassesmentComponent,

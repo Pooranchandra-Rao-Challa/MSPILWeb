@@ -22,8 +22,9 @@
                             <div class="p-fluid p-formgrid grid">
                                 <div class="field col-12 md:col-6">
                                     <label>Plant Type Name:<sup class="p-error">*</sup></label>&nbsp;
-                                    <p-dropdown [options]="planttype" optionLabel="name" formControlName="plantTypeId" placeholder="Select Plant Type Name "
-                                        optionValue="plantTypeId" placeholder="Select Plant Type Name." appendTo="body"  
+                                    <p-dropdown [options]="planttype" optionLabel="name" appendTo="body"
+                                        formControlName="plantTypeId" placeholder="Select Plant Type Name "
+                                        optionValue="plantTypeId" placeholder="Select Plant Type Name." appendTo="body"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantTypeId'].touched && FormControls['plantTypeId'].errors }">
                                     </p-dropdown>
                                     <span
@@ -37,16 +38,18 @@
 
                                 <div class="field col-12 md:col-6">
                                     <label>Code:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="code" type="text" formControlName="code" placeholder="Select Code" #code [maxlength]="6"  alphaNumeric
+                                    <input pInputText id="code" type="text" formControlName="code"
+                                        placeholder="Select Code" #code [maxlength]="6" alphaNumeric
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                                        <div class="text-right">
-                                            <small>{{code.value.length}}/6</small>
-                                          </div>
+                                    <div class="text-right">
+                                        <small>{{code.value.length}}/6</small>
+                                    </div>
                                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['required']">Please Enter Code.</div>
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['code'].errors?.['pattern']">Code Should Contains Alphabets & Numbers.</div>
+                                            *ngIf="FormControls['code'].errors?.['pattern']">Code Should Contains
+                                            Alphabets & Numbers.</div>
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['code'].errors?.['minlength']">
                                             Code Min Length Is 2.</div>
@@ -57,16 +60,18 @@
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>Name:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Name" #name alphaOnly [maxlength]="maxLength.name"
+                                    <input pInputText id="name" type="text" formControlName="name"
+                                        placeholder="Enter Name" #name alphaOnly [maxlength]="maxLength.name"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                                        <div class="text-right">
-                                            <small>{{name.value.length}}/{{maxLength.name}}</small>
-                                          </div>
+                                    <div class="text-right">
+                                        <small>{{name.value.length}}/{{maxLength.name}}</small>
+                                    </div>
                                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['name'].errors?.['required']">Please Enter Name.</div>
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['name'].errors?.['pattern']">Name Should Contains Alphabets.</div>
+                                            *ngIf="FormControls['name'].errors?.['pattern']">Name Should Contains
+                                            Alphabets.</div>
                                     </span>
                                 </div>
                                 <div class="field col-12 md:col-6 mt-2">
@@ -81,8 +86,9 @@
             <ng-template pTemplate="footer">
                 <div class="col-12">
                     <div class="col-4" style="float:right">
-                        <button pButton pRipple type="submit" label="{{submitLabel}}"  [disabled]="fbplantsubtype.invalid"
-                            class="p-button-raised p-button-success" (click)="onSubmit()"></button>
+                        <button pButton pRipple type="submit" label="{{submitLabel}}"
+                            [disabled]="fbplantsubtype.invalid" class="p-button-raised p-button-success"
+                            (click)="onSubmit()"></button>
                     </div>
                 </div>
             </ng-template>
@@ -90,7 +96,7 @@
 
         <!-- table -->
 
-        <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="10" [loading]="loading" [rowHover]="true"
+        <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="['code','name','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo',
        'createdByUser','updatedByUser','createAt','updatedAt']" [autoLayout]="true" responsiveLayout="scroll"
@@ -166,14 +172,13 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td class="md:text-center" colspan="10" class="md:text-center" >No Plant Sub Types Found.</td>
+                    <td class="md:text-center" colspan="10" class="md:text-center">No Plant Sub Types Found.</td>
                 </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
+            </ng-template> 
                 <tr>
-                    <td class="md:text-center" colspan="10" sclass="md:text-center" >Loading Plant Sub Types. Please wait.</td>
+                    <td class="md:text-center" colspan="10" sclass="md:text-center">Loading Plant Sub Types. Please
+                        wait.</td>
                 </tr>
-            </ng-template>
         </p-table>
     </div>
 </div>

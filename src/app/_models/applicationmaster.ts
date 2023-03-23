@@ -26,6 +26,7 @@ export class LookupDetailDto {
   lookupDetailId?: number;
   code?: string;
   name?: string;
+  aliasName?: string;
   lookupId?: number;
   remarks?: string;
   lookupName?: string;
@@ -51,6 +52,7 @@ export class LookupDetailViewDto {
   updatedBy?: string;
   createdBy?: string;
   // lookupName?: string;
+
 }
 export class plantTypeViewDto {
   plantTypeId?: number;

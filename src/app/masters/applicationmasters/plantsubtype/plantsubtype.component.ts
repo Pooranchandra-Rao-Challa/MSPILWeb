@@ -27,7 +27,6 @@ export class PlantsubtypeComponent implements OnInit {
   planttype: plantTypeDto[] = [];
   submitLabel!: string;
   addFlag: boolean = true;
-  loading: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
 
@@ -73,7 +72,6 @@ export class PlantsubtypeComponent implements OnInit {
     this.appMasterService.GetPlantSubType().subscribe((resp) => {
       this.plantSubTypes = resp as unknown as PlantSubTypeViewDto[];
       console.log(this.plantSubType);
-      this.loading = false;
     })
   }
   onClose() {

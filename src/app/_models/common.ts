@@ -9,12 +9,12 @@ export class MaxLength {
 }
 export class ApplicationConstantDto {
 
-  Id?: number;
-  Name?: string;
-  Value?: string;
-  CreatedBy?: string;
-  CreatedAt?: Date;
-  UpdatedBy?: string;
-  UpdatedAt?: Date;
+  id?: number;
+  name?: string;
+  value?: string;
+  createdBy?: string;
+  createdAt?: Date;
+  updatedBy?: string;
+  updatedAt?: Date;
 
 }

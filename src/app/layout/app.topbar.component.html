@@ -1,199 +1,171 @@
 <div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.png"
-            alt="logo">
-    </a>
-    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
-        <i class="pi pi-bars"></i>
+  <a class="layout-topbar-logo" routerLink="">
+    <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.png"
+      alt="logo">
+  </a>
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+    <i class="pi pi-bars"></i>
+  </button>
+
+  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+    (click)="layoutService.showProfileSidebar()">
+    <i class="pi pi-ellipsis-v"></i>
+  </button>
+
+  <div #topbarmenu class="layout-topbar-menu"
+    [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+
+    <h4 class="p-link user_name">Hi! {{loggedInUser}}</h4>
+    <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    <button class="p-link layout-topbar-button" (click)="menu.toggle($event)">
+      <i class="pi pi-user"></i>
+      <span>Profile</span>
     </button>
-
-    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
-        (click)="layoutService.showProfileSidebar()">
-        <i class="pi pi-ellipsis-v"></i>
-    </button>
-
-    <div #topbarmenu class="layout-topbar-menu"
-        [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-
-        <h4 class="p-link user_name">Hi! {{loggedInUser}}</h4>
-        <p-menu #menu [popup]="true" [model]="items"></p-menu>
-        <button class="p-link layout-topbar-button" (click)="menu.toggle($event)">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-        </button>
-        <!-- <button class="p-link layout-topbar-button"  (click)="Logout()">
-            <i class="pi pi-sign-out"></i>
-            <span>logout</span>
-        </button> -->
-    </div>
+  </div>
 </div>
-<p-dialog header="Application Constants" [(visible)]="app_config_dialog" showEffect="fade"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" [modal]="true">
-    <ng-template pTemplate="content">
-        <div class="flex flex-column align-items-center justify-content-center">
-            <div class="col align-self-end">
-                <button pButton pRipple type="button" label="Add Application Constant"
-                    class="p-button-raised p-button-success    align-self-end "
-                    (click)="addAppConfig()"></button>
+<p-dialog header="Header" [(visible)]="app_config_dialog" showEffect="fade"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" [modal]="true">
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Application Constants</span>
+    <button pButton pRipple type="button" label="Add Constant"
+      class="p-button-raised p-button-success align-self-end align-items-end" pAddRow (click)="addAppConfig()"></button>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="flex flex-column align-items-center justify-content-center">
 
-            </div>
-            <!-- <div formArrayName="appArray"> -->
-                <p-table #dt dataKey="vin" editMode="row" [value]="appConfig" [tableStyle]="{ width: 'max-content'}">
+      <p-table #dtConfig dataKey="id" editMode="row" [value]="appConfigItems" [tableStyle]="{ width: 'max-content'}"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:15em">Name</th>
+            <th style="width:15em">Value</th>
+            <th style="width:20em"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-config let-editing="editing" let-ri="rowIndex">
+          <tr [pEditableRow]="config">
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="config.name" required>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{config.name}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="config.value" required>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{config.value}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td style="text-align:center">
+              <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                class="ui-button-info p-button-outlined" (click)="onConstantEditInit(config)"></button>
 
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th style="width:15em">Name</th>
-                            <th style="width:15em">Value</th>
-                            <th style="width:20em"></th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-appConfig let-editing="editing" let-ri="rowIndex">
-                        <tr [pEditableRow]="appConfig">
-                            <td>
-                                <p-cellEditor>
-                                    <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="appConfig.name" required>
-                                    </ng-template>
-                                    <ng-template pTemplate="output">
-                                        {{appConfig.name}}
-                                    </ng-template>
-                                </p-cellEditor>
-                            </td>
-                            <td>
-                                <p-cellEditor>
-                                    <ng-template pTemplate="input">
-                                        <input pInputText type="text" [(ngModel)]="appConfig.value" required>
-                                    </ng-template>
-                                    <ng-template pTemplate="output">
-                                        {{appConfig.value}}
-                                    </ng-template>
-                                </p-cellEditor>
-                            </td>
-                            <td style="text-align:center">
-                                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
-                                    class="ui-button-info p-button-outlined" (click)="onRowEditInit(appConfig)"></button>
-                                <!-- (click)="onRowEditInit(rowData)" -->
-                                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
-                                    class="ui-button-success p-button-outlined" style="margin-right: .5em"></button>
-                                <!-- (click)="onRowEditSave(rowData)" -->
-                                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
-                                    class="ui-button-danger p-button-outlined"></button>
-                                <!-- (click)="onRowEditCancel(rowData, ri)" -->
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-        </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-                (click)="onSubmit()"></button>
-        </div>
-    </ng-template>
+              <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                class="ui-button-success p-button-outlined" style="margin-right: .5em"
+                (click)="onConstantEditSave(config,ri)"></button>
+
+              <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                class="ui-button-danger p-button-outlined" (click)="onConstantEditCancel(config, ri)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </ng-template>
 </p-dialog>
 
-<p-dialog header="lookup" [(visible)]="lookup_dialog" showEffect="fade"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '70vw' }" [modal]="true">
-    <ng-template pTemplate="content">
-        <div class="flex flex-column align-items-left justify-content-left">
-            <form [formGroup]="application_contsants" (ngSubmit)="onSubmit()">
-                <div class="grid p-fluid">
-                    <div class="field col-4 md:col-4 align-self-start">
-                        <label>Code:<sup class="p-error">*</sup></label>
-                        <p-dropdown placeholder="Select Code" optionLabel="code" [options]="lookupMenuCode"
-                            optionValue="lookupId" formControlName="code" appendTo="body"
-                            (onChange)="getLookupDetailsByLookupId($event.value)"
-                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                        </p-dropdown>
-                        <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                                *ngIf="FormControls['code'].errors?.['required']">
-                                Please Select code.</div>
-                        </span>
-                    </div>
-                    <div class="field col-4 md:col-4 align-self-end">
-                        <div class="col ">
-                            <button pButton pRipple type="button" label="Add Lookup"
-                                class="p-button-raised p-button-success  align-self-end "
-                                (click)="addLookup()"></button>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-12" formArrayName="lookUpArray" *ngIf="showlookup">
-                        
-                        <p-table #dt2 [value]="faLookupFrom().controls" dataKey="id" [rows]="10" [rowHover]="true"
-                            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
-                            [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Code </th>
-                                    <th>Name</th>
-                                    <th>Remarks</th>
-                                    <th>Listing Order</th>
-                                    <th>Action</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-lookupDetails let-lookUpDetailsIndex="rowIndex">
-                                <tr [formGroupName]="lookUpDetailsIndex">
-                                    <td>
-                                        <input pInputText class="form-control" formControlName="code" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
-                                    formArrayControls(lookUpDetailsIndex, 'code')?.errors }">
-                                        <span
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched &&formArrayControls(lookUpDetailsIndex,'code')?.invalid">
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['required']">
-                                                Please enter code.</div>
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['maxlength']">
-                                                Code should contains maximum 20 letters or integers.</div>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <input pInputText class="form-control" formControlName="name" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'name')?.touched &&
-                                        formArrayControls(lookUpDetailsIndex,'name')?.errors }">
-                                        <span
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.touched &&formArrayControls(lookUpDetailsIndex,'name')?.invalid">
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.errors?.['required']">
-                                                Please enter name.</div>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <input pInputText class="form-control" formControlName="remarks">
-                                    </td>
-                                    <td>
-                                        <p-inputNumber class="form-control" formControlName="listingorder"
-                                            [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&
-                                        formArrayControls(lookUpDetailsIndex,'listingorder')?.errors }"></p-inputNumber>
-                                        <span
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&formArrayControls(lookUpDetailsIndex,'listingorder')?.invalid">
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.errors?.['required']">
-                                                Please enter listing order.</div>
-                                        </span>
-                                    </td>
-                                    <!-- <td>
-                                            <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                                                *ngIf="!this.  LookupFrom().controls[lookUpDetailsIndex].get('lookupId')?.value"
-                                                (click)="  LookupFrom().removeAt(lookUpDetailsIndex)"></i>
-                                            <i class="pi pi-fw pi-verified text-3xl"
-                                                *ngIf="this.  LookupFrom().controls[lookUpDetailsIndex].get('lookupId')?.value"></i>
-                                        </td> -->
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-            </form>
+<p-dialog header="Lookups With Details" [(visible)]="lookup_dialog" showEffect="fade"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '70vw' }" [modal]="true">
+  <ng-template pTemplate="content">
+    <div class="flex flex-column align-items-left justify-content-left">
+      <div class="grid p-fluid">
+        <div class="field col-4 md:col-4 align-self-start">
+          <label>Lookups:<sup
+              class="p-error">*</sup></label>
+          <p-dropdown placeholder="Select Lookup" optionLabel="code" [options]="lookups" optionValue="id"
+            appendTo="body" [autoDisplayFirst]=false (onChange)="getLookupDetailsByLookupId($event.value)">
+          </p-dropdown>
         </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-                (click)="onSubmit()"></button>
+        <div class="field col-2 md:col-2 align-self-end">
+          <button pButton pRipple type="button" label="Add Lookup Detail"
+            class="p-button-raised p-button-success  align-self-end " (click)="addLookup()"></button>
         </div>
-    </ng-template>
+
+
+        <div class="col-12">
+          <p-table #lookupDetail editMode="row" dataKey="lookupDetailId" [rowHover]="true"
+            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
+            [autoLayout]="true" responsiveLayout="scroll" [value]="lookupDetails">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Code </th>
+                <th>Name</th>
+                <th>Listing Order</th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-lookupDetail let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="lookupDetail">
+                <td >
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="lookupDetail.code" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{lookupDetail.code}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td >
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="lookupDetail.name" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{lookupDetail.name}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+
+                <td>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="lookupDetail.listingorder" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{lookupDetail.name}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+
+                <td style="text-align:center">
+                  <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                    class="ui-button-info p-button-outlined" (click)="onLookupDetailEdit(lookupDetail)"></button>
+
+                  <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                    class="ui-button-success p-button-outlined" style="margin-right: .5em"
+                    (click)="onRowLookupDetailSave(lookupDetail,ri)"></button>
+
+                  <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                    class="ui-button-danger p-button-outlined"
+                    (click)="onRowLookupDetailCancel(lookupDetail, ri)"></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+      <!-- </form> -->
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+  </ng-template>
 </p-dialog>
