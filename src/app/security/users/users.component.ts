@@ -60,6 +60,8 @@ export class UsersComponent implements OnInit {
     this.securityService.GetUsers().subscribe(resp => {
       this.users = resp as unknown as UserViewDto[];
       this.users.sort((a,b)=> (a.userName||"").localeCompare(b.userName||""))
+      console.log(this.users);
+
     })
   }
 

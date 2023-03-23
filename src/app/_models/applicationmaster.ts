@@ -51,6 +51,7 @@ export class LookupDetailViewDto {
   updatedBy?: string;
   createdBy?: string;
   // lookupName?: string;
+
 }
 export class plantTypeViewDto {
   plantTypeId?: number;

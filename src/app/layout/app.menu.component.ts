@@ -35,7 +35,7 @@ export class AppMenuComponent implements OnInit {
         return this.jwtService.Permissions.CanViewTpts || this.jwtService.Permissions.CanViewVarieties
           || this.jwtService.Permissions.CanViewVehicleTypes
       case 'Monitoring':
-        return this.jwtService.Permissions.CanViewAllottedPlots || this.jwtService.Permissions.CanViewPlotReports
+        return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
       default: return false;
     }
   }
@@ -146,12 +146,12 @@ export class AppMenuComponent implements OnInit {
             icon: 'pi pi-fw pi-eye',
             permission: true,
             items: [
-              { label: 'Allotted Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: this.jwtService.Permissions.CanViewAllottedPlots },
+              { label: 'Plot Offers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot'], permission: this.jwtService.Permissions.CanViewPlotOffers },
               { label: 'Plot Assesment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassesment'], permission: true },
               { label: 'Plot Reports', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports'], permission: this.jwtService.Permissions.CanViewPlotReports },
               { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true },
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
-              { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:forapproval'], permission: this.jwtService.Permissions.CanViewAllottedPlots },
+              { label: 'Allotted Plot Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/allottedplot/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotOffers },
               // { label: 'Plot Assesment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassesment'], permission: true },
               { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: true },
               { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: true },

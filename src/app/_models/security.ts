@@ -5,6 +5,7 @@ export class UserViewDto {
   lastName?: string;
   password?: string;
   roleId?: string;
+  roleName?:string;
   userName?: string;
   email?: string;
   mobileNumber?: string;

@@ -20,6 +20,7 @@ import { AppLayoutComponent } from "./app.layout.component";
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
+// import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -55,6 +56,7 @@ import { SharedModule } from 'src/app/_shared/shared.module';
         DialogModule,
         FieldsetModule,
         SharedModule,
+    //    TableModule,
     ],
     exports: [AppLayoutComponent]
 })
