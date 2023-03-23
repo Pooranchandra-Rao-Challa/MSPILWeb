@@ -154,9 +154,9 @@ export const GET_BILLPARAMSFORCATEGORY_URI = "ApplicationMaster/GetBillParameter
 export const GET_GETSEASONBILLINGRATES_URI = "ApplicationMaster/GetSeasonBillingRate";
 
 export const GET_OFFERCODE_URI = "Monitoring/GetNewOfferNo";
-export const CREATE_ALLOTTEDPLOT_URI = "Monitoring/CreatePlotOffer";
-export const UPDATE_ALLOTTEDPLOT_URI = "Monitoring/UpdatePlotOffer";
-export const GET_ALLOTTEDPLOTS_URI = "Monitoring/GetPlotOffers";
+export const CREATE_PLOT_OFFER_URI = "Monitoring/CreatePlotOffer";
+export const UPDATE_PLOT_OFFER_URI = "Monitoring/UpdatePlotOffer";
+export const GET_PLOT_OFFERS_URI = "Monitoring/GetPlotOffers";
 export const IS_NEW_FARMAR_URI = "Monitoring/IsNewFarmer";
 export const CREATE_PLOT_REPORT_URI = "Monitoring/CreatePlotReport";
 export const UPDATE_PLOT_REPORT_URI = "Monitoring/UpdatePlotReport";

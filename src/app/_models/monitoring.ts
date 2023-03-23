@@ -1,5 +1,4 @@
-import { NumericDirective } from 'src/app/_directives/numericOnly.directive';
-export class AllottedPlotDto {
+export class PlotOfferDto {
   allottedPlotId?: number;
   seasonId?: number;
   offerNo?: number;

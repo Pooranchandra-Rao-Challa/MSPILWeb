@@ -22,7 +22,6 @@ export class DistrictComponent implements OnInit {
   districts: DistrictViewDto[] = [];
   district: DistrictDto = new DistrictDto();
   state: StateDto[] = [];
-  loading: boolean = true;
   fbdistricts!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
@@ -64,7 +63,6 @@ export class DistrictComponent implements OnInit {
   initDistricts() {
     this.geoMasterService.GetDistricts().subscribe((resp) => {
       this.districts = resp as unknown as DistrictViewDto[]
-      this.loading = false;
     })
   }
 

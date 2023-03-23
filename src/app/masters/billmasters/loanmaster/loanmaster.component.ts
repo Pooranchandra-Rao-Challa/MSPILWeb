@@ -11,13 +11,13 @@ import { HttpEvent } from '@angular/common/http';
 import { LoanTypeViewDto, LoanTypeDto, LoanSubTypeViewDto, } from '../../../_models/billingmaster';
 import { BillMasterService } from '../../../_services/billmaster.service';
 import { MaxLength } from 'src/app/_models/common';
-import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { AlertMessage } from '../../../_alerts/alertMessage';
+import { AlertMessage, ALERT_CODES } from '../../../_alerts/alertMessage';
 
 @Component({
   selector: 'app-loanmaster',
   templateUrl: './loanmaster.component.html',
-  styles: [],
+  styles: [
+  ],
 })
 export class LoanMasterComponent implements OnInit {
   loanTypes: LoanTypeViewDto[] = [];
@@ -156,6 +156,7 @@ export class LoanMasterComponent implements OnInit {
   }
 
   addLoanType() {
+
     this.submitLabel = 'Add Loan SubType';
     this.addFlag = true;
     this.loanTypesForm();

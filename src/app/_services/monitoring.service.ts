@@ -1,10 +1,10 @@
 import { IPlotReportViewDto, PlotAssessmentDto, PlotAssessmentViewDto, PlotReportDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
-import { AllottedPlotDto, IPlotOfferViewDto } from "src/app/_models/monitoring";
+import { PlotOfferDto, IPlotOfferViewDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "src/app/_services/api.http.service";
 import { CompletedPlotDto, CompletedPlotViewDto } from '../_models/monitoring';
 import {
-  CREATE_ALLOTTEDPLOT_URI, GET_ALLOTTEDPLOTS_URI, GET_OFFERCODE_URI, UPDATE_ALLOTTEDPLOT_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
+  CREATE_PLOT_OFFER_URI, GET_PLOT_OFFERS_URI, GET_OFFERCODE_URI, UPDATE_PLOT_OFFER_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
   UPDATE_PLOT_REPORT_URI, GET_PLOT_ALLOTMENTS_IN_SEASON_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_PLOTTRANSFER_URI, GET_DOCCODE_URI,
   CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI, UPDATE_COMPLETED_PLOT_URI, GET_ALLOTTED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_PLOT_REPORTINFO_URI
 } from "src/app/_services/api.uri.service";
@@ -17,24 +17,24 @@ export class MonitoringService extends ApiHttpService {
     return this.getWithId<boolean>(GET_OFFERCODE_URI, seasonId);
   }
 
-  public CreateAllottedPlot(allottedPlot: AllottedPlotDto) {
-    return this.post<AllottedPlotDto>(CREATE_ALLOTTEDPLOT_URI, allottedPlot);
+  public CreatePlotOffer(plotOffer: PlotOfferDto) {
+    return this.post<PlotOfferDto>(CREATE_PLOT_OFFER_URI, plotOffer);
   }
 
-  public UpdateAllottedPlot(allottedPlot: AllottedPlotDto) {
-    return this.post<AllottedPlotDto>(UPDATE_ALLOTTEDPLOT_URI, allottedPlot);
+  public UpdatePlotOffer(plotOffer: PlotOfferDto) {
+    return this.post<PlotOfferDto>(UPDATE_PLOT_OFFER_URI, plotOffer);
   }
 
-  public GetAllottedPlots(seasonId: number, forapproval: boolean, param1 = null) {
+  public GetPlotOffers(seasonId: number, forapproval: boolean, param1 = null) {
     let arr: any[] = [];
     arr.push(seasonId);
     arr.push(forapproval);
     if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<IPlotOfferViewDto[]>(GET_ALLOTTEDPLOTS_URI, arr);
+      return this.getWithParams<IPlotOfferViewDto[]>(GET_PLOT_OFFERS_URI, arr);
     }
     else {
-      return this.getWithParams<IPlotOfferViewDto[]>(GET_ALLOTTEDPLOTS_URI, arr);
+      return this.getWithParams<IPlotOfferViewDto[]>(GET_PLOT_OFFERS_URI, arr);
     }
   }
 

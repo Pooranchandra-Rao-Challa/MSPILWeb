@@ -26,6 +26,7 @@ export class LookupDetailDto {
   lookupDetailId?: number;
   code?: string;
   name?: string;
+  aliasName?: string;
   lookupId?: number;
   remarks?: string;
   lookupName?: string;

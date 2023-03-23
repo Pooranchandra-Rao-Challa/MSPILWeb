@@ -89,7 +89,7 @@ export class ProppingComponent implements OnInit {
     }
     initAllottedPlots(seasonId: number) {
         let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-        this.monitoringService.GetAllottedPlots(seasonId, this.forapproval, param1).subscribe((resp) => {
+        this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
             this.allottedPlots = resp as unknown as IPlotOfferViewDto[];
             this.loading = false;
         });
