@@ -4,7 +4,7 @@
   --surface-c:#e9ecef;
   --surface-d:#dee2e6;
   --surface-e:#ffffff;
-  --surface-f:#ffffff;
+  --surface-f:#dbd0f6;
   --text-color:#495057;
   --text-color-secondary:#6c757d;
   --primary-color:#8B5CF6;
@@ -41,6 +41,9 @@
   --surface-border:#dfe7ef;
   --surface-hover:#f6f9fc;
   --focus-ring: 0 0 0 0.2rem #DDD6FE;
+  --menu-bg1:#8B5CF6;
+  --menu-bg2:#371584;
+  --active:#354282;
   --maskbg: rgba(0, 0, 0, 0.4);
   color-scheme: light;
 }

@@ -2,7 +2,7 @@
     <div class="card">
         <p-toast key="tst"></p-toast>
         <p-dialog header="Shift" [(visible)]="dialog" showEffect="fade"
-            [modal]="true" [style]="{width: '60%'}">
+            [modal]="true" [style]="{width: '40%'}">
                 <ng-template pTemplate="content">
                 <div class="flex flex-column align-items-center justify-content-center">
                     <form [formGroup]="fbshifts" (ngSubmit)="onSubmit()">
@@ -49,7 +49,7 @@
 
                                 <div class="field col-12 md:col-6">
                                     <label>From Time:<sup class="p-error">*</sup></label>
-                                    <p-calendar class="cursor-pointer" [timeOnly]="true"   [showSeconds]="false" dataType="string" [readonlyInput]="true" [showIcon]="true"
+                                    <p-calendar class="cursor-pointer" [timeOnly]="true" [showIcon]="true" icon="fa-clock-o"  placeholder="From time" [showSeconds]="false" dataType="string" [readonlyInput]="true" 
                                     formControlName="strFromTime"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['strFromTime'].touched && FormControls['strFromTime'].errors }">
                                     </p-calendar>
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>To Time:<sup class="p-error">*</sup></label>
-                                    <p-calendar [readonlyInput]="true" [timeOnly]="true"   [showSeconds]="false" dataType="string" [showIcon]="true" formControlName="strToTime"
+                                    <p-calendar [readonlyInput]="true" [timeOnly]="true" [showIcon]="true" icon="fa-clock" placeholder="To time"  [showSeconds]="false" dataType="string"  formControlName="strToTime"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['strToTime'].touched && FormControls['strToTime'].errors }">
                                     </p-calendar>
                                     <span *ngIf="FormControls['strToTime'].touched && FormControls['strToTime'].invalid">
@@ -89,7 +89,7 @@
 
             <ng-template pTemplate="footer">
                 <div class="col-4" style="float:right">
-                  <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+                  <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
                     (click)="onSubmit()"></button>
                 </div>
               </ng-template>
@@ -99,7 +99,7 @@
                 <h4>Shifts</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="New Shift" icon="pi pi-plus" class="p-button-success p-mr-2"
+                <button pButton pRipple label="New Shift" icon="pi pi-plus" class="p-button-primary p-mr-2"
                     (click)="InitShift();"></button>
             </ng-template>
         </p-toolbar>

@@ -8,7 +8,7 @@
         <h4>Varieties</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Variety" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Variety" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addVariety()"></button>
       </ng-template>
     </p-toolbar>
@@ -237,7 +237,7 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-primary"
             [disabled]="fbVariety.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
