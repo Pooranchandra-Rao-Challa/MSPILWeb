@@ -1,17 +1,18 @@
 export class PlotOfferDto {
-  allottedPlotId?: number;
+  plotOfferId?: number;
   seasonId?: number;
-  offerNo?: number;
+  offerNo!: number;
   offerDate?: Date;
   isNewFarmer?: boolean;
   farmerId?: number;
-  villageId?: number;
+  plotVillageId?: number;
   expectedArea?: number;
   plantTypeId?: number;
-  plantingDate?: Date;
-  varietyId?: number;
+  expectedPlantingDate?: Date;
+  expectedVarietyId?: number;
   reasonForNotPlantingId?: number;
-  isActive?: boolean;
+  entityStatusId?: number;
+  serverUpdatedStatus?: boolean;
 }
 export interface IPlotOfferViewDto {
   allottedPlotId: number;
@@ -54,7 +55,6 @@ export interface IPlotOfferViewDto {
   updatedBy: string;
 }
 
-
 export interface IFarmerInPlotOfferDto {
   plotOfferId: number;
   seasonId: number;
@@ -74,8 +74,12 @@ export interface IFarmerInPlotOfferDto {
   offeredPlots: string;
   ObjOfferedPlots:IFarmerPlotOffersViewDto[];
 }
+
 export interface IFarmerPlotOffersViewDto{
   plotOfferId: number;
+  offerNo: number;
+  offerDate: Date;
+  isNewFarmer: boolean;
   plotVillageId: number;
   plotVillageName: string;
   plotDivisionName: string;
@@ -83,9 +87,9 @@ export interface IFarmerPlotOffersViewDto{
   plotSectionName: string;
   plantTypeId: number;
   plantType: string;
-  varietyId: number;
+  expectedVarietyId: number;
   expectedVariety: string;
-  plantingDate: Date;
+  expectedPlantingDate: Date;
   expectedArea: number;
   reasonForNotPlantingId: number;
   reasonForNotPlanting: string;
@@ -186,7 +190,6 @@ export class plotAssessmentWeedicidesDto {
   isAssessed?: boolean;
   isAgreemented?: boolean;
 }
-
 export class PlotAssessmentViewDto {
   plotAssessmentId?: number;
   seasonId?: number;

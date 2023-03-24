@@ -83,8 +83,8 @@ export class PlotreportsComponent implements OnInit {
     private monitoringService: MonitoringService) { }
 
   ngOnInit() {
-    let currentSeason = '2020-21';
     this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
+    this.initCurrentSeason(this.CurrentSeasonCode);
     this.initSeasons();
     this.initCropTypes();
     this.initVillages();
@@ -99,8 +99,19 @@ export class PlotreportsComponent implements OnInit {
     this.initSourceofIrrigations();
     this.initMethodofIrrigations();
     this.initPlantingMethods();
-    this.initCurrentSeason(currentSeason);
     this.allottedPlotForm();
+  }
+
+  get CurrentSeasonCode() : string {
+    let fullYear = new Date().getFullYear();
+    let shortYear = parseInt(fullYear.toString().substring(2, 4));
+    let month = new Date().getMonth();
+    if (month >= 10) {
+      return `${fullYear}-${shortYear+1}`;
+    }
+    else {
+      return `${fullYear-1}-${shortYear}`;
+    }
   }
 
   getPlotAllotmentsInSeason(seasonId: number) {
@@ -309,6 +320,9 @@ export class PlotreportsComponent implements OnInit {
   addPlotReport() {
     this.fbPlotReport.controls['seasonId'].enable();
     this.fbPlotReport.controls['offerNo'].enable();
+    this.fbPlotReport.controls['seasonId'].setValue(this.currentSeason.seasonId);
+    this.getPlotAllotmentsInSeason(this.currentSeason.seasonId || 0);
+
     this.showDialog = true;
   }
 
