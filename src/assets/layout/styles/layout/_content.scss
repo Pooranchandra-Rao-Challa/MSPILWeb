@@ -30,7 +30,7 @@
 {
 	border-radius: 0px;
 	background-color: #FFF;
-	background-image: linear-gradient(50deg, rgb(2, 0, 36) 0%, rgb(68, 157, 9) 0%, rgb(10, 145, 91) 100%, rgb(5, 103, 95) 100%);
+	background-image: linear-gradient(50deg,var(--active)0%, var(--menu-bg1)100%, var(--menu-bg2)100%);
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
     background-color: var(--surface-ground);
