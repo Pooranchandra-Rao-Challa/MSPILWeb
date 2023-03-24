@@ -118,6 +118,10 @@ export class PlotofferComponent implements OnInit {
         value.ObjOfferedPlots = JSON.parse(value.offeredPlots) as IFarmerPlotOffersViewDto[];
       });
     });
+
+
+    console.log(this.seasons.filter((season)=> season.seasonId != seasonId ));
+
   }
 
   onSearch() {

@@ -7,7 +7,7 @@
         <h4>Seasons</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Season" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Season" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addSeason()" (onChange)="handleBillCategoryChange($event)" ></button>
       </ng-template>
     </p-toolbar>
@@ -272,7 +272,7 @@
                             <div class="col-3" style="float:right">
                               <button (click)="addItem((billCategory.aliasName?.toLowerCase())+'Rates', billCategory)"
                                 pButton pRipple type="button" [label]="'Add '+ billCategory.name" icon="pi pi-plus"
-                                class="p-button-raised p-button-success" style="white-space: nowrap;"></button>
+                                class="p-button-raised p-button-primary" style="white-space: nowrap;"></button>
                             </div>
                             <div [formArrayName]="(billCategory.aliasName?.toLowerCase())+'Rates' "
                               class="season-rates-tab-items">
@@ -324,7 +324,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12">
           <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+            <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
             [disabled]="fbseasons.invalid" (click)="onSubmit()"></button>
           </div>
         </div>

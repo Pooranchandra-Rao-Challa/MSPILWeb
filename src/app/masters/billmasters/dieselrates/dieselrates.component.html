@@ -8,7 +8,7 @@
         <h4>Diesel Rates</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Diesel Rate" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Diesel Rate" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addDieselRate()"></button>
       </ng-template>
     </p-toolbar>
@@ -149,7 +149,7 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" [label]="submitLabel" class="p-button-raised p-button-success"
+          <button pButton pRipple type="button" [label]="submitLabel" class="p-button-raised p-button-primary"
             [disabled]="fbDieselRate.invalid"
             (click)="onSubmit()"></button>
         </div>

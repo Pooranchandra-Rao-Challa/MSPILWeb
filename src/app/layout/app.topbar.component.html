@@ -1,6 +1,6 @@
 <div class="layout-topbar">
   <a class="layout-topbar-logo" routerLink="">
-    <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.png"
+    <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-dark'}}.png"
       alt="logo">
   </a>
   <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
@@ -17,10 +17,15 @@
 
     <h4 class="p-link user_name">Hi! {{loggedInUser}}</h4>
     <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    <p-menu #menu_theme [popup]="true" [model]="setting_items"></p-menu>
     <button class="p-link layout-topbar-button" (click)="menu.toggle($event)">
       <i class="pi pi-user"></i>
       <span>Profile</span>
     </button>
+    <button class="p-link layout-topbar-button" (click)="menu_theme.toggle($event)">
+        <i class="pi pi-cog"></i>
+        <span>Theam</span>
+      </button>
   </div>
 </div>
 <p-dialog header="Header" [(visible)]="app_config_dialog" showEffect="fade"

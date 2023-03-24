@@ -1,10 +1,11 @@
+import { FertilizerComponent } from './../../masters/applicationmasters/fertilizer/fertilizer.component';
 import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
 import { FarmersViewDto, LookupDetailDto, plantTypeDto, SeasonDto, SeasonViewDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
-import { IPlotReportViewDto, PlotAssessmentViewDto, plotAssessmentWeedicidesDto, PlotReportDto } from 'src/app/_models/monitoring';
+import { IFarmerInPlotOfferDto, IPlotReportViewDto, MaintenanceItems, MaintWeedicideDto, MaintDiseaseDto, MaintFertilizerDto, MaintPestDto, PlotAssessmentViewDto, plotAssessmentWeedicidesDto, PlotReportDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -40,88 +41,127 @@ export class PlotassesmentComponent implements OnInit {
   plottype: LookupDetailDto[] = [];
   weedstatus: LookupDetailDto[] = [];
   weedicideId: plotAssessmentWeedicidesDto[] = [];
-  plotAssessments: PlotAssessmentViewDto[] = [];
-  weedicides:LookupDetailDto[] =[]
-  plotReports: PlotReportDto[] =[];
+  plotAssessments: IFarmerInPlotOfferDto[] = [];
+  weedicides: LookupDetailDto[] = []
+  plotReports: PlotReportDto[] = [];
   currentSeasonCode?: string;
-  pests:LookupDetailDto[] =[];
-  fertilizers:LookupDetailDto[] =[];
-  Diseases:LookupDetailDto[] =[];
-  plotReportsinfo:IPlotReportViewDto[] =[];
+  pests: LookupDetailDto[] = [];
+  fertilizers: LookupDetailDto[] = [];
+  Diseases: LookupDetailDto[] = [];
+  plotReportsinfo: IPlotReportViewDto[] = [];
   offeredNo: any[] = [];
   allottedPlotByAllottedPlotId: any;
+  maintanenceItems?: MaintenanceItems = {}
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private lookupService: LookupService,
     private monitoringService: MonitoringService) { }
-    headers: IHeader[] = [
-      { field: 'cropType', header: 'cropType', label: 'Crop' },
-      { field: 'season', header: 'season', label:'Season' },
-      { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
-      { field: 'farmerCode', header: 'farmerCode', label: 'farmer Name' },
-      { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' },
-      { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-      { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-      { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
-      { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-      { field: 'variety', header: 'variety', label: 'Variety' },
-      { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
-      { field: 'plotType', header: 'plotType', label: 'plot Type'},
-      { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
-      { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date'},
-  
-    ];
-  initPlotAssesment() {
+  farmerHeader: IHeader[] = [
+    // { field: 'cropType', header: 'cropType', label: 'Crop' },
+    { field: 'season', header: 'season', label: 'Season' },
+    // { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
+    { field: 'farmerCode', header: 'farmerCode', label: 'farmer Name' },
+    { field: 'fatherName', header: 'fatherName', label: 'father Name' },
+    { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' },
+    // { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    // { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
+    // { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
+    // { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    // { field: 'variety', header: 'variety', label: 'Variety' },
+    // { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
+    // { field: 'plotType', header: 'plotType', label: 'plot Type'},
+    // { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
+    // { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date'},
+
+  ];
+
+  plotHeader: IHeader[] = [
+    { field: 'CropType', header: 'CropType', label: 'Crop' },
+    // { field: 'season', header: 'season', label:'Season' },
+    { field: 'OfferNo', header: 'OfferNo', label: 'OfferNo' },
+    // { field: 'farmerCode', header: 'farmerCode', label: 'farmer Name' },
+    // { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' },
+    { field: 'plantType', header: 'PlantType', label: 'Plant Type' },
+    { field: 'SurveyNo', header: 'SurveyNo', label: 'Survey No' },
+    { field: 'PlotNumber', header: 'PlotNumber', label: 'Plot Number' },
+    { field: 'PlantingDate', header: 'PlantingDate', label: 'Planting Date' },
+    { field: 'Variety', header: 'Variety', label: 'Variety' },
+    { field: 'FieldName', header: 'FieldName', label: 'Field Name' },
+    { field: 'PlotType', header: 'PlotType', label: 'plot Type' },
+    { field: 'AssessedArea', header: 'AssessedArea', label: 'Assessed Area' },
+    { field: 'AssessedDate', header: 'AssessedDate', label: 'Assessed Date' },
+
+  ];
+
+
+  initPlotAssesment(plotAssessmentId: number = -1) {
     this.submitLabel = "Add Assesment";
     this.addFlag = true;
     this.showDialog = true;
 
-    this.fbPlotAssesment.patchValue({"seasonId":this.currentSeason.seasonId});
-    const formArray = this.fbPlotAssesment.get("weedicides") as FormArray;
-    this.weedicides.forEach(weed =>{
-      console.log(weed);
-
-      formArray.push(this.createWeed(weed));
-    })
-  this.pest();
-  this.Fertilizer();
-  this.Disease();
+    this.monitoringService.GetMaintenanceItemsForAssessment(plotAssessmentId).subscribe((resp) => {
+      this.maintanenceItems = resp as unknown as MaintenanceItems;
+      console.log(this.maintanenceItems);
+      this.initMaintanenceItems();
+    });
   }
 
-  pest(){
-  this.fbPlotAssesment.patchValue({"seasonId":this.currentSeason.seasonId});
+  initMaintanenceItems() {
+    const weedicideArray = this.fbPlotAssesment.get("weedicides") as FormArray;
+    console.log(this.maintanenceItems?.weedicides);
+
+    this.maintanenceItems?.weedicides?.forEach(weedicide => {
+      weedicideArray.push(this.createWeed(weedicide))
+    })
+    const fertilizerArray = this.fbPlotAssesment.get("fertilizers") as FormArray;
+    this.maintanenceItems?.fertilizers?.forEach(fertilizer => {
+      fertilizerArray.push(this.createFertlizer(fertilizer))
+    })
+    const pestArray = this.fbPlotAssesment.get("pests") as FormArray;
+    this.maintanenceItems?.pests?.forEach(pest => {
+      pestArray.push(this.createpests(pest))
+    })
+    const diseaseArray = this.fbPlotAssesment.get("diseases") as FormArray;
+    this.maintanenceItems?.diseases?.forEach(disease => {
+      diseaseArray.push(this.createDisease(disease))
+    })
+  }
+
+
+  pest() {
+    this.fbPlotAssesment.patchValue({ "seasonId": this.currentSeason.seasonId });
     const formArray = this.fbPlotAssesment.get("pests") as FormArray;
-    this.pests.forEach(pest =>{
+    this.pests.forEach(pest => {
       console.log(pest);
 
       formArray.push(this.createpests(pest));
     })
   }
-  Fertilizer(){
-    this.fbPlotAssesment.patchValue({"seasonId":this.currentSeason.seasonId});
+  Fertilizer() {
+    this.fbPlotAssesment.patchValue({ "seasonId": this.currentSeason.seasonId });
     const formArray = this.fbPlotAssesment.get("fertilizers") as FormArray;
-    this.fertilizers.forEach(fertilizer=>{
+    this.fertilizers.forEach(fertilizer => {
       console.log(fertilizer);
 
       formArray.push(this.createFertlizer(fertilizer));
     })
   }
-  Disease(){
-    this.fbPlotAssesment.patchValue({"seasonId":this.currentSeason.seasonId});
+  Disease() {
+    this.fbPlotAssesment.patchValue({ "seasonId": this.currentSeason.seasonId });
     const formArray = this.fbPlotAssesment.get("diseases") as FormArray;
-    this.Diseases.forEach(diseases=>{
+    this.Diseases.forEach(diseases => {
       console.log(diseases);
 
       formArray.push(this.createDisease(diseases));
     })
   }
-  
+
   ngOnInit(): void {
     this.currentSeasonCode = CURRENT_SEASON()
     console.log(this.currentSeasonCode);
-   
-   
+
+
     this.plotAssesmentForm();
     this.initCurrentSeasons();
     this.initSeasons();
@@ -154,12 +194,13 @@ export class PlotassesmentComponent implements OnInit {
     });
   }
 
-  initPlotReports(season: number){
-    this.monitoringService.GetPlotReportsInSeason(season).subscribe((resp)=>{
+  initPlotReports(season: number) {
+    this.monitoringService.GetPlotReportsInSeason(season).subscribe((resp) => {
       console.log(resp);
 
       this.plotReports = resp as unknown as PlotReportDto[];
     })
+
   }
   getAllottedPlotByAllottedPlotId(offerNo: number) {
     this.offeredNo.forEach((value) => {
@@ -227,28 +268,31 @@ export class PlotassesmentComponent implements OnInit {
       this.weedicides = resp as unknown as LookupDetailDto[];
     });
   }
-  initPests(){
+  initPests() {
     this.lookupService.Pests().subscribe((resp) => {
       this.pests = resp as unknown as LookupDetailDto[];
       // console.log(resp)
     });
   }
-  initFertlizers(){
+  initFertlizers() {
     this.lookupService.Fertilizers().subscribe((resp) => {
       this.fertilizers = resp as unknown as LookupDetailDto[];
       // console.log(resp)
-  })
-}
-initDisease(){
-  this.lookupService.Diseases().subscribe((resp) => {
-    this.Diseases = resp as unknown as LookupDetailDto[];
-    // console.log(resp)
-  })
-}
+    })
+  }
+  initDisease() {
+    this.lookupService.Diseases().subscribe((resp) => {
+      this.Diseases = resp as unknown as LookupDetailDto[];
+      // console.log(resp)
+    })
+  }
   initPlotAssesments(seasonId: number) {
     this.monitoringService.GetPlotAssessments(seasonId).subscribe((resp) => {
-      this.plotAssessments = resp as unknown as PlotAssessmentViewDto[];
-      console.log(resp)
+      this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
+      this.plotAssessments.forEach((farmer) => {
+        farmer.ObjMeasuredPlots = JSON.parse(farmer.measuredPlots) as PlotAssessmentViewDto[]
+      })
+      console.log(this.plotAssessments)
     })
   }
   onSearch() {
@@ -257,9 +301,9 @@ initDisease(){
 
   plotAssesmentForm() {
     this.fbPlotAssesment = this.formbuilder.group({
-      seasonId:[{ value: this.currentSeason.seasonId }, (Validators.required)],
-      plotReportId:[,(Validators.required)],
-      croptype: ['',Validators.required],
+      seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
+      plotReportId: [, (Validators.required)],
+      croptype: ['', Validators.required],
       crop: [],
       offeredno: [],
       farmerId: [],
@@ -270,29 +314,29 @@ initDisease(){
       section: [],
       farmervillage: [],
       plotareavillage: [],
-      plantTypeId: ['',Validators.required],
-      plotTypeId: ['',Validators.required],
-      surveyNo: ['',Validators.required],
+      plantTypeId: ['', Validators.required],
+      plotTypeId: ['', Validators.required],
+      surveyNo: ['', Validators.required],
       reportedarea: [],
-      plantingDate: ['',Validators.required],
-      varietyId: ['',Validators.required],
+      plantingDate: ['', Validators.required],
+      varietyId: ['', Validators.required],
       // agreedton: [],
       fieldname: [],
       birnumber: [],
       birdate: [],
-      assessedArea: ['',Validators.required],
-      assessedDate: ['',Validators.required],
+      assessedArea: ['', Validators.required],
+      assessedDate: ['', Validators.required],
       demoplotarea: [true],
       isactive: [true],
-      weedStatusId: ['',Validators.required],
-      interCropId: ['',Validators.required],
+      weedStatusId: ['', Validators.required],
+      interCropId: ['', Validators.required],
       micronutrientdeficiency: [true],
       trashmulching: [true],
       gapfillingdone: [true],
-      weedicides:this.formbuilder.array([]),
-      pests:this.formbuilder.array([]),
-      fertilizers:this.formbuilder.array([]),
-      diseases:this.formbuilder.array([]),
+      weedicides: this.formbuilder.array([]),
+      pests: this.formbuilder.array([]),
+      fertilizers: this.formbuilder.array([]),
+      diseases: this.formbuilder.array([]),
     })
   }
 
@@ -300,76 +344,56 @@ initDisease(){
     return this.fbPlotAssesment.controls;
   }
 
-  getFormArrayControl(formGroupName: string):FormArray{
+  getFormArrayControl(formGroupName: string): FormArray {
     return this.fbPlotAssesment.controls[formGroupName] as FormArray
   }
-  
-  createpests(pest:LookupDetailDto,plotAssessmentpests?:any):  FormGroup {
-    return this.formbuilder.group({
-      pestsId: [pest.lookupId],
-      plotAssessmentpestsId:[plotAssessmentpests?.pestid==pest.lookupId ? plotAssessmentpests?.id:''],
-      name :[pest.name],
-      remarks: [pest.remarks],
-      // identifieddate:[],
-      // controldate:[],
-    })
-  }
-  createWeed(weed: LookupDetailDto,plotAssessmentWeeds?:any): FormGroup {
-    return this.formbuilder.group({
-      weedicideId: [weed.lookupDetailId],
-      plotAssessmentWeedicideId: [plotAssessmentWeeds?.weedid==weed.lookupId ? plotAssessmentWeeds?.id:''],
-      name: [weed.name],
-      checked:[plotAssessmentWeeds?.weedid==weed.lookupId],
-    });
-  }
-  createFertlizer(fertlizer: LookupDetailDto,plotAssessmentfertlizers?:any): FormGroup {
-    return this.formbuilder.group({
-      fertlizerId: [fertlizer.lookupDetailId],
-      plotAssessmentfertlizerId: [plotAssessmentfertlizers?.fertlizerid==fertlizer.lookupId ? plotAssessmentfertlizers?.id:''],
-      name: [fertlizer.name],
-      checked:[plotAssessmentfertlizers?.fertlizerid==fertlizer.lookupId],
-    });
-  }
-  createDisease(disease:LookupDetailDto,plotAssessmentdiseases?:any):  FormGroup {
-    return this.formbuilder.group({
-      diseaseId: [disease.lookupId],
-      plotAssessmentdiseasesId:[plotAssessmentdiseases?. diseaseId==disease.lookupId ? plotAssessmentdiseases?.id:''],
-      name :[disease.name],
-      remarks: [disease.remarks],
-      // identifieddate:[],
-      // controldate:[],
-    })
-  }
-  // getAllottedPlotByPlotAssessment(plotReportId: number) {
-  //   this.plotReportsinfo.forEach((value) => {
-  //     if (value.plotReportId == plotReportId) {
-  //       this.fbPlotAssesment.controls['farmername'].setValue(value.farmerName);
-  //       this.fbPlotAssesment.controls['fathername'].setValue(value.fatherName);
-  //       this.fbPlotAssesment.controls['farmervillage'].setValue(value.villageName);
-  //       this.fbPlotAssesment.controls['division'].setValue(value.divisionName);
-  //       this.fbPlotAssesment.controls['circle'].setValue(value.circleName);
-  //       this.fbPlotAssesment.controls['section'].setValue(value.sectionName);
-  //     }
-  //   });
-  // }
-  // disabledFormControls() {
-  //   this.fbPlotAssesment.controls['farmername'].disable();
-  //   this.fbPlotAssesment.controls['fathername'].disable();
-  //   this.fbPlotAssesment.controls['farmervillage'].disable();
-  //   this.fbPlotAssesment.controls['division'].disable();
-  //   this.fbPlotAssesment.controls['circle'].disable();
-  //   this.fbPlotAssesment.controls['section'].disable();
-  // }
 
+  createpests(pest: MaintPestDto): FormGroup {
+    return this.formbuilder.group({
+      pestId: [pest.pestId],
+      plotAssessmentId: [pest.plotAssessmentId],
+      name: [pest.name],
+      remarks: [pest.remarks],
+      identifiedDate: [pest.identifiedDate],
+      controlDate: [pest.controlDate]
+    })
+  }
+  createWeed(weed: MaintWeedicideDto): FormGroup {
+    return this.formbuilder.group({
+      weedicideId: [weed.weedicideId],
+      plotAssessmentId: [weed.plotAssessmentId],
+      name: [weed.name],
+      checked: [weed.selected],
+    });
+  }
+  createFertlizer(fertlizer: MaintFertilizerDto): FormGroup {
+    return this.formbuilder.group({
+      fertlizerId: [fertlizer.fertilizerId],
+      plotAssessmentId: [fertlizer.plotAssessmentId],
+      name: [fertlizer.name],
+      checked: [fertlizer.selected],
+    });
+  }
+  createDisease(disease: MaintDiseaseDto): FormGroup {
+    return this.formbuilder.group({
+      diseaseId: [disease.diseaseId],
+      plotAssessmentId: [disease.plotAssessmentId],
+      name: [disease.name],
+      remarks: [disease.remarks],
+      identifiedDate: [disease.identifiedDate],
+      controlDate: [disease.controlDate]
+    })
+  }
   savePlotAssessment(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.monitoringService.CreatePlotReport(this.fbPlotAssesment.value)
     else return this.monitoringService.UpdatePlotReport(this.fbPlotAssesment.value)
   }
   onSubmit() {
-    if(this.fbPlotAssesment.value){
+    if (this.fbPlotAssesment.valid) {
+      console.log(this.fbPlotAssesment.value);
 
     }
- else {
+    else {
       this.fbPlotAssesment.markAllAsTouched();
     }
   }

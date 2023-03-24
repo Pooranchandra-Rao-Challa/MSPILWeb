@@ -180,6 +180,8 @@ export const GET_DONOFORCOMPLETEDPLOTS_URI = "Monitoring/GetNewDocNoForCompleted
 export const GET_COMPLETED_PLOT_IN_SEASON_URI= "Monitoring/PlotAllotmentsInSeason";
 
 
-
+export const GET_MAINTANANCE_ITEMS_ASSESSMENT_URI = "Monitoring/GetMaintenanceItemsForAssessment";
+export const GET_MAINTANANCE_ITEMS_AGREEMENT_URI = "Monitoring/GetMaintenanceItemsForAgreement";
+export const GET_MAINTANANCE_ITEMS_YIELD_URI = "Monitoring/GetMaintenanceItemsForYield";
 export const GET_ALLOTTED_PLOT_URI = "Monitoring/AllottedPlot";
 export const GET_PLOT_NUMBER_URI = "Monitoring/GetPlotNumber";
