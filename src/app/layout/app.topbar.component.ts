@@ -110,14 +110,14 @@ export class AppTopBarComponent {
       
     ];
     this.setting_items = [
-      { label: 'Light Green(Default)', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-indigo', 'light'), },
-      { label: 'Dark Green', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-indigo', 'dark'), },
-      { label: 'Light Blue', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-blue', 'light'), },
-      { label: 'Dark Blue', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-blue', 'dark'), },    
-      { label: 'Light Purple', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-purple', 'light'), },
-      { label: 'Dark Purple', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-purple', 'dark'), },
-      { label: 'Light Teal', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-teal', 'light'), },
-      { label: 'Dark Teal', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-teal', 'dark'), },
+      { label: 'Green (Default)', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-indigo', 'light'), },
+      { label: 'Dark Green',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-indigo', 'dark'), },
+      { label: 'Light Blue',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-blue', 'light'), },
+      { label: 'Dark Blue',       icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-blue', 'dark'), },    
+      { label: 'Light Purple',    icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-purple', 'light'), },
+      { label: 'Dark Purple',     icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-purple', 'dark'), },
+      { label: 'Light Teal',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-teal', 'light'), },
+      { label: 'Dark Teal',       icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-teal', 'dark'), },
     ];
   }
 

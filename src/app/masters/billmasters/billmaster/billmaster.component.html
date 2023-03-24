@@ -8,7 +8,7 @@
         <h4>Bills</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Bill" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Bill" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addBill()"></button>
       </ng-template>
     </p-toolbar>
@@ -184,7 +184,7 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success" [disabled]="fbBillMaster.invalid"
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary" [disabled]="fbBillMaster.invalid"
             (click)="onSubmit()"></button>
         </div>
       </ng-template>

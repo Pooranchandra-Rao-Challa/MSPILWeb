@@ -8,7 +8,7 @@
         <h4>TPTs</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New TPT" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New TPT" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addTPT()"></button>
       </ng-template>
     </p-toolbar>
@@ -494,7 +494,7 @@
                 <div class="col-12 p-0">
                   <div class="md:col-3 p-0 mb-3" style="float: right;">
                     <button pButton pRipple type="button" label="Add TPT Details"
-                      class="p-button-raised p-button-success" (click)="addTptDetail()"></button>
+                      class="p-button-raised p-button-primary" (click)="addTptDetail()"></button>
                   </div>
                 </div>
                 <div formArrayName="tptdetails" *ngIf="showTptDetails">
@@ -586,7 +586,7 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-primary"
             [disabled]="fbTpt.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>

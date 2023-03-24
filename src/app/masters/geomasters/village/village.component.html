@@ -417,7 +417,7 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
           [disabled]="fbvillages.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
@@ -428,7 +428,7 @@
         <h4>Villages</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Village" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Village" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="InitVillage({})"></button>
       </ng-template>
     </p-toolbar>

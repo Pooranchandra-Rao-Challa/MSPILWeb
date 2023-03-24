@@ -42,9 +42,9 @@
   --surface-hover:rgba(255,255,255,.03);
   --focus-ring: 0 0 0 0.2rem rgba(165, 180, 252, 0.5);
   --maskbg: rgba(0, 0, 0, 0.4);
-  --menu-bg1:#A5B4FC;
-  --menu-bg2:#2d3667;
-  --active:#354282;
+  --menu-bg1:#7cad5b;
+  --menu-bg2:#11998e;
+  --active:#039f62;
   color-scheme: dark;
 }
 

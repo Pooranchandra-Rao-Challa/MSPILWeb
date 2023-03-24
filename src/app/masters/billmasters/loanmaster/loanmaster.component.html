@@ -7,7 +7,7 @@
         <h4>Loan Types</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New LoanType" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New LoanType" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addLoanType()" (click)="addLoanSubType()"></button>
       </ng-template>
     </p-toolbar>
@@ -253,7 +253,7 @@
                   </div>
                   <div class="field col-12 md:col-3 mt-4">
                     <button pButton pRipple type="button" label="Add SubloanType"
-                      class="p-button-raised p-button-success" (click)="addLoanSubType()"></button>
+                      class="p-button-raised p-button-primary" (click)="addLoanSubType()"></button>
                   </div>
 
                 </div>
@@ -370,7 +370,7 @@
 
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-success"
+          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-primary"
           [disabled]="fbloantype.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
