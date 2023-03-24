@@ -110,6 +110,10 @@ export class PlotofferComponent implements OnInit {
       console.log(this.plotOffers);
 
     });
+
+
+    console.log(this.seasons.filter((season)=> season.seasonId != seasonId ));
+
   }
 
   onSearch() {

@@ -6,7 +6,7 @@ import { CompletedPlotDto, CompletedPlotViewDto } from '../_models/monitoring';
 import {
   CREATE_PLOT_OFFER_URI, GET_PLOT_OFFERS_URI, GET_OFFERCODE_URI, UPDATE_PLOT_OFFER_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
   UPDATE_PLOT_REPORT_URI, GET_PLOT_ALLOTMENTS_IN_SEASON_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_PLOTTRANSFER_URI, GET_DOCCODE_URI,
-  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI, UPDATE_COMPLETED_PLOT_URI, GET_ALLOTTED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_PLOT_REPORTINFO_URI
+  CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI, GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI, UPDATE_COMPLETED_PLOT_URI, GET_ALLOTTED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_PLOT_REPORTINFO_URI, GET_MAINTANANCE_ITEMS_ASSESSMENT_URI
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -49,10 +49,10 @@ export class MonitoringService extends ApiHttpService {
     return this.getWithParams<PlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
   }
   public CreatePlotAssessment(plotAssessment: PlotAssessmentDto) {
-    return this.post<PlotAssessmentDto>(CREATE_PLOTTRANSFER_URI,plotAssessment);
+    return this.post<PlotAssessmentDto>(CREATE_PLOTTRANSFER_URI, plotAssessment);
   }
   public UpdatePlotAssessment(plotAssessment: PlotAssessmentDto) {
-    return this.post<PlotAssessmentDto>(UPDATE_PLOTTRANSFER_URI,plotAssessment);
+    return this.post<PlotAssessmentDto>(UPDATE_PLOTTRANSFER_URI, plotAssessment);
   }
   public GetPlotAllotmentsInSeason(seasonId: number) {
     return this.getWithId<any>(GET_PLOT_ALLOTMENTS_IN_SEASON_URI, seasonId);
@@ -75,7 +75,7 @@ export class MonitoringService extends ApiHttpService {
 
   // Get new docNo
   public GetNewDocNo(seasonId: number) {
-    return this.getWithId<any>(GET_DOCCODE_URI , seasonId);
+    return this.getWithId<any>(GET_DOCCODE_URI, seasonId);
   }
 
   public CreatePlotTransfer(plotTransfer: PlotTransferDto) {
@@ -104,7 +104,7 @@ export class MonitoringService extends ApiHttpService {
   }
 
   public GetPlotNumber(allotedPlotId: number) {
-    return this.getWithId<any>(GET_PLOT_NUMBER_URI, allotedPlotId, {responseType: 'text'});
+    return this.getWithId<any>(GET_PLOT_NUMBER_URI, allotedPlotId, { responseType: 'text' });
   }
 
   public GetPlotReports(seasonId: number, forapproval: boolean, param1 = null) {
@@ -136,7 +136,7 @@ export class MonitoringService extends ApiHttpService {
 
 
   public GetNewDocNoForCompletedPlots(seasonId: number) {
-    return this.getWithId<any>(GET_DONOFORCOMPLETEDPLOTS_URI,seasonId);
+    return this.getWithId<any>(GET_DONOFORCOMPLETEDPLOTS_URI, seasonId);
   }
 
 
@@ -150,14 +150,18 @@ export class MonitoringService extends ApiHttpService {
     else {
       return this.getWithParams<CompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, arr);
     }
-
-
-
   }
 
+  public GetMaintenanceItemsForAssessment(plotAssessmentId: number) {
+    return this.getWithId(GET_MAINTANANCE_ITEMS_ASSESSMENT_URI,plotAssessmentId);
+  }
 
+  public GetMaintenanceItemsForAgreement(plotAgreementId: number) {
+    return this.getWithId(GET_MAINTANANCE_ITEMS_ASSESSMENT_URI,plotAgreementId);
+  }
 
-
-
+  public GetMaintenanceItemsForYield(plotYieldId: number) {
+    return this.getWithId(GET_MAINTANANCE_ITEMS_ASSESSMENT_URI,plotYieldId);
+  }
 
 }
