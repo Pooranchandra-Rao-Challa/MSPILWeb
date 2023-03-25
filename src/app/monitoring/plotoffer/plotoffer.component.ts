@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ActivatedRoute } from '@angular/router';
+import { CURRENT_SEASON } from 'src/environments/environment';
 
 export interface IHeader {
   field: string;
@@ -89,7 +90,7 @@ export class PlotofferComponent implements OnInit {
   ngOnInit(): void {
     this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
     this.initSeasons();
-    this.initCurrentSeason(this.CurrentSeasonCode);
+    this.initCurrentSeason(CURRENT_SEASON());
     this.initFarmers();
     this.initVillages();
     this.initPlantType();
@@ -98,17 +99,17 @@ export class PlotofferComponent implements OnInit {
     this.plotOfferForm();
   }
 
-  get CurrentSeasonCode() : string {
-    let fullYear = new Date().getFullYear();
-    let shortYear = parseInt(fullYear.toString().substring(2, 4));
-    let month = new Date().getMonth();
-    if (month >= 10) {
-      return `${fullYear}-${shortYear+1}`;
-    }
-    else {
-      return `${fullYear-1}-${shortYear}`;
-    }
-  }
+  // get CurrentSeasonCode() : string {
+  //   let fullYear = new Date().getFullYear();
+  //   let shortYear = parseInt(fullYear.toString().substring(2, 4));
+  //   let month = new Date().getMonth();
+  //   if (month >= 10) {
+  //     return `${fullYear}-${shortYear+1}`;
+  //   }
+  //   else {
+  //     return `${fullYear-1}-${shortYear}`;
+  //   }
+  // }
 
   initPlotOffers(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
