@@ -10,6 +10,7 @@ import { PlotreportsComponent } from './plotreports/plotreports.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
 
+
 @NgModule({
   declarations: [
     PlotofferComponent,

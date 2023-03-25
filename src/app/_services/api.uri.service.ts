@@ -185,3 +185,7 @@ export const GET_MAINTANANCE_ITEMS_AGREEMENT_URI = "Monitoring/GetMaintenanceIte
 export const GET_MAINTANANCE_ITEMS_YIELD_URI = "Monitoring/GetMaintenanceItemsForYield";
 export const GET_ALLOTTED_PLOT_URI = "Monitoring/AllottedPlot";
 export const GET_PLOT_NUMBER_URI = "Monitoring/GetPlotNumber";
+export const GET_PLOTS_FORASSESSMENT_URI = "Monitoring/GetPlots";
+export const GET_PLOTS_URI = "Monitoring/GetPlotInformation";
+
+

@@ -115,10 +115,11 @@ export class PlotreportsComponent implements OnInit {
   }
 
   getPlotAllotmentsInSeason(seasonId: number) {
-    this.monitoringService.GetPlotAllotmentsInSeason(seasonId).subscribe((resp) => {
+    this.monitoringService.GetPlotsInSeason(seasonId,'Reported').subscribe((resp) => {
       this.offeredNo = resp as any;
     });
   }
+
 
   getAllottedPlotByAllottedPlotId(offerNo: number) {
     this.offeredNo.forEach((value) => {

@@ -456,10 +456,8 @@ export class MaintDiseaseDto {
   identifiedDate?: Date
   controlDate?: Date
   remarks?: string
-
   createdBy?: string
   updatedBy?: string
-
   createdAt?: Date
   updatedAt?: Date
 }
@@ -473,11 +471,8 @@ export class MaintPestDto {
   identifiedDate?: Date
   controlDate?: Date
   remarks?: string
-
-
   createdBy?: string
   updatedBy?: string
-
   createdAt?: Date
   updatedAt?: Date
 }
@@ -491,10 +486,8 @@ export class MaintWeedicideDto {
   weedicideId?: number
   name?: string
   selected?: boolean
-
   createdBy?: string
   updatedBy?: string
-
   createdAt?: Date
   updatedAt?: Date
 }
@@ -506,14 +499,54 @@ export class MaintFertilizerDto {
   fertilizerId?: number
   name?: string
   selected?: boolean
-
-  createdBy?: string
+ createdBy?: string
   updatedBy?: string
-
   createdAt?: Date
   updatedAt?: Date
 }
 
+export class PlotInfoDto {
+  plotId?: number
+  plotNumber?: string
+}
+export class PlotsDto {
+  plotId?: number
+  plotNumber?: string
+  offerNo?: number
+  farmerId?: number
+  farmerCode?: string
+  farmerName?: string
+  fatherName?: string
+  farmerCircle?: string
+  farmerDivision?: string
+  farmerSection?: string
+  farmerDistrict?: string
+  farmerMandal?: string
+  farmerVillageId?: number
+  farmerVillage?: string
+  plotCircle?: string
+  plotDivision?:string
+  plotSection?: string
+  plotDistrict?: string
+  plotMandal?:string
+  plotVillageId?: number
+  plotVillage?: string
+  reportedArea?: number
+  fieldName?: string
+  birNumber?: number
+  birDate?: Date
+  plantingDate?: Date
+  varietyId?: number
+  variety?: string
+  surveyNo?: number
+  plantTypeId?: number
+  plantType?: string
+  plotTypeId?: number
+  plotType?: string
+  agreedTon?: number
+  cropType?:string
+  Crop?:string
+}
 
 
 
