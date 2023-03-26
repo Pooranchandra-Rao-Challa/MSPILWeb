@@ -23,11 +23,13 @@
       <span>Profile</span>
     </button>
     <button class="p-link layout-topbar-button" (click)="menu_theme.toggle($event)">
-        <i class="pi pi-cog"></i>
-        <span>Theam</span>
-      </button>
+      <i class="pi pi-cog"></i>
+      <span>Theam</span>
+    </button>
   </div>
 </div>
+
+<!-- config constants -->
 <p-dialog header="Header" [(visible)]="app_config_dialog" showEffect="fade"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" [modal]="true">
   <ng-template pTemplate="header">
@@ -39,7 +41,7 @@
     <div class="flex flex-column align-items-center justify-content-center">
 
       <p-table #dtConfig dataKey="id" editMode="row" [value]="appConfigItems" [tableStyle]="{ width: 'max-content'}"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
         <ng-template pTemplate="header">
           <tr>
             <th style="width:15em">Name</th>
@@ -93,8 +95,7 @@
     <div class="flex flex-column align-items-left justify-content-left">
       <div class="grid p-fluid">
         <div class="field col-4 md:col-4 align-self-start">
-          <label>Lookups:<sup
-              class="p-error">*</sup></label>
+          <label>Lookups:<sup class="p-error">*</sup></label>
           <p-dropdown placeholder="Select Lookup" optionLabel="code" [options]="lookups" optionValue="id"
             appendTo="body" [autoDisplayFirst]=false (onChange)="getLookupDetailsByLookupId($event.value)">
           </p-dropdown>
@@ -119,7 +120,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-lookupDetail let-editing="editing" let-ri="rowIndex">
               <tr [pEditableRow]="lookupDetail">
-                <td >
+                <td>
                   <p-cellEditor>
                     <ng-template pTemplate="input">
                       <input pInputText type="text" [(ngModel)]="lookupDetail.code" required>
@@ -129,7 +130,7 @@
                     </ng-template>
                   </p-cellEditor>
                 </td>
-                <td >
+                <td>
                   <p-cellEditor>
                     <ng-template pTemplate="input">
                       <input pInputText type="text" [(ngModel)]="lookupDetail.name" required>

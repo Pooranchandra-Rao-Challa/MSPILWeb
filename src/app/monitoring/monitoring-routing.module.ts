@@ -9,6 +9,7 @@ import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
 
+
 @NgModule({
   imports: [RouterModule.forChild([
     { path: 'plotoffer', component: PlotofferComponent },

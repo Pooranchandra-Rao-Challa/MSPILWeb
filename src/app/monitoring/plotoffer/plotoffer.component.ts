@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ActivatedRoute } from '@angular/router';
+import { CURRENT_SEASON } from 'src/environments/environment';
 
 export interface IHeader {
   field: string;
@@ -32,7 +33,7 @@ export class PlotofferComponent implements OnInit {
   plotOffers: IFarmerInPlotOfferDto[] = [];
   plotOffer: PlotOfferDto = new PlotOfferDto();
   globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
-    "expectedArea", "varietyId", "plantingDate"];
+    "expectedArea", "expectedVarietyId", "expectedPlantingDate"];
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   showApprovalDialog: boolean = false;
@@ -65,16 +66,16 @@ export class PlotofferComponent implements OnInit {
 
   plotHeaders: IHeader[] = [
     // { field: 'seasonName', header: 'seasonName', label: 'Season' },
-    { field: 'OfferNo', header: 'OfferNo', label: 'Offer No' },
-    { field: 'OfferDate', header: 'OfferDate', label: 'Offer Date' },
+    { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
+    { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
     // { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     // { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     // { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
-    { field: 'PlotVillageName', header: 'PlotVillageName', label: 'Plot Village' },
-    { field: 'PlantType', header: 'PlantType', label: 'Plant Type' },
-    { field: 'ExpectedArea', header: 'ExpectedArea', label: 'Area' },
-    { field: 'VarietyId', header: 'VarietyId', label: 'Variety' },
-    { field: 'PlantingDate', header: 'PlantingDate', label: 'Planting Date' },
+    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'expectedArea', header: 'expectedArea', label: 'Area' },
+    { field: 'expectedVariety', header: 'expectedVariety', label: 'Variety' },
+    { field: 'expectedPlantingDate', header: 'expectedPlantingDate', label: 'Planting Date' },
   ];
 
   constructor(private formbuilder: FormBuilder,
@@ -87,29 +88,41 @@ export class PlotofferComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let currentSeason = '2020-21';
     this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
     this.initSeasons();
-    this.initCurrentSeason(currentSeason);
+    this.initCurrentSeason(CURRENT_SEASON());
     this.initFarmers();
     this.initVillages();
     this.initPlantType();
     this.initVarieties();
     this.initReasonForNotPlanting();
     this.plotOfferForm();
-    this.disabledFormControls();
   }
+
+  // get CurrentSeasonCode() : string {
+  //   let fullYear = new Date().getFullYear();
+  //   let shortYear = parseInt(fullYear.toString().substring(2, 4));
+  //   let month = new Date().getMonth();
+  //   if (month >= 10) {
+  //     return `${fullYear}-${shortYear+1}`;
+  //   }
+  //   else {
+  //     return `${fullYear-1}-${shortYear}`;
+  //   }
+  // }
 
   initPlotOffers(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotOffers = resp as unknown as IFarmerInPlotOfferDto[];
-      this.plotOffers.forEach((value)=>{
+      this.plotOffers.forEach((value) => {
         value.ObjOfferedPlots = JSON.parse(value.offeredPlots) as IFarmerPlotOffersViewDto[];
       });
-      console.log(this.plotOffers);
-
     });
+
+
+    console.log(this.seasons.filter((season)=> season.seasonId != seasonId ));
+
   }
 
   onSearch() {
@@ -160,40 +173,48 @@ export class PlotofferComponent implements OnInit {
     });
   }
 
+  plantFrom!: Date;
+  plantTo!: Date;
+
   getNewOfferNo(seasonId: number) {
-    if (this.plotOffer.allottedPlotId == null)
+    this.seasons?.forEach((value) => {
+      if(value.seasonId == seasonId) {
+        this.plantFrom = value.plantFrom && new Date(value.plantFrom?.toString() + "");
+        this.plantTo = value.plantTo && new Date(value.plantTo?.toString() + "");
+      }
+    });
+    if (this.plotOffer.plotOfferId == null)
       this.monitoringService.GetNewOfferNo(seasonId).subscribe((resp) => {
         if (resp) this.fbPlotOffer.controls['offerNo'].setValue(resp);
       });
   }
 
-  get IsAdd(): boolean { return this.plotOffer?.allottedPlotId == null; }
+  get IsAdd(): boolean { return this.plotOffer?.plotOfferId == null; }
 
   plotOfferForm() {
     this.fbPlotOffer = this.formbuilder.group({
       plotOfferId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
-      offerNo: [{ value: '' }],
+      offerNo: [{ value: '', disabled: true }],
       offerDate: ['', (Validators.required)],
-      isNewFarmer: [false],
+      isNewFarmer: [{value: false, disabled: true}],
       farmerId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here farmerId is ryotNo */
-      ryotName: [''],
-      fatherName: [''],
-      farmerVillage: [''],
-      farmerDivision: [''],
-      farmerCircle: [''],
-      farmerSection: [''],
-      villageId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here villageId is plotVillageId */
-      plotDivision: [''],
-      plotCircle: [''],
-      plotSection: [''],
-      expectedArea: ['', (Validators.required)],
+      ryotName: [{ value: '', disabled: true }],
+      fatherName: [{ value: '', disabled: true }],
+      farmerVillage: [{ value: '', disabled: true }],
+      farmerDivision: [{ value: '', disabled: true }],
+      farmerCircle: [{ value: '', disabled: true }],
+      farmerSection: [{ value: '', disabled: true }],
+      plotVillageId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here villageId is plotVillageId */
+      plotDivision: [{ value: '', disabled: true }],
+      plotCircle: [{ value: '', disabled: true }],
+      plotSection: [{ value: '', disabled: true }],
+      expectedArea: [null, (Validators.required)],
       plantTypeId: ['', (Validators.required)],
-      plantingDate: ['', (Validators.required)],
-      varietyId: ['', (Validators.required)],
+      expectedPlantingDate: ['', (Validators.required)],
+      expectedVarietyId: ['', (Validators.required)],
       reasonForNotPlantingId: ['', (Validators.required)],
-      isActive: [false],
-      remarks: ['']
+      remarks: [''],
     });
   }
 
@@ -202,26 +223,17 @@ export class PlotofferComponent implements OnInit {
   }
 
   addPlotOffer() {
+    this.plotOffer = new PlotOfferDto();
     this.submitLabel = 'Add Allotted Plot';
-
-    this.fbPlotOffer.controls['seasonId'].enable();
-    this.fbPlotOffer.controls['villageId'].enable();
-    this.fbPlotOffer.controls['farmerId'].enable();
-    this.fbPlotOffer.controls['isNewFarmer'].setValue(false);
-    this.showDialog = true;
-  }
-
-  disabledFormControls() {
     // this.fbPlotOffer.controls['offerNo'].disable();
-    this.fbPlotOffer.controls['ryotName'].disable();
-    this.fbPlotOffer.controls['fatherName'].disable();
-    this.fbPlotOffer.controls['farmerVillage'].disable();
-    this.fbPlotOffer.controls['farmerDivision'].disable();
-    this.fbPlotOffer.controls['farmerCircle'].disable();
-    this.fbPlotOffer.controls['farmerSection'].disable();
-    this.fbPlotOffer.controls['plotDivision'].disable();
-    this.fbPlotOffer.controls['plotCircle'].disable();
-    this.fbPlotOffer.controls['plotSection'].disable();
+    this.fbPlotOffer.controls['seasonId'].enable();
+    // this.fbPlotOffer.controls['plotVillageId'].enable();
+    // this.fbPlotOffer.controls['farmerId'].enable();
+    this.fbPlotOffer.controls['isNewFarmer'].setValue(false);
+    this.fbPlotOffer.controls['seasonId'].setValue(this.currentSeason.seasonId);
+    this.getNewOfferNo(this.currentSeason.seasonId || 0);
+    this.addFlag = true;
+    this.showDialog = true;
   }
 
   onSelectedFarmer(farmerId: number) {
@@ -248,10 +260,10 @@ export class PlotofferComponent implements OnInit {
     )
     return returnvalue;
   }
-  onSelectedVillage(villageId: number) {
+  onSelectedVillage(plotVillageId: number) {
     this.villages.forEach((value) => {
-      if (value.villageId == villageId) {
-        this.fbPlotOffer.controls['villageId'].setValue(value.villageId);
+      if (value.villageId == plotVillageId) {
+        this.fbPlotOffer.controls['plotVillageId'].setValue(value.villageId);
         this.fbPlotOffer.controls['plotDivision'].setValue(value.divisionName);
         this.fbPlotOffer.controls['plotCircle'].setValue(value.circleName);
         this.fbPlotOffer.controls['plotSection'].setValue(value.sectionName);
@@ -268,43 +280,44 @@ export class PlotofferComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-  editPlotOffer(plotOffer: IFarmerInPlotOfferDto) {
-    // this.plotOffer.plotOfferId = plotOffer.plotOfferId;
-    this.plotOffer.seasonId = plotOffer.seasonId;
+  editPlotOffer(plotOffer: IFarmerPlotOffersViewDto, farmer: IFarmerInPlotOfferDto) {
+    this.plotOffer.plotOfferId = plotOffer.plotOfferId;
+    this.plotOffer.seasonId = farmer.seasonId;
     this.fbPlotOffer.controls['seasonId'].disable();
     this.plotOffer.offerNo = plotOffer.offerNo;
-    this.plotOffer.offerDate = new Date(plotOffer.offerDate?.toString() + "");
-    this.plotOffer.isNewFarmer = plotOffer.isNewFarmer;
-    this.plotOffer.farmerId = plotOffer.farmerId;
-    this.fbPlotOffer.controls['farmerId'].disable();
-    // this.plotOffer.villageId = plotOffer.plotVillageId;
-    this.fbPlotOffer.controls['villageId'].disable();
-    // this.plotOffer.expectedArea = plotOffer.expectedArea;
-    // this.plotOffer.plantTypeId = plotOffer.plantTypeId;
-    // this.plotOffer.plantingDate = new Date(plotOffer.plantingDate?.toString() + "");
-    // this.plotOffer.varietyId = plotOffer.varietyId;
-    // this.plotOffer.reasonForNotPlantingId = plotOffer.reasonForNotPlantingId;
-    // this.plotOffer.isActive = plotOffer.isActive;
+    this.fbPlotOffer.controls['offerNo'].disable();
+    this.plotOffer.offerDate = plotOffer.offerDate && new Date(plotOffer.offerDate?.toString() + "");
+    this.plotOffer.farmerId = farmer.farmerId;
+    // this.fbPlotOffer.controls['farmerId'].disable();
+    this.plotOffer.plotVillageId = plotOffer.plotVillageId;
+    // this.fbPlotOffer.controls['plotVillageId'].disable();
+    this.plotOffer.expectedArea = plotOffer.expectedArea;
+    this.plotOffer.plantTypeId = plotOffer.plantTypeId;
+    this.plotOffer.expectedPlantingDate = plotOffer.expectedPlantingDate && new Date(plotOffer.expectedPlantingDate?.toString() + "");
+    this.plotOffer.expectedVarietyId = plotOffer.expectedVarietyId;
+    this.plotOffer.reasonForNotPlantingId = plotOffer.reasonForNotPlantingId;
     this.plotOffer.isNewFarmer = plotOffer.isNewFarmer;
     this.fbPlotOffer.patchValue(this.plotOffer);
-    this.fbPlotOffer.controls['ryotName'].setValue(plotOffer.farmerName);
-    this.fbPlotOffer.controls['fatherName'].setValue(plotOffer.fatherName);
-    this.fbPlotOffer.controls['farmerVillage'].setValue(plotOffer.farmerVillageName);
-    this.fbPlotOffer.controls['farmerDivision'].setValue(plotOffer.farmerDivisionName);
-    this.fbPlotOffer.controls['farmerCircle'].setValue(plotOffer.farmerCircleName);
-    this.fbPlotOffer.controls['farmerSection'].setValue(plotOffer.farmerSectionName);
+    this.fbPlotOffer.controls['ryotName'].setValue(farmer.farmerName);
+    this.fbPlotOffer.controls['fatherName'].setValue(farmer.fatherName);
+    this.fbPlotOffer.controls['farmerVillage'].setValue(farmer.farmerVillageName);
+    this.fbPlotOffer.controls['farmerDivision'].setValue(farmer.farmerDivisionName);
+    this.fbPlotOffer.controls['farmerCircle'].setValue(farmer.farmerCircleName);
+    this.fbPlotOffer.controls['farmerSection'].setValue(farmer.farmerSectionName);
 
-    // this.fbPlotOffer.controls['plotDivision'].setValue(plotOffer.plotDivisionName);
-    // this.fbPlotOffer.controls['plotCircle'].setValue(plotOffer.plotCircleName);
-    // this.fbPlotOffer.controls['plotSection'].setValue(plotOffer.plotSectionName);
+    this.fbPlotOffer.controls['plotDivision'].setValue(plotOffer.plotDivisionName);
+    this.fbPlotOffer.controls['plotCircle'].setValue(plotOffer.plotCircleName);
+    this.fbPlotOffer.controls['plotSection'].setValue(plotOffer.plotSectionName);
 
     this.addFlag = false;
     this.submitLabel = 'Update Allotted Plot';
     this.showDialog = true;
+
+
   }
 
-  editApproval(plotOffer: IFarmerInPlotOfferDto) {
-    this.editPlotOffer(plotOffer);
+  editApproval(plotOffer: IFarmerPlotOffersViewDto, farmer: IFarmerInPlotOfferDto) {
+    this.editPlotOffer(plotOffer, farmer);
     this.showDialog = false;
     this.showApprovalDialog = true;
   }
@@ -316,8 +329,12 @@ export class PlotofferComponent implements OnInit {
 
   onSubmit() {
     if (this.fbPlotOffer.valid) {
+      this.fbPlotOffer.controls['seasonId'].enable();
+      this.fbPlotOffer.controls['offerNo'].enable();
+      // this.fbPlotOffer.controls['farmerId'].enable();
+      // this.fbPlotOffer.controls['plotVillageId'].enable();
       this.fbPlotOffer.value.offerDate = FORMAT_DATE(this.fbPlotOffer.value.offerDate);
-      this.fbPlotOffer.value.plantingDate = FORMAT_DATE(this.fbPlotOffer.value.plantingDate);
+      this.fbPlotOffer.value.expectedPlantingDate = FORMAT_DATE(this.fbPlotOffer.value.expectedPlantingDate);
       this.saveAllottedPlot().subscribe(resp => {
         if (resp) {
           this.initPlotOffers(this.currentSeason.seasonId!);
