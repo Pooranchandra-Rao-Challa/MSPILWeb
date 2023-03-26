@@ -36,6 +36,8 @@ export class AppMenuComponent implements OnInit {
           || this.jwtService.Permissions.CanViewVehicleTypes
       case 'Monitoring':
         return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
+        case 'Permits':
+        return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
       default: return false;
     }
   }
@@ -158,6 +160,22 @@ export class AppMenuComponent implements OnInit {
               { label: 'Seed', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/seed'], permission: true },
               { label: 'Plot Report Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
             ]
+          },
+          {
+            label: 'Permits',
+            icon: 'pi pi-fw pi-eye',
+            permission: true,
+            items: [
+              { label: 'Cutting Order', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/cuttingorder'], permission: true },
+              { label: 'Non Registered', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/nonregistered'], permission: true },
+              { label: 'Permit Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitapproval'], permission: true },
+              { label: 'Permit Chart', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitchart'], permission: true },
+              { label: 'Permit Printing', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitprinting'], permission: true },
+              { label: 'Schedule Grouping', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/schedulegrouping'], permission: true },
+              { label: 'Special Permits', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/specialpermits'], permission: true },
+             
+            ]
+
           }
         ]
       },

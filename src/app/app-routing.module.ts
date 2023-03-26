@@ -21,6 +21,7 @@ const routes: Routes = [
       { path: 'billmasters', loadChildren: () => import('src/app/masters/billmasters/billmasters.module').then(m => m.BillMastersModule) },
       { path: 'appmasters', loadChildren: () => import('src/app/masters/applicationmasters/appmasters.module').then(m => m.AppMastersModule) },
       { path: 'monitoring', loadChildren: () => import('src/app/monitoring/monitoring.module').then(m => m.MonitoringModule) },
+      { path: 'permits', loadChildren: () => import('src/app/permits/permits.module').then(m => m.PermitsModule) },
     ]
   },
 
