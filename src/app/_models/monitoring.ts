@@ -110,107 +110,100 @@ export class PlotAssessmentDto {
   updatedAt?: Date;
   updatedBy?: string;
   plotAssessmentId?: number;
-  seasonId?: number;
-  plotReportId?: number;
-  assessedArea?: number;
-  assessedDate?: Date;
-  isAdemoPlot?: boolean;
+  plotId?: number;
+  measuredArea?: number;
+  // measuredDate?: Date;
+  isaDemoPlot?: boolean;
   weedStatusId?: number;
-  interCropId?: number;
+  interCropingId?: number;
   hasMicroNutrientDeficiency?: boolean;
   isTrashMulchingDone?: boolean;
   isGapsFillingDone?: boolean;
-  earthingUpArea?: number;
-  bioFertilizersAppliedArea?: number;
-  deepPloughedArea?: number;
-  deTrashingArea?: number;
-  ratoonManagedUsedArea?: number;
-  trashShedderArea?: number;
-  loadShedderArea?: number;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
-  agreementedDate?: Date;
-  agreementedArea?: Date;
-  isActive?: boolean;
-  selfId?: number;
-  plotAssessmentDiseases?: plotAssessmentDiseasesDto[];
-  plotAssessmentFertilizers?: plotAssessmentFertilizersDto[];
-  plotAssessmentPests?: plotAssessmentPestsDto[];
-  plotAssessmentWeedicides?: plotAssessmentWeedicidesDto[];
+  serverUpdatedStatus?:boolean;
+  diseases?: plotDiseasesDto[];
+  fertilizers?: plotFertilizersDto[];
+  pests?: plotPestsDto[];
+  weedicides?: plotWeedicidesDto[];
 }
-export class plotAssessmentDiseasesDto {
+export class plotDiseasesDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentDiseaseId?: number;
+  diseaseDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?:number;
   diseaseId?: number;
   identifiedDate?: Date;
   controlDate?: Date;
   remarks?: string;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
 
-export class plotAssessmentFertilizersDto {
+export class plotFertilizersDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentFertilizerId?: number;
+  fertilizerDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?: number;
   fertilizerId?: number;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
 
-export class plotAssessmentPestsDto {
+export class plotPestsDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentPestId?: number;
+  pestDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?: number 
   pestId?: number;
   identifiedDate?: Date;
   controlDate?: Date;
   remarks?: string;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
 
-export class plotAssessmentWeedicidesDto {
+export class plotWeedicidesDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentWeedicideId?: number;
+  weedicideDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?: number;
   weedicideId?: number;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
+
 export class PlotAssessmentViewDto {
   plotAssessmentId?: number;
-  //seasonId?: number;
-  //season?: Date;
+  seasonId?: number;
+  season?: Date;
   plotReportId?: number;
   plotNumber?: string;
   previousCropId?: number;
   previousCrop?: string;
   cropTypeId?: number;
   cropType?: string;
-  //allottedPlotId?: number;
+  allottedPlotId?: number;
   offerNo?: number;
-  //farmerId?: number;
-  //farmerCode?: string;
-  //fatherName?: string;
-  //farmerVillageId?: number;
-  //farmerVillageName?: string;
-  //farmerDivisionName?: string;
-  //farmerCircleName?: string;
-  //farmerSectionName?: string;
+  farmerId?: number;
+  farmerCode?: string;
+  farmerName?:string;
+  fatherName?: string;
+  farmerVillageId?: number;
+  farmerVillageName?: string;
+  farmerDivisionName?: string;
+  farmerCircleName?: string;
+  farmerSectionName?: string;
   plotVillageId?: number;
   plotVillageName?: string;
   plotDivisionName?: string;
@@ -243,6 +236,7 @@ export class PlotAssessmentViewDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
+
 }
 export class PlotTransferDto {
   plotTransferId?: number
