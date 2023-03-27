@@ -501,7 +501,7 @@ export class MaintFertilizerDto {
   fertilizerId?: number
   name?: string
   selected?: boolean
- createdBy?: string
+  createdBy?: string
   updatedBy?: string
   createdAt?: Date
   updatedAt?: Date

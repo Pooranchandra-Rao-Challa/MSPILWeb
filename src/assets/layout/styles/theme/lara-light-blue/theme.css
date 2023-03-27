@@ -43,7 +43,8 @@
   --focus-ring: 0 0 0 0.2rem #BFDBFE;
   --menu-bg1:#3B82F6;
   --menu-bg2:#063074;
-  --active:#354282;
+  --active:#6d7cc5;
+  --disabled:#576197;
   --maskbg: rgba(0, 0, 0, 0.4);
   color-scheme: light;
 }

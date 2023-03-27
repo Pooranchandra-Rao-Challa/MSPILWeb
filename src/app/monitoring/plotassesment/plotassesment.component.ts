@@ -1,4 +1,3 @@
-import { FertilizerComponent } from './../../masters/applicationmasters/fertilizer/fertilizer.component';
 import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -207,12 +206,12 @@ export class PlotassesmentComponent implements OnInit {
       checked: [weed.selected],
     });
   }
-  createFertlizer(fertlizer: MaintFertilizerDto): FormGroup {
+  createFertlizer(fertilizer: MaintFertilizerDto): FormGroup {
     return this.formbuilder.group({
-      fertlizerId: [fertlizer.fertilizerId],
-      plotAssessmentId: [fertlizer.plotAssessmentId],
-      name: [fertlizer.name],
-      checked: [fertlizer.selected],
+      fertilizerId: [fertilizer.fertilizerId],
+      plotAssessmentId: [fertilizer.plotAssessmentId],
+      name: [fertilizer.name],
+      checked: [fertilizer.selected],
     });
   }
   createDisease(disease: MaintDiseaseDto): FormGroup {
@@ -226,12 +225,25 @@ export class PlotassesmentComponent implements OnInit {
     })
   }
   savePlotAssessment(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.monitoringService.CreatePlotReport(this.fbPlotAssesment.value)
-    else return this.monitoringService.UpdatePlotReport(this.fbPlotAssesment.value)
+    var postValues = this.fbPlotAssesment.value;
+    postValues.weedicides = postValues.weedicides.filter((weed:any)=>weed.checked == true)
+    postValues.pests = postValues.pests.filter((pest:any)=> pest.identifiedDate != undefined || pest.controlDate != undefined)
+    postValues.fertilizers = postValues.fertilizers.filter((fertilizer:any)=>fertilizer.checked == true)
+    postValues.diseases = postValues.diseases.filter((disease:any)=> disease.identifiedDate != undefined || disease.controlDate != undefined)
+    console.log(postValues);
+
+
+    if (this.addFlag) return this.monitoringService.CreatePlotAssessment(postValues)
+    else return this.monitoringService.UpdatePlotAssessment(postValues)
   }
   onSubmit() {
     if (this.fbPlotAssesment.valid) {
-      console.log(this.fbPlotAssesment.value);
+
+
+      this.savePlotAssessment().subscribe(resp =>{
+        console.log(resp);
+
+      })
     }
     else {
       this.fbPlotAssesment.markAllAsTouched();
