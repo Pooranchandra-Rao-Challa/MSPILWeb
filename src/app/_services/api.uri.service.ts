@@ -165,9 +165,9 @@ export const GET_PLOT_REPORTS_URI = "Monitoring/GetPlotReports";
 export const GET_PLOT_REORT_IN_SEASON_URI = "Monitoring/PlotReportsInSeason";
 
 export const GET_PLOTASSESSMENT_URI = "Monitoring/GetPlotAssessements";
-export const CREATE_PLOTASSESSMENT_URI = "Monitoring/CreateAssessedArea";
-export const UPDATE_PLOTASSESSMENT_URI = "Monitoring/UpdateAssessedArea";
-export  const GET_PLOT_REPORTINFO_URI ="Monitoring/PlotReportInfo";
+export const CREATE_PLOTASSESSMENT_URI = "Monitoring/CreatePlotAssessment";
+export const UPDATE_PLOTASSESSMENT_URI = "Monitoring/UpdatePlotAssessment";
+export const GET_PLOT_REPORTINFO_URI ="Monitoring/PlotReportInfo";
 export const GET_DOCCODE_URI = "Monitoring/GetNewDocNoForPlotTransfer";
 export const CREATE_PLOTTRANSFER_URI = "Monitoring/CreatePlotTransfer";
 export const UPDATE_PLOTTRANSFER_URI = "Monitoring/UpdatePlotTransfer";

@@ -251,7 +251,7 @@
 
               <p-tabPanel header="Pests" class="col-12">
                 <div class="col-12">
-                  <div formArrayName='pests' class="checkboxList grid">
+                  <div formArrayName='pests' class="checkboxList">
                     <p-table #dt2 dataKey="id" [value]="getFormArrayControl('pests').controls" [rows]="10"
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [tableStyle]="{width:'100%'}" [autoLayout]="true" responsiveLayout="scroll"
@@ -318,10 +318,10 @@
               </p-tabPanel>
               <p-tabPanel header="Diseases" class="col-12">
                 <div class="col-12">
-                  <div formArrayName='diseases' class="checkboxList grid">
+                  <div formArrayName='diseases' class="checkboxList">
                     <p-table #dt2 dataKey="id" [value]="getFormArrayControl('diseases').controls" [rows]="10"
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                      [paginator]="false" [tableStyle]="{ width: '100px'}" [autoLayout]="true" responsiveLayout="scroll"
+                      [paginator]="false" [tableStyle]="{ width: '100%'}" [autoLayout]="true" responsiveLayout="scroll"
                       [rowsPerPageOptions]="[10,25,50]">>
                       <ng-template pTemplate="header">
                         <tr>
@@ -439,13 +439,6 @@
           <td><button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component"></button>
           </td>
-
-          <!-- <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-                              (click)="editPlotOffer(plotOffer)" *ngIf="!forapproval"></button>
-                            <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
-                              (click)="editApproval(plotOffer)" *ngIf="forapproval"></button> -->
-          <!-- (click)="editAllottedPlot(allottedPlot)" -->
-          <!-- </td> -->
           <td *ngFor="let col of plotHeader">
 
             <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotAssessment[col.field]}}</span>
