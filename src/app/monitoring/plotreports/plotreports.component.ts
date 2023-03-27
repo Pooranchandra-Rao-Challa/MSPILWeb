@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ActivatedRoute } from '@angular/router';
-import { IPlotReportViewDto, PlotReportDto } from 'src/app/_models/monitoring';
+import { IFarmerInPlotReportsViewDto, IPlotReportViewDto, PlotReportDto } from 'src/app/_models/monitoring';
 
 export interface IHeader {
   field: string;
@@ -27,7 +27,7 @@ export interface IHeader {
   ]
 })
 export class PlotreportsComponent implements OnInit {
-  plotReports: IPlotReportViewDto[] = [];
+  plotReports: IFarmerInPlotReportsViewDto[] = [];
   plotReport: PlotReportDto = new PlotReportDto();
   addFlag: boolean = true;
   globalFilterFields: any;
@@ -53,27 +53,31 @@ export class PlotreportsComponent implements OnInit {
   forapproval: boolean = false;
   offeredNo: any[] = [];
   allottedPlotByAllottedPlotId: any;
-  headers: IHeader[] = [
-    { field: 'previousCrop', header: 'previousCrop', label: 'Crop' },
+
+  farmerHeaders: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'offerNo', header: 'offerNo', label: 'Offered No' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
+    { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
+  ];
+
+  plotHeaders: IHeader[] = [
+    { field: 'crop', header: 'crop', label: 'Crop' },
+    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
+    { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'expectedVariety', header: 'expectedVariety', label: 'Variety' },
-    { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
+    { field: 'variety', header: 'variety', label: 'Variety' },
     { field: 'plotType', header: 'plotType', label: 'Plot Type' },
-    { field: 'isActive', header: 'isActive', label: 'Is Active' },
     { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'createdBy', header: 'createdBy', label: 'Created By' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
+
   constructor(private formbuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private commonService: CommonService,
@@ -249,7 +253,12 @@ export class PlotreportsComponent implements OnInit {
   initPlotReports(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotReports(seasonId, this.forapproval, param1).subscribe((resp) => {
-      this.plotReports = resp as unknown as IPlotReportViewDto[];
+      this.plotReports = resp as unknown as IFarmerInPlotReportsViewDto[];
+      this.plotReports.forEach((value) => {
+        value.objReportedPlots = JSON.parse(value.reportedPlots) as IPlotReportViewDto[];
+      });
+      console.log(this.plotReports);
+
     });
   }
 
@@ -327,33 +336,33 @@ export class PlotreportsComponent implements OnInit {
     this.showDialog = true;
   }
 
-  editPlotReport(plotReport: IPlotReportViewDto) {
-    this.getPlotAllotmentsInSeason(plotReport.seasonId);
-    this.fbPlotReport.controls['seasonId'].disable();
-    this.fbPlotReport.controls['offerNo'].setValue(plotReport.offerNo);
-    this.fbPlotReport.controls['offerNo'].disable();
-    this.fbPlotReport.controls['farmerId'].setValue(plotReport.farmerId);
-    this.fbPlotReport.controls['farmerName'].setValue(plotReport.farmerName);
-    this.fbPlotReport.controls['fatherName'].setValue(plotReport.fatherName);
-    this.fbPlotReport.controls['farmerDivision'].setValue(plotReport.farmerDivisionName);
-    this.fbPlotReport.controls['farmerCircle'].setValue(plotReport.farmerCircleName);
-    this.fbPlotReport.controls['farmerSection'].setValue(plotReport.farmerSectionName);
-    this.fbPlotReport.controls['farmerVillage'].setValue(plotReport.farmerVillageName);
-    this.fbPlotReport.controls['plotDivision'].setValue(plotReport.plotDivisionName);
-    this.fbPlotReport.controls['plotCircle'].setValue(plotReport.plotCircleName);
-    this.fbPlotReport.controls['plotSection'].setValue(plotReport.plotSectionName);
-    this.fbPlotReport.controls['plotVillageName'].setValue(plotReport.plotVillageName);
+  // editPlotReport(plotReport: IPlotReportViewDto) {
+  //   this.getPlotAllotmentsInSeason(plotReport.seasonId);
+  //   this.fbPlotReport.controls['seasonId'].disable();
+  //   this.fbPlotReport.controls['offerNo'].setValue(plotReport.offerNo);
+  //   this.fbPlotReport.controls['offerNo'].disable();
+  //   this.fbPlotReport.controls['farmerId'].setValue(plotReport.farmerId);
+  //   this.fbPlotReport.controls['farmerName'].setValue(plotReport.farmerName);
+  //   this.fbPlotReport.controls['fatherName'].setValue(plotReport.fatherName);
+  //   this.fbPlotReport.controls['farmerDivision'].setValue(plotReport.farmerDivisionName);
+  //   this.fbPlotReport.controls['farmerCircle'].setValue(plotReport.farmerCircleName);
+  //   this.fbPlotReport.controls['farmerSection'].setValue(plotReport.farmerSectionName);
+  //   this.fbPlotReport.controls['farmerVillage'].setValue(plotReport.farmerVillageName);
+  //   this.fbPlotReport.controls['plotDivision'].setValue(plotReport.plotDivisionName);
+  //   this.fbPlotReport.controls['plotCircle'].setValue(plotReport.plotCircleName);
+  //   this.fbPlotReport.controls['plotSection'].setValue(plotReport.plotSectionName);
+  //   this.fbPlotReport.controls['plotVillageName'].setValue(plotReport.plotVillageName);
 
-    this.fbPlotReport.controls['plantingDate'].setValue(new Date(plotReport.plantingDate?.toString() + ""));
-    this.fbPlotReport.controls['birnumber'].setValue(plotReport.birNumber);
-    this.fbPlotReport.controls['birdate'].setValue(new Date(plotReport.birDate?.toString() + ""));
+  //   this.fbPlotReport.controls['plantingDate'].setValue(new Date(plotReport.plantingDate?.toString() + ""));
+  //   this.fbPlotReport.controls['birnumber'].setValue(plotReport.birNumber);
+  //   this.fbPlotReport.controls['birdate'].setValue(new Date(plotReport.birDate?.toString() + ""));
 
-    this.fbPlotReport.patchValue(plotReport);
+  //   this.fbPlotReport.patchValue(plotReport);
 
-    this.addFlag = false;
-    this.submitLabel = 'Update Plot Report';
-    this.showDialog = true;
-  }
+  //   this.addFlag = false;
+  //   this.submitLabel = 'Update Plot Report';
+  //   this.showDialog = true;
+  // }
 
   editApproval(plotReport: any) {
 
