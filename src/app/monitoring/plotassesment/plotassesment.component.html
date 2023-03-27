@@ -14,9 +14,9 @@
 
     <!-- dialog -->
     <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
-      <form [formGroup]="fbPlotAssesment" (ngSubmit)="onSubmit()">
-        <p-tabView orientation="left">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
+      <form [formGroup]="fbPlotAssesment" >
+        <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Assesment" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
@@ -189,7 +189,7 @@
               </div>
             </div>
           </p-tabPanel>
-          <p-tabPanel header="Weedicide" class="line-height-3 m-0">
+          <p-tabPanel header="Weedicide/Pests" class="line-height-3 m-0">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
@@ -234,7 +234,7 @@
                 </div>
               </div>
             </div>
-            <p-tabView orientation="left">
+            <p-tabView orientation="left" [(activeIndex)]="activeIndex1!">
               <p-tabPanel header="Weedicide">
                 <div class="grid col-12">
                   <div formArrayName='weedicides' class="checkboxList grid">
@@ -301,7 +301,7 @@
             </p-tabView>
           </p-tabPanel>
           <p-tabPanel header="Fertilizer/Disease" class="line-height-3 m-0">
-            <p-tabView orientation="left">
+            <p-tabView orientation="left" [(activeIndex)]="activeIndex2!">
               <p-tabPanel header="Fertilizers " class="col-12">
                 <div class="grid col-12">
                   <div formArrayName='fertilizers' class="checkboxList grid">
@@ -325,7 +325,7 @@
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
                       [rowsPerPageOptions]="[10,25,50]">
-                     
+
                       <ng-template pTemplate="header">
                         <tr>
                           <th>Name</th>

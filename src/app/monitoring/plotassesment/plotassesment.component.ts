@@ -42,6 +42,9 @@ export class PlotassesmentComponent implements OnInit {
   plotInfo: PlotsDto = {};
   mediumDate: string = MEDIUM_DATE;
   maintanenceItems?: MaintenanceItems = {}
+  activeIndex?=0;
+  activeIndex1?=0;
+  activeIndex2?=0;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -83,25 +86,37 @@ export class PlotassesmentComponent implements OnInit {
 
   initMaintanenceItems() {
     let weedicideArray = this.fbPlotAssesment.get("weedicides") as FormArray;
-    weedicideArray.clear();
+
     this.maintanenceItems?.weedicides?.forEach(weedicide => {
       weedicideArray.push(this.createWeed(weedicide));
     })
     let fertilizerArray = this.fbPlotAssesment.get("fertilizers") as FormArray;
-    fertilizerArray.clear();
+
     this.maintanenceItems?.fertilizers?.forEach(fertilizer => {
       fertilizerArray.push(this.createFertlizer(fertilizer))
     })
     let pestArray = this.fbPlotAssesment.get("pests") as FormArray;
-    pestArray.clear();
+
     this.maintanenceItems?.pests?.forEach(pest => {
       pestArray.push(this.createpests(pest))
     })
-    const diseaseArray = this.fbPlotAssesment.get("diseases") as FormArray;
-    diseaseArray.clear();
+    let diseaseArray = this.fbPlotAssesment.get("diseases") as FormArray;
+
     this.maintanenceItems?.diseases?.forEach(disease => {
       diseaseArray.push(this.createDisease(disease))
     })
+  }
+  ClearForm(){
+    var temp = Object.assign({}, this.currentSeason);
+    this.fbPlotAssesment.reset();
+    this.plotInfo ={};
+    (this.fbPlotAssesment.get("weedicides") as FormArray).clear();
+    (this.fbPlotAssesment.get("fertilizers") as FormArray).clear();
+    (this.fbPlotAssesment.get("pests") as FormArray).clear();
+    (this.fbPlotAssesment.get("diseases") as FormArray).clear();
+    this.activeIndex = this.activeIndex1 = this.activeIndex2 =0;
+    this.currentSeason = Object.assign({}, temp);
+    this.fbPlotAssesment.get('seasonId')?.patchValue(this.currentSeason.seasonId);
   }
 
   ngOnInit(): void {
@@ -153,12 +168,13 @@ export class PlotassesmentComponent implements OnInit {
     this.initPlotAssesments(this.currentSeason.seasonId!);
   }
   plotAssesmentForm() {
+
     this.fbPlotAssesment = this.formbuilder.group({
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       plotId: [, (Validators.required)],
       measuredArea: [null, Validators.required],
-      assessedDate: [''],
-      isaDemoPlot: [''],
+      assessedDate: ['', Validators.required],
+      isaDemoPlot: ['false'],
       weedStatusId: [null],
       interCropId: [null],
       micronutrientdeficiency: [''],
