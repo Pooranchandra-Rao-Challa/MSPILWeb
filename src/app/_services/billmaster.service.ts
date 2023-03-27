@@ -91,6 +91,8 @@ export class BillMasterService extends ApiHttpService {
     return this.get<VillageParamRateViewDto[]>(GET_VILLAGEPARAMRATESBYSEASONID_URI + seasonId);
   }
 
+  
+
   public CreateVillageParamRate(villageParamRate: VillageParamRateDto) {
     return this.post<VillageParamRateDto>(CREATE_VILLAGEPARAMRATE_URI, villageParamRate);
   }

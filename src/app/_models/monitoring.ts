@@ -549,7 +549,24 @@ export class PlotsDto {
   cropType?:string
   Crop?:string
 }
-
+export class FarmerSelectInfoViewDto {
+  
+  userId?: number
+  name?:string
+  id?: number
+  title?: string
+  completed?: boolean
+  fromFarmerName?:string
+  toFarmerName?:string
+}
+export class GetFarmersInSeasonViewDto {
+  farmerCode?: number
+  farmerName?:string
+  plotId?: number
+  plotNumber?: string
+  netArea?: boolean
+  seasonsId?: number
+}
 
 
 
