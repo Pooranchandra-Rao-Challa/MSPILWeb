@@ -189,6 +189,7 @@ export class PlotAssessmentViewDto {
   season?: Date;
   plotReportId?: number;
   plotNumber?: string;
+  plotId?:any
   previousCropId?: number;
   previousCrop?: string;
   cropTypeId?: number;
@@ -238,23 +239,28 @@ export class PlotAssessmentViewDto {
   updatedBy?: string;
 
 }
-export class PlotTransferDto {
-  plotTransferId?: number
-  seasonId?: number
-  plotAssessmentId?: number
-  docNo?: number
-  docDate?: string
-  plotTransferTypeId?: number
-  fromFarmerId?: number
-  transferArea?: number
-  toFarmerId?: number
-  plotTransferReasonId?: number
-  isActive?: boolean
-  createdBy?: string
-  createdAt?: string
-  updatedBy?: string
-  updatedAt?: string
-}
+
+  export class PlotTransferDto {
+    createdBy?: string
+    createdAt?: string
+    updatedBy?: string
+    updatedAt?: string
+    plotTransferId?: number
+    plotId?: number
+    plotAssessmentId?: number
+    docNo?: number
+    docDate?: string
+    plotTransferTypeId?: number
+    fromFarmerId?: number
+    transferArea?: number
+    toFarmerId?: number
+    plotTransferReasonId?: number
+    serverUpdatedStatus?: boolean
+    transferredToPlotId?: number
+    transferredToOfferId?: number
+  }
+  
+
 export class PlotTransferViewDto {
   plotTransferId?: number
   seasonId?: number
@@ -544,7 +550,6 @@ export class PlotsDto {
   Crop?:string
 }
 export class FarmerSelectInfoViewDto {
-  
   userId?: number
   name?:string
   id?: number

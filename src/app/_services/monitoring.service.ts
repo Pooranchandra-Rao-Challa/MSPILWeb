@@ -92,6 +92,7 @@ export class MonitoringService extends ApiHttpService {
   }
 
   public CreatePlotTransfer(plotTransfer: PlotTransferDto) {
+    debugger;
     return this.post<PlotTransferDto>(CREATE_PLOTTRANSFER_URI, plotTransfer);
   }
 
