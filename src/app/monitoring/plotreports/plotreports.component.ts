@@ -312,7 +312,6 @@ export class PlotreportsComponent implements OnInit {
       methodOfIrrigationId: ['', Validators.required],
       distanceFromPlot: [''],
       plantingMethodId: ['', Validators.required],
-      enabledValidation: [false],
 
       plotReportsAdditionalInfo: this.formbuilder.group({
         soilTypeId: [''],
@@ -327,6 +326,7 @@ export class PlotreportsComponent implements OnInit {
         isCompositeFormYard: [null],
         isFilterPressMud: [null],
         isGreenManures: [null],
+        enabledValidation: [false],
       }),
 
       plot: this.formbuilder.group({
