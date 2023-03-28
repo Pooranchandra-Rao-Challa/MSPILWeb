@@ -119,10 +119,6 @@ export class PlotofferComponent implements OnInit {
         value.ObjOfferedPlots = JSON.parse(value.offeredPlots) as IFarmerPlotOffersViewDto[];
       });
     });
-
-
-    console.log(this.seasons.filter((season)=> season.seasonId != seasonId ));
-
   }
 
   onSearch() {
@@ -178,7 +174,7 @@ export class PlotofferComponent implements OnInit {
 
   getNewOfferNo(seasonId: number) {
     this.seasons?.forEach((value) => {
-      if(value.seasonId == seasonId) {
+      if (value.seasonId == seasonId) {
         this.plantFrom = value.plantFrom && new Date(value.plantFrom?.toString() + "");
         this.plantTo = value.plantTo && new Date(value.plantTo?.toString() + "");
       }
@@ -197,7 +193,7 @@ export class PlotofferComponent implements OnInit {
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       offerNo: [{ value: '', disabled: true }],
       offerDate: ['', (Validators.required)],
-      isNewFarmer: [{value: false, disabled: true}],
+      isNewFarmer: [{ value: false, disabled: true }],
       farmerId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here farmerId is ryotNo */
       ryotName: [{ value: '', disabled: true }],
       fatherName: [{ value: '', disabled: true }],
@@ -348,12 +344,27 @@ export class PlotofferComponent implements OnInit {
     }
   }
 
+  onApprovalOrDeny() {
+    // if (this.fbPlotOffer.valid) {
+    this.monitoringService.ApprovePlotOffer(this.fbPlotOffer.value).subscribe(resp => {
+      if (resp) {
+        this.initPlotOffers(this.currentSeason.seasonId!);
+        this.fbPlotOffer.reset();
+        this.showApprovalDialog = false;
+      }
+    });
+    // }
+    // else {
+    this.fbPlotOffer.markAllAsTouched();
+    // }
+  }
+
   onApprovalSubmit(data: string) {
     if (data == 'denied') {
       this.fbPlotOffer.controls['remarks'].setValidators(Validators.required);
       this.fbPlotOffer.controls['remarks'].updateValueAndValidity();
     }
-    this.onSubmit();
+    this.onApprovalOrDeny();
   }
 
 }
