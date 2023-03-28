@@ -76,7 +76,7 @@ export interface IFarmerInPlotOfferDto {
   ObjMeasuredPlots?: PlotAssessmentViewDto[];
 }
 
-export interface IFarmerPlotOffersViewDto{
+export interface IFarmerPlotOffersViewDto {
   plotOfferId: number;
   offerNo: number;
   offerDate: Date;
@@ -352,7 +352,7 @@ export interface IPlotReportViewDto {
   surveyNo: string;
   demoPlotArea: number;
   reportedArea: number;
-  plantingDate: Date;
+  plantingDate?: Date;
   varietyId: number;
   variety: string;
   plotTypeId: number;
@@ -361,7 +361,7 @@ export interface IPlotReportViewDto {
   cropType: string;
   fieldName: string;
   birNumber: number;
-  birDate: Date;
+  birDate?: Date;
   seedMaterialUsedId: number;
   seedMaterialUsed: string;
   profile: string;
@@ -388,10 +388,33 @@ export interface IPlotReportViewDto {
   isCompositeFormYard: boolean;
   isFilterPressMud: boolean;
   isGreenManures: boolean;
-  createdAt: Date;
+  createdAt: string;
   createdBy: string;
-  updatedAt: Date;
+  updatedAt: string;
   updatedBy: string;
+}
+
+export interface IPlotOfferInfoViewDto {
+  plotOfferId: number;
+  offerNo: number;
+  farmerName: string;
+  farmerCode: string;
+  frmerCircle: string;
+  armerDivision: string;
+  armerSection: string;
+  armerDistrict: string;
+  armerMandal: string;
+  armerVillage: string;
+  lotVillage: string;
+  lotCircle: string;
+  lotDistrict: string;
+  lotDivision: string;
+  lotSection: string;
+  lotMandal: string;
+  plantTypeId: number;
+  plantType: string;
+  expectedVarietyId: number;
+  expectedVariety: string;
 }
 
 export class CompletedPlotDto {
@@ -521,10 +544,10 @@ export class PlotsDto {
   farmerVillageId?: number
   farmerVillage?: string
   plotCircle?: string
-  plotDivision?:string
+  plotDivision?: string
   plotSection?: string
   plotDistrict?: string
-  plotMandal?:string
+  plotMandal?: string
   plotVillageId?: number
   plotVillage?: string
   reportedArea?: number
@@ -540,8 +563,8 @@ export class PlotsDto {
   plotTypeId?: number
   plotType?: string
   agreedTon?: number
-  cropType?:string
-  Crop?:string
+  cropType?: string
+  Crop?: string
 }
 export class FarmerSelectInfoViewDto {
   
