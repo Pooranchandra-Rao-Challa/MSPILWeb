@@ -110,107 +110,100 @@ export class PlotAssessmentDto {
   updatedAt?: Date;
   updatedBy?: string;
   plotAssessmentId?: number;
-  seasonId?: number;
-  plotReportId?: number;
-  assessedArea?: number;
-  assessedDate?: Date;
-  isAdemoPlot?: boolean;
+  plotId?: number;
+  measuredArea?: number;
+  // measuredDate?: Date;
+  isaDemoPlot?: boolean;
   weedStatusId?: number;
-  interCropId?: number;
+  interCropingId?: number;
   hasMicroNutrientDeficiency?: boolean;
   isTrashMulchingDone?: boolean;
   isGapsFillingDone?: boolean;
-  earthingUpArea?: number;
-  bioFertilizersAppliedArea?: number;
-  deepPloughedArea?: number;
-  deTrashingArea?: number;
-  ratoonManagedUsedArea?: number;
-  trashShedderArea?: number;
-  loadShedderArea?: number;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
-  agreementedDate?: Date;
-  agreementedArea?: Date;
-  isActive?: boolean;
-  selfId?: number;
-  plotAssessmentDiseases?: plotAssessmentDiseasesDto[];
-  plotAssessmentFertilizers?: plotAssessmentFertilizersDto[];
-  plotAssessmentPests?: plotAssessmentPestsDto[];
-  plotAssessmentWeedicides?: plotAssessmentWeedicidesDto[];
+  serverUpdatedStatus?:boolean;
+  diseases?: plotDiseasesDto[];
+  fertilizers?: plotFertilizersDto[];
+  pests?: plotPestsDto[];
+  weedicides?: plotWeedicidesDto[];
 }
-export class plotAssessmentDiseasesDto {
+export class plotDiseasesDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentDiseaseId?: number;
+  diseaseDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?:number;
   diseaseId?: number;
   identifiedDate?: Date;
   controlDate?: Date;
   remarks?: string;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
 
-export class plotAssessmentFertilizersDto {
+export class plotFertilizersDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentFertilizerId?: number;
+  fertilizerDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?: number;
   fertilizerId?: number;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
 
-export class plotAssessmentPestsDto {
+export class plotPestsDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentPestId?: number;
+  pestDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?: number 
   pestId?: number;
   identifiedDate?: Date;
   controlDate?: Date;
   remarks?: string;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
 
-export class plotAssessmentWeedicidesDto {
+export class plotWeedicidesDto {
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  plotAssessmentWeedicideId?: number;
+  weedicideDtoId?: number;
   plotAssessmentId?: number;
+  plotAgreementId?: number;
+  plotYieldId?: number;
   weedicideId?: number;
-  isAssessed?: boolean;
-  isAgreemented?: boolean;
+  serverUpdatedStatus?: boolean;
 }
+
 export class PlotAssessmentViewDto {
   plotAssessmentId?: number;
-  //seasonId?: number;
-  //season?: Date;
+  seasonId?: number;
+  season?: Date;
   plotReportId?: number;
   plotNumber?: string;
   previousCropId?: number;
   previousCrop?: string;
   cropTypeId?: number;
   cropType?: string;
-  //allottedPlotId?: number;
+  allottedPlotId?: number;
   offerNo?: number;
-  //farmerId?: number;
-  //farmerCode?: string;
-  //fatherName?: string;
-  //farmerVillageId?: number;
-  //farmerVillageName?: string;
-  //farmerDivisionName?: string;
-  //farmerCircleName?: string;
-  //farmerSectionName?: string;
+  farmerId?: number;
+  farmerCode?: string;
+  farmerName?:string;
+  fatherName?: string;
+  farmerVillageId?: number;
+  farmerVillageName?: string;
+  farmerDivisionName?: string;
+  farmerCircleName?: string;
+  farmerSectionName?: string;
   plotVillageId?: number;
   plotVillageName?: string;
   plotDivisionName?: string;
@@ -243,6 +236,7 @@ export class PlotAssessmentViewDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
+
 }
 export class PlotTransferDto {
   plotTransferId?: number
@@ -325,79 +319,81 @@ export class PlotReportDto {
   isActive?: boolean;
 }
 
-export interface IPlotReportViewDto {
-  plotReportId?: number;
+export interface IFarmerInPlotReportsViewDto {
   seasonId: number;
-  season?: string;
-  cropTypeId?: number;
-  cropType?: string;
-  allottedPlotId?: number;
-  offerNo?: number;
-  farmerId?: number;
-  farmerCode?: string;
-  farmerName?: string;
-  fatherName?: string;
-  farmerVillageId?: number;
-  farmerVillageName?: string;
-  farmerDivisionName?: string;
-  farmerCircleName?: string;
-  farmerSectionName?: string;
-  plotVillageId?: number;
-  plotVillageName?: string;
-  plotDivisionName?: string;
-  plotCircleName?: string;
-  plotSectionName?: string;
-  plantTypeId?: number;
-  plantType?: string;
-  plotNumber?: string;
-  surveyNo?: string;
-  reportedArea?: number;
-  plantingDate?: Date;
-  plantSubTypeId?: number;
-  plantSubType?: string;
-  varietyId?: number;
-  varietyName?: string;
-  expectedVariety?: string;
-  fieldName?: string;
-  birNumber?: string;
-  birDate?: Date;
-  plotTypeId?: number;
-  plotType?: string;
-  demoPlotArea?: number;
-  seedMaterialUsedId?: number;
-  seedMaterialUsed?: string;
-  soilTypeId?: number;
-  soilType?: string;
-  spacingId?: number;
-  spacing?: string;
-  isNeedHotWaterTreatment?: boolean;
-  isDustingApplied?: boolean;
-  isTrashMulchingDone?: boolean;
-  isPreviouslyRedPlot?: boolean;
-  isBasalFertilization?: boolean;
-  previousCropId?: number;
-  previousCrop?: string;
-  sourceOfIrrigationId?: number;
-  sourceOfIrrigation?: string;
-  isCompositeFormYard?: boolean;
-  isFilterPressMud?: boolean;
-  isGreenManures?: boolean;
-  profile?: string;
-  cultivatedArea?: number;
-  methodOfIrrigationId?: number;
-  methodOfIrrigation?: string;
-  distanceFromPlot?: number;
-  plantingMethodId?: number;
-  plantingMethod?: string;
-  approvedAt?: Date;
-  forApproval?: boolean;
-  dataSyncedAt?: Date;
-  isActive?: boolean;
-  createdAt?: Date;
-  createdBy?: string;
-  updatedAt?: Date;
-  updatedBy?: string;
+  season: string;
+  farmerId: number;
+  farmerCode: string;
+  farmerName: string;
+  fatherName: string;
+  farmerVillageId: number;
+  farmerVillageName: string;
+  farmerDivisionName: string;
+  farmerCircleName: string;
+  farmerSectionName: string;
+  reportedPlots: string;
+  objReportedPlots?: IPlotReportViewDto[]
 }
+
+export interface IPlotReportViewDto {
+  plotId: number;
+  offerNo: number;
+  plotNumber: number;
+  plotReportId: number;
+  plotVillageName: string;
+  plotDivisionName: string;
+  plotCircleName: string;
+  plotSectionName: string;
+  plantTypeId: number;
+  plantType: string;
+  plantSubTypeId: number;
+  plantSubType: string;
+  expectedPlantingDate: Date;
+  surveyNo: string;
+  demoPlotArea: number;
+  reportedArea: number;
+  plantingDate: Date;
+  varietyId: number;
+  variety: string;
+  plotTypeId: number;
+  plotType: string;
+  cropTypeId: number;
+  cropType: string;
+  fieldName: string;
+  birNumber: number;
+  birDate: Date;
+  seedMaterialUsedId: number;
+  seedMaterialUsed: string;
+  profile: string;
+  totalArea: number;
+  cultivatedArea: number;
+  methodOfIrrigationId: number;
+  methodOfIrrigation: string;
+  distanceFromPlot: number;
+  plantingMethodId: number;
+  plantingMethod: string;
+  soilTypeId: number;
+  soilType: string;
+  spacingId: number;
+  spacing: string;
+  isNeedHotWaterTreatment: boolean;
+  isDustingApplied: boolean;
+  isTrashMulchingDone: boolean;
+  isPreviouslyRedPlot: boolean;
+  isBasalFertilization: boolean;
+  previousCropId: number;
+  previousCrop: string;
+  sourceOfIrrigationId: number;
+  sourceOfIrrigation: string;
+  isCompositeFormYard: boolean;
+  isFilterPressMud: boolean;
+  isGreenManures: boolean;
+  createdAt: Date;
+  createdBy: string;
+  updatedAt: Date;
+  updatedBy: string;
+}
+
 export class CompletedPlotDto {
   createdBy?: string
   createdAt?: string
@@ -547,7 +543,24 @@ export class PlotsDto {
   cropType?:string
   Crop?:string
 }
-
+export class FarmerSelectInfoViewDto {
+  
+  userId?: number
+  name?:string
+  id?: number
+  title?: string
+  completed?: boolean
+  fromFarmerName?:string
+  toFarmerName?:string
+}
+export class GetFarmersInSeasonViewDto {
+  farmerCode?: number
+  farmerName?:string
+  plotId?: number
+  plotNumber?: string
+  netArea?: boolean
+  seasonsId?: number
+}
 
 
 

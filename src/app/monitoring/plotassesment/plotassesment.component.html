@@ -7,16 +7,16 @@
         <h4>Plot Assessments</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plot Assesment" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Plot Assesment" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="initPlotAssesment()"></button>
       </ng-template>
     </p-toolbar>
 
     <!-- dialog -->
     <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
-      <form [formGroup]="fbPlotAssesment" (ngSubmit)="onSubmit()">
-        <p-tabView orientation="left">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
+      <form [formGroup]="fbPlotAssesment" >
+        <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Assesment" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
@@ -28,7 +28,7 @@
                         <label>Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
                           [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
-                          (onChange)="initPlotReports($event.value)"
+                          (onChange)="initPlotReports($event.value)"  appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -38,10 +38,10 @@
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label>Plot No:</label>
+                        <label>Plot No:<sup class="p-error">*</sup></label>
                         <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
-                          (onChange)="getPlotinfo($event.value)"
+                          (onChange)="getPlotinfo($event.value)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
@@ -159,18 +159,18 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Assessed Area:<sup class="p-error">*</sup></label>
-                        <input pInputText type="text" formControlName="assessedArea" placeholder="Enter Measure Area"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['assessedArea'].touched && FormControls['assessedArea'].errors }">
-                        <span *ngIf="FormControls['assessedArea'].touched && FormControls['assessedArea'].invalid">
+                        <input pInputText type="name" formControlName="measuredArea" placeholder="Enter Assessed Area"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['measuredArea'].touched && FormControls['measuredArea'].errors }">
+                        <span *ngIf="FormControls['measuredArea'].touched && FormControls['measuredArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['assessedArea'].errors?.['required']">
+                            *ngIf="FormControls['measuredArea'].errors?.['required']">
                             Select Assessed Area.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label>Assessed Date:<sup class="p-error">*</sup></label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                          formControlName="assessedDate" placeholder="Please Select Inspection Date"
+                          formControlName="assessedDate" placeholder="Please Select assessed Date" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['assessedDate'].touched && FormControls['assessedDate'].errors }">
                         </p-calendar>
                         <span *ngIf="FormControls['assessedDate'].touched && FormControls['assessedDate'].invalid">
@@ -181,7 +181,7 @@
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Demo Plot Area:</label><br>
-                        <p-inputSwitch formControlName="demoplotarea"></p-inputSwitch>
+                        <p-inputSwitch formControlName="isaDemoPlot"></p-inputSwitch>
                       </div>
                     </div>
                   </p-fieldset>
@@ -189,14 +189,14 @@
               </div>
             </div>
           </p-tabPanel>
-          <p-tabPanel header="Weedicide" class="line-height-3 m-0">
+          <p-tabPanel header="Weedicide/Pests" class="line-height-3 m-0">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Weed Status:</label>
-                      <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="weedstatus"
+                      <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="weedstatus" appendTo="body"
                         formControlName="weedStatusId" [autoDisplayFirst]="false" placeholder="Select Weed Status"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['weedStatusId'].touched && FormControls['weedStatusId'].errors }">
                       </p-dropdown>
@@ -208,7 +208,7 @@
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Inter Croping:</label>
-                      <p-dropdown optionLabel="name" [options]="cropstypes" optionValue="lookupDetailId"
+                      <p-dropdown optionLabel="name" [options]="cropstypes" optionValue="lookupDetailId" appendTo="body"
                         formControlName="interCropId" [autoDisplayFirst]="false" placeholder="Select Inter Croping"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['interCropId'].touched && FormControls['interCropId'].errors }">
                       </p-dropdown>
@@ -234,7 +234,7 @@
                 </div>
               </div>
             </div>
-            <p-tabView orientation="left">
+            <p-tabView orientation="left" [(activeIndex)]="activeIndex1!">
               <p-tabPanel header="Weedicide">
                 <div class="grid col-12">
                   <div formArrayName='weedicides' class="checkboxList grid">
@@ -274,12 +274,12 @@
                             </div>
                           </td>
                           <td>
-                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
                               placeholder=" Please Select Identified Date" formControlName="identifiedDate">
                             </p-calendar>
                           </td>
                           <td>
-                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
                               placeholder=" Please Select Control Date" formControlName="controlDate">
                             </p-calendar>
                           </td>
@@ -301,7 +301,7 @@
             </p-tabView>
           </p-tabPanel>
           <p-tabPanel header="Fertilizer/Disease" class="line-height-3 m-0">
-            <p-tabView orientation="left">
+            <p-tabView orientation="left" [(activeIndex)]="activeIndex2!">
               <p-tabPanel header="Fertilizers " class="col-12">
                 <div class="grid col-12">
                   <div formArrayName='fertilizers' class="checkboxList grid">
@@ -325,7 +325,7 @@
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
                       [rowsPerPageOptions]="[10,25,50]">
-                     
+
                       <ng-template pTemplate="header">
                         <tr>
                           <th>Name</th>
@@ -342,12 +342,12 @@
                             </div>
                           </td>
                           <td>
-                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
                               placeholder="Please Select Identified Date" formControlName="identifiedDate">
                             </p-calendar>
                           </td>
                           <td>
-                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
                               placeholder="Please Select Control Date" formControlName="controlDate">
                             </p-calendar>
                           </td>
@@ -367,7 +367,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12">
           <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-success"
+            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary"
               (click)="onSubmit()"></button>
           </div>
         </div>
@@ -411,8 +411,6 @@
               [icon]="expanded ? 'pi pi-chevron-down':  'pi pi-chevron-right'"></button>
           </td>
 
-          <!--
-           -->
           <td *ngFor="let col of farmerHeader">
             <span>{{farmer[col.field]}}</span>
             <span *ngIf="col?.field == 'assessedDate' ||col?.field == 'assessedDate'">

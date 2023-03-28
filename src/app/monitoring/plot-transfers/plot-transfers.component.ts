@@ -8,10 +8,10 @@ import { CommonService } from 'src/app/_services/common.service';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { VillageParamRateViewDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
 import { MonitoringService } from '../../_services/monitoring.service';
-import { FarmersViewDto, LookupDetailDto, SeasonDto,} from 'src/app/_models/applicationmaster';
+import { FarmersViewDto, LookupDetailDto, SeasonDto, } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from '../../_services/appmaster.service';
 import { LookupService } from '../../_services/lookup.service';
-import { PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
+import { FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, PlotInfoDto, PlotsDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -38,18 +38,20 @@ export class PlotTransfersComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   fbplotTransfer!: FormGroup;
   seasons: any;
-  farmers: FarmersViewDto[] = [];
-  tofarmers:FarmersViewDto[] = [];
-  transferResons:LookupDetailDto[] = [];
-  plotTransferTypes:LookupDetailDto[] = [];
-  billParameters: BillParameterViewDto[] = [];
+  farmers: FarmerSelectInfoViewDto[] = [];
+  tofarmers: FarmerSelectInfoViewDto[] = [];
+  transferResons: LookupDetailDto[] = [];
+  plotTransferTypes: LookupDetailDto[] = [];
+
   submitLabel!: string;
+  plotReports: GetFarmersInSeasonViewDto[] = [];
   currentSeason: SeasonDto = {};
+  plotInfo: PlotsDto = {};
   mediumDate: string = MEDIUM_DATE;
 
   headers: IHeader[] = [
     { field: 'SeasonName', header: 'SeasonName', label: 'Season' },
-    { field: 'docNo', header: 'docNo', label:'Doc No' },
+    { field: 'docNo', header: 'docNo', label: 'Doc No' },
     { field: 'docDate', header: 'docDate', label: 'Doc Date' },
     { field: 'plotTransferType', header: 'plotTransferType', label: 'Plot Transfer Type' },
     { field: 'fromFarmerName', header: 'fromFarmerName', label: 'From Farmer Name' },
@@ -59,7 +61,7 @@ export class PlotTransfersComponent implements OnInit {
     { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
     { field: 'createdBy', header: 'createdBy', label: 'Created By' },
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
-    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By'},
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
 
 
   ];
@@ -68,34 +70,34 @@ export class PlotTransfersComponent implements OnInit {
     private commonService: CommonService,
     private AppMasterService: AppMasterService,
     private monitoringService: MonitoringService,
-    private LookupService:LookupService,
+    private LookupService: LookupService,
 
   ) { }
   ngOnInit(): void {
     let currentSeason = '2020-21';
     this.initDefaults();
     this.plotTransferForm();
-    this.initfarmers();
-    this.initTofarmers();
-    this. plotTransferForm() ;
-   this.initPlotTransferReasons();
-   this.initPlotTransferTypes()
+    this.initPlotTransferReasons();
+    this.initPlotTransferTypes();
+    this.initRegfarmers();
+    this.initToRegfarmers();
 
   }
   plotTransferForm() {
     this.fbplotTransfer = this.formbuilder.group({
-      plotTransferId:[0],
-      seasonId: ['',(Validators.required)],
-      plotAssessmentId:[2],
-      docNo:  [{ value: '' }],
-      docDate:['' ,(Validators.required)],
-      plotTransferTypeId:['', (Validators.required)],
-      fromFarmerId:['', (Validators.required)],
-      fromFarmerName:['', ],
+      plotTransferId: [0],
+      seasonId: ['', (Validators.required)],
+      plotAssessmentId: [2],
+      docNo: [{ value: '' }],
+      docDate: ['', (Validators.required)],
+      plotTransferTypeId: ['', (Validators.required)],
+      fromFarmerId: ['', (Validators.required)],
+      fromFarmerName: [''],
+      title: [''],
       transferArea: ['', (Validators.required)],
-      toFarmerId:['', (Validators.required)],
-      toFarmerName:[''],
-      plotTransferReasonId:['', (Validators.required)],
+      toFarmerId: ['', (Validators.required)],
+      toFarmerName: [''],
+      plotTransferReasonId: ['', (Validators.required)],
       isActive: [false],
     });
   }
@@ -120,6 +122,7 @@ export class PlotTransfersComponent implements OnInit {
     this.AppMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
       this.initSeasons();
+
       this.initPlotsTransfer(this.currentSeason.seasonId!);
     });
   }
@@ -129,33 +132,33 @@ export class PlotTransfersComponent implements OnInit {
     });
   }
 
-  getPlotTransferBySeason(seasonId: number) {
+ 
+
+  GetFarmersInSeason(seasonId: number){
     var seasonId = seasonId ? seasonId : 0;
-    this.billMasterService.GetVillageParamRatesBySeasonId(seasonId).subscribe((resp) => {
-      this.loading = false;
-    });
-  }
+    this.monitoringService.GetFarmersInSeason(seasonId).subscribe((resp)=>{
+    console.log(resp)
+  })
+    }
+
   initDefaults() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp;
     });
+  }
 
-    this.billMasterService.GetBillParameters().subscribe((resp) => {
-      this.billParameters = resp as unknown as BillParameterViewDto[];
-    });
-  }
-  initfarmers() {
-    this.AppMasterService.GetFarmers().subscribe((resp) => {
-      this.farmers = resp as unknown as FarmersViewDto[];
-    });
-  }
-  initTofarmers() {
-    this.AppMasterService.GetFarmers().subscribe((resp) => {
-      this.tofarmers = resp as unknown as FarmersViewDto[];
 
+  initRegfarmers() {
+    this.monitoringService.GetRegisteredFarmers().subscribe((resp) => {
+      this.farmers = resp as unknown as FarmerSelectInfoViewDto[];
     });
   }
-  initPlotTransferReasons(){
+  initToRegfarmers() {
+    this.monitoringService.GetRegisteredFarmers().subscribe((resp) => {
+      this.tofarmers = resp as unknown as FarmerSelectInfoViewDto[];
+    });
+  }
+  initPlotTransferReasons() {
     this.LookupService.PlotTransferReasons().subscribe((resp) => {
       this.transferResons = resp as unknown as LookupDetailDto[]
       console.log(this.transferResons)
@@ -170,23 +173,24 @@ export class PlotTransfersComponent implements OnInit {
     });
   }
 
-  onSelectedFarmer(farmerId: number) {
-    this.farmers.forEach((value) => {
-      if (value.farmerId == farmerId) {
-        this.fbplotTransfer.controls['fromFarmerName'].setValue(value.farmerName);
+
+  onSelectedFarmer(fromFarmerId: number) {
+    const selectedFarmer = this.farmers.find((farmer) => farmer.id === fromFarmerId);
+    if (selectedFarmer) {
+      this.fbplotTransfer.controls['fromFarmerName'].setValue(selectedFarmer.name);
+    }
+  }
 
 
-        console.log(value.farmerName)
-      }
-    });
+  onSelectedToFarmer(toFarmerId: number) {
+    const selectedFarmer = this.tofarmers.find((tofarmer) => tofarmer.id === toFarmerId);
+    if (selectedFarmer) {
+      this.fbplotTransfer.controls['toFarmerName'].setValue(selectedFarmer.name);
+    }
   }
-  onSelectedToFarmer(farmerId: number) {
-    this.tofarmers.forEach((value) => {
-      if (value.farmerId == farmerId) {
-        this.fbplotTransfer.controls['toFarmerName'].setValue(value.farmerName);
-      }
-    });
-  }
+
+
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
@@ -202,17 +206,17 @@ export class PlotTransfersComponent implements OnInit {
     this.showDialog = true;
   }
 
-  getNewDocNo(seasonId: number) {
-    if (this.plotTransfer.plotTransferId == null)
-      this.monitoringService.GetNewDocNo(seasonId).subscribe((resp) => {
-        if (resp) this.fbplotTransfer.controls['docNo'].setValue(resp);
-      });
-  }
-  editPlotTransfer(plotTransfer:PlotTransferViewDto){
+  // getNewDocNo(seasonId: number) {
+  //   if (this.plotTransfer.plotTransferId == null)
+  //     this.monitoringService.GetNewDocNo(seasonId).subscribe((resp) => {
+  //      // if (resp) this.fbplotTransfer.controls['docNo'].setValue(resp);
+  //     });
+  // }
+  editPlotTransfer(plotTransfer: PlotTransferViewDto) {
     this.fbplotTransfer.patchValue({
       plotTransferId: plotTransfer.plotTransferId,
       seasonId: plotTransfer.seasonId,
-      plotAssessmentId: plotTransfer.plotAssessmentId=2,
+      plotAssessmentId: plotTransfer.plotAssessmentId = 2,
       docNo: plotTransfer.docNo,
       docDate: plotTransfer.docDate,
       plotTransferTypeId: plotTransfer.plotTransferTypeId,
