@@ -104,6 +104,7 @@ export interface IFarmerPlotOffersViewDto {
   updatedBy: string;
 }
 
+
 export class PlotAssessmentDto {
   createdAt?: Date;
   createdBy?: string;
@@ -112,7 +113,7 @@ export class PlotAssessmentDto {
   plotAssessmentId?: number;
   plotId?: number;
   measuredArea?: number;
-  // measuredDate?: Date;
+  measuredDate?: Date;
   isaDemoPlot?: boolean;
   weedStatusId?: number;
   interCropingId?: number;
@@ -130,7 +131,7 @@ export class plotDiseasesDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  diseaseDtoId?: number;
+  plotDiseaseId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?:number;
@@ -146,7 +147,7 @@ export class plotFertilizersDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  fertilizerDtoId?: number;
+  plotFertilizerId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?: number;
@@ -159,7 +160,7 @@ export class plotPestsDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  pestDtoId?: number;
+  plotPestId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?: number 
@@ -175,7 +176,7 @@ export class plotWeedicidesDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  weedicideDtoId?: number;
+  plotWeedicideId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?: number;

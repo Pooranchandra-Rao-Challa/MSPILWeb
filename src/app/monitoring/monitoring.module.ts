@@ -9,6 +9,7 @@ import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { PlotreportsComponent } from './plotreports/plotreports.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
+import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SeedComponent } from './seed/seed.component';
     PlotreportsComponent,
     ProppingComponent,
     SeedComponent,
+    PlotaggrementComponent,
   ],
   imports: [
     SharedModule,
