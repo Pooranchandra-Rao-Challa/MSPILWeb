@@ -163,7 +163,7 @@ export class plotPestsDto {
   plotPestId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
-  plotYieldId?: number 
+  plotYieldId?: number
   pestId?: number;
   identifiedDate?: Date;
   controlDate?: Date;
@@ -260,7 +260,7 @@ export class PlotAssessmentViewDto {
     transferredToPlotId?: number
     transferredToOfferId?: number
   }
-  
+
 
 export class PlotTransferViewDto {
   plotTransferId?: number
@@ -289,41 +289,25 @@ export class PlotTransferViewDto {
 
 export class PlotReportDto {
   plotReportId?: number;
-  seasonId?: number;
-  allottedPlotId?: number;
-  cropTypeId?: number;
-  plantTypeId?: number;
-  plotNumber?: string;
-  surveyNo?: string;
+  plotId?: number;
   reportedArea?: number;
-  plantingDate?: Date;
   plantSubTypeId?: number;
   varietyId?: number;
   fieldName?: string;
   birnumber?: string;
   birdate?: Date;
-  plotTypeId?: number;
+  surveyNo?: string;
   demoPlotArea?: number;
   seedMaterialUsedId?: number;
-  soilTypeId?: number;
-  spacingId?: number;
-  isNeedHotWaterTreatment?: boolean;
-  isDustingApplied?: boolean;
-  isTrashMulchingDone?: boolean;
-  isPreviouslyRedPlot?: boolean;
-  isBasalFertilization?: boolean;
-  previousCropId?: number;
-  sourceOfIrrigationId?: number;
-  isCompositeFormYard?: boolean;
-  isFilterPressMud?: boolean;
-  isGreenManures?: boolean;
+  dataSyncedAt?: string;
+  remarks?: string;
+  serverUpdatedStatus?: boolean;
   profile?: string;
   totalArea?: number;
   cultivatedArea?: number;
   methodOfIrrigationId?: number;
   distanceFromPlot?: number;
   plantingMethodId?: number;
-  isActive?: boolean;
 }
 
 export interface IFarmerInPlotReportsViewDto {
@@ -344,6 +328,7 @@ export interface IFarmerInPlotReportsViewDto {
 
 export interface IPlotReportViewDto {
   plotId: number;
+  plotOfferId: number;
   offerNo: number;
   plotNumber: number;
   plotReportId: number;

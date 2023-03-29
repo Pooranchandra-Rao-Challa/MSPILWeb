@@ -297,7 +297,7 @@ export class PlotreportsComponent implements OnInit {
       // plotVillage: [''],
       plotVillageName: [{ value: '', disabled: true }, (Validators.required)],
       plantTypeId: ['', (Validators.required)],
-      plotNumber: [{ value: '', disabled: true }, (Validators.required)],
+      plotNumber: ['', (Validators.required)],
       surveyNo: ['', (Validators.required)],
       reportedArea: [null, (Validators.required)],
       plantingDate: ['', (Validators.required)],
@@ -313,13 +313,11 @@ export class PlotreportsComponent implements OnInit {
       profile: [''],
       totalArea: [''],
       cultivatedArea: [null],
-      isActive: [false],
       methodOfIrrigationId: ['', Validators.required],
       distanceFromPlot: [''],
       plantingMethodId: ['', Validators.required],
 
       plotReportsAdditionalInfo: this.formbuilder.group({
-
         enabledValidation: [false],
         soilTypeId: [''],
         isNeedHotWaterTreatment: [null],
@@ -333,11 +331,11 @@ export class PlotreportsComponent implements OnInit {
         isCompositeFormYard: [null],
         isFilterPressMud: [null],
         isGreenManures: [null],
-        enabledValidation: [false],
       }),
 
       plot: this.formbuilder.group({
         plotId: [null],
+        plotOfferId: [''],
         seasonId: [''],
         cropTypeId: [''],
         plotTypeId: [''],
@@ -412,6 +410,8 @@ export class PlotreportsComponent implements OnInit {
     this.subPlot.get('isFilterPressMud')?.setValue(plotReport.isFilterPressMud);
     this.subPlot.get('isGreenManures')?.setValue(plotReport.isGreenManures);
 
+    this.mainPlot.get('plotOfferId')?.setValue(plotReport.plotOfferId);
+
     this.fbPlotReport.patchValue(plotReport);
     this.onCalculation();
     this.addFlag = false;
@@ -477,15 +477,16 @@ export class PlotreportsComponent implements OnInit {
   }
 
   onValidations() {
+    debugger
     if (this.subPlot.get('enabledValidation')?.value) {
       this.subPlot.get('soilTypeId')?.setValidators(Validators.required);
       this.subPlot.get('soilTypeId')?.updateValueAndValidity();
 
-      this.subPlot.get('methodOfIrrigationId')?.setValidators(Validators.required);
-      this.subPlot.get('methodOfIrrigationId')?.updateValueAndValidity();
+      // this.subPlot.get('methodOfIrrigationId')?.setValidators(Validators.required);
+      // this.subPlot.get('methodOfIrrigationId')?.updateValueAndValidity();
 
-      this.subPlot.get('plantingMethodId')?.setValidators(Validators.required);
-      this.subPlot.get('plantingMethodId')?.updateValueAndValidity();
+      // this.subPlot.get('plantingMethodId')?.setValidators(Validators.required);
+      // this.subPlot.get('plantingMethodId')?.updateValueAndValidity();
 
       this.subPlot.get('previousCropId')?.setValidators(Validators.required);
       this.subPlot.get('previousCropId')?.updateValueAndValidity();
@@ -494,11 +495,11 @@ export class PlotreportsComponent implements OnInit {
       this.subPlot.get('soilTypeId')?.clearValidators();
       this.subPlot.get('soilTypeId')?.updateValueAndValidity();
 
-      this.subPlot.get('methodOfIrrigationId')?.clearValidators();
-      this.subPlot.get('methodOfIrrigationId')?.updateValueAndValidity();
+      // this.subPlot.get('methodOfIrrigationId')?.clearValidators();
+      // this.subPlot.get('methodOfIrrigationId')?.updateValueAndValidity();
 
-      this.subPlot.get('plantingMethodId')?.clearValidators();
-      this.subPlot.get('plantingMethodId')?.updateValueAndValidity();
+      // this.subPlot.get('plantingMethodId')?.clearValidators();
+      // this.subPlot.get('plantingMethodId')?.updateValueAndValidity();
 
       this.subPlot.get('previousCropId')?.clearValidators();
       this.subPlot.get('previousCropId')?.updateValueAndValidity();
