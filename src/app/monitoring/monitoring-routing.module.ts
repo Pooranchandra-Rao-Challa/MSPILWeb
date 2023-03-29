@@ -8,6 +8,7 @@ import { PlotassesmentComponent } from './plotassesment/plotassesment.component'
 import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
+import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SeedComponent } from './seed/seed.component';
     { path: 'PlotTransfers', component: PlotTransfersComponent },
     { path: 'CompletedPlots', component: CompletedPlotsComponent },
     { path: 'plotoffer/:paramUrl', component: PlotofferComponent },
-    { path: 'plotassesment', component: PlotassesmentComponent},
+    { path: 'plotassessment', component: PlotassesmentComponent},
+    { path: 'plotaggrement', component: PlotaggrementComponent},
     { path: 'sampleentry', component: SampleEntryComponent},
     { path: 'plotreports', component: PlotreportsComponent},
     { path: 'plotreports/:paramUrl', component: PlotreportsComponent },

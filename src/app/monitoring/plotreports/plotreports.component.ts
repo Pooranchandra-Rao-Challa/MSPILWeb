@@ -333,6 +333,7 @@ export class PlotreportsComponent implements OnInit {
         isCompositeFormYard: [null],
         isFilterPressMud: [null],
         isGreenManures: [null],
+        enabledValidation: [false],
       }),
 
       plot: this.formbuilder.group({

@@ -104,6 +104,7 @@ export interface IFarmerPlotOffersViewDto {
   updatedBy: string;
 }
 
+
 export class PlotAssessmentDto {
   createdAt?: Date;
   createdBy?: string;
@@ -112,7 +113,7 @@ export class PlotAssessmentDto {
   plotAssessmentId?: number;
   plotId?: number;
   measuredArea?: number;
-  // measuredDate?: Date;
+  measuredDate?: Date;
   isaDemoPlot?: boolean;
   weedStatusId?: number;
   interCropingId?: number;
@@ -130,7 +131,7 @@ export class plotDiseasesDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  diseaseDtoId?: number;
+  plotDiseaseId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?:number;
@@ -146,7 +147,7 @@ export class plotFertilizersDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  fertilizerDtoId?: number;
+  plotFertilizerId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?: number;
@@ -159,7 +160,7 @@ export class plotPestsDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  pestDtoId?: number;
+  plotPestId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?: number 
@@ -175,7 +176,7 @@ export class plotWeedicidesDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
-  weedicideDtoId?: number;
+  plotWeedicideId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
   plotYieldId?: number;
@@ -189,6 +190,7 @@ export class PlotAssessmentViewDto {
   season?: Date;
   plotReportId?: number;
   plotNumber?: string;
+  plotId?:any
   previousCropId?: number;
   previousCrop?: string;
   cropTypeId?: number;
@@ -238,23 +240,28 @@ export class PlotAssessmentViewDto {
   updatedBy?: string;
 
 }
-export class PlotTransferDto {
-  plotTransferId?: number
-  seasonId?: number
-  plotAssessmentId?: number
-  docNo?: number
-  docDate?: string
-  plotTransferTypeId?: number
-  fromFarmerId?: number
-  transferArea?: number
-  toFarmerId?: number
-  plotTransferReasonId?: number
-  isActive?: boolean
-  createdBy?: string
-  createdAt?: string
-  updatedBy?: string
-  updatedAt?: string
-}
+
+  export class PlotTransferDto {
+    createdBy?: string
+    createdAt?: string
+    updatedBy?: string
+    updatedAt?: string
+    plotTransferId?: number
+    plotId?: number
+    plotAssessmentId?: number
+    docNo?: number
+    docDate?: string
+    plotTransferTypeId?: number
+    fromFarmerId?: number
+    transferArea?: number
+    toFarmerId?: number
+    plotTransferReasonId?: number
+    serverUpdatedStatus?: boolean
+    transferredToPlotId?: number
+    transferredToOfferId?: number
+  }
+  
+
 export class PlotTransferViewDto {
   plotTransferId?: number
   seasonId?: number
@@ -567,7 +574,6 @@ export class PlotsDto {
   Crop?: string
 }
 export class FarmerSelectInfoViewDto {
-  
   userId?: number
   name?:string
   id?: number

@@ -1,5 +1,5 @@
 import { HttpEvent } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
@@ -25,6 +25,7 @@ export interface IHeader {
 })
 
 export class PlotassesmentComponent implements OnInit {
+  plotinfo:any;
   showDialog: boolean = false;
   submitLabel!: string;
   filter: any;
@@ -73,6 +74,7 @@ export class PlotassesmentComponent implements OnInit {
   ];
 
   initPlotAssesment(plotAssessmentId: number = -1) {
+    this.plotAssesment = new PlotAssessmentDto();
     this.submitLabel = "Add Assesment";
     this.addFlag = true;
     this.showDialog = true;
@@ -128,12 +130,14 @@ export class PlotassesmentComponent implements OnInit {
     this.initSeasons();
     this.initCropType();
     this.initweedstatus();
+
   }
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
     });
   }
+
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
@@ -152,6 +156,7 @@ export class PlotassesmentComponent implements OnInit {
     this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
       console.log(resp)
       this.plotReports = resp as unknown as PlotInfoDto[];
+      
     })
   }
 
@@ -168,7 +173,6 @@ export class PlotassesmentComponent implements OnInit {
     this.initPlotAssesments(this.currentSeason.seasonId!);
   }
   plotAssesmentForm() {
-
     this.fbPlotAssesment = this.formbuilder.group({
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       plotId: [, (Validators.required)],
@@ -248,29 +252,39 @@ export class PlotassesmentComponent implements OnInit {
     postValues.diseases = postValues.diseases.filter((disease: any) => disease.identifiedDate != undefined || disease.controlDate != undefined)
     console.log(postValues);
 
-
     if (this.addFlag) return this.monitoringService.CreatePlotAssessment(postValues)
     else return this.monitoringService.UpdatePlotAssessment(postValues)
   }
-  // editPlotAssessment(plotAssesment: PlotAssessmentViewDto, plotInfo: PlotsDto) {
-  //   this.plotAssesment.plotAssessmentId = plotAssesment.plotAssessmentId;
-  //   this.plotAssesment.plotId = plotInfo.plotId;
-  //   this.fbPlotAssesment.controls['plotId'].disable();
-  //   this.plotAssesment.measuredArea = plotAssesment.assessedArea;
-  //   this.plotAssesment.measuredDate = plotAssesment.assessedDate;
-  //   this.plotAssesment.isaDemoPlot = plotAssesment.isADemoPlot;
-  //   this.plotAssesment.weedStatusId = plotAssesment.weedStatusId;
-  //   this.plotAssesment.interCropingId = plotAssesment.interCropId;
-  //   this.plotAssesment.hasMicroNutrientDeficiency = plotAssesment.isTrashMulchingDone;
-  //   this.plotAssesment.isGapsFillingDone = plotAssesment.isGapsFillingDone;
-  //   this.fbPlotAssesment.patchValue(this.plotAssesment);
-  //   this.fbPlotAssesment.setValue(plotInfo.farmerCode);
-  // }
+  editPlotAssessment(plotAssesment:any, plotInfo:any) {
+    console.log(plotAssesment);
+     this.plotAssesment.plotAssessmentId = plotAssesment.PlotAssessmentId;
+     this.plotAssesment.plotId = plotAssesment?.PlotId;
+    // this.fbPlotAssesment.controls['plotId'].disable();
+     this.plotAssesment.measuredArea = plotAssesment.MeasuredArea;
+    this.plotAssesment.measuredDate = plotAssesment.AssessedDate;
+    this.plotAssesment.isaDemoPlot = plotAssesment.isADemoPlot;
+    this.plotAssesment.weedStatusId = plotAssesment.weedStatusId;
+    this.plotAssesment.interCropingId = plotAssesment.interCropId;
+    this.plotAssesment.hasMicroNutrientDeficiency = plotAssesment.IsTrashMulchingDone;
+    this.plotAssesment.isGapsFillingDone = plotAssesment.isGapsFillingDone;
+    // this.fbPlotAssesment.patchValue(this.plotAssesment);
+    // this.getPlotinfo( plotAssesment.PlotId);
+    this.initPlotAssesment(plotAssesment.plotAssesment);
+    
+    this.addFlag = false;
+    this.submitLabel = 'Update Assesment';
+    this.showDialog = true;
+  }
   onSubmit() {
     if (this.fbPlotAssesment.valid) {
       this.savePlotAssessment().subscribe(resp => {
-        console.log(resp);
+        if (resp) {
+          this.savePlotAssessment();
+          this.fbPlotAssesment.reset();
+          this.showDialog = false;
+        }
       })
+      this.monitoringService.UpdatePlotAssessment(this.plotinfo);
     }
     else {
       this.fbPlotAssesment.markAllAsTouched();
