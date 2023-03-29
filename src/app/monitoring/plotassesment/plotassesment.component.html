@@ -20,17 +20,18 @@
           <p-tabPanel header="Plot Assesment" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
-                {{ this.fbPlotAssesment.value |json}}
+                <!-- {{ this.fbPlotAssesment.value |json}} -->
                 <div class="col-12">
                   <p-fieldset legend="Season" [toggleable]="true" class="line-height-3 m-0"
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Season:</label>
-                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                          [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
-                          (onChange)="initPlotReports($event.value)" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
+                        <p-dropdown class="ml-2" placeholder="Select a season"
+                        optionLabel="name" [options]="seasons"
+                        [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
+                        (onChange)="initPlotReports($event.value)" appendTo="body"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -170,7 +171,7 @@
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
-                        <label>Assessed Date:<sup class="p-error">*</sup></label>
+                        <label>Assessed Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
                           formControlName="assessedDate" placeholder="Please Select assessed Date" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['assessedDate'].touched && FormControls['assessedDate'].errors }">

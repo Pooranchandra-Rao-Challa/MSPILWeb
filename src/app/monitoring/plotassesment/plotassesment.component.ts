@@ -155,8 +155,7 @@ export class PlotassesmentComponent implements OnInit {
   initPlotReports(season: number) {
     this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
       console.log(resp)
-      this.plotReports = resp as unknown as PlotInfoDto[];
-      
+      this.plotReports = resp as unknown as PlotInfoDto[];    
     })
   }
 
@@ -177,8 +176,8 @@ export class PlotassesmentComponent implements OnInit {
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       plotId: [, (Validators.required)],
       measuredArea: [null, Validators.required],
-      assessedDate: ['', Validators.required],
-      isaDemoPlot: ['false'],
+      assessedDate: [''],
+      isaDemoPlot: [false],
       weedStatusId: [null],
       interCropId: [null],
       micronutrientdeficiency: [''],
@@ -245,6 +244,7 @@ export class PlotassesmentComponent implements OnInit {
     })
   }
   savePlotAssessment(): Observable<HttpEvent<PlotAssessmentDto>> {
+    debugger
     var postValues = this.fbPlotAssesment.value;
     postValues.weedicides = postValues.weedicides.filter((weed: any) => weed.checked == true)
     postValues.pests = postValues.pests.filter((pest: any) => pest.identifiedDate != undefined || pest.controlDate != undefined)
@@ -261,14 +261,14 @@ export class PlotassesmentComponent implements OnInit {
      this.plotAssesment.plotId = plotAssesment?.PlotId;
     // this.fbPlotAssesment.controls['plotId'].disable();
      this.plotAssesment.measuredArea = plotAssesment.MeasuredArea;
-    this.plotAssesment.measuredDate = plotAssesment.AssessedDate;
+    // this.plotAssesment.measuredDate = plotAssesment.AssessedDate;
     this.plotAssesment.isaDemoPlot = plotAssesment.isADemoPlot;
     this.plotAssesment.weedStatusId = plotAssesment.weedStatusId;
     this.plotAssesment.interCropingId = plotAssesment.interCropId;
     this.plotAssesment.hasMicroNutrientDeficiency = plotAssesment.IsTrashMulchingDone;
     this.plotAssesment.isGapsFillingDone = plotAssesment.isGapsFillingDone;
     // this.fbPlotAssesment.patchValue(this.plotAssesment);
-    // this.getPlotinfo( plotAssesment.PlotId);
+    this.getPlotinfo( plotAssesment.PlotId);
     this.initPlotAssesment(plotAssesment.plotAssesment);
     
     this.addFlag = false;
@@ -284,7 +284,7 @@ export class PlotassesmentComponent implements OnInit {
           this.showDialog = false;
         }
       })
-      this.monitoringService.UpdatePlotAssessment(this.plotinfo);
+      // this.monitoringService.UpdatePlotAssessment(this.plotinfo);
     }
     else {
       this.fbPlotAssesment.markAllAsTouched();
