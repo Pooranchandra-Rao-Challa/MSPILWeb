@@ -53,6 +53,7 @@ export class PlotreportsComponent implements OnInit {
   forapproval: boolean = false;
   offeredNo: any[] = [];
   allottedPlotByAllottedPlotId: any;
+  autoDisplayDrowdown:boolean = false;
 
   farmerHeaders: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
@@ -241,12 +242,16 @@ export class PlotreportsComponent implements OnInit {
   initMethodofIrrigations() {
     this.lookupService.MethodofIrrigations().subscribe((resp) => {
       this.methodofIrrigations = resp as unknown as LookupDetailViewDto[];
+      console.log(this.methodofIrrigations);
+
     });
   }
 
   initPlantingMethods() {
     this.lookupService.PlantingMethods().subscribe((resp) => {
       this.plantingMethods = resp as unknown as LookupDetailViewDto[];
+      console.log(this.plantingMethods );
+
     });
   }
 
@@ -312,9 +317,10 @@ export class PlotreportsComponent implements OnInit {
       methodOfIrrigationId: ['', Validators.required],
       distanceFromPlot: [''],
       plantingMethodId: ['', Validators.required],
-      enabledValidation: [false],
 
       plotReportsAdditionalInfo: this.formbuilder.group({
+
+        enabledValidation: [false],
         soilTypeId: [''],
         isNeedHotWaterTreatment: [null],
         isDustingApplied: [null],
@@ -431,8 +437,13 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['offerNo'].enable();
     if (this.fbPlotReport.valid) {
       this.plotInfo();
-      this.fbPlotReport.value.plantingDate = FORMAT_DATE(this.fbPlotReport.value.plantingDate);
-      this.fbPlotReport.value.birdate = FORMAT_DATE(this.fbPlotReport.value.birdate);
+      console.log(this.fbPlotReport.value.plantingDate);
+      console.log(new Date(this.fbPlotReport.value.plantingDate));
+
+      if(this.fbPlotReport.value.plantingDate != undefined || this.fbPlotReport.value.plantingDate != null)
+      this.fbPlotReport.value.plantingDate = FORMAT_DATE(new Date(this.fbPlotReport.value.plantingDate));
+      if(this.fbPlotReport.value.birdate != undefined || this.fbPlotReport.value.birdate != null)
+      this.fbPlotReport.value.birdate = FORMAT_DATE(new Date(this.fbPlotReport.value.birdate));
       this.savePlotReport().subscribe(resp => {
         if (resp) {
           this.initPlotReports(this.currentSeason.seasonId!);

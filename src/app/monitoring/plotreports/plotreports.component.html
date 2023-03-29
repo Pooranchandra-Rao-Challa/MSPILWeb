@@ -384,7 +384,7 @@
                 <div class="field col-12 md:col-3">
                   <label>Method Of Irrigation:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Method of Irrigation" optionLabel="name"
-                    [options]="methodofIrrigations" optionValue="lookupDetailId"
+                    [options]="methodofIrrigations" optionValue="id" [autoDisplayFirst]="autoDisplayDrowdown"
                     formControlName="methodOfIrrigationId" appendTo="body"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['methodOfIrrigationId'].touched && FormControls['methodOfIrrigationId'].errors }">
                   </p-dropdown>
@@ -404,7 +404,7 @@
                 <div class="field col-12 md:col-3">
                   <label>Planting Method:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Planting Method" optionLabel="name" [options]="plantingMethods"
-                    optionValue="lookupDetailId" formControlName="plantingMethodId" appendTo="body"
+                    optionValue="id" formControlName="plantingMethodId" appendTo="body" [autoDisplayFirst]="autoDisplayDrowdown"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingMethodId'].touched && FormControls['plantingMethodId'].errors }">
                   </p-dropdown>
                   <span
