@@ -131,8 +131,11 @@ public GetPlotinfo(plotId: number) {
     return this.post<PlotReportDto>(UPDATE_PLOT_REPORT_URI, plotReport);
   }
 
-  public PlotOffersInSeason(seasonId: number) {
-    return this.getWithId<IPlotOfferInfoViewDto>(GET_PLOT_OFFERS_IN_SEASON_URI, seasonId);
+  public PlotOffersInSeason(seasonId: number,plotId: number) {
+    let arr: any[] = [];
+    arr.push(seasonId);
+    arr.push(plotId);
+    return this.getWithParams<IPlotOfferInfoViewDto>(GET_PLOT_OFFERS_IN_SEASON_URI, arr);
   }
 
   public GetOfferInfo(offerId: number) {

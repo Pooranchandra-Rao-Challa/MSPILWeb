@@ -114,7 +114,7 @@
               <div class="field col-12 md:col-3">
                 <label>Season:<sup class="p-error">*</sup></label>
                 <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
-                  formControlName="seasonId" (onChange)="getPlotOffersInSeason($event.value)"
+                  formControlName="seasonId" (onChange)="getPlotOffersInSeason($event.value,-1)"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                 </p-dropdown>
                 <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">

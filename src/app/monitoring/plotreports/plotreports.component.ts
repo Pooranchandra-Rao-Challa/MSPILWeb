@@ -127,8 +127,8 @@ export class PlotreportsComponent implements OnInit {
   //   });
   // }
 
-  getPlotOffersInSeason(seasonId: number) {
-    this.monitoringService.PlotOffersInSeason(seasonId).subscribe((resp) => {
+  getPlotOffersInSeason(seasonId: number,plotId: number) {
+    this.monitoringService.PlotOffersInSeason(seasonId,plotId).subscribe((resp) => {
       this.seasonPlotOffers = resp as any;
       this.seasonPlotOffers.forEach(s =>{
         s.DisplayValue = `${s.code}-${s.farmerName}-${s.farmerCode}-${s.plotVillageName}`
@@ -358,13 +358,13 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['seasonId'].enable();
     this.fbPlotReport.controls['plotOfferId'].enable();
     this.fbPlotReport.controls['seasonId'].setValue(this.currentSeason.seasonId);
-    this.getPlotOffersInSeason(this.currentSeason.seasonId || 0);
+    this.getPlotOffersInSeason(this.currentSeason.seasonId || 0, -1);
 
     this.showDialog = true;
   }
 
   editPlotReport(plotReport: IPlotReportViewDto, farmer: IFarmerInPlotReportsViewDto) {
-    this.getPlotOffersInSeason(this.currentSeason.seasonId || 0);
+    this.getPlotOffersInSeason(this.currentSeason.seasonId || 0,plotReport.plotId);
     this.fbPlotReport.controls['seasonId'].setValue(farmer.seasonId);
     this.fbPlotReport.controls['seasonId'].disable();
     this.fbPlotReport.controls['plotOfferId'].setValue(plotReport.plotOfferId);
