@@ -45,6 +45,7 @@
   --menu-bg2:#371584;
   --active:#354282;
   --disabled:#554776;
+  --readonlytext:#9d6100;
   --maskbg: rgba(0, 0, 0, 0.4);
   color-scheme: light;
 }
