@@ -334,6 +334,7 @@ export interface IPlotReportViewDto {
   offerNo: number;
   plotNumber: number;
   plotReportId: number;
+  plotReportAddlInfoId: number;
   plotVillageName: string;
   plotDivisionName: string;
   plotCircleName: string;
