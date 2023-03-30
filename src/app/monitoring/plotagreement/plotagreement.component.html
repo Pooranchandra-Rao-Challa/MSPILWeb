@@ -4,19 +4,19 @@
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Plot Aggrements</h4>
+        <h4>Plot Agreements</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plot Aggrement" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="initPlotAggrement()"></button>
+        <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="initPlotAgreement()"></button>
       </ng-template>
     </p-toolbar>
     <!-- dialog -->
-    <p-dialog header="Plot Aggrement" [(visible)]="showDialog" [modal]="true"
+    <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
-      <form [formGroup]="fbPlotAggrement" (ngSubmit)="onSubmit()">
+      <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left">
-          <p-tabPanel header="Plot Aggrement" class="col-12">
+          <p-tabPanel header="Plot Agreement" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
@@ -165,25 +165,25 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Aggreement Area:<sup class="p-error">*</sup></label>
-                        <p-inputNumber placeholder="Enter Aggreement Area" formControlName="aggrementArea"
+                        <p-inputNumber placeholder="Enter Aggreement Area" formControlName="agreementArea"
                           mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['aggrementArea'].touched && FormControls['aggrementArea'].errors }">
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementArea'].touched && FormControls['agreementArea'].errors }">
                         </p-inputNumber>
-                        <span *ngIf="FormControls['aggrementArea'].touched && FormControls['aggrementArea'].invalid">
+                        <span *ngIf="FormControls['agreementArea'].touched && FormControls['agreementArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['aggrementArea'].errors?.['required']">
+                            *ngIf="FormControls['agreementArea'].errors?.['required']">
                             Select Aggreement Area.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label>Aggreement Date:<sup class="p-error">*</sup></label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                          formControlName="aggrementDate" placeholder="Please Select Aggreement Date" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['aggrementDate'].touched && FormControls['aggrementDate'].errors }">
+                          formControlName="agreementDate" placeholder="Please Select Agreement Date" appendTo="body"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementDate'].touched && FormControls['agreementDate'].errors }">
                         </p-calendar>
-                        <span *ngIf="FormControls['aggrementDate'].touched && FormControls['aggrementDate'].invalid">
+                        <span *ngIf="FormControls['agreementDate'].touched && FormControls['agreementDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['aggrementDate'].errors?.['required']">
+                            *ngIf="FormControls['agreementDate'].errors?.['required']">
                             Select Assessed Date.</div>
                         </span>
                       </div>
@@ -332,7 +332,7 @@
               <p-tabPanel header="Weedicide">
                 <div class="grid col-12">
                   <div formArrayName='weedicides' class="checkboxList grid">
-                    <ng-container *ngIf="this.fbPlotAggrement.controls['weedicides'] as formArray">
+                    <ng-container *ngIf="this.fbPlotAgreement.controls['weedicides'] as formArray">
                       <div *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index" class="col-3">
                         <div [formGroupName]="i" style="padding-left:unset" class="capitalize form-control">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
@@ -398,7 +398,7 @@
               <p-tabPanel header="Fertilizers " class="col-12">
                 <div class="grid col-12">
                   <div formArrayName='fertilizers' class="checkboxList grid">
-                    <ng-container *ngIf="this.fbPlotAggrement.controls['fertilizers'] as formArray">
+                    <ng-container *ngIf="this.fbPlotAgreement.controls['fertilizers'] as formArray">
                       <div *ngFor="let item of getFormArrayControl('fertilizers').controls; let i = index"
                         class="col-3">
                         <div [formGroupName]="i" style="padding-left:unset">
@@ -545,7 +545,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6">There Are No Aggrements Found Yet.</td>
+          <td colspan="6">There Are No Agreements Found Yet.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -555,7 +555,7 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td class="md:text-center" colspan="12">No Aggrements Found.</td>
+      <td class="md:text-center" colspan="12">No Agreements Found.</td>
     </tr>
   </ng-template>
   </p-table>

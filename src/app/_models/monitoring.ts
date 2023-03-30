@@ -579,7 +579,7 @@ export class GetFarmersInSeasonViewDto {
   seasonsId?: number
 }
 
-export class PlotAggrementDto {
+export class PlotAgreementDto {
 
 }
 

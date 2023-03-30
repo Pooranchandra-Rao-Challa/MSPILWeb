@@ -210,7 +210,7 @@ public GetPlotinfo(plotId: number) {
     return this.getWithId(GET_MAINTANANCE_ITEMS_ASSESSMENT_URI, plotYieldId);
   }
 
-  public GetPlotAggrements(seasonId: number, param1 = null) {
+  public GetPlotAgreement(seasonId: number, param1 = null) {
     let arr: any[] = [];
     arr.push(seasonId);
     if (param1 != null) arr.push(param1);

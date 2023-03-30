@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { FarmersViewDto, LookupDetailViewDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
-import { IAgreementedPlotsViewDto, IFarmerInPlotOfferDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotAggrementDto, PlotInfoDto, PlotsDto } from 'src/app/_models/monitoring';
+import { IAgreementedPlotsViewDto, IFarmerInPlotOfferDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotAgreementDto, PlotInfoDto, PlotsDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
@@ -14,21 +14,21 @@ export interface IHeader {
   label: string;
 }
 @Component({
-  selector: 'app-plotaggrement',
-  templateUrl: './plotaggrement.component.html',
+  selector: 'app-plotagreement',
+  templateUrl: './plotagreement.component.html',
   styles: [
   ]
 })
-export class PlotaggrementComponent implements OnInit {
+export class PlotagreementComponent implements OnInit {
   plotAgreements: IFarmerInPlotOfferDto[] = [];
-  plotAgreement: PlotAggrementDto = {};
+  plotAgreement: PlotAgreementDto = {};
   globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
   @ViewChild('filter') filter!: ElementRef;
   seasons: SeasonViewDto[] = [];
   showDialog: boolean = false;
   submitLabel!: string;
-  fbPlotAggrement!: FormGroup
+  fbPlotAgreement!: FormGroup
   addFlag: boolean = true;
   plotInfo: PlotsDto = {};
   currentSeason: SeasonDto = {};
@@ -75,7 +75,7 @@ export class PlotaggrementComponent implements OnInit {
     this.initFarmers();
     this.initweedstatus();
     this.initCrops();
-    this.plotAggrementForm();
+    this.plotAgreementForm();
   }
 
   initSeasons() {
@@ -98,9 +98,9 @@ export class PlotaggrementComponent implements OnInit {
     });
   }
 
-  initPlotAggrements(seasonId: number) {
+  initPlotAgreements(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetPlotAggrements(seasonId, param1).subscribe((resp) => {
+    this.monitoringService.GetPlotAgreement(seasonId, param1).subscribe((resp) => {
       this.plotAgreements = resp as unknown as IFarmerInPlotOfferDto[];
       this.plotAgreements?.forEach((value) => {
         value.objAgreementedPlots = JSON.parse(value.agreementedPlots) as IAgreementedPlotsViewDto[];
@@ -113,9 +113,9 @@ export class PlotaggrementComponent implements OnInit {
       this.plotInfo = resp as unknown as PlotsDto;
       if (this.plotInfo.farmerId) {
         this.farmers = this.farmers?.filter(x => x.farmerId != this.plotInfo.farmerId);
-        this.fbPlotAggrement.controls['guarantor1'].setValue('');
-        this.fbPlotAggrement.controls['guarantor2'].setValue('');
-        this.fbPlotAggrement.controls['guarantor3'].setValue('');
+        this.fbPlotAgreement.controls['guarantor1'].setValue('');
+        this.fbPlotAgreement.controls['guarantor2'].setValue('');
+        this.fbPlotAgreement.controls['guarantor3'].setValue('');
       }
     });
   }
@@ -158,47 +158,47 @@ export class PlotaggrementComponent implements OnInit {
     });
   }
 
-  initPlotAggrement(plotAggrementId: number = -1) {
-    this.plotAgreement = new PlotAggrementDto();
-    this.submitLabel = "Add Aggrement";
+  initPlotAgreement(plotAgreementId: number = -1) {
+    this.plotAgreement = new PlotAgreementDto();
+    this.submitLabel = "Add Agreement";
     this.addFlag = true;
     this.showDialog = true;
 
-    this.monitoringService.GetMaintenanceItemsForAssessment(plotAggrementId).subscribe((resp) => {
+    this.monitoringService.GetMaintenanceItemsForAssessment(plotAgreementId).subscribe((resp) => {
       this.maintanenceItems = resp as unknown as MaintenanceItems;
       this.initMaintanenceItems();
     });
   }
 
   initMaintanenceItems() {
-    let weedicideArray = this.fbPlotAggrement.get("weedicides") as FormArray;
+    let weedicideArray = this.fbPlotAgreement.get("weedicides") as FormArray;
 
     this.maintanenceItems?.weedicides?.forEach(weedicide => {
       weedicideArray.push(this.createWeed(weedicide));
     })
-    let fertilizerArray = this.fbPlotAggrement.get("fertilizers") as FormArray;
+    let fertilizerArray = this.fbPlotAgreement.get("fertilizers") as FormArray;
 
     this.maintanenceItems?.fertilizers?.forEach(fertilizer => {
       fertilizerArray.push(this.createFertlizer(fertilizer))
     })
-    let pestArray = this.fbPlotAggrement.get("pests") as FormArray;
+    let pestArray = this.fbPlotAgreement.get("pests") as FormArray;
 
     this.maintanenceItems?.pests?.forEach(pest => {
       pestArray.push(this.createpests(pest))
     })
-    let diseaseArray = this.fbPlotAggrement.get("diseases") as FormArray;
+    let diseaseArray = this.fbPlotAgreement.get("diseases") as FormArray;
 
     this.maintanenceItems?.diseases?.forEach(disease => {
       diseaseArray.push(this.createDisease(disease))
     })
   }
 
-  plotAggrementForm() {
-    this.fbPlotAggrement = this.formbuilder.group({
+  plotAgreementForm() {
+    this.fbPlotAgreement = this.formbuilder.group({
       seasonId: [(Validators.required)],
       plotNumber: ['', Validators.required],
-      aggrementArea: [null, Validators.required],
-      aggrementDate: ['', Validators.required],
+      agreementArea: [null, Validators.required],
+      agreementDate: ['', Validators.required],
       weedStatusId: ['', Validators.required],
       interCropId: ['', Validators.required],
       micronutrientdeficiency: [null],
@@ -215,11 +215,11 @@ export class PlotaggrementComponent implements OnInit {
   }
 
   get FormControls() {
-    return this.fbPlotAggrement.controls;
+    return this.fbPlotAgreement.controls;
   }
 
   getFormArrayControl(formGroupName: string): FormArray {
-    return this.fbPlotAggrement.controls[formGroupName] as FormArray
+    return this.fbPlotAgreement.controls[formGroupName] as FormArray
   }
 
   createpests(pest: MaintPestDto): FormGroup {
