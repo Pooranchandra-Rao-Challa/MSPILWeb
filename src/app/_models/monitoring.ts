@@ -72,8 +72,10 @@ export interface IFarmerInPlotOfferDto {
   farmerSectionName: string;
   measuredPlots: string;
   offeredPlots: string;
+  agreementedPlots: string;
   ObjOfferedPlots?: IFarmerPlotOffersViewDto[];
   ObjMeasuredPlots?: PlotAssessmentViewDto[];
+  objAgreementedPlots: IAgreementedPlotsViewDto[];
 }
 
 export interface IFarmerPlotOffersViewDto {
@@ -120,7 +122,7 @@ export class PlotAssessmentDto {
   hasMicroNutrientDeficiency?: boolean;
   isTrashMulchingDone?: boolean;
   isGapsFillingDone?: boolean;
-  serverUpdatedStatus?:boolean;
+  serverUpdatedStatus?: boolean;
   diseases?: plotDiseasesDto[];
   fertilizers?: plotFertilizersDto[];
   pests?: plotPestsDto[];
@@ -134,7 +136,7 @@ export class plotDiseasesDto {
   plotDiseaseId?: number;
   plotAssessmentId?: number;
   plotAgreementId?: number;
-  plotYieldId?:number;
+  plotYieldId?: number;
   diseaseId?: number;
   identifiedDate?: Date;
   controlDate?: Date;
@@ -190,7 +192,7 @@ export class PlotAssessmentViewDto {
   season?: Date;
   plotReportId?: number;
   plotNumber?: string;
-  plotId?:any
+  plotId?: any
   previousCropId?: number;
   previousCrop?: string;
   cropTypeId?: number;
@@ -199,7 +201,7 @@ export class PlotAssessmentViewDto {
   offerNo?: number;
   farmerId?: number;
   farmerCode?: string;
-  farmerName?:string;
+  farmerName?: string;
   fatherName?: string;
   farmerVillageId?: number;
   farmerVillageName?: string;
@@ -241,25 +243,25 @@ export class PlotAssessmentViewDto {
 
 }
 
-  export class PlotTransferDto {
-    createdBy?: string
-    createdAt?: string
-    updatedBy?: string
-    updatedAt?: string
-    plotTransferId?: number
-    plotId?: number
-    plotAssessmentId?: number
-    docNo?: number
-    docDate?: string
-    plotTransferTypeId?: number
-    fromFarmerId?: number
-    transferArea?: number
-    toFarmerId?: number
-    plotTransferReasonId?: number
-    serverUpdatedStatus?: boolean
-    transferredToPlotId?: number
-    transferredToOfferId?: number
-  }
+export class PlotTransferDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  plotTransferId?: number
+  plotId?: number
+  plotAssessmentId?: number
+  docNo?: number
+  docDate?: string
+  plotTransferTypeId?: number
+  fromFarmerId?: number
+  transferArea?: number
+  toFarmerId?: number
+  plotTransferReasonId?: number
+  serverUpdatedStatus?: boolean
+  transferredToPlotId?: number
+  transferredToOfferId?: number
+}
 
 
 export class PlotTransferViewDto {
@@ -560,22 +562,88 @@ export class PlotsDto {
 }
 export class FarmerSelectInfoViewDto {
   userId?: number
-  name?:string
+  name?: string
   id?: number
   title?: string
   completed?: boolean
-  fromFarmerName?:string
-  toFarmerName?:string
+  fromFarmerName?: string
+  toFarmerName?: string
 }
 export class GetFarmersInSeasonViewDto {
   farmerCode?: number
-  farmerName?:string
+  farmerName?: string
   plotId?: number
   plotNumber?: string
   netArea?: boolean
   seasonsId?: number
 }
 
+export class PlotAggrementDto {
 
+}
 
+// export interface IPlotAgreementViewDto {
+//   seasonId: number;
+//   season: string
+//   farmerId: number;
+//   farmerCode: string;
+//   farmerName: string;
+//   fatherName: string;
+//   farmerVillageId: number;
+//   farmerVillageName: string;
+//   farmerDivisionName: string;
+//   farmerCircleName: string;
+//   farmerSectionName: string;
+//   agreementedPlots: string;
+//   objAgreementedPlots: IAgreementedPlotsViewDto[];
+// }
+
+export interface IAgreementedPlotsViewDto {
+  plotId: number;
+  offerNo: number;
+  plotNumber: number;
+  plotReportId: number;
+  plotAgreementId: number;
+  plotVillageName: string;
+  plotDivisionName: string;
+  plotCircleName: string;
+  plotSectionName: string;
+  surveyNo: string;
+  reportedArea: string;
+  plantingDate: Date;
+  variety: string;
+  plantType: string;
+  plotType: string;
+  weedStatusId: number;
+  weedStatus: string;
+  interCropingId: number;
+  interCrop: string;
+  crop: string;
+  fieldName: string;
+  birNumber: number;
+  birDate: Date;
+  agreementedArea: number;
+  agreementedDate: Date;
+  earthingUpArea: number;
+  bioFertilizersAppliedArea: number;
+  deepPloughedArea: number;
+  deTrashingArea: number;
+  ratoonManagedUsedArea: number;
+  trashShedderArea: number;
+  loadShedderArea: number;
+  hasMicroNutrientDeficiency: boolean;
+  isTrashMulchingDone: boolean;
+  isGapsFillingDone: boolean;
+  nomineeId: number;
+  relationTypeId: number;
+  relationType: string;
+  nominee: string;
+  guarantor1: string;
+  guarantor2: string;
+  guarantor3: string;
+  createdAt: Date;
+  createdBy: string;
+  updatedAt: Date;
+  updatedBy: string;
+}
 
