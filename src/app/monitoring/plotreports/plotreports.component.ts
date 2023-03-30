@@ -130,6 +130,9 @@ export class PlotreportsComponent implements OnInit {
   getPlotOffersInSeason(seasonId: number) {
     this.monitoringService.PlotOffersInSeason(seasonId).subscribe((resp) => {
       this.seasonPlotOffers = resp as any;
+      this.seasonPlotOffers.forEach(s =>{
+        s.DisplayValue = `${s.code}-${s.farmerName}-${s.farmerCode}-${s.plotVillageName}`
+      })
     });
   }
 
