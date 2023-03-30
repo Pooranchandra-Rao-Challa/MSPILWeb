@@ -194,9 +194,10 @@ export const GET_PLOTS_URI = "Monitoring/GetPlotInformation";
 export const GET_REGISTERED_FARMERS_URI ='Monitoring/GetRegisteredFarmers'
 export const GET_PLOTTRANSFERS_URI = "Monitoring/GetPlotTransfers";
 export const GET_FARMERS_IN_SEASON_URI = "Monitoring/GetFarmersInSeason";
-
 export const GET_PLOT_AGREEMENTS_URI = "Monitoring/GetPlotAgreements";
 export const GET_PLOTS_FORAGREEMENT_URI = "Monitoring/GetPlots";
+export const GET_FARMER_IN_SECTIONS_URI = "Monitoring/GetFarmerSections";
+
 
 
 

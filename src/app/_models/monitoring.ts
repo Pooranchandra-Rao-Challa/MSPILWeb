@@ -646,4 +646,11 @@ export interface IAgreementedPlotsViewDto {
   updatedAt: Date;
   updatedBy: string;
 }
+export class FarmerSectionViewDto {
+  farmerId?: number
+  farmerCode?: string
+  farmerName?: string
+
+}
+
 
