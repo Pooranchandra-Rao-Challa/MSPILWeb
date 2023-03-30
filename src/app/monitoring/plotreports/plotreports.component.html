@@ -124,13 +124,13 @@
               </div>
               <div class="field col-12 md:col-3">
                 <label>Offered No:<sup class="p-error">*</sup></label>
-                <p-dropdown placeholder="Select Offered No" optionLabel="code" [options]="offeredNo"
-                  formControlName="offerNo" optionValue="code" [virtualScroll]="true" [virtualScrollItemSize]="20"
+                <p-dropdown placeholder="Select Offered No" optionLabel="code" [options]="seasonPlotOffers"
+                  formControlName="plotOfferId" optionValue="id" [virtualScroll]="true" [virtualScrollItemSize]="20"
                   (onChange)="getOfferInfo($event.value)"
-                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['offerNo'].touched && FormControls['offerNo'].errors }">
+                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotOfferId'].touched && FormControls['plotOfferId'].errors }">
                 </p-dropdown>
-                <span *ngIf="FormControls['offerNo'].touched && FormControls['offerNo'].invalid">
-                  <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['offerNo'].errors?.['required']">
+                <span *ngIf="FormControls['plotOfferId'].touched && FormControls['plotOfferId'].invalid">
+                  <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plotOfferId'].errors?.['required']">
                     Please Select Offer No.</div>
                 </span>
               </div>
@@ -201,7 +201,7 @@
                     <p-dropdown placeholder="Select Cane Area Village" optionLabel="villageName" [options]="villages"
                       optionValue="villageId" formControlName="caneAreaVillageId">
                     </p-dropdown>
-                    <span
+                    <spanplotNumber
                       *ngIf="FormControls['caneAreaVillageId'].touched && FormControls['caneAreaVillageId'].invalid">
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['caneAreaVillageId'].errors?.['required']">
