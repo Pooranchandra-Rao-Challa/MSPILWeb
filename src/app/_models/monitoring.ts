@@ -334,6 +334,7 @@ export interface IPlotReportViewDto {
   offerNo: number;
   plotNumber: number;
   plotReportId: number;
+  plotReportAddlInfoId: number;
   plotVillageName: string;
   plotDivisionName: string;
   plotCircleName: string;
@@ -559,6 +560,8 @@ export class PlotsDto {
   agreedTon?: number
   cropType?: string
   Crop?: string
+  measuredArea?:number
+  agreementedArea?:number
 }
 export class FarmerSelectInfoViewDto {
   userId?: number
@@ -578,7 +581,7 @@ export class GetFarmersInSeasonViewDto {
   seasonsId?: number
 }
 
-export class PlotAggrementDto {
+export class PlotAgreementDto {
 
 }
 

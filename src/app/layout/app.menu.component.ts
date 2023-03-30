@@ -35,7 +35,7 @@ export class AppMenuComponent implements OnInit {
         return this.jwtService.Permissions.CanViewTpts || this.jwtService.Permissions.CanViewVarieties
           || this.jwtService.Permissions.CanViewVehicleTypes
       case 'Monitoring':
-        return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
+        return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports || this.jwtService.Permissions.CanViewPlotAgreements
         case 'Permits':
         return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
       default: return false;
@@ -148,11 +148,11 @@ export class AppMenuComponent implements OnInit {
             icon: 'pi pi-fw pi-eye',
             permission: true,
             items: [
-              { label: 'Plot Offers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer'], permission: this.jwtService.Permissions.CanViewPlotReports },
+              { label: 'Plot Offers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer'], permission: this.jwtService.Permissions.CanViewPlotOffers },
               { label: 'Plot Reports', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports'], permission: this.jwtService.Permissions.CanViewPlotReports },
               { label: 'Plot Assessments', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassessment'], permission: true },
-              { label: 'Plot Agreements', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotaggrement'], permission: true },
-              { label: 'Plot Offer Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
+              { label: 'Plot Agreements', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotagreement'], permission: this.jwtService.Permissions.CanViewPlotAgreements },
+              { label: 'Plot Offer Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotOffers },
               { label: 'Plot Report Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
               { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true },
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
@@ -174,7 +174,7 @@ export class AppMenuComponent implements OnInit {
               { label: 'Permit Printing', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitprinting'], permission: true },
               { label: 'Schedule Grouping', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/schedulegrouping'], permission: true },
               { label: 'Special Permits', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/specialpermits'], permission: true },
-             
+
             ]
 
           }
