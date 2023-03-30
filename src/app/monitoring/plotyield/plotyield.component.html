@@ -12,7 +12,7 @@
             </ng-template>
         </p-toolbar>
         <!-- dialog -->
-        <p-dialog header="Plot Yield" [(visible)]="showDialog" [modal]="true"
+        <p-dialog header="Plot Yield" [(visible)]="showDialog" [modal]="true" (onHide)="ClearForm()"
             [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
             <form [formGroup]="fbPlotYield" (ngSubmit)="onSubmit()">
                 <p-tabView orientation="left">
@@ -27,7 +27,8 @@
                                                 <label>Season:</label>
                                                 <p-dropdown class="ml-2" placeholder="Select a season"
                                                     optionLabel="name" [options]="seasons" optionValue="seasonId"
-                                                    formControlName="seasonId"  [(ngModel)]="currentSeason.seasonId" appendTo="body"
+                                                    formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
+                                                    (onChange)="initPlotReports($event.value)" appendTo="body"
                                                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                                                 </p-dropdown>
                                                 <span
@@ -40,8 +41,9 @@
                                             <div class="field col-12 md:col-4">
                                                 <label>Plot No:</label>
                                                 <p-dropdown class="ml-2" placeholder="Select Plot"
-                                                    optionLabel="plotNumber" optionValue="plotReportId"
-                                                    formControlName="plotReportId"
+                                                    optionLabel="plotNumber" [filter]="true" filterBy="plotNumber"
+                                                    [options]="plotReports" optionValue="plotId"  [virtualScroll]="true" [virtualScrollItemSize]="30"
+                                                    formControlName="plotId" (onChange)="getPlotinfo($event.value)"
                                                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotReportId'].touched && FormControls['plotReportId'].errors }">
                                                 </p-dropdown>
                                                 <span
@@ -64,31 +66,31 @@
                                                 </div>
                                                 <div class="field col-12 md:col-6 lg:col-6">
                                                     <label>Farmer Name:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.farmerName}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-6 lg:col-6">
                                                     <label>Farmer Village:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.farmerVillage}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-6 lg:col-6">
                                                     <label>Farmer Division:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.farmerDivision}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-6 lg:col-6">
                                                     <label>Farmer Circle:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.farmerCircle}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-6 lg:col-6">
                                                     <label>Farmer Section:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.farmerSection}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-6 lg:col-6">
                                                     <label>Crop Type:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.cropType}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-6 lg:col-6">
                                                     <label>Offered No:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.offerNo}}</span>
                                                 </div>
                                             </div>
                                         </p-fieldset>
@@ -97,70 +99,69 @@
                                             <div class="p-fluid p-formgrid grid">
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Plot Division:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.plotDivision}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Plot Circle:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.plotCircle}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Plot Section:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.plotSection}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Plot Village:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.plotVillage}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Plant Type:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.plantType}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Planting Date:</label>
-
-
+                                                    <span class="disabled_text">{{plotInfo.plantingDate}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Survey No:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.surveyNo}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Variety</label>
-
+                                                    <span class="disabled_text">{{plotInfo.variety}}</span>
                                                 </div>
 
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Field Name:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.fieldName}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>BIR Number:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.birNumber}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>BIR Date:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.birDate}}</span>
                                                 </div>
-                                                <div class="field col-12 md:col-3 lg:col-3">
+                                                <!-- <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Seed/Harvest Qunatity:</label>
-
-                                                </div>
+                                                    <span class="disabled_text"></span>
+                                                </div> -->
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Plot Type:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.plotType}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Reported Area:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.reportedArea}}</span>
                                                 </div>
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Measured Area:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.measuredArea}}</span>
                                                 </div>
 
                                                 <div class="field col-12 md:col-3 lg:col-3">
                                                     <label>Agreemented Area:</label>
-
+                                                    <span class="disabled_text">{{plotInfo.agreementedArea}}</span>
                                                 </div>
                                             </div>
                                         </p-fieldset>
@@ -171,7 +172,8 @@
                                             <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Action Plan:<sup class="p-error">*</sup></label>
                                                 <p-dropdown class="ml-2" placeholder="Select Action PLan"
-                                                    optionLabel="name" formControlName="actionPlan">
+                                                    optionLabel="name" optionValue="lookupDetailId" appendTo="body"
+                                                    [options]="actionPlan" formControlName="actionPlan">
                                                 </p-dropdown>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3">
@@ -189,6 +191,10 @@
                                                 </span>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
+                                                <label>Seed/Harvest Qunatity:</label>
+                                                <input pInputText text="name">
+                                            </div>
+                                            <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Poor Crop Area:</label>
                                                 <input pInputText text="name">
                                             </div>
@@ -199,7 +205,8 @@
                                             <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Reasons For Perished Area:<sup class="p-error">*</sup></label>
                                                 <p-dropdown class="ml-2" placeholder="Select Reasons For Perished Area"
-                                                    optionLabel="name">
+                                                    optionLabel="name" optionValue="lookupDetailId" appendTo="body"
+                                                    [options]="perishedArea">
                                                 </p-dropdown>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
@@ -224,172 +231,179 @@
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="Weedicide" class="line-height-3 m-0">
+                    <p-tabPanel header="Weedicide/Pests" class="line-height-3 m-0">
                         <div class="flex flex-column  justify-content-center">
-                            <div class="grid">
-                                <div class="col-12">
-                                    <div class="p-fluid p-formgrid grid">
-                                        <div class="field col-12 md:col-4 lg:col-3 ">
-                                            <label>Weed Status:</label>
-                                            <p-dropdown optionLabel="name" optionValue="lookupDetailId"
-                                                formControlName="weedStatusId" [autoDisplayFirst]="false"
-                                                placeholder="Select Weed Status"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['weedStatusId'].touched && FormControls['weedStatusId'].errors }">
-                                            </p-dropdown>
-                                            <span
-                                                *ngIf="FormControls['weedStatusId'].touched && FormControls['weedStatusId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['weedStatusId'].errors?.['required']">
-                                                    Select Weed Status.</div>
-                                            </span>
-                                        </div>
-                                        <div class="field col-12 md:col-4 lg:col-3 ">
-                                            <label>Inter Croping:</label>
-                                            <p-dropdown optionLabel="name" optionValue="lookupDetailId"
-                                                formControlName="interCropId" [autoDisplayFirst]="false"
-                                                placeholder="Select Inter Croping"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['interCropId'].touched && FormControls['interCropId'].errors }">
-                                            </p-dropdown>
-                                            <span
-                                                *ngIf="FormControls['interCropId'].touched && FormControls['interCropId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['interCropId'].errors?.['required']">
-                                                    Select Inter Croping.</div>
-                                            </span>
-                                        </div>
-                                        <div class="field col-12 md:col-6  lg:col-3 ">
-                                            <label>Micronutrient Deficiency:</label><br>
-                                            <p-inputSwitch formControlName="micronutrientdeficiency"></p-inputSwitch>
-                                        </div>
-                                        <div class="field col-12 md:col-6  lg:col-3 ">
-                                            <label>Trash Mulching:</label><br>
-                                            <p-inputSwitch formControlName="trashmulching"></p-inputSwitch>
-                                        </div>
-                                        <div class="field col-12 md:col-6  lg:col-3 ">
-                                            <label>Gap Filing Done:</label><br>
-                                            <p-inputSwitch formControlName="gapfillingdone"></p-inputSwitch>
-                                        </div>
-                                    </div>
+                          <div class="grid">
+                            <div class="col-12">
+                              <div class="p-fluid p-formgrid grid">
+                                <div class="field col-12 md:col-4 lg:col-3 ">
+                                  <label>Weed Status:</label>
+                                  <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="weedstatus" appendTo="body"
+                                    formControlName="weedStatusId" [autoDisplayFirst]="false" placeholder="Select Weed Status"
+                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['weedStatusId'].touched && FormControls['weedStatusId'].errors }">
+                                  </p-dropdown>
+                                  <span *ngIf="FormControls['weedStatusId'].touched && FormControls['weedStatusId'].invalid">
+                                    <div class="ng-invalid ng-touched p-error"
+                                      *ngIf="FormControls['weedStatusId'].errors?.['required']">
+                                      Select Weed Status.</div>
+                                  </span>
                                 </div>
+                                <div class="field col-12 md:col-4 lg:col-3 ">
+                                  <label>Inter Croping:</label>
+                                  <p-dropdown optionLabel="name" [options]="cropstypes" optionValue="lookupDetailId" appendTo="body"
+                                    formControlName="interCropId" [autoDisplayFirst]="false" placeholder="Select Inter Croping"
+                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['interCropId'].touched && FormControls['interCropId'].errors }">
+                                  </p-dropdown>
+                                  <span *ngIf="FormControls['interCropId'].touched && FormControls['interCropId'].invalid">
+                                    <div class="ng-invalid ng-touched p-error"
+                                      *ngIf="FormControls['interCropId'].errors?.['required']">
+                                      Select Inter Croping.</div>
+                                  </span>
+                                </div>
+                                <div class="field col-12 md:col-6  lg:col-3 ">
+                                  <label>Micronutrient Deficiency:</label><br>
+                                  <p-inputSwitch formControlName="micronutrientdeficiency"></p-inputSwitch>
+                                </div>
+                                <div class="field col-12 md:col-6  lg:col-3 ">
+                                  <label>Trash Mulching:</label><br>
+                                  <p-inputSwitch formControlName="trashmulching"></p-inputSwitch>
+                                </div>
+                                <div class="field col-12 md:col-6  lg:col-3 ">
+                                  <label>Gap Filing Done:</label><br>
+                                  <p-inputSwitch formControlName="gapfillingdone"></p-inputSwitch>
+                                </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                        <p-tabView orientation="left">
-                            <p-tabPanel header="Weedicide">
-                                <!-- <div class="grid col-12">
-            <div formArrayName='weedicides' class="checkboxList grid">
-              <ng-container *ngIf="this.fbPlotAssesment.controls['weedicides'] as formArray">
-                <div *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index" class="col-2">
-                  <div [formGroupName]="i" style="padding-left:unset">
-                    <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
-                    </p-inputSwitch>{{item.value.name}}
-                  </div>
-                </div>
-              </ng-container>
-            </div>
-          </div> -->
-                            </p-tabPanel>
-
-                            <p-tabPanel header="Pests" class="col-12">
-                                <div class="col-12">
-                                    <p-table #dt2 dataKey="id" [rows]="10" [rowHover]="true"
-                                        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                                        [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
-                                        [rowsPerPageOptions]="[10,25,50]">
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Identified Date</th>
-                                                <th>Control Date</th>
-                                                <th>Remarks</th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-pest>
-                                            <tr>
-                                                <td>
-                                                    <input pInputText [value]="pest.name">
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" [showIcon]="true"
-                                                        mask="99/99/9999" placeholder=" Please Select Identified Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" [showIcon]="true"
-                                                        mask="99/99/9999" placeholder=" Please Select Control Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <input pInputText [value]="pest.remarks">
-                                                </td>
-                                            </tr>
-
-                                        </ng-template>
-                                        <ng-template pTemplate="emptymessage">
-                                            <tr>
-                                                <td colspan="8">No customers found.</td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                            </p-tabPanel>
+                        <p-tabView orientation="left" [(activeIndex)]="activeIndex1!">
+                          <p-tabPanel header="Weedicide">
+                            <div class="grid col-12">
+                              <div formArrayName='weedicides' class="checkboxList grid">
+                                <ng-container *ngIf="this.fbPlotYield.controls['weedicides'] as formArray">
+                                  <div *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index" class="col-3">
+                                    <div [formGroupName]="i" style="padding-left:unset" class="capitalize form-control">
+                                      <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
+                                      </p-inputSwitch>
+                                      <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                                    </div>
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </div>
+                          </p-tabPanel>
+            
+                          <p-tabPanel header="Pests" class="col-12">
+                            <div class="col-12">
+                              <div formArrayName='pests' class="checkboxList">
+                                <p-table #dt2 dataKey="id" [value]="getFormArrayControl('pests').controls" [rows]="10"
+                                  [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+                                  [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
+                                  [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: '100%'}">
+                                  <ng-template pTemplate="header">
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Identified Date</th>
+                                      <th>Control Date</th>
+                                      <th>Remarks</th>
+                                    </tr>
+                                  </ng-template>
+                                  <ng-template pTemplate="body" let-pestControl let-i="rowIndex">
+                                    <tr [formGroupName]="i">
+                                      <td>
+                                        <div class="font-bold">
+                                          {{pestControl.get('name').value}}
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
+                                          placeholder=" Please Select Identified Date" formControlName="identifiedDate">
+                                        </p-calendar>
+                                      </td>
+                                      <td>
+                                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
+                                          placeholder=" Please Select Control Date" formControlName="controlDate">
+                                        </p-calendar>
+                                      </td>
+                                      <td>
+                                        <input pInputText formControlName="remarks">
+                                      </td>
+                                    </tr>
+            
+                                  </ng-template>
+                                  <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                      <td colspan="8">No Pest Found.</td>
+                                    </tr>
+                                  </ng-template>
+                                </p-table>
+                              </div>
+                            </div>
+                          </p-tabPanel>
                         </p-tabView>
-                    </p-tabPanel>
-                    <p-tabPanel header="Fertilizer/Disease" class="line-height-3 m-0">
-                        <p-tabView orientation="left">
-                            <p-tabPanel header="Fertilizers " class="col-12">
-                                <!-- <div class="grid col-12">
-            <div formArrayName='fertilizers' class="checkboxList grid">
-              <ng-container *ngIf="this.fbPlotAssesment.controls['fertilizers'] as formArray">
-                <div *ngFor="let item of getFormArrayControl('fertilizers').controls; let i = index"
-                  class="col-2">
-                  <div [formGroupName]="i" style="padding-left:unset">
-                    <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
-                    </p-inputSwitch>{{item.value.name}}
-                  </div>
-                </div>
-              </ng-container>
-            </div>
-          </div> -->
-                            </p-tabPanel>
-                            <p-tabPanel header="Diseases" class="col-12">
-                                <div class="col-12">
-                                    <p-table #dt2 dataKey="id" [rows]="10" [rowHover]="true"
-                                        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                                        [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
-                                        [rowsPerPageOptions]="[10,25,50]">>
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Identified Date</th>
-                                                <th>Control Date</th>
-                                                <th>Remarks</th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-diseases>
-                                            <tr>
-                                                <td>
-                                                    <input pInputText [value]="diseases.name">
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" [showIcon]="true"
-                                                        mask="99/99/9999" placeholder="Please Select Identified Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <p-calendar [readonlyInput]="true" [showIcon]="true"
-                                                        mask="99/99/9999" placeholder="Please Select Control Date">
-                                                    </p-calendar>
-                                                </td>
-                                                <td>
-                                                    <input pInputText [value]="diseases.remarks">
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                            </p-tabPanel>
+                      </p-tabPanel>
+                      <p-tabPanel header="Fertilizer/Disease" class="line-height-3 m-0">
+                        <p-tabView orientation="left" [(activeIndex)]="activeIndex2!">
+                          <p-tabPanel header="Fertilizers " class="col-12">
+                            <div class="grid col-12">
+                              <div formArrayName='fertilizers' class="checkboxList grid">
+                                <ng-container *ngIf="this.fbPlotYield.controls['fertilizers'] as formArray">
+                                  <div *ngFor="let item of getFormArrayControl('fertilizers').controls; let i = index"
+                                    class="col-3">
+                                    <div [formGroupName]="i" style="padding-left:unset">
+                                      <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
+                                      </p-inputSwitch>
+                                      <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                                    </div>
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </div>
+                          </p-tabPanel>
+                          <p-tabPanel header="Diseases" class="col-12">
+                            <div class="col-12">
+                              <div formArrayName='diseases' class="checkboxList">
+                                <p-table #dt2 dataKey="id" [value]="getFormArrayControl('diseases').controls" [rows]="10"
+                                  [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+                                  [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
+                                  [rowsPerPageOptions]="[10,25,50]">
+            
+                                  <ng-template pTemplate="header">
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Identified Date</th>
+                                      <th>Control Date</th>
+                                      <th>Remarks</th>
+                                    </tr>
+                                  </ng-template>
+                                  <ng-template pTemplate="body" let-diseaseControl let-i="rowIndex">
+                                    <tr [formGroupName]="i">
+                                      <td>
+                                        <div class="font-bold">
+                                          {{diseaseControl.get('name').value}}
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
+                                          placeholder="Please Select Identified Date" formControlName="identifiedDate">
+                                        </p-calendar>
+                                      </td>
+                                      <td>
+                                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
+                                          placeholder="Please Select Control Date" formControlName="controlDate">
+                                        </p-calendar>
+                                      </td>
+                                      <td>
+                                        <input pInputText formControlName="remarks">
+                                      </td>
+                                    </tr>
+                                  </ng-template>
+                                </p-table>
+                              </div>
+                            </div>
+                          </p-tabPanel>
                         </p-tabView>
-                    </p-tabPanel>
+                      </p-tabPanel>
                 </p-tabView>
             </form>
             <ng-template pTemplate="footer">
@@ -416,8 +430,9 @@
                             <input pInputText type="text" #filter placeholder="Search Keyword"
                                 pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
                         </span>
-                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name">
-                        </p-dropdown>
+                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+              [(ngModel)]="currentSeason.seasonId" optionValue="seasonId">
+            </p-dropdown>
                     </div>
                 </div>
             </ng-template>

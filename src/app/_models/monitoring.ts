@@ -560,6 +560,8 @@ export class PlotsDto {
   agreedTon?: number
   cropType?: string
   Crop?: string
+  measuredArea?:number
+  agreementedArea?:number
 }
 export class FarmerSelectInfoViewDto {
   userId?: number
