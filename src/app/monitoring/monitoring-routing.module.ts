@@ -9,6 +9,8 @@ import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
 import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component';
+import { PlotyieldComponent } from './plotyield/plotyield.component';
+
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component'
     { path: 'plotreports/:paramUrl', component: PlotreportsComponent },
     { path: 'propping', component: ProppingComponent},
     { path: 'seed', component: SeedComponent},
+    { path: 'plotyield', component: PlotyieldComponent},
   ])],
   exports: [RouterModule]
 })

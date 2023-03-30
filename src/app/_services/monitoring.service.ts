@@ -11,7 +11,7 @@ import {
   UPDATE_PLOT_REPORT_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_DOCCODE_URI, CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI,
   GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI,
   UPDATE_COMPLETED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_MAINTANANCE_ITEMS_ASSESSMENT_URI, GET_PLOTS_FORASSESSMENT_URI, GET_PLOTS_URI, GET_PLOT_OFFERS_IN_SEASON_URI,
-  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, GET_PLOT_AGREEMENTS_URI
+  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, GET_PLOT_AGREEMENTS_URI, CREATE_PLOTASSESSMENT_URI, UPDATE_PLOTASSESSMENT_URI, GET_PLOTS_FORAGREEMENT_URI
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -58,10 +58,10 @@ export class MonitoringService extends ApiHttpService {
     return this.getWithParams<PlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
   }
   public CreatePlotAssessment(plotAssessment: PlotAssessmentDto) {
-    return this.post<PlotAssessmentDto>(CREATE_PLOTTRANSFER_URI, plotAssessment);
+    return this.post<PlotAssessmentDto>(CREATE_PLOTASSESSMENT_URI, plotAssessment);
   }
   public UpdatePlotAssessment(plotAssessment: PlotAssessmentDto) {
-    return this.post<PlotAssessmentDto>(UPDATE_PLOTTRANSFER_URI, plotAssessment);
+    return this.post<PlotAssessmentDto>(UPDATE_PLOTASSESSMENT_URI, plotAssessment);
   }
 
   public GetPlotsInSeason(seasonId: number, purpose: string) {
@@ -73,7 +73,17 @@ export class MonitoringService extends ApiHttpService {
   public GetPlotsinfo(plotId: number) {
     return this.getWithId<PlotsDto>(GET_PLOTS_URI, plotId);
   }
+// plot agreement
 
+public GetPlotsInSeasons(seasonId: number, purpose: string) {
+  let arr: any[] = [];
+  arr.push(seasonId);
+  arr.push(purpose);
+  return this.getWithParams<PlotInfoDto>(GET_PLOTS_FORAGREEMENT_URI, arr);
+}
+public GetPlotinfo(plotId: number) {
+  return this.getWithId<PlotsDto>(GET_PLOTS_URI, plotId);
+}
   // Plot Transfers
   public GetAllPlotsTransfers(seasonId: number, param1 = null) {
     let arr: any[] = [];
@@ -101,7 +111,6 @@ export class MonitoringService extends ApiHttpService {
   }
 
   public CreatePlotTransfer(plotTransfer: PlotTransferDto) {
-    debugger;
     return this.post<PlotTransferDto>(CREATE_PLOTTRANSFER_URI, plotTransfer);
   }
 

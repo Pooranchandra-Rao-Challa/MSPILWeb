@@ -39,13 +39,15 @@ export class SugarAPIInterceptor implements HttpInterceptor {
               this.jwtService.Logout();
             }
             else if ([400].includes(err.status) && this.jwtService.IsLoggedIn) {
-              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.error });
+              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.message });
             }
             else if ([404].includes(err.status) && this.jwtService.IsLoggedIn) {
-              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.error });
+              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.message });
             }
             const error = (err && err.error && err.error.message) || err.statusText;
             console.error(error);
+            console.error(JSON.stringify(err.error))
+            console.error(err.error)
             return throwError(() => error);
           }),
           finalize(

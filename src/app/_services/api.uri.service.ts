@@ -169,6 +169,7 @@ export const GET_OFFER_INFO_URI = "Monitoring/GetOfferInfo";
 
 export const GET_PLOTASSESSMENT_URI = "Monitoring/GetPlotAssessements";
 export const CREATE_PLOTASSESSMENT_URI = "Monitoring/CreatePlotAssessment";
+
 export const UPDATE_PLOTASSESSMENT_URI = "Monitoring/UpdatePlotAssessment";
 export const GET_PLOT_REPORTINFO_URI ="Monitoring/PlotReportInfo";
 export const GET_DOCCODE_URI = "Monitoring/GetNewDocNoForPlotTransfer";
@@ -195,6 +196,7 @@ export const GET_PLOTTRANSFERS_URI = "Monitoring/GetPlotTransfers";
 export const GET_FARMERS_IN_SEASON_URI = "Monitoring/GetFarmersInSeason";
 
 export const GET_PLOT_AGREEMENTS_URI = "Monitoring/GetPlotAgreements";
+export const GET_PLOTS_FORAGREEMENT_URI = "Monitoring/GetPlots";
 
 
 

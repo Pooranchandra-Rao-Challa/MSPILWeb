@@ -150,16 +150,16 @@ export class AppMenuComponent implements OnInit {
             items: [
               { label: 'Plot Offers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer'], permission: this.jwtService.Permissions.CanViewPlotReports },
               { label: 'Plot Reports', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports'], permission: this.jwtService.Permissions.CanViewPlotReports },
-              { label: 'Plot Assessment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassessment'], permission: true },
-              { label: 'Plot Aggrement', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotaggrement'], permission: true },
+              { label: 'Plot Assessments', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassessment'], permission: true },
+              { label: 'Plot Agreements', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotaggrement'], permission: true },
               { label: 'Plot Offer Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
               { label: 'Plot Report Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
               { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true },
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
-              // { label: 'Plot Assesment', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassesment'], permission: true },
               { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: true },
               { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: true },
               { label: 'Seed', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/seed'], permission: true },
+              { label: 'plot Yields', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotyield'], permission: true },
             ]
           },
           {

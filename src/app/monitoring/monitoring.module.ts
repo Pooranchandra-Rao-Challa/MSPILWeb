@@ -10,6 +10,8 @@ import { PlotreportsComponent } from './plotreports/plotreports.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
 import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component';
+import { PlotyieldComponent } from './plotyield/plotyield.component';
+
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component'
     ProppingComponent,
     SeedComponent,
     PlotaggrementComponent,
+    PlotyieldComponent,
   ],
   imports: [
     SharedModule,
