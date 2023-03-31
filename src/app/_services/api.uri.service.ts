@@ -198,7 +198,7 @@ export const GET_FARMERS_IN_SEASON_URI = "Monitoring/GetFarmersInSeason";
 export const GET_PLOT_AGREEMENTS_URI = "Monitoring/GetPlotAgreements";
 export const GET_PLOTS_FORAGREEMENT_URI = "Monitoring/GetPlots";
 export const GET_FARMER_IN_SECTIONS_URI = "Monitoring/GetFarmerSections";
-
-
+export const GET_PLOTS_FORYIELDS_URI = "Monitoring/GetPlots";
+export const GET_PLOTYIELDS_URI = "Monitoring/GetPlotYields";
 
 

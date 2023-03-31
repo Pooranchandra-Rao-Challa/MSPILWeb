@@ -44,12 +44,12 @@
                                                     optionLabel="plotNumber" [filter]="true" filterBy="plotNumber"
                                                     [options]="plotReports" optionValue="plotId"  [virtualScroll]="true" [virtualScrollItemSize]="30"
                                                     formControlName="plotId" (onChange)="getPlotinfo($event.value)"
-                                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotReportId'].touched && FormControls['plotReportId'].errors }">
+                                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                                                 </p-dropdown>
                                                 <span
-                                                    *ngIf="FormControls['plotReportId'].touched && FormControls['plotReportId'].invalid">
+                                                    *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                                                     <div class="ng-invalid ng-touched p-error"
-                                                        *ngIf="FormControls['plotReportId'].errors?.['required']">
+                                                        *ngIf="FormControls['plotId'].errors?.['required']">
                                                         Select Plot No.</div>
                                                 </span>
                                             </div>
