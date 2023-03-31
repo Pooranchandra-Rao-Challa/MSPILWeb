@@ -1,0 +1,212 @@
+<div class="col-12">
+    <div class="card">
+        <!-- toolbar -->
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <h4>Permit Quota</h4>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <button pButton pRipple label="Add Permit Quota" icon="pi pi-plus" class="p-button-success p-mr-2"
+                    (click)="getPermitQuota()"></button>
+
+            </ng-template>
+        </p-toolbar>
+
+      
+
+        <!-- popup form -->
+        <p-dialog header="Permit Quota" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
+            <!-- (onHide)="fbAllottedPlot.reset()" -->
+            <div class="flex flex-column align-items-center justify-content-center">
+                <form [formGroup]="fbPermitQuota">
+                    <!-- (ngSubmit)="onSubmit()" -->
+                    <div class="grid">
+                        <div class="col-12">
+                            <div class="p-fluid p-formgrid grid">
+                                <p-fieldset legend="Permit Quota" class="col-12" [toggleable]="true"
+                                    [transitionOptions]="'500ms'">
+                                    <div class="p-fluid p-formgrid grid">
+                                        <div class="field col-12 md:col-3">
+                                            <label>Season:<sup class="p-error">*</sup></label>
+                                            <p-dropdown placeholder="Select Season" optionLabel="code"
+                                                [options]="seasons" optionValue="seasonId" formControlName="seasonId"
+                                                appendTo="body">
+                                                <!-- [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }" -->
+                                            </p-dropdown> <!-- (onChange)="getNewOfferNo($event.value)" -->
+                                            <!-- <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
+                                              <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['seasonId'].errors?.['required']">
+                                                Please Select Season.</div>
+                                            </span> -->
+                                        </div>
+                                        <div class="field col-12 md:col-3">
+                                            <label>From Schedule Group No:<sup class="p-error">*</sup></label>
+                                            <p-dropdown placeholder="Select From Schedule" optionLabel="code"
+                                                optionValue="fromScheduleGroupNo" formControlName="fromScheduleGroupNo"
+                                                appendTo="body">
+
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="field col-12 md:col-3">
+                                            <label>To Schedule Group No:<sup class="p-error">*</sup></label>
+                                            <p-dropdown placeholder="Select To Schedule" optionLabel="code"
+                                                optionValue="toScheduleGroupNo" formControlName="toScheduleGroupNo"
+                                                appendTo="body">
+
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="field col-12 md:col-3">
+                                            <label>From Date:<sup class="p-error">*</sup></label>
+                                            <p-calendar placeholder="From Date" [readonlyInput]="true" [showIcon]="true"
+                                                appendTo="body" formControlName="fromDate" [style]="{'width':'100%'}">
+                                            </p-calendar>
+                                        </div>
+                                        <div class="field col-12 md:col-4">
+                                            <label>Quota:<sup class="p-error">*</sup></label>
+                                            <input pInputText id="quota" type="number" formControlName="quota">
+                                        </div>
+                                        <div class="field col-12 md:col-8">
+                                            <label>Type:<sup class="p-error">*</sup></label>
+                                            <!-- <div formGroupName="test" *ngFor="let category of categories"
+                                                class="p-field-checkbox">
+                                                <p-radioButton [inputId]="category.key" name="category"
+                                                    [value]="category" [(ngModel)]="selectedCategory"></p-radioButton>
+                                                <label [for]="category.key">{{ category.name }}</label>
+                                            </div> -->
+                                            <div class="grid mt-1">                                           
+                                                <div class="col col-3">
+                                                    <p-radioButton name="test" formControlName="test" value="Division" label="Division"></p-radioButton>
+                                                </div>
+                                                <div class="col col-3">
+                                                    <p-radioButton name="test" formControlName="test" value="Circle" label="Circle"></p-radioButton>
+                                                </div>
+                                                <div class="col col-3">
+                                                    <p-radioButton name="test" formControlName="test" value="Section" label="Section"></p-radioButton>
+                                                </div>
+                                                <div class="col col-3">
+                                                    <p-radioButton name="test" formControlName="test" value="Village" label="Village"></p-radioButton>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field col-12 md:col-4">
+                                            <button pButton pRipple type="submit" label="Get Quota" 
+                                                class="p-button-raised p-button-success" (click)="onSubmit()"></button>
+                                        </div>
+                                    </div>
+                                </p-fieldset>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+                <!-- table -->
+                
+                <p-table #dt1 [value]="permitQuotaFromDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+                    [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
+                    [tableStyle]="{ width: '100%'}" [autoLayout]="true">
+                    <!-- <ng-template pTemplate="caption">
+                        <div class="flex justify-content-between flex-column sm:flex-row">
+                            <button pButton label="Clear" class="p-button-outlined mb-2"
+                                icon="pi pi-filter-slash"></button>
+                             (click)="clear(dt1)"
+                            <div>
+                                <span class="p-input-icon-left mb-2">
+                                    <!-- <i class="pi pi-search"></i> -
+
+                                </span>
+
+                            </div>
+                        </div>
+                    </ng-template> -->
+
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th></th>
+                            <th *ngFor="let col of header" [pSortableColumn]="col.header">
+                                {{col?.label}} <p-sortIcon field="code">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-getQuota>
+                        <tr>
+                            <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
+                            <td><button pButton pRipple icon="pi pi-pencil"
+                                    class="p-element p-ripple p-button-text p-button p-component"></button>
+                            </td>
+                            <td *ngFor="let col of header">
+                                <span *ngIf="col?.field != 'FromDate' ">{{getQuota[col.field]}}</span>
+                                <span *ngIf="col?.field == 'FromDate'">
+                                    {{getQuota[col.field] | date: 'dd-MM-yyyy'}}
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            
+                
+            </div>
+        </p-dialog>
+
+        <!-- popup table -->
+
+
+        <!-- table -->
+        <p-table #dt1 [value]="permitQuotaDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
+            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
+                    <!--  (click)="clear(dt1)"-->
+                    <div>
+                        <span class="p-input-icon-left mb-2">
+                            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                            [options]="seasons" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
+                            (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
+                            [style]="{'width':'100%'}">
+                        </p-dropdown>
+                        </span>
+
+                    </div>
+                </div>
+            </ng-template>
+
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+                        {{col?.label}} <p-sortIcon field="code">
+                        </p-sortIcon>
+                        <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-permitQuota>
+                <tr>
+                    <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
+                    <td><button pButton pRipple icon="pi pi-pencil"
+                            class="p-element p-ripple p-button-text p-button p-component"></button>
+                    </td>
+                    <td *ngFor="let col of headers">
+                        <span *ngIf="col?.field != 'FromDate' ">{{permitQuota[col.field]}}</span>
+                        <span *ngIf="col?.field == 'FromDate'">
+                            {{permitQuota[col.field] | date: 'dd-MM-yyyy'}}
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+
+    </div>
+</div>

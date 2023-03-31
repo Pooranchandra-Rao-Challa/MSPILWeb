@@ -28,6 +28,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+
 
 @NgModule({
   exports: [
@@ -60,6 +62,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     RadioButtonModule,
     PasswordModule,
     ProgressSpinnerModule,
+    OverlayPanelModule
   ]
 })
 export class PrimeNgModule { }
