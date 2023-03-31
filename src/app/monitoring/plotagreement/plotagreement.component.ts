@@ -203,18 +203,24 @@ export class PlotagreementComponent implements OnInit {
 
   plotAgreementForm() {
     this.fbPlotAgreement = this.formbuilder.group({
-      seasonId: [(Validators.required)],
-      plotNumber: ['', Validators.required],
-      agreementArea: [null, Validators.required],
-      agreementDate: ['', Validators.required],
-      weedStatusId: ['', Validators.required],
-      interCropId: ['', Validators.required],
+      seasonId: ['', (Validators.required)],
+      plotNumber: [null, (Validators.required)],
+      agreementArea: [null, (Validators.required)],
+      agreementDate: ['', (Validators.required)],
+      weedStatusId: [null, (Validators.required)],
+      interCropId: [null, (Validators.required)],
       micronutrientdeficiency: [null],
       trashmulching: [null],
       gapfillingdone: [null],
-      guarantor1: [''],
-      guarantor2: [''],
-      guarantor3: [''],
+      nomineeDetails: this.formbuilder.group({
+        nomineeDetailId: [null],
+        plotAgreementId: [''],
+        relationTypeId: ['', (Validators.required)],
+        nominee: ['', (Validators.required)],
+        guarantor1: [null, (Validators.required)],
+        guarantor2: [null],
+        guarantor3: [null]
+      }),
       weedicides: this.formbuilder.array([]),
       pests: this.formbuilder.array([]),
       fertilizers: this.formbuilder.array([]),
@@ -224,6 +230,11 @@ export class PlotagreementComponent implements OnInit {
 
   get FormControls() {
     return this.fbPlotAgreement.controls;
+  }
+
+  get fcNomineeDetails() {
+    return this.fbPlotAgreement.get('nomineeDetails') as FormGroup;
+
   }
 
   getFormArrayControl(formGroupName: string): FormArray {
@@ -268,6 +279,11 @@ export class PlotagreementComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.fbPlotAgreement.valid){
 
+    }
+    else{
+      this.fbPlotAgreement.markAllAsTouched();
+    }
   }
 }

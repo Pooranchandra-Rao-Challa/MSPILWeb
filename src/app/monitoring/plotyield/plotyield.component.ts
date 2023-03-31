@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators ,FormBuilder, FormArray} from '@angular/forms';
 import { Table } from 'primeng/table';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
-import { MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto, PlotsDto } from 'src/app/_models/monitoring';
+import { FarmerPlotYieldViewDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto, PlotsDto, PlotYieldViewDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -39,6 +39,7 @@ export class PlotyieldComponent implements OnInit {
   cropstypes: LookupDetailDto[] = [];
   weedstatus: LookupDetailDto[] = [];
   maintanenceItems?: MaintenanceItems = {};
+  plotYields:FarmerPlotYieldViewDto[] =[]
   activeIndex?=0;
   activeIndex1?=0;
   activeIndex2?=0;
@@ -73,7 +74,7 @@ constructor(private formbuilder: FormBuilder,
 plotYieldForm() {
   this.fbPlotYield = this.formbuilder.group({
     seasonId:[(Validators.required)],
-    plotReportId:[,(Validators.required)],
+    plotId:[,(Validators.required)],
     actionPlan: ['',Validators.required],
     inspectionDate: ['',Validators.required],
     weedStatusId: ['',Validators.required],
@@ -120,7 +121,7 @@ initCurrentSeasons() {
     })
   }
 initPlotReports(season: number) {
-  this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
+  this.monitoringService.GetPlotsInSeasons(season, 'PlotYield').subscribe((resp) => {
     console.log(resp)
     this.plotReports = resp as unknown as PlotInfoDto[];    
   })
@@ -134,6 +135,18 @@ initweedstatus() {
   this.lookupService.WeedStatuses().subscribe((resp) => {
     this.weedstatus = resp as unknown as LookupDetailDto[];
   });
+}
+initPlotYields(seasonId: number) {
+  this.monitoringService.GetPlotYields(seasonId).subscribe((resp) => {
+    this.plotYields = resp as unknown as FarmerPlotYieldViewDto[];
+    this.plotYields.forEach((value) => {
+      value.objnetYieldPlots = JSON.parse(value.netYieldPlots) as PlotYieldViewDto[]
+    })
+    console.log(this.plotYields)
+  })
+}
+onSearch() {
+  this.initPlotYields(this.currentSeason.seasonId!);
 }
 ngOnInit(): void {
   this.currentSeasonCode = CURRENT_SEASON()
