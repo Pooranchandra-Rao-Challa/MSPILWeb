@@ -45,6 +45,8 @@
   --menu-bg1:#7cad5b;
   --menu-bg2:#11998e;
   --active:#039f62;
+  --disabled:#405f5b;
+  --readonlytext:#9d6100;
   color-scheme: dark;
 }
 
