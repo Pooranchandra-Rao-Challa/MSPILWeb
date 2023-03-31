@@ -61,7 +61,8 @@
         <tr>
           <td colspan="5">
               <div class="p-3">
-                  <p-table [value]="farmer.ObjOfferedPlots" [columns]="plotHeaders"  dataKey="plotOfferId">
+                  <p-table [value]="farmer.ObjOfferedPlots" [columns]="plotHeaders"  dataKey="plotOfferId"
+                  [tableStyle]="{ width: 'max-content'}" [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                       <ng-template pTemplate="header">
                           <tr>
                             <th></th>

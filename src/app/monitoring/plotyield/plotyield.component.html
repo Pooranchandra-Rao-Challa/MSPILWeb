@@ -44,12 +44,19 @@
                                                     optionLabel="plotNumber" [filter]="true" filterBy="plotNumber"
                                                     [options]="plotReports" optionValue="plotId"  [virtualScroll]="true" [virtualScrollItemSize]="30"
                                                     formControlName="plotId" (onChange)="getPlotinfo($event.value)"
-                                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotReportId'].touched && FormControls['plotReportId'].errors }">
+                                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
+                                                    <!-- <ng-template let-plotReports pTemplate="item">
+                                                      <div class="block align-items-center gap-2">
+                                                        <div>{{plotReports.plotNumber}}</div>
+                                                        <div>{{plotReports.farmerCode}} - {{plotReports.farmerName}}</div>
+                                                        <div>{{plotReports.farmerVillage}}</div>
+                                                      </div>
+                                                    </ng-template> -->
                                                 </p-dropdown>
                                                 <span
-                                                    *ngIf="FormControls['plotReportId'].touched && FormControls['plotReportId'].invalid">
+                                                    *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                                                     <div class="ng-invalid ng-touched p-error"
-                                                        *ngIf="FormControls['plotReportId'].errors?.['required']">
+                                                        *ngIf="FormControls['plotId'].errors?.['required']">
                                                         Select Plot No.</div>
                                                 </span>
                                             </div>
@@ -192,18 +199,24 @@
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Seed/Harvest Qunatity:</label>
-                                                <input pInputText text="name">
+                                                <p-inputNumber placeholder="Enter Harvest Area" formControlName="harvestedArea" mode="decimal"
+                                                locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Poor Crop Area:</label>
-                                                <input pInputText text="name">
+                                                <p-inputNumber placeholder="Enter Poor Crop Area" formControlName="poorCropArea" mode="decimal"
+                                                locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Perished Area:<sup class="p-error">*</sup></label>
-                                                <input pInputText text="name">
+                                                <label class="required">Perished Area:</label>
+                                                <p-inputNumber placeholder="Enter Perished Area" formControlName="perishedArea" mode="decimal"
+                                                locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Reasons For Perished Area:<sup class="p-error">*</sup></label>
+                                                <label class="required">Reasons For Perished Area:</label>
                                                 <p-dropdown class="ml-2" placeholder="Select Reasons For Perished Area"
                                                     optionLabel="name" optionValue="lookupDetailId" appendTo="body"
                                                     [options]="perishedArea">
@@ -211,19 +224,25 @@
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
                                                 <label>Diverted Area:</label>
-                                                <input pInputText text="name">
+                                                <p-inputNumber placeholder="Enter Diverted Area" formControlName="divertedArea" mode="decimal"
+                                                locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Net Area:<sup class="p-error">*</sup></label>
-                                                <input pInputText text="name">
+                                                <label class="required">Net Area:</label>
+                                                <p-inputNumber placeholder="Enter Net Area" formControlName="netArea" mode="decimal"
+                                                locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>NotGrown Area:</label>
-                                                <input pInputText text="name">
+                                                <label>Not Grown Area:</label>
+                                                <p-inputNumber placeholder="Enter Not Grown Area" formControlName="notGrownArea" mode="decimal"
+                                                locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                                              </p-inputNumber>
                                             </div>
                                             <div class="field col-12 md:col-4 lg:col-3 ">
-                                                <label>Is seed Area:</label><br>
-                                                <p-inputSwitch></p-inputSwitch>
+                                                <label>Is Seed Area:</label><br>
+                                                <p-inputSwitch formControlName="isSeedArea"></p-inputSwitch>
                                             </div>
                                         </div>
                                     </p-fieldset>
@@ -416,14 +435,14 @@
             </ng-template>
         </p-dialog>
         <!-- table -->
-        <p-table #dt1 [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
+        <p-table #yields  dataKey="farmerCode" [value]="plotYields" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
             [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                        (click)="clear(dt1)"></button>
+                        (click)="clear(yields)"></button>
                     <div>
                         <span class="p-input-icon-left mb-2">
                             <i class="pi pi-search"></i>
@@ -431,7 +450,7 @@
                                 pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
                         </span>
                         <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId" optionValue="seasonId">
+              [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" [virtualScrollItemSize]="30">
             </p-dropdown>
                     </div>
                 </div>
@@ -467,8 +486,8 @@
                 <tr>
                     <td colspan="5">
                         <div class="p-3">
-                            <p-table [columns]="plotHeaders" dataKey="plotOfferId">
-                                <ng-template pTemplate="header">
+                          <p-table [value]="farmer.objnetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId">
+                            <ng-template pTemplate="header">
                 <tr>
                     <th></th>
                     <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
@@ -478,27 +497,24 @@
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-plotOffer>
-                <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil"
-                            class="p-element p-ripple p-button-text p-button p-component"></button>
-                        <button pButton pRipple icon="pi pi-thumbs-up"
-                            class="p-element p-ripple p-button-text p-button p-component"></button>
-                        <!-- (click)="editAllottedPlot(allottedPlot)" -->
-                    </td>
-                    <td *ngFor="let col of plotHeaders">
+            <ng-template pTemplate="body" let-plotyield >
+              <tr>
+                <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"></button>
+               
+                <!-- (click)="editAllottedPlot(allottedPlot)" -->
+              </td>
+              <td *ngFor="let col of plotHeaders">
 
-                        <span
-                            *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotOffer[col.field]}}</span>
-                        <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
-                            {{plotOffer[col.field] | date: 'dd-MM-yyyy'}}
-                        </span>
-                    </td>
-                </tr>
-            </ng-template>
+                <span *ngIf="col?.field != 'offerDate' && col?.field != 'expectedPlantingDate'">{{plotyield[col.field]}}</span>
+                <span *ngIf="col?.field == 'offerDate' || col?.field == 'expectedPlantingDate'">
+                  {{plotyield[col.field] | date: 'dd-MM-yyyy'}}
+                </span>
+              </td>
+              </tr>
+          </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="6">There Are No Aggrements Found Yet.</td>
+                    <td colspan="15">There Are No Yields Found Yet.</td>
                 </tr>
             </ng-template>
         </p-table>
@@ -508,7 +524,7 @@
     </ng-template>
     <ng-template pTemplate="emptymessage">
         <tr>
-            <td class="md:text-center" colspan="12">No Aggrements Found.</td>
+            <td class="md:text-center" colspan="12">No Yields Found.</td>
         </tr>
     </ng-template>
     </p-table>

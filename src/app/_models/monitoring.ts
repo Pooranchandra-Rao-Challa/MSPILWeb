@@ -655,5 +655,68 @@ export class FarmerSectionViewDto {
   farmerName?: string
 
 }
+export class FarmerPlotYieldViewDto{
+  seasonId?: number;
+  season?: Date;
+  farmerId?: number;
+  farmerCode?: string;
+  farmerName?: string;
+  fatherName?: string;
+  farmerVillageId?:number;
+  farmerVillageName?: string;
+  farmerDivisionName?: string;
+  farmerCircleName?: string;
+  farmerSectionName?: string;
+  netYieldPlots!: string;
+  objnetYieldPlots?: PlotYieldViewDto[];
+}
+export class PlotYieldViewDto{
+  offerNo?: number;
+  plotNumber?: number;
+  plotYieldId?: number;
+  plotVillageName?:number;
+  plotDivisionName?: string;
+  plotCircleName?: string;
+  plotSectionName?: string;
+  reportedArea?: string;
+  plantingDate?: string;
+  variety?: string;
+  plantType?: string;
+  cropType?: string;
+  birNumber?: number;
+  birDate?:Date;
+  surveyNo?: number;
+  measuredArea?: number;
+  agreementedArea?: number;
+  estimatedTon?: number;
+  perishedArea?:number;
+  netArea?: number;
+  hasMicroNutrientDeficiency?: boolean;
+  isTrashMulchingDone?: boolean;
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+}
+export class SampleDto {
+  DocNo?: string;
+  DocDate?: Date;
+  FieldBrix?: number;
+  Pol?: number;
+  CreatedAt?: Date;
+  CreatedBy?: string;
+  UpdatedAt?: Date;
+  UpdatedBy?: string;
+  SeasonId?: number;
+  PlotYieldId?: number;
+  PlotNo?: number;
+  FarmerCode?: number;
+}
 
-
+export interface plotsofFarmerViewDto {
+  plotId: number
+  seasonId: number
+  farmerId: number
+  plotNumber: string
+  netArea: number
+}

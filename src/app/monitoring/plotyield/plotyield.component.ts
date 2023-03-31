@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators ,FormBuilder, FormArray} from '@angular/forms';
 import { Table } from 'primeng/table';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
-import { MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto, PlotsDto } from 'src/app/_models/monitoring';
+import { FarmerPlotYieldViewDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto, PlotsDto, PlotYieldViewDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -39,25 +39,45 @@ export class PlotyieldComponent implements OnInit {
   cropstypes: LookupDetailDto[] = [];
   weedstatus: LookupDetailDto[] = [];
   maintanenceItems?: MaintenanceItems = {};
+  plotYields:FarmerPlotYieldViewDto[] =[]
   activeIndex?=0;
   activeIndex1?=0;
   activeIndex2?=0;
 
 farmerHeaders: IHeader[] = [
-  { field: 'seasonName', header: 'seasonName', label: 'Season' },
+  { field: 'season', header: 'season', label: 'Season' },
   { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
   { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
   { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
 ];
 
 plotHeaders: IHeader[] = [
-  { field: 'OfferNo', header: 'OfferNo', label: 'Offer No' },
-  { field: 'OfferDate', header: 'OfferDate', label: 'Offer Date' },
-  { field: 'PlotVillageName', header: 'PlotVillageName', label: 'Plot Village' },
-  { field: 'PlantType', header: 'PlantType', label: 'Plant Type' },
-  { field: 'ExpectedArea', header: 'ExpectedArea', label: 'Area' },
-  { field: 'VarietyId', header: 'VarietyId', label: 'Variety' },
-  { field: 'PlantingDate', header: 'PlantingDate', label: 'Planting Date' },
+  { field: 'cropType', header: 'cropType', label: 'Crop Type' },
+  { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
+  { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+  { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
+  { field: 'plotNumber', header: 'plotNumber', label: ' Plot Number' },
+  { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
+  { field: 'plotType', header: 'plotType', label: 'Plot Type' },
+  { field: 'reportedArea', header: 'reportedArea', label: 'Reported Area' },
+  { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
+  { field: 'netArea', header: 'netArea', label: 'Net Area' },
+  { field: 'perishedArea', header: 'perishedArea', label: 'Perished Area' },
+  { field: 'notGrownArea', header: 'notGrownArea', label: 'Not Grown Area' },
+  { field: 'isSeedArea', header: 'isSeedArea', label: 'Is Seed Area' },
+  { field: 'agreementedArea', header: 'agreementedArea', label: 'Agreemented Area' },
+  { field: 'harvestedArea', header: 'harvestedArea', label: 'Harvested Area' },
+  { field: 'poorCropArea', header: 'poorCropArea', label: 'Poor Crop Area' },
+  { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+  { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+  { field: 'variety', header: 'variety', label: 'Variety' },
+  { field: 'estimatedton', header: 'estimatedton', label: 'Estimated Ton' },
+  { field: 'birNumber', header: 'birNumber', label: 'Bir Number' },
+  { field: 'birDate', header: 'birDate', label: 'Bir Date' },
+  { field: 'inspectionDate', header: 'inspectionDate', label: 'Inspection Date' },
+  { field: 'reasonForPerishedAreaId', header: 'reasonForPerishedAreaId', label: 'Perishal Reason' },
+  { field: 'actionPlan', header: 'actionPlan', label: 'Action Plan' },
+  { field: 'divertedArea', header: 'divertedArea', label: 'Divert To Others' },
 ];
 
 clear(table: Table) {
@@ -73,9 +93,16 @@ constructor(private formbuilder: FormBuilder,
 plotYieldForm() {
   this.fbPlotYield = this.formbuilder.group({
     seasonId:[(Validators.required)],
-    plotReportId:[,(Validators.required)],
+    plotId:[,(Validators.required)],
     actionPlan: ['',Validators.required],
     inspectionDate: ['',Validators.required],
+    isSeedArea:[],
+    notGrownArea:[],
+    netArea:[],
+    divertedArea:[],
+    harvestedArea:[],
+    poorCropArea:[],
+    perishedArea:[],
     weedStatusId: ['',Validators.required],
     interCropId: ['',Validators.required],
     micronutrientdeficiency: [null],
@@ -92,6 +119,7 @@ get FormControls() {
   return this.fbPlotYield.controls;
 }
   initSeasons() {
+
   this.appMasterService.Getseason().subscribe((resp) => {
     this.seasons = resp as unknown as SeasonViewDto[];
   });
@@ -111,6 +139,7 @@ initCurrentSeasons() {
     this.currentSeason = resp as unknown as SeasonDto;
     console.log(this.currentSeason)
     this.initPlotReports(this.currentSeason.seasonId!);
+    this.initPlotYields(this.currentSeason.seasonId!);
   });
 }
  getPlotinfo(plotId: number) {
@@ -120,7 +149,7 @@ initCurrentSeasons() {
     })
   }
 initPlotReports(season: number) {
-  this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
+  this.monitoringService.GetPlotsInSeasons(season, 'PlotYield').subscribe((resp) => {
     console.log(resp)
     this.plotReports = resp as unknown as PlotInfoDto[];    
   })
@@ -135,6 +164,18 @@ initweedstatus() {
     this.weedstatus = resp as unknown as LookupDetailDto[];
   });
 }
+initPlotYields(seasonId: number) {
+  this.monitoringService.GetPlotYields(seasonId).subscribe((resp) => {
+    this.plotYields = resp as unknown as FarmerPlotYieldViewDto[];
+    this.plotYields.forEach((farmer) => {
+      farmer.objnetYieldPlots = JSON.parse(farmer.netYieldPlots) as PlotYieldViewDto[]
+    })
+    console.log(this.plotYields)
+  })
+}
+onSearch() {
+  this.initPlotYields(this.currentSeason.seasonId!);
+}
 ngOnInit(): void {
   this.currentSeasonCode = CURRENT_SEASON()
   
@@ -145,6 +186,7 @@ ngOnInit(): void {
   this.initPerishedArea();
   this.initweedstatus();
   this.initCropType();
+  
 }
 getFormArrayControl(formGroupName: string): FormArray {
   return this.fbPlotYield.controls[formGroupName] as FormArray

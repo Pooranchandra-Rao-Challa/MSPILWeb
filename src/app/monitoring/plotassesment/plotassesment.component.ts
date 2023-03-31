@@ -153,9 +153,9 @@ export class PlotassesmentComponent implements OnInit {
     })
   }
   initPlotReports(season: number) {
-    this.monitoringService.GetPlotsInSeason(season, 'PlotYield').subscribe((resp) => {
+    this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
       console.log(resp)
-      this.plotReports = resp as unknown as PlotInfoDto[];    
+      this.plotReports = resp as unknown as PlotInfoDto[];
     })
   }
 
@@ -177,12 +177,12 @@ export class PlotassesmentComponent implements OnInit {
       plotId: [, (Validators.required)],
       measuredArea: [null, Validators.required],
       assessedDate: [''],
-      isaDemoPlot: [false],
+      isaDemoPlot: [null],
       weedStatusId: [null],
       interCropId: [null],
-      micronutrientdeficiency: [''],
-      trashmulching: [''],
-      gapfillingdone: [''],
+      micronutrientdeficiency: [null],
+      trashmulching: [null],
+      gapfillingdone: [null],
       weedicides: this.formbuilder.array([]),
       pests: this.formbuilder.array([]),
       fertilizers: this.formbuilder.array([]),
@@ -270,13 +270,15 @@ export class PlotassesmentComponent implements OnInit {
     // this.fbPlotAssesment.patchValue(this.plotAssesment);
     this.getPlotinfo( plotAssesment.PlotId);
     this.initPlotAssesment(plotAssesment.plotAssesment);
-    
+
     this.addFlag = false;
     this.submitLabel = 'Update Assesment';
     this.showDialog = true;
   }
   onSubmit() {
     if (this.fbPlotAssesment.valid) {
+      console.log(this.fbPlotAssesment.value);
+      return
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
           this.savePlotAssessment();

@@ -81,18 +81,18 @@
                 <p-fieldset legend="Doc Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
-                      <label>Season:<sup class="p-error">*</sup></label>
+                      <label class="required">Season:</label>
                       <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
                         optionValue="seasonId" formControlName="seasonId" appendTo="body"
                         (onChange)="initFarmerSections($event.value)">
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label>Doc No:<sup class="p-error">*</sup></label>
+                      <label class="required">Doc No:</label>
                       <input pInputText id="docNo" type="text" formControlName="docNo" readonly>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label>Doc Date:<sup class="p-error">*</sup></label>
+                      <label class="required">Doc Date:</label>
                       <p-calendar placeholder="Select DocDate Date" [readonlyInput]="true" [showIcon]="true"
                         formControlName="docDate" [panelStyle]="{'height':'280px'}" appendTo="body"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['docDate'].touched && FormControls['docDate'].errors }">
@@ -107,71 +107,80 @@
                 <p-fieldset legend="Ryot Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
-                      <label>Farmer Code:<sup class="p-error">*</sup></label>
-                      <p-dropdown optionLabel="farmerCode" [options]="getFarmers" optionValue="farmerId" [filter]="true"
+                      <label  class="required">Farmer Code:</label>
+                      <p-dropdown optionLabel="farmerCode" [options]="farmers" optionValue="farmerId" [filter]="true"
                         filterBy="farmerCode,farmerName" formControlName="farmerId" placeholder="Select Farmer"
                         (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="20"
                         appendTo="body">
                         <ng-template let-getFarmer pTemplate="selectedItem">
-                          <div>{{getFarmer.farmerCode}}</div>
+                          <div>{{getFarmer.farmerCode}} - {{getFarmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-getFarmer pTemplate="item">
-                          <div>{{getFarmer.farmerCode}}</div>
-                          <div>Code: {{getFarmer.farmerCode}} Name: {{getFarmer.farmerName}}</div>
+                          <div class="block align-items-center gap-2">
+                          <div>{{getFarmer.farmerCode}} - {{getFarmer.farmerName}}</div>
+                        </div>
                         </ng-template>
 
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label>Farmer Name:<sup class="p-error">*</sup></label>
-                      <input pInputText id="farmerName" type="text" formControlName="farmerName" readonly>
+                      <label>Farmer Name:</label>
+                      <input pInputText id="farmerName" type="text" [(ngModel)]="selectedFarmer.farmerName"  [ngModelOptions]="{standalone: true}" readonly>
+
+
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label class="required">Plot No:</label>
-                      <p-dropdown placeholder="Plot No" optionLabel="PlotNo" formControlName="plotNo" appendTo="body">
+                      <p-dropdown placeholder="Plot No" optionLabel="plotNumber"
+                      formControlName="plotId" [options]="plots" appendTo="body">
                       </p-dropdown>
                     </div>
 
                     <div class="field col-12 md:col-4">
-                      <label>Filed Brix:<sup class="p-error">*</sup></label>
-                      <input pInputText id="fieldBrix" type="text" formControlName="fieldBrix">
+                      <label class="required">Filed Brix:</label>
+                      <input #fieldBrix pInputText id="fieldBrix" type="text" formControlName="fieldBrix">
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label>Brix:<sup class="p-error">*</sup></label>
-                      <input pInputText id="Brix" type="text" formControlName="Brix">
+                      <label class="required">Brix:</label>
+                      <input #brix pInputText id="Brix" type="text" formControlName="brix">
                     </div>
-                    <div class="field col-12 md:col-4">
-                      <label>Pol:<sup class="p-error">*</sup></label>
-                      <input pInputText id="pol" type="text" formControlName="pol">
+                    <div class="field  md:col-4">
+                      <label class="required">Pol:</label>
+                      <input #pol pInputText id="pol" type="text" formControlName="pol">
                     </div>
-                    <div class="field col-12 md:col-3">
-                      <label>Purity:<sup class="p-error">*</sup></label>
-                      <input pInputText id="purity" type="text" formControlName="purity" readonly>
+                    <div class="field col-12  md:col-3">
+                      <label class="required">Purity:</label>
+                      <!-- <input pInputText id="purity" type="text" formControlName="purity" readonly> -->
+                      <p class="disabled_text">{{this.fbSampleEntry.controls['purity'].value}}</p>
                     </div>
-                    <div class="field col-12 md:col-3">
-                      <label>CCS:<sup class="p-error">*</sup></label>
-                      <input pInputText id="ccs" type="text" formControlName="ccs" readonly>
+                    <div class="field col-12  md:col-3">
+                      <label class="required">CCS:</label>
+                      <!-- <input pInputText id="ccs" type="text" formControlName="ccs" readonly> -->
+                      <p class="disabled_text">{{this.fbSampleEntry.controls['ccs'].value}}</p>
                     </div>
-                    <div class="field col-12 md:col-3">
-                      <label>Brix Factor:<sup class="p-error">*</sup></label>
-                      <input pInputText id="brixfactor" type="text" formControlName="brixFactor" readonly>
+
+                    <div class="field col-12  md:col-3">
+                      <label>Brix Factor:</label>
+                      <!-- <input pInputText id="brixfactor" type="text" [(ngModel)]="appConstants.BrixFactor" [ngModelOptions]="{standalone: true}" readonly> -->
+                      <p class="disabled_text">{{appConstants.BrixFactor}}</p>
                     </div>
-                    <div class="field col-12 md:col-3">
-                      <label>Pol Factor:<sup class="p-error">*</sup></label>
-                      <input pInputText id="polFactor" type="text" formControlName="polFactor" readonly>
+                    <div class="field col-12  md:col-3">
+                      <label>Pol Factor:</label>
+                      <!-- <input pInputText id="polFactor" type="text" [(ngModel)]="appConstants.PolFactor" [ngModelOptions]="{standalone: true}" readonly> -->
+                      <p class="disabled_text">{{appConstants.PolFactor}}</p>
                     </div>
 
                     <div class="field col-12 md:col-3">
-                      <label>No of Sample:<sup class="p-error">*</sup></label>
-                      <input pInputText id="noofSample" type="text" formControlName="noofSample" readonly>
+                      <label  class="required">No of Sample:</label>
+                      <!-- <input pInputText id="noofSample" type="text" readonly [value]="this.samples.length+1"> -->
+                      <p class="disabled_text">{{this.samples.length+1}}</p>
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label>No of Entered Samples:<sup class="p-error">*</sup></label>
-                      <input pInputText id="noofSample" type="text" formControlName="noofEnteredSamples" readonly>
+                      <label  class="required">No of Entered Samples:</label>
+                      <!-- <input pInputText id="noofSample" type="text" readonly  [value]="this.samples.length"> -->
+                      <p class="disabled_text">{{this.samples.length}}</p>
                     </div>
-
-
                   </div>
                 </p-fieldset>
 
