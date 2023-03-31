@@ -155,7 +155,7 @@ export class PlotassesmentComponent implements OnInit {
   initPlotReports(season: number) {
     this.monitoringService.GetPlotsInSeason(season, 'PlotYield').subscribe((resp) => {
       console.log(resp)
-      this.plotReports = resp as unknown as PlotInfoDto[];    
+      this.plotReports = resp as unknown as PlotInfoDto[];
     })
   }
 
@@ -270,13 +270,15 @@ export class PlotassesmentComponent implements OnInit {
     // this.fbPlotAssesment.patchValue(this.plotAssesment);
     this.getPlotinfo( plotAssesment.PlotId);
     this.initPlotAssesment(plotAssesment.plotAssesment);
-    
+
     this.addFlag = false;
     this.submitLabel = 'Update Assesment';
     this.showDialog = true;
   }
   onSubmit() {
     if (this.fbPlotAssesment.valid) {
+      console.log(this.fbPlotAssesment.value);
+      return
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
           this.savePlotAssessment();
