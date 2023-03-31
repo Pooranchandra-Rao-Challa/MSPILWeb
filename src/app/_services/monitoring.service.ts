@@ -11,7 +11,7 @@ import {
   UPDATE_PLOT_REPORT_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_DOCCODE_URI, CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI,
   GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI,
   UPDATE_COMPLETED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_MAINTANANCE_ITEMS_ASSESSMENT_URI, GET_PLOTS_FORASSESSMENT_URI, GET_PLOTS_URI, GET_PLOT_OFFERS_IN_SEASON_URI,
-  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, GET_PLOT_AGREEMENTS_URI, CREATE_PLOTASSESSMENT_URI, UPDATE_PLOTASSESSMENT_URI, GET_PLOTS_FORAGREEMENT_URI, DENY_PLOT_OFFER_URI, GET_FARMER_IN_SECTIONS_URI
+  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, CREATE_PLOTASSESSMENT_URI, UPDATE_PLOTASSESSMENT_URI, DENY_PLOT_OFFER_URI, GET_PLOT_AGREEMENTS_URI, GET_FARMER_IN_SECTIONS_URI
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -77,17 +77,7 @@ export class MonitoringService extends ApiHttpService {
   public GetPlotsinfo(plotId: number) {
     return this.getWithId<PlotsDto>(GET_PLOTS_URI, plotId);
   }
-// plot agreement
 
-public GetPlotsInSeasons(seasonId: number, purpose: string) {
-  let arr: any[] = [];
-  arr.push(seasonId);
-  arr.push(purpose);
-  return this.getWithParams<PlotInfoDto>(GET_PLOTS_FORAGREEMENT_URI, arr);
-}
-public GetPlotinfo(plotId: number) {
-  return this.getWithId<PlotsDto>(GET_PLOTS_URI, plotId);
-}
   // Plot Transfers
   public GetAllPlotsTransfers(seasonId: number, param1 = null) {
     let arr: any[] = [];
@@ -134,7 +124,7 @@ public GetPlotinfo(plotId: number) {
     return this.post<PlotReportDto>(UPDATE_PLOT_REPORT_URI, plotReport);
   }
 
-  public PlotOffersInSeason(seasonId: number,plotId: number) {
+  public PlotOffersInSeason(seasonId: number, plotId: number) {
     let arr: any[] = [];
     arr.push(seasonId);
     arr.push(plotId);
@@ -152,7 +142,7 @@ public GetPlotinfo(plotId: number) {
   public GetPlotNumber(allotedPlotId: number) {
     return this.getWithId<any>(GET_PLOT_NUMBER_URI, allotedPlotId, { responseType: 'text' });
   }
- 
+
 
 
   public GetPlotReports(seasonId: number, forapproval: boolean, param1 = null) {
@@ -221,7 +211,6 @@ public GetPlotinfo(plotId: number) {
   }
 
   //sample
-
 
   public GetFarmerSections(seasonId:any,userid:any) {
     return this.getWithId(GET_FARMER_IN_SECTIONS_URI, seasonId +'/'+userid);

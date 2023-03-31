@@ -42,20 +42,26 @@ export class PlotagreementComponent implements OnInit {
   maintanenceItems?: MaintenanceItems = {}
 
   farmerHeaders: IHeader[] = [
-    { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    { field: 'season', header: 'season', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
+    { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
   ];
 
   plotHeaders: IHeader[] = [
-    { field: 'OfferNo', header: 'OfferNo', label: 'Offer No' },
-    { field: 'OfferDate', header: 'OfferDate', label: 'Offer Date' },
-    { field: 'PlotVillageName', header: 'PlotVillageName', label: 'Plot Village' },
-    { field: 'PlantType', header: 'PlantType', label: 'Plant Type' },
-    { field: 'ExpectedArea', header: 'ExpectedArea', label: 'Area' },
-    { field: 'VarietyId', header: 'VarietyId', label: 'Variety' },
-    { field: 'PlantingDate', header: 'PlantingDate', label: 'Planting Date' },
+    { field: 'crop', header: 'crop', label: 'Crop' },
+    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
+    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
+    { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    { field: 'variety', header: 'variety', label: 'Variety' },
+    { field: 'plotType', header: 'plotType', label: 'Plot Type' },
+    { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
+    { field: 'agreementedArea', header: 'agreementedArea', label: 'Area' },
+    { field: 'agreementedDate', header: 'agreementedDate', label: 'Agreemented Date' },
   ];
 
   clear(table: Table) {
@@ -87,8 +93,8 @@ export class PlotagreementComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-      this.initSeasons();
-      // this.initPlotNumbers(this.currentSeason.seasonId!);
+      this.initPlotAgreements(this.currentSeason.seasonId!);
+      this.initPlotNumbers(this.currentSeason.seasonId!);
     });
   }
 
@@ -105,6 +111,8 @@ export class PlotagreementComponent implements OnInit {
       this.plotAgreements?.forEach((value) => {
         value.objAgreementedPlots = JSON.parse(value.agreementedPlots) as IAgreementedPlotsViewDto[];
       });
+      console.log(this.plotAgreements);
+
     });
   }
 
