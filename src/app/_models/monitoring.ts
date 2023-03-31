@@ -674,6 +674,7 @@ export class PlotYieldViewDto{
   offerNo?: number;
   plotNumber?: number;
   plotYieldId?: number;
+  plotVillageName?:number;
   plotDivisionName?: string;
   plotCircleName?: string;
   plotSectionName?: string;
