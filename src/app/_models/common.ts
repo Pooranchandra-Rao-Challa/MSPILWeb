@@ -18,3 +18,14 @@ export class ApplicationConstantDto {
   updatedAt?: Date;
 
 }
+export class ConstantDto {
+  PolFactor?: string
+  BrixFactor?: string
+  WeighmentPrintCount?: string
+  SpecialPermitAllowedLimit?: string
+  PermitLapseHours?: string
+  NonRegisteredBindingPERC?: string
+  NonRegisteredBadPERC?: string
+  SupportsMultiLogin?: string
+  IsWeighmentApprovalRequired?: string
+}

@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
 import { FarmersViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
-import { FarmerSectionViewDto, PlotInfoDto } from 'src/app/_models/monitoring';
+import { ConstantDto } from 'src/app/_models/common';
+import { SectionDto } from 'src/app/_models/geomodels';
+import { FarmerSectionViewDto, PlotInfoDto, plotsofFarmerViewDto, SampleDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
@@ -17,20 +19,6 @@ export interface IHeader {
   label: string;
 }
 
-export class SampleDto {
-  DocNo?: string;
-  DocDate?: Date;
-  FieldBrix?: number;
-  Pol?: number;
-  CreatedAt?: Date;
-  CreatedBy?: string;
-  UpdatedAt?: Date;
-  UpdatedBy?: string;
-  SeasonId?: number;
-  PlotYieldId?: number;
-  PlotNo?: number;
-  FarmerCode?: number;
-}
 
 @Component({
   selector: 'sampleentry',
@@ -50,6 +38,13 @@ export class SampleEntryComponent implements OnInit {
   isNewFarmer!: [false];
   loggedInUser: String = "";
   getFarmers:FarmerSectionViewDto[]=[];
+  getPlots:any
+  Brixfactor: number = 1.054;
+  Polfactor: number = 1.122;
+  brixFactor: any;
+  polFactor: any;
+  FarmerSectionViewDto:any
+ 
   
   
   constructor(private formbuilder: FormBuilder,
@@ -58,6 +53,7 @@ export class SampleEntryComponent implements OnInit {
     private monitoringService: MonitoringService,
     private lookupService: LookupService,
     private jwtService: JWTService,
+ 
   ) {
     this.loggedInUser = this.jwtService.GetLoginId;
   
@@ -83,6 +79,9 @@ export class SampleEntryComponent implements OnInit {
     this.initSeasons();
     this.sampleEntryForm();
     this.initCurrentSeason(currentSeason);
+    this.initSampleCaluclations();
+    this.initConstants()
+  
    
   }
   sampleEntryForm() {
@@ -96,10 +95,10 @@ export class SampleEntryComponent implements OnInit {
       fieldBrix: [''],
       Brix: [''],
       pol: [''],
-      purity: [''],
-      brixFactor: [''],
-      polFactor: [''],
-      ccs: [''],
+  brixFactor: [],
+      polFactor: [],
+      purity: [{ value: null, disabled: true }],
+      ccs: [{ value: null, disabled: true }],
       noofSample: [''],
       noofEnteredSamples: [''],
       isActive: [false],
@@ -129,6 +128,7 @@ export class SampleEntryComponent implements OnInit {
   initFarmerSections(season: number) {
    let temp="ff4986c9-a00d-4f99-af2c-672cafe4cffe";
     this.monitoringService.GetFarmerSections(season, temp).subscribe((resp) => {
+      
       console.log(resp)
       // this.loggedInUser
       this.getFarmers = resp as unknown as FarmerSectionViewDto[];   
@@ -137,11 +137,48 @@ export class SampleEntryComponent implements OnInit {
   }
 
 
+
+  initPlotsofFarmers(season: any, farmer: any) {
+    this.monitoringService.GetPlotsofFarmers(season, farmer).subscribe((resp) => {
+      console.log(resp);
+      this.getPlots = resp as unknown as plotsofFarmerViewDto[];
+    });
+  }
+
   onSelectedFarmer(farmerId: number) {
     const selectedFarmer = this.getFarmers.find((getFarmer) => getFarmer.farmerId === farmerId);
     if (selectedFarmer) {
       this.fbSampleEntry.controls['farmerName'].setValue(selectedFarmer.farmerName);
+      if (this.currentSeason?.seasonId) {
+        this.initPlotsofFarmers(this.currentSeason.seasonId, selectedFarmer.farmerId);
+      }
     }
+  }
+  
+  calculatePurityAndCCS() {
+    const fieldBrix = this.fbSampleEntry.get('fieldBrix')?.value;
+    const Brix = this.fbSampleEntry.get('Brix')?.value;
+    const pol = this.fbSampleEntry.get('pol')?.value;
+  
+    const Purity = Brix == 0 ? 0 : Math.round((pol / Brix) * 100);
+    const CCS = Math.round((0.87 * pol) - (0.29 * Brix));
+  
+    this.fbSampleEntry.get('purity')?.setValue(Purity);
+    this.fbSampleEntry.get('ccs')?.setValue(CCS);
+  }
+
+  initSampleCaluclations(){
+  this.fbSampleEntry.get('fieldBrix')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
+  this.fbSampleEntry.get('Brix')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
+  this.fbSampleEntry.get('pol')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
+  }
+
+  initAppConstants(seasonId: number) {
+    this.commonService.GetSampleConstants().subscribe((resp) => {
+      this.appConstants = resp as ConstantDto;
+      this.brixFactor = this.appConstants.BrixFactor;
+      this.polFactor = this.appConstants.PolFactor;
+    });
   }
   onSearch() {
     this.initAppConstants(this.currentSeason.seasonId!);
@@ -156,10 +193,10 @@ export class SampleEntryComponent implements OnInit {
       this.seasons = resp as any;
     });
   }
-  initAppConstants(seasonId: number) {
-    this.lookupService.AppConstants().subscribe((resp) => {
-      this.appConstants = resp as any;
-      this.appConstants.PolFactor
+ 
+  initConstants() {
+    this.commonService.GetSampleConstants().subscribe((resp) => {
+      this.appConstants = resp as ConstantDto;
     });
   }
 

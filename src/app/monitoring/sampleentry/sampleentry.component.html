@@ -116,8 +116,10 @@
                           <div>{{getFarmer.farmerCode}}</div>
                         </ng-template>
                         <ng-template let-getFarmer pTemplate="item">
+                          <div class="block align-items-center gap-2">
                           <div>{{getFarmer.farmerCode}}</div>
                           <div>Code: {{getFarmer.farmerCode}} Name: {{getFarmer.farmerName}}</div>
+                        </div>
                         </ng-template>
 
                       </p-dropdown>
@@ -125,11 +127,13 @@
                     <div class="field col-12 md:col-4">
                       <label>Farmer Name:<sup class="p-error">*</sup></label>
                       <input pInputText id="farmerName" type="text" formControlName="farmerName" readonly>
+                      
+                      
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label class="required">Plot No:</label>
-                      <p-dropdown placeholder="Plot No" optionLabel="PlotNo" formControlName="plotNo" appendTo="body">
+                      <p-dropdown placeholder="Plot No" optionLabel="plotNumber" formControlName="plotNo" [options]="getPlots" appendTo="body">
                       </p-dropdown>
                     </div>
 
@@ -141,25 +145,26 @@
                       <label>Brix:<sup class="p-error">*</sup></label>
                       <input pInputText id="Brix" type="text" formControlName="Brix">
                     </div>
-                    <div class="field col-12 md:col-4">
+                    <div class="field  md:col-4">
                       <label>Pol:<sup class="p-error">*</sup></label>
                       <input pInputText id="pol" type="text" formControlName="pol">
                     </div>
-                    <div class="field col-12 md:col-3">
+                    <div class="field col-12  md:col-3">
                       <label>Purity:<sup class="p-error">*</sup></label>
                       <input pInputText id="purity" type="text" formControlName="purity" readonly>
                     </div>
-                    <div class="field col-12 md:col-3">
+                    <div class="field col-12  md:col-3">
                       <label>CCS:<sup class="p-error">*</sup></label>
                       <input pInputText id="ccs" type="text" formControlName="ccs" readonly>
                     </div>
-                    <div class="field col-12 md:col-3">
+
+                    <div class="field col-12  md:col-3">
                       <label>Brix Factor:<sup class="p-error">*</sup></label>
-                      <input pInputText id="brixfactor" type="text" formControlName="brixFactor" readonly>
+                      <input pInputText id="brixfactor" type="text" formControlName="brixFactor" [value]="appConstants?.BrixFactor" readonly>
                     </div>
-                    <div class="field col-12 md:col-3">
+                    <div class="field col-12  md:col-3">
                       <label>Pol Factor:<sup class="p-error">*</sup></label>
-                      <input pInputText id="polFactor" type="text" formControlName="polFactor" readonly>
+                      <input pInputText id="polFactor" type="text" formControlName="polFactor" [value]="appConstants?.PolFactor" readonly>
                     </div>
 
                     <div class="field col-12 md:col-3">
