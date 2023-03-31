@@ -387,16 +387,16 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['farmerId'].setValue(farmer.farmerId);
 
 
-    this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
-    this.fbPlotReport.controls['fatherName'].setValue(farmer.fatherName);
-    this.fbPlotReport.controls['farmerDivision'].setValue(farmer.farmerDivisionName);
-    this.fbPlotReport.controls['farmerCircle'].setValue(farmer.farmerCircleName);
-    this.fbPlotReport.controls['farmerSection'].setValue(farmer.farmerSectionName);
-    this.fbPlotReport.controls['farmerVillage'].setValue(farmer.farmerVillageName);
-    this.fbPlotReport.controls['plotDivision'].setValue(plotReport.plotDivisionName);
-    this.fbPlotReport.controls['plotCircle'].setValue(plotReport.plotCircleName);
-    this.fbPlotReport.controls['plotSection'].setValue(plotReport.plotSectionName);
-    this.fbPlotReport.controls['plotVillageName'].setValue(plotReport.plotVillageName);
+    // this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
+    // this.fbPlotReport.controls['fatherName'].setValue(farmer.fatherName);
+    // this.fbPlotReport.controls['farmerDivision'].setValue(farmer.farmerDivisionName);
+    // this.fbPlotReport.controls['farmerCircle'].setValue(farmer.farmerCircleName);
+    // this.fbPlotReport.controls['farmerSection'].setValue(farmer.farmerSectionName);
+    // this.fbPlotReport.controls['farmerVillage'].setValue(farmer.farmerVillageName);
+    // this.fbPlotReport.controls['plotDivision'].setValue(plotReport.plotDivisionName);
+    // this.fbPlotReport.controls['plotCircle'].setValue(plotReport.plotCircleName);
+    // this.fbPlotReport.controls['plotSection'].setValue(plotReport.plotSectionName);
+    // this.fbPlotReport.controls['plotVillageName'].setValue(plotReport.plotVillageName);
 
 
     this.fbPlotReport.controls['plantingDate'].setValue(plotReport.plantingDate && new Date(plotReport.plantingDate?.toString() + ""));
