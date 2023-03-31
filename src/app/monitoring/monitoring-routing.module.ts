@@ -8,7 +8,7 @@ import { PlotassesmentComponent } from './plotassesment/plotassesment.component'
 import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
-import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component';
+import { PlotagreementComponent } from './plotagreement/plotagreement.component';
 import { PlotyieldComponent } from './plotyield/plotyield.component';
 
 
@@ -20,7 +20,7 @@ import { PlotyieldComponent } from './plotyield/plotyield.component';
     { path: 'CompletedPlots', component: CompletedPlotsComponent },
     { path: 'plotoffer/:paramUrl', component: PlotofferComponent },
     { path: 'plotassessment', component: PlotassesmentComponent},
-    { path: 'plotaggrement', component: PlotaggrementComponent},
+    { path: 'plotagreement', component: PlotagreementComponent},
     { path: 'sampleentry', component: SampleEntryComponent},
     { path: 'plotreports', component: PlotreportsComponent},
     { path: 'plotreports/:paramUrl', component: PlotreportsComponent },

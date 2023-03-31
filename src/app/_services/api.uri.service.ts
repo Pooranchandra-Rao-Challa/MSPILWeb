@@ -158,6 +158,7 @@ export const CREATE_PLOT_OFFER_URI = "Monitoring/CreatePlotOffer";
 export const UPDATE_PLOT_OFFER_URI = "Monitoring/UpdatePlotOffer";
 export const GET_PLOT_OFFERS_URI = "Monitoring/GetPlotOffers";
 export const APPROVE_PLOT_OFFER_URI = "Monitoring/ApprovePlotOffer";
+export const DENY_PLOT_OFFER_URI = "Monitoring/RejectPlotOffer";
 export const IS_NEW_FARMAR_URI = "Monitoring/IsNewFarmer";
 export const CREATE_PLOT_REPORT_URI = "Monitoring/CreatePlotReport";
 export const UPDATE_PLOT_REPORT_URI = "Monitoring/UpdatePlotReport";
@@ -194,9 +195,10 @@ export const GET_PLOTS_URI = "Monitoring/GetPlotInformation";
 export const GET_REGISTERED_FARMERS_URI ='Monitoring/GetRegisteredFarmers'
 export const GET_PLOTTRANSFERS_URI = "Monitoring/GetPlotTransfers";
 export const GET_FARMERS_IN_SEASON_URI = "Monitoring/GetFarmersInSeason";
-
 export const GET_PLOT_AGREEMENTS_URI = "Monitoring/GetPlotAgreements";
 export const GET_PLOTS_FORAGREEMENT_URI = "Monitoring/GetPlots";
+export const GET_FARMER_IN_SECTIONS_URI = "Monitoring/GetFarmerSections";
+
 
 
 

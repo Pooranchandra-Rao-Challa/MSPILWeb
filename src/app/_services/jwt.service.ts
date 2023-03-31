@@ -34,12 +34,14 @@ export class JWTService {
   }
 
   public SaveToken(tokens: ResponseModel){
+
     localStorage.removeItem(TOKEN_KEY)
     localStorage.setItem(TOKEN_KEY,tokens.accessToken||"")
     this.saveRefreshToken(tokens);
   }
 
   public saveRefreshToken(tokens: ResponseModel){
+
     localStorage.removeItem(REFRESHTOKEN_KEY)
     localStorage.setItem(REFRESHTOKEN_KEY,tokens.refreshToken||"")
   }
@@ -62,7 +64,14 @@ export class JWTService {
   }
 
   public get GivenName(): string{
+
     const jwt = this.DecodedJWT;
     return jwt.GivenName;
   }
+  public get GetLoginId(): string{
+
+    const jwt = this.DecodedJWT;
+    return jwt.Id;
+  }
+
 }

@@ -7,7 +7,7 @@ import { CommonService } from '../../_services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { PlotOfferDto, IPlotOfferViewDto, IFarmerInPlotOfferDto, IFarmerPlotOffersViewDto } from 'src/app/_models/monitoring';
+import { PlotOfferDto,  IFarmerInPlotOfferDto, IFarmerPlotOffersViewDto } from 'src/app/_models/monitoring';
 import { FarmersViewDto, plantTypeViewDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
 import { VillagesViewDto } from 'src/app/_models/geomodels';
 import { Observable } from 'rxjs';
@@ -38,6 +38,7 @@ export class PlotofferComponent implements OnInit {
   showDialog: boolean = false;
   showApprovalDialog: boolean = false;
   addFlag: boolean = true;
+  approveOrDenyFlag?: boolean;
   submitLabel!: string;
   fbPlotOffer!: FormGroup;
   seasons!: any[];
@@ -344,27 +345,40 @@ export class PlotofferComponent implements OnInit {
     }
   }
 
-  onApprovalOrDeny() {
-    // if (this.fbPlotOffer.valid) {
-    this.monitoringService.ApprovePlotOffer(this.fbPlotOffer.value).subscribe(resp => {
-      if (resp) {
-        this.initPlotOffers(this.currentSeason.seasonId!);
-        this.fbPlotOffer.reset();
-        this.showApprovalDialog = false;
-      }
-    });
-    // }
-    // else {
-    this.fbPlotOffer.markAllAsTouched();
-    // }
+  saveApproveOrDeny(): Observable<HttpEvent<any>> {
+    if (this.approveOrDenyFlag) return this.monitoringService.ApprovePlotOffer(this.fbPlotOffer.value)
+    else return this.monitoringService.DenyPlotOffer(this.fbPlotOffer.value)
+  }
+
+  onApproveOrDenyPlotOffer() {
+    if (this.fbPlotOffer.valid) {
+      this.saveApproveOrDeny().subscribe(resp => {
+        if (resp) {
+          this.initPlotOffers(this.currentSeason.seasonId!);
+          this.fbPlotOffer.reset();
+          this.showApprovalDialog = false;
+          this.approveOrDenyFlag = undefined;
+        }
+      });
+    }
+    else {
+      this.fbPlotOffer.markAllAsTouched();
+    }
   }
 
   onApprovalSubmit(data: string) {
+    this.fbPlotOffer.controls['reasonForNotPlantingId'].disable();
     if (data == 'denied') {
+      this.approveOrDenyFlag = false;
       this.fbPlotOffer.controls['remarks'].setValidators(Validators.required);
       this.fbPlotOffer.controls['remarks'].updateValueAndValidity();
     }
-    this.onApprovalOrDeny();
+    else if (data == 'approve') {
+      this.approveOrDenyFlag = true;
+      this.fbPlotOffer.controls['remarks'].clearValidators();
+      this.fbPlotOffer.controls['remarks'].updateValueAndValidity();
+    }
+    this.onApproveOrDenyPlotOffer();
   }
 
 }

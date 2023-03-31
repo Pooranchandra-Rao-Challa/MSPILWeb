@@ -36,7 +36,7 @@ import { SampleslabsComponent } from './sampleslab/sampleslab.component';
     { path: 'variety', component: VarietyComponent },
     { path: 'hgl', component: HglComponent },
     { path: 'Shift', component: ShiftsComponent },
-    { path: 'Sample_Slabs', component: SampleslabsComponent },
+    { path: 'SampleSlabs', component: SampleslabsComponent },
   ])],
   exports: [RouterModule]
 })

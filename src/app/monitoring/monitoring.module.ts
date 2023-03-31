@@ -9,7 +9,7 @@ import { SampleEntryComponent } from './sampleentry/sampleentry.component';
 import { PlotreportsComponent } from './plotreports/plotreports.component';
 import { ProppingComponent } from './propping/propping.component';
 import { SeedComponent } from './seed/seed.component';
-import { PlotaggrementComponent } from './plotaggrement/plotaggrement.component';
+import { PlotagreementComponent } from './plotagreement/plotagreement.component';
 import { PlotyieldComponent } from './plotyield/plotyield.component';
 
 
@@ -24,7 +24,7 @@ import { PlotyieldComponent } from './plotyield/plotyield.component';
     PlotreportsComponent,
     ProppingComponent,
     SeedComponent,
-    PlotaggrementComponent,
+    PlotagreementComponent,
     PlotyieldComponent,
   ],
   imports: [

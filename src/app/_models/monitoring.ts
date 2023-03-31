@@ -14,45 +14,45 @@ export class PlotOfferDto {
   entityStatusId?: number;
   serverUpdatedStatus?: boolean;
 }
-export interface IPlotOfferViewDto {
-  allottedPlotId: number;
-  seasonId: number;
-  seasonName: string;
-  isNewFarmer: boolean;
-  offerNo: number;
-  offerDate: Date;
-  farmerId: number;
-  farmerCode: string;
-  farmerName: string;
-  fatherName: string;
-  farmerVillageId: number;
-  farmerVillageName: string;
-  farmerDivisionName: string;
-  farmerCircleName: string;
-  farmerSectionName: string;
-  offeredPlots: string;
-  ObjOfferedPlots: IFarmerPlotOffersViewDto[];
-  plotVillageId: number;
-  plotVillageName: string;
-  plotDivisionName: string;
-  plotCircleName: string;
-  plotSectionName: string;
-  plantTypeId: number;
-  plantType: string;
-  varietyId: number;
-  expectedVariety: string;
-  plantingDate: Date;
-  expectedArea: number;
-  reasonForNotPlantingId: number;
-  reasonForNotPlanting: string;
-  forApproval: boolean;
-  approvedAt: Date;
-  dataSyncedAt: Date;
-  isActive: boolean;
-  createdAt: Date;
-  createdBy: string;
-  updatedAt: Date;
-  updatedBy: string;
+export class IPlotOfferViewDto {
+  plotOfferId?: number;
+  seasonId?: number;
+  seasonName?: string;
+  isNewFarmer?: boolean;
+  offerNo?: number;
+  offerDate?: Date;
+  farmerId?: number;
+  farmerCode?: string;
+  farmerName?: string;
+  fatherName?: string;
+  farmerVillageId?: number;
+  farmerVillageName?: string;
+  farmerDivisionName?: string;
+  farmerCircleName?: string;
+  farmerSectionName?: string;
+  offeredPlots?: string;
+  ObjOfferedPlots?: IFarmerPlotOffersViewDto[];
+  plotVillageId?: number;
+  plotVillageName?: string;
+  plotDivisionName?: string;
+  plotCircleName?: string;
+  plotSectionName?: string;
+  plantTypeId?: number;
+  plantType?: string;
+  varietyId?: number;
+  expectedVariety?: string;
+  plantingDate?: Date;
+  expectedArea?: number;
+  reasonForNotPlantingId?: number;
+  reasonForNotPlanting?: string;
+  forApproval?: boolean;
+  approvedAt?: Date;
+  dataSyncedAt?: Date;
+  isActive?: boolean;
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
 }
 
 export interface IFarmerInPlotOfferDto {
@@ -334,6 +334,7 @@ export interface IPlotReportViewDto {
   offerNo: number;
   plotNumber: number;
   plotReportId: number;
+  plotReportAddlInfoId: number;
   plotVillageName: string;
   plotDivisionName: string;
   plotCircleName: string;
@@ -559,6 +560,8 @@ export class PlotsDto {
   agreedTon?: number
   cropType?: string
   Crop?: string
+  measuredArea?:number
+  agreementedArea?:number
 }
 export class FarmerSelectInfoViewDto {
   userId?: number
@@ -578,7 +581,7 @@ export class GetFarmersInSeasonViewDto {
   seasonsId?: number
 }
 
-export class PlotAggrementDto {
+export class PlotAgreementDto {
 
 }
 
@@ -646,4 +649,11 @@ export interface IAgreementedPlotsViewDto {
   updatedAt: Date;
   updatedBy: string;
 }
+export class FarmerSectionViewDto {
+  farmerId?: number
+  farmerCode?: string
+  farmerName?: string
+
+}
+
 

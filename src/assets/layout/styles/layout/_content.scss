@@ -48,5 +48,7 @@
     -webkit-border-radius: 3px;
 }
 .disabled_text{
-    color:var(--disabled);
+    color:var(--readonlytext);
+    font-style: oblique;
+    font-family: cursive, 'Courier New', Courier, monospace;
 }

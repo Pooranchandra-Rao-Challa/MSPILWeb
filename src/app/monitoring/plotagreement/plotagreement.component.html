@@ -4,19 +4,19 @@
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Plot Aggrements</h4>
+        <h4>Plot Agreements</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plot Aggrement" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="initPlotAggrement()"></button>
+        <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="initPlotAgreement()"></button>
       </ng-template>
     </p-toolbar>
     <!-- dialog -->
-    <p-dialog header="Plot Aggrement" [(visible)]="showDialog" [modal]="true"
+    <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
-      <form [formGroup]="fbPlotAggrement" (ngSubmit)="onSubmit()">
+      <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left">
-          <p-tabPanel header="Plot Aggrement" class="col-12">
+          <p-tabPanel header="Plot Agreement" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
@@ -165,25 +165,25 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Aggreement Area:<sup class="p-error">*</sup></label>
-                        <p-inputNumber placeholder="Enter Aggreement Area" formControlName="aggrementArea"
+                        <p-inputNumber placeholder="Enter Aggreement Area" formControlName="agreementArea"
                           mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['aggrementArea'].touched && FormControls['aggrementArea'].errors }">
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementArea'].touched && FormControls['agreementArea'].errors }">
                         </p-inputNumber>
-                        <span *ngIf="FormControls['aggrementArea'].touched && FormControls['aggrementArea'].invalid">
+                        <span *ngIf="FormControls['agreementArea'].touched && FormControls['agreementArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['aggrementArea'].errors?.['required']">
+                            *ngIf="FormControls['agreementArea'].errors?.['required']">
                             Select Aggreement Area.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label>Aggreement Date:<sup class="p-error">*</sup></label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                          formControlName="aggrementDate" placeholder="Please Select Aggreement Date" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['aggrementDate'].touched && FormControls['aggrementDate'].errors }">
+                          formControlName="agreementDate" placeholder="Please Select Agreement Date" appendTo="body"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementDate'].touched && FormControls['agreementDate'].errors }">
                         </p-calendar>
-                        <span *ngIf="FormControls['aggrementDate'].touched && FormControls['aggrementDate'].invalid">
+                        <span *ngIf="FormControls['agreementDate'].touched && FormControls['agreementDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['aggrementDate'].errors?.['required']">
+                            *ngIf="FormControls['agreementDate'].errors?.['required']">
                             Select Assessed Date.</div>
                         </span>
                       </div>
@@ -212,7 +212,8 @@
                       <label>Guarantor1:<sup class="p-error">*</sup></label>
                       <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
                         filterBy="aliasName,code,fatherName" formControlName="guarantor1" placeholder="Select Farmer"
-                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body" (onChange)="getGuarantor2($event.value)">
+                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
+                        (onChange)="getGuarantor2($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}}</div>
                         </ng-template>
@@ -224,9 +225,10 @@
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label>Guarantor2:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="farmerId" [filter]="true"
-                        filterBy="aliasName,code,fatherName" formControlName="guarantor2" placeholder="Select Farmer"
-                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body" (onChange)="getGuarantor3Farmers($event.value)">
+                      <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="farmerId"
+                        [filter]="true" filterBy="aliasName,code,fatherName" formControlName="guarantor2"
+                        placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
+                        (onChange)="getGuarantor3Farmers($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}}</div>
                         </ng-template>
@@ -238,9 +240,10 @@
                     </div>
                     <div class="field col-12 md:col-4  ">
                       <label>Guarantor3:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="farmerId" [filter]="true"
-                        filterBy="aliasName,code,fatherName" formControlName="guarantor3" placeholder="Select Farmer"
-                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body" (onChange)="onGuarantor3($event.value)">
+                      <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="farmerId"
+                        [filter]="true" filterBy="aliasName,code,fatherName" formControlName="guarantor3"
+                        placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
+                        (onChange)="onGuarantor3($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}}</div>
                         </ng-template>
@@ -332,7 +335,7 @@
               <p-tabPanel header="Weedicide">
                 <div class="grid col-12">
                   <div formArrayName='weedicides' class="checkboxList grid">
-                    <ng-container *ngIf="this.fbPlotAggrement.controls['weedicides'] as formArray">
+                    <ng-container *ngIf="this.fbPlotAgreement.controls['weedicides'] as formArray">
                       <div *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index" class="col-3">
                         <div [formGroupName]="i" style="padding-left:unset" class="capitalize form-control">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
@@ -398,7 +401,7 @@
               <p-tabPanel header="Fertilizers " class="col-12">
                 <div class="grid col-12">
                   <div formArrayName='fertilizers' class="checkboxList grid">
-                    <ng-container *ngIf="this.fbPlotAggrement.controls['fertilizers'] as formArray">
+                    <ng-container *ngIf="this.fbPlotAgreement.controls['fertilizers'] as formArray">
                       <div *ngFor="let item of getFormArrayControl('fertilizers').controls; let i = index"
                         class="col-3">
                         <div [formGroupName]="i" style="padding-left:unset">
@@ -466,7 +469,7 @@
       </ng-template>
     </p-dialog>
     <!-- table -->
-    <p-table #dt1 [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
+    <p-table #dt1 [value]="plotAgreements" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
@@ -480,7 +483,8 @@
               <input pInputText type="text" #filter placeholder="Search Keyword"
                 pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name">
+            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAgreements($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
         </div>
@@ -515,7 +519,7 @@
         <tr>
           <td colspan="5">
             <div class="p-3">
-              <p-table [columns]="plotHeaders" dataKey="plotOfferId">
+              <p-table [value]="farmer.objAgreementedPlots" [columns]="plotHeaders" dataKey="plotOfferId">
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
@@ -545,7 +549,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6">There Are No Aggrements Found Yet.</td>
+          <td colspan="13">There Are No Agreements Found Yet.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -555,7 +559,7 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td class="md:text-center" colspan="12">No Aggrements Found.</td>
+      <td class="md:text-center" colspan="6">No Agreements Found.</td>
     </tr>
   </ng-template>
   </p-table>

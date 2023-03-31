@@ -32,10 +32,20 @@ export class AppMenuComponent implements OnInit {
           || this.jwtService.Permissions.CanViewVillageParamRates || this.jwtService.Permissions.CanViewVillagetptRates
           || this.jwtService.Permissions.CanViewWareHouses
       case 'Application Masters':
-        return this.jwtService.Permissions.CanViewTpts || this.jwtService.Permissions.CanViewVarieties
-          || this.jwtService.Permissions.CanViewVehicleTypes
+        return this.jwtService.Permissions.CanViewSeasons || this.jwtService.Permissions.CanViewFarmers
+          || this.jwtService.Permissions.CanViewHGLs || this.jwtService.Permissions.CanViewTpts
+          || this.jwtService.Permissions.CanViewPlantTypes || this.jwtService.Permissions.CanViewPlantSubTypes
+          || this.jwtService.Permissions.CanViewVarieties || this.jwtService.Permissions.CanViewBanks
+          || this.jwtService.Permissions.CanViewVehicleTypes || this.jwtService.Permissions.CanViewLookUps
+          || this.jwtService.Permissions.CanViewShifts || this.jwtService.Permissions.CanViewSampleSlabs
       case 'Monitoring':
-        return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
+        return this.jwtService.Permissions.CanViewPlotOffers
+        || this.jwtService.Permissions.CanViewPlotReports
+        || this.jwtService.Permissions.CanViewPlotAssessments
+        || this.jwtService.Permissions.CanViewPlotAgreements
+        || this.jwtService.Permissions.CanViewPlotYields
+        || this.jwtService.Permissions.CanViewPlotTransfers
+        || this.jwtService.Permissions.CanViewSampleEntrys
         case 'Permits':
         return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
       default: return false;
@@ -127,18 +137,18 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-align-justify text-lg',
                 permission: this.GroupPermission('Application Masters'),
                 items: [
-                  { label: 'Seasons', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: true },
-                  { label: 'Farmers', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: true },
-                  { label: 'HGLs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: true },
+                  { label: 'Seasons', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/season'], permission: this.jwtService.Permissions.CanViewSeasons },
+                  { label: 'Farmers', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/farmer'], permission: this.jwtService.Permissions.CanViewFarmers },
+                  { label: 'HGLs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/hgl'], permission: this.jwtService.Permissions.CanViewHGLs },
                   { label: 'TPTs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/tpt'], permission: this.jwtService.Permissions.CanViewTpts },
-                  { label: 'Plant Types', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: true },
-                  { label: 'Plant Sub Types', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/plantsubtype'], permission: true },
+                  { label: 'Plant Types', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/planttype'], permission: this.jwtService.Permissions.CanViewPlantTypes },
+                  { label: 'Plant Sub Types', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/plantsubtype'], permission: this.jwtService.Permissions.CanViewPlantSubTypes },
                   { label: 'Varieties', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/variety'], permission: this.jwtService.Permissions.CanViewVarieties },
-                  { label: 'Banks', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/bank'], permission: true },
+                  { label: 'Banks', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/bank'], permission: this.jwtService.Permissions.CanViewBanks },
                   { label: 'Vehicles', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/vehicle'], permission: this.jwtService.Permissions.CanViewVehicleTypes },
-                  { label: 'Lookups', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: true },
-                  { label: 'Shifts', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Shift'], permission: true },
-                  { label: 'Sample Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Sample_Slabs'], permission: true },
+                  { label: 'Lookups', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/lookup'], permission: this.jwtService.Permissions.CanViewLookUps },
+                  { label: 'Shifts', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/Shift'], permission: this.jwtService.Permissions.CanViewShifts },
+                  { label: 'Sample Slabs', icon: 'pi pi-fw pi-circle', routerLink: ['/appmasters/SampleSlabs'], permission: this.jwtService.Permissions.CanViewSampleSlabs },
                 ]
               }
             ]
@@ -146,26 +156,26 @@ export class AppMenuComponent implements OnInit {
           {
             label: 'Monitoring',
             icon: 'pi pi-fw pi-eye',
-            permission: true,
+            permission: this.GroupPermission('Monitoring'),
             items: [
-              { label: 'Plot Offers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer'], permission: this.jwtService.Permissions.CanViewPlotReports },
+              { label: 'Plot Offers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer'], permission: this.jwtService.Permissions.CanViewPlotOffers },
               { label: 'Plot Reports', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports'], permission: this.jwtService.Permissions.CanViewPlotReports },
-              { label: 'Plot Assessments', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassessment'], permission: true },
-              { label: 'Plot Agreements', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotaggrement'], permission: true },
-              { label: 'Plot Offer Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
+              { label: 'Plot Assessments', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotassessment'], permission: this.jwtService.Permissions.CanViewPlotAssessments },
+              { label: 'Plot Agreements', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotagreement'], permission: this.jwtService.Permissions.CanViewPlotAgreements },
+              { label: 'Plot Yields', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotyield'], permission: this.jwtService.Permissions.CanViewPlotYields },
+              { label: 'Plot Offer Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotoffer/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotOffers },
               { label: 'Plot Report Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotreports/:forapproval'], permission: this.jwtService.Permissions.CanViewPlotReports },
-              { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: true },
+              { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: this.jwtService.Permissions.CanViewPlotTransfers },
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
-              { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: true },
+              { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: this.jwtService.Permissions.CanViewSampleEntrys},
               { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: true },
               { label: 'Seed', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/seed'], permission: true },
-              { label: 'plot Yields', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/plotyield'], permission: true },
             ]
           },
           {
             label: 'Permits',
             icon: 'pi pi-fw pi-eye',
-            permission: true,
+            permission: this.GroupPermission('Permits'),
             items: [
               { label: 'Cutting Order', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/cuttingorder'], permission: true },
               { label: 'Non Registered', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/nonregistered'], permission: true },
