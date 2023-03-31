@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
 import { FarmersViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
+import { FarmerSectionViewDto, PlotInfoDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 
@@ -14,7 +16,6 @@ export interface IHeader {
   header: string;
   label: string;
 }
-
 
 export class SampleDto {
   DocNo?: string;
@@ -37,22 +38,29 @@ export class SampleDto {
   styles: [],
 })
 export class SampleEntryComponent implements OnInit {
+  
+  appConstants: any = {};
+  sampleDto: SampleDto[] = [];
   fbSampleEntry!: FormGroup;
   currentSeason: SeasonDto = {};
+  seasons!: any[];
   submitLabel!: string;
   showDialog: boolean = false;
   farmers: FarmersViewDto[] = [];
   isNewFarmer!: [false];
-
-
+  loggedInUser: String = "";
+  getFarmers:FarmerSectionViewDto[]=[];
+  
+  
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterservice: AppMasterService,
-    private geoMasterService: GeoMasterService,
     private monitoringService: MonitoringService,
     private lookupService: LookupService,
-    private activatedRoute: ActivatedRoute,
+    private jwtService: JWTService,
   ) {
+    this.loggedInUser = this.jwtService.GetLoginId;
+  
   }
 
   headers: IHeader[] = [
@@ -68,53 +76,22 @@ export class SampleEntryComponent implements OnInit {
     { field: 'CreatedBy', header: 'CreatedBy', label: 'Created By' },
     { field: 'UpdatedBy', header: 'UpdatedBy', label: 'Updated By' },
   ];
-  seasons!: any[];
-  appConstants: any = {};
-  sampleDto: SampleDto[] = [];
+
   ngOnInit(): void {
     let currentSeason = '2020-21';
     this.fillData();
     this.initSeasons();
     this.sampleEntryForm();
     this.initCurrentSeason(currentSeason);
+   
   }
-  initCurrentSeason(seasonCode: string) {
-    this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
-      this.currentSeason = resp as SeasonDto;
-      this.initSeasons();
-    });
-  }
-  onSearch() {
-    this.initAppConstants(this.currentSeason.seasonId!);
-  }
-
-
-  initFarmers() {
-    this.appMasterservice.GetFarmers().subscribe((resp) => {
-      this.farmers = resp as unknown as FarmersViewDto[];
-    })
-  }
-
-  initSeasons() {
-    this.commonService.GetSeasons().subscribe((resp) => {
-      this.seasons = resp as any;
-    });
-  }
-
-  initAppConstants(seasonId: number) {
-    this.lookupService.AppConstants().subscribe((resp) => {
-      this.appConstants = resp as any;
-      this.appConstants.PolFactor
-    });
-  }
-
   sampleEntryForm() {
     this.fbSampleEntry = this.formbuilder.group({
-      seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
+      seasonId: [{ value: this.currentSeason.seasonId },],
       docNo: [{ value: '' }],
-      docDate: ['', (Validators.required)],
-      farmerId: [{ value: '', }, (Validators.required)], /* Here farmerId is ryotNo */
-      ryotName: [''],
+      docDate: ['',],
+      farmerId: [], /* Here farmerId is ryotNo */
+      farmerName: [''],
       plotNo: [''],
       fieldBrix: [''],
       Brix: [''],
@@ -129,8 +106,7 @@ export class SampleEntryComponent implements OnInit {
 
     })
   }
-
-  /**{
+   /**{
       "PolFactor": "0.87",
       "BrixFactor": "0.29",
       "WeighmentPrintCount": "3",
@@ -141,11 +117,56 @@ export class SampleEntryComponent implements OnInit {
       "SupportsMultiLogin": "true",
       "IsWeighmentApprovalRequired": "1"
   } */
+
+  initCurrentSeason(seasonCode: string) {
+    this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
+      this.currentSeason = resp as SeasonDto;
+      this.initSeasons();
+      this.initFarmerSections(this.currentSeason.seasonId!);
+    });
+  }
+
+  initFarmerSections(season: number) {
+   let temp="ff4986c9-a00d-4f99-af2c-672cafe4cffe";
+    this.monitoringService.GetFarmerSections(season, temp).subscribe((resp) => {
+      console.log(resp)
+      // this.loggedInUser
+      this.getFarmers = resp as unknown as FarmerSectionViewDto[];   
+      
+    })
+  }
+
+
+  onSelectedFarmer(farmerId: number) {
+    const selectedFarmer = this.getFarmers.find((getFarmer) => getFarmer.farmerId === farmerId);
+    if (selectedFarmer) {
+      this.fbSampleEntry.controls['farmerName'].setValue(selectedFarmer.farmerName);
+    }
+  }
+  onSearch() {
+    this.initAppConstants(this.currentSeason.seasonId!);
+  }
+  initFarmers() {
+    this.appMasterservice.GetFarmers().subscribe((resp) => {
+      this.farmers = resp as unknown as FarmersViewDto[];
+    })
+  }
+  initSeasons() {
+    this.commonService.GetSeasons().subscribe((resp) => {
+      this.seasons = resp as any;
+    });
+  }
+  initAppConstants(seasonId: number) {
+    this.lookupService.AppConstants().subscribe((resp) => {
+      this.appConstants = resp as any;
+      this.appConstants.PolFactor
+    });
+  }
+
   addSampleEntry() {
     this.submitLabel = 'Add Sample Entry';
     this.fbSampleEntry.controls['seasonId'].enable();
     this.showDialog = true;
-    this.fbSampleEntry.controls['isNewFarmer'].setValue(false);
   }
 
   get FormControls() {
@@ -155,33 +176,7 @@ export class SampleEntryComponent implements OnInit {
 
   // For Farmer
 
-  onSelectedFarmer(farmerId: number) {
-    this.fbSampleEntry.controls['isNewFarmer'].setValue(this.IsNewFarmer(farmerId));
-    this.farmers.forEach((value) => {
-      if (value.farmerId == farmerId) {
-        this.fbSampleEntry.controls['ryotName'].setValue(value.farmerName);
-        this.fbSampleEntry.controls['fatherName'].setValue(value.fatherName);
-        this.fbSampleEntry.controls['farmerVillage'].setValue(value.villageName);
-        this.fbSampleEntry.controls['farmerDivision'].setValue(value.divisionName);
-        this.fbSampleEntry.controls['farmerCircle'].setValue(value.circleName);
-        this.fbSampleEntry.controls['farmerSection'].setValue(value.sectionName);
-      }
-    });
-  }
-  IsNewFarmer(farmerId: number): boolean {
-    var returnvalue = false;
-    this.monitoringService.IsNewFarmer(farmerId).subscribe(
-      (resp) => {
-        returnvalue = resp as unknown as boolean;
-        return returnvalue;
-      }
-    )
-    return returnvalue;
-  }
-
-
-
-
+  
 
   fillData() {
     for (var i of [1, 2]) {
@@ -203,6 +198,10 @@ export class SampleEntryComponent implements OnInit {
       )
     }
   }
+
+
+
+
 }
 
 

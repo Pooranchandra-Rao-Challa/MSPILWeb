@@ -153,7 +153,7 @@ export class PlotassesmentComponent implements OnInit {
     })
   }
   initPlotReports(season: number) {
-    this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
+    this.monitoringService.GetPlotsInSeason(season, 'PlotYield').subscribe((resp) => {
       console.log(resp)
       this.plotReports = resp as unknown as PlotInfoDto[];    
     })
