@@ -6,7 +6,7 @@
                 <h4>Permit Quota</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Add Permit Quota" icon="pi pi-plus" class="p-button-success p-mr-2"
+                <button pButton pRipple label="Add Permit Quota" icon="pi pi-plus" class="p-button-primary p-mr-2"
                     (click)="getPermitQuota()"></button>
 
             </ng-template>
@@ -91,7 +91,7 @@
                                         </div>
                                         <div class="field col-12 md:col-4">
                                             <button pButton pRipple type="submit" label="Get Quota" 
-                                                class="p-button-raised p-button-success" (click)="onSubmit()"></button>
+                                                class="p-button-raised p-button-primary" (click)="onSubmit()"></button>
                                         </div>
                                     </div>
                                 </p-fieldset>
@@ -106,9 +106,9 @@
                 <!-- table -->
                 
                 <p-table #dt1 [value]="permitQuotaFromDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
-                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-                    [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
-                    [tableStyle]="{ width: '100%'}" [autoLayout]="true">
+                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
+                   responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
+                     >
                     <!-- <ng-template pTemplate="caption">
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <button pButton label="Clear" class="p-button-outlined mb-2"
