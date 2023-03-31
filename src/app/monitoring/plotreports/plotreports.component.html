@@ -57,43 +57,44 @@
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-farmer>
         <tr>
-          <td colspan="15">
+          <td colspan="5">
             <div class="p-3">
-              <p-table [value]="farmer.objReportedPlots" [columns]="plotHeaders" dataKey="plotId">
+              <p-table [value]="farmer.objReportedPlots" [columns]="plotHeaders" dataKey="plotId" [tableStyle]="{ width: 'min-content'}"
+              styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" >
                 <ng-template pTemplate="header">
-        <tr>
-          <th></th>
-          <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-plotReport>
-        <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editPlotReport(plotReport, farmer)" *ngIf="!forapproval"></button>
-            <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editApproval(plotReport, farmer)" *ngIf="forapproval"></button>
-          </td>
-          <td *ngFor="let col of plotHeaders">
-            <span
-              *ngIf="col?.field != 'plantingDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{plotReport[col.field]}}</span>
-            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
-              {{plotReport[col.field] | date: 'dd-MM-yyyy'}}
-            </span>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="15">There Are No Plots For This Farmer Yet.</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-  </td>
+                <tr>
+                  <th></th>
+                  <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
+                    {{col?.label}} <p-sortIcon field="code">
+                    </p-sortIcon>
+                    <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-plotReport>
+                <tr>
+                  <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+                      (click)="editPlotReport(plotReport, farmer)" *ngIf="!forapproval"></button>
+                    <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
+                      (click)="editApproval(plotReport, farmer)" *ngIf="forapproval"></button>
+                  </td>
+                  <td *ngFor="let col of plotHeaders">
+                    <span
+                      *ngIf="col?.field != 'plantingDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{plotReport[col.field]}}</span>
+                    <span *ngIf="col?.field == 'plantingDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
+                      {{plotReport[col.field] | date: 'dd-MM-yyyy'}}
+                    </span>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="15">There Are No Plots For This Farmer Yet.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+      </td>
   </tr>
   </ng-template>
 
