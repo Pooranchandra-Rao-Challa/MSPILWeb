@@ -225,12 +225,19 @@ public GetPlotYields(seasonId: number) {
     return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_AGREEMENTS_URI, arr);
   }
 
-  //sample
 
-  public GetFarmerSections(seasonId:any,userid:any) {
-    return this.getWithId(GET_FARMER_IN_SECTIONS_URI, seasonId +'/'+userid);
+  public GetSectionFarmers(seasonId:any) {
+    return this.getWithId(GET_FARMER_IN_SECTIONS_URI, seasonId);
   }
+
   public GetPlotsofFarmers(seasonId: any, farmerId: any) {
-    return this.getWithId(GET_PLOTS_OF_FARMERS_URI, seasonId +'/'+farmerId);
+    let arr: any[] = [];
+    arr.push(seasonId);
+    arr.push(farmerId);
+    return this.getWithParams(GET_PLOTS_OF_FARMERS_URI, arr);
+  }
+
+  public GetSamplesOfPlot(plotId: number) {
+    return this.getWithId(GET_PLOTS_OF_FARMERS_URI, plotId);
   }
 }

@@ -202,5 +202,5 @@ export const  GET_PLOTS_OF_FARMERS_URI = "Monitoring/GetPlotsofFarmers";
 export const GET_PLOTS_FORYIELDS_URI = "Monitoring/GetPlots";
 export const GET_PLOTYIELDS_URI = "Monitoring/GetPlotYields";
 export const GET_SAMPLE_CONSTANT_URI ="Common/Constants"
-
+export const GET_SAMPLE_OF_Plot_URI = "Monitoring/GetSamplesOfPlot";
 
