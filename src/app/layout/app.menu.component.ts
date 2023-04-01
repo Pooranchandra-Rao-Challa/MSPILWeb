@@ -184,19 +184,16 @@ export class AppMenuComponent implements OnInit {
               { label: 'Permit Printing', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitprinting'], permission: true },
               { label: 'Schedule Grouping', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/schedulegrouping'], permission: true },
               { label: 'Special Permits', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/specialpermits'], permission: true },
-
+              { label: 'Cancel Permit', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/cancelpermit'], permission: true },
+              { label: 'Permit Date Change', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitdatechange'], permission: true },
+              { label: 'Estimated Ton', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/estimatedton'], permission: true },
+              { label: 'Permit Quota', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitquota'], permission: true },
+             
             ]
 
           }
         ]
       },
-
-
-
-
-
-
-
 
 
 
