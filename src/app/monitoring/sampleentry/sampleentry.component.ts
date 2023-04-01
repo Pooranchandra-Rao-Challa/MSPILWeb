@@ -13,7 +13,7 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
-import { CURRENT_SEASON } from 'src/environments/environment';
+import { CURRENT_SEASON,EDocumentNumberScreens } from 'src/environments/environment';
 
 export interface IHeader {
   field: string;
@@ -38,10 +38,8 @@ export class SampleEntryComponent implements OnInit {
   showDialog: boolean = false;
   farmers: FarmerSectionViewDto[] = [];
   plots: any
-  Brixfactor: number = 1.054;
-  Polfactor: number = 1.122;
-  brixFactor: any;
-  polFactor: any;
+  // brixFactor: any;
+  // polFactor: any;
   FarmerSectionViewDto: any
   samples: SampleDto[] =[]
   selectedFarmer:FarmerSectionViewDto ={}
@@ -79,18 +77,13 @@ export class SampleEntryComponent implements OnInit {
     this.fillData();
     this.initSeasons();
     this.initCurrentSeason();
+    this.initAppConstants()
     this.sampleEntryForm();
-    this.initSampleCaluclations();
-    this.initConstants()
-
-
-
-
   }
   sampleEntryForm() {
     this.fbSampleEntry = this.formbuilder.group({
       seasonId: [{ value: this.currentSeason.seasonId },],
-      docNo: [{ value: null }],
+      docNo: [null],
       docDate: [null,],
       farmerId: [null], /* Here farmerId is ryotNo */
       farmerName: [''],
@@ -113,7 +106,14 @@ export class SampleEntryComponent implements OnInit {
      "SupportsMultiLogin": "true",
      "IsWeighmentApprovalRequired": "1"
  } */
-
+ ClearForm(){
+  this.fbSampleEntry.reset();
+  this.selectedFarmer ={};
+ }
+ InitForm(){
+  this.initSampleCaluclations();
+  this.getDocNo();
+ }
   initCurrentSeason() {
     this.appMasterservice.CurrentSeason(CURRENT_SEASON()).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
@@ -124,11 +124,7 @@ export class SampleEntryComponent implements OnInit {
 
   initFarmerSections(season: number) {
     this.monitoringService.GetSectionFarmers(season).subscribe((resp) => {
-
-      console.log(resp)
-      // this.loggedInUser
       this.farmers = resp as unknown as FarmerSectionViewDto[];
-
     })
   }
 
@@ -136,7 +132,6 @@ export class SampleEntryComponent implements OnInit {
 
   initPlotsofFarmers(seasonId: any, farmerId: any) {
     this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
-      console.log(resp);
       this.plots = resp as unknown as plotsofFarmerViewDto[];
     });
   }
@@ -150,7 +145,11 @@ export class SampleEntryComponent implements OnInit {
       }
     }
   }
-
+  getDocNo(){
+    this.commonService.GetDocNo(this.currentSeason.seasonId!,EDocumentNumberScreens.Samples).subscribe((resp) => {
+      this.fbSampleEntry.get('docNo')?.setValue(resp);
+    });
+  }
   calculatePurityAndCCS() {
     //const fieldBrix = this.fbSampleEntry.get('fieldBrix')?.value;
     const brix = this.fbSampleEntry.get('brix')?.value;
@@ -171,8 +170,8 @@ export class SampleEntryComponent implements OnInit {
     this.fbSampleEntry.get('pol')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
   }
 
-  initAppConstants(seasonId: number) {
-    this.commonService.GetSampleConstants().subscribe((resp) => {
+  initAppConstants() {
+    this.commonService.GetConstants().subscribe((resp) => {
       this.appConstants = resp as any;
     });
   }
@@ -180,11 +179,10 @@ export class SampleEntryComponent implements OnInit {
   onPlotChange(plotId: number) {
     this.monitoringService.GetSamplesOfPlot(plotId).subscribe((resp) => {
       this.samples = resp as any;
-
     });
   }
   onSearch() {
-    this.initAppConstants(this.currentSeason.seasonId!);
+
   }
   initFarmers() {
     this.appMasterservice.GetFarmers().subscribe((resp) => {
@@ -195,12 +193,6 @@ export class SampleEntryComponent implements OnInit {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp as any;
       this.fbSampleEntry.get('seasonId')?.patchValue(this.currentSeason.seasonId);
-    });
-  }
-
-  initConstants() {
-    this.commonService.GetSampleConstants().subscribe((resp) => {
-      this.appConstants = resp as any;
     });
   }
 
