@@ -210,9 +210,8 @@ export class PlotagreementComponent implements OnInit {
   plotAgreementForm() {
     this.fbPlotAgreement = this.formbuilder.group({
       plotAgreementId: [null],
-      plotId: [''],
-      seasonId: ['', (Validators.required)],
-      plotNumber: [null, (Validators.required)],
+      plotId: [null],
+      seasonId: [null, (Validators.required)],
       agreementArea: [null, (Validators.required)],
       agreementDate: ['', (Validators.required)],
       interCropingId: [null],
@@ -227,14 +226,14 @@ export class PlotagreementComponent implements OnInit {
       ratoonManagedUsedArea: [null],
       trashShedderArea: [null],
       loadShedderArea: [null],
-      nomineeDetails: this.formbuilder.group({
+      nomineeInfo: this.formbuilder.group({
         nomineeDetailId: [null],
-        plotAgreementId: [0],
+        plotAgreementId: [null],
         relationTypeId: ['', (Validators.required)],
         nominee: ['', (Validators.required)],
-        guarantor1: ['', (Validators.required)],
-        guarantor2: [''],
-        guarantor3: ['']
+        guarantor1: [null, (Validators.required)],
+        guarantor2: [null],
+        guarantor3: [null]
       }),
       weedicides: this.formbuilder.array([]),
       pests: this.formbuilder.array([]),
@@ -248,7 +247,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   get fcNomineeDetails() {
-    return this.fbPlotAgreement.get('nomineeDetails') as FormGroup;
+    return this.fbPlotAgreement.get('nomineeInfo') as FormGroup;
 
   }
 
@@ -294,7 +293,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto) {
-    this.fbPlotAgreement.controls['plotNumber'].setValue(plotAgreement.plotId);
+    this.fbPlotAgreement.controls['plotId'].setValue(plotAgreement.plotId);
     this.fbPlotAgreement.controls['agreementArea'].setValue(plotAgreement.agreementedArea);
     this.fbPlotAgreement.controls['agreementDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
     this.fcNomineeDetails.controls['nomineeDetailId'].setValue(plotAgreement.nomineeId);
@@ -320,11 +319,16 @@ export class PlotagreementComponent implements OnInit {
     postValues.pests = postValues.pests.filter((pest: any) => pest.identifiedDate != undefined || pest.controlDate != undefined)
     postValues.fertilizers = postValues.fertilizers.filter((fertilizer: any) => fertilizer.checked == true)
     postValues.diseases = postValues.diseases.filter((disease: any) => disease.identifiedDate != undefined || disease.controlDate != undefined)
+    console.log(postValues);
+
     if (this.addFlag) return this.monitoringService.CreatePlotAgreement(postValues)
     else return this.monitoringService.UpdatePlotAgreement(postValues)
   }
 
   onSubmit() {
+    console.log(this.fbPlotAgreement.valid);
+    console.log( this.fbPlotAgreement.value);
+
     if (this.fbPlotAgreement.valid) {
       this.savePlotAgreement().subscribe(resp => {
         if (resp) {

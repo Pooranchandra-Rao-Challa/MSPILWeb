@@ -26,7 +26,7 @@
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select a season" [options]="seasons" optionLabel="name"
-                          [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
+                          optionValue="seasonId" formControlName="seasonId"
                           (onChange)="initPlotNumbers($event.value)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
@@ -197,7 +197,7 @@
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
-                  <div class="p-fluid p-formgrid grid" formGroupName="nomineeDetails">
+                  <div class="p-fluid p-formgrid grid" formGroupName="nomineeInfo">
                     <div class="field col-12 md:col-4 ">
                       <label class="required">RelationShip Type:</label>
                       <p-dropdown placeholder="Enter RelationShip" optionLabel="name" [options]="relationTypes"
@@ -234,7 +234,7 @@
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
                           <div>{{farmer.aliasName}}</div>
-                          <div>Code: {{farmer.code}} Father Name:{{farmer.fatherName}}</div>
+                          <div>{{farmer.code}}={{farmer.fatherName}}</div>
                         </ng-template>
                       </p-dropdown>
                       <span
