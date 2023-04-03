@@ -13,7 +13,7 @@
     </p-toolbar>
     <!-- dialog -->
     <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="fbPlotAgreement.reset()">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="clearForm()">
       <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left">
           <p-tabPanel header="Plot Agreement" class="col-12">
@@ -221,7 +221,7 @@
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label class="required">Guarantor1:</label>
-                      <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
+                      <p-dropdown optionLabel="code" [options]="farmers" optionValue="code" [filter]="true"
                         filterBy="aliasName,code,fatherName" formControlName="guarantor1" placeholder="Select Farmer"
                         [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor2($event.value)"
@@ -283,20 +283,20 @@
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Inter Croping:</label>
                       <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="crops"
-                        formControlName="interCropId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
+                        formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Micronutrient Deficiency:</label><br>
-                      <p-inputSwitch formControlName="micronutrientdeficiency"></p-inputSwitch>
+                      <p-inputSwitch formControlName="hasMicroNutrientDeficiency"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Trash Mulching:</label><br>
-                      <p-inputSwitch formControlName="trashmulching"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isTrashMulchingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Gap Filing Done:</label><br>
-                      <p-inputSwitch formControlName="gapfillingdone"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isGapsFillingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Weed Status:</label>
@@ -306,31 +306,31 @@
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Bio Fertilizer Applied Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="bioFertilizersAppliedArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Deep Ploughed Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="deepPloughedArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>De Trashing Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="deTrashingArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Earthing Up Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="earthingUpArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Ratoon Managed Used Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="ratoonManagedUsedArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>TrashShedder Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="trashShedderArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>LoadShedder Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="loadShedderArea">
                     </div>
                   </div>
                 </div>
@@ -535,9 +535,9 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-plotOffer>
+      <ng-template pTemplate="body" let-plotAgreement>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil"
+          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement, farmer)"
               class="p-element p-ripple p-button-text p-button p-component"></button>
             <button pButton pRipple icon="pi pi-thumbs-up"
               class="p-element p-ripple p-button-text p-button p-component"></button>
@@ -545,9 +545,9 @@
           </td>
           <td *ngFor="let col of plotHeaders">
 
-            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotOffer[col.field]}}</span>
+            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotAgreement[col.field]}}</span>
             <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
-              {{plotOffer[col.field] | date: 'dd-MM-yyyy'}}
+              {{plotAgreement[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
         </tr>
