@@ -39,7 +39,8 @@ export const CREATE_VILLAGE_URI = "GeoMaster/CreateVillage"
 export const UPDATE_VILLAGE_URI = "GeoMaster/UpdateVillage"
 export const GET_VILLAGES_URI = "GeoMaster/GetVillages"
 
-export const GET_Application_Constant_URI = "Common/GetConstants"
+export const GET_APPLICATION_CONSTANTS_URI = "Common/GetConstants"
+export const GET_CONSTANTS_URI = "Common/Constants"
 
 export const CREATE_BILL_URI = "BillingMaster/CreateBill";
 export const UPDATE_BILL_URI = "BillingMaster/UpdateBill";
@@ -198,8 +199,12 @@ export const GET_FARMERS_IN_SEASON_URI = "Monitoring/GetFarmersInSeason";
 export const GET_PLOT_AGREEMENTS_URI = "Monitoring/GetPlotAgreements";
 export const GET_PLOTS_FORAGREEMENT_URI = "Monitoring/GetPlots";
 export const GET_FARMER_IN_SECTIONS_URI = "Monitoring/GetFarmerSections";
+export const  GET_PLOTS_OF_FARMERS_URI = "Monitoring/GetPlotsofFarmers";
 export const GET_PLOTS_FORYIELDS_URI = "Monitoring/GetPlots";
 export const GET_PLOTYIELDS_URI = "Monitoring/GetPlotYields";
 
 export const CREATE_PLOT_AGREEMENT_URI = "Monitoring/CreatePlotAgreement";
 export const UPDATE_PLOT_AGREEMENT_URI = "Monitoring/UpdatePlotAgreement";
+export const GET_SAMPLE_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
+export const GET_SCREEN_DOC_NO_URI = "Common/GetDocNo";
+

@@ -706,6 +706,7 @@ export class PlotYieldViewDto {
   offerNo?: number;
   plotNumber?: number;
   plotYieldId?: number;
+  plotVillageName?:number;
   plotDivisionName?: string;
   plotCircleName?: string;
   plotSectionName?: string;
@@ -728,4 +729,26 @@ export class PlotYieldViewDto {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
+}
+export class SampleDto {
+  DocNo?: string;
+  DocDate?: Date;
+  FieldBrix?: number;
+  Pol?: number;
+  CreatedAt?: Date;
+  CreatedBy?: string;
+  UpdatedAt?: Date;
+  UpdatedBy?: string;
+  SeasonId?: number;
+  PlotYieldId?: number;
+  PlotNo?: number;
+  FarmerCode?: number;
+}
+
+export interface plotsofFarmerViewDto {
+  plotId: number
+  seasonId: number
+  farmerId: number
+  plotNumber: string
+  netArea: number
 }
