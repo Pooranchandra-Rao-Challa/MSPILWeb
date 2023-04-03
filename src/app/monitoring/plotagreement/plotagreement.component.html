@@ -8,12 +8,12 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="initPlotAgreement()"></button>
+          (click)="addPlotAgreement()"></button>
       </ng-template>
     </p-toolbar>
     <!-- dialog -->
     <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="fbPlotAgreement.reset()">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="clearForm()">
       <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left">
           <p-tabPanel header="Plot Agreement" class="col-12">
@@ -39,14 +39,14 @@
                       <div class="field col-12 md:col-4">
                         <label class="required">Plot No:</label>
                         <p-dropdown optionLabel="plotNumber" [options]="plotNumbers" optionValue="plotId"
-                          [filter]="true" filterBy="plotNumber" formControlName="plotNumber" placeholder="Select Plot"
+                          [filter]="true" filterBy="plotNumber" formControlName="plotId" placeholder="Select Plot"
                           (onChange)="getPlotinfo($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="30"
                           appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotNumber'].touched && FormControls['plotNumber'].errors }">
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                         </p-dropdown>
-                        <span *ngIf="FormControls['plotNumber'].touched && FormControls['plotNumber'].invalid">
+                        <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['plotNumber'].errors?.['required']">
+                            *ngIf="FormControls['plotId'].errors?.['required']">
                             Please Select Plot No.</div>
                         </span>
                       </div>
@@ -204,7 +204,8 @@
                         optionValue="lookupDetailId" appendTo="body" formControlName="relationTypeId"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['relationTypeId'].touched && fcNomineeDetails.controls['relationTypeId'].errors }">
                       </p-dropdown>
-                      <span *ngIf="fcNomineeDetails.controls['relationTypeId'].touched && fcNomineeDetails.controls['relationTypeId'].invalid">
+                      <span
+                        *ngIf="fcNomineeDetails.controls['relationTypeId'].touched && fcNomineeDetails.controls['relationTypeId'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['relationTypeId'].errors?.['required']">
                           Please Select RelationShip.</div>
@@ -214,14 +215,16 @@
                       <label class="required">Nominee:</label>
                       <input pInputText type="text" placeholder="Enter Nominee" formControlName="nominee"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].errors }">
-                      <span *ngIf="fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="fcNomineeDetails.controls['nominee'].errors?.['required']">
+                      <span
+                        *ngIf="fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="fcNomineeDetails.controls['nominee'].errors?.['required']">
                           Please Select Nominee.</div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label class="required">Guarantor1:</label>
-                      <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
+                      <p-dropdown optionLabel="code" [options]="farmers" optionValue="code" [filter]="true"
                         filterBy="aliasName,code,fatherName" formControlName="guarantor1" placeholder="Select Farmer"
                         [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor2($event.value)"
@@ -234,7 +237,8 @@
                           <div>Code: {{farmer.code}} Father Name:{{farmer.fatherName}}</div>
                         </ng-template>
                       </p-dropdown>
-                      <span *ngIf="fcNomineeDetails.controls['guarantor1'].touched && fcNomineeDetails.controls['guarantor1'].invalid">
+                      <span
+                        *ngIf="fcNomineeDetails.controls['guarantor1'].touched && fcNomineeDetails.controls['guarantor1'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['guarantor1'].errors?.['required']">
                           Please Select Guarantor1.</div>
@@ -283,20 +287,20 @@
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Inter Croping:</label>
                       <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="crops"
-                        formControlName="interCropId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
+                        formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Micronutrient Deficiency:</label><br>
-                      <p-inputSwitch formControlName="micronutrientdeficiency"></p-inputSwitch>
+                      <p-inputSwitch formControlName="hasMicroNutrientDeficiency"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Trash Mulching:</label><br>
-                      <p-inputSwitch formControlName="trashmulching"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isTrashMulchingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Gap Filing Done:</label><br>
-                      <p-inputSwitch formControlName="gapfillingdone"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isGapsFillingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Weed Status:</label>
@@ -306,31 +310,31 @@
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Bio Fertilizer Applied Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="bioFertilizersAppliedArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Deep Ploughed Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="deepPloughedArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>De Trashing Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="deTrashingArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Earthing Up Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="earthingUpArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Ratoon Managed Used Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="ratoonManagedUsedArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>TrashShedder Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="trashShedderArea">
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>LoadShedder Area:</label>
-                      <input pInputText text="name">
+                      <input pInputText text="name" formControlName="loadShedderArea">
                     </div>
                   </div>
                 </div>
@@ -513,8 +517,8 @@
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
           <td *ngFor="let col of farmerHeaders">
-            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{farmer[col.field]}}</span>
-            <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
+            <span *ngIf="col?.field != 'plantingDate' && col?.field != 'agreementedDate'">{{farmer[col.field]}}</span>
+            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'agreementedDate'">
               {{farmer[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
@@ -522,7 +526,7 @@
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-farmer>
         <tr>
-          <td colspan="5">
+          <td colspan="6">
             <div class="p-3">
               <p-table [value]="farmer.objAgreementedPlots" [columns]="plotHeaders" dataKey="plotOfferId">
                 <ng-template pTemplate="header">
@@ -535,19 +539,19 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-plotOffer>
+      <ng-template pTemplate="body" let-plotAgreement>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil"
+          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement)"
               class="p-element p-ripple p-button-text p-button p-component"></button>
-            <button pButton pRipple icon="pi pi-thumbs-up"
-              class="p-element p-ripple p-button-text p-button p-component"></button>
+            <!-- <button pButton pRipple icon="pi pi-thumbs-up"
+              class="p-element p-ripple p-button-text p-button p-component"></button> -->
             <!-- (click)="editAllottedPlot(allottedPlot)" -->
           </td>
           <td *ngFor="let col of plotHeaders">
 
-            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotOffer[col.field]}}</span>
+            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotAgreement[col.field]}}</span>
             <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
-              {{plotOffer[col.field] | date: 'dd-MM-yyyy'}}
+              {{plotAgreement[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
         </tr>

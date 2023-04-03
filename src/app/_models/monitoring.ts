@@ -560,8 +560,8 @@ export class PlotsDto {
   agreedTon?: number
   cropType?: string
   Crop?: string
-  measuredArea?:number
-  agreementedArea?:number
+  measuredArea?: number
+  agreementedArea?: number
 }
 export class FarmerSelectInfoViewDto {
   userId?: number
@@ -582,24 +582,40 @@ export class GetFarmersInSeasonViewDto {
 }
 
 export class PlotAgreementDto {
-
+  plotAgreementId?: number;
+  plotId?: number;
+  earthingUpArea?: number;
+  bioFertilizersAppliedArea?: number;
+  deepPloughedArea?: number;
+  deTrashingArea?: number;
+  ratoonManagedUsedArea?: number;
+  trashShedderArea?: number;
+  loadShedderArea?: number;
+  weedStatusId?: number;
+  interCropingId?: number;
+  hasMicroNutrientDeficiency?: boolean;
+  isTrashMulchingDone?: boolean;
+  isGapsFillingDone?: boolean;
+  serverUpdatedStatus?: boolean;
+  agreementedArea?: number;
+  nomineeDetails?: NomineeDetailsDto;
+  diseases?: plotDiseasesDto[];
+  fertilizers?: plotFertilizersDto[];
+  pests?: plotPestsDto[];
+  weedicides?: plotWeedicidesDto[];
 }
 
-// export interface IPlotAgreementViewDto {
-//   seasonId: number;
-//   season: string
-//   farmerId: number;
-//   farmerCode: string;
-//   farmerName: string;
-//   fatherName: string;
-//   farmerVillageId: number;
-//   farmerVillageName: string;
-//   farmerDivisionName: string;
-//   farmerCircleName: string;
-//   farmerSectionName: string;
-//   agreementedPlots: string;
-//   objAgreementedPlots: IAgreementedPlotsViewDto[];
-// }
+export class NomineeDetailsDto {
+  nomineeDetailId?: number;
+  plotAgreementId?: number;
+  relationTypeId?: number;
+  nominee?: string;
+  guarantor1?: string;
+  guarantor2?: string;
+  guarantor3?: string;;
+  serverUpdatedStatus?: boolean;
+
+}
 
 export interface IAgreementedPlotsViewDto {
   plotId: number;
@@ -655,14 +671,14 @@ export class FarmerSectionViewDto {
   farmerName?: string
 
 }
-export class FarmerPlotYieldViewDto{
+export class FarmerPlotYieldViewDto {
   seasonId?: number;
   season?: Date;
   farmerId?: number;
   farmerCode?: string;
   farmerName?: string;
   fatherName?: string;
-  farmerVillageId?:number;
+  farmerVillageId?: number;
   farmerVillageName?: string;
   farmerDivisionName?: string;
   farmerCircleName?: string;
@@ -670,7 +686,7 @@ export class FarmerPlotYieldViewDto{
   netYieldPlots!: string;
   objnetYieldPlots?: PlotYieldViewDto[];
 }
-export class PlotYieldViewDto{
+export class PlotYieldViewDto {
   offerNo?: number;
   plotNumber?: number;
   plotYieldId?: number;
@@ -684,12 +700,12 @@ export class PlotYieldViewDto{
   plantType?: string;
   cropType?: string;
   birNumber?: number;
-  birDate?:Date;
+  birDate?: Date;
   surveyNo?: number;
   measuredArea?: number;
   agreementedArea?: number;
   estimatedTon?: number;
-  perishedArea?:number;
+  perishedArea?: number;
   netArea?: number;
   hasMicroNutrientDeficiency?: boolean;
   isTrashMulchingDone?: boolean;

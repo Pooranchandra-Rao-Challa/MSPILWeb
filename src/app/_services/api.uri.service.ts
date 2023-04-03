@@ -202,6 +202,9 @@ export const GET_FARMER_IN_SECTIONS_URI = "Monitoring/GetFarmerSections";
 export const  GET_PLOTS_OF_FARMERS_URI = "Monitoring/GetPlotsofFarmers";
 export const GET_PLOTS_FORYIELDS_URI = "Monitoring/GetPlots";
 export const GET_PLOTYIELDS_URI = "Monitoring/GetPlotYields";
+
+export const CREATE_PLOT_AGREEMENT_URI = "Monitoring/CreatePlotAgreement";
+export const UPDATE_PLOT_AGREEMENT_URI = "Monitoring/UpdatePlotAgreement";
 export const GET_SAMPLE_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
 export const GET_SCREEN_DOC_NO_URI = "Common/GetDocNo";
 
