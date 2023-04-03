@@ -25,7 +25,7 @@ export interface IHeader {
 export class PlotagreementComponent implements OnInit {
   plotAgreements: IFarmerInPlotOfferDto[] = [];
   plotAgreement: PlotAgreementDto = {};
-  globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
+  globalFilterFields: string[] = ["seasonName", "offerNo", "agreementedDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
   @ViewChild('filter') filter!: ElementRef;
   seasons: SeasonViewDto[] = [];
@@ -171,7 +171,7 @@ export class PlotagreementComponent implements OnInit {
     });
   }
 
-  initPlotAgreement(plotAgreementId: number = -1) {
+  addPlotAgreement(plotAgreementId: number = -1) {
     this.plotAgreement = new PlotAgreementDto();
     this.submitLabel = "Add Agreement";
     this.addFlag = true;
@@ -294,7 +294,12 @@ export class PlotagreementComponent implements OnInit {
   }
 
   editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto, farmer: IFarmerInPlotOfferDto) {
+    debugger
     this.fbPlotAgreement.patchValue(plotAgreement);
+    this.fbPlotAgreement.controls['plotNumber'].setValue(plotAgreement.plotId);
+    this.getPlotinfo(plotAgreement.plotId);
+    this.addPlotAgreement(plotAgreement.plotAgreementId);
+
     this.addFlag = false;
     this.submitLabel = 'Update Plot Agreement';
     this.showDialog = true;
@@ -311,16 +316,6 @@ export class PlotagreementComponent implements OnInit {
   }
 
   onSubmit() {
-    let reqNomineeParam = {
-      'nomineeDetailId': this.fcNomineeDetails.controls['nomineeDetailId'].value,
-      'plotAgreementId': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'relationTypeId': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'nominee': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'guarantor1': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'guarantor2': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'guarantor3': this.fcNomineeDetails.controls['plotAgreementId'].value,
-    };
-    this.fbPlotAgreement.controls["nomineeDetails"].patchValue([{ reqNomineeParam }]);
     if (this.fbPlotAgreement.valid) {
       this.savePlotAgreement().subscribe(resp => {
         if (resp) {
