@@ -445,6 +445,7 @@ export class PlotreportsComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+    this.onSearch();
   }
 
   savePlotReport(): Observable<HttpEvent<any>> {

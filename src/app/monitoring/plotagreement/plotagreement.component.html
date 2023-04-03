@@ -15,7 +15,7 @@
     <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="clearForm()">
       <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
-        <p-tabView orientation="left">
+        <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Agreement" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
@@ -165,25 +165,25 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label class="required">Aggreement Area:</label>
-                        <p-inputNumber placeholder="Enter Aggreement Area" formControlName="agreementArea"
+                        <p-inputNumber placeholder="Enter Aggreement Area" formControlName="agreementedArea"
                           mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementArea'].touched && FormControls['agreementArea'].errors }">
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedArea'].touched && FormControls['agreementedArea'].errors }">
                         </p-inputNumber>
-                        <span *ngIf="FormControls['agreementArea'].touched && FormControls['agreementArea'].invalid">
+                        <span *ngIf="FormControls['agreementedArea'].touched && FormControls['agreementedArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['agreementArea'].errors?.['required']">
+                            *ngIf="FormControls['agreementedArea'].errors?.['required']">
                             Please Select Aggreement Area.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label class="required">Aggreement Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                          formControlName="agreementDate" placeholder="Please Select Agreement Date" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementDate'].touched && FormControls['agreementDate'].errors }">
+                          formControlName="agreementedDate" placeholder="Please Select Agreement Date" appendTo="body"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedDate'].touched && FormControls['agreementedDate'].errors }">
                         </p-calendar>
-                        <span *ngIf="FormControls['agreementDate'].touched && FormControls['agreementDate'].invalid">
+                        <span *ngIf="FormControls['agreementedDate'].touched && FormControls['agreementedDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['agreementDate'].errors?.['required']">
+                            *ngIf="FormControls['agreementedDate'].errors?.['required']">
                             Please Select Assessed Date.</div>
                         </span>
                       </div>
@@ -340,7 +340,7 @@
                 </div>
               </div>
             </div>
-            <p-tabView orientation="left">
+            <p-tabView orientation="left" [(activeIndex)]="activeIndex1!">
               <p-tabPanel header="Weedicide">
                 <div class="grid col-12">
                   <div formArrayName='weedicides' class="checkboxList grid">
@@ -406,7 +406,7 @@
             </p-tabView>
           </p-tabPanel>
           <p-tabPanel header="Fertilizer/Disease" class="line-height-3 m-0">
-            <p-tabView orientation="left">
+            <p-tabView orientation="left" [(activeIndex)]="activeIndex2!">
               <p-tabPanel header="Fertilizers " class="col-12">
                 <div class="grid col-12">
                   <div formArrayName='fertilizers' class="checkboxList grid">
@@ -489,8 +489,8 @@
           <div>
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
-              <input pInputText type="text" #filter placeholder="Search Keyword"
-                pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
+              <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                pTooltip="Search By Farmer Code, Farmer Name, Village Name, Plot No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAgreements($event.value)" optionValue="seasonId">
