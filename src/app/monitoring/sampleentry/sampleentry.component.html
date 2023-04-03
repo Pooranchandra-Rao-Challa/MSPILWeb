@@ -70,7 +70,8 @@
     </p-table>
 
     <p-dialog header="Sample Entry" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}"
+      (onHide)="ClearForm()" (onShow)="InitForm()">
       <!-- (onHide)="fbAllottedPlot.reset()" -->
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbSampleEntry">
@@ -89,7 +90,8 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label class="required">Doc No:</label>
-                      <input pInputText id="docNo" type="text" formControlName="docNo" readonly>
+                      <!-- <input pInputText id="docNo" type="text" formControlName="docNo" readonly> -->
+                      <p class="disabled_text">{{this.fbSampleEntry.controls['docNo'].value}}</p>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label class="required">Doc Date:</label>
@@ -125,8 +127,8 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label>Farmer Name:</label>
-                      <input pInputText id="farmerName" type="text" [(ngModel)]="selectedFarmer.farmerName"  [ngModelOptions]="{standalone: true}" readonly>
-
+                      <!-- <input pInputText id="farmerName" type="text" [(ngModel)]="selectedFarmer.farmerName"  [ngModelOptions]="{standalone: true}" readonly> -->
+                      <p class="disabled_text">{{selectedFarmer.farmerCode}} - {{selectedFarmer.farmerName}}</p>
 
                     </div>
 
