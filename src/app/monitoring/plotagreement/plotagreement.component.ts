@@ -1,3 +1,4 @@
+import { NomineeDetailsDto } from './../../_models/monitoring';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
@@ -7,6 +8,8 @@ import { IAgreementedPlotsViewDto, IFarmerInPlotOfferDto, MaintDiseaseDto, Maint
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
+import { HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface IHeader {
   field: string;
@@ -22,7 +25,7 @@ export interface IHeader {
 export class PlotagreementComponent implements OnInit {
   plotAgreements: IFarmerInPlotOfferDto[] = [];
   plotAgreement: PlotAgreementDto = {};
-  globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
+  globalFilterFields: string[] = ["seasonName", "offerNo", "agreementedDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
   @ViewChild('filter') filter!: ElementRef;
   seasons: SeasonViewDto[] = [];
@@ -40,6 +43,9 @@ export class PlotagreementComponent implements OnInit {
   weedStatus: LookupDetailViewDto[] = [];
   crops: LookupDetailViewDto[] = [];
   maintanenceItems?: MaintenanceItems = {}
+  activeIndex?= 0;
+  activeIndex1?= 0;
+  activeIndex2?= 0;
 
   farmerHeaders: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
@@ -67,6 +73,7 @@ export class PlotagreementComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+    this.onSearch();
   }
 
   constructor(private formbuilder: FormBuilder,
@@ -111,19 +118,19 @@ export class PlotagreementComponent implements OnInit {
       this.plotAgreements?.forEach((value) => {
         value.objAgreementedPlots = JSON.parse(value.agreementedPlots) as IAgreementedPlotsViewDto[];
       });
-      console.log(this.plotAgreements);
-
     });
   }
 
   getPlotinfo(plotId: number) {
+    debugger
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+      this.FormControls['plotId'].setValue(this.plotInfo.plotId);
       if (this.plotInfo.farmerId) {
         this.farmers = this.farmers?.filter(x => x.farmerId != this.plotInfo.farmerId);
-        this.fbPlotAgreement.controls['guarantor1'].setValue('');
-        this.fbPlotAgreement.controls['guarantor2'].setValue('');
-        this.fbPlotAgreement.controls['guarantor3'].setValue('');
+        this.fcNomineeDetails.controls['guarantor1'].setValue(null);
+        this.fcNomineeDetails.controls['guarantor2'].setValue(null);
+        this.fcNomineeDetails.controls['guarantor3'].setValue(null);
       }
     });
   }
@@ -166,12 +173,12 @@ export class PlotagreementComponent implements OnInit {
     });
   }
 
-  initPlotAgreement(plotAgreementId: number = -1) {
+  addPlotAgreement(plotAgreementId: number = -1) {
     this.plotAgreement = new PlotAgreementDto();
     this.submitLabel = "Add Agreement";
     this.addFlag = true;
     this.showDialog = true;
-
+    this.fbPlotAgreement.get('seasonId')?.patchValue(this.currentSeason.seasonId);
     this.monitoringService.GetMaintenanceItemsForAssessment(plotAgreementId).subscribe((resp) => {
       this.maintanenceItems = resp as unknown as MaintenanceItems;
       this.initMaintanenceItems();
@@ -182,39 +189,52 @@ export class PlotagreementComponent implements OnInit {
     let weedicideArray = this.fbPlotAgreement.get("weedicides") as FormArray;
 
     this.maintanenceItems?.weedicides?.forEach(weedicide => {
+      if (!this.addFlag) weedicide.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       weedicideArray.push(this.createWeed(weedicide));
     })
     let fertilizerArray = this.fbPlotAgreement.get("fertilizers") as FormArray;
 
     this.maintanenceItems?.fertilizers?.forEach(fertilizer => {
+      if (!this.addFlag) fertilizer.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       fertilizerArray.push(this.createFertlizer(fertilizer))
     })
     let pestArray = this.fbPlotAgreement.get("pests") as FormArray;
 
     this.maintanenceItems?.pests?.forEach(pest => {
+      if (!this.addFlag) pest.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       pestArray.push(this.createpests(pest))
     })
     let diseaseArray = this.fbPlotAgreement.get("diseases") as FormArray;
 
     this.maintanenceItems?.diseases?.forEach(disease => {
+      if (!this.addFlag) disease.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       diseaseArray.push(this.createDisease(disease))
     })
+
   }
 
   plotAgreementForm() {
     this.fbPlotAgreement = this.formbuilder.group({
-      seasonId: ['', (Validators.required)],
-      plotNumber: [null, (Validators.required)],
-      agreementArea: [null, (Validators.required)],
-      agreementDate: ['', (Validators.required)],
-      weedStatusId: [null, (Validators.required)],
-      interCropId: [null, (Validators.required)],
-      micronutrientdeficiency: [null],
-      trashmulching: [null],
-      gapfillingdone: [null],
-      nomineeDetails: this.formbuilder.group({
+      plotAgreementId: [null],
+      plotId: [null],
+      seasonId: [null, (Validators.required)],
+      agreementedArea: [null, (Validators.required)],
+      agreementedDate: [null, (Validators.required)],
+      interCropingId: [null],
+      hasMicroNutrientDeficiency: [null],
+      isTrashMulchingDone: [null],
+      isGapsFillingDone: [null],
+      weedStatusId: [null],
+      bioFertilizersAppliedArea: [null],
+      deepPloughedArea: [null],
+      deTrashingArea: [null],
+      earthingUpArea: [null],
+      ratoonManagedUsedArea: [null],
+      trashShedderArea: [null],
+      loadShedderArea: [null],
+      nomineeInfo: this.formbuilder.group({
         nomineeDetailId: [null],
-        plotAgreementId: [''],
+        plotAgreementId: [null],
         relationTypeId: ['', (Validators.required)],
         nominee: ['', (Validators.required)],
         guarantor1: [null, (Validators.required)],
@@ -233,7 +253,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   get fcNomineeDetails() {
-    return this.fbPlotAgreement.get('nomineeDetails') as FormGroup;
+    return this.fbPlotAgreement.get('nomineeInfo') as FormGroup;
 
   }
 
@@ -244,7 +264,7 @@ export class PlotagreementComponent implements OnInit {
   createpests(pest: MaintPestDto): FormGroup {
     return this.formbuilder.group({
       pestId: [pest.pestId],
-      plotAssessmentId: [pest.plotAssessmentId],
+      plotAgreementId: [pest.plotAgreementId],
       name: [pest.name],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate],
@@ -254,7 +274,7 @@ export class PlotagreementComponent implements OnInit {
   createWeed(weed: MaintWeedicideDto): FormGroup {
     return this.formbuilder.group({
       weedicideId: [weed.weedicideId],
-      plotAssessmentId: [weed.plotAssessmentId],
+      plotAgreementId: [weed.plotAgreementId],
       name: [weed.name],
       checked: [weed.selected],
     });
@@ -262,7 +282,7 @@ export class PlotagreementComponent implements OnInit {
   createFertlizer(fertilizer: MaintFertilizerDto): FormGroup {
     return this.formbuilder.group({
       fertilizerId: [fertilizer.fertilizerId],
-      plotAssessmentId: [fertilizer.plotAssessmentId],
+      plotAgreementId: [fertilizer.plotAgreementId],
       name: [fertilizer.name],
       checked: [fertilizer.selected],
     });
@@ -270,7 +290,7 @@ export class PlotagreementComponent implements OnInit {
   createDisease(disease: MaintDiseaseDto): FormGroup {
     return this.formbuilder.group({
       diseaseId: [disease.diseaseId],
-      plotAssessmentId: [disease.plotAssessmentId],
+      plotAgreementId: [disease.plotAgreementId],
       name: [disease.name],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate],
@@ -278,12 +298,66 @@ export class PlotagreementComponent implements OnInit {
     })
   }
 
-  onSubmit() {
-    if(this.fbPlotAgreement.valid){
+  onSearch() {
+    this.initPlotAgreements(this.currentSeason.seasonId!);
+  }
 
+  editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto) {
+    this.fbPlotAgreement.controls['plotId'].setValue(plotAgreement.plotId);
+    this.fbPlotAgreement.controls['agreementedArea'].setValue(plotAgreement.agreementedArea);
+    this.fbPlotAgreement.controls['agreementedDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
+    this.fcNomineeDetails.controls['nomineeDetailId'].setValue(plotAgreement.nomineeId);
+    this.fcNomineeDetails.controls['plotAgreementId'].setValue(plotAgreement.plotAgreementId);
+    this.fcNomineeDetails.controls['relationTypeId'].setValue(plotAgreement.relationTypeId);
+    this.fcNomineeDetails.controls['nominee'].setValue(plotAgreement.nominee);
+    this.fcNomineeDetails.controls['guarantor1'].setValue(plotAgreement.guarantor1);
+    this.fcNomineeDetails.controls['guarantor2'].setValue(plotAgreement.guarantor2);
+    this.fcNomineeDetails.controls['guarantor3'].setValue(plotAgreement.guarantor3);
+
+    this.fbPlotAgreement.patchValue(plotAgreement);
+    this.getPlotinfo(plotAgreement.plotId);
+    this.addPlotAgreement(plotAgreement.plotAgreementId);
+
+    this.addFlag = false;
+    this.submitLabel = 'Update Plot Agreement';
+    this.showDialog = true;
+  }
+
+  savePlotAgreement(): Observable<HttpEvent<PlotAgreementDto>> {
+    var postValues = this.fbPlotAgreement.value;
+    postValues.weedicides = postValues.weedicides.filter((weed: any) => weed.checked == true)
+    postValues.pests = postValues.pests.filter((pest: any) => pest.identifiedDate != undefined || pest.controlDate != undefined)
+    postValues.fertilizers = postValues.fertilizers.filter((fertilizer: any) => fertilizer.checked == true)
+    postValues.diseases = postValues.diseases.filter((disease: any) => disease.identifiedDate != undefined || disease.controlDate != undefined)
+    if (this.addFlag) return this.monitoringService.CreatePlotAgreement(postValues)
+    else return this.monitoringService.UpdatePlotAgreement(postValues)
+  }
+
+  onSubmit() {
+    if (this.fbPlotAgreement.valid) {
+      this.savePlotAgreement().subscribe(resp => {
+        if (resp) {
+          this.initPlotAgreements(this.currentSeason.seasonId!);
+          this.fbPlotAgreement.reset();
+          this.showDialog = false;
+        }
+      })
     }
-    else{
+    else {
       this.fbPlotAgreement.markAllAsTouched();
     }
+  }
+
+  clearForm() {
+    var temp = Object.assign({}, this.currentSeason);
+    this.fbPlotAgreement.reset();
+    this.plotInfo = {};
+    (this.fbPlotAgreement.get("weedicides") as FormArray).clear();
+    (this.fbPlotAgreement.get("fertilizers") as FormArray).clear();
+    (this.fbPlotAgreement.get("pests") as FormArray).clear();
+    (this.fbPlotAgreement.get("diseases") as FormArray).clear();
+    this.activeIndex = this.activeIndex1 = this.activeIndex2 = 0;
+    this.currentSeason = Object.assign({}, temp);
+    this.fbPlotAgreement.get('seasonId')?.patchValue(this.currentSeason.seasonId);
   }
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
 import { debounceTime, distinctUntilChanged, fromEvent, tap } from 'rxjs';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { FarmersViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
 import { SectionDto } from 'src/app/_models/geomodels';
 import { FarmerSectionViewDto, PlotInfoDto, plotsofFarmerViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
@@ -38,11 +39,10 @@ export class SampleEntryComponent implements OnInit {
   showDialog: boolean = false;
   farmers: FarmerSectionViewDto[] = [];
   plots: any
-  // brixFactor: any;
-  // polFactor: any;
   FarmerSectionViewDto: any
   sample: SampleDto[] =[];
   samples:SampleDetailsDto[] = [];
+  mediumDate: string = MEDIUM_DATE;
   selectedFarmer:FarmerSectionViewDto ={}
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('fieldBrix') fieldBrix!: ElementRef;
@@ -164,7 +164,6 @@ initSampleEntry(seasonId: number) {
     });
   } 
   calculatePurityAndCCS() {
-    //const fieldBrix = this.fbSampleEntry.get('fieldBrix')?.value;
     const brix = this.fbSampleEntry.get('brix')?.value;
     const pol = this.fbSampleEntry.get('pol')?.value;
     const Purity = brix == 0 ? 0 : Math.round((pol / brix) * 100);
@@ -174,7 +173,6 @@ initSampleEntry(seasonId: number) {
   }
 
   initSampleCaluclations() {
-    //this.fbSampleEntry.get('fieldBrix')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
     this.fbSampleEntry.get('brix')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
     this.fbSampleEntry.get('pol')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
   }
