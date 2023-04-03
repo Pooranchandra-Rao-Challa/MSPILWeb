@@ -39,14 +39,14 @@
                       <div class="field col-12 md:col-4">
                         <label class="required">Plot No:</label>
                         <p-dropdown optionLabel="plotNumber" [options]="plotNumbers" optionValue="plotId"
-                          [filter]="true" filterBy="plotNumber" formControlName="plotNumber" placeholder="Select Plot"
+                          [filter]="true" filterBy="plotNumber" formControlName="plotId" placeholder="Select Plot"
                           (onChange)="getPlotinfo($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="30"
                           appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotNumber'].touched && FormControls['plotNumber'].errors }">
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                         </p-dropdown>
-                        <span *ngIf="FormControls['plotNumber'].touched && FormControls['plotNumber'].invalid">
+                        <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['plotNumber'].errors?.['required']">
+                            *ngIf="FormControls['plotId'].errors?.['required']">
                             Please Select Plot No.</div>
                         </span>
                       </div>
@@ -541,7 +541,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotAgreement>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement, farmer)"
+          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement)"
               class="p-element p-ripple p-button-text p-button p-component"></button>
             <!-- <button pButton pRipple icon="pi pi-thumbs-up"
               class="p-element p-ripple p-button-text p-button p-component"></button> -->

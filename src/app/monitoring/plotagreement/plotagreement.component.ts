@@ -293,10 +293,19 @@ export class PlotagreementComponent implements OnInit {
     })
   }
 
-  editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto, farmer: IFarmerInPlotOfferDto) {
-    debugger
-    this.fbPlotAgreement.patchValue(plotAgreement);
+  editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto) {
     this.fbPlotAgreement.controls['plotNumber'].setValue(plotAgreement.plotId);
+    this.fbPlotAgreement.controls['agreementArea'].setValue(plotAgreement.agreementedArea);
+    this.fbPlotAgreement.controls['agreementDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
+    this.fcNomineeDetails.controls['nomineeDetailId'].setValue(plotAgreement.nomineeId);
+    this.fcNomineeDetails.controls['plotAgreementId'].setValue(plotAgreement.plotAgreementId);
+    this.fcNomineeDetails.controls['relationTypeId'].setValue(plotAgreement.relationTypeId);
+    this.fcNomineeDetails.controls['nominee'].setValue(plotAgreement.nominee);
+    this.fcNomineeDetails.controls['guarantor1'].setValue(plotAgreement.guarantor1);
+    this.fcNomineeDetails.controls['guarantor2'].setValue(plotAgreement.guarantor2);
+    this.fcNomineeDetails.controls['guarantor3'].setValue(plotAgreement.guarantor3);
+
+    this.fbPlotAgreement.patchValue(plotAgreement);
     this.getPlotinfo(plotAgreement.plotId);
     this.addPlotAgreement(plotAgreement.plotAgreementId);
 

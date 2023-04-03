@@ -617,22 +617,6 @@ export class NomineeDetailsDto {
 
 }
 
-// export interface IPlotAgreementViewDto {
-//   seasonId: number;
-//   season: string
-//   farmerId: number;
-//   farmerCode: string;
-//   farmerName: string;
-//   fatherName: string;
-//   farmerVillageId: number;
-//   farmerVillageName: string;
-//   farmerDivisionName: string;
-//   farmerCircleName: string;
-//   farmerSectionName: string;
-//   agreementedPlots: string;
-//   objAgreementedPlots: IAgreementedPlotsViewDto[];
-// }
-
 export interface IAgreementedPlotsViewDto {
   plotId: number;
   offerNo: number;
