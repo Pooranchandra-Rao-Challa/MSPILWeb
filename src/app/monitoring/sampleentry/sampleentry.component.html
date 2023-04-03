@@ -14,60 +14,59 @@
 
 
     <!-- table -->
-    <p-table #dt1 [value]="sampleDto" dataKey="id" [rows]="10" [rowHover]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
-      <ng-template pTemplate="caption">
-        <div class="flex justify-content-between flex-column sm:flex-row">
-          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
-          <!--  (click)="clear(dt1)"-->
-          <div>
-            <span class="p-input-icon-left mb-2">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" #filter placeholder="Search Keyword"
-                pTooltip="Search By Farmer Name, Village Name, Plot No" class="w-full" />
-              <!-- (input)="onSearch()"-->
-            </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="seasons" optionValue="seasonId">
-            </p-dropdown> <!-- [options]="seasons"-->
-          </div>
+    <p-table #sampleEntry dataKey="id" [value]="samples" [columns]="headers" [rows]="10" [rowHover]="true"
+    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
+    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between flex-column sm:flex-row">
+        <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+          (click)="clear(sampleEntry)"></button>
+        <div>
+          <span class="p-input-icon-left mb-2">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+              pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
+          </span>
+          <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+            [(ngModel)]="currentSeason.seasonId" (onChange)="initSampleEntry($event.value)" optionValue="seasonId">
+          </p-dropdown>
         </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th></th>
-          <th *ngFor="let col of headers" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-allottedPlot>
-        <tr><!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
-          <td><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component"></button>
-          </td>
-          <td *ngFor="let col of headers">
-            <span
-              *ngIf="col?.field != 'DocDate' && col?.field != 'CreatedAt' && col?.field != 'UpdatedAt' ">{{allottedPlot[col.field]}}</span>
-            <span *ngIf="col?.field == 'DocDate' || col?.field == 'CreatedAt' || col?.field == 'UpdatedAt'">
-              {{allottedPlot[col.field] | date: 'dd-MM-yyyy'}}
-            </span>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td class="md:text-center" colspan="12">No Sample Entry Found.</td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="loadingbody">
-        <tr>
-          <td class="md:text-center" colspan="12">Loading Sample Entry Data. Please Wait.</td>
-        </tr>
-      </ng-template>
-    </p-table>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+          {{col?.label}} <p-sortIcon field="code">
+          </p-sortIcon>
+          <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-sample>
+      <tr>
+        <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+            (click)="editSampleEntry(sample)"></button>
+        </td>
+        <td *ngFor="let col of headers">
+          <span *ngIf="col?.field != 'docDate' && col?.field != 'plantingDate'">{{sample[col.field]}}</span>
+          <span *ngIf="col?.field == 'docDate' || col?.field == 'plantingDate'">
+            {{sample[col.field] | date: 'dd-MM-yyyy'}}      
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage"> 
+      <tr>
+        <td colspan="20" class="md:text-center">No Sample Entry Found.</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="loadingbody">
+      <tr>
+        <td colspan="20" class="md:text-center">Loading Sample Entry Data. Please wait.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
     <p-dialog header="Sample Entry" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}"
@@ -79,7 +78,7 @@
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
-                <p-fieldset legend="Doc Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <p-fieldset legend="Season Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
                       <label class="required">Season:</label>
@@ -106,7 +105,7 @@
                     </div>
                   </div>
                 </p-fieldset>
-                <p-fieldset legend="Ryot Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                <p-fieldset legend="Sample Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
                       <label  class="required">Farmer Code:</label>
@@ -136,6 +135,7 @@
                       <label class="required">Plot No:</label>
                       <p-dropdown placeholder="Plot No" optionLabel="plotNumber"
                       formControlName="plotId" [options]="plots" appendTo="body">
+                       (onChange)="onPlotChange($event.value)" 
                       </p-dropdown>
                     </div>
 
@@ -174,15 +174,18 @@
                     </div>
 
                     <div class="field col-12 md:col-3">
-                      <label  class="required">No of Sample:</label>
-                      <!-- <input pInputText id="noofSample" type="text" readonly [value]="this.samples.length+1"> -->
-                      <p class="disabled_text">{{this.samples.length+1}}</p>
+                      <label class="required">No of Sample:</label>
+                      <p class="disabled_text" value="noOfSamplesEntered" >{{sample.length+1}}</p>
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label  class="required">No of Entered Samples:</label>
-                      <!-- <input pInputText id="noofSample" type="text" readonly  [value]="this.samples.length"> -->
-                      <p class="disabled_text">{{this.samples.length}}</p>
+                      <label class="required">No of Entered sample:</label>
+                      <p class="disabled_text" value="noOfSample">{{ sample.length}}</p>
+                       <div *ngIf="isSampleCountMatched">
+                        Entered sample count matches expected sample count
+                      </div> 
+                       -->
                     </div>
+
                   </div>
                 </p-fieldset>
 

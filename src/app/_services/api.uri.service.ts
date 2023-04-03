@@ -204,4 +204,6 @@ export const GET_PLOTS_FORYIELDS_URI = "Monitoring/GetPlots";
 export const GET_PLOTYIELDS_URI = "Monitoring/GetPlotYields";
 export const GET_SAMPLE_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
 export const GET_SCREEN_DOC_NO_URI = "Common/GetDocNo";
+export const GET_SAMPLES_ENTRY_URI = "Monitoring/SeasonSamples";
+export const  GET_SAMPLES_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
 
