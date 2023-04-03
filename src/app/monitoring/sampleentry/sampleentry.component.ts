@@ -38,15 +38,9 @@ export class SampleEntryComponent implements OnInit {
   showDialog: boolean = false;
   farmers: FarmerSectionViewDto[] = [];
   plots: any
-  // brixFactor: any;
-  // polFactor: any;
   FarmerSectionViewDto: any
   samples: SampleDto[] =[]
   selectedFarmer:FarmerSectionViewDto ={}
-  @ViewChild('fieldBrix') fieldBrix!: ElementRef;
-  @ViewChild('brix') brix!: ElementRef;
-  @ViewChild('pol') pol!: ElementRef;
-
 
 
   constructor(private formbuilder: FormBuilder,
@@ -95,17 +89,6 @@ export class SampleEntryComponent implements OnInit {
       ccs: [{ value: null, disabled: true }],
     })
   }
-  /**{
-     "PolFactor": "0.87",
-     "BrixFactor": "0.29",
-     "WeighmentPrintCount": "3",
-     "SpecialPermitAllowedLimit": "3",
-     "PermitLapseHours": "48",
-     "NonRegisteredBindingPERC": "0",
-     "NonRegisteredBadPERC": "0",
-     "SupportsMultiLogin": "true",
-     "IsWeighmentApprovalRequired": "1"
- } */
  ClearForm(){
   this.fbSampleEntry.reset();
   this.selectedFarmer ={};
@@ -151,21 +134,15 @@ export class SampleEntryComponent implements OnInit {
     });
   }
   calculatePurityAndCCS() {
-    //const fieldBrix = this.fbSampleEntry.get('fieldBrix')?.value;
     const brix = this.fbSampleEntry.get('brix')?.value;
     const pol = this.fbSampleEntry.get('pol')?.value;
-    console.log(brix);
-    console.log(pol);
-
     const Purity = brix == 0 ? 0 : Math.round((pol / brix) * 100);
     const CCS = Math.round((this.appConstants.PolFactor * pol) - (this.appConstants.BrixFactor * brix));
-
     this.fbSampleEntry.get('purity')?.setValue(Purity);
     this.fbSampleEntry.get('ccs')?.setValue(CCS);
   }
 
   initSampleCaluclations() {
-    //this.fbSampleEntry.get('fieldBrix')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
     this.fbSampleEntry.get('brix')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
     this.fbSampleEntry.get('pol')?.valueChanges.subscribe(() => this.calculatePurityAndCCS());
   }
