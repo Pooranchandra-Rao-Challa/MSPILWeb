@@ -73,6 +73,7 @@ export class SampleslabsComponent implements OnInit {
       this.sampleslabs.forEach((slab) => {
         this.maxAreaThatUsedInRecods = Math.max(this.maxAreaThatUsedInRecods, slab.toArea!)
         this.lastSampleSize = Math.max(this.lastSampleSize, slab.noOfSample!)
+        console.log(this.sampleslabs.values)
       })
       this.loading = false;
     })

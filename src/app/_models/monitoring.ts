@@ -617,22 +617,6 @@ export class NomineeDetailsDto {
 
 }
 
-// export interface IPlotAgreementViewDto {
-//   seasonId: number;
-//   season: string
-//   farmerId: number;
-//   farmerCode: string;
-//   farmerName: string;
-//   fatherName: string;
-//   farmerVillageId: number;
-//   farmerVillageName: string;
-//   farmerDivisionName: string;
-//   farmerCircleName: string;
-//   farmerSectionName: string;
-//   agreementedPlots: string;
-//   objAgreementedPlots: IAgreementedPlotsViewDto[];
-// }
-
 export interface IAgreementedPlotsViewDto {
   plotId: number;
   offerNo: number;
@@ -743,6 +727,7 @@ export class SampleDto {
   PlotYieldId?: number;
   PlotNo?: number;
   FarmerCode?: number;
+  noOfSample: any;
 }
 
 export interface plotsofFarmerViewDto {
@@ -752,3 +737,24 @@ export interface plotsofFarmerViewDto {
   plotNumber: string
   netArea: number
 }
+
+export class SampleDetailsDto {
+
+  seasonId?: number
+ season?: string
+  docNo?: number
+  docDate?: string
+  plotId?: number
+  farmerId?: number
+  farmerCode?: string
+  farmerName?: string
+  plotNumber?: number
+  fieldBrix?: number
+  brix?: number
+  pol?: number
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+}
+

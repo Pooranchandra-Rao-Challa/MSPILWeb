@@ -25,7 +25,7 @@ export interface IHeader {
 export class PlotagreementComponent implements OnInit {
   plotAgreements: IFarmerInPlotOfferDto[] = [];
   plotAgreement: PlotAgreementDto = {};
-  globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
+  globalFilterFields: string[] = ["seasonName", "offerNo", "agreementedDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
   @ViewChild('filter') filter!: ElementRef;
   seasons: SeasonViewDto[] = [];
@@ -73,6 +73,7 @@ export class PlotagreementComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+    this.onSearch();
   }
 
   constructor(private formbuilder: FormBuilder,
@@ -121,6 +122,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   getPlotinfo(plotId: number) {
+    debugger
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
       this.FormControls['plotId'].setValue(this.plotInfo.plotId);
@@ -171,12 +173,12 @@ export class PlotagreementComponent implements OnInit {
     });
   }
 
-  initPlotAgreement(plotAgreementId: number = -1) {
+  addPlotAgreement(plotAgreementId: number = -1) {
     this.plotAgreement = new PlotAgreementDto();
     this.submitLabel = "Add Agreement";
     this.addFlag = true;
     this.showDialog = true;
-
+    this.fbPlotAgreement.get('seasonId')?.patchValue(this.currentSeason.seasonId);
     this.monitoringService.GetMaintenanceItemsForAssessment(plotAgreementId).subscribe((resp) => {
       this.maintanenceItems = resp as unknown as MaintenanceItems;
       this.initMaintanenceItems();
@@ -187,21 +189,25 @@ export class PlotagreementComponent implements OnInit {
     let weedicideArray = this.fbPlotAgreement.get("weedicides") as FormArray;
 
     this.maintanenceItems?.weedicides?.forEach(weedicide => {
+      if (!this.addFlag) weedicide.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       weedicideArray.push(this.createWeed(weedicide));
     })
     let fertilizerArray = this.fbPlotAgreement.get("fertilizers") as FormArray;
 
     this.maintanenceItems?.fertilizers?.forEach(fertilizer => {
+      if (!this.addFlag) fertilizer.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       fertilizerArray.push(this.createFertlizer(fertilizer))
     })
     let pestArray = this.fbPlotAgreement.get("pests") as FormArray;
 
     this.maintanenceItems?.pests?.forEach(pest => {
+      if (!this.addFlag) pest.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       pestArray.push(this.createpests(pest))
     })
     let diseaseArray = this.fbPlotAgreement.get("diseases") as FormArray;
 
     this.maintanenceItems?.diseases?.forEach(disease => {
+      if (!this.addFlag) disease.plotAgreementId = this.fbPlotAgreement.controls['plotAgreementId'].value;
       diseaseArray.push(this.createDisease(disease))
     })
 
@@ -210,11 +216,10 @@ export class PlotagreementComponent implements OnInit {
   plotAgreementForm() {
     this.fbPlotAgreement = this.formbuilder.group({
       plotAgreementId: [null],
-      plotId: [''],
-      seasonId: ['', (Validators.required)],
-      plotNumber: [null, (Validators.required)],
-      agreementArea: [null, (Validators.required)],
-      agreementDate: ['', (Validators.required)],
+      plotId: [null],
+      seasonId: [null, (Validators.required)],
+      agreementedArea: [null, (Validators.required)],
+      agreementedDate: [null, (Validators.required)],
       interCropingId: [null],
       hasMicroNutrientDeficiency: [null],
       isTrashMulchingDone: [null],
@@ -227,14 +232,14 @@ export class PlotagreementComponent implements OnInit {
       ratoonManagedUsedArea: [null],
       trashShedderArea: [null],
       loadShedderArea: [null],
-      nomineeDetails: this.formbuilder.group({
+      nomineeInfo: this.formbuilder.group({
         nomineeDetailId: [null],
-        plotAgreementId: [0],
+        plotAgreementId: [null],
         relationTypeId: ['', (Validators.required)],
         nominee: ['', (Validators.required)],
-        guarantor1: ['', (Validators.required)],
-        guarantor2: [''],
-        guarantor3: ['']
+        guarantor1: [null, (Validators.required)],
+        guarantor2: [null],
+        guarantor3: [null]
       }),
       weedicides: this.formbuilder.array([]),
       pests: this.formbuilder.array([]),
@@ -248,7 +253,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   get fcNomineeDetails() {
-    return this.fbPlotAgreement.get('nomineeDetails') as FormGroup;
+    return this.fbPlotAgreement.get('nomineeInfo') as FormGroup;
 
   }
 
@@ -259,7 +264,7 @@ export class PlotagreementComponent implements OnInit {
   createpests(pest: MaintPestDto): FormGroup {
     return this.formbuilder.group({
       pestId: [pest.pestId],
-      plotAssessmentId: [pest.plotAssessmentId],
+      plotAgreementId: [pest.plotAgreementId],
       name: [pest.name],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate],
@@ -269,7 +274,7 @@ export class PlotagreementComponent implements OnInit {
   createWeed(weed: MaintWeedicideDto): FormGroup {
     return this.formbuilder.group({
       weedicideId: [weed.weedicideId],
-      plotAssessmentId: [weed.plotAssessmentId],
+      plotAgreementId: [weed.plotAgreementId],
       name: [weed.name],
       checked: [weed.selected],
     });
@@ -277,7 +282,7 @@ export class PlotagreementComponent implements OnInit {
   createFertlizer(fertilizer: MaintFertilizerDto): FormGroup {
     return this.formbuilder.group({
       fertilizerId: [fertilizer.fertilizerId],
-      plotAssessmentId: [fertilizer.plotAssessmentId],
+      plotAgreementId: [fertilizer.plotAgreementId],
       name: [fertilizer.name],
       checked: [fertilizer.selected],
     });
@@ -285,7 +290,7 @@ export class PlotagreementComponent implements OnInit {
   createDisease(disease: MaintDiseaseDto): FormGroup {
     return this.formbuilder.group({
       diseaseId: [disease.diseaseId],
-      plotAssessmentId: [disease.plotAssessmentId],
+      plotAgreementId: [disease.plotAgreementId],
       name: [disease.name],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate],
@@ -293,8 +298,26 @@ export class PlotagreementComponent implements OnInit {
     })
   }
 
-  editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto, farmer: IFarmerInPlotOfferDto) {
+  onSearch() {
+    this.initPlotAgreements(this.currentSeason.seasonId!);
+  }
+
+  editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto) {
+    this.fbPlotAgreement.controls['plotId'].setValue(plotAgreement.plotId);
+    this.fbPlotAgreement.controls['agreementedArea'].setValue(plotAgreement.agreementedArea);
+    this.fbPlotAgreement.controls['agreementedDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
+    this.fcNomineeDetails.controls['nomineeDetailId'].setValue(plotAgreement.nomineeId);
+    this.fcNomineeDetails.controls['plotAgreementId'].setValue(plotAgreement.plotAgreementId);
+    this.fcNomineeDetails.controls['relationTypeId'].setValue(plotAgreement.relationTypeId);
+    this.fcNomineeDetails.controls['nominee'].setValue(plotAgreement.nominee);
+    this.fcNomineeDetails.controls['guarantor1'].setValue(plotAgreement.guarantor1);
+    this.fcNomineeDetails.controls['guarantor2'].setValue(plotAgreement.guarantor2);
+    this.fcNomineeDetails.controls['guarantor3'].setValue(plotAgreement.guarantor3);
+
     this.fbPlotAgreement.patchValue(plotAgreement);
+    this.getPlotinfo(plotAgreement.plotId);
+    this.addPlotAgreement(plotAgreement.plotAgreementId);
+
     this.addFlag = false;
     this.submitLabel = 'Update Plot Agreement';
     this.showDialog = true;
@@ -311,16 +334,6 @@ export class PlotagreementComponent implements OnInit {
   }
 
   onSubmit() {
-    let reqNomineeParam = {
-      'nomineeDetailId': this.fcNomineeDetails.controls['nomineeDetailId'].value,
-      'plotAgreementId': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'relationTypeId': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'nominee': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'guarantor1': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'guarantor2': this.fcNomineeDetails.controls['plotAgreementId'].value,
-      'guarantor3': this.fcNomineeDetails.controls['plotAgreementId'].value,
-    };
-    this.fbPlotAgreement.controls["nomineeDetails"].patchValue([{ reqNomineeParam }]);
     if (this.fbPlotAgreement.valid) {
       this.savePlotAgreement().subscribe(resp => {
         if (resp) {
