@@ -268,6 +268,7 @@ export class PlotTransferViewDto {
   plotTransferId?: number
   seasonId?: number
   SeasonName?: string
+  plotId?: number
   plotAssessmentId?: number
   docNo?: number
   docDate?: string
@@ -462,6 +463,7 @@ export class MaintenanceItems {
 
 }
 export class MaintDiseaseDto {
+  plotDiseaseId?: number;
   plotAssessmentId?: number
   plotAgreementId?: number
   plotYieldId?: number
@@ -477,6 +479,7 @@ export class MaintDiseaseDto {
 }
 
 export class MaintPestDto {
+  plotPestId?: number;
   plotAssessmentId?: number
   plotAgreementId?: number
   plotYieldId?: number
@@ -494,6 +497,7 @@ export class MaintPestDto {
 
 
 export class MaintWeedicideDto {
+  plotWeedicideId?: number;
   plotAssessmentId?: number
   plotAgreementId?: number
   plotYieldId?: number
@@ -507,6 +511,7 @@ export class MaintWeedicideDto {
 }
 
 export class MaintFertilizerDto {
+  plotFertilizerId?: number;
   plotAssessmentId?: number
   plotAgreementId?: number
   plotYieldId?: number
