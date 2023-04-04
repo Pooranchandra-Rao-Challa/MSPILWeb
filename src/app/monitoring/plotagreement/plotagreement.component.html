@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addPlotAgreement()"></button>
+          (click)="addPlotAgreement()" *ngIf="permissions.CanCreatePlotAgreement"></button>
       </ng-template>
     </p-toolbar>
     <!-- dialog -->
@@ -27,7 +27,7 @@
                         <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select a season" [options]="seasons" optionLabel="name"
                           optionValue="seasonId" formControlName="seasonId"
-                          (onChange)="initPlotNumbers($event.value)" appendTo="body"
+                          (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -59,39 +59,39 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop:</label>
-                          <span class="disabled_text">{{plotInfo.Crop}}</span>
+                          <p class="disabled_text">{{plotInfo.Crop}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop Type:</label>
-                          <span class="disabled_text">{{plotInfo.cropType}}</span>
+                          <p class="disabled_text">{{plotInfo.cropType}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Code:</label>
-                          <span class="disabled_text">{{plotInfo.farmerCode}}</span>
+                          <p class="disabled_text">{{plotInfo.farmerCode}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Name:</label>
-                          <span class="disabled_text">{{plotInfo.farmerName}}</span>
+                          <p class="disabled_text">{{plotInfo.farmerName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Father Name:</label>
-                          <span class="disabled_text">{{plotInfo.fatherName}}</span>
+                          <p class="disabled_text">{{plotInfo.fatherName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Division:</label>
-                          <span class="disabled_text">{{plotInfo.farmerDivision}}</span>
+                          <p class="disabled_text">{{plotInfo.farmerDivision}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Circle:</label>
-                          <span class="disabled_text">{{plotInfo.farmerCircle}}</span>
+                          <p class="disabled_text">{{plotInfo.farmerCircle}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Section:</label>
-                          <span class="disabled_text">{{plotInfo.farmerSection}}</span>
+                          <p class="disabled_text">{{plotInfo.farmerSection}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Village:</label>
-                          <span class="disabled_text">{{plotInfo.farmerVillage}}</span>
+                          <p class="disabled_text">{{plotInfo.farmerVillage}}</p>
                         </div>
                       </div>
                     </p-fieldset>
@@ -99,63 +99,63 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Division:</label>
-                          <span class="disabled_text">{{plotInfo.plotDivision}}</span>
+                          <p class="disabled_text">{{plotInfo.plotDivision}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Circle:</label>
-                          <span class="disabled_text">{{plotInfo.plotCircle}}</span>
+                          <p class="disabled_text">{{plotInfo.plotCircle}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Section:</label>
-                          <span class="disabled_text">{{plotInfo.plotSection}}</span>
+                          <p class="disabled_text">{{plotInfo.plotSection}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Village:</label>
-                          <span class="disabled_text">{{plotInfo.plotVillage}}</span>
+                          <p class="disabled_text">{{plotInfo.plotVillage}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plant Type:</label>
-                          <span class="disabled_text">{{plotInfo.plantType}}</span>
+                          <p class="disabled_text">{{plotInfo.plantType}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Planting Date:</label>
-                          <span class="disabled_text">{{plotInfo.plantingDate}}</span>
+                          <p class="disabled_text">{{plotInfo.plantingDate}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Survey No:</label>
-                          <span class="disabled_text">{{plotInfo.surveyNo}}</span>
+                          <p class="disabled_text">{{plotInfo.surveyNo}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Aggreed Ton:</label>
-                          <span class="disabled_text">{{plotInfo.agreedTon}}</span>
+                          <p class="disabled_text">{{plotInfo.agreedTon}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Variety:</label>
-                          <span class="disabled_text">{{plotInfo.variety}}</span>
+                          <p class="disabled_text">{{plotInfo.variety}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Field Name:</label>
-                          <span class="disabled_text">{{plotInfo.fieldName}}</span>
+                          <p class="disabled_text">{{plotInfo.fieldName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>BIR Number:</label>
-                          <span class="disabled_text">{{plotInfo.birNumber}}</span>
+                          <p class="disabled_text">{{plotInfo.birNumber}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>BIR Date:</label>
-                          <span class="disabled_text">{{plotInfo.birDate}}</span>
+                          <p class="disabled_text">{{plotInfo.birDate}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Reported Area:</label>
-                          <span class="disabled_text">{{plotInfo.reportedArea}}</span>
+                          <p class="disabled_text">{{plotInfo.reportedArea}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Measured Area:</label>
-                          <span class="disabled_text">{{plotInfo.farmerVillage}}</span>
+                          <p class="disabled_text">{{plotInfo.farmerVillage}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Type:</label>
-                          <span class="disabled_text">{{plotInfo.plotType}}</span>
+                          <p class="disabled_text">{{plotInfo.plotType}}</p>
                         </div>
                       </div>
                     </p-fieldset>
@@ -169,7 +169,8 @@
                           mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedArea'].touched && FormControls['agreementedArea'].errors }">
                         </p-inputNumber>
-                        <span *ngIf="FormControls['agreementedArea'].touched && FormControls['agreementedArea'].invalid">
+                        <span
+                          *ngIf="FormControls['agreementedArea'].touched && FormControls['agreementedArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['agreementedArea'].errors?.['required']">
                             Please Select Aggreement Area.</div>
@@ -178,10 +179,13 @@
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label class="required">Aggreement Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                          formControlName="agreementedDate" placeholder="Please Select Agreement Date" appendTo="body"
+                          [defaultDate]="plotInfo.plantingDate!" [minDate]="plotInfo.plantingDate!"
+                          [maxDate]="todayDate" formControlName="agreementedDate"
+                          placeholder="Please Select Agreement Date" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedDate'].touched && FormControls['agreementedDate'].errors }">
                         </p-calendar>
-                        <span *ngIf="FormControls['agreementedDate'].touched && FormControls['agreementedDate'].invalid">
+                        <span
+                          *ngIf="FormControls['agreementedDate'].touched && FormControls['agreementedDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['agreementedDate'].errors?.['required']">
                             Please Select Assessed Date.</div>
@@ -224,17 +228,18 @@
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label class="required">Guarantor1:</label>
-                      <p-dropdown optionLabel="code" [options]="farmers" optionValue="code" [filter]="true"
+                      <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="code" [filter]="true"
                         filterBy="aliasName,code,fatherName" formControlName="guarantor1" placeholder="Select Farmer"
                         [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor2($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['guarantor1'].touched && fcNomineeDetails.controls['guarantor1'].errors }">
                         <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.code}} - {{farmer.aliasName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
                           <div>{{farmer.aliasName}}</div>
-                          <div>{{farmer.code}}={{farmer.fatherName}}</div>
+                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
                       <span
@@ -251,11 +256,12 @@
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor3Farmers($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.code}} - {{farmer.aliasName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
                           <div>{{farmer.aliasName}}</div>
-                          <div>Code: {{farmer.code}} Father Name:{{farmer.fatherName}}</div>
+                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
                     </div>
@@ -266,11 +272,12 @@
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="onGuarantor3($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.code}} - {{farmer.aliasName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
                           <div>{{farmer.aliasName}}</div>
-                          <div>Code: {{farmer.code}} Father Name:{{farmer.fatherName}}</div>
+                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
                     </div>
@@ -516,11 +523,7 @@
               class="p-button-text p-button-rounded p-button-plain"
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-          <td *ngFor="let col of farmerHeaders">
-            <span *ngIf="col?.field != 'plantingDate' && col?.field != 'agreementedDate'">{{farmer[col.field]}}</span>
-            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'agreementedDate'">
-              {{farmer[col.field] | date: 'dd-MM-yyyy'}}
-            </span>
+          <td *ngFor="let col of farmerHeaders">{{farmer[col.field]}}
           </td>
         </tr>
       </ng-template>
@@ -542,15 +545,16 @@
       <ng-template pTemplate="body" let-plotAgreement>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement)"
-              class="p-element p-ripple p-button-text p-button p-component"></button>
+              class="p-element p-ripple p-button-text p-button p-component" [disabled]="!permissions.CanUpdatePlotAgreement"></button>
             <!-- <button pButton pRipple icon="pi pi-thumbs-up"
               class="p-element p-ripple p-button-text p-button p-component"></button> -->
             <!-- (click)="editAllottedPlot(allottedPlot)" -->
           </td>
           <td *ngFor="let col of plotHeaders">
 
-            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotAgreement[col.field]}}</span>
-            <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
+            <span
+              *ngIf="col?.field != 'plantingDate' && col?.field != 'agreementedDate'">{{plotAgreement[col.field]}}</span>
+            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'agreementedDate'">
               {{plotAgreement[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
