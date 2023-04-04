@@ -187,7 +187,6 @@ export class PlotagreementComponent implements OnInit {
   }
 
   addPlotAgreement() {
-    this.plotAgreement = new PlotAgreementDto();
     this.submitLabel = "Add Agreement";
     this.addFlag = true;
     this.showDialog = true;
@@ -235,7 +234,7 @@ export class PlotagreementComponent implements OnInit {
   plotAgreementForm() {
     this.fbPlotAgreement = this.formbuilder.group({
       plotAgreementId: [null],
-      plotId: [null],
+      plotId: [null, (Validators.required)],
       seasonId: [null, (Validators.required)],
       agreementedArea: [null, (Validators.required)],
       agreementedDate: [null, (Validators.required)],

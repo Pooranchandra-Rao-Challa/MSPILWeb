@@ -88,9 +88,11 @@ public GetPlotsInSeasons(seasonId: number, purpose: string) {
   arr.push(purpose);
   return this.getWithParams<PlotInfoDto>(GET_PLOTS_FORYIELDS_URI, arr);
 }
-public GetPlotYields(seasonId: number) {
+public GetPlotYields(seasonId: number, param1 = null) {
   let arr: any[] = [];
   arr.push(seasonId);
+  if (param1 != null) arr.push(param1);
+
   return this.getWithParams<FarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, arr);
 }
 
