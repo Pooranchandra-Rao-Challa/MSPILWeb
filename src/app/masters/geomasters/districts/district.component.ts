@@ -27,6 +27,7 @@ export class DistrictComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
+  permissions:any;
 
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -46,6 +47,7 @@ export class DistrictComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.initDistricts();
 
     this.commonService.GetStates().subscribe((resp) => {

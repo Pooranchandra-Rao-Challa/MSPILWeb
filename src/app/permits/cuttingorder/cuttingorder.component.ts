@@ -161,7 +161,7 @@ export interface IFromHeader {
         this.getFilterPermitQuota();
         this.initSeasons();
         this.fillData();
-    this.fillFromData();
+    // this.fillFromData();
       }
 
       onSubmit() {
@@ -190,9 +190,6 @@ export interface IFromHeader {
               NetArea: 1,
               EstimatedTon: 1,
 
-              
-              
-            
             }
           )
         }

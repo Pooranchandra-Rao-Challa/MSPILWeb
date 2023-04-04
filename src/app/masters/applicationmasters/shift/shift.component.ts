@@ -27,7 +27,8 @@ export class ShiftsComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
   valSwitch: boolean = true;
   nextSwitch: boolean = true;
-
+  permissions:any;
+  
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,
     public jwtService: JWTService,
@@ -49,6 +50,7 @@ export class ShiftsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.initShifts();
     this.fbshifts = this.formbuilder.group({
       shiftId: [null],

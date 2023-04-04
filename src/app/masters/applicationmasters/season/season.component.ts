@@ -14,6 +14,7 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../../_alerts/alertMessage';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 interface Temp {
   seasonBillingRateId: number;
@@ -45,15 +46,17 @@ export class SeasonComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   cSeasonCode: string = ""
   existCurrentSeasonRecord: boolean = false;
-
+  permissions:any;
+  
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService,
-    private alertMessage:AlertMessage
-  ) { }
+    private alertMessage:AlertMessage,
+    private jwtService:JWTService) { }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     var year = new Date().getFullYear();
     this.cSeasonCode = year.toString() + '-' + (year + 1).toString().substring(2)
     this.initSeasons();

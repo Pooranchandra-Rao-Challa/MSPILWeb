@@ -2,6 +2,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators ,FormBuilder, FormArray} from '@angular/forms';
 import { Table } from 'primeng/table';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
 import { FarmerPlotYieldViewDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto, PlotsDto, PlotYieldViewDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
@@ -23,10 +24,12 @@ export interface IHeader {
 })
 export class PlotyieldComponent implements OnInit {
 
-  globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
-  "expectedArea", "varietyId", "plantingDate"];
+  globalFilterFields: string[] = ["Season", "farmerCode", "farmerName", "farmerVillageName", "cropType", "offerNo", "plotVillageName", "fieldName",
+  "surveyNo", "plotType", "reportedArea","measuredArea","netArea","perishedArea","notGrownArea","isSeedArea","agreementedArea","harvestedArea","poorCropArea","plantType"
+,"plantingDate","variety","estimatedton","birNumber","birDate","inspectionDate","reasonForPerishedAreaId","actionPlan","divertedArea"];
   @ViewChild('filter') filter!: ElementRef;
-  seasons: SeasonViewDto[] = [];
+  // seasons: SeasonViewDto[] = [];
+  seasons!:any;
   currentSeasonCode?: string;
   currentSeason: SeasonDto = {};
   showDialog: boolean = false;
@@ -35,12 +38,15 @@ export class PlotyieldComponent implements OnInit {
   addFlag: boolean = true;
   plotInfo: PlotsDto = {};
   plotReports: PlotInfoDto[] = [];
+  // plotReports: any[] = [];
   actionPlan: LookupDetailDto[] = [];
   perishedArea: LookupDetailDto[] = [];
   cropstypes: LookupDetailDto[] = [];
   weedstatus: LookupDetailDto[] = [];
   maintanenceItems?: MaintenanceItems = {};
-  plotYields:FarmerPlotYieldViewDto[] =[]
+  plotYields:FarmerPlotYieldViewDto[] =[];
+  mediumDate: string = MEDIUM_DATE;
+  checked!: boolean;
   activeIndex?=0;
   activeIndex1?=0;
   activeIndex2?=0;
@@ -99,15 +105,16 @@ plotYieldForm() {
     plotId:[,(Validators.required)],
     actionPlan: ['',Validators.required],
     inspectionDate: ['',Validators.required],
-    isSeedArea:[],
-    notGrownArea:[],
-    netArea:[],
-    divertedArea:[],
-    harvestedArea:[],
-    poorCropArea:[],
-    perishedArea:[],
-    weedStatusId: ['',Validators.required],
-    interCropId: ['',Validators.required],
+    isSeedArea:[null],
+    notGrownArea:[null,(Validators.required)],
+    netArea:[null,(Validators.required)],
+    perishedAreareasons:[null,(Validators.required)],
+    divertedArea:[null,(Validators.required)],
+    harvestedArea:[null,(Validators.required)],
+    poorCropArea:[null,(Validators.required)],
+    perishedArea:[null,(Validators.required)],
+    weedStatusId: [null,Validators.required],
+    interCropId: [null,Validators.required],
     micronutrientdeficiency: [null],
     trashmulching: [null],
     gapfillingdone: [null],
@@ -147,11 +154,16 @@ initCurrentSeasons() {
  getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+      console.log(this.plotInfo)
     })
   }
 initPlotReports(season: number) {
   this.monitoringService.GetPlotsInSeasons(season, 'PlotYield').subscribe((resp) => {
-    this.plotReports = resp as unknown as PlotInfoDto[];
+    console.log(resp)
+    this.plotReports = resp as any;
+    // this.plotReports.forEach(s => {
+    //   s.DisplayValue = `${s.plotNumber}-${s.farmerCode}-${s.farmerName}-${s.farmerVillage}`
+    // })
   })
 }
 initCropType() {
@@ -227,12 +239,12 @@ createDisease(disease: MaintDiseaseDto): FormGroup {
     controlDate: [disease.controlDate]
   })
 }
-initPlotyield(plotAssessmentId:number = -1){
+initPlotyield(plotyieldId:number = -1){
   this.submitLabel = "Add Plot Yield";
   this.addFlag = true;
   this.showDialog = true;
 
-  this.monitoringService.GetMaintenanceItemsForAssessment(plotAssessmentId).subscribe((resp) => {
+  this.monitoringService.GetMaintenanceItemsForAssessment(plotyieldId).subscribe((resp) => {
     this.maintanenceItems = resp as unknown as MaintenanceItems;
     this.initMaintanenceItems();
   });

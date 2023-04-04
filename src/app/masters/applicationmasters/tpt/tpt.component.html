@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New TPT" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addTPT()"></button>
+          (click)="addTPT()" *ngIf="permissions.CanCreateTpt"></button>
       </ng-template>
     </p-toolbar>
 
@@ -141,7 +141,7 @@
       <ng-template pTemplate="body" let-tpt>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editTpt(tpt)"></button></td>
+              (click)="editTpt(tpt)" [disabled]="!permissions.CanUpdateTpt"></button></td>
           <td>{{tpt.code}}</td>
           <td>{{tpt.name}}</td>
           <td>{{tpt.relationType}}</td>

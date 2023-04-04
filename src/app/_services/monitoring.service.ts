@@ -1,7 +1,7 @@
 import {
   FarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  PlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto
+  PlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, SampleDetailsDto
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
@@ -12,7 +12,7 @@ import {
   UPDATE_PLOT_REPORT_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_DOCCODE_URI, CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI,
   GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI,
   UPDATE_COMPLETED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_MAINTANANCE_ITEMS_ASSESSMENT_URI, GET_PLOTS_FORASSESSMENT_URI, GET_PLOTS_URI, GET_PLOT_OFFERS_IN_SEASON_URI,
-  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, CREATE_PLOTASSESSMENT_URI, UPDATE_PLOTASSESSMENT_URI, DENY_PLOT_OFFER_URI, GET_PLOT_AGREEMENTS_URI, GET_FARMER_IN_SECTIONS_URI, GET_PLOTS_FORYIELDS_URI, GET_PLOTYIELDS_URI, CREATE_PLOT_AGREEMENT_URI, UPDATE_PLOT_AGREEMENT_URI, GET_PLOTS_OF_FARMERS_URI, GET_MAINTANANCE_ITEMS_AGREEMENT_URI
+  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, CREATE_PLOTASSESSMENT_URI, UPDATE_PLOTASSESSMENT_URI, DENY_PLOT_OFFER_URI, GET_PLOT_AGREEMENTS_URI, GET_FARMER_IN_SECTIONS_URI, GET_PLOTS_FORYIELDS_URI, GET_PLOTYIELDS_URI, CREATE_PLOT_AGREEMENT_URI, UPDATE_PLOT_AGREEMENT_URI, GET_PLOTS_OF_FARMERS_URI, GET_MAINTANANCE_ITEMS_AGREEMENT_URI, GET_SAMPLES_OF_PLOT_URI, GET_SAMPLES_ENTRY_URI
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -239,7 +239,19 @@ public GetPlotYields(seasonId: number) {
   }
 
   public GetSamplesOfPlot(plotId: number) {
-    return this.getWithId(GET_PLOTS_OF_FARMERS_URI, plotId);
+    return this.getWithId(GET_SAMPLES_OF_PLOT_URI, plotId);
+  }
+
+  public GetSeasonSamples(seasonId: number, param1 = null) {
+    let arr: any[] = [];
+    arr.push(seasonId);
+    if (param1 != null) arr.push(param1);
+    if (param1 == null) {
+      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, arr);
+    }
+    else {
+      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, arr);
+    }
   }
 
   public CreatePlotAgreement(plotAgreement: PlotAgreementDto) {

@@ -5,7 +5,7 @@
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '70vw' }" [modal]="true">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()" >
             <div class="container">
               <div class="grid p-fluid">
                 <p-fieldset legend="Geographic Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
@@ -83,8 +83,7 @@
                           FormControls['stateId'].touched &&
                           FormControls['stateId'].invalid
                         ">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['stateId'].errors?.['required']">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['stateId'].errors?.['required']">
                           Please Select District.
                         </div>
                       </span>
@@ -134,24 +133,24 @@
                 <p-fieldset legend="Village Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-                     
-			  <label>Code:<sup class="p-error">*</sup></label>
-        <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-          alphaNumeric [readonly]="fbvillages.value.tptId" [maxlength]="20"
-          [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-        <div class="text-right">
-          <small>{{code.value.length}}/20</small>
-        </div>
-        <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-            Please Enter Code.</div>
-          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-            Code Min Length Is 2 .</div>
-          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-            Code Max Length Is 20.</div>
-          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-            Code Should Contains Only Alpha Numeric.</div>
-        </span>
+
+                      <label>Code:<sup class="p-error">*</sup></label>
+                      <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
+                        alphaNumeric [readonly]="fbvillages.value.tptId" [maxlength]="20"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                      <div class="text-right">
+                        <small>{{code.value.length}}/20</small>
+                      </div>
+                      <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                          Please Enter Code.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                          Code Min Length Is 2 .</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                          Code Max Length Is 20.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                          Code Should Contains Only Alpha Numeric.</div>
+                      </span>
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -170,27 +169,29 @@
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
                           Name Should Contains Only Alphabets.</div>
                       </span>
-              
+
                     </div>
 
                     <div class="field col-12 md:col-4">
                       <label>Incharge Name:</label>
-                    <input pInputText type="text" #inchargeName formControlName="inchargeName" alphaOnly placeholder="Enter Incharge Name" [maxlength]="50">
+                      <input pInputText type="text" #inchargeName formControlName="inchargeName" alphaOnly
+                        placeholder="Enter Incharge Name" [maxlength]="50">
                       <div class="text-right">
                         <small>{{inchargeName.value.length}}/50</small>
                       </div>
-                    <span *ngIf="FormControls['inchargeName'].touched && FormControls['inchargeName'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['inchargeName'].errors?.['pattern']">Incharge Name Should Contains
-                        Alphabets.</div>
-                    </span>
+                      <span *ngIf="FormControls['inchargeName'].touched && FormControls['inchargeName'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['inchargeName'].errors?.['pattern']">Incharge Name Should Contains
+                          Alphabets.</div>
+                      </span>
                     </div>
 
-                   
+
                     <div class="field col-12 md:col-4">
                       <label>Incharge PhoneNo:</label>
-                      <input pInputText id="inchargePhoneNo"  formControlName="inchargePhoneNo"  placeholder="Enter Incharge PhoneNo"
-                         #inchargePhoneNo numericOnly [maxlength]="maxLength.phoneNo"
+                      <input pInputText id="inchargePhoneNo" formControlName="inchargePhoneNo"
+                        placeholder="Enter Incharge PhoneNo" #inchargePhoneNo numericOnly
+                        [maxlength]="maxLength.phoneNo"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].errors }">
                       <div class="text-right">
                         <small>{{inchargePhoneNo.value.length}}/{{maxLength.phoneNo}}</small>
@@ -204,91 +205,92 @@
                       </span>
                     </div>
 
-                   
-                     
-                        <div class="field col-12 md:col-4">
-                          <label>PinCode:<sup class="p-error">*</sup></label>
-                          <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
-                          formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
-                        <div class="text-right">
-                          <small>
-                            {{pinCode.value.length}}/{{maxLength.pinCode}}
-                          </small>
-                        </div>
-                        <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
+
+
+                    <div class="field col-12 md:col-4">
+                      <label>PinCode:<sup class="p-error">*</sup></label>
+                      <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
+                        formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
+                      <div class="text-right">
+                        <small>
+                          {{pinCode.value.length}}/{{maxLength.pinCode}}
+                        </small>
+                      </div>
+                      <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
                           *ngIf="FormControls['pinCode'].errors?.['minlength']">
                           Please Enter 6 Digits PinCode .</div>
-                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
-                            Please Enter Pin Code.</div>
-                        </span>  
-                </div>
-              
-                        <div class="field col-12 md:col-4">
-                          <label for="distance">Distance:<sup class="p-error">*</sup></label>
-                          <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2"
-                            placeholder="Enter Distance"
-                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
-                          </p-inputNumber>
-                          <div *ngIf="
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
+                          Please Enter Pin Code.</div>
+                      </span>
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label for="distance">Distance:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2"
+                        placeholder="Enter Distance"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
+                      </p-inputNumber>
+                      <div *ngIf="
                               FormControls['distance'].invalid &&
                               FormControls['distance'].touched
                             " class="error-message p-error">
-                            Distance Required
-                          </div>
-                        </div>
-                        <div class="field col-12 md:col-4">
-                          <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
-                          <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
-                            [minFractionDigits]="2" placeholder="Enter Diverted Distance"
-                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['divertedDistance'].touched && FormControls['divertedDistance'].errors }">
-                          </p-inputNumber>
-                          <div *ngIf="
+                        Distance Required
+                      </div>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
+                        [minFractionDigits]="2" placeholder="Enter Diverted Distance"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['divertedDistance'].touched && FormControls['divertedDistance'].errors }">
+                      </p-inputNumber>
+                      <div *ngIf="
                               FormControls['divertedDistance'].invalid &&
                               FormControls['divertedDistance'].touched
                             " class="error-message p-error">
-                            Diverted Distance Required
-                          </div>
-                        </div>
-                       
-                        <div class="field col-12 md:col-4">
-                          <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
-                          <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
-                            locale="en-IN" [useGrouping]="false" [size]="6" [maxlength]="6"
-                            placeholder="Enter Listing Order"
-                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
-                          </p-inputNumber>
-                          <div *ngIf="
+                        Diverted Distance Required
+                      </div>
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                      <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
+                      <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
+                        locale="en-IN" [useGrouping]="false" [size]="6" [maxlength]="6"
+                        placeholder="Enter Listing Order"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
+                      </p-inputNumber>
+                      <div *ngIf="
                               FormControls['listingOrder'].invalid &&
                               FormControls['listingOrder'].touched
                             " class="error-message p-error">
-                            Listing Order Is Required
-                          </div>
-                        </div>
+                        Listing Order Is Required
+                      </div>
+                    </div>
 
-                        <div class="field col-8 md:col-4">
-                          <label>Address:<sup class="p-error">*</sup></label>
-                        <textarea rows="5" cols="30" placeholder="Enter Address"#address pInputTextarea formControlName="address" [maxlength]="maxLength.address"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
-                          <div class="text-right">
-                            <small>{{address.value.length}}/{{maxLength.address}} </small>
-                          </div>
-                          <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
-                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
-                              Please Enter Address.</div>
-                            <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
-                              Address Is Incorrect.</div>
-                          </span>
-                        </div>
-                        <div class="field col-12 md:col-4">
-                          <div class="col-6">
-                            <label htmlFor="isActive">Is Active?:</label><br />
-                            <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
-                          </div>
-                        </div>
-                    
-                   
+                    <div class="field col-8 md:col-4">
+                      <label>Address:<sup class="p-error">*</sup></label>
+                      <textarea rows="5" cols="30" placeholder="Enter Address" #address pInputTextarea
+                        formControlName="address" [maxlength]="maxLength.address"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                      <div class="text-right">
+                        <small>{{address.value.length}}/{{maxLength.address}} </small>
+                      </div>
+                      <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
+                          Please Enter Address.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
+                          Address Is Incorrect.</div>
+                      </span>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <div class="col-6">
+                        <label htmlFor="isActive">Is Active?:</label><br />
+                        <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                      </div>
+                    </div>
+
+
                   </div>
                 </p-fieldset>
 
@@ -418,7 +420,7 @@
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-          [disabled]="fbvillages.invalid" (click)="onSubmit()"></button>
+            [disabled]="fbvillages.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>
@@ -429,11 +431,11 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Village" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitVillage({})"></button>
+          (click)="InitVillage({})" *ngIf="permissions.CanCreateVillage"></button>
       </ng-template>
     </p-toolbar>
 
-    <p-table #dt1 [value]="villages" dataKey="id" [rows]="10"  [rowHover]="true"
+    <p-table #dt1 [value]="villages" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="[
         'divisionName',
         'circleName',
@@ -497,7 +499,7 @@
             </p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
-             
+
           <th pSortableColumn="districtName">
             District<p-columnFilter type="text" field="districtName" display="menu"></p-columnFilter>
             <p-sortIcon field="districtName"></p-sortIcon>
@@ -512,13 +514,13 @@
             </p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
           </th>
-          
+
           <th pSortableColumn="pinCode">
             Pincode<p-columnFilter type="text" field="pinCode" display="menu">
             </p-columnFilter>
             <p-sortIcon field="pinCode"></p-sortIcon>
           </th>
-         
+
           <th pSortableColumn="villageCode">
             Code<p-columnFilter type="text" field="villageCode" display="menu">
             </p-columnFilter>
@@ -529,8 +531,8 @@
             </p-columnFilter>
             <p-sortIcon field="villageName"></p-sortIcon>
           </th>
-         
-      <th pSortableColumn="inchargeName">
+
+          <th pSortableColumn="inchargeName">
             Incharge Name<p-columnFilter type="text" field="inchargeName" display="menu"></p-columnFilter>
             <p-sortIcon field="inchargeName"></p-sortIcon>
           </th>
@@ -538,8 +540,8 @@
             InchargePhone No<p-columnFilter type="text" field="inchargePhoneNo" display="menu"></p-columnFilter>
             <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
           </th>
-         
-          
+
+
           <th pSortableColumn="distance">
             Distance<p-columnFilter type="text" field="distance" display="menu">
             </p-columnFilter>
@@ -591,7 +593,7 @@
             <p-sortIcon field="targetTons"></p-sortIcon>
           </th>
           <th pSortableColumn="listingOrder">
-        Order<p-columnFilter type="text" field="listingOrder" display="menu"></p-columnFilter>
+            Order<p-columnFilter type="text" field="listingOrder" display="menu"></p-columnFilter>
             <p-sortIcon field="listingOrder"></p-sortIcon>
           </th>
           <th class="text-center" pSortableColumn="isActive">
@@ -623,7 +625,7 @@
         <tr>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="InitVillage(village)"></button>
+              (click)="InitVillage(village)" [disabled]="!permissions.CanUpdateVillage"></button>
           </td>
           <td>{{ village.divisionName }}</td>
           <td>{{ village.circleName }}</td>

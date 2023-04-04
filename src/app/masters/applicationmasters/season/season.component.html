@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Season" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addSeason()" (onChange)="handleBillCategoryChange($event)" ></button>
+          (click)="addSeason()" (onChange)="handleBillCategoryChange($event)" *ngIf="permissions.CanCreateSeason" ></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->
@@ -91,7 +91,7 @@
       <ng-template pTemplate="body" let-season>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" (click)="editseason(season)"
-              class="p-element p-ripple p-button-text p-button p-component"></button>
+             [disabled]="!permissions.CanUpdateSeason" class="p-element p-ripple p-button-text p-button p-component"></button>
           </td>
           <td>{{season.code}}</td>
           <td>{{season.name}}</td>

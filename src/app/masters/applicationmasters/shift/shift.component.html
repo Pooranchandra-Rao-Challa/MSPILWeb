@@ -100,7 +100,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Shift" icon="pi pi-plus" class="p-button-primary p-mr-2"
-                    (click)="InitShift();"></button>
+                    (click)="InitShift();" *ngIf="permissions.CanCreateShift"></button>
             </ng-template>
         </p-toolbar>
         <p-table #dt1 [value]="shifts" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading"
@@ -161,7 +161,7 @@
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil"
                             class="p-element p-ripple p-button-text p-button p-component"
-                            (click)="editProduct(shifts)"></button></td>
+                            (click)="editProduct(shifts)" [disabled]="!permissions.CanUpdateShift"></button></td>
                     <!-- <td>{{shifts.shiftId}}</td> -->
                     <td>{{shifts.code}}</td>
                     <td>{{shifts.name}}</td>

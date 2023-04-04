@@ -10,6 +10,7 @@ import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { VehicleTypeDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-vehicle',
@@ -28,12 +29,15 @@ export class VehicleComponent implements OnInit {
   showDialog: boolean = false;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
-
+  permissions:any;
+  
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initVehicleTypes();
     this.vehicleTypeForm();
   }

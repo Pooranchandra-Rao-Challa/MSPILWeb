@@ -26,6 +26,7 @@ export class PlanttypeComponent implements OnInit {
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
+  permissions: any;
   
   constructor(private formbuilder: FormBuilder,
     public jwtService: JWTService,
@@ -41,6 +42,7 @@ export class PlanttypeComponent implements OnInit {
     return this.fbplantType.controls;
   }
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.plantTypeForm();
     this.getPlant();
   }

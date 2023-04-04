@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Bill Parameter" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addBillParam()"></button>
+          (click)="addBillParam()" *ngIf="permissions.CanCreateBillParameters"></button>
       </ng-template>
     </p-toolbar>
 
@@ -85,7 +85,7 @@
       <ng-template pTemplate="body" let-billparam>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editBillParam(billparam)"></button></td>
+              (click)="editBillParam(billparam)" [disabled]="!permissions.CanUpdatePermissions"></button></td>
           <td>{{billparam.billCategoryName}}</td>
           <td>{{billparam.type}}</td>
           <td>{{billparam.code}}</td>

@@ -36,7 +36,7 @@ import { AlertMessage, ALERT_CODES } from '../../../_alerts/alertMessage';
   templateUrl: './circles.component.html',
 })
 export class CirclesComponent implements OnInit {
-  
+
   dialog: boolean = false;
   circles: CirclesViewDto[] = [];
   circle: CircleDto = new CircleDto();
@@ -48,14 +48,15 @@ export class CirclesComponent implements OnInit {
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
+  permissions: any;
 
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-    private AlertMessage:AlertMessage
-  ) {}
+    private AlertMessage: AlertMessage
+  ) { }
   InitCircle() {
     this.circle = new CircleDto();
     this.fbcircles.reset();
@@ -67,6 +68,7 @@ export class CirclesComponent implements OnInit {
     return this.fbcircles.controls;
   }
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.initCircles();
     this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[];
@@ -76,14 +78,14 @@ export class CirclesComponent implements OnInit {
       divisionId: ['', Validators.required],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      inchargeName:  new FormControl(null, [Validators.required, Validators.pattern(RG_PHONE_NO)]),
-    
+      inchargeName: new FormControl(null, [Validators.required, Validators.pattern(RG_PHONE_NO)]),
+
       listingOrder: new FormControl('', [
         Validators.required,
         Validators.pattern(RG_NUMERIC_ONLY),
       ]),
       isActive: [Validators.required],
-     
+
       inchargePhoneNo: new FormControl('', [Validators.pattern(RG_PHONE_NO),
       ]),
       address: ['', Validators.required],

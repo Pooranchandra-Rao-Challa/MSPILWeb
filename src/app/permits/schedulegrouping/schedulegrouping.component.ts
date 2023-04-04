@@ -16,10 +16,6 @@ export class ScheduleGroupingDto {
   ToDOP?: number; 
   NetArea?: number;
   EstimatedTon?: number;
-  CreatedDate?: Date;
-  CreatedBy?: string;
-  UpdatedDate?: Date;
-  UpdatedBy?: string;
 
 }
 export interface IHeader {
@@ -85,10 +81,6 @@ export interface IFromHeader {
         { field: 'ToDOP', header: 'ToDOP', label: 'To DOP' }, 
         { field: 'NetArea', header: 'NetArea', label: 'Net Area' },
         { field: 'EstimatedTon', header: 'EstimatedTon', label: 'Estimated Ton' },
-        { field: 'CreatedDate', header: 'CreatedDate', label: 'Created Date' },
-        { field: 'CreatedBy', header: 'CreatedBy', label: 'Created By' },
-        { field: 'UpdatedDate', header: 'UpdatedDate', label: 'Updated Date' },
-        { field: 'UpdatedBy', header: 'UpdatedBy', label: 'Updated By' },
     
       ];
 
@@ -134,7 +126,7 @@ export interface IFromHeader {
         });
       }
      
-      getFilterPermitQuota() {
+      getFilterScheduleGrouping() {
         this.fbScheduleGrouping = this.formbuilder.group({
           seasonId: new FormControl('', [Validators.required]),
           scheduleGroupNo: new FormControl('', [Validators.required]),
@@ -152,7 +144,7 @@ export interface IFromHeader {
         });
       }
       ngOnInit(): void {
-   
+        this.getFilterScheduleGrouping();
         this.initSeasons();
         this.fillData();
         this.fillFromData();
@@ -171,10 +163,6 @@ export interface IFromHeader {
               ToDOP: 1,
               NetArea: 1,
               EstimatedTon: 1,
-              CreatedDate: new Date(),
-              CreatedBy: 'CreatedBy' + i,
-              UpdatedDate: new Date(),
-              UpdatedBy: 'UpdatedBy' + i,
 
             }
           )

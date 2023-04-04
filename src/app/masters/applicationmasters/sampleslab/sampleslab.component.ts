@@ -27,7 +27,7 @@ export class SampleslabsComponent implements OnInit {
   addFlag: boolean = true;
   maxAreaThatUsedInRecods: number = 1.2;
   lastSampleSize:number = 0;
-
+  permissions:any;
 
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,
@@ -54,7 +54,7 @@ export class SampleslabsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.permissions = this.jwtService.Permissions;
     this.initSampleslabs();
 
 
@@ -73,6 +73,7 @@ export class SampleslabsComponent implements OnInit {
       this.sampleslabs.forEach((slab) => {
         this.maxAreaThatUsedInRecods = Math.max(this.maxAreaThatUsedInRecods, slab.toArea!)
         this.lastSampleSize = Math.max(this.lastSampleSize, slab.noOfSample!)
+        console.log(this.sampleslabs.values)
       })
       this.loading = false;
     })
