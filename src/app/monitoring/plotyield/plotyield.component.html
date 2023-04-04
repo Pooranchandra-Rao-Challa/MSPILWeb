@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Plot Yield" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    (click)="initPlotyield()"></button>
+                    (click)="initPlotyield()" *ngIf="permissions?.CanCreatePlotYield"></button>
             </ng-template>
         </p-toolbar>
         <!-- dialog -->
@@ -499,8 +499,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-plotyield >
               <tr>
-                <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"></button>
-               
+                <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+                  [disabled]="!permissions?.CanUpdatePlotYield"></button>
+
                 <!-- (click)="editAllottedPlot(allottedPlot)" -->
               </td>
               <td *ngFor="let col of plotHeaders">

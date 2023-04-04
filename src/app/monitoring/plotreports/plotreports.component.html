@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right" *ngIf="!forapproval">
         <button pButton pRipple label="New Plot Report" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addPlotReport()"></button>
+          (click)="addPlotReport()" *ngIf="permissions?.CanCreatePlotReport"></button>
       </ng-template>
     </p-toolbar>
 
@@ -74,7 +74,7 @@
               <ng-template pTemplate="body" let-plotReport>
                 <tr>
                   <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-                      (click)="editPlotReport(plotReport, farmer)" *ngIf="!forapproval"></button>
+                      (click)="editPlotReport(plotReport, farmer)" *ngIf="!forapproval" [disabled]="!permissions?.CanUpdatePlotReport"></button>
                     <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
                       (click)="editApproval(plotReport, farmer)" *ngIf="forapproval"></button>
                   </td>

@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
 import { FarmerPlotYieldViewDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto, PlotsDto, PlotYieldViewDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
@@ -43,6 +44,7 @@ export class PlotyieldComponent implements OnInit {
   activeIndex?=0;
   activeIndex1?=0;
   activeIndex2?=0;
+  permissions: any;
 
 farmerHeaders: IHeader[] = [
   { field: 'season', header: 'season', label: 'Season' },
@@ -88,7 +90,8 @@ clear(table: Table) {
 constructor(private formbuilder: FormBuilder,
   private appMasterService: AppMasterService,
   private monitoringService: MonitoringService,
-  private lookupService: LookupService,) { }
+  private lookupService: LookupService,
+  private jwtService: JWTService) { }
 
 plotYieldForm() {
   this.fbPlotYield = this.formbuilder.group({
@@ -137,7 +140,6 @@ initPerishedArea() {
 initCurrentSeasons() {
   this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
     this.currentSeason = resp as unknown as SeasonDto;
-    console.log(this.currentSeason)
     this.initPlotReports(this.currentSeason.seasonId!);
     this.initPlotYields(this.currentSeason.seasonId!);
   });
@@ -145,13 +147,11 @@ initCurrentSeasons() {
  getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
-      console.log(this.plotInfo)
     })
   }
 initPlotReports(season: number) {
   this.monitoringService.GetPlotsInSeasons(season, 'PlotYield').subscribe((resp) => {
-    console.log(resp)
-    this.plotReports = resp as unknown as PlotInfoDto[];    
+    this.plotReports = resp as unknown as PlotInfoDto[];
   })
 }
 initCropType() {
@@ -170,15 +170,14 @@ initPlotYields(seasonId: number) {
     this.plotYields.forEach((farmer) => {
       farmer.objnetYieldPlots = JSON.parse(farmer.netYieldPlots) as PlotYieldViewDto[]
     })
-    console.log(this.plotYields)
   })
 }
 onSearch() {
   this.initPlotYields(this.currentSeason.seasonId!);
 }
 ngOnInit(): void {
+  this.permissions = this.jwtService.Permissions;
   this.currentSeasonCode = CURRENT_SEASON()
-  
   this.plotYieldForm();
   this.initSeasons();
   this.initCurrentSeasons();
@@ -186,7 +185,7 @@ ngOnInit(): void {
   this.initPerishedArea();
   this.initweedstatus();
   this.initCropType();
-  
+
 }
 getFormArrayControl(formGroupName: string): FormArray {
   return this.fbPlotYield.controls[formGroupName] as FormArray
@@ -235,7 +234,6 @@ initPlotyield(plotAssessmentId:number = -1){
 
   this.monitoringService.GetMaintenanceItemsForAssessment(plotAssessmentId).subscribe((resp) => {
     this.maintanenceItems = resp as unknown as MaintenanceItems;
-    console.log(this.maintanenceItems);
     this.initMaintanenceItems();
   });
 }

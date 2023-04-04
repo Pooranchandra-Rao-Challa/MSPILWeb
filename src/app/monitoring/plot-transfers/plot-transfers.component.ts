@@ -12,6 +12,7 @@ import { AppMasterService } from '../../_services/appmaster.service';
 import { LookupService } from '../../_services/lookup.service';
 import { FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, PlotInfoDto, PlotsDto, PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring'
 import { CURRENT_SEASON } from 'src/environments/environment';
+import { JWTService } from 'src/app/_services/jwt.service';
 export interface IHeader {
   field: string;
   header: string;
@@ -48,7 +49,7 @@ export class PlotTransfersComponent implements OnInit {
   selectedFarmer: any;
   selectedPlot: any;
   filteredTofarmers :any
-
+  permissions: any;
 
   headers: IHeader[] = [
     { field: 'SeasonName', header: 'SeasonName', label: 'Season' },
@@ -70,8 +71,10 @@ export class PlotTransfersComponent implements OnInit {
     private AppMasterService: AppMasterService,
     private monitoringService: MonitoringService,
     private LookupService: LookupService,
-  ) { }
+    private jwtService: JWTService) { }
+
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.currentSeasonCode = CURRENT_SEASON()
     this.initDefaults();
     this.plotTransferForm();
@@ -81,6 +84,7 @@ export class PlotTransfersComponent implements OnInit {
     this.initToRegfarmers();
 
   }
+
   plotTransferForm() {
     this.fbplotTransfer = this.formbuilder.group({
       plotTransferId: [0],
@@ -124,20 +128,17 @@ export class PlotTransfersComponent implements OnInit {
   initCurrentSeasons() {
     this.AppMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
-      console.log(this.currentSeason);
-      this.initPlotReports(this.currentSeason.seasonId!);
+      this.initPlotReports(this.currentSeason.seasonId!, -1);
       this.initPlotsTransfer(this.currentSeason.seasonId!);
     });
   }
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
-      console.log(this.plotInfo)
     })
   }
-  initPlotReports(season: number) {
-    this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
-      console.log(resp)
+  initPlotReports(season: number, plotId: number) {
+    this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
     })
   }
@@ -149,7 +150,6 @@ export class PlotTransfersComponent implements OnInit {
   initFarmersInSeason(seasonId: number) {
     var seasonId = seasonId ? seasonId : 0;
     this.monitoringService.GetFarmersInSeason(seasonId).subscribe((resp) => {
-      console.log(resp)
       this.plotReports = resp as unknown as GetFarmersInSeasonViewDto[];
     })
   }
@@ -171,14 +171,11 @@ export class PlotTransfersComponent implements OnInit {
   initPlotTransferReasons() {
     this.LookupService.PlotTransferReasons().subscribe((resp) => {
       this.transferResons = resp as unknown as LookupDetailDto[]
-      console.log(this.transferResons)
     });
   }
   initPlotTransferTypes() {
     this.LookupService.PlotTransferTypes().subscribe((resp) => {
       this.plotTransferTypes = resp as unknown as LookupDetailDto[];
-      console.log(this.plotTransferTypes);
-
     });
   }
   onSelectedFarmer(fromFarmerId: number) {
@@ -217,6 +214,7 @@ export class PlotTransfersComponent implements OnInit {
   //     });
   // }
   editPlotTransfer(plotTransfer: PlotTransferViewDto) {
+    this.initPlotReports(this.currentSeason.seasonId!, plotTransfer.plotId!);
     this.fbplotTransfer.patchValue({
       plotTransferId: plotTransfer.plotTransferId,
       seasonId: plotTransfer.seasonId,
@@ -242,14 +240,11 @@ export class PlotTransfersComponent implements OnInit {
   }
 
   savePlotTransfer(): Observable<HttpEvent<any>> {
-    debugger;
     if (this.addFlag) return this.monitoringService.CreatePlotTransfer(this.fbplotTransfer.value)
     else return this.monitoringService.UpdatePlotTransfer(this.fbplotTransfer.value)
   }
 
   onSubmit() {
-    debugger;
-    console.log(this.fbplotTransfer.value);
     if (this.fbplotTransfer.valid) {
       this.savePlotTransfer().subscribe(resp => {
         if (resp) {
