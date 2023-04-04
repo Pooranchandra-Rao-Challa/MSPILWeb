@@ -76,8 +76,8 @@
         <h4>Districts</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button *ngIf="jwtService.Permissions.CanCreateDistrict" pButton pRipple label="New District" icon="pi pi-plus"
-          class="p-button-primary p-mr-2" (click)="InitDistrict();"></button>
+        <button pButton pRipple label="New District" icon="pi pi-plus"
+          class="p-button-primary p-mr-2" (click)="InitDistrict()" *ngIf="permissions.CanCreateDistrict"></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->
@@ -139,7 +139,7 @@
       <ng-template pTemplate="body" let-district>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(district)"></button></td>
+              (click)="editProduct(district)" [disabled]="!permissions.CanUpdateDistrict"></button></td>
           <td>{{district.districtCode}}</td>
           <td>{{district.districtName}}</td>
           <td>{{district.stateName}}</td>

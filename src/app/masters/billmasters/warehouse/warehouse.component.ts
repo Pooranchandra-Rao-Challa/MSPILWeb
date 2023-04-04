@@ -14,6 +14,7 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
 import { AlertMessage,ALERT_CODES  } from '../../../_alerts/alertMessage';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-warehouse',
@@ -30,14 +31,16 @@ export class WareHouseComponent implements OnInit {
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
-
+  permissions: any;
+  
   constructor(
     private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,
-    private alertMessage:AlertMessage
-  ) {}
+    private alertMessage:AlertMessage,
+     private jwtService:JWTService) {}
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.loadwarehouses();
     this.warehouseform();
   }

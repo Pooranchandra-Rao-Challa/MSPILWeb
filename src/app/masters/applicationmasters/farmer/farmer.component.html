@@ -377,7 +377,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Farmer" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitFarmer()"></button>
+          (click)="InitFarmer()" *ngIf="permissions.CanCreateFarmer"></button>
       </ng-template>
     </p-toolbar>
 
@@ -558,7 +558,7 @@
       <ng-template pTemplate="body" let-farmer>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editFarmer(farmer)"></button></td>
+              (click)="editFarmer(farmer)" [disabled]="!permissions.CanUpdateFarmer"></button></td>
           <td>{{farmer.code}}</td>
           <td>{{farmer.farmerName}}</td>
           <td>{{farmer.aliasName}}</td>

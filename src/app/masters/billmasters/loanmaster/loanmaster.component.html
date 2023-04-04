@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New LoanType" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addLoanType()" (click)="addLoanSubType()"></button>
+          (click)="addLoanType()" (click)="addLoanSubType()" *ngIf="permissions.CanCreateLoanType"></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->
@@ -102,7 +102,7 @@
         <tr>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editTpt(loanType)"></button>
+              (click)="editTpt(loanType)" [disabled]="!permissions.CanUpdateLoanType"></button>
           </td>
           <td>{{ loanType.categoryName }}</td>
           <td>{{ loanType.code }}</td>

@@ -82,7 +82,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Mandal" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitMandal();"></button>
+          (click)="InitMandal()" *ngIf="permissions.CanCreateMandal"></button>
       </ng-template>
     </p-toolbar>
 
@@ -140,7 +140,7 @@
       <ng-template pTemplate="body" let-mandal>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(mandal)"></button></td>
+              (click)="editProduct(mandal)" [disabled]="!permissions.CanUpdateMandal"></button></td>
           <td>{{mandal.mandalCode}}</td>
           <td>{{mandal.mandalName}}</td>
           <td>{{mandal.districtName}}</td>

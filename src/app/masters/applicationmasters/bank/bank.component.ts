@@ -8,6 +8,7 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { BankDto, BankViewDto, BranchDto, BranchViewDto } from 'src/app/_models/applicationmaster';
 import { MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { JWTService } from 'src/app/_services/jwt.service';
 import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_11, MIN_LENGTH_2, MIN_LENGTH_6, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
 
 @Component({
@@ -31,10 +32,12 @@ export class BankComponent implements OnInit {
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
+  permissions: any;
   
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   get FormControls() {
     return this.fbbank.controls;
@@ -50,6 +53,7 @@ export class BankComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.BankForm();
     this.initBank();
   }

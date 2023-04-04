@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Distance Rate" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addDistanceRate()"></button>
+          (click)="addDistanceRate()" *ngIf="permissions.CanCreateDistanceRate"></button>
       </ng-template>
     </p-toolbar>
 
@@ -89,7 +89,7 @@
       <ng-template pTemplate="body" let-distance>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editDistanceRate(distance)"></button></td>
+              (click)="editDistanceRate(distance)" [disabled]="!permissions.CanUpdateDistanceRate"></button></td>
           <td>{{distance.distance}}</td>
           <td>{{distance.rate}}</td>
           <td class="text-center">

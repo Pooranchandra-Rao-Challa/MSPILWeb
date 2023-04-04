@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Lookup" icon="pi pi-plus" class="p-button-primary p-mr-2"
-                    (click)="addLookupDialog()"></button>
+                    (click)="addLookupDialog()" *ngIf="permissions.CanCreateLookUp"></button>
             </ng-template>
         </p-toolbar>
 
@@ -233,7 +233,7 @@
             <ng-template pTemplate="body" let-lookup>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil" (click)=" editLookUp(lookup)"
-                            class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                          [disabled]="!permissions.CanUpdateLookUp"  class="p-element p-ripple p-button-text p-button p-component"></button></td>
                     <td>{{lookup.code}}</td>
                     <td>{{lookup.name}}</td>
                     <td style="text-align:center">

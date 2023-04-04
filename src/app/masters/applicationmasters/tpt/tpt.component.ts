@@ -13,6 +13,7 @@ import { BankDto, BranchDto, TptdetailViewDto } from 'src/app/_models/applicatio
 import { LookupService } from 'src/app/_services/lookup.service';
 import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_VEHICLE, MIN_LENGTH_2, MAX_LENGTH_20 } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-tpt',
@@ -43,11 +44,12 @@ export class TptComponent implements OnInit {
   IFSC?: string;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
-
+  permissions: any;
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService,
-    private alertMessage: AlertMessage) {
+    private alertMessage: AlertMessage,
+    private jwtService: JWTService) {
     this.defaults = [
       { name: 'Yes', id: true },
       { name: 'No', id: false }
@@ -59,6 +61,7 @@ export class TptComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initTpts();
     this.initBanks();
     this.initRelationTypes();

@@ -5,7 +5,7 @@
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}" [modal]="true">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbsections" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbsections" (ngSubmit)="onSubmit()" >
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
@@ -165,7 +165,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Section" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitSection();"></button>
+          (click)="InitSection()" *ngIf="permissions.CanCreateSection"></button>
       </ng-template>
     </p-toolbar>
 
@@ -255,7 +255,7 @@
       <ng-template pTemplate="body" let-section>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(section)"></button></td>
+              (click)="editProduct(section)" [disabled]="!permissions.CanUpdateSection"></button></td>
 
               <td>{{section.divisionName}}</td>
               <td>{{section.circleName}}</td>

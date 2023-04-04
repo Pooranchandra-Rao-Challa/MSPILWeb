@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Village Param Rate" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addVillageParamRate()"></button>
+          (click)="addVillageParamRate()" *ngIf="permissions.CanCreateVillageParamRate"></button>
       </ng-template>
     </p-toolbar>
 
@@ -89,7 +89,7 @@
       <ng-template pTemplate="body" let-vParamRate>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editVillageParamRate(vParamRate)"></button></td>
+              (click)="editVillageParamRate(vParamRate)" [disabled]="!permissions.CanUpdateVillageParamRate"></button></td>
           <td>{{vParamRate.seasonName}}</td>
           <td>{{vParamRate.divisionName}}</td>
           <td>{{vParamRate.circleName}}</td>

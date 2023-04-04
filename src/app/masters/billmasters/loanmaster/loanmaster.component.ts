@@ -12,6 +12,7 @@ import { LoanTypeViewDto, LoanTypeDto, LoanSubTypeViewDto, } from '../../../_mod
 import { BillMasterService } from '../../../_services/billmaster.service';
 import { MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from '../../../_alerts/alertMessage';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-loanmaster',
@@ -35,13 +36,15 @@ export class LoanMasterComponent implements OnInit {
   defaults: { name: string; id: boolean }[];
   billCategories: any;
   maxLength: MaxLength = new MaxLength();
-
+  permissions:any;
+  
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService,
     private BillMasterService: BillMasterService,
-    private alertMessage:AlertMessage
+    private alertMessage:AlertMessage,
+    private jwtService:JWTService
   ) {
     this.defaults = [
       { name: 'Yes', id: true },
@@ -50,6 +53,7 @@ export class LoanMasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initLoanTypes();
     this.initUom();
     this.loanTypesForm();

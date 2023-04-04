@@ -7,6 +7,7 @@ import { DieselRateViewDto, DieselRateDto } from 'src/app/_models/billingmaster'
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-dieselrates',
@@ -24,12 +25,15 @@ export class DieselRatesComponent implements OnInit {
   fbDieselRate!: FormGroup;
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
-
+  permissions: any;
+  
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initDieselRates();
     this.dieselRateForm();
   }

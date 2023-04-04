@@ -132,7 +132,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Division" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitDivision();"></button>
+          (click)="InitDivision()"  *ngIf="permissions.CanCreateDivision"></button>
       </ng-template>
     </p-toolbar>
 
@@ -203,7 +203,7 @@
       <ng-template pTemplate="body" let-divisons>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(divisons)"></button></td>
+              (click)="editProduct(divisons)" [disabled]="!permissions.CanUpdateDivision"></button></td>
           <td>{{divisons.divisionCode}}</td>
           <td>{{divisons.divisionName}}</td>
           <td>{{divisons.inchargeName}}</td>

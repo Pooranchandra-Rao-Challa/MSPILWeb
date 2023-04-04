@@ -29,6 +29,8 @@ export class DivisionsComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
+  permissions:any;
+  
   globalFilterFields: string[] =['divisionId','divisionCode','divisionName','inchargeName','address','inchargePhoneNo','inchargePhoneNo',
   'listingOrder','isActive','createdByUser','updatedByUser','createdAt','updatedAt']
   maxLength: MaxLength = new MaxLength();
@@ -50,6 +52,7 @@ export class DivisionsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.initDivisions();
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[]

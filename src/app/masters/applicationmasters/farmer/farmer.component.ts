@@ -49,7 +49,7 @@ export class FarmerComponent implements OnInit {
     pincode: FormControl = new FormControl();
     address: FormControl = new FormControl();
     maxLength: MaxLength = new MaxLength();
-
+    permissions:any;
     
 
     constructor(private formbuilder: FormBuilder,
@@ -64,6 +64,7 @@ export class FarmerComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.permissions = this.jwtService.Permissions;
         this.initFarmers();
         this. farmerForm();
          this.initcasteDetails();

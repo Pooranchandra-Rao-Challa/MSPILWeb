@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Plant Type" icon="pi pi-plus" class="p-button-primary p-mr-2"
-                    (click)=" initPlant()"></button>
+                    (click)=" initPlant()" *ngIf="permissions.CanCreatePlantType"></button>
             </ng-template>
         </p-toolbar>
 
@@ -166,7 +166,7 @@
             <ng-template pTemplate="body" let-planttype>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlantType(planttype)"
-                            class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                         [disabled]="!permissions.CanUpdatePlantType"   class="p-element p-ripple p-button-text p-button p-component"></button></td>
                     <td>{{planttype.code}}</td>
                     <td>{{planttype.name}}</td>
                     <td>{{planttype.estimatedTon}}</td>
