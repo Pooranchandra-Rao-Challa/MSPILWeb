@@ -15,6 +15,7 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON,EDocumentNumberScreens } from 'src/environments/environment';
+import { MessageService } from 'primeng/api';
 
 export interface IHeader {
   field: string;
@@ -48,24 +49,19 @@ export class SampleEntryComponent implements OnInit {
   @ViewChild('fieldBrix') fieldBrix!: ElementRef;
   @ViewChild('brix') brix!: ElementRef;
   @ViewChild('pol') pol!: ElementRef;
-  isSampleCountMatched: boolean = false;
-  // expectedSampleCount: any ;
-  // enteredSampleCount: number = 0;
   noOfSample: number = 0;
   noOfSamplesEntered: number = 0;
+  selectedPlot: any;
+  sampleArea: any;
+  expectedSampleCount: number=0;
+  isSampleCountMatched: boolean = false;
+  submitDisabled: boolean = false;
   
-
-
-
-
-
-
-
-
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterservice: AppMasterService,
     private monitoringService: MonitoringService,
+    private messageService:MessageService
 
   ) {
   }
@@ -90,6 +86,8 @@ export class SampleEntryComponent implements OnInit {
     this.initCurrentSeason();
     this.initAppConstants()
     this.sampleEntryForm();
+
+  
   }
 
   sampleEntryForm() {
@@ -158,6 +156,23 @@ initSampleEntry(seasonId: number) {
       }
     }
   }
+
+  // onSelectedPlot(plotId: number) {
+  //   const selectedPlot = this.plots.filter((plot) => plot.plotId === plotId)[0];
+  
+  //   if (selectedPlot) {
+  //     this.selectedPlot = selectedPlot;
+  //     const netArea = selectedPlot.area - selectedPlot.deductionArea;
+  //     this.numberOfSamples = Math.ceil(netArea / this.selectedSampleSlab.toArea);
+  //     this.numberOfEnteredSamples = selectedPlot.sampleEntries.filter(entry => entry.isActive).length;
+  
+  //     if (this.numberOfEnteredSamples === this.numberOfSamples) {
+  //       console.log("All samples have been entered");
+  //     } else {
+  //       console.log(`${this.numberOfEnteredSamples} out of ${this.numberOfSamples} samples have been entered`);
+  //     }
+  //   }
+  // }
   getDocNo(){
     this.commonService.GetDocNo(this.currentSeason.seasonId!,EDocumentNumberScreens.Samples).subscribe((resp) => {
       this.fbSampleEntry.get('docNo')?.setValue(resp);
@@ -183,46 +198,34 @@ initSampleEntry(seasonId: number) {
     });
   }
 
-  // onPlotChange(plotId: number) {
-  //   this.monitoringService.GetSamplesOfPlot(plotId).subscribe((resp) => {
-  //     this.sample = resp as any;
-  //     this.enteredSampleCount = this.sample.length;
-
-  //   });
-  // }
-
-  // onPlotChange(plotId: number) {
-  //   this.monitoringService.GetSectionFarmers(plotId).subscribe((resp) => {
-  //     const farmers = resp as any;
-  //     const netArea = farmers.netArea;
-  //     let expectedSampleCount = 0;
-  //     if (netArea >= 0 && netArea < 4) {
-  //       expectedSampleCount = 1;
-  //     } else if (netArea >= 4 && netArea < 8) {
-  //       expectedSampleCount = 2;
-  //     } 
-
-  //     this.monitoringService.GetSamplesOfPlot(plotId).subscribe((resp) => {
-  //       const sample = resp as any;
-  //       if (sample.length === expectedSampleCount) {
-  //         this.isSampleCountMatched = true;
-  //       } else {
-  //         this.isSampleCountMatched = false;
-  //       }
-  //     });
-  //   });
-  // }
 
 
-  onPlotChange(plotId: number) {
-    this.monitoringService.GetSamplesOfPlot(plotId).subscribe((resp) => {
-      this.sample = resp as any;
-      console.log(this.sample)
-      if (this.sample.length === (this.noOfSamplesEntered + 1) && this.sample.length === this.noOfSample) {
-        this.isSampleCountMatched = true;
+  
+  onPlotChange(plotId: any) {
+    debugger;
+    this.monitoringService.GetPlotsofFarmers(plotId.seasonId, plotId.farmerId).subscribe((resp) => {
+      const sample = resp as unknown as any[];
+      if (sample && sample.length > 0) {
+        let netAreaTotal = 0;
+        for (let i = 0; i < sample.length; i++) {
+          netAreaTotal += sample[i].netArea;
+        }
+        if (netAreaTotal >= 0 && netAreaTotal < 4) {
+          this.expectedSampleCount = 1;
+        } else if (netAreaTotal >= 4 && netAreaTotal < 8) {
+          this.expectedSampleCount = 2;
+        }
+        this.isSampleCountMatched = this.sample.length ===  this.expectedSampleCount  ;
+        this.submitDisabled! = !this.isSampleCountMatched;
+       
+   
+      } else {
+        this.expectedSampleCount = 0;
+        this.isSampleCountMatched = false;
+        this.submitDisabled = true;
       }
     });
-  }
+  }                     
 
 
   initSeasons() {
@@ -252,7 +255,6 @@ initSampleEntry(seasonId: number) {
   get FormControls() {
     return this.fbSampleEntry.controls;
   }
-
 
   // For Farmer
   clear(table: Table) {

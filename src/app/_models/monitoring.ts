@@ -728,6 +728,7 @@ export class SampleDto {
   PlotNo?: number;
   FarmerCode?: number;
   noOfSample: any;
+  plotId?: number;
 }
 
 export interface plotsofFarmerViewDto {
