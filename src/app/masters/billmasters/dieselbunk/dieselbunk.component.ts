@@ -11,6 +11,7 @@ import { DieselBunkDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_EMAIL, RG_PHONE_NO } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-dieselbunk',
@@ -30,12 +31,15 @@ export class DieselBunkComponent implements OnInit {
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
-
+  permissions: any;
+  
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initDieselBunks();
     this.dieselRateForm();
   }

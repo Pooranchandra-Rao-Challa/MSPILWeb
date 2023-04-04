@@ -177,20 +177,18 @@ export class AppMenuComponent implements OnInit {
             icon: 'pi pi-fw pi-eye',
             permission: this.GroupPermission('Permits'),
             items: [
-              { label: 'Cutting Order', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/cuttingorder'], permission: true },
-              { label: 'Non Registered', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/nonregistered'], permission: true },
-              { label: 'Permit Approval', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitapproval'], permission: true },
-              { label: 'Permit Chart', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitchart'], permission: true },
-              { label: 'Permit Printing', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitprinting'], permission: true },
               { label: 'Schedule Grouping', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/schedulegrouping'], permission: true },
-              { label: 'Special Permits', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/specialpermits'], permission: true },
-              { label: 'Cancel Permit', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/cancelpermit'], permission: true },
-              { label: 'Permit Date Change', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitdatechange'], permission: true },
-              { label: 'Estimated Ton', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/estimatedton'], permission: true },
-              { label: 'Permit Quota', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitquota'], permission: true },
-             
+              { label: 'Cutting Order',     icon: 'pi pi-fw pi-circle', routerLink: ['/permits/cuttingorder'], permission: true },
+              { label: 'Permit Chart',      icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitchart'], permission: true },
+              { label: 'Non Registered',    icon: 'pi pi-fw pi-circle', routerLink: ['/permits/nonregistered'], permission: true },
+              { label: 'Special Permits',   icon: 'pi pi-fw pi-circle', routerLink: ['/permits/specialpermits'], permission: true },
+              { label: 'Permit Approval',   icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitapproval'], permission: true },
+              { label: 'Permit Printing',   icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitprinting'], permission: true },
+              { label: 'Cancel Permit',     icon: 'pi pi-fw pi-circle', routerLink: ['/permits/cancelpermit'], permission: true },
+              { label: 'Permit Date Change',icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitdatechange'], permission: true },
+              { label: 'Estimated Ton',     icon: 'pi pi-fw pi-circle', routerLink: ['/permits/estimatedton'], permission: true },
+              { label: 'Permit Quota',      icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitquota'], permission: true },
             ]
-
           }
         ]
       },

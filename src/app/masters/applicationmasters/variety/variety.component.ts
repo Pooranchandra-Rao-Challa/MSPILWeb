@@ -10,6 +10,7 @@ import { VarietyViewDto, VarietyDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MaxLength } from 'src/app/_models/common';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-variety',
@@ -30,13 +31,16 @@ export class VarietyComponent implements OnInit {
   fbVariety!: FormGroup;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
-
+  permissions:any;
+  
   constructor(private formbuilder: FormBuilder,
     private lookupService: LookupService,
     private appMasterService: AppMasterService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initVarieties();
     this.initLookupDetails();
     this.varietyForm();

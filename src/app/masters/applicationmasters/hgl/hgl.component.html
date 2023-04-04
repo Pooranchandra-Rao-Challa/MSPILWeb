@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addHgl()" (click)="addSubHgl()"></button>
+          (click)="addHgl()" (click)="addSubHgl()" *ngIf="permissions.CanCreateHGL"></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->
@@ -150,7 +150,7 @@
       <ng-template pTemplate="body" let-hgl>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-            (click)="editHgl(hgl)" ></button></td>          
+            (click)="editHgl(hgl)" [disabled]="!permissions.CanUpdateHGL" ></button></td>          
           <td>{{hgl.code}}</td>
           <td>{{hgl.name}}</td>
           <td>{{hgl.gender}}</td>

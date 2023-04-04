@@ -26,6 +26,7 @@ export class StateComponent implements OnInit {
   addFlag: boolean = true;
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
+  permissions: any;
   globalFilterFields: string[] = ['stateCode','stateName', 'isActive', 'createdAt', 'createdByUser','updatedAt', 'updatedByUser'];
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -37,6 +38,8 @@ export class StateComponent implements OnInit {
     this.submitLabel = "Add State";
     this.addFlag = true;
     this.display = true;
+
+
   }
 
   get FormControls() {
@@ -44,6 +47,7 @@ export class StateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.initStates();
     this.fbstates = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
@@ -95,7 +99,7 @@ export class StateComponent implements OnInit {
     }
   }
 
-  
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }

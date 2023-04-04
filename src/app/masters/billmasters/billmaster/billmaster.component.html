@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Bill" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addBill()"></button>
+          (click)="addBill()" *ngIf="permissions.CanCreateBill"></button>
       </ng-template>
     </p-toolbar>
 

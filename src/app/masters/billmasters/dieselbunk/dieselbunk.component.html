@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Diesel Bunk" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addDieselBunk()"></button>
+          (click)="addDieselBunk()" *ngIf="permissions.CanCreateDieselBunk"></button>
       </ng-template>
     </p-toolbar>
 
@@ -93,7 +93,7 @@
       <ng-template pTemplate="body" let-bunk>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editDieselBunk(bunk)"></button></td>
+              (click)="editDieselBunk(bunk)" [disabled]="!permissions.CanUpdateDieselBunk"></button></td>
           <td>{{bunk.code}}</td>
           <td>{{bunk.name}}</td>
           <td>{{bunk.address}}</td>

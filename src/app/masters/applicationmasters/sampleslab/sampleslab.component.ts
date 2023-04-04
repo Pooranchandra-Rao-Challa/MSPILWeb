@@ -27,7 +27,7 @@ export class SampleslabsComponent implements OnInit {
   addFlag: boolean = true;
   maxAreaThatUsedInRecods: number = 1.2;
   lastSampleSize:number = 0;
-
+  permissions:any;
 
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,
@@ -54,7 +54,7 @@ export class SampleslabsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.permissions = this.jwtService.Permissions;
     this.initSampleslabs();
 
 

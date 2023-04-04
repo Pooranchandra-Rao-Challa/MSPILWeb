@@ -13,6 +13,7 @@ import { HglViewDto, SubHglViewDto, HglDto, } from '../../../_models/application
 import { MaxLength } from 'src/app/_models/common';
 import { MIN_LENGTH_6 } from '../../../_shared/regex';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-hgl',
@@ -68,15 +69,15 @@ export class HglComponent implements OnInit {
   vehicleTypes: VehicleTypeViewDto[] = [];
   IFSC?: any;
   maxLength: MaxLength = new MaxLength();
+  permissions: any;
 
- 
 
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService,
-    private alertMessage: AlertMessage
-  ) {
+    private alertMessage: AlertMessage,
+    private jwtService: JWTService) {
     this.genders = [
       { label: 'Male', value: 'M' },
       { label: 'Female', value: 'F' },
@@ -87,7 +88,7 @@ export class HglComponent implements OnInit {
     this.fbHgl = this.formbuilder.group({
       hglId: [0],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       relationTypeId: new FormControl('', [Validators.required]),
       relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       gender: ['', Validators.required],
@@ -96,7 +97,7 @@ export class HglComponent implements OnInit {
       phoneNo: ['', Validators.pattern(RG_PHONE_NO)],
       tax: ['', Validators.required],
       email: ['', (Validators.pattern(RG_EMAIL))],
-      panNo:new FormControl('', [ Validators.pattern(RG_PANNO)]),
+      panNo: new FormControl('', [Validators.pattern(RG_PANNO)]),
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -104,15 +105,16 @@ export class HglComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      bankId:['', Validators.required],
+      bankId: ['', Validators.required],
       branchId: ['', Validators.required],
       accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
-      aadhaarNo: new FormControl('', [ Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
+      aadhaarNo: new FormControl('', [Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
       isActive: [true],
       subHgls: this.formbuilder.array([]),
     });
   }
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.inithgls();
     this.initBanks();
     this.initRelationTypes();
@@ -195,7 +197,7 @@ export class HglComponent implements OnInit {
     this.initsubHgls(hgl.hglId);
     this.initRelationTypes();
     this.getBranchByBankId(hgl.bankId || 0);
-      this.getIFSCByBranch(hgl.branchId || 0);
+    this.getIFSCByBranch(hgl.branchId || 0);
     this.hgl.hglId = hgl.hglId
     this.hgl.code = hgl.code;
     this.hgl.name = hgl.name;
@@ -221,7 +223,7 @@ export class HglComponent implements OnInit {
     this.hgl.aadhaarNo = hgl.aadhaarNo;
     this.hgl.isActive = hgl.isActive;
     this.hgl.subHgls = this.subHgls ? this.subHgls : [];
-      this.fbHgl.patchValue(this.hgl);
+    this.fbHgl.patchValue(this.hgl);
     this.addFlag = false;
     this.submitLabel = 'Update Hgl';
     this.showDialog = true;
@@ -254,7 +256,7 @@ export class HglComponent implements OnInit {
           this.hglform();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMHG001" : "SMAMHG002"]);
-         
+
         }
       });
     } else {

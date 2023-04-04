@@ -7,6 +7,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { BillViewDto } from 'src/app/_models/billingmaster';
 import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-billmaster',
@@ -23,6 +24,7 @@ export class BillMasterComponent implements OnInit {
   submitLabel!: string;
   fbBillMaster!: FormGroup;
   seasons: any;
+  permissions: any;
   addFlag: boolean = true;
   billCategories: any;
   mediumDate: string = MEDIUM_DATE;
@@ -31,9 +33,11 @@ export class BillMasterComponent implements OnInit {
     private commonService: CommonService,
     private billmasterService: BillMasterService,
     private lookupService: LookupService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initBills();
     this.initLookupDetails();
     this.billmasterForm();

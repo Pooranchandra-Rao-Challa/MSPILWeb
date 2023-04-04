@@ -9,6 +9,7 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { VillageParamRateViewDto, VillageParamRateDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-villageparamrates',
@@ -29,14 +30,15 @@ export class VillageParamRatesComponent implements OnInit {
   billParameters: BillParameterViewDto[] = [];
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
-
+  permissions: any
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private commonService: CommonService,
-    private geoMasterService: GeoMasterService
-  ) { }
+    private geoMasterService: GeoMasterService,
+    private jwtService:JWTService ) { }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initVillageParamRates();
     this.initDefaults();
     this.villageParamRateForm();
