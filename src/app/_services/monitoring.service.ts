@@ -1,7 +1,7 @@
 import {
-  FarmerPlotYieldViewDto,
+  IFarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  PlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, SampleDetailsDto
+  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, SampleDetailsDto
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
@@ -52,7 +52,7 @@ export class MonitoringService extends ApiHttpService {
   public GetPlotAssessments(seasonId: number) {
     let arr: any[] = [];
     arr.push(seasonId);
-    return this.getWithParams<PlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
+    return this.getWithParams<IPlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
   }
   public CreatePlotAssessment(plotAssessment: PlotAssessmentDto) {
     return this.post<PlotAssessmentDto>(CREATE_PLOTASSESSMENT_URI, plotAssessment);
@@ -85,7 +85,7 @@ public GetPlotYields(seasonId: number, param1 = null) {
   arr.push(seasonId);
   if (param1 != null) arr.push(param1);
 
-  return this.getWithParams<FarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, arr);
+  return this.getWithParams<IFarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, arr);
 }
 
   // Plot Transfers
