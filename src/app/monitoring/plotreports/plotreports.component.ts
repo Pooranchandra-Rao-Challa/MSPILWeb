@@ -37,6 +37,8 @@ export class PlotreportsComponent implements OnInit {
   seasons!: any;
   currentSeason: SeasonDto = {};
   showDialog: boolean = false;
+  showApprovalDialog: boolean = false;
+  approveOrDenyFlag?: boolean;
   fbPlotReport!: FormGroup;
   submitLabel: string = 'Add Plot Report';
   villages: VillagesViewDto[] = [];
@@ -350,6 +352,8 @@ export class PlotreportsComponent implements OnInit {
         plotNumber: [''],
         plantingDate: [''],
       }),
+
+      remarks: [''],
     });
   }
 
@@ -387,7 +391,7 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['farmerId'].setValue(farmer.farmerId);
 
 
-    // this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
+    this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
     // this.fbPlotReport.controls['fatherName'].setValue(farmer.fatherName);
     // this.fbPlotReport.controls['farmerDivision'].setValue(farmer.farmerDivisionName);
     // this.fbPlotReport.controls['farmerCircle'].setValue(farmer.farmerCircleName);
@@ -439,7 +443,9 @@ export class PlotreportsComponent implements OnInit {
   }
 
   editApproval(plotReport: IPlotReportViewDto, farmer: IFarmerInPlotReportsViewDto) {
-
+    this.editPlotReport(plotReport, farmer);
+    this.showDialog = false;
+    this.showApprovalDialog = true;
   }
 
   clear(table: Table) {
@@ -528,6 +534,41 @@ export class PlotreportsComponent implements OnInit {
         this.FormControls['agreed'].setValue(cal);
       }
     });
+  }
+
+  saveApproveOrDeny(): Observable<HttpEvent<any>> {
+    if (this.approveOrDenyFlag) return this.monitoringService.ApprovePlotOffer(this.fbPlotReport.value)
+    else return this.monitoringService.DenyPlotOffer(this.fbPlotReport.value)
+  }
+
+  onApproveOrDenyPlotOffer() {
+    if (this.fbPlotReport.valid) {
+      this.saveApproveOrDeny().subscribe(resp => {
+        if (resp) {
+          this.initPlotReports(this.currentSeason.seasonId!);
+          this.fbPlotReport.reset();
+          this.showApprovalDialog = false;
+          this.approveOrDenyFlag = undefined;
+        }
+      });
+    }
+    else {
+      this.fbPlotReport.markAllAsTouched();
+    }
+  }
+
+  onApprovalSubmit(data: string) {
+    if (data == 'denied') {
+      this.approveOrDenyFlag = false;
+      this.fbPlotReport.controls['remarks'].setValidators(Validators.required);
+      this.fbPlotReport.controls['remarks'].updateValueAndValidity();
+    }
+    else if (data == 'approve') {
+      this.approveOrDenyFlag = true;
+      this.fbPlotReport.controls['remarks'].clearValidators();
+      this.fbPlotReport.controls['remarks'].updateValueAndValidity();
+    }
+    this.onApproveOrDenyPlotOffer();
   }
 
 }
