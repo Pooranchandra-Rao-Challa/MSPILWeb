@@ -1,5 +1,6 @@
 <div class="col-12">
   <div class="card">
+    <p-toast key="tst"></p-toast>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -25,37 +26,30 @@
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 ">
-                        <label>Season:</label>
+                        <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
                           optionValue="seasonId" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
-                          (onChange)="initPlotReports($event.value)" appendTo="body"
+                          (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['seasonId'].errors?.['required']">
-                            Select Season.</div>
+                            Please Select Season.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4">
-                        <label>Plot No:</label>
+                        <label class="required">Plot No:</label>
                         <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
-                          [options]="plotReports" optionValue="plotId" [filter]="true" filterBy="plotNumber"
+                          [options]="plotNumbers" optionValue="plotId" [filter]="true" filterBy="plotNumber"
                           formControlName="plotNumber" [virtualScrollItemSize]="20" formControlName="plotId"
                           (onChange)="getPlotinfo($event.value)"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
-                          <!-- <ng-template let-plotReport pTemplate="item">
-                            <div class="block align-items-center gap-2">
-                              <div>{{plotReport.plotNumber}}</div>
-                              <div>{{plotReport.farmerCode}} - {{plotReport.farmerName}}</div>
-                              <div>{{plotReport.plotVillage}}</div>
-                            </div>
-                          </ng-template> -->
                         </p-dropdown>
                         <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['plotId'].errors?.['required']">
-                            Select Plot No.</div>
+                            Please Select Plot No.</div>
                         </span>
                       </div>
                     </div>
@@ -182,7 +176,7 @@
                         <span *ngIf="FormControls['actionPlanId'].touched && FormControls['actionPlanId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['actionPlanId'].errors?.['required']">
-                            Select Action Plan.</div>
+                            Please Select Action Plan.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
@@ -194,7 +188,7 @@
                         <span *ngIf="FormControls['inspectionDate'].touched && FormControls['inspectionDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['inspectionDate'].errors?.['required']">
-                            Select Inspection Date.</div>
+                            Please Select Inspection Date.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3 ">
@@ -393,7 +387,6 @@
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
                       [rowsPerPageOptions]="[10,25,50]">
-
                       <ng-template pTemplate="header">
                         <tr>
                           <th>Name</th>
@@ -436,7 +429,7 @@
         <div class="col-12">
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-success"
-              (click)="onSubmit()"></button>
+              [disabled]="fbPlotYield.invalid" (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>
@@ -455,7 +448,7 @@
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No" class="w-full" />
+                pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" [virtualScrollItemSize]="30">
@@ -483,11 +476,6 @@
           </td>
           <td *ngFor="let col of farmerHeaders">
             {{farmer[col.field]}}
-            <!-- <span
-              *ngIf="col?.field != 'plantingDate' && col?.field != 'inspectionDate' && col?.field != 'birDate'">{{farmer[col.field]}}</span>
-            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'inspectionDate' || col?.field == 'birDate'">
-              {{farmer[col.field] | date: 'dd-MM-yyyy'}}
-            </span> -->
           </td>
         </tr>
       </ng-template>
@@ -495,7 +483,7 @@
         <tr>
           <td colspan="5">
             <div class="p-3">
-              <p-table [value]="farmer.objnetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId">
+              <p-table [value]="farmer.objNetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId">
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
@@ -509,9 +497,7 @@
       <ng-template pTemplate="body" let-plotyield>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              [disabled]="!permissions?.CanUpdatePlotYield"></button>
-
-            <!-- (click)="editAllottedPlot(allottedPlot)" -->
+              (click)="editPlotYield(plotyield)" [disabled]="!permissions?.CanUpdatePlotYield"></button>
           </td>
           <td *ngFor="let col of plotHeaders">
             <span
