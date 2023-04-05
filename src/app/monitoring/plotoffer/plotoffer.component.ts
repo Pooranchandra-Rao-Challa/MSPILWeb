@@ -306,6 +306,7 @@ export class PlotofferComponent implements OnInit {
           this.initPlotOffers(this.currentSeason.seasonId!);
           this.fbPlotOffer.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPO001" : "SMOPO002"]);
         }
       })
     }
@@ -327,7 +328,6 @@ export class PlotofferComponent implements OnInit {
           this.fbPlotOffer.reset();
           this.showApprovalDialog = false;
           this.approveOrDenyFlag = undefined;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPO001" : "SMOPO002"]);
         }
       });
     }

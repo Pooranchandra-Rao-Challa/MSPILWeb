@@ -503,5 +503,60 @@
     </ng-template>
   </p-dialog>
 
+      <!-- Plot Report Approval Dialog -->
+      <p-dialog header="Plot Report For Approval" [(visible)]="showApprovalDialog" showEffect="fade"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}" [modal]="true"
+      (onHide)="fbPlotReport.reset()">
+      <ng-template pTemplate="content">
+        <div class="flex flex-column align-items-center justify-content-center">
+          <form [formGroup]="fbPlotReport" (ngSubmit)="onSubmit()">
+            <div class="grid">
+              <div class="col-12">
+                <div class="p-fluid p-formgrid grid">
+                  <div class="field col-12 md:col-6">
+                    <label class="required">Season:</label>
+                    <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
+                      optionValue="seasonId" formControlName="seasonId"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
+                    </p-dropdown>
+                    <!-- (onChange)="getNewOfferNo($event.value)" -->
+                    <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['seasonId'].errors?.['required']">
+                        Please Select Season.</div>
+                    </span>
+                  </div>
+                  <div class="field col-12 md:col-6">
+                    <label>Offer No:</label>
+                    <input pInputText id="plotOfferId" type="text" formControlName="plotOfferId" readonly>
+                  </div>
+                  <div class="field col-12 md:col-6">
+                    <label>Ryot Name:</label>
+                    <input pInputText id="farmerName" type="text" formControlName="farmerName" readonly>
+                  </div>
+                  <div class="field col-12 md:col-6">
+                    <label>Remarks:</label>
+                    <input pInputText id="remarks" type="text" formControlName="remarks"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['remarks'].touched && FormControls['remarks'].errors }">
+                    <span *ngIf="FormControls['remarks'].touched && FormControls['remarks'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['remarks'].errors?.['required']">
+                        Remarks is required if you want to denied.</div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="col-12" style="float:right">
+          <button pButton pRipple type="submit" label="Approval" class="p-button-raised p-button-success"
+            (click)="onApprovalSubmit('approve')" [disabled]="!permissions?.CanApproveOrDeny"></button>
+          <button pButton pRipple type="submit" label="Denied" class="p-button-raised p-button-success"
+            (click)="onApprovalSubmit('denied')" [disabled]="!permissions?.CanApproveOrDeny"></button>
+        </div>
+      </ng-template>
+    </p-dialog>
+
 </div>
 </div>
