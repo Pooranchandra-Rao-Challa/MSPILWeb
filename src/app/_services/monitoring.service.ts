@@ -1,20 +1,19 @@
 import {
-  FarmerPlotYieldViewDto,
+  IFarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  PlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, SampleDetailsDto
+  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, SampleDetailsDto
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "src/app/_services/api.http.service";
-import { CompletedPlotDto, CompletedPlotViewDto } from '../_models/monitoring';
+import { CompletedPlotDto, CompletedPlotViewDto, SampleDto } from '../_models/monitoring';
 import {
   CREATE_PLOT_OFFER_URI, GET_PLOT_OFFERS_URI, GET_OFFERCODE_URI, UPDATE_PLOT_OFFER_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
   UPDATE_PLOT_REPORT_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_DOCCODE_URI, CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI,
   GET_PLOT_REORT_IN_SEASON_URI, GET_DONOFORCOMPLETEDPLOTS_URI, CREATE_COMPLETED_PLOT_URI, GET_COMPLETED_PLOTS_URI, GET_COMPLETED_PLOT_IN_SEASON_URI,
   UPDATE_COMPLETED_PLOT_URI, GET_PLOT_NUMBER_URI, GET_MAINTANANCE_ITEMS_ASSESSMENT_URI, GET_PLOTS_FORASSESSMENT_URI, GET_PLOTS_URI, GET_PLOT_OFFERS_IN_SEASON_URI,
-  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, CREATE_PLOTASSESSMENT_URI, UPDATE_PLOTASSESSMENT_URI, DENY_PLOT_OFFER_URI, GET_PLOT_AGREEMENTS_URI, GET_FARMER_IN_SECTIONS_URI, GET_PLOTS_FORYIELDS_URI, GET_PLOTYIELDS_URI, CREATE_PLOT_AGREEMENT_URI, UPDATE_PLOT_AGREEMENT_URI, GET_PLOTS_OF_FARMERS_URI, GET_MAINTANANCE_ITEMS_AGREEMENT_URI, GET_SAMPLES_OF_PLOT_URI, GET_SAMPLES_ENTRY_URI
+  GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOTTRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, CREATE_PLOTASSESSMENT_URI, UPDATE_PLOTASSESSMENT_URI, DENY_PLOT_OFFER_URI, GET_PLOT_AGREEMENTS_URI, GET_FARMER_IN_SECTIONS_URI, GET_PLOTS_FORYIELDS_URI, GET_PLOTYIELDS_URI, CREATE_PLOT_AGREEMENT_URI, UPDATE_PLOT_AGREEMENT_URI, GET_PLOTS_OF_FARMERS_URI, GET_MAINTANANCE_ITEMS_AGREEMENT_URI, GET_SAMPLES_OF_PLOT_URI, GET_SAMPLES_ENTRY_URI, CREATE_SAMPLES_ENTRY_URI
 } from "src/app/_services/api.uri.service";
-
 @Injectable({ providedIn: 'root' })
 export class MonitoringService extends ApiHttpService {
   // Get new offerNo
@@ -22,23 +21,18 @@ export class MonitoringService extends ApiHttpService {
     //return this.get<any>(GET_OFFERCODE_URI + seasonId);
     return this.getWithId<boolean>(GET_OFFERCODE_URI, seasonId);
   }
-
   public CreatePlotOffer(plotOffer: PlotOfferDto) {
     return this.post<PlotOfferDto>(CREATE_PLOT_OFFER_URI, plotOffer);
   }
-
   public UpdatePlotOffer(plotOffer: PlotOfferDto) {
     return this.post<PlotOfferDto>(UPDATE_PLOT_OFFER_URI, plotOffer);
   }
-
   public ApprovePlotOffer(plotOffer: PlotOfferDto) {
     return this.post<PlotOfferDto>(APPROVE_PLOT_OFFER_URI, plotOffer);
   }
-
   public DenyPlotOffer(plotOffer: PlotOfferDto) {
     return this.post<PlotOfferDto>(DENY_PLOT_OFFER_URI, plotOffer);
   }
-
   public GetPlotOffers(seasonId: number, forapproval: boolean, param1 = null) {
     if (param1 == null) {
       return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, [seasonId, forapproval]);
@@ -47,14 +41,12 @@ export class MonitoringService extends ApiHttpService {
       return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, [seasonId, forapproval, param1]);
     }
   }
-
   public IsNewFarmer(farmerId: number) {
     return this.getWithId<boolean>(IS_NEW_FARMAR_URI, farmerId);
   }
-
   // plot assessment
   public GetPlotAssessments(seasonId: number) {
-    return this.getWithParams<PlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, [seasonId]);
+    return this.getWithParams<IPlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, [seasonId]);
   }
   public CreatePlotAssessment(plotAssessment: PlotAssessmentDto) {
     return this.post<PlotAssessmentDto>(CREATE_PLOTASSESSMENT_URI, plotAssessment);
@@ -78,9 +70,9 @@ export class MonitoringService extends ApiHttpService {
   public GetPlotYields(seasonId: number, param1 = null) {
 
     if (param1 != null)
-      return this.getWithParams<FarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, [seasonId, param1]);
+      return this.getWithParams<IFarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, [seasonId, param1]);
     else
-      return this.getWithParams<FarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, [seasonId]);
+      return this.getWithParams<IFarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, [seasonId]);
   }
 
   // Plot Transfers
@@ -229,6 +221,11 @@ export class MonitoringService extends ApiHttpService {
 
   public UpdatePlotAgreement(plotAgreement: PlotAgreementDto) {
     return this.post<PlotAgreementDto>(UPDATE_PLOT_AGREEMENT_URI, plotAgreement);
+  }
+
+  public CreateSample(Sample: SampleDto) {
+    debugger
+    return this.post<SampleDto>(CREATE_SAMPLES_ENTRY_URI, Sample);
   }
 
 }

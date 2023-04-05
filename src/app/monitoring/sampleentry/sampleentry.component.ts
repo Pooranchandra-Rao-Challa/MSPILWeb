@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
-import { debounceTime, distinctUntilChanged, fromEvent, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, fromEvent, Observable, tap } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { FarmersViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
 import { SectionDto } from 'src/app/_models/geomodels';
@@ -16,6 +16,8 @@ import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON,EDocumentNumberScreens } from 'src/environments/environment';
 import { MessageService } from 'primeng/api';
+import { HttpEvent } from '@angular/common/http';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 export interface IHeader {
   field: string;
@@ -39,12 +41,13 @@ export class SampleEntryComponent implements OnInit {
   submitLabel!: string;
   showDialog: boolean = false;
   farmers: FarmerSectionViewDto[] = [];
-  plots: any
+  plots: plotsofFarmerViewDto[] =[];
   FarmerSectionViewDto: any
   sample: SampleDto[] =[];
   samples:SampleDetailsDto[] = [];
   mediumDate: string = MEDIUM_DATE;
   selectedFarmer:FarmerSectionViewDto ={}
+  addFlag: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('fieldBrix') fieldBrix!: ElementRef;
   @ViewChild('brix') brix!: ElementRef;
@@ -61,7 +64,8 @@ export class SampleEntryComponent implements OnInit {
     private commonService: CommonService,
     private appMasterservice: AppMasterService,
     private monitoringService: MonitoringService,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private alertMessage: AlertMessage,
 
   ) {
   }
@@ -92,19 +96,22 @@ export class SampleEntryComponent implements OnInit {
 
   sampleEntryForm() {
     this.fbSampleEntry = this.formbuilder.group({
+      sampleId:[0],
       seasonId: [{ value: this.currentSeason.seasonId },],
-      docNo: [null],
-      docDate: [null,],
-      farmerId: [null],
+      docNo: [],
+      docDate: ['',],
+      farmerId: [],
       farmerName: [''],
-      plotId: [null],
-      fieldBrix: [null],
-      brix: [null],
-      pol: [null],
+      plotId: [],
+      fieldBrix: [],
+      brix: [],
+      pol: [],
+      plotYieldId:[],
       purity: [{ value: null, disabled: true }],
       ccs: [{ value: null, disabled: true }],
-      noOfSamplesEntered:[],
-      noOfSample:[],
+      noOfSamplesEntered:[null],
+      noOfSample:[null],
+      serverUpdatedStatus: true
     })
   }
 
@@ -145,6 +152,7 @@ initSampleEntry(seasonId: number) {
   initPlotsofFarmers(seasonId: any, farmerId: any) {
     this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
       this.plots = resp as unknown as plotsofFarmerViewDto[];
+      console.log(this.plots)
     });
   }
   onSelectedFarmer(farmerId: number) {
@@ -199,34 +207,35 @@ initSampleEntry(seasonId: number) {
   }
 
 
-
-
   onPlotChange(plotId: any) {
-    //debugger;
-    this.monitoringService.GetPlotsofFarmers(plotId.seasonId, plotId.farmerId).subscribe((resp) => {
-      const sample = resp as unknown as any[];
-      if (sample && sample.length > 0) {
-        let netAreaTotal = 0;
-        for (let i = 0; i < sample.length; i++) {
-          netAreaTotal += sample[i].netArea;
-        }
-        if (netAreaTotal >= 0 && netAreaTotal < 4) {
-          this.expectedSampleCount = 1;
-        } else if (netAreaTotal >= 4 && netAreaTotal < 8) {
-          this.expectedSampleCount = 2;
-        }
-        this.isSampleCountMatched = this.sample.length ===  this.expectedSampleCount  ;
-        this.submitDisabled! = !this.isSampleCountMatched;
 
-
-      } else {
-        this.expectedSampleCount = 0;
-        this.isSampleCountMatched = false;
-        this.submitDisabled = true;
-      }
-    });
+    // const seasonId = selectedPlot.seasonId;
+    // const farmerId = selectedPlot.farmerId;
+    let filteredSamples =this.samples.filter((sample)=>sample.plotId==plotId);
+    // this.monitoringService.GetPlotsofFarmers(selectedPlot.seasonId, selectedPlot.farmerId).subscribe((resp) => {
+    //   const sample = resp as unknown as any[];
+    //   if (sample && sample.length > 0) {
+    //     let netAreaTotal = 0;
+    //     for (let i = 0; i < sample.length; i++) {
+    //       netAreaTotal += sample[i].netArea;
+    //     }
+    //     if (netAreaTotal >= 0 && netAreaTotal < 4) {
+    //       this.expectedSampleCount = 1;
+    //     } else if (netAreaTotal >= 4 && netAreaTotal < 8) {
+    //       this.expectedSampleCount = 2;
+    //     }
+    //     this.isSampleCountMatched =  this.sample.length >= this.expectedSampleCount ;
+    //     this.submitDisabled =    this.sample.length <  this.expectedSampleCount ;
+    //     if (this.isSampleCountMatched) {
+    //       this.alertMessage.displayAlertMessage(ALERT_CODES[ "SMMSE001" ]);
+    //     }
+    //   } else {
+    //     this.expectedSampleCount = 0;
+    //     this.isSampleCountMatched = false;
+    //     this.submitDisabled = true;
+    //   }
+    // });
   }
-
 
   initSeasons() {
     this.commonService.GetSeasons().subscribe((resp) => {
@@ -238,6 +247,7 @@ initSampleEntry(seasonId: number) {
   addSampleEntry() {
     this.submitLabel = 'Add Sample Entry';
     this.fbSampleEntry.controls['seasonId'].enable();
+    this.addFlag = true;
     this.showDialog = true;
   }
   initFarmers() {
@@ -250,12 +260,35 @@ initSampleEntry(seasonId: number) {
     this.fbSampleEntry.patchValue(sample)
     this.submitLabel = 'Update Plot Transfer';
     this.showDialog = true;
+    this.addFlag = false;
   }
 
   get FormControls() {
     return this.fbSampleEntry.controls;
   }
 
+
+
+  saveSampleEntry(): Observable<HttpEvent<any>> {
+    if (this.addFlag) return this.monitoringService.CreateSample(this.fbSampleEntry.value)
+    else return this.monitoringService.UpdatePlotTransfer(this.fbSampleEntry.value)
+  }
+
+  onSubmit() {
+
+    if (this.fbSampleEntry.valid) {
+      this.saveSampleEntry().subscribe((resp: any) => {
+        if (resp) {
+          this.fbSampleEntry.reset();
+          this.showDialog = false;
+        }
+      })
+    }
+    else {
+      this.fbSampleEntry.markAllAsTouched();
+    }
+
+  }
   // For Farmer
   clear(table: Table) {
     table.clear();
