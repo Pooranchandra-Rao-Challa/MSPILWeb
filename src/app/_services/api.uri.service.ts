@@ -209,4 +209,5 @@ export const GET_SAMPLE_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
 export const GET_SCREEN_DOC_NO_URI = "Common/GetDocNo";
 export const GET_SAMPLES_ENTRY_URI = "Monitoring/SeasonSamples";
 export const  GET_SAMPLES_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
+export const CREATE_SAMPLES_ENTRY_URI = "Monitoring/CreateSample";
 

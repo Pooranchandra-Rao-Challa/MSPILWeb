@@ -185,6 +185,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Lookup
   'SMAMLU001': 'Lookup Added Successfully',
   'SMAMLU002': 'Lookup Updated Successfully',
+//sample alert
 
+'SMMSE001': 'Alredy Takeen Sample You Dont Have Any Sample',
 
 }
