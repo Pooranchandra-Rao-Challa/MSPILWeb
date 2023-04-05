@@ -1,17 +1,16 @@
+import { NomineeDetailsDto } from './../../_models/monitoring';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { FarmersViewDto, LookupDetailViewDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
-import { IAgreementedPlotsViewDto, IFarmerInPlotOfferDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto,
-  PlotAgreementDto, PlotInfoDto, PlotsDto } from 'src/app/_models/monitoring';
+import { IAgreementedPlotsViewDto, IFarmerInPlotOfferDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotAgreementDto, PlotInfoDto, PlotsDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 export interface IHeader {
   field: string;
@@ -84,8 +83,7 @@ export class PlotagreementComponent implements OnInit {
     private appMasterService: AppMasterService,
     private monitoringService: MonitoringService,
     private lookupService: LookupService,
-    private jwtService: JWTService,
-    private alertMessage: AlertMessage,) {
+    private jwtService: JWTService,) {
     }
 
   ngOnInit(): void {
@@ -114,9 +112,13 @@ export class PlotagreementComponent implements OnInit {
   }
 
   initPlotNumbers(season: number, plotId: number) {
+    debugger
+    console.log('plotId', plotId);
     this.plotNumbers = [];
     this.monitoringService.GetPlotsInSeason(season, 'Agreement', plotId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as PlotInfoDto[];
+      console.log(this.plotNumbers);
+
     });
   }
 
@@ -131,9 +133,11 @@ export class PlotagreementComponent implements OnInit {
   }
 
   getPlotinfo(plotId: number) {
+    debugger
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
       this.plotInfo.plantingDate = this.plotInfo.plantingDate && new Date(this.plotInfo.plantingDate?.toString() + "");
+
       this.FormControls['plotId'].setValue(this.plotInfo.plotId);
       if (this.plotInfo.farmerId) {
         this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != this.plotInfo.farmerId);
@@ -193,6 +197,8 @@ export class PlotagreementComponent implements OnInit {
   getMaintenanceItemsForAgreement(plotAgreementId: number = -1) {
     this.monitoringService.GetMaintenanceItemsForAgreement(plotAgreementId).subscribe((resp) => {
       this.maintanenceItems = resp as unknown as MaintenanceItems;
+      console.log(this.maintanenceItems);
+
       this.initMaintanenceItems();
     });
   }
@@ -280,11 +286,10 @@ export class PlotagreementComponent implements OnInit {
       plotAgreementId: [pest.plotAgreementId],
       name: [pest.name],
       remarks: [pest.remarks],
-      identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
-      controlDate: [pest.controlDate && new Date(pest.controlDate)]
+      identifiedDate: [pest.identifiedDate],
+      controlDate: [pest.controlDate]
     })
   }
-
   createWeed(weed: MaintWeedicideDto): FormGroup {
     return this.formbuilder.group({
       plotWeedicideId: [weed.plotWeedicideId],
@@ -294,7 +299,6 @@ export class PlotagreementComponent implements OnInit {
       checked: [weed.selected],
     });
   }
-
   createFertlizer(fertilizer: MaintFertilizerDto): FormGroup {
     return this.formbuilder.group({
       plotFertilizerId: [fertilizer.plotFertilizerId],
@@ -304,7 +308,6 @@ export class PlotagreementComponent implements OnInit {
       checked: [fertilizer.selected],
     });
   }
-
   createDisease(disease: MaintDiseaseDto): FormGroup {
     return this.formbuilder.group({
       plotDiseaseId: [disease.plotDiseaseId],
@@ -312,8 +315,8 @@ export class PlotagreementComponent implements OnInit {
       plotAgreementId: [disease.plotAgreementId],
       name: [disease.name],
       remarks: [disease.remarks],
-      identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
-      controlDate: [disease.controlDate && new Date(disease.controlDate)]
+      identifiedDate: [disease.identifiedDate],
+      controlDate: [disease.controlDate]
     })
   }
 
@@ -324,9 +327,7 @@ export class PlotagreementComponent implements OnInit {
   editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto) {
     this.initPlotNumbers(this.currentSeason.seasonId!, plotAgreement.plotId);
     this.fbPlotAgreement.controls['seasonId'].setValue(this.currentSeason.seasonId!);
-    this.fbPlotAgreement.controls['seasonId'].disable();
     this.fbPlotAgreement.controls['plotId'].setValue(plotAgreement.plotId);
-    this.fbPlotAgreement.controls['plotId'].disable();
     this.fbPlotAgreement.controls['agreementedArea'].setValue(plotAgreement.agreementedArea);
     this.fbPlotAgreement.controls['agreementedDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
     this.fcNomineeDetails.controls['nomineeDetailId'].setValue(plotAgreement.nomineeId);
@@ -358,14 +359,12 @@ export class PlotagreementComponent implements OnInit {
 
   onSubmit() {
     if (this.fbPlotAgreement.valid) {
-      this.fbPlotAgreement.controls['seasonId'].enable();
-      this.fbPlotAgreement.controls['plotId'].enable();
+      console.log(this.fbPlotAgreement.value);
       this.savePlotAgreement().subscribe(resp => {
         if (resp) {
           this.initPlotAgreements(this.currentSeason.seasonId!);
           this.fbPlotAgreement.reset();
           this.showDialog = false;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAG001" : "SMOPAG002"]);
         }
       })
     }

@@ -1,4 +1,4 @@
-import { IPlotOfferViewDto } from 'src/app/_models/monitoring';
+import { IPlotOfferViewDto } from './../../_models/monitoring';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { GeoMasterService } from 'src/app/_services/geomaster.service';
@@ -15,7 +15,6 @@ import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { IFarmerInPlotReportsViewDto, IPlotReportViewDto, PlotReportDto } from 'src/app/_models/monitoring';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 export interface IHeader {
   field: string;
@@ -94,8 +93,7 @@ export class PlotreportsComponent implements OnInit {
     private lookupService: LookupService,
     private geoMasterService: GeoMasterService,
     private monitoringService: MonitoringService,
-    private jwtService: JWTService,
-    private alertMessage: AlertMessage,) { }
+    private jwtService: JWTService) { }
 
   ngOnInit() {
     this.permissions = this.jwtService.Permissions;
@@ -481,7 +479,6 @@ export class PlotreportsComponent implements OnInit {
           this.initPlotReports(this.currentSeason.seasonId!);
           this.fbPlotReport.reset();
           this.showDialog = false;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPR001" : "SMOPR002"]);
         }
       })
     }

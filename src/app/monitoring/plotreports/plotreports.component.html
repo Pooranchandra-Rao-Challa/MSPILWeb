@@ -1,6 +1,5 @@
 <div class="col-12">
   <div class="card">
-    <p-toast key="tst"></p-toast>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -60,44 +59,42 @@
         <tr>
           <td colspan="5">
             <div class="p-3">
-              <p-table [value]="farmer.objReportedPlots" [columns]="plotHeaders" dataKey="plotId"
-                [tableStyle]="{ width: 'min-content'}"
-                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+              <p-table [value]="farmer.objReportedPlots" [columns]="plotHeaders" dataKey="plotId" [tableStyle]="{ width: 'min-content'}"
+              styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" >
                 <ng-template pTemplate="header">
-        <tr>
-          <th></th>
-          <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-plotReport>
-        <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editPlotReport(plotReport, farmer)" *ngIf="!forapproval"
-              [disabled]="!permissions?.CanUpdatePlotReport"></button>
-            <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editApproval(plotReport, farmer)" *ngIf="forapproval"></button>
-          </td>
-          <td *ngFor="let col of plotHeaders">
-            <span
-              *ngIf="col?.field != 'plantingDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{plotReport[col.field]}}</span>
-            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
-              {{plotReport[col.field] | date: 'dd-MM-yyyy'}}
-            </span>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="15">There Are No Plots For This Farmer Yet.</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-  </td>
+                <tr>
+                  <th></th>
+                  <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
+                    {{col?.label}} <p-sortIcon field="code">
+                    </p-sortIcon>
+                    <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-plotReport>
+                <tr>
+                  <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+                      (click)="editPlotReport(plotReport, farmer)" *ngIf="!forapproval" [disabled]="!permissions?.CanUpdatePlotReport"></button>
+                    <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
+                      (click)="editApproval(plotReport, farmer)" *ngIf="forapproval"></button>
+                  </td>
+                  <td *ngFor="let col of plotHeaders">
+                    <span
+                      *ngIf="col?.field != 'plantingDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{plotReport[col.field]}}</span>
+                    <span *ngIf="col?.field == 'plantingDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
+                      {{plotReport[col.field] | date: 'dd-MM-yyyy'}}
+                    </span>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="15">There Are No Plots For This Farmer Yet.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+      </td>
   </tr>
   </ng-template>
 
@@ -132,6 +129,12 @@
                   formControlName="plotOfferId" optionValue="id" [virtualScroll]="true" [virtualScrollItemSize]="20"
                   (onChange)="getOfferInfo($event.value)"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotOfferId'].touched && FormControls['plotOfferId'].errors }">
+                  <!-- <ng-template pTemplate="selectedItem">
+                    <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
+                        <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + selectedCountry.code.toLowerCase()" style="width: 18px"/>
+                        <div>{{ selectedCountry.name }}</div>
+                    </div>
+                </ng-template> -->
                   <ng-template let-seasonPlotOffer pTemplate="item">
                     <div class="block align-items-center gap-2">
                       <div>{{seasonPlotOffer.offerNo}}</div>
@@ -151,30 +154,37 @@
                 <div class="field col-12 md:col-4">
                   <label>Ryot No:</label>
                   <p class="disabled_text">{{plotOfferDto.farmerCode}}</p>
+                  <!-- <input pInputText id="farmerId" type="text" formControlName="farmerId" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Ryot Name:</label>
                   <p class="disabled_text">{{plotOfferDto.farmerName}}</p>
+                  <!-- <input pInputText id="farmerName" type="text" formControlName="farmerName" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Father Name:</label>
                   <p class="disabled_text">{{plotOfferDto.fatherName}}</p>
+                  <!-- <input pInputText id="fatherName" type="text" formControlName="fatherName" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Farmer Division:</label>
                   <p class="disabled_text">{{plotOfferDto.farmerDivisionName}}</p>
+                  <!-- <input pInputText id="farmerDivision" type="text" formControlName="farmerDivision" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Farmer Circle:</label>
                   <p class="disabled_text">{{plotOfferDto.farmerCircleName}}</p>
+                  <!-- <input pInputText id="farmerCircle" type="text" formControlName="farmerCircle" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Farmer Section:</label>
                   <p class="disabled_text">{{plotOfferDto.farmerSectionName}}</p>
+                  <!-- <input pInputText id="farmerSection" type="text" formControlName="farmerSection" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Farmer Village:</label>
                   <p class="disabled_text">{{plotOfferDto.farmerVillageName}}</p>
+                  <!-- <input pInputText id="farmerVillage" type="text" formControlName="farmerVillage" readonly> -->
                 </div>
               </div>
             </p-fieldset>
@@ -183,24 +193,42 @@
                 <div class="field col-12 md:col-4">
                   <label>Plot Division:</label>
                   <p class="disabled_text">{{plotOfferDto.plotDivisionName}}</p>
+                  <!-- <input pInputText id="plotDivision" type="text" formControlName="plotDivision" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Plot Circle:</label>
                   <p class="disabled_text">{{plotOfferDto.plotCircleName}}</p>
+                  <!-- <input pInputText id="plotCircle" type="text" formControlName="plotCircle" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Plot Section:</label>
                   <p class="disabled_text">{{plotOfferDto.plotSectionName}}</p>
+                  <!-- <input pInputText id="plotSection" type="text" formControlName="plotSection" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Cane Area Village:</label>
                   <p class="disabled_text">{{plotOfferDto.plotVillageName}}</p>
+                  <!-- <input pInputText id="plotVillageName" type="text" formControlName="plotVillageName" readonly> -->
                 </div>
+                <!-- <div class="field col-12 md:col-4">
+                    <label>Cane Area Village:<sup class="p-error">*</sup></label>
+                    <p-dropdown placeholder="Select Cane Area Village" optionLabel="villageName" [options]="villages"
+                      optionValue="villageId" formControlName="caneAreaVillageId">
+                    </p-dropdown>
+                    <spanplotNumber
+                      *ngIf="FormControls['caneAreaVillageId'].touched && FormControls['caneAreaVillageId'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['caneAreaVillageId'].errors?.['required']">
+                        Please Select Cane Area Village.</div>
+                    </span>
+                  </div> -->
                 <div class="field col-12 md:col-4">
                   <label>Plot Number:</label>
                   <p class="disabled_text">{{FormControls['plotNumber'].value}}</p>
+                  <!-- <input pInputText id="plotNumber" type="text" formControlName="plotNumber" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
+
                 </div>
               </div>
               <div>
@@ -219,6 +247,10 @@
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Survey No:</label>
+                  <!-- <p-inputNumber id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo" mode="decimal"
+                      locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
+                    </p-inputNumber> -->
                   <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
                   <span *ngIf="FormControls['surveyNo'].touched && FormControls['surveyNo'].invalid">
@@ -274,9 +306,14 @@
                 <div class="field col-12 md:col-4">
                   <label>Agreed (Ton):</label>
                   <p class="disabled_text" style="font-weight: 800;">{{FormControls['agreed'].value}}</p>
+                  <!-- <input pInputText id="agreed" type="text" formControlName="agreed" readonly> -->
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">BIR Number:</label>
+                  <!-- <p-inputNumber id="birnumber" placeholder="Enter BIR No" formControlName="birnumber" mode="decimal"
+                      locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['birnumber'].touched && FormControls['birnumber'].errors }">
+                    </p-inputNumber> -->
                   <input pInputText id="birnumber" placeholder="Enter BIR No" formControlName="birnumber"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['birnumber'].touched && FormControls['birnumber'].errors }">
                   <span *ngIf="FormControls['birnumber'].touched && FormControls['birnumber'].invalid">
@@ -295,10 +332,12 @@
                       Please Select BIR Date.</div>
                   </span>
                 </div>
+
                 <div class="field col-12 md:col-4">
                   <label>Field Name:</label>
                   <input pInputText id="fieldName" type="text" formControlName="fieldName">
                 </div>
+
                 <div class="field col-12 md:col-4">
                   <label class="required">Plot Type:</label>
                   <p-dropdown placeholder="Select Plot Type" optionLabel="name" [options]="plotTypes"
@@ -348,7 +387,7 @@
             <p-fieldset legend="Plot Exist On" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-4">
-                  <label class="required">Method Of Irrigation:</label>
+                  <label>Method Of Irrigation:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Method of Irrigation" optionLabel="name"
                     [options]="methodofIrrigations" optionValue="lookupDetailId"
                     [autoDisplayFirst]="autoDisplayDrowdown" formControlName="methodOfIrrigationId" appendTo="body"
@@ -368,7 +407,7 @@
                   </p-inputNumber>
                 </div>
                 <div class="field col-12 md:col-4">
-                  <label class="required">Planting Method:</label>
+                  <label>Planting Method:<sup class="p-error">*</sup></label>
                   <p-dropdown placeholder="Select Planting Method" optionLabel="name" [options]="plantingMethods"
                     optionValue="lookupDetailId" formControlName="plantingMethodId" appendTo="body"
                     [autoDisplayFirst]="autoDisplayDrowdown"
@@ -470,6 +509,7 @@
                   </div>
                 </p-fieldset>
               </p-fieldset>
+
             </div>
             <p-fieldset legend="Area Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
               <div class="p-fluid p-formgrid grid">
@@ -492,13 +532,17 @@
               </div>
             </p-fieldset>
           </p-fieldset>
+
+
+
+
         </form>
       </div>
     </ng-template>
     <ng-template pTemplate="footer">
       <div class="col-4" style="float:right">
         <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
-          [disabled]="fbPlotReport.invalid" (click)="onSubmit()"></button>
+          (click)="onSubmit()"></button>
       </div>
     </ng-template>
   </p-dialog>

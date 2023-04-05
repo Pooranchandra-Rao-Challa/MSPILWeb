@@ -1,6 +1,5 @@
 <div class="col-12">
   <div class="card">
-    <p-toast key="tst"></p-toast>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -21,25 +20,27 @@
           <p-tabPanel header="Plot Assesment" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
+                <!-- {{ this.fbPlotAssesment.value |json}} -->
                 <div class="col-12">
                   <p-fieldset legend="Season" [toggleable]="true" class="line-height-3 m-0"
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Season:</label>
-                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                          [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
-                          (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
+                        <p-dropdown class="ml-2" placeholder="Select a season"
+                        optionLabel="name" [options]="seasons"
+                        [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
+                        (onChange)="initPlotReports($event.value, -1)" appendTo="body"
+                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['seasonId'].errors?.['required']">
-                            Please Select Season.</div>
+                            Select Season.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label class="required">Plot No:</label>
+                        <label>Plot No:<sup class="p-error">*</sup></label>
                         <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
                           (onChange)="getPlotinfo($event.value)" appendTo="body"
@@ -48,7 +49,7 @@
                         <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['plotId'].errors?.['required']">
-                            Please Select Plot No.</div>
+                            Select Plot No.</div>
                         </span>
                       </div>
                     </div>
@@ -59,39 +60,39 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Code: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerCode}}</p>
+                          <span class="disabled_text">{{plotInfo.farmerCode}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Name: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerName}}</p>
+                          <span class="disabled_text">{{plotInfo.farmerName}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Village: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerVillage}}</p>
+                          <span class="disabled_text">{{plotInfo.farmerVillage}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Division: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerDivision}}</p>
+                          <span class="disabled_text">{{plotInfo.farmerDivision}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold"> Farmer Circle: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerCircle}}</p>
+                          <span class="disabled_text">{{plotInfo.farmerCircle}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Section: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerSection}}</p>
+                          <span class="disabled_text">{{plotInfo.farmerSection}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Offered No: </label><br />
-                          <p class="disabled_text">{{plotInfo.offerNo}}</p>
+                          <span class="disabled_text">{{plotInfo.offerNo}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Crop Type: </label><br />
-                          <p class="disabled_text">{{plotInfo.cropType}}</p>
+                          <span class="disabled_text">{{plotInfo.cropType}}</span>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Crop: </label><br />
-                          <p class="disabled_text">{{plotInfo.Crop}}</p>
+                          <span class="disabled_text">{{plotInfo.Crop}}</span>
                         </div>
                       </div>
                     </p-fieldset>
@@ -99,59 +100,59 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Division: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotDivision}}</p>
+                          <span class="disabled_text">{{plotInfo.plotDivision}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Circle: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotCircle}}</p>
+                          <span class="disabled_text">{{plotInfo.plotCircle}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Section: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotSection}}</p>
+                          <span class="disabled_text">{{plotInfo.plotSection}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Village: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotVillage}}</p>
+                          <span class="disabled_text">{{plotInfo.plotVillage}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plant Type: </label><br />
-                          <p class="disabled_text">{{plotInfo.plantType}}</p>
+                          <span class="disabled_text">{{plotInfo.plantType}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Survey No: </label><br />
-                          <p class="disabled_text">{{plotInfo.surveyNo}}</p>
+                          <span class="disabled_text">{{plotInfo.surveyNo}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Reported Area: </label><br />
-                          <p class="disabled_text">{{plotInfo.reportedArea}}</p>
+                          <span class="disabled_text">{{plotInfo.reportedArea}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Planting Date: </label><br />
-                          <p class="disabled_text">{{plotInfo.plantingDate | date: mediumDate}}</p>
+                          <span class="disabled_text">{{plotInfo.plantingDate | date: mediumDate}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Variety: </label><br />
-                          <p class="disabled_text">{{plotInfo.variety}}</p>
+                          <span class="disabled_text">{{plotInfo.variety}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Agreed Ton: </label><br />
-                          <p class="disabled_text">{{plotInfo.agreedTon}}</p>
+                          <span class="disabled_text">{{plotInfo.agreedTon}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Field Name: </label><br />
-                          <p class="disabled_text">{{plotInfo.fieldName}}</p>
+                          <span class="disabled_text">{{plotInfo.fieldName}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">BIR Number: </label><br />
-                          <p class="disabled_text">{{plotInfo.birNumber}}</p>
+                          <span class="disabled_text">{{plotInfo.birNumber}}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">BIR Date: </label><br />
-                          <p class="disabled_text">{{plotInfo.birDate | date: mediumDate }}</p>
+                          <span class="disabled_text">{{plotInfo.birDate | date: mediumDate }}</span>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Type: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotType}}</p>
+                          <span class="disabled_text">{{plotInfo.plotType}}</span>
                         </div>
                       </div>
                     </p-fieldset>
@@ -160,17 +161,17 @@
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label class="required">Assessed Area:</label>
+                        <label>Assessed Area:<sup class="p-error">*</sup></label>
                         <input pInputText type="name" formControlName="measuredArea" placeholder="Enter Assessed Area"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['measuredArea'].touched && FormControls['measuredArea'].errors }">
                         <span *ngIf="FormControls['measuredArea'].touched && FormControls['measuredArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['measuredArea'].errors?.['required']">
-                            Please Select Assessed Area.</div>
+                            Select Assessed Area.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
-                        <label class="required">Assessed Date:</label>
+                        <label>Assessed Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
                           formControlName="assessedDate" placeholder="Please Select assessed Date" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['assessedDate'].touched && FormControls['assessedDate'].errors }">
@@ -178,7 +179,7 @@
                         <span *ngIf="FormControls['assessedDate'].touched && FormControls['assessedDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['assessedDate'].errors?.['required']">
-                            Please Select Assessed Date.</div>
+                            Select Assessed Date.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3 ">
@@ -199,14 +200,26 @@
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Weed Status:</label>
                       <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="weedstatus" appendTo="body"
-                        formControlName="weedStatusId" [autoDisplayFirst]="false" placeholder="Select Weed Status">
+                        formControlName="weedStatusId" [autoDisplayFirst]="false" placeholder="Select Weed Status"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['weedStatusId'].touched && FormControls['weedStatusId'].errors }">
                       </p-dropdown>
+                      <span *ngIf="FormControls['weedStatusId'].touched && FormControls['weedStatusId'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['weedStatusId'].errors?.['required']">
+                          Select Weed Status.</div>
+                      </span>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Inter Croping:</label>
                       <p-dropdown optionLabel="name" [options]="cropstypes" optionValue="lookupDetailId" appendTo="body"
-                        formControlName="interCropId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
+                        formControlName="interCropId" [autoDisplayFirst]="false" placeholder="Select Inter Croping"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['interCropId'].touched && FormControls['interCropId'].errors }">
                       </p-dropdown>
+                      <span *ngIf="FormControls['interCropId'].touched && FormControls['interCropId'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['interCropId'].errors?.['required']">
+                          Select Inter Croping.</div>
+                      </span>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Micronutrient Deficiency:</label><br>
@@ -240,6 +253,7 @@
                   </div>
                 </div>
               </p-tabPanel>
+
               <p-tabPanel header="Pests" class="col-12">
                 <div class="col-12">
                   <div formArrayName='pests' class="checkboxList">
@@ -276,6 +290,7 @@
                             <input pInputText formControlName="remarks">
                           </td>
                         </tr>
+
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
                         <tr>
@@ -313,6 +328,7 @@
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
                       [rowsPerPageOptions]="[10,25,50]">
+
                       <ng-template pTemplate="header">
                         <tr>
                           <th>Name</th>
@@ -354,13 +370,12 @@
       <ng-template pTemplate="footer">
         <div class="col-12">
           <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary" [disabled]="fbPlotAssesment.invalid"
+            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary"
               (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>
     </p-dialog>
-
     <!-- table -->
     <p-table #assessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
@@ -372,8 +387,8 @@
           <div>
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
-              <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full">
+              <input pInputText type="text" #filter (input)="onGlobalFilter(assessments, $event)"
+                placeholder="Search Keyword" class="w-full">
             </span>
             <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssesments($event.value)" optionValue="seasonId">
@@ -398,8 +413,13 @@
               class="p-button-text p-button-rounded p-button-plain"
               [icon]="expanded ? 'pi pi-chevron-down':  'pi pi-chevron-right'"></button>
           </td>
+
           <td *ngFor="let col of farmerHeader">
-            {{farmer[col.field]}}
+            <span>{{farmer[col.field]}}</span>
+            <span *ngIf="col?.field == 'assessedDate' ||col?.field == 'assessedDate'">
+              {{farmer[col.field] | date: 'dd-MM-yyyy'}}
+            </span>
+
           </td>
         </tr>
       </ng-template>
@@ -420,15 +440,13 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotAssessment>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAssessment(plotAssessment)"
-              class="p-element p-ripple p-button-text p-button p-component"
-              [disabled]="!permissions?.CanUpdatePlotAssessment"></button>
+          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAssessment(plotAssessment, farmer)"
+              class="p-element p-ripple p-button-text p-button p-component" [disabled]="!permissions?.CanUpdatePlotAssessment"></button>
           </td>
           <td *ngFor="let col of plotHeader">
 
-            <span
-              *ngIf="col?.field != 'PlantingDate' && col?.field != 'AssessedDate'">{{plotAssessment[col.field]}}</span>
-            <span *ngIf="col?.field == 'PlantingDate' || col?.field == 'AssessedDate'">
+            <span *ngIf="col?.field != 'offerDate' && col?.field != 'plantingDate'">{{plotAssessment[col.field]}}</span>
+            <span *ngIf="col?.field == 'offerDate' || col?.field == 'plantingDate'">
               {{plotAssessment[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
@@ -443,6 +461,7 @@
   </div>
   </td>
   </tr>
+
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
@@ -455,6 +474,5 @@
     </tr>
   </ng-template>
   </p-table>
-
 </div>
 </div>

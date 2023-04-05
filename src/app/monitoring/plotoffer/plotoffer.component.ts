@@ -7,7 +7,7 @@ import { CommonService } from '../../_services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { PlotOfferDto, IFarmerInPlotOfferDto, IFarmerPlotOffersViewDto } from 'src/app/_models/monitoring';
+import { PlotOfferDto,  IFarmerInPlotOfferDto, IFarmerPlotOffersViewDto } from 'src/app/_models/monitoring';
 import { FarmersViewDto, plantTypeViewDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
 import { VillagesViewDto } from 'src/app/_models/geomodels';
 import { Observable } from 'rxjs';
@@ -16,7 +16,6 @@ import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 export interface IHeader {
   field: string;
@@ -53,19 +52,29 @@ export class PlotofferComponent implements OnInit {
   forapproval: boolean = false;
   isApproved: boolean = false; // for ture value use this icon class' pi-thumbs-up-fill' else ' pi-thumbs-up'
   permissions: any;
-  plantFrom!: Date;
-  plantTo!: Date;
+
   // varietyTypes: any;
   farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    // { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
+    // { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
+    // { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+    // { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    // { field: 'expectedArea', header: 'expectedArea', label: 'Area' },
+    // { field: 'varietyId', header: 'varietyId', label: 'Variety' },
+    // { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
   ];
 
   plotHeaders: IHeader[] = [
+    // { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
     { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
+    // { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
+    // { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    // { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
     { field: 'expectedArea', header: 'expectedArea', label: 'Area' },
@@ -80,8 +89,7 @@ export class PlotofferComponent implements OnInit {
     private monitoringService: MonitoringService,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
-    private jwtService: JWTService,
-    private alertMessage: AlertMessage,) {
+    private jwtService: JWTService) {
   }
 
   ngOnInit(): void {
@@ -96,6 +104,18 @@ export class PlotofferComponent implements OnInit {
     this.initReasonForNotPlanting();
     this.plotOfferForm();
   }
+
+  // get CurrentSeasonCode() : string {
+  //   let fullYear = new Date().getFullYear();
+  //   let shortYear = parseInt(fullYear.toString().substring(2, 4));
+  //   let month = new Date().getMonth();
+  //   if (month >= 10) {
+  //     return `${fullYear}-${shortYear+1}`;
+  //   }
+  //   else {
+  //     return `${fullYear-1}-${shortYear}`;
+  //   }
+  // }
 
   initPlotOffers(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
@@ -155,6 +175,9 @@ export class PlotofferComponent implements OnInit {
     });
   }
 
+  plantFrom!: Date;
+  plantTo!: Date;
+
   getNewOfferNo(seasonId: number) {
     this.seasons?.forEach((value) => {
       if (value.seasonId == seasonId) {
@@ -204,7 +227,10 @@ export class PlotofferComponent implements OnInit {
   addPlotOffer() {
     this.plotOffer = new PlotOfferDto();
     this.submitLabel = 'Add Allotted Plot';
+    // this.fbPlotOffer.controls['offerNo'].disable();
     this.fbPlotOffer.controls['seasonId'].enable();
+    // this.fbPlotOffer.controls['plotVillageId'].enable();
+    // this.fbPlotOffer.controls['farmerId'].enable();
     this.fbPlotOffer.controls['isNewFarmer'].setValue(false);
     this.fbPlotOffer.controls['seasonId'].setValue(this.currentSeason.seasonId);
     this.getNewOfferNo(this.currentSeason.seasonId || 0);
@@ -247,6 +273,10 @@ export class PlotofferComponent implements OnInit {
     });
   }
 
+  // onGlobalFilter(table: Table, event: Event) {
+  //   table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  // }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
@@ -260,7 +290,9 @@ export class PlotofferComponent implements OnInit {
     this.fbPlotOffer.controls['offerNo'].disable();
     this.plotOffer.offerDate = plotOffer.offerDate && new Date(plotOffer.offerDate?.toString() + "");
     this.plotOffer.farmerId = farmer.farmerId;
+    // this.fbPlotOffer.controls['farmerId'].disable();
     this.plotOffer.plotVillageId = plotOffer.plotVillageId;
+    // this.fbPlotOffer.controls['plotVillageId'].disable();
     this.plotOffer.expectedArea = plotOffer.expectedArea;
     this.plotOffer.plantTypeId = plotOffer.plantTypeId;
     this.plotOffer.expectedPlantingDate = plotOffer.expectedPlantingDate && new Date(plotOffer.expectedPlantingDate?.toString() + "");
@@ -282,6 +314,8 @@ export class PlotofferComponent implements OnInit {
     this.addFlag = false;
     this.submitLabel = 'Update Allotted Plot';
     this.showDialog = true;
+
+
   }
 
   editApproval(plotOffer: IFarmerPlotOffersViewDto, farmer: IFarmerInPlotOfferDto) {
@@ -299,6 +333,8 @@ export class PlotofferComponent implements OnInit {
     if (this.fbPlotOffer.valid) {
       this.fbPlotOffer.controls['seasonId'].enable();
       this.fbPlotOffer.controls['offerNo'].enable();
+      // this.fbPlotOffer.controls['farmerId'].enable();
+      // this.fbPlotOffer.controls['plotVillageId'].enable();
       this.fbPlotOffer.value.offerDate = FORMAT_DATE(this.fbPlotOffer.value.offerDate);
       this.fbPlotOffer.value.expectedPlantingDate = FORMAT_DATE(this.fbPlotOffer.value.expectedPlantingDate);
       this.saveAllottedPlot().subscribe(resp => {

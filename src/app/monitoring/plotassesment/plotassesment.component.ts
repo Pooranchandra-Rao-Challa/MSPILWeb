@@ -4,14 +4,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
 import { LookupDetailDto, SeasonDto, SeasonViewDto, } from 'src/app/_models/applicationmaster';
-import { IFarmerInPlotOfferDto, MaintenanceItems, MaintWeedicideDto, MaintDiseaseDto, MaintFertilizerDto, MaintPestDto, IPlotAssessmentViewDto, PlotInfoDto, PlotsDto, PlotAssessmentDto } from 'src/app/_models/monitoring';
+import { IFarmerInPlotOfferDto, MaintenanceItems, MaintWeedicideDto, MaintDiseaseDto, MaintFertilizerDto, MaintPestDto, PlotAssessmentViewDto, PlotInfoDto, PlotsDto, PlotAssessmentDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 
 export interface IHeader {
@@ -27,10 +26,10 @@ export interface IHeader {
 })
 
 export class PlotassesmentComponent implements OnInit {
-  plotinfo: any;
+  plotinfo:any;
   showDialog: boolean = false;
   submitLabel!: string;
-  @ViewChild('filter') filter!: ElementRef;
+  filter: any;
   loading: boolean = true;
   addFlag: boolean = true;
   fbPlotAssesment!: FormGroup
@@ -45,17 +44,16 @@ export class PlotassesmentComponent implements OnInit {
   plotInfo: PlotsDto = {};
   mediumDate: string = MEDIUM_DATE;
   maintanenceItems?: MaintenanceItems = {}
-  activeIndex?= 0;
-  activeIndex1?= 0;
-  activeIndex2?= 0;
+  activeIndex?=0;
+  activeIndex1?=0;
+  activeIndex2?=0;
   permissions: any;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private lookupService: LookupService,
     private monitoringService: MonitoringService,
-    private jwtService: JWTService,
-    private alertMessage: AlertMessage,) { }
+    private jwtService: JWTService) { }
 
   farmerHeader: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
@@ -84,10 +82,7 @@ export class PlotassesmentComponent implements OnInit {
     this.submitLabel = "Add Assesment";
     this.addFlag = true;
     this.showDialog = true;
-    this.getMaintenanceItemsForAssessment();
-  }
 
-  getMaintenanceItemsForAssessment(plotAssessmentId: number = -1) {
     this.monitoringService.GetMaintenanceItemsForAssessment(plotAssessmentId).subscribe((resp) => {
       this.maintanenceItems = resp as unknown as MaintenanceItems;
       this.initMaintanenceItems();
@@ -116,16 +111,15 @@ export class PlotassesmentComponent implements OnInit {
       diseaseArray.push(this.createDisease(disease))
     })
   }
-
-  ClearForm() {
+  ClearForm(){
     var temp = Object.assign({}, this.currentSeason);
     this.fbPlotAssesment.reset();
-    this.plotInfo = {};
+    this.plotInfo ={};
     (this.fbPlotAssesment.get("weedicides") as FormArray).clear();
     (this.fbPlotAssesment.get("fertilizers") as FormArray).clear();
     (this.fbPlotAssesment.get("pests") as FormArray).clear();
     (this.fbPlotAssesment.get("diseases") as FormArray).clear();
-    this.activeIndex = this.activeIndex1 = this.activeIndex2 = 0;
+    this.activeIndex = this.activeIndex1 = this.activeIndex2 =0;
     this.currentSeason = Object.assign({}, temp);
     this.fbPlotAssesment.get('seasonId')?.patchValue(this.currentSeason.seasonId);
   }
@@ -149,40 +143,34 @@ export class PlotassesmentComponent implements OnInit {
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
-      this.initPlotNumbers(this.currentSeason.seasonId!, -1);
+      this.initPlotReports(this.currentSeason.seasonId!, -1);
       this.initPlotAssesments(this.currentSeason.seasonId!);
     });
   }
-
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
     })
   }
-
-  initPlotNumbers(season: number, plotId: number) {
+  initPlotReports(season: number, plotId: number) {
     this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
     })
   }
 
   initPlotAssesments(seasonId: number) {
-    let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
+    this.monitoringService.GetPlotAssessments(seasonId).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
       this.plotAssessments.forEach((farmer) => {
-        farmer.ObjMeasuredPlots = JSON.parse(farmer.measuredPlots) as IPlotAssessmentViewDto[]
+        farmer.ObjMeasuredPlots = JSON.parse(farmer.measuredPlots) as PlotAssessmentViewDto[]
       })
     })
   }
-
   onSearch() {
     this.initPlotAssesments(this.currentSeason.seasonId!);
   }
-
   plotAssesmentForm() {
     this.fbPlotAssesment = this.formbuilder.group({
-      plotAssessmentId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       plotId: [, (Validators.required)],
       measuredArea: [null, Validators.required],
@@ -199,13 +187,11 @@ export class PlotassesmentComponent implements OnInit {
       diseases: this.formbuilder.array([]),
     })
   }
-
   initCropType() {
     this.lookupService.Crops().subscribe((resp) => {
       this.cropstypes = resp as unknown as LookupDetailDto[];
     });
   }
-
   initweedstatus() {
     this.lookupService.WeedStatuses().subscribe((resp) => {
       this.weedstatus = resp as unknown as LookupDetailDto[];
@@ -221,48 +207,40 @@ export class PlotassesmentComponent implements OnInit {
 
   createpests(pest: MaintPestDto): FormGroup {
     return this.formbuilder.group({
-      plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotAssessmentId: [pest.plotAssessmentId],
       name: [pest.name],
       remarks: [pest.remarks],
-      identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
-      controlDate: [pest.controlDate && new Date(pest.controlDate)]
+      identifiedDate: [pest.identifiedDate],
+      controlDate: [pest.controlDate]
     })
   }
-
   createWeed(weed: MaintWeedicideDto): FormGroup {
     return this.formbuilder.group({
-      plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotAssessmentId: [weed.plotAssessmentId],
       name: [weed.name],
       checked: [weed.selected],
     });
   }
-
   createFertlizer(fertilizer: MaintFertilizerDto): FormGroup {
     return this.formbuilder.group({
-      plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotAssessmentId: [fertilizer.plotAssessmentId],
       name: [fertilizer.name],
       checked: [fertilizer.selected],
     });
   }
-
   createDisease(disease: MaintDiseaseDto): FormGroup {
     return this.formbuilder.group({
-      plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotAssessmentId: [disease.plotAssessmentId],
       name: [disease.name],
       remarks: [disease.remarks],
-      identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
-      controlDate: [disease.controlDate && new Date(disease.controlDate)]
+      identifiedDate: [disease.identifiedDate],
+      controlDate: [disease.controlDate]
     })
   }
-
   savePlotAssessment(): Observable<HttpEvent<PlotAssessmentDto>> {
     var postValues = this.fbPlotAssesment.value;
     postValues.weedicides = postValues.weedicides.filter((weed: any) => weed.checked == true)
@@ -272,39 +250,33 @@ export class PlotassesmentComponent implements OnInit {
     if (this.addFlag) return this.monitoringService.CreatePlotAssessment(postValues)
     else return this.monitoringService.UpdatePlotAssessment(postValues)
   }
-
-  editPlotAssessment(plotAssesment: IPlotAssessmentViewDto) {
-    this.initPlotNumbers(this.currentSeason.seasonId!, plotAssesment?.plotId);
-    this.plotAssesment.plotAssessmentId = plotAssesment.plotAssessmentId;
-    this.plotAssesment.plotId = plotAssesment?.plotId;
-    this.fbPlotAssesment.controls['seasonId'].disable();
-    this.fbPlotAssesment.controls['plotId'].disable();
-    this.plotAssesment.measuredArea = plotAssesment.assessedArea;
-    this.plotAssesment.assessedDate = plotAssesment.assessedDate && new Date(plotAssesment.assessedDate);
+  editPlotAssessment(plotAssesment:any, plotInfo:any) {
+    this.initPlotReports(this.currentSeason.seasonId!, plotAssesment?.PlotId);
+     this.plotAssesment.plotAssessmentId = plotAssesment.PlotAssessmentId;
+     this.plotAssesment.plotId = plotAssesment?.PlotId;
+    // this.fbPlotAssesment.controls['plotId'].disable();
+     this.plotAssesment.measuredArea = plotAssesment.MeasuredArea;
+    // this.plotAssesment.measuredDate = plotAssesment.AssessedDate;
     this.plotAssesment.isaDemoPlot = plotAssesment.isADemoPlot;
     this.plotAssesment.weedStatusId = plotAssesment.weedStatusId;
     this.plotAssesment.interCropingId = plotAssesment.interCropId;
-    this.plotAssesment.hasMicroNutrientDeficiency = plotAssesment.isTrashMulchingDone;
+    this.plotAssesment.hasMicroNutrientDeficiency = plotAssesment.IsTrashMulchingDone;
     this.plotAssesment.isGapsFillingDone = plotAssesment.isGapsFillingDone;
-    this.fbPlotAssesment.patchValue(this.plotAssesment);
-    this.getPlotinfo(plotAssesment.plotId);
-    this.getMaintenanceItemsForAssessment(plotAssesment.plotAssessmentId);
+    // this.fbPlotAssesment.patchValue(this.plotAssesment);
+    this.getPlotinfo( plotAssesment.PlotId);
+    this.initPlotAssesment(plotAssesment.plotAssesment);
 
     this.addFlag = false;
     this.submitLabel = 'Update Assesment';
     this.showDialog = true;
   }
-
   onSubmit() {
     if (this.fbPlotAssesment.valid) {
-      this.fbPlotAssesment.controls['seasonId'].enable();
-      this.fbPlotAssesment.controls['plotId'].enable();
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
           this.savePlotAssessment();
           this.fbPlotAssesment.reset();
           this.showDialog = false;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAS001" : "SMOPAS002"]);
         }
       })
       // this.monitoringService.UpdatePlotAssessment(this.plotinfo);
@@ -314,10 +286,13 @@ export class PlotassesmentComponent implements OnInit {
     }
   }
 
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
-    this.onSearch();
   }
 
 }

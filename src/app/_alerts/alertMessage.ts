@@ -193,27 +193,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Lookup
   'SMAMLU001': 'Lookup Added Successfully',
   'SMAMLU002': 'Lookup Updated Successfully',
+//sample alert
 
-  // Monitoring Screens
-
-  // Plot Offers
-  'SMOPO001': 'Plot Offers Added Successfully',
-  'SMOPO002': 'Plot Offers Updated Successfully',
-
-  // Plot Reports
-  'SMOPR001': 'Plot Reports Added Successfully',
-  'SMOPR002': 'Plot Reports Updated Successfully',
-
-  // Plot Assessment
-  'SMOPAS001': 'Plot Assessment Added Successfully',
-  'SMOPAS002': 'Plot Assessment Updated Successfully',
-
-  // Plot Agreement
-  'SMOPAG001': 'Plot Agreement Added Successfully',
-  'SMOPAG002': 'Plot Agreement Updated Successfully',
-
-  // Plot Yield
-  'SMOPY001': 'Plot Yield Added Successfully',
-  'SMOPY002': 'Plot Yield Updated Successfully',
+'SMMSE001': 'Alredy Takeen Sample You Dont Have Any Sample',
 
 }
