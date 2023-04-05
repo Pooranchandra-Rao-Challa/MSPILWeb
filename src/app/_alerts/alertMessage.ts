@@ -28,6 +28,7 @@ export class AlertMessage {
  * ---------------------------------------------------------------------------
  * Security : S
  * Masters : M
+ * Monitoring: MO
  * ---------------------------------------------------------------------------
  * Masters; Geo Masters : GM, Bill Masters : BM, Application Masters : AM
  * ---------------------------------------------------------------------------
@@ -58,7 +59,7 @@ export class AlertMessage {
  * Seasons:SE
  * Farmers:FA
  * HGLs :HG
- * TPTs 
+ * TPTs
  * TPTs : T
  * Plant Types
  * Plant Sub Types
@@ -69,6 +70,15 @@ export class AlertMessage {
  * Shift:SH
  * Sample Slabs:SS
  *
+ * ---------------------------------------------------------------------------
+ * Monitoring Screens
+ * ---------------------------------------------------------------------------
+ * Screens;
+ * Plot Offers : PO
+ * Plot Reports : PR
+ * Plot Assessments : PAS
+ * Plot Agreements : PAG
+ * Plot Yields : PY
  * -------------------------------------
  * If the screens has more funcitonal items then
  * Like in settings use frist letter as code, if same
@@ -91,9 +101,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
 
-
-
-  //Application Master => 
+  //Application Master =>
 
   //Seasons Message
   'SMAMSE001': 'Season Added Successfully',
@@ -114,7 +122,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMAMFA001': 'Farmer Added Successfully',
   'SMAMFA002': 'Farmer Updated Successfully',
 
-  //Geo Master => 
+  //Geo Master =>
   //State
   'SMGMST001': 'State Added Successfully',
   'SMGMST002': 'State Updated Successfully',
@@ -162,7 +170,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Vehicle Message
   'SMAMVE001': 'Vehicle Added Successfully',
   'SMAMVE002': 'Vehicle Updated Successfully',
-  
+
   //Ware House
   'SMBMWH001': 'Diesel Bunk Added Successfully',
   'SMBMWH002': 'Diesel Bunk Updated Successfully',
