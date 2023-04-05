@@ -631,6 +631,7 @@ export class FarmersViewDto {
   createdBy?: string;
   updatedAt?: string;
   updatedBy?: string;
+  displayValue?: string;
 }
 
 export class FarmerDto {

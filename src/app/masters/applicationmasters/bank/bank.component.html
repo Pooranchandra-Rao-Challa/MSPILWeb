@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Bank" icon="pi pi-plus" class="p-button-primary p-mr-2"
-                    (click)=" initBankdailog()"></button>
+                    (click)=" initBankdailog()" *ngIf="permissions.CanCreateBank"></button>
             </ng-template>
         </p-toolbar>
 
@@ -258,7 +258,7 @@
             <ng-template pTemplate="body" let-bank>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil" (click)="editBank(bank)"
-                            class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                           [disabled]="!permissions.CanUpdateBank" class="p-element p-ripple p-button-text p-button p-component"></button></td>
                     <td>{{bank.code}}</td>
                     <td>{{bank.name}}</td>
                     <td style="text-align:center">

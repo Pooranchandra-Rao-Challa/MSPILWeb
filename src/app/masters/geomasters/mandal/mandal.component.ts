@@ -27,6 +27,7 @@ export class MandalComponent implements OnInit {
   addFlag: boolean = true;
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
+  permissions:any;
 
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -46,6 +47,7 @@ export class MandalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.initMandals();
 
     this.commonService.GetDistricts().subscribe((resp) => {

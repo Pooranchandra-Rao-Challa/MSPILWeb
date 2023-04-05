@@ -14,6 +14,7 @@ import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { IFarmerInPlotReportsViewDto, IPlotReportViewDto, PlotReportDto } from 'src/app/_models/monitoring';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 export interface IHeader {
   field: string;
@@ -56,6 +57,7 @@ export class PlotreportsComponent implements OnInit {
   plotOffer: any;
   plotOfferDto: IPlotOfferViewDto = {}
   autoDisplayDrowdown: boolean = false;
+  permissions: any;
 
   farmerHeaders: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
@@ -88,9 +90,11 @@ export class PlotreportsComponent implements OnInit {
     private appMasterService: AppMasterService,
     private lookupService: LookupService,
     private geoMasterService: GeoMasterService,
-    private monitoringService: MonitoringService) { }
+    private monitoringService: MonitoringService,
+    private jwtService: JWTService) { }
 
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
     this.initCurrentSeason(this.CurrentSeasonCode);
     this.initSeasons();
@@ -148,11 +152,7 @@ export class PlotreportsComponent implements OnInit {
       let plotOffer2 = resp as any;
       if (plotOffer2 && plotOffer2.length) {
         this.plotOfferDto = plotOffer2[0]
-        console.log(this.plotOfferDto );
-
         this.fbPlotReport.controls['farmerId'].setValue(this.plotOfferDto?.farmerId);
-
-
         // this.fbPlotReport.controls['farmerName'].setValue(plotOffer2[0]?.farmerName);
         // this.fbPlotReport.controls['fatherName'].setValue(plotOffer2[0]?.fatherName);
         // this.fbPlotReport.controls['farmerDivision'].setValue(plotOffer2[0]?.farmerDivision);

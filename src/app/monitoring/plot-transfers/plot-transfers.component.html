@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Plat Transfer" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addPlotTransfer()"></button>
+          (click)="addPlotTransfer()" *ngIf="permissions?.CanCreatePlotTransfer"></button>
       </ng-template>
     </p-toolbar>
     <!-- dialog -->
@@ -25,8 +25,8 @@
                   <div class="field col-12 md:col-4">
                     <label>Season:</label>
                     <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                    [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" 
-                    (onChange)="initPlotReports($event.value)"  appendTo="body">
+                    [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
+                    (onChange)="initPlotReports($event.value, -1)"  appendTo="body">
                   </p-dropdown>
                 </div>
                       <!-- (onChange)="getNewOfferNo($event.value)" -->
@@ -80,7 +80,7 @@
                           *ngIf="FormControls['plotId'].errors?.['required']">
                           Select Plot No.</div>
                       </span>
-                    </div>  
+                    </div>
                 <div class="field col-12 md:col-4">
                   <label>Net Area:<sup class="p-error">*</sup></label>
                   <input pInputText id="name" type="text" placeholder="Enter Net Area">
@@ -114,7 +114,7 @@
                 <p-fieldset legend="Transfer To Farmer" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-4">
-                    <label>To Farmer Code:<sup class="p-error">*</sup></label>         
+                    <label>To Farmer Code:<sup class="p-error">*</sup></label>
                     <p-dropdown optionLabel="code" [options]="filteredTofarmers " optionValue="id" [filter]="true"
                     filterBy="code,name" formControlName="toFarmerId" placeholder="Select Farmer"
                     (onChange)="onSelectedToFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="20" appendTo="body"
@@ -136,7 +136,7 @@
                 <div class="field col-12 md:col-4">
                   <label>Farmer Name:</label>
                   <input pInputText id="toFarmerName" type="text" formControlName="toFarmerName" readonly>
-                </div>           
+                </div>
                   <div class="field col-12 md:col-4">
                     <label>Plot Transfer Reason:<sup class="p-error">*</sup></label>
                     <p-dropdown formControlName="plotTransferReasonId"   optionLabel="name" [options]="transferResons" optionValue="lookupDetailId"placeholder="Select Plot Transfer Type"
@@ -198,17 +198,17 @@
       <ng-template pTemplate="body" let-plotTransfer>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editPlotTransfer(plotTransfer)"></button>
+              (click)="editPlotTransfer(plotTransfer)" [disabled]="!permissions?.CanUpdatePlotTransfer"></button>
           </td>
           <td *ngFor="let col of headers">
             <span *ngIf="col?.field != 'docDate' && col?.field != 'plantingDate'">{{plotTransfer[col.field]}}</span>
             <span *ngIf="col?.field == 'docDate' || col?.field == 'plantingDate'">
-              {{plotTransfer[col.field] | date: 'dd-MM-yyyy'}}      
+              {{plotTransfer[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="emptymessage"> 
+      <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="20" class="md:text-center">No Plot Transfers Found.</td>
         </tr>

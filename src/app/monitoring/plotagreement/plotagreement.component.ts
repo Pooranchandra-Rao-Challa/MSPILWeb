@@ -10,6 +10,7 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 export interface IHeader {
   field: string;
@@ -37,7 +38,7 @@ export class PlotagreementComponent implements OnInit {
   currentSeason: SeasonDto = {};
   plotNumbers: PlotInfoDto[] = [];
   relationTypes: LookupDetailViewDto[] = [];
-  farmers: FarmersViewDto[] = [];
+  guarantor1Farmers: FarmersViewDto[] = [];
   guarantor2Farmers: FarmersViewDto[] = [];
   guarantor3Farmers: FarmersViewDto[] = [];
   weedStatus: LookupDetailViewDto[] = [];
@@ -46,6 +47,8 @@ export class PlotagreementComponent implements OnInit {
   activeIndex?= 0;
   activeIndex1?= 0;
   activeIndex2?= 0;
+  todayDate = new Date();
+  permissions: any;
 
   farmerHeaders: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
@@ -79,9 +82,12 @@ export class PlotagreementComponent implements OnInit {
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private monitoringService: MonitoringService,
-    private lookupService: LookupService,) { }
+    private lookupService: LookupService,
+    private jwtService: JWTService,) {
+    }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initSeasons();
     this.initCurrentSeason(CURRENT_SEASON());
     this.initRelationTypes();
@@ -100,14 +106,19 @@ export class PlotagreementComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      this.initPlotNumbers(this.currentSeason.seasonId!, -1);
       this.initPlotAgreements(this.currentSeason.seasonId!);
-      this.initPlotNumbers(this.currentSeason.seasonId!);
     });
   }
 
-  initPlotNumbers(season: number) {
-    this.monitoringService.GetPlotsInSeason(season, 'Agreement').subscribe((resp) => {
+  initPlotNumbers(season: number, plotId: number) {
+    debugger
+    console.log('plotId', plotId);
+    this.plotNumbers = [];
+    this.monitoringService.GetPlotsInSeason(season, 'Agreement', plotId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as PlotInfoDto[];
+      console.log(this.plotNumbers);
+
     });
   }
 
@@ -125,9 +136,11 @@ export class PlotagreementComponent implements OnInit {
     debugger
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+      this.plotInfo.plantingDate = this.plotInfo.plantingDate && new Date(this.plotInfo.plantingDate?.toString() + "");
+
       this.FormControls['plotId'].setValue(this.plotInfo.plotId);
       if (this.plotInfo.farmerId) {
-        this.farmers = this.farmers?.filter(x => x.farmerId != this.plotInfo.farmerId);
+        this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != this.plotInfo.farmerId);
         this.fcNomineeDetails.controls['guarantor1'].setValue(null);
         this.fcNomineeDetails.controls['guarantor2'].setValue(null);
         this.fcNomineeDetails.controls['guarantor3'].setValue(null);
@@ -136,17 +149,17 @@ export class PlotagreementComponent implements OnInit {
   }
 
   getGuarantor2(farmerId: number) {
-    this.guarantor2Farmers = this.farmers?.filter(x => x.farmerId != farmerId);
+    this.guarantor2Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
   }
 
   getGuarantor3Farmers(farmerId: number) {
     this.guarantor3Farmers = this.guarantor2Farmers?.filter(x => x.farmerId != farmerId);
-    this.farmers = this.farmers?.filter(x => x.farmerId != farmerId);
+    this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
   }
 
   onGuarantor3(farmerId: number) {
     this.guarantor2Farmers = this.guarantor2Farmers?.filter(x => x.farmerId != farmerId);
-    this.farmers = this.farmers?.filter(x => x.farmerId != farmerId);
+    this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
   }
 
   initRelationTypes() {
@@ -157,7 +170,7 @@ export class PlotagreementComponent implements OnInit {
 
   initFarmers() {
     this.appMasterService.GetFarmers().subscribe((resp) => {
-      this.farmers = resp as unknown as FarmersViewDto[];
+      this.guarantor1Farmers = resp as unknown as FarmersViewDto[];
     })
   }
 
@@ -173,14 +186,19 @@ export class PlotagreementComponent implements OnInit {
     });
   }
 
-  addPlotAgreement(plotAgreementId: number = -1) {
-    this.plotAgreement = new PlotAgreementDto();
+  addPlotAgreement() {
     this.submitLabel = "Add Agreement";
     this.addFlag = true;
     this.showDialog = true;
     this.fbPlotAgreement.get('seasonId')?.patchValue(this.currentSeason.seasonId);
-    this.monitoringService.GetMaintenanceItemsForAssessment(plotAgreementId).subscribe((resp) => {
+    this.getMaintenanceItemsForAgreement();
+  }
+
+  getMaintenanceItemsForAgreement(plotAgreementId: number = -1) {
+    this.monitoringService.GetMaintenanceItemsForAgreement(plotAgreementId).subscribe((resp) => {
       this.maintanenceItems = resp as unknown as MaintenanceItems;
+      console.log(this.maintanenceItems);
+
       this.initMaintanenceItems();
     });
   }
@@ -216,7 +234,7 @@ export class PlotagreementComponent implements OnInit {
   plotAgreementForm() {
     this.fbPlotAgreement = this.formbuilder.group({
       plotAgreementId: [null],
-      plotId: [null],
+      plotId: [null, (Validators.required)],
       seasonId: [null, (Validators.required)],
       agreementedArea: [null, (Validators.required)],
       agreementedDate: [null, (Validators.required)],
@@ -263,6 +281,7 @@ export class PlotagreementComponent implements OnInit {
 
   createpests(pest: MaintPestDto): FormGroup {
     return this.formbuilder.group({
+      plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotAgreementId: [pest.plotAgreementId],
       name: [pest.name],
@@ -273,6 +292,7 @@ export class PlotagreementComponent implements OnInit {
   }
   createWeed(weed: MaintWeedicideDto): FormGroup {
     return this.formbuilder.group({
+      plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotAgreementId: [weed.plotAgreementId],
       name: [weed.name],
@@ -281,6 +301,7 @@ export class PlotagreementComponent implements OnInit {
   }
   createFertlizer(fertilizer: MaintFertilizerDto): FormGroup {
     return this.formbuilder.group({
+      plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotAgreementId: [fertilizer.plotAgreementId],
       name: [fertilizer.name],
@@ -289,6 +310,7 @@ export class PlotagreementComponent implements OnInit {
   }
   createDisease(disease: MaintDiseaseDto): FormGroup {
     return this.formbuilder.group({
+      plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotAgreementId: [disease.plotAgreementId],
       name: [disease.name],
@@ -303,6 +325,8 @@ export class PlotagreementComponent implements OnInit {
   }
 
   editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto) {
+    this.initPlotNumbers(this.currentSeason.seasonId!, plotAgreement.plotId);
+    this.fbPlotAgreement.controls['seasonId'].setValue(this.currentSeason.seasonId!);
     this.fbPlotAgreement.controls['plotId'].setValue(plotAgreement.plotId);
     this.fbPlotAgreement.controls['agreementedArea'].setValue(plotAgreement.agreementedArea);
     this.fbPlotAgreement.controls['agreementedDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
@@ -316,7 +340,7 @@ export class PlotagreementComponent implements OnInit {
 
     this.fbPlotAgreement.patchValue(plotAgreement);
     this.getPlotinfo(plotAgreement.plotId);
-    this.addPlotAgreement(plotAgreement.plotAgreementId);
+    this.getMaintenanceItemsForAgreement(plotAgreement.plotAgreementId);
 
     this.addFlag = false;
     this.submitLabel = 'Update Plot Agreement';
@@ -335,6 +359,7 @@ export class PlotagreementComponent implements OnInit {
 
   onSubmit() {
     if (this.fbPlotAgreement.valid) {
+      console.log(this.fbPlotAgreement.value);
       this.savePlotAgreement().subscribe(resp => {
         if (resp) {
           this.initPlotAgreements(this.currentSeason.seasonId!);

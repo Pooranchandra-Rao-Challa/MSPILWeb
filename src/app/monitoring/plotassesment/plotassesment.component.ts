@@ -10,6 +10,7 @@ import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 
 export interface IHeader {
@@ -46,11 +47,14 @@ export class PlotassesmentComponent implements OnInit {
   activeIndex?=0;
   activeIndex1?=0;
   activeIndex2?=0;
+  permissions: any;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private lookupService: LookupService,
-    private monitoringService: MonitoringService) { }
+    private monitoringService: MonitoringService,
+    private jwtService: JWTService) { }
+
   farmerHeader: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
@@ -81,7 +85,6 @@ export class PlotassesmentComponent implements OnInit {
 
     this.monitoringService.GetMaintenanceItemsForAssessment(plotAssessmentId).subscribe((resp) => {
       this.maintanenceItems = resp as unknown as MaintenanceItems;
-      console.log(this.maintanenceItems);
       this.initMaintanenceItems();
     });
   }
@@ -122,16 +125,15 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.currentSeasonCode = CURRENT_SEASON()
-    console.log(this.currentSeasonCode);
-
     this.plotAssesmentForm();
     this.initCurrentSeasons();
     this.initSeasons();
     this.initCropType();
     this.initweedstatus();
-
   }
+
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
@@ -141,20 +143,17 @@ export class PlotassesmentComponent implements OnInit {
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
-      console.log(this.currentSeason);
-      this.initPlotReports(this.currentSeason.seasonId!);
+      this.initPlotReports(this.currentSeason.seasonId!, -1);
       this.initPlotAssesments(this.currentSeason.seasonId!);
     });
   }
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
-      console.log(this.plotInfo)
     })
   }
-  initPlotReports(season: number) {
-    this.monitoringService.GetPlotsInSeason(season, 'Assessment').subscribe((resp) => {
-      console.log(resp)
+  initPlotReports(season: number, plotId: number) {
+    this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
     })
   }
@@ -165,7 +164,6 @@ export class PlotassesmentComponent implements OnInit {
       this.plotAssessments.forEach((farmer) => {
         farmer.ObjMeasuredPlots = JSON.parse(farmer.measuredPlots) as PlotAssessmentViewDto[]
       })
-      console.log(this.plotAssessments)
     })
   }
   onSearch() {
@@ -244,19 +242,16 @@ export class PlotassesmentComponent implements OnInit {
     })
   }
   savePlotAssessment(): Observable<HttpEvent<PlotAssessmentDto>> {
-    debugger
     var postValues = this.fbPlotAssesment.value;
     postValues.weedicides = postValues.weedicides.filter((weed: any) => weed.checked == true)
     postValues.pests = postValues.pests.filter((pest: any) => pest.identifiedDate != undefined || pest.controlDate != undefined)
     postValues.fertilizers = postValues.fertilizers.filter((fertilizer: any) => fertilizer.checked == true)
     postValues.diseases = postValues.diseases.filter((disease: any) => disease.identifiedDate != undefined || disease.controlDate != undefined)
-    console.log(postValues);
-
     if (this.addFlag) return this.monitoringService.CreatePlotAssessment(postValues)
     else return this.monitoringService.UpdatePlotAssessment(postValues)
   }
   editPlotAssessment(plotAssesment:any, plotInfo:any) {
-    console.log(plotAssesment);
+    this.initPlotReports(this.currentSeason.seasonId!, plotAssesment?.PlotId);
      this.plotAssesment.plotAssessmentId = plotAssesment.PlotAssessmentId;
      this.plotAssesment.plotId = plotAssesment?.PlotId;
     // this.fbPlotAssesment.controls['plotId'].disable();
@@ -277,8 +272,6 @@ export class PlotassesmentComponent implements OnInit {
   }
   onSubmit() {
     if (this.fbPlotAssesment.valid) {
-      console.log(this.fbPlotAssesment.value);
-      return
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
           this.savePlotAssessment();

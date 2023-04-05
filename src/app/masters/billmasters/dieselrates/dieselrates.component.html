@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Diesel Rate" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addDieselRate()"></button>
+          (click)="addDieselRate()" *ngIf="permissions.CanCreateDieselRate"></button>
       </ng-template>
     </p-toolbar>
 
@@ -70,7 +70,7 @@
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component mr-2"
-              (click)="editDieselRate(rate)"></button></td>
+              (click)="editDieselRate(rate)" [disabled]="!permissions.CanUpdateDieselRate"></button></td>
           <td>{{rate.fromDate | date: mediumDate}}</td>
           <td>{{rate.toDate | date: mediumDate}}</td>
           <td>{{rate.rate}}</td>

@@ -53,7 +53,8 @@ export class SectionComponent implements OnInit {
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
-
+  permissions:any;
+  
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -73,6 +74,7 @@ export class SectionComponent implements OnInit {
     return this.fbsections.controls;
   }
   ngOnInit() {
+    this.permissions = this.jwtService.Permissions;
     this.initSections();
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[];

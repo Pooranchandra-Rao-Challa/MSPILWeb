@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Plot Assesment" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="initPlotAssesment()"></button>
+          (click)="initPlotAssesment()" *ngIf="permissions?.CanCreatePlotAssessment"></button>
       </ng-template>
     </p-toolbar>
 
@@ -30,7 +30,7 @@
                         <p-dropdown class="ml-2" placeholder="Select a season"
                         optionLabel="name" [options]="seasons"
                         [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
-                        (onChange)="initPlotReports($event.value)" appendTo="body"
+                        (onChange)="initPlotReports($event.value, -1)" appendTo="body"
                             [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -441,7 +441,7 @@
       <ng-template pTemplate="body" let-plotAssessment>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAssessment(plotAssessment, farmer)"
-              class="p-element p-ripple p-button-text p-button p-component"></button>
+              class="p-element p-ripple p-button-text p-button p-component" [disabled]="!permissions?.CanUpdatePlotAssessment"></button>
           </td>
           <td *ngFor="let col of plotHeader">
 

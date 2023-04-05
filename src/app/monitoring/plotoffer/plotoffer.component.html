@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right" *ngIf="!forapproval">
         <button pButton pRipple label="New Plot Offer" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addPlotOffer()"></button>
+          (click)="addPlotOffer()" *ngIf="permissions?.CanCreatePlotOffer"></button>
       </ng-template>
     </p-toolbar>
 
@@ -76,7 +76,7 @@
                       <ng-template pTemplate="body" let-plotOffer >
                           <tr>
                             <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-                              (click)="editPlotOffer(plotOffer, farmer)" *ngIf="!forapproval"></button>
+                              (click)="editPlotOffer(plotOffer, farmer)" *ngIf="!forapproval" [disabled]="!permissions?.CanUpdatePlotOffer"></button>
                             <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
                               (click)="editApproval(plotOffer, farmer)" *ngIf="forapproval"></button>
                             <!-- (click)="editAllottedPlot(allottedPlot)" -->
@@ -363,9 +363,9 @@
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
           <button pButton pRipple type="submit" label="Approval" class="p-button-raised p-button-success"
-            (click)="onApprovalSubmit('approve')"></button>
+            (click)="onApprovalSubmit('approve')" [disabled]="!permissions?.CanApproveOrDeny"></button>
           <button pButton pRipple type="submit" label="Denied" class="p-button-raised p-button-success"
-            (click)="onApprovalSubmit('denied')"></button>
+            (click)="onApprovalSubmit('denied')" [disabled]="!permissions?.CanApproveOrDeny"></button>
         </div>
       </ng-template>
     </p-dialog>

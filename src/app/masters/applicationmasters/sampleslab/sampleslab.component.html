@@ -80,7 +80,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Sample Slab" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitSampleslab();"></button>
+          (click)="InitSampleslab();" *ngIf="permissions.CanCreateSampleSlab"></button>
       </ng-template>
     </p-toolbar>
     <p-table #dt1 [value]="sampleslabs" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading"
@@ -134,7 +134,7 @@
       <ng-template pTemplate="body" let-SampleSlabs>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(SampleSlabs)"></button></td>
+              (click)="editProduct(SampleSlabs)" [disabled]="!permissions.CanUpdateSampleSlab"></button></td>
           <!-- <td>{{SampleSlabs.sampleSlabId}}</td> -->
           <td>{{SampleSlabs.fromArea}}</td>
           <td>{{SampleSlabs.toArea}}</td>

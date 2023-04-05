@@ -15,6 +15,7 @@ import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { CURRENT_SEASON } from 'src/environments/environment';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 export interface IHeader {
   field: string;
@@ -50,6 +51,8 @@ export class PlotofferComponent implements OnInit {
   resonForNotPlanting: any;
   forapproval: boolean = false;
   isApproved: boolean = false; // for ture value use this icon class' pi-thumbs-up-fill' else ' pi-thumbs-up'
+  permissions: any;
+
   // varietyTypes: any;
   farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
@@ -85,10 +88,12 @@ export class PlotofferComponent implements OnInit {
     private geoMasterService: GeoMasterService,
     private monitoringService: MonitoringService,
     private lookupService: LookupService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private jwtService: JWTService) {
   }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.forapproval = this.activatedRoute.snapshot.params['paramUrl'] == ':forapproval';
     this.initSeasons();
     this.initCurrentSeason(CURRENT_SEASON());
