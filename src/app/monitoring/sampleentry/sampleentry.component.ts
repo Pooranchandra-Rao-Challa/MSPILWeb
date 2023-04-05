@@ -56,7 +56,7 @@ export class SampleEntryComponent implements OnInit {
   expectedSampleCount: number=0;
   isSampleCountMatched: boolean = false;
   submitDisabled: boolean = false;
-  
+
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterservice: AppMasterService,
@@ -87,7 +87,7 @@ export class SampleEntryComponent implements OnInit {
     this.initAppConstants()
     this.sampleEntryForm();
 
-  
+
   }
 
   sampleEntryForm() {
@@ -107,7 +107,7 @@ export class SampleEntryComponent implements OnInit {
       noOfSample:[],
     })
   }
- 
+
  ClearForm(){
   this.fbSampleEntry.reset();
   this.selectedFarmer ={};
@@ -159,13 +159,13 @@ initSampleEntry(seasonId: number) {
 
   // onSelectedPlot(plotId: number) {
   //   const selectedPlot = this.plots.filter((plot) => plot.plotId === plotId)[0];
-  
+
   //   if (selectedPlot) {
   //     this.selectedPlot = selectedPlot;
   //     const netArea = selectedPlot.area - selectedPlot.deductionArea;
   //     this.numberOfSamples = Math.ceil(netArea / this.selectedSampleSlab.toArea);
   //     this.numberOfEnteredSamples = selectedPlot.sampleEntries.filter(entry => entry.isActive).length;
-  
+
   //     if (this.numberOfEnteredSamples === this.numberOfSamples) {
   //       console.log("All samples have been entered");
   //     } else {
@@ -177,7 +177,7 @@ initSampleEntry(seasonId: number) {
     this.commonService.GetDocNo(this.currentSeason.seasonId!,EDocumentNumberScreens.Samples).subscribe((resp) => {
       this.fbSampleEntry.get('docNo')?.setValue(resp);
     });
-  } 
+  }
   calculatePurityAndCCS() {
     const brix = this.fbSampleEntry.get('brix')?.value;
     const pol = this.fbSampleEntry.get('pol')?.value;
@@ -200,9 +200,9 @@ initSampleEntry(seasonId: number) {
 
 
 
-  
+
   onPlotChange(plotId: any) {
-    debugger;
+    //debugger;
     this.monitoringService.GetPlotsofFarmers(plotId.seasonId, plotId.farmerId).subscribe((resp) => {
       const sample = resp as unknown as any[];
       if (sample && sample.length > 0) {
@@ -217,15 +217,15 @@ initSampleEntry(seasonId: number) {
         }
         this.isSampleCountMatched = this.sample.length ===  this.expectedSampleCount  ;
         this.submitDisabled! = !this.isSampleCountMatched;
-       
-   
+
+
       } else {
         this.expectedSampleCount = 0;
         this.isSampleCountMatched = false;
         this.submitDisabled = true;
       }
     });
-  }                     
+  }
 
 
   initSeasons() {
