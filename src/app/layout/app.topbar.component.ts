@@ -99,21 +99,20 @@ export class AppTopBarComponent {
     this.initLookups();
     this.items = [
       { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['changepassword'] },
-      { label: 'App Config', icon: 'pi pi-external-link', command: (e) => { this.app_config_dialog = true; this.submitLabel = 'Update Application Constants'; } },
+      { label: 'App Config', icon: 'pi pi-external-link', command: (e) => { this.initAppConstants(); this.app_config_dialog = true; this.submitLabel = 'Update Application Constants'; } },
       { label: 'Lookup', icon: 'pi pi-external-link', command: (e) => { this.lookup_dialog = true; this.submitLabel = 'Update lookups'; } },
       {
         label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
           console.log(this.jwtService.Logout());
-
         }
       },
-      
+
     ];
     this.setting_items = [
       { label: 'Green (Default)', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-indigo', 'light'), },
       { label: 'Dark Green',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-indigo', 'dark'), },
       { label: 'Light Blue',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-blue', 'light'), },
-      { label: 'Dark Blue',       icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-blue', 'dark'), },    
+      { label: 'Dark Blue',       icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-blue', 'dark'), },
       { label: 'Light Purple',    icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-purple', 'light'), },
       { label: 'Dark Purple',     icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-purple', 'dark'), },
       { label: 'Light Teal',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-teal', 'light'), },
@@ -176,6 +175,11 @@ export class AppTopBarComponent {
 
   onConstantEditSave(config: ApplicationConstantDto, ri: number) {
     // saving that row item and update local object
+    if(config.id! < 0 ) config.id = undefined;
+    this.commomService.UpdateConstant(config).subscribe(resp=>{
+      if(resp) this.initAppConstants();
+    })
+
   }
   onConstantEditCancel(config: ApplicationConstantDto, ri: number) {
     if(Number(config.id!) < 0 ){
