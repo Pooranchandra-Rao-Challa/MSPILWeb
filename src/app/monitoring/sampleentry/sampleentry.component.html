@@ -53,13 +53,13 @@
             <span *ngIf="col?.field == 'docDate' || col?.field == 'plantingDate'">
               {{ sample[col.field] | date : "dd-MM-yyyy" }}
             </span> -->
-           
+
             <span
             *ngIf="col?.field != 'docDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{sample[col.field]}}</span>
           <span *ngIf="col?.field == 'docDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
             {{sample[col.field] | date: 'dd-MM-yyyy'}}
           </span>
-       
+
           </td>
         </tr>
       </ng-template>
@@ -162,9 +162,9 @@
                     </div>
 
 
-                   
+
                     <!-- optionValue="plotId"  -->
- 
+
                     <div class="field col-12 md:col-4">
                       <label class="required">Filed Brix:</label>
                       <input #fieldBrix pInputText id="fieldBrix" type="number" formControlName="fieldBrix" />
@@ -210,7 +210,7 @@
 
                     <div class="field col-12 md:col-3">
                       <label class="required">No of Entered sample:</label>
-                      <p class="disabled_text">{{ sample?.length}}</p>
+                      <p class="disabled_text">{{ sample.length}}</p>
 
                       <!-- <ng-container *ngIf="!isSampleCountMatched">
                         <p class="success_text">
@@ -218,7 +218,7 @@
                           sample
                         </p>
                       </ng-container> -->
-                     
+
                     </div>
                   </div>
                 </p-fieldset>
