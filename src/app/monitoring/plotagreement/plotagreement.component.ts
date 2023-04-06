@@ -3,8 +3,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { FarmersViewDto, LookupDetailViewDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
-import { IAgreementedPlotsViewDto, IFarmerInPlotOfferDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto,
-  PlotAgreementDto, PlotInfoDto, PlotsDto } from 'src/app/_models/monitoring';
+import {
+  IAgreementedPlotsViewDto, IFarmerInPlotOfferDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto,
+  PlotAgreementDto, PlotInfoDto, PlotsDto
+} from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
@@ -86,7 +88,7 @@ export class PlotagreementComponent implements OnInit {
     private lookupService: LookupService,
     private jwtService: JWTService,
     private alertMessage: AlertMessage,) {
-    }
+  }
 
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
@@ -124,9 +126,13 @@ export class PlotagreementComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAgreement(seasonId, param1).subscribe((resp) => {
       this.plotAgreements = resp as unknown as IFarmerInPlotOfferDto[];
-      this.plotAgreements?.forEach((value) => {
-        value.objAgreementedPlots = JSON.parse(value.agreementedPlots) as IAgreementedPlotsViewDto[];
-      });
+    });
+  }
+
+  onRowExpand(source: any) {
+    var data = source.data as IFarmerInPlotOfferDto;
+    this.monitoringService.GetFarmerPlotsInAgreement(data.seasonId, data.farmerId).subscribe(resp => {
+      data.objAgreementedPlots = resp as unknown as IAgreementedPlotsViewDto[];
     });
   }
 
@@ -340,7 +346,6 @@ export class PlotagreementComponent implements OnInit {
     this.fbPlotAgreement.patchValue(plotAgreement);
     this.getPlotinfo(plotAgreement.plotId);
     this.getMaintenanceItemsForAgreement(plotAgreement.plotAgreementId);
-
     this.addFlag = false;
     this.submitLabel = 'Update Plot Agreement';
     this.showDialog = true;
