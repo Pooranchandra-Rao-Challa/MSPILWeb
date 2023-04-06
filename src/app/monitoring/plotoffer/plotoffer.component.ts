@@ -342,7 +342,7 @@ export class PlotofferComponent implements OnInit {
           this.initPlotOffers(this.currentSeason.seasonId!);
           this.fbPlotOffer.reset();
           this.showDialog = false;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPO001" : "SMOPO002"]);
+          //this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPO001" : "SMOPO002"]);
         }
       })
     }

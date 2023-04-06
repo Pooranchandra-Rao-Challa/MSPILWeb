@@ -34,15 +34,11 @@ export class MonitoringService extends ApiHttpService {
     return this.post<PlotOfferDto>(DENY_PLOT_OFFER_URI, plotOffer);
   }
   public GetPlotOffers(seasonId: number, forapproval: boolean, param1 = null) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    arr.push(forapproval);
-    if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, arr);
+      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, [seasonId, forapproval]);
     }
     else {
-      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, arr);
+      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_OFFERS_URI, [seasonId, forapproval, param1]);
     }
   }
   public IsNewFarmer(farmerId: number) {
@@ -50,9 +46,7 @@ export class MonitoringService extends ApiHttpService {
   }
   // plot assessment
   public GetPlotAssessments(seasonId: number) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    return this.getWithParams<IPlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, arr);
+    return this.getWithParams<IPlotAssessmentViewDto[]>(GET_PLOTASSESSMENT_URI, [seasonId]);
   }
   public CreatePlotAssessment(plotAssessment: PlotAssessmentDto) {
     return this.post<PlotAssessmentDto>(CREATE_PLOTASSESSMENT_URI, plotAssessment);
@@ -62,11 +56,7 @@ export class MonitoringService extends ApiHttpService {
   }
 
   public GetPlotsInSeason(seasonId: number, purpose: string, plotId: number) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    arr.push(purpose);
-    arr.push(plotId)
-    return this.getWithParams<PlotInfoDto>(GET_PLOTS_FORASSESSMENT_URI, arr);
+    return this.getWithParams<PlotInfoDto>(GET_PLOTS_FORASSESSMENT_URI, [seasonId, purpose, plotId]);
   }
   public GetPlotsinfo(plotId: number) {
     return this.getWithId<PlotsDto>(GET_PLOTS_URI, plotId);
@@ -74,30 +64,24 @@ export class MonitoringService extends ApiHttpService {
 
   // plot yields
 
-public GetPlotsInSeasons(seasonId: number, purpose: string) {
-  let arr: any[] = [];
-  arr.push(seasonId);
-  arr.push(purpose);
-  return this.getWithParams<PlotInfoDto>(GET_PLOTS_FORYIELDS_URI, arr);
-}
-public GetPlotYields(seasonId: number, param1 = null) {
-  let arr: any[] = [];
-  arr.push(seasonId);
-  if (param1 != null) arr.push(param1);
+  public GetPlotsInSeasons(seasonId: number, purpose: string) {
+    return this.getWithParams<PlotInfoDto>(GET_PLOTS_FORYIELDS_URI, [seasonId, purpose]);
+  }
+  public GetPlotYields(seasonId: number, param1 = null) {
 
-  return this.getWithParams<IFarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, arr);
-}
+    if (param1 != null)
+      return this.getWithParams<IFarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, [seasonId, param1]);
+    else
+      return this.getWithParams<IFarmerPlotYieldViewDto[]>(GET_PLOTYIELDS_URI, [seasonId]);
+  }
 
   // Plot Transfers
   public GetAllPlotsTransfers(seasonId: number, param1 = null) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<PlotTransferViewDto[]>(GET_PLOTTRANSFERS_URI, arr);
+      return this.getWithParams<PlotTransferViewDto[]>(GET_PLOTTRANSFERS_URI, [seasonId]);
     }
     else {
-      return this.getWithParams<PlotTransferViewDto[]>(GET_PLOTTRANSFERS_URI, arr);
+      return this.getWithParams<PlotTransferViewDto[]>(GET_PLOTTRANSFERS_URI, [seasonId, param1]);
     }
   }
 
@@ -135,10 +119,7 @@ public GetPlotYields(seasonId: number, param1 = null) {
   }
 
   public PlotOffersInSeason(seasonId: number, plotId: number) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    arr.push(plotId);
-    return this.getWithParams<IPlotOfferInfoViewDto>(GET_PLOT_OFFERS_IN_SEASON_URI, arr);
+    return this.getWithParams<IPlotOfferInfoViewDto>(GET_PLOT_OFFERS_IN_SEASON_URI, [seasonId, plotId]);
   }
 
   public GetOfferInfo(offerId: number) {
@@ -156,15 +137,11 @@ public GetPlotYields(seasonId: number, param1 = null) {
 
 
   public GetPlotReports(seasonId: number, forapproval: boolean, param1 = null) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    arr.push(forapproval);
-    if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<IPlotReportViewDto[]>(GET_PLOT_REPORTS_URI, arr);
+      return this.getWithParams<IPlotReportViewDto[]>(GET_PLOT_REPORTS_URI, [seasonId, forapproval]);
     }
     else {
-      return this.getWithParams<IPlotReportViewDto[]>(GET_PLOT_REPORTS_URI, arr);
+      return this.getWithParams<IPlotReportViewDto[]>(GET_PLOT_REPORTS_URI, [seasonId, forapproval, param1]);
     }
   }
 
@@ -189,14 +166,11 @@ public GetPlotYields(seasonId: number, param1 = null) {
 
 
   public GeAllCompletedPlots(seasonId: number, param1 = null) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<CompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, arr);
+      return this.getWithParams<CompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, [seasonId]);
     }
     else {
-      return this.getWithParams<CompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, arr);
+      return this.getWithParams<CompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, [seasonId, param1]);
     }
   }
 
@@ -213,23 +187,19 @@ public GetPlotYields(seasonId: number, param1 = null) {
   }
 
   public GetPlotAgreement(seasonId: number, param1 = null) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    if (param1 != null) arr.push(param1);
-
-    return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_AGREEMENTS_URI, arr);
+    if (param1 != null)
+      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_AGREEMENTS_URI, [seasonId, param1]);
+    else
+      return this.getWithParams<IFarmerInPlotOfferDto[]>(GET_PLOT_AGREEMENTS_URI, [seasonId]);
   }
 
 
-  public GetSectionFarmers(seasonId:any) {
+  public GetSectionFarmers(seasonId: any) {
     return this.getWithId(GET_FARMER_IN_SECTIONS_URI, seasonId);
   }
 
   public GetPlotsofFarmers(seasonId: any, farmerId: any) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    arr.push(farmerId);
-    return this.getWithParams(GET_PLOTS_OF_FARMERS_URI, arr);
+    return this.getWithParams(GET_PLOTS_OF_FARMERS_URI, [seasonId, farmerId]);
   }
 
   public GetSamplesOfPlot(plotId: number) {
@@ -237,19 +207,15 @@ public GetPlotYields(seasonId: number, param1 = null) {
   }
 
   public GetSeasonSamples(seasonId: number, param1 = null) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, arr);
+      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, [seasonId]);
     }
     else {
-      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, arr);
+      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, [seasonId, param1]);
     }
   }
 
   public CreatePlotAgreement(plotAgreement: PlotAgreementDto) {
-    debugger
     return this.post<PlotAgreementDto>(CREATE_PLOT_AGREEMENT_URI, plotAgreement);
   }
 

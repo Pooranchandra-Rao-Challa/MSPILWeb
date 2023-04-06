@@ -4,7 +4,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
 import { LookupDetailDto, SeasonDto, SeasonViewDto, } from 'src/app/_models/applicationmaster';
-import { IFarmerInPlotOfferDto, MaintenanceItems, MaintWeedicideDto, MaintDiseaseDto, MaintFertilizerDto, MaintPestDto, PlotAssessmentViewDto, PlotInfoDto, PlotsDto, PlotAssessmentDto } from 'src/app/_models/monitoring';
+import { IFarmerInPlotOfferDto, MaintenanceItems, MaintWeedicideDto, MaintDiseaseDto, MaintFertilizerDto, MaintPestDto,
+  IPlotAssessmentViewDto, PlotInfoDto, PlotsDto, PlotAssessmentDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -162,7 +163,7 @@ export class PlotassesmentComponent implements OnInit {
     this.monitoringService.GetPlotAssessments(seasonId).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
       this.plotAssessments.forEach((farmer) => {
-        farmer.ObjMeasuredPlots = JSON.parse(farmer.measuredPlots) as PlotAssessmentViewDto[]
+        farmer.ObjMeasuredPlots = JSON.parse(farmer.measuredPlots) as IPlotAssessmentViewDto[]
       })
     })
   }

@@ -4,8 +4,8 @@ import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
 import {
-  FarmerPlotYieldViewDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto,
-  PlotsDto, PlotYieldViewDto
+  IFarmerPlotYieldViewDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotInfoDto,
+  PlotsDto, IPlotYieldViewDto
 } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
@@ -46,7 +46,7 @@ export class PlotyieldComponent implements OnInit {
   cropstypes: LookupDetailDto[] = [];
   weedstatus: LookupDetailDto[] = [];
   maintanenceItems?: MaintenanceItems = {};
-  plotYields: FarmerPlotYieldViewDto[] = [];
+  plotYields: IFarmerPlotYieldViewDto[] = [];
   mediumDate: string = MEDIUM_DATE;
   checked!: boolean;
   activeIndex?= 0;
@@ -233,9 +233,9 @@ export class PlotyieldComponent implements OnInit {
   initPlotYields(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotYields(seasonId, param1).subscribe((resp) => {
-      this.plotYields = resp as unknown as FarmerPlotYieldViewDto[];
+      this.plotYields = resp as unknown as IFarmerPlotYieldViewDto[];
       this.plotYields.forEach((farmer) => {
-        farmer.objnetYieldPlots = JSON.parse(farmer.netYieldPlots) as PlotYieldViewDto[]
+        farmer.objNetYieldPlots = JSON.parse(farmer.netYieldPlots) as IPlotYieldViewDto[]
       })
     })
   }

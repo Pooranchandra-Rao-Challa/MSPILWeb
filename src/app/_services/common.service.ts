@@ -55,9 +55,6 @@ export class CommonService extends ApiHttpService {
   }
 
   GetDocNo(seasonId: number,screenNumber: EDocumentNumberScreens) {
-    let arr: any[] = [];
-    arr.push(seasonId);
-    arr.push(screenNumber);
-    return this.getWithParams<number>(GET_SCREEN_DOC_NO_URI, arr);
+    return this.getWithParams<number>(GET_SCREEN_DOC_NO_URI,[seasonId,screenNumber]);
   }
 }

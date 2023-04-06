@@ -112,7 +112,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   initPlotNumbers(season: number, plotId: number) {
-    debugger
+   /// debugger
     console.log('plotId', plotId);
     this.plotNumbers = [];
     this.monitoringService.GetPlotsInSeason(season, 'Agreement', plotId).subscribe((resp) => {
@@ -133,7 +133,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   getPlotinfo(plotId: number) {
-    debugger
+   // debugger
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
       this.plotInfo.plantingDate = this.plotInfo.plantingDate && new Date(this.plotInfo.plantingDate?.toString() + "");
