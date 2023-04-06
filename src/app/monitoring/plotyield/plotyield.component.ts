@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
@@ -267,6 +268,28 @@ export class PlotyieldComponent implements OnInit {
     })
   }
 
+  virtualPlots: IFarmerPlotYieldViewDto[]= [];
+  onRowExpand(source:any){
+    var data = source.data as IFarmerPlotYieldViewDto;
+    console.log(data);
+    this.monitoringService.GetFarmerPlotsInYield(data.seasonId,data.farmerId).subscribe(resp=>{
+      data.objNetYieldPlots = resp as unknown as IPlotYieldViewDto[]
+    })
+  }
+
+  //loadCarsLazy(event: LazyLoadEvent) {
+//     //simulate remote connection with a timeout
+//     setTimeout(() => {
+//         //load data of required page
+//         let loadedPlots = this.plotYields.slice(event.first, event.first! + event.rows!);
+
+//         //populate page of virtual cars
+//         Array.prototype.splice.apply(this.virtualPlots, [...[event.first!, event.rows!], ...loadedPlots]);
+
+//         //trigger change detection
+//         event.forceUpdate();
+//     }, Math.random() * 1000 + 250);
+// }
   createWeed(weed: MaintWeedicideDto): FormGroup {
     return this.formbuilder.group({
       plotWeedicideId: [weed.plotWeedicideId],
