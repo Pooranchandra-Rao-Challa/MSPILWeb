@@ -1,8 +1,8 @@
-import { HttpEvent } from '@angular/common/http';
+import { HttpEvent, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
@@ -16,6 +16,7 @@ import { MAX_LENGTH_20, MIN_AADHAAR, MIN_ACCNO, MIN_LENGTH_2, RG_ALPHA_NUMERIC, 
 import { MaxLength } from 'src/app/_models/common';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../../_alerts/alertMessage';
+import { LazyLoadEvent } from 'primeng/api';
 
 
 @Component({
@@ -50,16 +51,21 @@ export class FarmerComponent implements OnInit {
     address: FormControl = new FormControl();
     maxLength: MaxLength = new MaxLength();
     permissions:any;
+    virtualfarmers:any
+    totalRecords: number[]=[];
+    slicedDatabase:any
+
+
     
 
     constructor(private formbuilder: FormBuilder,
-        private geoMasterService: GeoMasterService,
         private appmasterservice: AppMasterService,
         private commonService: CommonService,
         private lookupService: LookupService,
         public jwtService: JWTService,
         private messageService: MessageService,
-        private alertMessage:AlertMessage
+        private alertMessage:AlertMessage,
+       
     ) {
 
     }
@@ -69,7 +75,7 @@ export class FarmerComponent implements OnInit {
         this. farmerForm();
          this.initcasteDetails();
         this.initGetVillages();
-        this.initBanks();
+        this.initBanks(); 
     }
     farmerForm(){
         this.fbfarmers = this.formbuilder.group({
@@ -119,6 +125,22 @@ export class FarmerComponent implements OnInit {
             this.farmers = resp as unknown as FarmersViewDto[]
         })
     }
+    // loadCarsLazy(event: LazyLoadEvent) {
+    //     //simulate remote connection with a timeout
+    //     setTimeout(() => {
+    //       //load data of required page
+    //       let loadedfarmers = this.farmers.slice(event.first, event.first! + event.rows!);
+    
+    //       //populate page of virtual cars
+    //       Array.prototype.splice.apply(this.virtualfarmers, [
+    //         ...[event.first!, event.rows], ...loadedfarmers
+    //       ]);
+    
+    //       //trigger change detection
+    //       this.virtualfarmers = [...this.virtualfarmers];
+    //     }, Math.random() * 1000 + 250);
+    //   }
+
     get FormControls() {
         return this.fbfarmers.controls;
     }
@@ -128,16 +150,6 @@ export class FarmerComponent implements OnInit {
             return village.villageId == villageId;
 
         })
-        console.log(this.village);
-        if (this.village.length) {
-            this.divisionName.setValue(this.village[0].divisionName);
-            this.circleName.setValue(this.village[0].circleName);
-            this.sectionName.setValue(this.village[0].sectionName);
-            this.districtName.setValue(this.village[0].districtName);
-            this.mandalName.setValue(this.village[0].mandalName);
-            this.pincode.setValue(this.village[0].pinCode);
-            this.address.setValue(this.village[0].address);
-        }
     }
     InitFarmer() {
         this.farmer = new SampleSlabDto();
@@ -166,6 +178,7 @@ export class FarmerComponent implements OnInit {
     if (branch) this.IFSC = branch.ifsc;
     else this.IFSC = '';
   }
+
 
     editFarmer(farmers: FarmersViewDto) {
        this.farmerForm();
@@ -197,6 +210,12 @@ export class FarmerComponent implements OnInit {
             this.fbfarmers.markAllAsTouched();
         }
     }
+
+
+    
+
+  
+
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }

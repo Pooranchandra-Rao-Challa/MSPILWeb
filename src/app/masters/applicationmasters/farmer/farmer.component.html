@@ -383,6 +383,8 @@
 
     <p-table #dt1 [value]="farmers" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true" 
       [globalFilterFields]="['code','farmerName','aliasName','gender','fatherName','casteId','caste','address','circleId',
       'circleName','divisionId','divisionName','sectionId','sectionName','districtId','districtName','mandalId','mandalName',
       'villageId','villageName','pinCode','phoneNo','email','panNoaadharNo','oldRyot','jfNo','bankId','bankName','branchId','branchName','ifsc',

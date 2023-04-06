@@ -1,7 +1,6 @@
 import { HttpEvent } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
@@ -152,7 +151,7 @@ export class PlotyieldComponent implements OnInit {
       seasonId: [null, (Validators.required)],
       plotId: [null, (Validators.required)],
       actionPlanId: [null, Validators.required],
-      inspectionDate: ['', Validators.required],
+      inspectionDate: [null, Validators.required],
       isSeedArea: [null],
       notGrownArea: [null],
       netArea: [null, (Validators.required)],
@@ -213,7 +212,7 @@ export class PlotyieldComponent implements OnInit {
     this.plotNumbers = [];
     this.monitoringService.GetPlotsInSeason(season, 'PlotYield', plotId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as PlotInfoDto[];
-      if(plotId){
+      if (plotId) {
         this.fbPlotYield.controls['plotId'].patchValue(plotId);
         this.fbPlotYield.controls['plotId'].disable();
       }
@@ -269,28 +268,13 @@ export class PlotyieldComponent implements OnInit {
     })
   }
 
-  virtualPlots: IFarmerPlotYieldViewDto[]= [];
-  onRowExpand(source:any){
+  onRowExpand(source: any) {
     var data = source.data as IFarmerPlotYieldViewDto;
-    console.log(data);
-    this.monitoringService.GetFarmerPlotsInYield(data.seasonId,data.farmerId).subscribe(resp=>{
-      data.objNetYieldPlots = resp as unknown as IPlotYieldViewDto[]
-    })
+    this.monitoringService.GetFarmerPlotsInYield(data.seasonId, data.farmerId).subscribe(resp => {
+      data.objNetYieldPlots = resp as unknown as IPlotYieldViewDto[];
+    });
   }
 
-  //loadCarsLazy(event: LazyLoadEvent) {
-//     //simulate remote connection with a timeout
-//     setTimeout(() => {
-//         //load data of required page
-//         let loadedPlots = this.plotYields.slice(event.first, event.first! + event.rows!);
-
-//         //populate page of virtual cars
-//         Array.prototype.splice.apply(this.virtualPlots, [...[event.first!, event.rows!], ...loadedPlots]);
-
-//         //trigger change detection
-//         event.forceUpdate();
-//     }, Math.random() * 1000 + 250);
-// }
   createWeed(weed: MaintWeedicideDto): FormGroup {
     return this.formbuilder.group({
       plotWeedicideId: [weed.plotWeedicideId],
@@ -358,7 +342,7 @@ export class PlotyieldComponent implements OnInit {
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPY001" : "SMOPY002"]);
         }
-      })
+      });
     }
     else {
       this.fbPlotYield.markAllAsTouched();

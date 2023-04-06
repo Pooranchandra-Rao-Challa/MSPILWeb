@@ -162,6 +162,8 @@
     <p-table #dt1 [value]="circles" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="['divisionId','code','name','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo',
           'listingOrder','createdByUser','updatedByUser','createAt','updatedAt']" [autoLayout]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">

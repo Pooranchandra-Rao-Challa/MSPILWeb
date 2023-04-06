@@ -246,6 +246,7 @@
                     <p-table #dt2 dataKey="id" [value]="getFormArrayControl('pests').controls" [rows]="10"
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
+                      
                       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: '100%'}">
                       <ng-template pTemplate="header">
                         <tr>
@@ -367,7 +368,7 @@
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"  [autoLayout]="true" scrollHeight="450px"
       [virtualScroll]="true" [virtualRowHeight]="50" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -430,8 +431,8 @@
           <td *ngFor="let col of plotHeader">
 
             <span
-              *ngIf="col?.field != 'PlantingDate' && col?.field != 'AssessedDate'">{{plotAssessment[col.field]}}</span>
-            <span *ngIf="col?.field == 'PlantingDate' || col?.field == 'AssessedDate'">
+              *ngIf="col?.field != 'plantingDate' && col?.field != 'assessedDate'">{{plotAssessment[col.field]}}</span>
+            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'assessedDate'">
               {{plotAssessment[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
@@ -439,7 +440,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6">There are no plots for this farmer yet.</td>
+          <td class="md:text-center" colspan="12">There are no plots for this farmer yet.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -449,7 +450,7 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="20" class="md:text-center">No Plot Assesment Found.</td>
+      <td colspan="5" class="md:text-center">No Plot Assesment Found.</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="loadingbody">

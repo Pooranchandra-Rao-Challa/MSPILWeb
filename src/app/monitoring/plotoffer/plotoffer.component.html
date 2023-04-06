@@ -18,7 +18,8 @@
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
+      (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -54,11 +55,7 @@
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
           <td *ngFor="let col of farmerHeaders">
-            <span *ngIf="col?.field != 'offerDate' && col?.field != 'expectedPlantingDate'">{{farmer[col.field]}}</span>
-            <span *ngIf="col?.field == 'offerDate' || col?.field == 'expectedPlantingDate'">
-              {{farmer[col.field] | date: 'dd-MM-yyyy'}}
-            </span>
-          </td>
+            {{farmer[col.field]}} </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-farmer>
@@ -95,7 +92,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6">There are no plots for this farmer yet.</td>
+          <td class="md:text-center" colspan="8">There are no plots for this farmer yet.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -105,7 +102,7 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td class="md:text-center" colspan="12">No Allotted Plots Found.</td>
+      <td class="md:text-center" colspan="5">No Allotted Plots Found.</td>
     </tr>
   </ng-template>
   </p-table>

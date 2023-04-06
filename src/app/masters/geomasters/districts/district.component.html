@@ -83,6 +83,8 @@
     <!-- table -->
     <p-table #dt1 [value]="districts" dataKey="id" [rows]="10"  [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
       [globalFilterFields]="['districtId','districtName','districtCode','stateName','updatedAt','createdAt','updatedBy','createdBy' ]"
       [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}" [rowsPerPageOptions]="[10,25,50]"
      >
