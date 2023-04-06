@@ -141,6 +141,22 @@ export class PlotassesmentComponent implements OnInit {
     this.initweedstatus();
   }
 
+
+  loadPlotassessmentLazy(event: IPlotAssessmentViewDto) {
+     
+
+    setTimeout(() => {
+      
+        let loadedCars = this.plotAssessments.slice(1000);
+        
+        // Array.prototype.splice.apply(this.plotAssessments, [
+        //   ...[1000],
+        //   ...loadedCars
+        // ]);
+        this.plotAssessments = [...this.plotAssessments];
+    }, Math.random() * 1000 + 250);
+} 
+
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
