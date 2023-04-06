@@ -17,6 +17,7 @@
     <p-table #dt1 [value]="plotReports" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -61,15 +62,13 @@
           <td colspan="5">
             <div class="p-3">
               <p-table [value]="farmer.objReportedPlots" [columns]="plotHeaders" dataKey="plotId"
-                [tableStyle]="{ width: 'min-content'}"
+                [tableStyle]="{ width: 'min-content'}" [rowHover]="true"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
           <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            {{col?.label}}
           </th>
         </tr>
       </ng-template>
