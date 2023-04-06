@@ -219,3 +219,4 @@ export const GET_FARMER_PLOTS_IN_ASSESSMENT_URI = "Monitoring/GetFarmerPlotsInAs
 export const GET_FARMER_PLOTS_IN_REPORT_URI = "Monitoring/GetFarmerPlotsInReport";
 export const GET_FARMER_PLOTS_IN_OFFER_URI = "Monitoring/GetFarmerPlotsInOffer";
 export const GET_PROPPING = "Monitoring/GetPlotProppings";
+export const UPDATE_CONSTANT = "Common/UpdateConstant";
