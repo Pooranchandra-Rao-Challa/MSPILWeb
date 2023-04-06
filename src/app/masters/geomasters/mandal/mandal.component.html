@@ -88,6 +88,8 @@
 
     <!-- table -->
     <p-table #dt1 [value]="mandals" dataKey="id" [rows]="10" [rowHover]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="['mandalId','mandalCode','mandalName','districtId','districtName',
             'createdBy','updatedBy','createdAt','updatedAt']" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'autoLayout'}">

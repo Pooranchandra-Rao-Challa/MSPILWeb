@@ -98,6 +98,8 @@
 
         <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
             [globalFilterFields]="['code','name','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo',
        'createdByUser','updatedByUser','createAt','updatedAt']" [autoLayout]="true" responsiveLayout="scroll"
             [rowsPerPageOptions]="[10,25,50]">

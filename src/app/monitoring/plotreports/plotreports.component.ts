@@ -130,16 +130,10 @@ export class PlotreportsComponent implements OnInit {
     }
   }
 
-  clearForm(){
+  clearForm() {
     this.fbPlotReport.reset();
     this.plotOfferDto = {};
   }
-
-  // getPlotAllotmentsInSeason(seasonId: number) {
-  //   this.monitoringService.GetPlotsInSeason(seasonId,'Reported').subscribe((resp) => {
-  //     this.seasonPlotOffers = resp as any;
-  //   });
-  // }
 
   getPlotOffersInSeason(seasonId: number, plotId: number) {
     this.monitoringService.PlotOffersInSeason(seasonId, plotId).subscribe((resp) => {
@@ -157,16 +151,6 @@ export class PlotreportsComponent implements OnInit {
       if (plotOffer2 && plotOffer2.length) {
         this.plotOfferDto = plotOffer2[0]
         this.fbPlotReport.controls['farmerId'].setValue(this.plotOfferDto?.farmerId);
-        // this.fbPlotReport.controls['farmerName'].setValue(plotOffer2[0]?.farmerName);
-        // this.fbPlotReport.controls['fatherName'].setValue(plotOffer2[0]?.fatherName);
-        // this.fbPlotReport.controls['farmerDivision'].setValue(plotOffer2[0]?.farmerDivision);
-        // this.fbPlotReport.controls['farmerCircle'].setValue(plotOffer2[0]?.farmerCircle);
-        // this.fbPlotReport.controls['farmerSection'].setValue(plotOffer2[0]?.farmerSection);
-        // this.fbPlotReport.controls['farmerVillage'].setValue(plotOffer2[0]?.farmerVillage);
-        // this.fbPlotReport.controls['plotDivision'].setValue(plotOffer2[0]?.plotDivision);
-        // this.fbPlotReport.controls['plotCircle'].setValue(plotOffer2[0]?.plotCircle);
-        // this.fbPlotReport.controls['plotSection'].setValue(plotOffer2[0]?.plotSection);
-        // this.fbPlotReport.controls['plotVillageName'].setValue(plotOffer2[0]?.plotVillage);
         this.getPlotNumber(plotOfferId);
       }
     });
@@ -276,9 +260,13 @@ export class PlotreportsComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotReports(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotReports = resp as unknown as IFarmerInPlotReportsViewDto[];
-      this.plotReports.forEach((value) => {
-        value.objReportedPlots = JSON.parse(value.reportedPlots) as IPlotReportViewDto[];
-      });
+    });
+  }
+
+  onRowExpand(source: any) {
+    var data = source.data as IFarmerInPlotReportsViewDto;
+    this.monitoringService.GetFarmerPlotsInReport(data.seasonId, data.farmerId).subscribe(resp => {
+      data.objReportedPlots = resp as unknown as IPlotReportViewDto[];
     });
   }
 
@@ -290,10 +278,10 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport = this.formbuilder.group({
       plotReportId: [null],
       plotId: [null],
-      seasonId: ['', (Validators.required)],
-      cropTypeId: ['', (Validators.required)],
-      plotOfferId: ['', (Validators.required)],
-      farmerId: [{ value: '', disabled: false }],
+      seasonId: [null, (Validators.required)],
+      cropTypeId: [null, (Validators.required)],
+      plotOfferId: [null, (Validators.required)],
+      farmerId: [{ value: null, disabled: false }],
 
       farmerName: [{ value: '', disabled: false }],
       fatherName: [{ value: '', disabled: false }],
@@ -306,27 +294,27 @@ export class PlotreportsComponent implements OnInit {
       plotSection: [{ value: '', disabled: false }],
       plotVillageName: [{ value: '', disabled: true }],
 
-      plantTypeId: ['', (Validators.required)],
+      plantTypeId: [null, (Validators.required)],
       plotNumber: ['', (Validators.required)],
       surveyNo: ['', (Validators.required)],
       reportedArea: [null, (Validators.required)],
       plantingDate: ['', (Validators.required)],
-      plantSubTypeId: ['', (Validators.required)],
-      varietyId: ['', (Validators.required)],
-      agreed: [{ value: '', disabled: true }],
+      plantSubTypeId: [null, (Validators.required)],
+      varietyId: [null, (Validators.required)],
+      agreed: [{ value: null, disabled: true }],
       fieldName: [''],
-      birnumber: ['', (Validators.required)],
-      birdate: ['', (Validators.required)],
-      plotTypeId: ['', (Validators.required)],
+      birnumber: [null, (Validators.required)],
+      birdate: [null, (Validators.required)],
+      plotTypeId: [null, (Validators.required)],
       demoPlotArea: [null],
-      seedMaterialUsedId: ['', (Validators.required)],
+      seedMaterialUsedId: [null, (Validators.required)],
       profile: [''],
       totalArea: [null],
       cultivatedArea: [null],
       distanceFromPlot: [null],
       enabledValidation: [false],
       methodOfIrrigationId: [null, Validators.required],
-      plantingMethodId: ['', Validators.required],
+      plantingMethodId: [null, Validators.required],
 
       plotReportsAdditionalInfo: this.formbuilder.group({
         plotReportAddlInfoId: [null],
@@ -346,11 +334,11 @@ export class PlotreportsComponent implements OnInit {
 
       plot: this.formbuilder.group({
         plotId: [null],
-        plotOfferId: [''],
-        seasonId: [''],
-        cropTypeId: [''],
-        plotTypeId: [''],
-        plantTypeId: [''],
+        plotOfferId: [null],
+        seasonId: [null],
+        cropTypeId: [null],
+        plotTypeId: [null],
+        plantTypeId: [null],
         plotNumber: [''],
         plantingDate: [''],
       }),
@@ -388,22 +376,9 @@ export class PlotreportsComponent implements OnInit {
 
     this.fbPlotReport.controls['seasonId'].setValue(farmer.seasonId);
     this.fbPlotReport.controls['seasonId'].disable();
-    this.fbPlotReport.controls['plotOfferId'].setValue(plotReport.plotOfferId);
-    this.fbPlotReport.controls['plotOfferId'].disable();
     this.fbPlotReport.controls['farmerId'].setValue(farmer.farmerId);
 
-
     this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
-    // this.fbPlotReport.controls['fatherName'].setValue(farmer.fatherName);
-    // this.fbPlotReport.controls['farmerDivision'].setValue(farmer.farmerDivisionName);
-    // this.fbPlotReport.controls['farmerCircle'].setValue(farmer.farmerCircleName);
-    // this.fbPlotReport.controls['farmerSection'].setValue(farmer.farmerSectionName);
-    // this.fbPlotReport.controls['farmerVillage'].setValue(farmer.farmerVillageName);
-    // this.fbPlotReport.controls['plotDivision'].setValue(plotReport.plotDivisionName);
-    // this.fbPlotReport.controls['plotCircle'].setValue(plotReport.plotCircleName);
-    // this.fbPlotReport.controls['plotSection'].setValue(plotReport.plotSectionName);
-    // this.fbPlotReport.controls['plotVillageName'].setValue(plotReport.plotVillageName);
-
 
     this.fbPlotReport.controls['plantingDate'].setValue(plotReport.plantingDate && new Date(plotReport.plantingDate?.toString() + ""));
     this.fbPlotReport.controls['birnumber'].setValue(plotReport.birNumber);
@@ -468,16 +443,18 @@ export class PlotreportsComponent implements OnInit {
 
   onSubmit() {
     if (this.fbPlotReport.valid) {
+      this.fbPlotReport.controls['seasonId'].enable();
+      this.fbPlotReport.controls['plotOfferId'].enable();
       if (!this.subPlot.get('plotReportAddlInfoId')?.value) {
         this.fbPlotReport.value.plotReportAddlInfoId = null;
       }
       this.plotInfo();
+      if (this.fbPlotReport.value.plantingDate != undefined || this.fbPlotReport.value.plantingDate != null)
+        this.fbPlotReport.value.plantingDate = FORMAT_DATE(new Date(this.fbPlotReport.value.plantingDate));
       if (this.fbPlotReport.value.birdate != undefined || this.fbPlotReport.value.birdate != null)
         this.fbPlotReport.value.birdate = FORMAT_DATE(new Date(this.fbPlotReport.value.birdate));
       this.savePlotReport().subscribe(resp => {
         if (resp) {
-          this.fbPlotReport.controls['seasonId'].enable();
-          this.fbPlotReport.controls['plotOfferId'].enable();
           this.initPlotReports(this.currentSeason.seasonId!);
           this.fbPlotReport.reset();
           this.showDialog = false;
@@ -516,7 +493,6 @@ export class PlotreportsComponent implements OnInit {
 
       this.subPlot.get('previousCropId')?.setValidators(Validators.required);
       this.subPlot.get('previousCropId')?.updateValueAndValidity();
-
     }
     else {
       this.subPlot.get('soilTypeId')?.clearValidators();

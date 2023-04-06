@@ -1,9 +1,9 @@
-import { SeasonDto } from '../../_models/applicationmaster';
+import { SeasonDto } from 'src/app/_models/applicationmaster';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
-import { AppMasterService } from '../../_services/appmaster.service';
-import { GeoMasterService } from '../../_services/geomaster.service';
-import { CommonService } from '../../_services/common.service';
+import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { CommonService } from 'src/app/_services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
@@ -55,7 +55,7 @@ export class PlotofferComponent implements OnInit {
   permissions: any;
   plantFrom!: Date;
   plantTo!: Date;
-  // varietyTypes: any;
+
   farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
@@ -101,9 +101,13 @@ export class PlotofferComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotOffers = resp as unknown as IFarmerInPlotOfferDto[];
-      this.plotOffers.forEach((value) => {
-        value.ObjOfferedPlots = JSON.parse(value.offeredPlots) as IFarmerPlotOffersViewDto[];
-      });
+    });
+  }
+
+  onRowExpand(source: any) {
+    var data = source.data as IFarmerInPlotOfferDto;
+    this.monitoringService.GetFarmerPlotsInOffer(data.seasonId, data.farmerId).subscribe(resp => {
+      data.ObjOfferedPlots = resp as unknown as IFarmerPlotOffersViewDto[];
     });
   }
 
@@ -174,25 +178,25 @@ export class PlotofferComponent implements OnInit {
     this.fbPlotOffer = this.formbuilder.group({
       plotOfferId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
-      offerNo: [{ value: '', disabled: true }],
-      offerDate: ['', (Validators.required)],
+      offerNo: [{ value: null, disabled: true }],
+      offerDate: [null, (Validators.required)],
       isNewFarmer: [{ value: false, disabled: true }],
-      farmerId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here farmerId is ryotNo */
+      farmerId: [{ value: null, disabled: !this.IsAdd }, (Validators.required)], /* Here farmerId is ryotNo */
       ryotName: [{ value: '', disabled: true }],
       fatherName: [{ value: '', disabled: true }],
       farmerVillage: [{ value: '', disabled: true }],
       farmerDivision: [{ value: '', disabled: true }],
       farmerCircle: [{ value: '', disabled: true }],
       farmerSection: [{ value: '', disabled: true }],
-      plotVillageId: [{ value: '', disabled: !this.IsAdd }, (Validators.required)], /* Here villageId is plotVillageId */
+      plotVillageId: [{ value: null, disabled: !this.IsAdd }, (Validators.required)], /* Here villageId is plotVillageId */
       plotDivision: [{ value: '', disabled: true }],
       plotCircle: [{ value: '', disabled: true }],
       plotSection: [{ value: '', disabled: true }],
       expectedArea: [null, (Validators.required)],
-      plantTypeId: ['', (Validators.required)],
-      expectedPlantingDate: ['', (Validators.required)],
-      expectedVarietyId: ['', (Validators.required)],
-      reasonForNotPlantingId: ['', (Validators.required)],
+      plantTypeId: [null, (Validators.required)],
+      expectedPlantingDate: [null, (Validators.required)],
+      expectedVarietyId: [null, (Validators.required)],
+      reasonForNotPlantingId: [null, (Validators.required)],
       remarks: [''],
     });
   }

@@ -4,8 +4,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
 import { LookupDetailDto, SeasonDto, SeasonViewDto, } from 'src/app/_models/applicationmaster';
-import { IFarmerInPlotOfferDto, MaintenanceItems, MaintWeedicideDto, MaintDiseaseDto, MaintFertilizerDto, MaintPestDto, IPlotAssessmentViewDto, PlotInfoDto, PlotsDto,
-  PlotAssessmentDto } from 'src/app/_models/monitoring';
+import {
+  IFarmerInPlotOfferDto, MaintenanceItems, MaintWeedicideDto, MaintDiseaseDto, MaintFertilizerDto, MaintPestDto, IPlotAssessmentViewDto, PlotInfoDto, PlotsDto,
+  PlotAssessmentDto
+} from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -13,7 +15,6 @@ import { CURRENT_SEASON } from 'src/environments/environment';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-
 
 export interface IHeader {
   field: string;
@@ -67,16 +68,16 @@ export class PlotassesmentComponent implements OnInit {
 
   plotHeader: IHeader[] = [
     { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'OfferNo', header: 'OfferNo', label: 'OfferNo' },
+    { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
     { field: 'plantType', header: 'PlantType', label: 'Plant Type' },
-    { field: 'SurveyNo', header: 'SurveyNo', label: 'Survey No' },
-    { field: 'PlotNumber', header: 'PlotNumber', label: 'Plot Number' },
-    { field: 'PlantingDate', header: 'PlantingDate', label: 'Planting Date' },
-    { field: 'Variety', header: 'Variety', label: 'Variety' },
-    { field: 'FieldName', header: 'FieldName', label: 'Field Name' },
-    { field: 'PlotType', header: 'PlotType', label: 'plot Type' },
-    { field: 'MeasuredArea', header: 'MeasuredArea', label: 'Assessed Area' },
-    { field: 'AssessedDate', header: 'AssessedDate', label: 'Assessed Date' },
+    { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    { field: 'variety', header: 'variety', label: 'Variety' },
+    { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
+    { field: 'plotType', header: 'plotType', label: 'plot Type' },
+    { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
+    { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date' },
 
   ];
 
@@ -141,6 +142,22 @@ export class PlotassesmentComponent implements OnInit {
     this.initweedstatus();
   }
 
+
+  loadPlotassessmentLazy(event: IPlotAssessmentViewDto) {
+     
+
+    setTimeout(() => {
+      
+        let loadedCars = this.plotAssessments.slice(1000);
+        
+        // Array.prototype.splice.apply(this.plotAssessments, [
+        //   ...[1000],
+        //   ...loadedCars
+        // ]);
+        this.plotAssessments = [...this.plotAssessments];
+    }, Math.random() * 1000 + 250);
+} 
+
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
@@ -158,23 +175,27 @@ export class PlotassesmentComponent implements OnInit {
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
-    })
+    });
   }
 
   initPlotNumbers(season: number, plotId: number) {
     this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
-    })
+    });
   }
 
   initPlotAssesments(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
-      this.plotAssessments.forEach((farmer) => {
-        farmer.ObjMeasuredPlots = JSON.parse(farmer.measuredPlots) as IPlotAssessmentViewDto[]
-      })
-    })
+    });
+  }
+
+  onRowExpand(source: any) {
+    var data = source.data as IFarmerInPlotOfferDto;
+    this.monitoringService.GetFarmerPlotsInAssessment(data.seasonId, data.farmerId).subscribe(resp => {
+      data.ObjMeasuredPlots = resp as unknown as IPlotAssessmentViewDto[];
+    });
   }
 
   onSearch() {
@@ -185,9 +206,9 @@ export class PlotassesmentComponent implements OnInit {
     this.fbPlotAssesment = this.formbuilder.group({
       plotAssessmentId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
-      plotId: [, (Validators.required)],
+      plotId: [null, (Validators.required)],
       measuredArea: [null, Validators.required],
-      assessedDate: [''],
+      assessedDate: [null],
       isaDemoPlot: [null],
       weedStatusId: [null],
       interCropId: [null],
@@ -307,8 +328,7 @@ export class PlotassesmentComponent implements OnInit {
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAS001" : "SMOPAS002"]);
         }
-      })
-      // this.monitoringService.UpdatePlotAssessment(this.plotinfo);
+      });
     }
     else {
       this.fbPlotAssesment.markAllAsTouched();

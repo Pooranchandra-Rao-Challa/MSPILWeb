@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ApplicationConstantDto } from "../_models/common";
 import { CircleDto, DistrictDto, DivisionDto, MandalDto, SectionDto, StateDto, VillageDto } from "../_models/geomodels";
 import { ApiHttpService } from "./api.http.service";
-import { GET_CIRCLES_URI, GET_DISTRICTS_URI, GET_DIVISION_URI, GET_MANDALS_URI, GET_SEASON_URI, GET_SECTIONS_URI, GET_STATES_URI, GET_VILLAGES_URI, GET_WAREHOUSE_URI,  GET_SCREEN_DOC_NO_URI, GET_APPLICATION_CONSTANTS_URI, GET_CONSTANTS_URI } from './api.uri.service';
+import { GET_CIRCLES_URI, GET_DISTRICTS_URI, GET_DIVISION_URI, GET_MANDALS_URI, GET_SEASON_URI, GET_SECTIONS_URI, GET_STATES_URI, GET_VILLAGES_URI, GET_WAREHOUSE_URI,  GET_SCREEN_DOC_NO_URI, GET_APPLICATION_CONSTANTS_URI, GET_CONSTANTS_URI, UPDATE_CONSTANT } from './api.uri.service';
 import { EDocumentNumberScreens } from "src/environments/environment";
 
 
@@ -56,5 +56,9 @@ export class CommonService extends ApiHttpService {
 
   GetDocNo(seasonId: number,screenNumber: EDocumentNumberScreens) {
     return this.getWithParams<number>(GET_SCREEN_DOC_NO_URI,[seasonId,screenNumber]);
+  }
+
+  UpdateConstant(data: ApplicationConstantDto) {
+    return this.post(UPDATE_CONSTANT,data);
   }
 }
