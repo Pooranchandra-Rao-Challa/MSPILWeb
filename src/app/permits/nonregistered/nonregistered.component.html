@@ -17,7 +17,7 @@
             <ng-template pTemplate="left">
                 <div class="flex justify-content-between flex-column sm:flex-row grid">
                     <from [formGroup]="fbNonRegistered">
-                        <div class="col-10">
+                        <div class="col-12">
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
                                 <div class="col-3 p-2">
                                     <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
@@ -120,12 +120,13 @@
                                         formControlName="vehicleNo" [style]="{'width':'100%'}">
                                     </p-dropdown>
                                 </div>
-                            </div>
-                            <div class="col-3 p-2">
+                                <div class="col-3 p-2">
 
-                                <input placeholder="Vehicle Type" pInputText id="vehicleType" type="text" [style]="{'width':'100%'}"
-                                    formControlName="'vehicleType'">
+                                    <input placeholder="Vehicle Type" pInputText id="vehicleType" type="text" [style]="{'width':'100%'}"
+                                        formControlName="'vehicleType'">
+                                </div>
                             </div>
+                            
                         </div>
                     </from>
                     <!-- <div class="col-2 p-2">
