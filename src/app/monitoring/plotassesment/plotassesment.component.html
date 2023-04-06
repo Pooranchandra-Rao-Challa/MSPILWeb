@@ -355,8 +355,8 @@
       <ng-template pTemplate="footer">
         <div class="col-12">
           <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary" [disabled]="fbPlotAssesment.invalid"
-              (click)="onSubmit()"></button>
+            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary"
+              [disabled]="fbPlotAssesment.invalid" (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>
@@ -365,9 +365,8 @@
     <!-- table -->
     <p-table #assessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -388,9 +387,7 @@
         <tr>
           <th></th>
           <th *ngFor="let col of farmerHeader" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            {{col?.label}}
           </th>
         </tr>
       </ng-template>
@@ -410,7 +407,9 @@
         <tr>
           <td colspan="5">
             <div class="p-3">
-              <p-table [value]="farmer.ObjMeasuredPlots" [columns]="plotHeader" dataKey="plotId">
+              <p-table [value]="farmer.ObjMeasuredPlots" [columns]="plotHeader" dataKey="plotId"
+                [tableStyle]="{ width: 'min-content'}"
+                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
@@ -430,8 +429,8 @@
           <td *ngFor="let col of plotHeader">
 
             <span
-              *ngIf="col?.field != 'PlantingDate' && col?.field != 'AssessedDate'">{{plotAssessment[col.field]}}</span>
-            <span *ngIf="col?.field == 'PlantingDate' || col?.field == 'AssessedDate'">
+              *ngIf="col?.field != 'plantingDate' && col?.field != 'assessedDate'">{{plotAssessment[col.field]}}</span>
+            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'assessedDate'">
               {{plotAssessment[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>

@@ -490,10 +490,9 @@
     <!-- table -->
     <p-table #dt1 [value]="plotAgreements" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -520,7 +519,7 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-farmer let-expanded="expanded">
+      <ng-template pTemplate="body" let-farmer let-rowIndex="rowIndex" let-expanded="expanded">
         <tr>
           <td>
             <button type="button" pButton pRipple [pRowToggler]="farmer"
@@ -535,14 +534,14 @@
         <tr>
           <td colspan="6">
             <div class="p-3">
-              <p-table [value]="farmer.objAgreementedPlots" [columns]="plotHeaders" dataKey="plotOfferId">
+              <p-table [value]="farmer.objAgreementedPlots" [columns]="plotHeaders" dataKey="plotOfferId"
+                [tableStyle]="{ width: 'min-content'}"
+                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
           <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            {{col?.label}}
           </th>
         </tr>
       </ng-template>

@@ -440,8 +440,7 @@
       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true">
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -470,7 +469,7 @@
       </ng-template>
 
       <ng-template pTemplate="body" let-farmer let-expanded="expanded">
-        <tr>
+        <tr [pSelectableRow]="farmer">
           <td>
             <button type="button" pButton pRipple [pRowToggler]="farmer"
               class="p-button-text p-button-rounded p-button-plain"
@@ -485,14 +484,14 @@
         <tr>
           <td colspan="5">
             <div class="p-3">
-              <p-table [value]="farmer.objNetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId">
+              <p-table [value]="farmer.objNetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId"
+                [tableStyle]="{ width: 'min-content'}"
+                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
           <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            {{col?.label}}
           </th>
         </tr>
       </ng-template>
@@ -503,7 +502,7 @@
           </td>
           <td *ngFor="let col of plotHeaders">
             <span
-              *ngIf="col?.field != 'plantingDate' && col?.field != 'inspectionDate' && col?.field != 'birDate'">{{plotyield[col.field]}}</span>
+              *ngIf="col?.field != 'plantingDate' && col?.field != 'inspectionDate' && col?.field != 'birDate' && col?.field != 'isSeedArea'">{{plotyield[col.field]}}</span>
             <span *ngIf="col?.field == 'plantingDate' || col?.field == 'inspectionDate' || col?.field == 'birDate'">
               {{plotyield[col.field] | date: 'dd-MM-yyyy'}}
             </span>
