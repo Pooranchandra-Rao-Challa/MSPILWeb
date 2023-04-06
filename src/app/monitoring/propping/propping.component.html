@@ -12,86 +12,66 @@
             </ng-template>
         </p-toolbar>
 
-        <p-toolbar styleClass="p-mb-2">
+        <!-- <p-toolbar styleClass="p-mb-2">
             <ng-template pTemplate="left">
                 <form [formGroup]="fbPropping">
                     <div class="flex justify-content-between flex-column sm:flex-row grid">
-                        <div class="col-10">
+                        <div class="col-12">
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
-                                <div class="col-2 p-2">
+                                <div class="col-6">
                                     <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
                                         [options]="seasons" [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
                                         formControlName="seasonId" [style]="{'width':'100%'}" appendTo="body">
                                     </p-dropdown>
-                                    <!-- (onChange)="initAllottedPlots($event.value)" -->
                                 </div>
-                                <div class="col-2 p-2">
-                                    <p-dropdown placeholder="Select Village" optionLabel="villageName"
-                                        [options]="villages" optionValue="villageId" formControlName="villageId"
-                                        appendTo="body" [style]="{'width':'100%'}">
-                                    </p-dropdown>
-                                </div>
-                             
-                                <div class="col-2 p-2">
+                                <div class="col-6">
                                     <p-dropdown class="ml-2" optionLabel="name" [options]="proppingstage"
                                         optionValue="lookupDetailId" [style]="{'width':'100%'}"
                                         (onChange)="initPropping($event.value)"
                                         formControlName="ProppingStageId" appendTo="body">
                                     </p-dropdown>
-                                    <!-- (onChange)="initPropping($event.value,$event.value)" -->
-                                </div>
-                                <div class="col-2 p-2">
-                                    <input pInputText id="code" type="text" placeholder="Farmer Code" readonly
-                                        [style]="{'width':'100%'}">
-                                </div>
-                                <div class="col-2 p-2">
-                                    <p-calendar placeholder="From Planting Date" [readonlyInput]="true"
-                                        [showIcon]="true" formControlName="FromplantingDate" appendTo="body"
-                                        [style]="{'width':'100%'}">
-                                        <!-- [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingDate'].touched && FormControls['plantingDate'].errors }" -->
-                                        <!-- <span *ngIf="FormControls['plantingDate'].touched && FormControls['plantingDate'].invalid">
-                              <div class="ng-invalid ng-touched p-error"
-                                *ngIf="FormControls['plantingDate'].errors?.['required']">
-                                Please Select Planting Date.</div>
-                            </span> -->
-                                    </p-calendar>
-                                </div>
-                                <div class="col-2 p-2">
-                                    <p-calendar placeholder="To Planting Date" [readonlyInput]="true" [showIcon]="true"
-                                        formControlName="ToplantingDate" appendTo="body" [style]="{'width':'100%'}">
-                                        <!-- [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingDate'].touched && FormControls['plantingDate'].errors }" -->
-                                        <!-- <span *ngIf="FormControls['plantingDate'].touched && FormControls['plantingDate'].invalid">
-                              <div class="ng-invalid ng-touched p-error"
-                                *ngIf="FormControls['plantingDate'].errors?.['required']">
-                                Please Select Planting Date.</div>
-                            </span> -->
-                                    </p-calendar>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-2 p-2">
-                            <button pButton pRipple label="Search" class="p-button-raised p-button-success"
-                                style="width:100%"></button><!-- (click)="onSubmit()" -->
                         </div>
                     </div>
                 </form>
             </ng-template>
-        </p-toolbar>
+        </p-toolbar> -->
 
         <!-- table -->
-        <p-table #dt1 dataKey="id"  [value]="propping" [rows]="10" [rowHover]="true"
+        <p-table #dtpropping dataKey="id" [value]="propping" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
             <ng-template pTemplate="caption">
-                <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
-                    <!--  (click)="clear(dt1)"-->
-                    <!-- <div>
-                        <span class="p-input-icon-left mb-2">
-                            <i class="pi pi-search"></i>
-                        </span>
-                    </div> -->
-                </div>
+                <form [formGroup]="fbPropping">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                            (click)="clear(dtpropping)"></button>
+                        <div>
+                            <span class="p-input-icon-left mb-2">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                                    pTooltip="Search By Farmer Code, Farmer Name, Village Name,Plot No."
+                                    class="w-full" />
+                            </span>
+                            <span class="p-input-icon-left mb-2">
+                                <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                                    [options]="seasons" [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
+                                    formControlName="seasonId" [style]="{'width':'100%'}" appendTo="body">
+                                </p-dropdown>
+                            </span>&nbsp;
+                            <span class="p-input-icon-left mb-2">
+                                <p-dropdown class="ml-2" optionLabel="name" [options]="proppingstage"
+                                    optionValue="lookupDetailId" [style]="{'width':'100%'}"
+                                    (onChange)="initPropping($event.value)" formControlName="ProppingStageId"
+                                    appendTo="body">
+                                </p-dropdown>
+                            </span>
+                        </div>
+                    </div>
+                </form>
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
@@ -103,17 +83,34 @@
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-allottedPlot>
+            <ng-template pTemplate="body" let-propping>
                 <tr>
-                    <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
-                    <td><button pButton pRipple icon="pi pi-pencil"
+                    <td>
+                        <p-overlayPanel #op>
+                            <ng-template pTemplate="content">
+                                <form>
+                                    <label> Update Propping Date:<sup class="p-error">*</sup></label>
+                                    <div class="grid mt-2">
+                                        <div class="field col-12 md:col-8">
+                                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                                                placeholder="Select Propping Date">
+                                            </p-calendar>
+                                        </div>
+                                        <div class=" col-12 md:col-4">
+                                            <button pButton class="p-button-outlined " icon="pi pi-check"></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </ng-template>
+                        </p-overlayPanel>
+                        <button pButton pRipple icon="pi pi-pencil" (click)="op.toggle($event)"
                             class="p-element p-ripple p-button-text p-button p-component"></button>
                     </td>
                     <td *ngFor="let col of headers">
                         <span
-                            *ngIf="col?.field != 'ProppingDate' && col?.field != 'plantingDate'">{{allottedPlot[col.field]}}</span>
-                        <span *ngIf="col?.field == 'ProppingDate' && col?.field == 'plantingDate'">
-                            {{allottedPlot[col.field] | date: 'dd-MM-yyyy'}}
+                            *ngIf="col?.field != 'plantingDate' && col?.field != 'proppingDate'">{{propping[col.field]}}</span>
+                        <span *ngIf="col?.field == 'plantingDate' || col?.field == 'proppingDate'">
+                            {{propping[col.field] | date: 'dd-MM-yyyy'}}
                         </span>
                     </td>
                 </tr>
@@ -129,3 +126,9 @@
         </p-table>
     </div>
 </div>
+
+
+
+
+
+
