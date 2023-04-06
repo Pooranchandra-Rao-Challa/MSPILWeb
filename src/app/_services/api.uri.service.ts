@@ -213,3 +213,5 @@ export const CREATE_SAMPLES_ENTRY_URI = "Monitoring/CreateSample";
 
 export const CREATE_PLOT_YIELD_URI = "Monitoring/CreatePlotYield";
 export const UPDATE_PLOT_YIELD_URI = "Monitoring/UpdatePlotYield";
+
+export const GET_PROPPING = "Monitoring/GetPlotProppings"
