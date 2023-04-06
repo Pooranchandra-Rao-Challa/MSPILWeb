@@ -173,7 +173,7 @@ export const GET_PLOTASSESSMENT_URI = "Monitoring/GetPlotAssessements";
 export const CREATE_PLOTASSESSMENT_URI = "Monitoring/CreatePlotAssessment";
 
 export const UPDATE_PLOTASSESSMENT_URI = "Monitoring/UpdatePlotAssessment";
-export const GET_PLOT_REPORTINFO_URI ="Monitoring/PlotReportInfo";
+export const GET_PLOT_REPORTINFO_URI = "Monitoring/PlotReportInfo";
 export const GET_DOCCODE_URI = "Monitoring/GetNewDocNoForPlotTransfer";
 export const CREATE_PLOTTRANSFER_URI = "Monitoring/CreatePlotTransfer";
 export const UPDATE_PLOTTRANSFER_URI = "Monitoring/UpdatePlotTransfer";
@@ -183,7 +183,7 @@ export const CREATE_COMPLETED_PLOT_URI = "Monitoring/CreateCompletedPlot";
 export const UPDATE_COMPLETED_PLOT_URI = "Monitoring/UpdateCompletedPlot";
 export const GET_COMPLETED_PLOTS_URI = "Monitoring/GetCompletedPlots";
 export const GET_DONOFORCOMPLETEDPLOTS_URI = "Monitoring/GetNewDocNoForCompletedPlots";
-export const GET_COMPLETED_PLOT_IN_SEASON_URI= "Monitoring/PlotAllotmentsInSeason";
+export const GET_COMPLETED_PLOT_IN_SEASON_URI = "Monitoring/PlotAllotmentsInSeason";
 
 
 export const GET_MAINTANANCE_ITEMS_ASSESSMENT_URI = "Monitoring/GetMaintenanceItemsForAssessment";
@@ -193,13 +193,13 @@ export const GET_ALLOTTED_PLOT_URI = "Monitoring/AllottedPlot";
 export const GET_PLOT_NUMBER_URI = "Monitoring/GetPlotNumber";
 export const GET_PLOTS_FORASSESSMENT_URI = "Monitoring/GetPlots";
 export const GET_PLOTS_URI = "Monitoring/GetPlotInformation";
-export const GET_REGISTERED_FARMERS_URI ='Monitoring/GetRegisteredFarmers'
+export const GET_REGISTERED_FARMERS_URI = 'Monitoring/GetRegisteredFarmers'
 export const GET_PLOTTRANSFERS_URI = "Monitoring/GetPlotTransfers";
 export const GET_FARMERS_IN_SEASON_URI = "Monitoring/GetFarmersInSeason";
 export const GET_PLOT_AGREEMENTS_URI = "Monitoring/GetPlotAgreements";
 export const GET_PLOTS_FORAGREEMENT_URI = "Monitoring/GetPlots";
 export const GET_FARMER_IN_SECTIONS_URI = "Monitoring/GetFarmerSections";
-export const  GET_PLOTS_OF_FARMERS_URI = "Monitoring/GetPlotsofFarmers";
+export const GET_PLOTS_OF_FARMERS_URI = "Monitoring/GetPlotsofFarmers";
 export const GET_PLOTS_FORYIELDS_URI = "Monitoring/GetPlots";
 export const GET_PLOTYIELDS_URI = "Monitoring/GetPlotYields";
 
@@ -208,7 +208,7 @@ export const UPDATE_PLOT_AGREEMENT_URI = "Monitoring/UpdatePlotAgreement";
 export const GET_SAMPLE_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
 export const GET_SCREEN_DOC_NO_URI = "Common/GetDocNo";
 export const GET_SAMPLES_ENTRY_URI = "Monitoring/SeasonSamples";
-export const  GET_SAMPLES_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
+export const GET_SAMPLES_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
 export const CREATE_SAMPLES_ENTRY_URI = "Monitoring/CreateSample";
 
 export const CREATE_PLOT_YIELD_URI = "Monitoring/CreatePlotYield";

@@ -738,6 +738,21 @@ export interface IPlotYieldViewDto {
   updatedBy: string;
 }
 
+export class SampleDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  sampleId?: number
+  plotId?: number
+  docNo?: number
+  docDate?: string
+  plotYieldI?: number
+  fieldBrix?: number
+  brix?: number
+  pol?: number
+  serverUpdatedStatus?: boolean
+}
 
 export interface plotsofFarmerViewDto {
   plotId: number
@@ -748,6 +763,7 @@ export interface plotsofFarmerViewDto {
 }
 
 export class SampleDetailsDto {
+
   seasonId?: number
  season?: string
   docNo?: number
@@ -765,22 +781,6 @@ export class SampleDetailsDto {
   updatedAt?: string
   updatedBy?: string
 }
-export class SampleDto {
-  createdBy?: string
-  createdAt?: string
-  updatedBy?: string
-  updatedAt?: string
-  sampleId?: number
-  plotId?: number
-  docNo?: number
-  docDate?: string
-  plotYieldI?: number
-  fieldBrix?: number
-  brix?: number
-  pol?: number
-  serverUpdatedStatus?: boolean
-}
-
 
 export class PlotYieldDto {
   plotYieldId?: number;
