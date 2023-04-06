@@ -14,6 +14,8 @@
 
     <!-- table -->
     <p-table #dt1 [value]="warehouses" dataKey="id" [rows]="10" [rowHover]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="[
     'code',
     'name',

@@ -85,6 +85,8 @@
     </p-toolbar>
     <p-table #dt1 [value]="sampleslabs" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading"
       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
       [globalFilterFields]="['fromArea','toArea','noOfSample','isActive','createdAt','createdBy','updatedAt',
            'updatedBy']" responsiveLayout="scroll"
       [tableStyle]="{ width: 'max-content'}" [autoLayout]="true" [rowsPerPageOptions]="[10,25,50]">
