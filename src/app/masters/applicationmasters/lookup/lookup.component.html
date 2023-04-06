@@ -182,6 +182,8 @@
 
         <p-table #dt1 [value]="lookups" dataKey="id" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
             [globalFilterFields]="['lookupId','code','name','isActive','createdBy','updatedBy','createdAt','updatedAt']"
             [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="caption">

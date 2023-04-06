@@ -105,6 +105,8 @@
         </p-toolbar>
         <p-table #dt1 [value]="shifts" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading"
             [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
             [globalFilterFields]="['shiftId','code','name','divisionId','divisionName','inchargeName','inchargePhoneNo',
            'address','listingOrder','updatedAt','createdAt','updatedBy','createdBy' ]" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
             [autoLayout]="true" [rowsPerPageOptions]="[10,25,50]">
