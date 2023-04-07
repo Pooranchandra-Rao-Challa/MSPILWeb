@@ -246,6 +246,7 @@
                     <p-table #dt2 dataKey="id" [value]="getFormArrayControl('pests').controls" [rows]="10"
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
+
                       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: '100%'}">
                       <ng-template pTemplate="header">
                         <tr>
@@ -363,7 +364,7 @@
 
     <!-- table -->
     <!-- [lazy]="true" -->
-    <p-table #assessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true" [lazy]="true"
+    <p-table #dtPlotAssessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true" [lazy]="true"
       (onLazyLoad)="loadPlotassessmentLazy($event)"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [autoLayout]="true" scrollHeight="350px"
       [virtualScroll]="true" [virtualRowHeight]="50" [paginator]="true"
@@ -373,7 +374,7 @@
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-            (click)="clear(assessments)"></button>
+            (click)="clear(dtPlotAssessments)"></button>
           <div>
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
@@ -390,7 +391,9 @@
         <tr>
           <th></th>
           <th *ngFor="let col of farmerHeader" [pSortableColumn]="col.header">
-            {{col?.label}}
+            {{col?.label}} <p-sortIcon field="code">
+            </p-sortIcon>
+            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
           </th>
         </tr>
       </ng-template>
@@ -417,9 +420,7 @@
         <tr>
           <th></th>
           <th *ngFor="let col of plotHeader" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
-            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            {{col?.label}}
           </th>
         </tr>
       </ng-template>

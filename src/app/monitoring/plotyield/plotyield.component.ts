@@ -33,6 +33,7 @@ export class PlotyieldComponent implements OnInit {
     "surveyNo", "plotType", "reportedArea", "measuredArea", "netArea", "perishedArea", "notGrownArea", "isSeedArea", "agreementedArea", "harvestedArea", "poorCropArea", "plantType"
     , "plantingDate", "variety", "estimatedton", "birNumber", "birDate", "inspectionDate", "reasonForPerishedAreaId", "actionPlan", "divertedArea"];
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('dtPlotYields') dtPlotYields!: Table;
   // seasons: SeasonViewDto[] = [];
   seasons!: any;
   currentSeason: SeasonDto = {};
@@ -63,11 +64,10 @@ export class PlotyieldComponent implements OnInit {
   ];
 
   plotHeaders: IHeader[] = [
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
-    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
-    { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
     { field: 'plotNumber', header: 'plotNumber', label: ' Plot Number' },
+    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'plotType', header: 'plotType', label: 'Plot Type' },
     { field: 'reportedArea', header: 'reportedArea', label: 'Reported Area' },
@@ -80,7 +80,6 @@ export class PlotyieldComponent implements OnInit {
     { field: 'harvestedArea', header: 'harvestedArea', label: 'Harvested Area' },
     { field: 'poorCropArea', header: 'poorCropArea', label: 'Poor Crop Area' },
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'variety', header: 'variety', label: 'Variety' },
     { field: 'estimatedton', header: 'estimatedton', label: 'Estimated Ton' },
     { field: 'birNumber', header: 'birNumber', label: 'Bir Number' },
@@ -89,6 +88,8 @@ export class PlotyieldComponent implements OnInit {
     { field: 'reasonForPerishedAreaId', header: 'reasonForPerishedAreaId', label: 'Perishal Reason' },
     { field: 'actionPlan', header: 'actionPlan', label: 'Action Plan' },
     { field: 'divertedArea', header: 'divertedArea', label: 'Divert To Others' },
+    { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
+    { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
   ];
 
   clear(table: Table) {
@@ -249,6 +250,7 @@ export class PlotyieldComponent implements OnInit {
   }
 
   onSearch() {
+    this.dtPlotYields.expandedRowKeys = {};
     this.initPlotYields(this.currentSeason.seasonId!);
   }
 
