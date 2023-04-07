@@ -1,20 +1,15 @@
 
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
-import { debounceTime, distinctUntilChanged, fromEvent, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { FarmersViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
-import { SectionDto } from 'src/app/_models/geomodels';
-import { FarmerSectionViewDto, PlotInfoDto, plotsofFarmerViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
+import { FarmersViewDto, SampleslabsViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
+import { FarmerSectionViewDto, plotsofFarmerViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
-import { GeoMasterService } from 'src/app/_services/geomaster.service';
-import { JWTService } from 'src/app/_services/jwt.service';
-import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
-import { CURRENT_SEASON,EDocumentNumberScreens } from 'src/environments/environment';
+import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
 import { MessageService } from 'primeng/api';
 import { HttpEvent } from '@angular/common/http';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
@@ -25,14 +20,12 @@ export interface IHeader {
   label: string;
 }
 
-
 @Component({
   selector: 'sampleentry',
   templateUrl: './sampleentry.component.html',
   styles: [],
 })
 export class SampleEntryComponent implements OnInit {
-
   appConstants: any = {};
   sampleDto: SampleDto[] = [];
   fbSampleEntry!: FormGroup;
@@ -41,35 +34,26 @@ export class SampleEntryComponent implements OnInit {
   submitLabel!: string;
   showDialog: boolean = false;
   farmers: FarmerSectionViewDto[] = [];
-  plots: plotsofFarmerViewDto[] =[];
+  plots: plotsofFarmerViewDto[] = [];
   FarmerSectionViewDto: any
-  sample: SampleDto[] =[];
-  samples:SampleDetailsDto[] = [];
+  sample: SampleDetailsDto = {};
+  sampleEntries: SampleDetailsDto[] = [];
   mediumDate: string = MEDIUM_DATE;
-  selectedFarmer:FarmerSectionViewDto ={}
+  selectedFarmer: FarmerSectionViewDto = {};
   addFlag: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
-  @ViewChild('fieldBrix') fieldBrix!: ElementRef;
-  @ViewChild('brix') brix!: ElementRef;
-  @ViewChild('pol') pol!: ElementRef;
   noOfSample: number = 0;
   noOfSamplesEntered: number = 0;
   selectedPlot: any;
   sampleArea: any;
-  expectedSampleCount: number=0;
+  expectedSampleCount: number = 0;
   isSampleCountMatched: boolean = false;
   submitDisabled: boolean = false;
-
-  constructor(private formbuilder: FormBuilder,
-    private commonService: CommonService,
-    private appMasterservice: AppMasterService,
-    private monitoringService: MonitoringService,
-    private messageService:MessageService,
-    private alertMessage: AlertMessage,
-
-  ) {
-  }
-
+  sampleSlabs: SampleslabsViewDto[] = [];
+  maxAreaThatUsedInRecods: number = 1.2;
+  lastSampleSize: number = 0;
+  enteredSampleCount: number = 0;
+  netArea: number = 0;
 
   headers: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
@@ -85,107 +69,96 @@ export class SampleEntryComponent implements OnInit {
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
 
+  constructor(private formbuilder: FormBuilder,
+    private commonService: CommonService,
+    private appMasterservice: AppMasterService,
+    private monitoringService: MonitoringService,
+    private messageService: MessageService,
+    private alertMessage: AlertMessage,
+  ) {
+  }
+
   ngOnInit(): void {
     this.initSeasons();
-    this.initCurrentSeason();
+    this.initCurrentSeason(CURRENT_SEASON());
     this.initAppConstants()
     this.sampleEntryForm();
-
-
   }
 
   sampleEntryForm() {
     this.fbSampleEntry = this.formbuilder.group({
-      sampleId:[0],
-      seasonId: [{ value: this.currentSeason.seasonId },],
-      docNo: [],
-      docDate: ['',],
-      farmerId: [],
-      farmerName: [''],
-      plotId: [],
-      fieldBrix: [],
-      brix: [],
-      pol: [],
-      plotYieldId:[],
-      purity: [{ value: null, disabled: true }],
-      ccs: [{ value: null, disabled: true }],
-      noOfSamplesEntered:[null],
-      noOfSample:[null],
-      serverUpdatedStatus: true
-    })
+      sampleId: [null],
+      seasonId: [null, (Validators.required)],
+      docNo: [null, (Validators.required)],
+      docDate: [null, (Validators.required)],
+      farmerId: [null, (Validators.required)],
+      plotId: [null, (Validators.required)],
+      fieldBrix: [null, (Validators.required)],
+      brix: [null, (Validators.required)],
+      pol: [null, (Validators.required)],
+      plotYieldId: [],
+      purity: [null, (Validators.required)],
+      ccs: [null, (Validators.required)],
+      noOfSamplesEntered: [null, (Validators.required)],
+      noOfSample: [null, (Validators.required)],
+    });
   }
 
- ClearForm(){
-  this.fbSampleEntry.reset();
-  this.selectedFarmer ={};
- }
- InitForm(){
-  this.initSampleCaluclations();
-  this.getDocNo();
- }
+  get FormControls() {
+    return this.fbSampleEntry.controls;
+  }
 
- onSearch() {
-  this.initSampleEntry(this.currentSeason.seasonId!);
-}
+  initForm() {
+    this.initSampleCaluclations();
+    this.getDocNo();
+  }
 
+  onSearch() {
+    this.initSampleEntries(this.currentSeason.seasonId!);
+  }
 
-initSampleEntry(seasonId: number) {
-  let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-  this.monitoringService.GetSeasonSamples(seasonId, param1).subscribe((resp) => {
-    this.samples = resp as unknown as SampleDetailsDto[];
-    console.log(this.samples)
-  });
-}
+  initSampleEntries(seasonId: number) {
+    let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
+    this.monitoringService.GetSeasonSamples(seasonId, param1).subscribe((resp) => {
+      this.sampleEntries = resp as unknown as SampleDetailsDto[];
+      console.log(this.sampleEntries)
+    });
+  }
 
-  initCurrentSeason() {
-    this.appMasterservice.CurrentSeason(CURRENT_SEASON()).subscribe((resp) => {
+  initCurrentSeason(seasonCode: string) {
+    this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-      this.initSeasons();
       this.initFarmerSections(this.currentSeason.seasonId!);
-     this.initSampleEntry(this.currentSeason.seasonId!)
-    }); }
+      this.initSampleEntries(this.currentSeason.seasonId!)
+    });
+  }
+
   initFarmerSections(season: number) {
     this.monitoringService.GetSectionFarmers(season).subscribe((resp) => {
       this.farmers = resp as unknown as FarmerSectionViewDto[];
     })
   }
+
   initPlotsofFarmers(seasonId: any, farmerId: any) {
     this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
       this.plots = resp as unknown as plotsofFarmerViewDto[];
-      console.log(this.plots)
+      if (this.addFlag == false) this.onPlotNumber(this.sample.plotId!);
     });
   }
+
   onSelectedFarmer(farmerId: number) {
-   this.selectedFarmer = this.farmers.filter((farmer) => farmer.farmerId === farmerId)[0];
-    if (this.selectedFarmer) {
-      this.fbSampleEntry.controls['farmerName'].setValue(this.selectedFarmer.farmerName);
-      if (this.currentSeason?.seasonId) {
-        this.initPlotsofFarmers(this.currentSeason.seasonId, this.selectedFarmer.farmerId);
-      }
+    if (this.currentSeason?.seasonId && farmerId) {
+      this.initPlotsofFarmers(this.currentSeason.seasonId, farmerId);
     }
+    this.selectedFarmer = this.farmers.filter((farmer) => farmer.farmerId === farmerId)[0];
   }
 
-  // onSelectedPlot(plotId: number) {
-  //   const selectedPlot = this.plots.filter((plot) => plot.plotId === plotId)[0];
-
-  //   if (selectedPlot) {
-  //     this.selectedPlot = selectedPlot;
-  //     const netArea = selectedPlot.area - selectedPlot.deductionArea;
-  //     this.numberOfSamples = Math.ceil(netArea / this.selectedSampleSlab.toArea);
-  //     this.numberOfEnteredSamples = selectedPlot.sampleEntries.filter(entry => entry.isActive).length;
-
-  //     if (this.numberOfEnteredSamples === this.numberOfSamples) {
-  //       console.log("All samples have been entered");
-  //     } else {
-  //       console.log(`${this.numberOfEnteredSamples} out of ${this.numberOfSamples} samples have been entered`);
-  //     }
-  //   }
-  // }
-  getDocNo(){
-    this.commonService.GetDocNo(this.currentSeason.seasonId!,EDocumentNumberScreens.Samples).subscribe((resp) => {
+  getDocNo() {
+    this.commonService.GetDocNo(this.currentSeason.seasonId!, EDocumentNumberScreens.Samples).subscribe((resp) => {
       this.fbSampleEntry.get('docNo')?.setValue(resp);
     });
   }
+
   calculatePurityAndCCS() {
     const brix = this.fbSampleEntry.get('brix')?.value;
     const pol = this.fbSampleEntry.get('pol')?.value;
@@ -206,35 +179,41 @@ initSampleEntry(seasonId: number) {
     });
   }
 
+  initSampleslabs() {
+    this.appMasterservice.GetSampleSlabs().subscribe((resp) => {
+      this.sampleSlabs = resp as unknown as SampleslabsViewDto[];
+      this.sampleSlabs?.forEach((slab) => {
+        if (this.netArea >= slab.fromArea && this.netArea <= slab.toArea) {
+          this.fbSampleEntry.controls['noOfSample'].setValue(slab.noOfSample);
+          let noOfSample = this.fbSampleEntry.controls['noOfSample'].value;
+          let noOfSamplesEntered = this.fbSampleEntry.controls['noOfSamplesEntered'].value;
+          if (noOfSamplesEntered < noOfSample) {
+            this.isSampleCountMatched = false;
+            if (this.addFlag == false) this.editSampleEntry(this.sample);
+          }
+          else {
+            this.isSampleCountMatched = true;
+            if (this.addFlag == false)
+              this.messageService.add({
+                key: 'samplesMsg',
+                severity: 'error',
+                summary: 'Error Message',
+                detail: 'Number of entered samples matches with number of expected samples',
+                life: 30000
+              });
+          }
+        }
+      });
+    });
+  }
 
-  onPlotChange(plotId: any) {
-
-    // const seasonId = selectedPlot.seasonId;
-    // const farmerId = selectedPlot.farmerId;
-    let filteredSamples =this.samples.filter((sample)=>sample.plotId==plotId);
-    // this.monitoringService.GetPlotsofFarmers(selectedPlot.seasonId, selectedPlot.farmerId).subscribe((resp) => {
-    //   const sample = resp as unknown as any[];
-    //   if (sample && sample.length > 0) {
-    //     let netAreaTotal = 0;
-    //     for (let i = 0; i < sample.length; i++) {
-    //       netAreaTotal += sample[i].netArea;
-    //     }
-    //     if (netAreaTotal >= 0 && netAreaTotal < 4) {
-    //       this.expectedSampleCount = 1;
-    //     } else if (netAreaTotal >= 4 && netAreaTotal < 8) {
-    //       this.expectedSampleCount = 2;
-    //     }
-    //     this.isSampleCountMatched =  this.sample.length >= this.expectedSampleCount ;
-    //     this.submitDisabled =    this.sample.length <  this.expectedSampleCount ;
-    //     if (this.isSampleCountMatched) {
-    //       this.alertMessage.displayAlertMessage(ALERT_CODES[ "SMMSE001" ]);
-    //     }
-    //   } else {
-    //     this.expectedSampleCount = 0;
-    //     this.isSampleCountMatched = false;
-    //     this.submitDisabled = true;
-    //   }
-    // });
+  onPlotNumber(plotId: number) {
+    let plot = this.plots.filter((value) => value.plotId == plotId)[0];
+    this.netArea = plot && plot.netArea;
+    let enteredSamples = this.sampleEntries.filter((sample) => sample.plotId == plotId);
+    this.enteredSampleCount = enteredSamples && enteredSamples.length;
+    this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(this.enteredSampleCount);
+    this.initSampleslabs();
   }
 
   initSeasons() {
@@ -245,37 +224,38 @@ initSampleEntry(seasonId: number) {
   }
 
   addSampleEntry() {
-    this.submitLabel = 'Add Sample Entry';
+    this.isSampleCountMatched = false;
     this.fbSampleEntry.controls['seasonId'].enable();
+    this.fbSampleEntry.controls['seasonId'].patchValue(this.currentSeason.seasonId);
+    this.submitLabel = 'Add Sample Entry';
     this.addFlag = true;
     this.showDialog = true;
   }
+
   initFarmers() {
     this.appMasterservice.GetFarmers().subscribe((resp) => {
       this.farmers = resp as unknown as FarmersViewDto[];
     })
   }
 
-  editSampleEntry(sample:SampleDetailsDto){
+  sampleCountWhileEdit(sample: SampleDetailsDto) {
+    this.sample = sample;
+    this.addFlag = false;
+    this.initPlotsofFarmers(this.currentSeason.seasonId, sample.farmerId);
+  }
+
+  editSampleEntry(sample: SampleDetailsDto) {
     this.fbSampleEntry.patchValue(sample)
     this.submitLabel = 'Update Plot Transfer';
     this.showDialog = true;
-    this.addFlag = false;
   }
-
-  get FormControls() {
-    return this.fbSampleEntry.controls;
-  }
-
-
 
   saveSampleEntry(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.monitoringService.CreateSample(this.fbSampleEntry.value)
-    else return this.monitoringService.UpdatePlotTransfer(this.fbSampleEntry.value)
+    if (this.addFlag) return this.monitoringService.CreateSampleEntry(this.fbSampleEntry.value)
+    else return this.monitoringService.UpdateSampleEntry(this.fbSampleEntry.value)
   }
 
   onSubmit() {
-
     if (this.fbSampleEntry.valid) {
       this.saveSampleEntry().subscribe((resp: any) => {
         if (resp) {
@@ -287,22 +267,18 @@ initSampleEntry(seasonId: number) {
     else {
       this.fbSampleEntry.markAllAsTouched();
     }
-
   }
-  // For Farmer
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+    this.onSearch();
   }
 
-
-
-
-
-
-
-
-
+  clearForm() {
+    this.fbSampleEntry.reset();
+    this.selectedFarmer = {};
+  }
 }
 
 

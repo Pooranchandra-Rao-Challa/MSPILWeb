@@ -763,7 +763,7 @@ export interface plotsofFarmerViewDto {
 }
 
 export class SampleDetailsDto {
-
+  sampleId?: number;
   seasonId?: number
  season?: string
   docNo?: number
