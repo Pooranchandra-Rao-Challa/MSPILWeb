@@ -27,6 +27,7 @@ import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
+import { permitService } from './_services/permit.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
     PhotoService, ProductService,
     // Application services,
     AccountService, JWTService, GeoMasterService, CommonService, BillMasterService,
-    AppMasterService, MessageService, MonitoringService
+    AppMasterService, MessageService, MonitoringService,permitService
   ],
   bootstrap: [AppComponent]
 })
