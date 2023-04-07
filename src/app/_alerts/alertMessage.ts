@@ -79,6 +79,7 @@ export class AlertMessage {
  * Plot Assessments : PAS
  * Plot Agreements : PAG
  * Plot Yields : PY
+ * Propping: P
  * -------------------------------------
  * If the screens has more funcitonal items then
  * Like in settings use frist letter as code, if same
@@ -218,5 +219,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Plot Yield
   'SMOPY001': 'Plot Yield Added Successfully',
   'SMOPY002': 'Plot Yield Updated Successfully',
+
+  // Propping
+  'SMOP002': 'Propping Date Is Updated Successfully',
 
 }

@@ -807,7 +807,7 @@ export class PlotYieldDto {
   pests?: plotPestsDto[];
   weedicides?: plotWeedicidesDto[];
 }
-export class proppingViewDto{
+export class ProppingViewDto{
   plotId?: number;
   plotNumber?: string;
   farmerCode?: string;
@@ -822,16 +822,11 @@ export class proppingViewDto{
   netArea?: number;
   proppingDate?: Date;
 }
-export class proppingDto{
+export class ProppingDto{
   plotProppingId?: number;
   plotId?: number;
   proppingStageId?:number;
   proppingDate?: Date;
-  serverUpdatedStatus?:boolean;
-  createdAt?: Date;
-  createdBy?: string;
-  updatedAt?: Date;
-  updatedBy?: string;
 }
 
 
