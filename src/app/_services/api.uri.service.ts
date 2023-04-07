@@ -222,3 +222,5 @@ export const GET_FARMER_PLOTS_IN_OFFER_URI = "Monitoring/GetFarmerPlotsInOffer";
 export const GET_PROPPING = "Monitoring/GetPlotProppings";
 export const UPDATE_PROPPING_URI ="Monitoring/UpdatePlotPropping";
 export const UPDATE_CONSTANT = "Common/UpdateConstant";
+export const GET_SEASON_SCHEDULE_GROUPS_URI = "Schedule/GetSeasonScheduleGroups";
+
