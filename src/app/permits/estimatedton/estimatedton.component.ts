@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { SeasonDto } from "src/app/_models/applicationmaster";
-import { IPlotOfferViewDto } from "src/app/_models/monitoring";
+import { EstimatedViewDto, FarmersInPlantingDatesDto, IPlotOfferViewDto } from "src/app/_models/monitoring";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { BillMasterService } from "src/app/_services/billmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { LookupService } from "src/app/_services/lookup.service";
 import { MonitoringService } from "src/app/_services/monitoring.service";
+import { CURRENT_SEASON } from "src/environments/environment";
 
 export interface IHeader {
   field: string;
@@ -24,7 +25,7 @@ export class EstimatedTonDto {
   PlantingDate?: Date;
   NetArea?: number;
   Estimatedton?: number;
-  IncreasedEstimatedton?: number; 
+  IncreasedEstimatedton?: number;
   PermitTon?: number;
   SuppliedTon?: number;
   BalanceTon?: number;
@@ -43,110 +44,107 @@ interface sampleDropdownValue {
 })
 
 export class EstimatedTonComponent implements OnInit {
-
-  activeTabs: boolean[] = [false];
-
-
+  // activeTabs: boolean[] = [false];
   seasons!: any[];
   currentSeason: SeasonDto = {};
-  allottedPlots: IPlotOfferViewDto[] = [];
   loading: boolean = true;
   showTable: boolean = false;
   showForm: boolean = false;
   dateTime = new Date();
-
-  forapproval: boolean = false;
-  estimatedTonDto: EstimatedTonDto[] = [];
-
+  estimatedton: EstimatedViewDto[] = [];
   @ViewChild('filter') filter!: ElementRef;
   fbEstimatedTonFilter: any;
   sampleDrop!: sampleDropdownValue[];
-  selectSample? : sampleDropdownValue;
-
+  selectSample?: sampleDropdownValue;
+  farmers:FarmersInPlantingDatesDto[]=[];
 
   constructor(private formbuilder: FormBuilder,
-    private billMasterService: BillMasterService,
     private commonService: CommonService,
     private appMasterService: AppMasterService,
-    private monitoringService: MonitoringService,
-    private lookupService: LookupService,
+    private monitoringService:MonitoringService) { }
 
-
-  ) { }
-  
   getEstimatedForm() {
     this.fbEstimatedTonFilter = this.formbuilder.group({
-      seasonId : new FormControl('', [Validators.required]),
-      divisionId : new FormControl('', [Validators.required]),
-      circleId : new FormControl('', [Validators.required]),
-      sectionId : new FormControl('', [Validators.required]),
-      villageId : new FormControl('', [Validators.required]),
-      fromPlantingDate : new FormControl('', [Validators.required]),
-      toPlantingDate : new FormControl('', [Validators.required]),
-      farmerCode : new FormControl('', [Validators.required]),
+      seasonId: new FormControl('', [Validators.required]),
+      divisionId: new FormControl('', [Validators.required]),
+      circleId: new FormControl('', [Validators.required]),
+      sectionId: new FormControl('', [Validators.required]),
+      villageId: new FormControl('', [Validators.required]),
+      frompltngDate: new FormControl('', [Validators.required]),
+      topltngDate: new FormControl('', [Validators.required]),
+      farmerCode: new FormControl('', [Validators.required]),
     });
   }
 
-  get FormControals(){
+  get FormControals() {
     return this.fbEstimatedTonFilter.controls
   }
-
   ngOnInit(): void {
-    this.fillData();
-    this.initSeasons();
+    // this.fillData();
+    this.initCurrentSeason(CURRENT_SEASON());
     this.getEstimatedForm();
     this.SampleDropdwon();
-
+    // this.GetFarmers();
   }
-
+  
   headers: IHeader[] = [
-    { field: 'FarmerCode', header: 'FarmerCode', label: 'Farmer Code' },
-    { field: 'FarmerName', header: 'FarmerName', label: 'Farmer Name' },
-    { field: 'PlotNo', header: 'PlotNo', label: 'Plot No' },
-    { field: 'VillageName', header: 'VillageName', label: 'Village Name' },
-    { field: 'VarityName', header: 'VarityName', label: 'Varity Name' },
-    { field: 'PlantType', header: 'PlantType', label: 'Plant Type' },
-    { field: 'PlantingDate', header: 'PlantingDate', label: 'Planting Date' },
-    { field: 'NetArea', header: 'NetArea', label: 'Net rea' },
-    { field: 'Estimatedton', header: 'Estimatedton', label: 'Estimated ton' },
-    { field: 'IncreasedEstimatedton', header: 'IncreasedEstimatedton', label: 'Increased Estimated ton' },
+    { field: 'updatedEstimatedton', header: 'updatedEstimatedton', label: 'Updated Estimated Ton' },
+    { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
+    { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
+    { field: 'villageName', header: 'villageName', label: 'Village Name' },
+    { field: 'variety', header: 'variety', label: 'Variety Name' },
+    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    { field: 'netArea', header: 'netArea', label: 'Net Area' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
+    { field: 'excessTonage', header: 'excessTonage', label: 'Increased Estimated Ton' },
     { field: 'PermitTon', header: 'PermitTon', label: 'Permit Ton' },
     { field: 'SuppliedTon', header: 'SuppliedTon', label: 'Supplied Ton' },
     { field: 'BalanceTon', header: 'BalanceTon', label: 'Balance Ton' },
     { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments' },
-    { field: 'UpdatedEstimatedton', header: 'UpdatedEstimatedton', label: 'Updated Estimated ton' },
-];
+  ];
 
   initSeasons() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp as any;
     });
   }
-  initAllottedPlots(seasonId: number) {
-    let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
-      this.allottedPlots = resp as unknown as IPlotOfferViewDto[];
-      this.loading = false;
-    });
-  }
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
       this.initSeasons();
-      this.initAllottedPlots(this.currentSeason.seasonId!);
+      this.initEstimatedTon(this.currentSeason.seasonId!);
+      // this.GetFarmers(this.currentSeason.seasonId!);
+    });
+  }
+  initEstimatedTon(seasonId:any){
+    this.monitoringService.GetEstimatedTon(seasonId).subscribe((resp) => {
+      this.estimatedton = resp as unknown as EstimatedViewDto[];
+      console.log(this.estimatedton)
     });
   }
 
+  GetFarmers(){
+    debugger
+    var seasonId=this.fbEstimatedTonFilter.value.seasonId;
+    var frompltngDate = this.fbEstimatedTonFilter.value.frompltngDate;
+    var topltngDate = this.fbEstimatedTonFilter.value.topltngDate;
+    this.monitoringService.GetFarmersInPlantingDates(seasonId,frompltngDate,topltngDate).subscribe((resp) => {
+      this.farmers = resp as unknown as FarmersInPlantingDatesDto[];
+      console.log(this.farmers)
+    })
+  }  
   toggleTab() {
-      // this.showForm = true;
-        this.showForm =  !this.showForm;
-    }
+    // this.showForm = true;
+    this.showForm = !this.showForm;
+  }
 
   getEstimatedTon() {
     this.showTable = true;
   }
-  
-  SampleDropdwon(){
+
+  SampleDropdwon() {
     this.sampleDrop = [
       { name: 'New York', code: 'NY' },
       { name: 'Rome', code: 'RM' },
@@ -156,28 +154,27 @@ export class EstimatedTonComponent implements OnInit {
     ];
   }
 
-  fillData() {
-    for (var i of [1, 2]) {
-        this.estimatedTonDto.push(
-            {
-                FarmerCode: i,
-                FarmerName: 'Farmer',
-                PlotNo: 1,
-                VillageName: 'Village',
-                VarityName: 'Varity',
-                PlantType: 'planttype',
-                PlantingDate: new Date(),
-                NetArea: 1,
-                Estimatedton: 20,
-                IncreasedEstimatedton: 5,
-                PermitTon: 0,
-                SuppliedTon: 0,
-                BalanceTon: 25,
-                NoofWeighments: 0,   
-                UpdatedEstimatedton: 0
-            }
-        )
-    }
-}
-
+  // fillData() {
+  //   for (var i of [1, 2]) {
+  //     this.estimatedTonDto.push(
+  //       {
+  //         FarmerCode: i,
+  //         FarmerName: 'Farmer',
+  //         PlotNo: 1,
+  //         VillageName: 'Village',
+  //         VarityName: 'Varity',
+  //         PlantType: 'planttype',
+  //         PlantingDate: new Date(),
+  //         NetArea: 1,
+  //         Estimatedton: 20,
+  //         IncreasedEstimatedton: 5,
+  //         PermitTon: 0,
+  //         SuppliedTon: 0,
+  //         BalanceTon: 25,
+  //         NoofWeighments: 0,
+  //         UpdatedEstimatedton: 0
+  //       }
+  //     )
+  //   }
+  // }
 }

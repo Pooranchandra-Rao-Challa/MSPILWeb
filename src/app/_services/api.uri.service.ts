@@ -224,3 +224,5 @@ export const UPDATE_PROPPING_URI ="Monitoring/UpdatePlotPropping";
 export const UPDATE_CONSTANT = "Common/UpdateConstant";
 export const GET_SEASON_SCHEDULE_GROUPS_URI = "Schedule/GetSeasonScheduleGroups";
 
+export const GET_ESTIMATED_TON ="Schedule/GetPlotExcessTonage"
+export const GET_FARMERS_FOR_ESTIMATED_TON ="Schedule/GetFarmersInPlantingDates"
