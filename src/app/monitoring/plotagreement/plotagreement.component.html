@@ -488,7 +488,7 @@
     </p-dialog>
 
     <!-- table -->
-    <p-table #dt1 [value]="plotAgreements" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
+    <p-table #dtPlotAgreements [value]="plotAgreements" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
@@ -496,7 +496,7 @@
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-            (click)="clear(dt1)"></button>
+            (click)="clear(dtPlotAgreements)"></button>
           <div>
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>

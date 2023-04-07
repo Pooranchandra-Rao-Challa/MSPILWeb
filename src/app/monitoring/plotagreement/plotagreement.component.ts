@@ -32,6 +32,7 @@ export class PlotagreementComponent implements OnInit {
   globalFilterFields: string[] = ["seasonName", "offerNo", "agreementedDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "varietyId", "plantingDate"];
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('dtPlotAgreements') dtPlotAgreements!: Table;
   seasons: SeasonViewDto[] = [];
   showDialog: boolean = false;
   submitLabel!: string;
@@ -62,13 +63,13 @@ export class PlotagreementComponent implements OnInit {
   ];
 
   plotHeaders: IHeader[] = [
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
+    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'crop', header: 'crop', label: 'Crop' },
     { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'variety', header: 'variety', label: 'Variety' },
     { field: 'plotType', header: 'plotType', label: 'Plot Type' },
     { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
@@ -324,6 +325,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   onSearch() {
+    this.dtPlotAgreements.expandedRowKeys = {};
     this.initPlotAgreements(this.currentSeason.seasonId!);
   }
 

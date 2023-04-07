@@ -33,6 +33,7 @@ export class PlotassesmentComponent implements OnInit {
   showDialog: boolean = false;
   submitLabel!: string;
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('dtPlotAssessments') dtPlotAssessments!: Table;
   loading: boolean = true;
   addFlag: boolean = true;
   fbPlotAssesment!: FormGroup
@@ -67,18 +68,17 @@ export class PlotassesmentComponent implements OnInit {
   ];
 
   plotHeader: IHeader[] = [
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
-    { field: 'plantType', header: 'PlantType', label: 'Plant Type' },
-    { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
+    { field: 'plantType', header: 'PlantType', label: 'Plant Type' },
+    { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'variety', header: 'variety', label: 'Variety' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
     { field: 'plotType', header: 'plotType', label: 'plot Type' },
     { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
     { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date' },
-
+    { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
   ];
 
   initPlotAssesment(plotAssessmentId: number = -1) {
@@ -183,6 +183,7 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   onSearch() {
+    this.dtPlotAssessments.expandedRowKeys = {};
     this.initPlotAssesments(this.currentSeason.seasonId!);
   }
 

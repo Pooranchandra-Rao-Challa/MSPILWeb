@@ -35,6 +35,7 @@ export class PlotreportsComponent implements OnInit {
   addFlag: boolean = true;
   globalFilterFields: any;
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('dtPlotReports') dtPlotReports!: Table;
   seasons!: any;
   currentSeason: SeasonDto = {};
   showDialog: boolean = false;
@@ -70,21 +71,17 @@ export class PlotreportsComponent implements OnInit {
   ];
 
   plotHeaders: IHeader[] = [
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
+    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'previousCrop', header: 'previousCrop', label: 'Previous Crop' },
     { field: 'cropType', header: 'cropType', label: 'Crop Type' },
     { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
-    { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'variety', header: 'variety', label: 'Variety' },
     { field: 'plotType', header: 'plotType', label: 'Plot Type' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
-    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
-    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
-    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
-    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
 
   constructor(private formbuilder: FormBuilder,
@@ -271,6 +268,7 @@ export class PlotreportsComponent implements OnInit {
   }
 
   onSearch() {
+    this.dtPlotReports.expandedRowKeys = {};
     this.initPlotReports(this.currentSeason.seasonId!);
   }
 

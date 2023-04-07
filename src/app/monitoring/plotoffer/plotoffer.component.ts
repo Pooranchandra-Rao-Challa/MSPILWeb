@@ -37,6 +37,7 @@ export class PlotofferComponent implements OnInit {
   globalFilterFields: string[] = ["seasonName", "offerNo", "offerDate", "farmerId", "farmerVillageName", "farmerName", "plotVillageName", "plantType",
     "expectedArea", "expectedVarietyId", "expectedPlantingDate"];
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('dtPlotOffer') dtPlotOffer!: Table;
   showDialog: boolean = false;
   showApprovalDialog: boolean = false;
   addFlag: boolean = true;
@@ -112,6 +113,7 @@ export class PlotofferComponent implements OnInit {
   }
 
   onSearch() {
+    this.dtPlotOffer.expandedRowKeys = {};
     this.initPlotOffers(this.currentSeason.seasonId!);
   }
 
