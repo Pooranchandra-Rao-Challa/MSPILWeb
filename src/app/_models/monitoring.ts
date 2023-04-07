@@ -822,3 +822,16 @@ export class proppingViewDto{
   netArea?: number;
   proppingDate?: Date;
 }
+export class proppingDto{
+  plotProppingId?: number;
+  plotId?: number;
+  proppingStageId?:number;
+  proppingDate?: Date;
+  serverUpdatedStatus?:boolean;
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+}
+
+

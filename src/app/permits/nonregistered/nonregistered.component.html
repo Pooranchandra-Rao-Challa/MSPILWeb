@@ -6,8 +6,133 @@
                 <h4>Non Registered</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Non Registered" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    ></button>
+                <button pButton pRipple label="Add Non Registered" icon="pi pi-plus"
+                    class="p-button-success p-mr-2"></button>
+                <!-- (click)="getSpecialPermit()" -->
+            </ng-template>
+        </p-toolbar>
+
+        <!-- From Toolbar -->
+        <p-toolbar styleClass="p-mb-2">
+            <ng-template pTemplate="left">
+                <div class="flex justify-content-between flex-column sm:flex-row grid">
+                    <from [formGroup]="fbNonRegistered">
+                        <div class="col-12">
+                            <div class="flex justify-content-between flex-column sm:flex-row grid">
+                                <div class="col-3 p-2">
+                                    <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                                        [options]="seasons" formControlName="seasonId"
+                                        [(ngModel)]="currentSeason.seasonId"
+                                        (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
+                                        [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-calendar placeholder="Permit Date" [readonlyInput]="true" [showIcon]="true"
+                                        formControlName="permitDate" [style]="{'width':'100%'}">
+
+                                    </p-calendar>
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="noOfPermits" type="number" placeholder="No Of Permits"
+                                        formControlName="noOfPermits" [style]="{'width':'100%'}">
+                                </div>
+                                <div class="col-3 p-2">
+                                    <label>Is Burnt:</label><br>
+                                    <p-inputSwitch formControlName="isBurnt"></p-inputSwitch>
+                                  </div>
+                                <div class="col-3 p-2">
+                                    <p-dropdown placeholder="Select To Ryot" optionLabel="code" optionValue="ryotNo" [style]="{'width':'100%'}"
+                                        formControlName="ryotNo" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="farmerDivision" type="text" placeholder="Farmer Division" [style]="{'width':'100%'}"
+                                        formControlName="farmerDivision">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="farmerCircle" type="text" placeholder="Farmer Circle" [style]="{'width':'100%'}"
+                                        formControlName="farmerCircle">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="farmerSection" placeholder="Farmer Section" type="text" [style]="{'width':'100%'}"
+                                        formControlName="farmerSection">
+                                </div>
+                                <div class="col-3 p-2">
+ 
+                                    <input pInputText id="farmerVillage" placeholder="Farmer Village" type="text" [style]="{'width':'100%'}"
+                                        formControlName="farmerVillage">
+                                </div>
+
+                                <div class="col-3 p-2">
+                                    <p-dropdown placeholder="Plot" optionLabel="plot" optionValue="plot" 
+                                        formControlName="plot" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotDivision" type="text" placeholder="Plot Division" [style]="{'width':'100%'}"
+                                        formControlName="plotDivision">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotCircle" type="text" placeholder="Plot Circle" [style]="{'width':'100%'}"
+                                        formControlName="plotCircle">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotSection" type="text" placeholder="Plot Section" [style]="{'width':'100%'}"
+                                        formControlName="plotSection">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotVillage" placeholder="Plot Village" type="text" [style]="{'width':'100%'}"
+                                        formControlName="plotVillage">
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-dropdown placeholder="HGL" optionLabel="HGL" optionValue="HGL"
+                                        formControlName="HGL" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-dropdown placeholder="sub HGL" optionLabel="subHGL" optionValue="subHGL"
+                                        formControlName="subHGL" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="col-3 p-2">
+
+                                    <input pInputText placeholder="Labour Price" id="labourPrice" type="number" [style]="{'width':'100%'}"
+                                        formControlName="'labourPrice'">
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-dropdown placeholder="TPT" optionLabel="TPT" optionValue="TPT"
+                                        formControlName="TPT" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-dropdown placeholder="Vehicle No" optionLabel="vehicleNo" optionValue="vehicleNo"
+                                        formControlName="vehicleNo" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input placeholder="Vehicle Type" pInputText id="vehicleType" type="text" [style]="{'width':'100%'}"
+                                        formControlName="'vehicleType'">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </from>
+                    <!-- <div class="col-2 p-2">
+                        <button pButton pRipple label="Search" class="p-button-raised p-button-success" style="width:100%"></button><!-- (click)="onSubmit()" 
+                    </div> -->
+                </div>
             </ng-template>
         </p-toolbar>
     </div>

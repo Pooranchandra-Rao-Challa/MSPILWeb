@@ -1,7 +1,7 @@
 import {
   IFarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, proppingViewDto, IPlotYieldViewDto
+  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, proppingViewDto, IPlotYieldViewDto, proppingDto
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
@@ -303,5 +303,9 @@ export class MonitoringService extends ApiHttpService {
   // Propping
   public GetPropping(seasonId: number, stageId: number) {
     return this.getWithParams<proppingViewDto>(GET_PROPPING, [seasonId,stageId]);
+  }
+
+  public UpdatePropping(propping: proppingDto) {
+    return this.post<proppingDto>(UPDATE_PLOT_YIELD_URI, propping);
   }
 }

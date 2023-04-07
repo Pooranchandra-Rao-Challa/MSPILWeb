@@ -7,7 +7,7 @@ import { VillagesViewDto } from 'src/app/_models/geomodels';
 import { IPlotOfferViewDto, proppingViewDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
-import { GeoMasterService } from 'src/app/_services/geomaster.service';
+import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
@@ -35,14 +35,16 @@ export class ProppingComponent implements OnInit {
     fbPropping!:FormGroup;
     proppingstage: LookupDetailDto[] =[];
     propping :proppingViewDto[]=[];
-    data:any
-    constructor(private commonService: CommonService,
-        private appMasterService: AppMasterService,
-        private geoMasterService: GeoMasterService,
+    data:any;
+    permissions:any;
+    
+    constructor(private appMasterService: AppMasterService,
+        private jwtService: JWTService,
         private formbuilder: FormBuilder,
         private monitoringService: MonitoringService,
-        private lookupService: LookupService,
-        private activatedRoute: ActivatedRoute) { }
+        private lookupService: LookupService,) {
+             this.initProppingStage();
+         }
     headers: IHeader[] = [
         { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
         { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
@@ -51,23 +53,25 @@ export class ProppingComponent implements OnInit {
         { field: 'circleName', header: 'circleName', label: 'Circle Name' },
         { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
         { field: 'villageName', header: 'villageName', label: 'Village Name' },
-        { field: 'varietyName', header: 'varietyName', label: 'Varity Name' },
+        { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
         { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
         { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
         { field: 'netArea', header: 'netArea', label: 'Net Area' },
         { field: 'proppingDate', header: 'proppingDate', label: 'Propping Date' },
     ];
-
+    clear(table: Table) {
+        table.clear();
+        this.filter.nativeElement.value = '';
+        this.onSearch();
+      }
+      onSearch() { 
+          this.initProppingStage();
+      }
     initSeasons() {
         this.appMasterService.Getseason().subscribe((resp) => {
           this.seasons = resp as unknown as SeasonViewDto[];
         });
       }
-      initVillages() {
-        this.geoMasterService.GetVillage().subscribe((resp) => {
-            this.villages = resp as unknown as VillagesViewDto[];
-        });
-    }
     initProppingStage() {
       this.lookupService.ProppingStages().subscribe((resp) => {
           this.proppingstage = resp as unknown as LookupDetailDto[];
@@ -78,13 +82,6 @@ export class ProppingComponent implements OnInit {
           this.initPropping(stageId);
         });
       }   
-    // initAllottedPlots(seasonId: number) {
-    //     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    //     this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
-    //         this.allottedPlots = resp as unknown as IPlotOfferViewDto[];
-    //         this.loading = false;
-    //     });
-    // }
     initCurrentSeason() {
         this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
             this.currentSeason = resp as SeasonDto;
@@ -96,25 +93,21 @@ export class ProppingComponent implements OnInit {
       }
     proppingForm() {
         this.fbPropping = this.formbuilder.group({
-            villageId : [''],
             seasonId : [{ value: this.currentSeason.seasonId }, (Validators.required)],
-            ProppingStageId : [59],
-            FromplantingDate :[null],
-            ToplantingDate : [null],
+            ProppingStageId : [null],
         })
     }
     ngOnInit(): void {
+        this.permissions = this.jwtService.Permissions;
         this.currentSeasonCode = CURRENT_SEASON()
         this.initCurrentSeason();
         this.initSeasons();
-        this.initVillages();
         this.proppingForm();
         this.initProppingStage();
     }
-    initPropping(stageId:any) {
-        debugger
+    initPropping(stageId:number) {
+        debugger;
         var seasonId=this.fbPropping.value.seasonId;
-     
         this.monitoringService.GetPropping(seasonId,stageId).subscribe((resp) => {
           this.propping = resp as unknown as proppingViewDto[];
           console.log(this.propping)
