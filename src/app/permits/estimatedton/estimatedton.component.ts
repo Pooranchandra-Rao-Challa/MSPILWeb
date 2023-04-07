@@ -43,11 +43,16 @@ interface sampleDropdownValue {
 })
 
 export class EstimatedTonComponent implements OnInit {
+
+  activeTabs: boolean[] = [false];
+
+
   seasons!: any[];
   currentSeason: SeasonDto = {};
   allottedPlots: IPlotOfferViewDto[] = [];
   loading: boolean = true;
   showTable: boolean = false;
+  showForm: boolean = false;
   dateTime = new Date();
 
   forapproval: boolean = false;
@@ -131,6 +136,11 @@ export class EstimatedTonComponent implements OnInit {
       this.initAllottedPlots(this.currentSeason.seasonId!);
     });
   }
+
+  toggleTab() {
+      // this.showForm = true;
+        this.showForm =  !this.showForm;
+    }
 
   getEstimatedTon() {
     this.showTable = true;

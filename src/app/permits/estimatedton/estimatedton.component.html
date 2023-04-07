@@ -7,13 +7,15 @@
             </ng-template>
             <ng-template pTemplate="right">
        
+                <button pButton pRipple label="Filter"  class="p-button-primary w-100" (click)="toggleTab()" ></button>
+                <!-- (click)="getEstimatedTon()" -->
                 
             </ng-template>
         </p-toolbar>
 
         <!-- From Toolbar -->
 
-        <p-toolbar styleClass="p-mb-2" >
+        <p-toolbar styleClass="p-mb-2" *ngIf ="showForm">
             <ng-template pTemplate="left">
                 <div class="flex justify-content-between flex-column sm:flex-row grid">
                     <from [formGroup]="fbEstimatedTonFilter" >
@@ -32,7 +34,7 @@
                             </p-dropdown> -->
                           
                                 <p-multiSelect [options]="sampleDrop" placeholder="Select Division"  [(ngModel)]="selectSample"
-                                 [filter]="true" optionLabel="name" formControlName="divisionI" [style]="{'width':'100%'}"></p-multiSelect>
+                                 [filter]="true" optionLabel="name" formControlName="divisionId" [style]="{'width':'100%'}"></p-multiSelect>
                          
                             </div>
                             <div class="col-2 p-2">
@@ -94,7 +96,7 @@
 
       
          <!-- table -->
-         <p-table #dt1 [value]="estimatedTonDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+         <p-table #dt1 [value]="estimatedTonDto" dataKey="id" [rows]="10" [rowHover]="true"
          styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
          responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
          <ng-template pTemplate="caption">

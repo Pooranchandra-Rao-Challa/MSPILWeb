@@ -11,6 +11,7 @@ import { PermitPrintingComponent } from './permitprinting/permitprinting.compone
 import { PermitQuotaComponent } from './permitquota/permitquota.component';
 import { PermitsRoutingModule } from './permits-routing.module';
 import { ScheduleGroupingComponent } from './schedulegrouping/schedulegrouping.component';
+// import { ScheduleGroupingComponent } from './schedulegrouping/schedulegrouping.component';
 import { SpecialPermitsComponent } from './specialpermits/specialpermits.component';
 
 @NgModule({

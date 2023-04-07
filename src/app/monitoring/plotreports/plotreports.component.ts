@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IFarmerInPlotReportsViewDto, IPlotReportViewDto, PlotReportDto } from 'src/app/_models/monitoring';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { LazyLoadEvent } from 'primeng/api';
 
 export interface IHeader {
   field: string;
@@ -62,6 +63,11 @@ export class PlotreportsComponent implements OnInit {
   plotOfferDto: IPlotOfferViewDto = {}
   autoDisplayDrowdown: boolean = false;
   permissions: any;
+  selectAll: boolean = false;
+  selectedplotReports: IFarmerInPlotReportsViewDto[] = [];
+  totalRecords: number = 0;
+
+  loading: boolean = false;
 
   farmerHeaders: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
@@ -547,5 +553,43 @@ export class PlotreportsComponent implements OnInit {
     }
     this.onApproveOrDenyPlotOffer();
   }
+
+  loadPlotReports(event: LazyLoadEvent) {
+    this.loading = true;
+
+    setTimeout(() => {
+      let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
+      this.monitoringService.GetPlotReports(this.currentSeason.seasonId?this.currentSeason.seasonId:1, this.forapproval, param1).subscribe((resp) => {
+        this.plotReports = resp as unknown as IFarmerInPlotReportsViewDto[];
+        this.totalRecords = this.plotReports.length;
+        this.loading = false;
+      });
+        // this.customerService.getCustomers({ lazyEvent: JSON.stringify(event) }).then((res) => {
+        //     this.customers = res.customers;
+        //     this.totalRecords = res.totalRecords;
+        //     this.loading = false;
+        // });
+    }, 1000);
+}
+
+onSelectionChange(value = []) {
+    this.selectAll = value.length === this.totalRecords;
+    this.selectedplotReports = value;
+}
+
+onSelectAllChange(event: any) {
+    const checked = event.checked;
+
+    if (checked) {
+      let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
+      this.monitoringService.GetPlotReports(this.currentSeason.seasonId?this.currentSeason.seasonId:1, this.forapproval, param1).subscribe((resp) => {
+            this.selectedplotReports = resp as unknown as IFarmerInPlotReportsViewDto[];
+            this.selectAll = true;
+        });
+    } else {
+        this.selectedplotReports = [];
+        this.selectAll = false;
+    }
+}
 
 }
