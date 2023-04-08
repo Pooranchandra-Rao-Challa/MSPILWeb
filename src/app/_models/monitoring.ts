@@ -763,7 +763,7 @@ export interface plotsofFarmerViewDto {
 }
 
 export class SampleDetailsDto {
-
+  sampleId?: number;
   seasonId?: number
  season?: string
   docNo?: number
@@ -807,7 +807,7 @@ export class PlotYieldDto {
   pests?: plotPestsDto[];
   weedicides?: plotWeedicidesDto[];
 }
-export class proppingViewDto{
+export class ProppingViewDto{
   plotId?: number;
   plotNumber?: string;
   farmerCode?: string;
@@ -822,16 +822,42 @@ export class proppingViewDto{
   netArea?: number;
   proppingDate?: Date;
 }
-export class proppingDto{
+export class ProppingDto{
   plotProppingId?: number;
   plotId?: number;
   proppingStageId?:number;
   proppingDate?: Date;
-  serverUpdatedStatus?:boolean;
-  createdAt?: Date;
-  createdBy?: string;
-  updatedAt?: Date;
-  updatedBy?: string;
 }
-
+export class EstimatedViewDto{
+  seasonId?: number;
+  seasonName?: string;
+  divisionCode?:  string;
+  divisionName?: string;
+  sectionCode?: string;
+  sectionName?: string;
+  circleCode?:  string;
+  circleName?:  string;
+  villageCode?: string;
+  villageName?:  string;
+  plantingDate?: Date
+  plotNumber?: string;
+  farmerId?: number;
+  farmerCode?:  string;
+  farmerName?:  string;
+  estimatedTon?: number;
+  netArea?: number;
+  excessTonage?: number;
+  plantType?:  string;
+  variety?:  string;
+  createdAt?: Date
+  createdBy?:  string;
+  updatedAt?: Date
+  updateBy?: string;
+  isActive?: boolean;
+  }
+  export class FarmersInPlantingDatesDto{
+    farmerId?:  number;
+    farmercode?: string;
+    farmerName?: string;
+  }
 

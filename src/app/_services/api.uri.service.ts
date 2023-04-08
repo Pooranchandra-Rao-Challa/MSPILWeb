@@ -210,6 +210,7 @@ export const GET_SCREEN_DOC_NO_URI = "Common/GetDocNo";
 export const GET_SAMPLES_ENTRY_URI = "Monitoring/SeasonSamples";
 export const GET_SAMPLES_OF_PLOT_URI = "Monitoring/GetSamplesOfPlot";
 export const CREATE_SAMPLES_ENTRY_URI = "Monitoring/CreateSample";
+export const UPDATE_SAMPLE_ENTRY_URI = "Monitoring/UpdateSample";
 
 export const CREATE_PLOT_YIELD_URI = "Monitoring/CreatePlotYield";
 export const UPDATE_PLOT_YIELD_URI = "Monitoring/UpdatePlotYield";
@@ -219,5 +220,9 @@ export const GET_FARMER_PLOTS_IN_ASSESSMENT_URI = "Monitoring/GetFarmerPlotsInAs
 export const GET_FARMER_PLOTS_IN_REPORT_URI = "Monitoring/GetFarmerPlotsInReport";
 export const GET_FARMER_PLOTS_IN_OFFER_URI = "Monitoring/GetFarmerPlotsInOffer";
 export const GET_PROPPING = "Monitoring/GetPlotProppings";
-export const UPDATE_PROPPING ="Monitoring/UpdatePlotPropping";
+export const UPDATE_PROPPING_URI ="Monitoring/UpdatePlotPropping";
 export const UPDATE_CONSTANT = "Common/UpdateConstant";
+export const GET_SEASON_SCHEDULE_GROUPS_URI = "Schedule/GetSeasonScheduleGroups";
+
+export const GET_ESTIMATED_TON ="Schedule/GetPlotExcessTonage"
+export const GET_FARMERS_FOR_ESTIMATED_TON ="Schedule/GetFarmersInPlantingDates"

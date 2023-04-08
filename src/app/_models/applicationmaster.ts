@@ -570,10 +570,9 @@ export class ToTime {
 }
 
 export class SampleslabsViewDto {
-
   sampleSlabId?: number;
-  fromArea?: number;
-  toArea?: number;
+  fromArea: number = 0;
+  toArea: number = 0;
   noOfSample?: number;
   isActive?: boolean;
   createdAt?: string;

@@ -1,7 +1,7 @@
 import {
   IFarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, proppingViewDto, IPlotYieldViewDto, proppingDto
+  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, PlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, ProppingViewDto, IPlotYieldViewDto, ProppingDto, EstimatedViewDto, FarmersInPlantingDatesDto
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
@@ -16,7 +16,7 @@ import {
   UPDATE_PLOTASSESSMENT_URI, DENY_PLOT_OFFER_URI, GET_PLOT_AGREEMENTS_URI, GET_FARMER_IN_SECTIONS_URI, GET_PLOTS_FORYIELDS_URI, GET_PLOTYIELDS_URI, CREATE_PLOT_AGREEMENT_URI,
   UPDATE_PLOT_AGREEMENT_URI, GET_PLOTS_OF_FARMERS_URI, GET_MAINTANANCE_ITEMS_AGREEMENT_URI, GET_SAMPLES_OF_PLOT_URI, GET_SAMPLES_ENTRY_URI, CREATE_PLOT_YIELD_URI,
   UPDATE_PLOT_YIELD_URI, GET_MAINTANANCE_ITEMS_YIELD_URI, CREATE_SAMPLES_ENTRY_URI, GET_PROPPING, UPDATE_FARMER_PLOTS_IN_YIELD_URI, GET_FARMER_PLOTS_IN_AGREEMENT_URI,
-  GET_FARMER_PLOTS_IN_ASSESSMENT_URI, GET_FARMER_PLOTS_IN_REPORT_URI, GET_FARMER_PLOTS_IN_OFFER_URI
+  GET_FARMER_PLOTS_IN_ASSESSMENT_URI, GET_FARMER_PLOTS_IN_REPORT_URI, GET_FARMER_PLOTS_IN_OFFER_URI, UPDATE_SAMPLE_ENTRY_URI, UPDATE_PROPPING_URI, GET_ESTIMATED_TON, GET_FARMERS_FOR_ESTIMATED_TON
 } from "src/app/_services/api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -277,9 +277,14 @@ export class MonitoringService extends ApiHttpService {
     return this.post<PlotYieldDto>(UPDATE_PLOT_YIELD_URI, plotYield);
   }
 
-  public CreateSample(Sample: SampleDto) {
-    return this.post<SampleDto>(CREATE_SAMPLES_ENTRY_URI, Sample);
+  public CreateSampleEntry(sampleEntry: SampleDto) {
+    return this.post<SampleDto>(CREATE_SAMPLES_ENTRY_URI, sampleEntry);
   }
+
+  public UpdateSampleEntry(sampleEntry: SampleDto) {
+    return this.post<SampleDto>(UPDATE_SAMPLE_ENTRY_URI, sampleEntry);
+  }
+
   public GetFarmerPlotsInYield(seasonId: number, farmerId: number) {
     return this.getWithParams<IPlotYieldViewDto>(UPDATE_FARMER_PLOTS_IN_YIELD_URI, [seasonId,farmerId]);
   }
@@ -302,10 +307,18 @@ export class MonitoringService extends ApiHttpService {
 
   // Propping
   public GetPropping(seasonId: number, stageId: number) {
-    return this.getWithParams<proppingViewDto>(GET_PROPPING, [seasonId,stageId]);
+    return this.getWithParams<ProppingViewDto>(GET_PROPPING, [seasonId,stageId]);
   }
 
-  public UpdatePropping(propping: proppingDto) {
-    return this.post<proppingDto>(UPDATE_PLOT_YIELD_URI, propping);
+  public UpdatePropping(propping: ProppingDto) {
+    return this.post<ProppingDto>(UPDATE_PROPPING_URI, propping);
+  }
+  // Estimatedton
+  public GetEstimatedTon(seasonId: number) {
+    return this.getWithId<EstimatedViewDto>(GET_ESTIMATED_TON, [seasonId]);
+  }
+  public GetFarmersInPlantingDates(seasonId:any,frompltngDate:any,topltngDate:any){
+    debugger
+    return this.getWithParams<FarmersInPlantingDatesDto>(GET_FARMERS_FOR_ESTIMATED_TON, [seasonId,frompltngDate,topltngDate]);
   }
 }
