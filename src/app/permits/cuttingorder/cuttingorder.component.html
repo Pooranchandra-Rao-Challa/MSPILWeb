@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>To Brix:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="toCSS" type="number" formControlName="toCSS">
+                                            <input pInputText id="toBrix" type="number" formControlName="toBrix">
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>From Pol:<sup class="p-error">*</sup></label>
@@ -239,9 +239,10 @@
                     <div>
                         <span class="p-input-icon-left mx-2">
                             <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
-                                [options]="seasons" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
+                                [options]="seasons"  [(ngModel)]="currentSeason.seasonId"
                                 (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
                                 [style]="{'width':'100%'}">
+                                <!-- formControlName="seasonId" -->
                             </p-dropdown>
                         </span>
 

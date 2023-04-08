@@ -6,8 +6,104 @@
                 <h4>Permit Chart</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Permit Chart" icon="pi pi-plus" class="p-button-success p-mr-2"
+                
+            </ng-template>
+        </p-toolbar>
+
+         <!-- From Toolbar -->
+         <p-toolbar styleClass="p-mb-2">
+            <ng-template pTemplate="left">
+                <div class="flex justify-content-between flex-column sm:flex-row grid">
+                    <from [formGroup]="fbPermitChart">
+                        <div class="col-12">
+                            <div class="flex justify-content-between flex-column sm:flex-row grid">
+                                <div class="col-3 p-2">
+                                    <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                                        [options]="seasons" formControlName="seasonId"
+                                        [(ngModel)]="currentSeason.seasonId"
+                                        (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
+                                        [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <!-- <label>From Schedule Group No:<sup class="p-error">*</sup></label> -->
+                                    <p-dropdown placeholder="Select From Schedule" optionLabel="code" 
+                                        optionValue="fromScheduleGroupNo" formControlName="fromScheduleGroupNo" [style]="{'width':'100%'}"
+                                        appendTo="body">
+
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <!-- <label>To Schedule Group No:<sup class="p-error">*</sup></label> -->
+                                    <p-dropdown placeholder="Select To Schedule" optionLabel="code"
+                                        optionValue="toScheduleGroupNo" formControlName="toScheduleGroupNo" [style]="{'width':'100%'}"
+                                        appendTo="body">
+
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-calendar placeholder="From Permit Date" [readonlyInput]="true" [showIcon]="true"
+                                        formControlName="fromPermitDate" [style]="{'width':'100%'}">
+
+                                    </p-calendar>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-calendar placeholder="To Permit Date" [readonlyInput]="true" [showIcon]="true"
+                                        formControlName="toPermitDate" [style]="{'width':'100%'}">
+
+                                    </p-calendar>
+                                </div>
+                               
+                                <div class="col-3 p-2">
+                                   
+                                    <p-dropdown placeholder="Select To division" optionLabel="code"
+                                        optionValue="division" formControlName="division" [style]="{'width':'100%'}" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <!-- <label>Circle:<sup class="p-error">*</sup></label> -->
+                                    <p-dropdown placeholder="Select To Circle" optionLabel="code"
+                                        optionValue="circle" formControlName="circle" appendTo="body" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <!-- <label>Section:<sup class="p-error">*</sup></label> -->
+                                    <p-dropdown placeholder="Select To Section" optionLabel="code"
+                                        optionValue="section" formControlName="section" [style]="{'width':'100%'}" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <!-- <label>Village:<sup class="p-error">*</sup></label> -->
+                                    <p-dropdown placeholder="Select To Village" optionLabel="code"
+                                        optionValue="village" formControlName="village" [style]="{'width':'100%'}" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <!-- <label>Plant Type:<sup class="p-error">*</sup></label> -->
+                                    <p-dropdown placeholder="Select To Plant Type" optionLabel="code"
+                                        optionValue="plantType" formControlName="plantType" [style]="{'width':'100%'}" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <!-- <label>Variety:<sup class="p-error">*</sup></label> -->
+                                    <p-dropdown placeholder="Select To Variety" optionLabel="code"
+                                        optionValue="variety" formControlName="variety" [style]="{'width':'100%'}" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                
+                                <div class="col-3 p-2">
+                                    <button pButton pRipple label="Permit Chart" icon="pi pi-plus" class="p-button-success p-mr-2 w-100"
                     ></button>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </from>
+                    <!-- <div class="col-2 p-2">
+                        <button pButton pRipple label="Search" class="p-button-raised p-button-success" style="width:100%"></button><!-- (click)="onSubmit()" 
+                    </div> -->
+                </div>
             </ng-template>
         </p-toolbar>
     </div>

@@ -17,156 +17,148 @@
           [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
           
           <div class="flex flex-column align-items-center justify-content-center">
-            <div class="container">
-                <div class="grid p-fluid">
-                    <form [formGroup]="fbScheduleGrouping">
-                        
-                        <div class="grid">
-                            <div class="col-12">
-                                <div class="p-fluid p-formgrid grid">
-                                    <p-fieldset legend="Ryot Details" class="col-6" [toggleable]="true"
-                                        [transitionOptions]="'500ms'">
-                                        <div class="p-fluid p-formgrid grid">
-                                            <div class="field col-12 md:col-6">
-                                                <label>Season:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select Season" optionLabel="code"
-                                                    [options]="seasons" optionValue="seasonId" formControlName="seasonId"
-                                                    appendTo="body"></p-dropdown>
-                                                    
-                                            </div>
+              <form [formGroup]="fbScheduleGrouping">
+                  
+                  <div class="grid">
+                      <div class="col-12">
+                          <div class="p-fluid p-formgrid grid">
+                              <p-fieldset legend="Ryot Details" class="col-6" [toggleable]="true"
+                                  [transitionOptions]="'500ms'">
+                                  <div class="p-fluid p-formgrid grid">
+                                      <div class="field col-12 md:col-6">
+                                          <label>Season:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select Season" optionLabel="code"
+                                              [options]="seasons" optionValue="seasonId" formControlName="seasonId"
+                                              appendTo="body"></p-dropdown>
+                                              
+                                      </div>
 
-                                            <div class="field col-12 md:col-6">
-                                                <label>Schedule Group No:<sup class="p-error">*</sup></label>
-                                                <input pInputText id="scheduleGroupNo" type="number" formControlName="scheduleGroupNo">
-                                            </div>
-                                            
+                                      <div class="field col-12 md:col-6">
+                                          <label>Schedule Group No:<sup class="p-error">*</sup></label>
+                                          <input pInputText id="scheduleGroupNo" type="number" formControlName="scheduleGroupNo">
+                                      </div>
+                                      
 
-                                            <div class="field col-12 md:col-6">
-                                                <label>From DOP/DOR:<sup class="p-error">*</sup></label>
-                                                <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true"
-                                                    appendTo="body" formControlName="fromDOP" [style]="{'width':'100%'}">
-                                                </p-calendar>
-                                            </div>
+                                      <div class="field col-12 md:col-6">
+                                          <label>From DOP/DOR:<sup class="p-error">*</sup></label>
+                                          <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true"
+                                              appendTo="body" formControlName="fromDOP" [style]="{'width':'100%'}">
+                                          </p-calendar>
+                                      </div>
 
-                                            <div class="field col-12 md:col-6">
-                                                <label>To DOP/DOR:<sup class="p-error">*</sup></label>
-                                                <p-calendar placeholder="To DOP" [readonlyInput]="true" [showIcon]="true"
-                                                    appendTo="body" formControlName="toDOP" [style]="{'width':'100%'}">
-                                                </p-calendar>
-                                            </div>
-                                            <div class="field col-12 md:col-6">
-                                                <label>Ryot No:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To Ryot" optionLabel="code"
-                                                    optionValue="ryotNo" formControlName="ryotNo" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
+                                      <div class="field col-12 md:col-6">
+                                          <label>To DOP/DOR:<sup class="p-error">*</sup></label>
+                                          <p-calendar placeholder="To DOP" [readonlyInput]="true" [showIcon]="true"
+                                              appendTo="body" formControlName="toDOP" [style]="{'width':'100%'}">
+                                          </p-calendar>
+                                      </div>
+                                      <div class="field col-12 md:col-6">
+                                          <label>Ryot No:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To Ryot" optionLabel="code"
+                                              optionValue="ryotNo" formControlName="ryotNo" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
 
-                                        </div>
-                                    </p-fieldset>
-                                    
+                                  </div>
+                              </p-fieldset>
+                              
 
-                                    <p-fieldset legend="Plot Details" class="col-6" [toggleable]="true"
-                                        [transitionOptions]="'500ms'">
-                                        <div class="p-fluid p-formgrid grid">
-                                            <div class="field col-12 md:col-4">
-                                                <label>Plot:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To plot" optionLabel="code"
-                                                    optionValue="plot" formControlName="plot" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4">
-                                                <label>Division:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To division" optionLabel="code"
-                                                    optionValue="division" formControlName="division" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4">
-                                                <label>Circle:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To Circle" optionLabel="code"
-                                                    optionValue="circle" formControlName="circle" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4">
-                                                <label>Section:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To Section" optionLabel="code"
-                                                    optionValue="section" formControlName="section" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4">
-                                                <label>Village:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To Village" optionLabel="code"
-                                                    optionValue="village" formControlName="village" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4">
-                                                <label>Plant Type:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To Plant Type" optionLabel="code"
-                                                    optionValue="plantType" formControlName="plantType" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-4">
-                                                <label>Variety:<sup class="p-error">*</sup></label>
-                                                <p-dropdown placeholder="Select To Variety" optionLabel="code"
-                                                    optionValue="variety" formControlName="variety" appendTo="body">
-                                                </p-dropdown>
-                                            </div>
-                                            <div class="field col-12 md:col-8">
-                                                <button pButton pRipple type="submit" label="Get Order"
-                                                class="p-button-raised p-button-primary mt-5" (click)="onSubmit()"></button>
-                                            </div>
-                                        </div>
-                                    </p-fieldset>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                              <p-fieldset legend="Plot Details" class="col-6" [toggleable]="true"
+                                  [transitionOptions]="'500ms'">
+                                  <div class="p-fluid p-formgrid grid">
+                                      <div class="field col-12 md:col-4">
+                                          <label>Plot:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To plot" optionLabel="code"
+                                              optionValue="plot" formControlName="plot" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
+                                      <div class="field col-12 md:col-4">
+                                          <label>Division:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To division" optionLabel="code"
+                                              optionValue="division" formControlName="division" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
+                                      <div class="field col-12 md:col-4">
+                                          <label>Circle:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To Circle" optionLabel="code"
+                                              optionValue="circle" formControlName="circle" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
+                                      <div class="field col-12 md:col-4">
+                                          <label>Section:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To Section" optionLabel="code"
+                                              optionValue="section" formControlName="section" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
+                                      <div class="field col-12 md:col-4">
+                                          <label>Village:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To Village" optionLabel="code"
+                                              optionValue="village" formControlName="village" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
+                                      <div class="field col-12 md:col-4">
+                                          <label>Plant Type:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To Plant Type" optionLabel="code"
+                                              optionValue="plantType" formControlName="plantType" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
+                                      <div class="field col-12 md:col-4">
+                                          <label>Variety:<sup class="p-error">*</sup></label>
+                                          <p-dropdown placeholder="Select To Variety" optionLabel="code"
+                                              optionValue="variety" formControlName="variety" appendTo="body">
+                                          </p-dropdown>
+                                      </div>
+                                      <div class="field col-12 md:col-8">
+                                        <button pButton pRipple type="submit" label="Get Order"
+                                        class="p-button-raised p-button-primary mt-5" (click)="onSubmit()"></button>
+                                      </div>
+                                  </div>
+                              </p-fieldset>
+                          </div>
+                      </div>
+                  </div>
+              </form>
 
 
-                    <!-- popup table -->
+              <!-- popup table -->
+              <p-fieldset legend="Plot Details" class="col-12" [toggleable]="true"
+                [transitionOptions]="'500ms'">
+                <p-table #dt1 [value]="scheduleGroupingFromDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
+                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
+                    >
                     
-                        
-                        
-                    <p-fieldset legend="Plot Details" class="col-12" [toggleable]="true"
-                        [transitionOptions]="'500ms'">
-                        <div class="grid p-fluid">
-                            <div class="col-12">
-                                <p-table #dt1 [value]="scheduleGroupingFromDto"dataKey="id" [rows]="10"
-                            [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-                            [paginator]="false"  [autoLayout]="true"
-                            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-                                    <ng-template pTemplate="header">
-                                        <tr>
-                                            <th></th>
-                                            <th *ngFor="let col of header" [pSortableColumn]="col.header">
-                                                {{col?.label}} <p-sortIcon field="code">
-                                                </p-sortIcon>
-                                                <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
-                                            </th>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="body" let-getOrder>
-                                        <tr>
-                                            
-                                            <td><button pButton pRipple icon="pi pi-pencil"
-                                                    class="p-element p-ripple p-button-text p-button p-component"></button>
-                                            </td>
-                                            <td *ngFor="let col of header">
-                                                <span *ngIf="col?.field != 'FromDate' ">{{getOrder[col.field]}}</span>
-                                                <span *ngIf="col?.field == 'FromDate'">
-                                                    {{getOrder[col.field] | date: 'dd-MM-yyyy'}}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
 
-                                </p-table>
-                            </div>
-                        </div>
-                    </p-fieldset>
-                </div>
-            </div>
-                
-              
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th></th>
+                            <th *ngFor="let col of header" [pSortableColumn]="col.header">
+                                {{col?.label}} <p-sortIcon field="code">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-getOrder>
+                        <tr>
+                            
+                            <td><button pButton pRipple icon="pi pi-pencil"
+                                    class="p-element p-ripple p-button-text p-button p-component"></button>
+                            </td>
+                            <td *ngFor="let col of header">
+                                <span *ngIf="col?.field != 'FromDate' ">{{getOrder[col.field]}}</span>
+                                <span *ngIf="col?.field == 'FromDate'">
+                                    {{getOrder[col.field] | date: 'dd-MM-yyyy'}}
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+              </p-fieldset>
+
+
           </div>
       </p-dialog>
 

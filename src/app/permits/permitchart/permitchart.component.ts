@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { SeasonDto } from "src/app/_models/applicationmaster";
+import { IPlotOfferViewDto } from "src/app/_models/monitoring";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { BillMasterService } from "src/app/_services/billmaster.service";
 import { CommonService } from "src/app/_services/common.service";
@@ -12,7 +14,16 @@ import { MonitoringService } from "src/app/_services/monitoring.service";
     styles: [],
   })
   export class PermitChartComponent implements OnInit {
-
+    fbPermitChart!: FormGroup;
+    seasons!: any[];
+    
+    currentSeason: SeasonDto = {};
+    allottedPlots: IPlotOfferViewDto[] = [];
+    loading: boolean = true;
+    showTable: boolean = true;
+    showDialog: boolean = false;
+    forapproval: boolean = false;
+    @ViewChild('filter') filter!: ElementRef;
     constructor(private formbuilder: FormBuilder,
         private billMasterService: BillMasterService,
         private commonService: CommonService,
@@ -22,12 +33,58 @@ import { MonitoringService } from "src/app/_services/monitoring.service";
        
       ) { }
 
-      
+      getFilterPermitChart() {
+        this.fbPermitChart = this.formbuilder.group({
+          seasonId: new FormControl('', [Validators.required]),
+          fromScheduleGroupNo: new FormControl('', [Validators.required]),
+          toScheduleGroupNo: new FormControl('', [Validators.required]),
+          fromPermitDate: new FormControl('', [Validators.required]),
+          toPermitDate: new FormControl('', [Validators.required]),
+          division: new FormControl('', [Validators.required]),
+          circle: new FormControl('', [Validators.required]),
+          section: new FormControl('', [Validators.required]),
+          village: new FormControl('', [Validators.required]),
+          plantType: new FormControl('', [Validators.required]),
+          variety: new FormControl('', [Validators.required]),
+          // plotSection: new FormControl('', [Validators.required]),
+          // plotVillage: new FormControl('', [Validators.required]),
+          // HGL: new FormControl('', [Validators.required]),
+          // subHGL: new FormControl('', [Validators.required]),
+          // labourPrice: new FormControl('', [Validators.required]),
+          // TPT: new FormControl('', [Validators.required]),
+          // vehicleNo: new FormControl('', [Validators.required]),
+          // vehicleType: new FormControl('', [Validators.required])
+        });
+      }
+      get FormControals() {
+        return this.fbPermitChart.controls
+      }
+
+      initSeasons() {
+        this.commonService.GetSeasons().subscribe((resp) => {
+          this.seasons = resp as any;
+        });
+      }
+      initAllottedPlots(seasonId: number) {
+        let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
+        this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
+          this.allottedPlots = resp as unknown as IPlotOfferViewDto[];
+          this.loading = false;
+        });
+      }
+      initCurrentSeason(seasonCode: string) {
+        this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
+          this.currentSeason = resp as SeasonDto;
+          this.initSeasons();
+          this.initAllottedPlots(this.currentSeason.seasonId!);
+        });
+      }
+
 
       ngOnInit(): void {
    
-       
-    
+       this.getFilterPermitChart();
+      this.initSeasons();
       }
 
   }

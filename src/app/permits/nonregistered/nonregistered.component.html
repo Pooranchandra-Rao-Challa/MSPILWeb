@@ -6,9 +6,7 @@
                 <h4>Non Registered</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Add Non Registered" icon="pi pi-plus"
-                    class="p-button-success p-mr-2"></button>
-                <!-- (click)="getSpecialPermit()" -->
+
             </ng-template>
         </p-toolbar>
 
@@ -41,58 +39,58 @@
                                 <div class="col-3 p-2">
                                     <label>Is Burnt:</label><br>
                                     <p-inputSwitch formControlName="isBurnt"></p-inputSwitch>
-                                  </div>
+                                </div>
                                 <div class="col-3 p-2">
-                                    <p-dropdown placeholder="Select To Ryot" optionLabel="code" optionValue="ryotNo" [style]="{'width':'100%'}"
-                                        formControlName="ryotNo" appendTo="body">
+                                    <p-dropdown placeholder="Select To Ryot" optionLabel="code" optionValue="ryotNo"
+                                        [style]="{'width':'100%'}" formControlName="ryotNo" appendTo="body">
                                     </p-dropdown>
                                 </div>
 
                                 <div class="col-3 p-2">
 
-                                    <input pInputText id="farmerDivision" type="text" placeholder="Farmer Division" [style]="{'width':'100%'}"
-                                        formControlName="farmerDivision">
+                                    <input pInputText id="farmerDivision" type="text" placeholder="Farmer Division"
+                                        [style]="{'width':'100%'}" formControlName="farmerDivision">
                                 </div>
                                 <div class="col-3 p-2">
 
-                                    <input pInputText id="farmerCircle" type="text" placeholder="Farmer Circle" [style]="{'width':'100%'}"
-                                        formControlName="farmerCircle">
+                                    <input pInputText id="farmerCircle" type="text" placeholder="Farmer Circle"
+                                        [style]="{'width':'100%'}" formControlName="farmerCircle">
                                 </div>
                                 <div class="col-3 p-2">
 
-                                    <input pInputText id="farmerSection" placeholder="Farmer Section" type="text" [style]="{'width':'100%'}"
-                                        formControlName="farmerSection">
+                                    <input pInputText id="farmerSection" placeholder="Farmer Section" type="text"
+                                        [style]="{'width':'100%'}" formControlName="farmerSection">
                                 </div>
                                 <div class="col-3 p-2">
- 
-                                    <input pInputText id="farmerVillage" placeholder="Farmer Village" type="text" [style]="{'width':'100%'}"
-                                        formControlName="farmerVillage">
+
+                                    <input pInputText id="farmerVillage" placeholder="Farmer Village" type="text"
+                                        [style]="{'width':'100%'}" formControlName="farmerVillage">
                                 </div>
 
                                 <div class="col-3 p-2">
-                                    <p-dropdown placeholder="Plot" optionLabel="plot" optionValue="plot" 
+                                    <p-dropdown placeholder="Plot" optionLabel="plot" optionValue="plot"
                                         formControlName="plot" [style]="{'width':'100%'}">
                                     </p-dropdown>
                                 </div>
                                 <div class="col-3 p-2">
 
-                                    <input pInputText id="plotDivision" type="text" placeholder="Plot Division" [style]="{'width':'100%'}"
-                                        formControlName="plotDivision">
+                                    <input pInputText id="plotDivision" type="text" placeholder="Plot Division"
+                                        [style]="{'width':'100%'}" formControlName="plotDivision">
                                 </div>
                                 <div class="col-3 p-2">
 
-                                    <input pInputText id="plotCircle" type="text" placeholder="Plot Circle" [style]="{'width':'100%'}"
-                                        formControlName="plotCircle">
+                                    <input pInputText id="plotCircle" type="text" placeholder="Plot Circle"
+                                        [style]="{'width':'100%'}" formControlName="plotCircle">
                                 </div>
                                 <div class="col-3 p-2">
 
-                                    <input pInputText id="plotSection" type="text" placeholder="Plot Section" [style]="{'width':'100%'}"
-                                        formControlName="plotSection">
+                                    <input pInputText id="plotSection" type="text" placeholder="Plot Section"
+                                        [style]="{'width':'100%'}" formControlName="plotSection">
                                 </div>
                                 <div class="col-3 p-2">
 
-                                    <input pInputText id="plotVillage" placeholder="Plot Village" type="text" [style]="{'width':'100%'}"
-                                        formControlName="plotVillage">
+                                    <input pInputText id="plotVillage" placeholder="Plot Village" type="text"
+                                        [style]="{'width':'100%'}" formControlName="plotVillage">
                                 </div>
                                 <div class="col-3 p-2">
                                     <p-dropdown placeholder="HGL" optionLabel="HGL" optionValue="HGL"
@@ -107,8 +105,8 @@
 
                                 <div class="col-3 p-2">
 
-                                    <input pInputText placeholder="Labour Price" id="labourPrice" type="number" [style]="{'width':'100%'}"
-                                        formControlName="'labourPrice'">
+                                    <input pInputText placeholder="Labour Price" id="labourPrice" type="number"
+                                        [style]="{'width':'100%'}" formControlName="labourPrice">
                                 </div>
                                 <div class="col-3 p-2">
                                     <p-dropdown placeholder="TPT" optionLabel="TPT" optionValue="TPT"
@@ -122,18 +120,25 @@
                                 </div>
                                 <div class="col-3 p-2">
 
-                                    <input placeholder="Vehicle Type" pInputText id="vehicleType" type="text" [style]="{'width':'100%'}"
-                                        formControlName="'vehicleType'">
+                                    <input placeholder="Vehicle Type" pInputText id="vehicleType" type="text"
+                                        [style]="{'width':'100%'}" formControlName="vehicleType">
                                 </div>
+                                <div class="col-9 p-2"></div>
+                                <div class="col-3 p-2">
+                                    <button pButton pRipple label="Add Non Registered" icon="pi pi-plus"
+                                        class="p-button-success p-mr-2 w-100"></button>
+                                </div>
+
                             </div>
-                            
+
                         </div>
                     </from>
-                    <!-- <div class="col-2 p-2">
-                        <button pButton pRipple label="Search" class="p-button-raised p-button-success" style="width:100%"></button><!-- (click)="onSubmit()" 
-                    </div> -->
+
                 </div>
             </ng-template>
+
+
         </p-toolbar>
+
     </div>
 </div>

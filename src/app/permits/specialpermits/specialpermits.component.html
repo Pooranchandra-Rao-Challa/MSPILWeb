@@ -6,8 +6,7 @@
                 <h4>Special Permit</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Add Special Permit" icon="pi pi-plus"
-                    class="p-button-success p-mr-2"></button>
+                
                 <!-- (click)="getSpecialPermit()" -->
             </ng-template>
         </p-toolbar>
@@ -108,7 +107,7 @@
                                 <div class="col-3 p-2">
 
                                     <input pInputText placeholder="Labour Price" id="labourPrice" type="number" [style]="{'width':'100%'}"
-                                        formControlName="'labourPrice'">
+                                        formControlName="labourPrice">
                                 </div>
                                 <div class="col-3 p-2">
                                     <p-dropdown placeholder="TPT" optionLabel="TPT" optionValue="TPT"
@@ -123,7 +122,13 @@
                                 <div class="col-3 p-2">
 
                                     <input placeholder="Vehicle Type" pInputText id="vehicleType" type="text" [style]="{'width':'100%'}"
-                                        formControlName="'vehicleType'">
+                                        formControlName="vehicleType">
+                                </div>
+                                <div class="col-9 p-2"></div>
+                                <div class="col-3 p-2">
+                                    <button pButton pRipple label="Add Special Permit" icon="pi pi-plus"
+                                         class="p-button-success p-mr-2 w-100"></button>
+
                                 </div>
                             </div>
                             
