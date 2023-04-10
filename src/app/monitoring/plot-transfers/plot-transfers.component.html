@@ -7,149 +7,166 @@
         <h4>Plot Transfers</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plat Transfer" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Plot Transfer" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addPlotTransfer()" *ngIf="permissions?.CanCreatePlotTransfer"></button>
       </ng-template>
     </p-toolbar>
     <!-- dialog -->
-    <p-dialog header="Plot Transfer"  [(visible)]="showDialog" [modal]="true"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
+
+    <p-dialog header="Plot Transfer" [(visible)]="showDialog" [modal]="true"
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="clearForm()">
       <div class="flex flex-column  justify-content-center">
         <form [formGroup]="fbplotTransfer" (ngSubmit)="onSubmit()">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
-                <p-fieldset legend="Season Info"class="col-12"[toggleable]="true" [transitionOptions]="'500ms'">
+                <p-fieldset legend="Season Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
-
-                  <div class="field col-12 md:col-4">
-                    <label>Season:</label>
-                    <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                    [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
-                    (onChange)="initPlotReports($event.value, -1)"  appendTo="body">
-                  </p-dropdown>
-                </div>
-                      <!-- (onChange)="getNewOfferNo($event.value)" -->
-                      <div class="field col-12 md:col-4">
-                        <label>Doc No:</label>
-                        <input pInputText id="offerNo" type="text" placeholder="Doc No" formControlName="docNo" readonly>
-                      </div>
-                  <div class="field col-12 md:col-4">
-                    <label>Doc Date:<sup class="p-error">*</sup></label>
-                    <p-calendar formControlName="docDate" placeholder="Select Doc Date" [readonlyInput]="true" [showIcon]="true"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['docDate'].touched && FormControls['docDate'].errors }">
-                    </p-calendar>
-                    <span *ngIf="FormControls['docDate'].touched && FormControls['docDate'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['docDate'].errors?.['required']">
-                        Please Select Doc Date.</div>
-                    </span>
-                </div>
-              </div>
-              </p-fieldset>
-              <p-fieldset legend="Farmer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
-                <div class="p-fluid p-formgrid grid">
-                <div class="field col-12 md:col-4">
-                    <label>Farmer Code:<sup class="p-error">*</sup></label>
-                    <p-dropdown optionLabel="code" [options]="farmers" optionValue="id" [filter]="true"
-                        filterBy="code,name" formControlName="fromFarmerId" placeholder="Select Farmer"
-                        (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="20" appendTo="body">
+                    <div class="field col-12 md:col-4">
+                      <label class="required">Season:</label>
+                      <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+                        optionValue="seasonId" formControlName="seasonId" appendTo="body">
+                      </p-dropdown>
+                      <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['seasonId'].errors?.['required']">
+                          Please Select Season.</div>
+                      </span>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label class="required">Doc No:</label>
+                      <p class="disabled_text">
+                        {{ this.fbplotTransfer.controls["docNo"].value }}
+                      </p>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label class="required">Doc Date:</label>
+                      <p-calendar formControlName="docDate" placeholder="Select Doc Date" [readonlyInput]="true"
+                        [showIcon]="true"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['docDate'].touched && FormControls['docDate'].errors }">
+                      </p-calendar>
+                      <span *ngIf="FormControls['docDate'].touched && FormControls['docDate'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['docDate'].errors?.['required']">
+                          Please Select Doc Date.</div>
+                      </span>
+                    </div>
+                  </div>
+                </p-fieldset>
+                <p-fieldset legend="Farmer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+                  <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-4">
+                      <label class="required">Farmer Code:</label>
+                      <p-dropdown optionLabel="farmerCode" [options]="farmers" optionValue="farmerId" [filter]="true"
+                        filterBy="farmerCode,farmerName" formControlName="fromFarmerId" placeholder="Select Farmer"
+                        (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="30"
+                        appendTo="body">
                         <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{farmer.code}}</div>
+                          <div>{{ farmer.farmerCode }} - {{ farmer.farmerName }}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
-                          <div>{{farmer.code}}</div>
-                          <div>Code: {{farmer.code}} Name:{{farmer.name}}</div>
+                          <div>{{farmer.farmerCode}}</div>
+                          <div>{{farmer.farmerName}}</div>
                         </ng-template>
                       </p-dropdown>
+                      <span *ngIf="FormControls['fromFarmerId'].touched && FormControls['fromFarmerId'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromFarmerId'].errors?.['required']">
+                          Please Select Farmer.</div>
+                      </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label>Farmer Name:</label>
-                      <input pInputText id="fromFarmerName" type="text" formControlName="fromFarmerName" readonly>
+                      <p class="disabled_text">
+                        {{ this.fbplotTransfer.controls["fromFarmerName"].value }}
+                      </p>
                     </div>
                     <div class="field col-12 col-4 lg:col-4 ">
-
-                      <label>Plot No:<sup class="p-error">*</sup></label>
+                      <label class="required">Plot No:</label>
                       <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
-                        [options]="plotReports" optionValue="plotId" formControlName="plotId"
-                        (onChange)="getPlotinfo($event.value)" appendTo="body"
+                        [options]="plotNumbers" optionValue="plotId" formControlName="plotId" appendTo="body" (onChange)="onSelectedPlot($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['plotId'].errors?.['required']">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plotId'].errors?.['required']">
                           Select Plot No.</div>
                       </span>
                     </div>
-                <div class="field col-12 md:col-4">
-                  <label>Net Area:<sup class="p-error">*</sup></label>
-                  <input pInputText id="name" type="text" placeholder="Enter Net Area">
-                </div>
-
-                <div class="field col-12 md:col-4">
-                  <label>Plot Transfer Type:<sup class="p-error">*</sup></label>
-                  <p-dropdown optionLabel="name" [options]="plotTransferTypes" optionValue="lookupDetailId" formControlName="plotTransferTypeId" placeholder="Select Plot Transfer Reason"
-                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotTransferTypeId'].touched && FormControls['plotTransferTypeId'].errors }">
-                  </p-dropdown>
-                  <span *ngIf="FormControls['plotTransferTypeId'].touched && FormControls['plotTransferTypeId'].invalid">
-                    <div class="ng-invalid ng-touched p-error"
-                      *ngIf="FormControls['plotTransferTypeId'].errors?.['required']">
-                      Please Select Transfer Type.</div>
-                  </span>
-                </div>
-                <div class="field col-12 md:col-4">
-                  <label> Transfer Area(Acres):<sup class="p-error">*</sup></label>
-                  <p-inputNumber placeholder="Enter TransferArea" formControlName="transferArea" mode="decimal"
-                  locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
-                  [ngClass]="{ 'is-invalid ng-dirty': FormControls['transferArea'].touched && FormControls['transferArea'].errors }">
-                </p-inputNumber>
-                <span *ngIf="FormControls['transferArea'].touched && FormControls['transferArea'].invalid">
-                  <div class="ng-invalid ng-touched p-error"
-                    *ngIf="FormControls['transferArea'].errors?.['required']">
-                    Please Enter Transfer Area.</div>
-                </span>
-                </div>
-              </div>
-                </p-fieldset>
-                <p-fieldset legend="Transfer To Farmer" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
-                  <div class="p-fluid p-formgrid grid">
-                  <div class="field col-12 md:col-4">
-                    <label>To Farmer Code:<sup class="p-error">*</sup></label>
-                    <p-dropdown optionLabel="code" [options]="filteredTofarmers " optionValue="id" [filter]="true"
-                    filterBy="code,name" formControlName="toFarmerId" placeholder="Select Farmer"
-                    (onChange)="onSelectedToFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="20" appendTo="body"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['toFarmerId'].touched && FormControls['toFarmerId'].errors }">
-                    <ng-template let-farmer pTemplate="selectedItem">
-                      <div>{{farmer.code}}</div>
-                    </ng-template>
-                    <ng-template let-tofarmer pTemplate="item">
-                      <div>{{tofarmer.code}}</div>
-                      <div>Code: {{tofarmer.code}} Name:{{tofarmer.name}}</div>
-                    </ng-template>
-                  </p-dropdown>
-                  <span *ngIf="FormControls['toFarmerId'].touched && FormControls['toFarmerId'].invalid">
-                    <div class="ng-invalid ng-touched p-error"
-                      *ngIf="FormControls['toFarmerId'].errors?.['required']">
-                      Please Select Farmer.</div>
-                  </span>
-                </div>
-                <div class="field col-12 md:col-4">
-                  <label>Farmer Name:</label>
-                  <input pInputText id="toFarmerName" type="text" formControlName="toFarmerName" readonly>
-                </div>
-                  <div class="field col-12 md:col-4">
-                    <label>Plot Transfer Reason:<sup class="p-error">*</sup></label>
-                    <p-dropdown formControlName="plotTransferReasonId"   optionLabel="name" [options]="transferResons" optionValue="lookupDetailId"placeholder="Select Plot Transfer Type"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotTransferReasonId'].touched && FormControls['plotTransferReasonId'].errors }">
-                    </p-dropdown>
-                    <span *ngIf="FormControls['plotTransferReasonId'].touched && FormControls['plotTransferReasonId'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['plotTransferReasonId'].errors?.['required']">
-                        Please Select  Plot Transfer Reason.</div>
-                    </span>
+                    <div class="field col-12 md:col-4">
+                      <label>Net Area:<sup class="p-error">*</sup></label>
+                      <p class="disabled_text">
+                        {{ this.fbplotTransfer.controls["netArea"].value }}
+                      </p>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label class="required">Plot Transfer Type:</label>
+                      <p-dropdown optionLabel="name" [options]="plotTransferTypes" optionValue="lookupDetailId"
+                        formControlName="plotTransferTypeId" placeholder="Select Plot Transfer Reason" appendTo="body" (onChange)="onSelectedTransferType($event.value)"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotTransferTypeId'].touched && FormControls['plotTransferTypeId'].errors }">
+                      </p-dropdown>
+                      <span
+                        *ngIf="FormControls['plotTransferTypeId'].touched && FormControls['plotTransferTypeId'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['plotTransferTypeId'].errors?.['required']">
+                          Please Select Transfer Type.</div>
+                      </span>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label [class.required]="enableValidation"> Transfer Area(Acres):</label>
+                      <p-inputNumber placeholder="Enter Transfer Area" formControlName="transferArea" mode="decimal"
+                        locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['transferArea'].touched && FormControls['transferArea'].errors }">
+                      </p-inputNumber>
+                      <span *ngIf="FormControls['transferArea'].touched && FormControls['transferArea'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['transferArea'].errors?.['required']">
+                          Please Enter Transfer Area.</div>
+                      </span>
+                    </div>
                   </div>
-
-                </div>
+                </p-fieldset>
+                <p-fieldset legend="Transfer To Farmer" class="col-12" [toggleable]="true"
+                  [transitionOptions]="'500ms'">
+                  <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-4">
+                      <label class="required">To Farmer Code:</label>
+                      <p-dropdown optionLabel="code" [options]="filteredToFarmers " optionValue="id" [filter]="true"
+                        filterBy="code,name" formControlName="toFarmerId" placeholder="Select Farmer"
+                        (onChange)="onSelectedToFarmer($event.value)" [virtualScroll]="true"
+                        [virtualScrollItemSize]="30" appendTo="body"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['toFarmerId'].touched && FormControls['toFarmerId'].errors }">
+                        <ng-template let-tofarmer pTemplate="selectedItem">
+                          <div>{{tofarmer.code}} - {{tofarmer.name}}</div>
+                        </ng-template>
+                        <ng-template let-tofarmer pTemplate="item">
+                          <div>{{tofarmer.code}}</div>
+                          <div>{{tofarmer.name}}</div>
+                        </ng-template>
+                      </p-dropdown>
+                      <span *ngIf="FormControls['toFarmerId'].touched && FormControls['toFarmerId'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['toFarmerId'].errors?.['required']">
+                          Please Select Farmer.</div>
+                      </span>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label>Farmer Name:</label>
+                      <p class="disabled_text">
+                        {{ this.fbplotTransfer.controls["toFarmerName"].value }}
+                      </p>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label class="required">Plot Transfer Reason:</label>
+                      <p-dropdown formControlName="plotTransferReasonId" optionLabel="name" [options]="transferResons"
+                        optionValue="lookupDetailId" placeholder="Select Plot Transfer Type" appendTo="body"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotTransferReasonId'].touched && FormControls['plotTransferReasonId'].errors }">
+                      </p-dropdown>
+                      <span
+                        *ngIf="FormControls['plotTransferReasonId'].touched && FormControls['plotTransferReasonId'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['plotTransferReasonId'].errors?.['required']">
+                          Please Select Plot Transfer Reason.</div>
+                      </span>
+                    </div>
+                  </div>
                 </p-fieldset>
               </div>
             </div>
@@ -159,17 +176,17 @@
       <ng-template pTemplate="footer">
         <div class="col-12">
           <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}"
-            (click)="onSubmit()" class="p-button-raised p-button-success"></button>
+            <button pButton pRipple type="submit" label="{{submitLabel}}" (click)="onSubmit()"
+              class="p-button-raised p-button-success"></button>
           </div>
         </div>
       </ng-template>
     </p-dialog>
+
     <!-- table -->
     <p-table #dt1 dataKey="id" [value]="plotTransfers" [columns]="headers" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -213,11 +230,6 @@
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="20" class="md:text-center">No Plot Transfers Found.</td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="loadingbody">
-        <tr>
-          <td colspan="20" class="md:text-center">Loading Plot Transfers Data. Please wait.</td>
         </tr>
       </ng-template>
     </p-table>
