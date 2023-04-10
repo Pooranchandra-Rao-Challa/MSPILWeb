@@ -47,7 +47,8 @@ export class SeasonComponent implements OnInit {
   cSeasonCode: string = ""
   existCurrentSeasonRecord: boolean = false;
   permissions:any;
-  
+  activeIndex: number = 0;
+
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -84,41 +85,31 @@ export class SeasonComponent implements OnInit {
   initBillCategories() {
     this.LookupService.BillCategories().subscribe((resp) => {
       this.billCategories = resp as unknown as LookupDetailDto[];
-      this.billCategories[0].aliasName = 'farmer';
-      this.billCategories[1].aliasName = 'transporter';
-      this.billCategories[2].aliasName = 'harvester';
-      this.billCategories[3].aliasName = 'seed';
-
-      this.initBillParamsForCategory(
-        this.billCategories[0].lookupDetailId + ''
-      );
+      this.initBillParamsForCategory();
     });
   }
 
-  initBillParamsForCategory(categoryId: string) {
-    this.appMasterService
-      .BillParamsForCategory(categoryId)
+  initBillParamsForCategory() {
+
+    this.billCategories.forEach((billCategory)=>{
+      this.appMasterService
+      .BillParamsForCategory(billCategory.lookupDetailId!)
       .subscribe((resp) => {
-        this.billCategories.map((s) => {
-          if (s.lookupDetailId?.toString() == categoryId.toString()) {
-            s.billParams = [];
-            s.billParams = resp as unknown as BillParameterViewDto[];
-          }
-        });
+        billCategory.billParams = resp as unknown as BillParameterViewDto[];
       });
+    })
+
   }
 
   handleBillCategoryChange(sevent: any) {
     var index = sevent.index;
-    this.initBillParamsForCategory(
-      this.billCategories[index].lookupDetailId + ''
-    );
+    this.initBillParamsForCategory();
   }
 
   seasonForm() {
     this.fbseasons = this.formbuilder.group({
       seasonId: [null],
-     
+
       code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       plantFrom: ['', Validators.required],
@@ -178,6 +169,7 @@ export class SeasonComponent implements OnInit {
     return this.fbseasons.controls;
   }
   editseason(season: SeasonViewDto) {
+    this.activeIndex  = 0;
     this.seasonForm();
     this.fbseasons.patchValue(season);
     this.fbseasons.patchValue({
@@ -195,10 +187,12 @@ export class SeasonComponent implements OnInit {
   getSeasonBillingRatesBySeasonId(seasonId: number | undefined) {
     this.appMasterService.GetSeasonBillingRates(seasonId).subscribe((resp) => {
       let rates = resp as unknown as SeasonBillingRateViewDto[];
+      console.log(rates);
+
       this.billCategories.forEach((billCategory) => {
-        
+
         var categoryFormArray = this.fbseasons.get(
-          billCategory.aliasName?.toLowerCase() + 'Rates'
+          billCategory.name?.toLowerCase() + 'Rates'
         ) as FormArray;
         rates
           .filter(
@@ -250,7 +244,7 @@ export class SeasonComponent implements OnInit {
   onClose() {
     this.fbseasons.reset();
   }
-  
+
   ngOnDestroy() {
     this.seasons = [];
     this.billParams = [];

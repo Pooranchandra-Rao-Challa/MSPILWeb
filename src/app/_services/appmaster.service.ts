@@ -203,7 +203,7 @@ export class AppMasterService extends ApiHttpService {
     return this.post<FarmerDto>(UPDATE_FARMER_URI, farmer);
   }
 
-  public BillParamsForCategory(categoryId: string) {
+  public BillParamsForCategory(categoryId: number) {
     return this.getWithId<BillParameterViewDto[]>(GET_BILLPARAMSFORCATEGORY_URI ,categoryId);
   }
 
