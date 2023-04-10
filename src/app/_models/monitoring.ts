@@ -56,6 +56,7 @@ export class IPlotOfferViewDto {
 }
 
 export interface IFarmerInPlotOfferDto {
+  expanded: boolean;
   offerNo: number;
   offerDate: Date;
   isNewFarmer: boolean;

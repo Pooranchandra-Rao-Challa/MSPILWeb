@@ -15,10 +15,8 @@
           <!-- popup form -->
           <p-dialog header="Schedule Grouping" [(visible)]="showDialog" [modal]="true" showEffect="fade"
           [breakpoints]="{'950px': '70vw', '630px': '900vw' }" [style]="{width: '70vw'}">
-          
           <div class="flex flex-column align-items-center justify-content-center">
               <form [formGroup]="fbScheduleGrouping">
-                  
                   <div class="grid">
                       <div class="col-12">
                           <div class="p-fluid p-formgrid grid">
@@ -29,23 +27,18 @@
                                           <label>Season:<sup class="p-error">*</sup></label>
                                           <p-dropdown placeholder="Select Season" optionLabel="code"
                                               [options]="seasons" optionValue="seasonId" formControlName="seasonId"
-                                              appendTo="body"></p-dropdown>
-                                              
+                                              appendTo="body"></p-dropdown>   
                                       </div>
-
                                       <div class="field col-12 md:col-6">
                                           <label>Schedule Group No:<sup class="p-error">*</sup></label>
                                           <input pInputText id="scheduleGroupNo" type="number" formControlName="scheduleGroupNo">
                                       </div>
-                                      
-
                                       <div class="field col-12 md:col-6">
                                           <label>From DOP/DOR:<sup class="p-error">*</sup></label>
                                           <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true"
                                               appendTo="body" formControlName="fromDOP" [style]="{'width':'100%'}">
                                           </p-calendar>
                                       </div>
-
                                       <div class="field col-12 md:col-6">
                                           <label>To DOP/DOR:<sup class="p-error">*</sup></label>
                                           <p-calendar placeholder="To DOP" [readonlyInput]="true" [showIcon]="true"
@@ -57,13 +50,10 @@
                                           <p-dropdown placeholder="Select To Ryot" optionLabel="code"
                                               optionValue="ryotNo" formControlName="ryotNo" appendTo="body">
                                           </p-dropdown>
-                                      </div>
-
+                                    </div>
                                   </div>
                               </p-fieldset>
-                              
-
-                              <p-fieldset legend="Plot Details" class="col-6" [toggleable]="true"
+                             <p-fieldset legend="Plot Details" class="col-6" [toggleable]="true"
                                   [transitionOptions]="'500ms'">
                                   <div class="p-fluid p-formgrid grid">
                                       <div class="field col-12 md:col-4">
@@ -118,100 +108,101 @@
                       </div>
                   </div>
               </form>
-
-
               <!-- popup table -->
               <p-fieldset legend="Plot Details" class="col-12" [toggleable]="true"
                 [transitionOptions]="'500ms'">
-                
+                <p-table  #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="seasonScheduleId" [rows]="10" [rowHover]="true"
+                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+                [globalFilterFields]="globalFilterFields" [autoLayout]="true" 
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+                responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" 
+                (onRowExpand)="onRowExpand($event)" >
+                <ng-template pTemplate="caption">
+                  <div class="flex justify-content-between flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+                      (click)="clear(dtSchedulegrouping)"></button>
+                    <div>
+                      <span class="p-input-icon-left mb-2">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                          pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety" class="w-full" />
+                      </span>
+                      <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+                        [(ngModel)]="currentSeason.seasonId" (onChange)="initScheduleGroups($event.value)" optionValue="seasonId">
+                      </p-dropdown>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width: 6rem"></th>
+                    <th *ngFor="let col of farmerHeaders" [pSortableColumn]="col.header">
+                      {{col?.label}} <p-sortIcon field="name">
+                      </p-sortIcon>
+                      <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+        
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-farmer let-rowIndex="rowIndex" let-expanded="expanded">
+                  <tr>
+                    <td>
+                      <button type="button" pButton pRipple [pRowToggler]="farmer"
+                        class="p-button-text p-button-rounded p-button-plain"
+                        [icon]="rowIndex === expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                    </td>
+                    <td *ngFor="let col of farmerHeaders">
+                      <span *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{farmer[col.field]}}</span>
+                      <span *ngIf="col?.field == 'toDOP' || col?.field == 'fromDOP'  || col?.field == 'createdAt'|| col?.field == 'updatedAt'">
+                        {{farmer[col.field] | date: 'dd-MM-yyyy'}}
+                      </span>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-farmer>
+                  <tr>
+                    <td colspan="100%">
+                      <div class="p-4">
+                        <p-table [value]="farmer.objPlotSchedule" [columns]="plotHeaders" dataKey="plotScheduleId"
+                          [tableStyle]="{ width: 'min-content'}"
+                          styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+                          <ng-template pTemplate="header">
+                  <tr>
+                    <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
+                      {{col?.label}}
+                    </th>
                     
-                    <p-table #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
-                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-                    [globalFilterFields]="globalFilterFields" [autoLayout]="true"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)">
-                    <ng-template pTemplate="caption">
-                      <div class="flex justify-content-between flex-column sm:flex-row">
-                        <div>
-                            <span class="p-input-icon-left mb-2">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                                  pTooltip="Search ByfarmerCode, farmerName, villageName, Offer No, Plot No" class="w-full">
-                              </span>
-                          <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                            [(ngModel)]="currentSeason.seasonId" (onChange)="initScheduleGroups($event.value)" optionValue="seasonId">
-                          </p-dropdown>
-                        </div>
-                      </div>
-                    </ng-template>
-                    <ng-template pTemplate="header">
-                      <tr>
-                        <th style="width: 5rem"></th>
-                        <th *ngFor="let col of farmerHeaders" [pSortableColumn]="col.header">
-                          {{col?.label}} <p-sortIcon field="code">
-                          </p-sortIcon>
-                          <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
-                        </th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-farmer let-rowIndex="rowIndex" let-expanded="expanded">
-                      <tr>
-                        <td>
-                          <button type="button" pButton pRipple [pRowToggler]="farmer"
-                            class="p-button-text p-button-rounded p-button-plain"
-                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                        </td>
-                        <td *ngFor="let col of farmerHeaders">{{farmer[col.field]}}
-                        </td>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="rowexpansion" let-farmer>
-                      <tr>
-                        <td colspan="6">
-                          <div class="p-3">
-                            <p-table [value]="farmer.objAgreementedPlots" [columns]="plotHeaders" dataKey="plotOfferId"
-                              [tableStyle]="{ width: 'min-content'}"
-                              styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
-                              <ng-template pTemplate="header">
-                      <tr>
-                        <th></th>
-                        <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
-                          {{col?.label}}
-                        </th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-plotAgreement>
-                      <tr>
-                        <td><button pButton pRipple icon="pi pi-pencil" 
-                      
-                            class="p-element p-ripple p-button-text p-button p-component"></button>
-                        </td>
-                        <!-- (click)="editPlotAgreement(plotAgreement)" -->
-                        <td *ngFor="let col of plotHeaders">
-                          <span
-                            *ngIf="col?.field != 'plantingDate' && col?.field != 'agreementedDate'">{{plotAgreement[col.field]}}</span>
-                          <span *ngIf="col?.field == 'plantingDate' || col?.field == 'agreementedDate'">
-                            {{plotAgreement[col.field] | date: 'dd-MM-yyyy'}}
-                          </span>
-                        </td>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                      <tr>
-                        <td class="md:text-center" colspan="50%">There Are No Agreements Found Yet.</td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                </div>
-                </td>
-                </tr>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-scheduleGrouping>
+                  <tr>
+                   
+                    <td *ngFor="let col of plotHeaders">
+                      <span *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{scheduleGrouping[col.field]}}</span>
+                      <span *ngIf="col?.field == 'toDOP' || col?.field == 'fromDOP'  || col?.field == 'createdAt'|| col?.field == 'updatedAt'">
+                        {{farmer[col.field] | date: 'dd-MM-yyyy'}}
+                      </span>
+        
+                     
+                    </td>
+                  </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                   <tr>
-                    <td class="md:text-center" colspan="50%">No Agreements Found.</td>
+                    <td class="md:text-center" colspan="50%">There Are No Schedule Groupings Found Yet.</td>
                   </tr>
                 </ng-template>
-                    </p-table>
+              </p-table>
+            </div>
+            </td>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td class="md:text-center" colspan="50%">No Schedule Groupings Found.</td>
+              </tr>
+            </ng-template>
+            </p-table>
                         
                 </p-fieldset> 
                 
@@ -222,11 +213,12 @@
             </p-dialog>
 
         <!-- table -->
-        <p-table #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
+        <p-table  #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="seasonScheduleId" [rows]="10" [rowHover]="true"
         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
         [globalFilterFields]="globalFilterFields" [autoLayout]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)">
+        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" 
+        (onRowExpand)="onRowExpand($event)" >
         <ng-template pTemplate="caption">
           <div class="flex justify-content-between flex-column sm:flex-row">
             <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -234,8 +226,8 @@
             <div>
               <span class="p-input-icon-left mb-2">
                 <i class="pi pi-search"></i>
-                <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                  pTooltip="Search By Farmer Code, Farmer Name, Village Name, Plot No" class="w-full" />
+                <input pInputText type="text" #filters (input)="onSearch()" placeholder="Search Keyword"
+                  pTooltip="Search By Group No, To DOP, From DOP, Created At, Created By,Updated At,Updated By" class="w-full" />
               </span>
               <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
                 [(ngModel)]="currentSeason.seasonId" (onChange)="initScheduleGroups($event.value)" optionValue="seasonId">
@@ -245,11 +237,12 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 6rem"></th>
+            <th style="width: 5rem"></th>
             <th *ngFor="let col of farmerHeaders" [pSortableColumn]="col.header">
               {{col?.label}} <p-sortIcon field="code">
               </p-sortIcon>
               <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+
             </th>
           </tr>
         </ng-template>
@@ -258,17 +251,21 @@
             <td>
               <button type="button" pButton pRipple [pRowToggler]="farmer"
                 class="p-button-text p-button-rounded p-button-plain"
-                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                [icon]="rowIndex === expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
-            <td *ngFor="let col of farmerHeaders">{{farmer[col.field]}}
+            <td *ngFor="let col of farmerHeaders">
+              <span *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{farmer[col.field]}}</span>
+              <span *ngIf="col?.field == 'toDOP' || col?.field == 'fromDOP'  || col?.field == 'createdAt'|| col?.field == 'updatedAt'">
+                {{farmer[col.field] | date: 'dd-MM-yyyy'}}
+              </span>
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="rowexpansion" let-farmer>
           <tr>
-            <td colspan="6">
-              <div class="p-3">
-                <p-table [value]="farmer.objAgreementedPlots" [columns]="plotHeaders" dataKey="plotOfferId"
+            <td colspan="100%">
+              <div class="p-4">
+                <p-table [value]="farmer.objPlotSchedule" [columns]="plotHeaders" dataKey="plotScheduleId"
                   [tableStyle]="{ width: 'min-content'}"
                   styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                   <ng-template pTemplate="header">
@@ -277,19 +274,21 @@
             <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
               {{col?.label}}
             </th>
+            
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-plotAgreement>
+        <ng-template pTemplate="body" let-scheduleGrouping>
           <tr>
-            <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement)"
+            <td><button pButton pRipple icon="pi pi-pencil" (click)="editscheduleGrouping(scheduleGrouping)"
                 class="p-element p-ripple p-button-text p-button p-component"></button>
             </td>
             <td *ngFor="let col of plotHeaders">
-              <span
-                *ngIf="col?.field != 'plantingDate' && col?.field != 'agreementedDate'">{{plotAgreement[col.field]}}</span>
-              <span *ngIf="col?.field == 'plantingDate' || col?.field == 'agreementedDate'">
-                {{plotAgreement[col.field] | date: 'dd-MM-yyyy'}}
+              <span *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{scheduleGrouping[col.field]}}</span>
+              <span *ngIf="col?.field == 'toDOP' || col?.field == 'fromDOP'  || col?.field == 'createdAt'|| col?.field == 'updatedAt'">
+                {{farmer[col.field] | date: 'dd-MM-yyyy'}}
               </span>
+
+             
             </td>
           </tr>
         </ng-template>
