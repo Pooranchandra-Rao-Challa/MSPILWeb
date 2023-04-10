@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { FarmersViewDto, SampleslabsViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
-import { FarmerSectionViewDto, plotsofFarmerViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
+import { FarmerSectionViewDto, IPlotsofFarmerViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -34,7 +34,7 @@ export class SampleEntryComponent implements OnInit {
   submitLabel!: string;
   showDialog: boolean = false;
   farmers: FarmerSectionViewDto[] = [];
-  plots: plotsofFarmerViewDto[] = [];
+  plots: IPlotsofFarmerViewDto[] = [];
   FarmerSectionViewDto: any
   sample: SampleDetailsDto = {};
   sampleEntries: SampleDetailsDto[] = [];
@@ -121,7 +121,6 @@ export class SampleEntryComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetSeasonSamples(seasonId, param1).subscribe((resp) => {
       this.sampleEntries = resp as unknown as SampleDetailsDto[];
-      console.log(this.sampleEntries)
     });
   }
 
@@ -134,14 +133,14 @@ export class SampleEntryComponent implements OnInit {
   }
 
   initFarmerSections(season: number) {
-    this.monitoringService.GetSectionFarmers(season).subscribe((resp) => {
+    this.monitoringService.GetFarmerSections(season).subscribe((resp) => {
       this.farmers = resp as unknown as FarmerSectionViewDto[];
     })
   }
 
   initPlotsofFarmers(seasonId: any, farmerId: any) {
     this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
-      this.plots = resp as unknown as plotsofFarmerViewDto[];
+      this.plots = resp as unknown as IPlotsofFarmerViewDto[];
       if (this.addFlag == false) this.onPlotNumber(this.sample.plotId!);
     });
   }

@@ -11,7 +11,7 @@ import { MonitoringService } from '../../_services/monitoring.service';
 import { FarmersViewDto, LookupDetailDto, SeasonDto,} from 'src/app/_models/applicationmaster';
 import { AppMasterService } from '../../_services/appmaster.service';
 import { LookupService } from '../../_services/lookup.service';
-import { PlotTransferDto, PlotTransferViewDto } from 'src/app/_models/monitoring';
+import { PlotTransferDto, IPlotTransferViewDto } from 'src/app/_models/monitoring';
 import { ActivatedRoute } from '@angular/router';
 import { CompletedPlotViewDto, CompletedPlotDto } from '../../_models/monitoring';
 
@@ -68,11 +68,11 @@ export class CompletedPlotsComponent implements OnInit {
     private AppMasterService: AppMasterService,
     private monitoringService: MonitoringService,
     private LookupService:LookupService,
-   
+
   ) { }
 
   ngOnInit(): void {
-   
+
     this.initDefaults();
     this.compleatedPlotsForm();
     this.initTofarmers();
@@ -82,11 +82,11 @@ export class CompletedPlotsComponent implements OnInit {
 
   }
 
-  
+
   compleatedPlotsForm() {
     this.fbCompletedPlots = this.formbuilder.group({
       completedPlotId:[0],
-      seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)], 
+      seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       plotAssessmentId:[2],
       docNo:  [{ value: '' }],
       farmerId:[''],
@@ -99,7 +99,7 @@ export class CompletedPlotsComponent implements OnInit {
       "isActive": true
     });
   }
- 
+
   get FormControls() {
     return this.fbCompletedPlots.controls;
   }
@@ -147,22 +147,18 @@ export class CompletedPlotsComponent implements OnInit {
   initTofarmers() {
     this.AppMasterService.GetFarmers().subscribe((resp) => {
       this.toFarmers = resp as unknown as FarmersViewDto[];
-      console.log(this.toFarmers)
-  
     });
   }
 
-  
 
-  
+
+
   initCompleatedPlots() {
     this.LookupService.PlotTransferTypes().subscribe((resp) => {
       this.plotTransferTypes = resp as unknown as LookupDetailDto[];
-      console.log(this.plotTransferTypes);
-      
     });
   }
- 
+
 
 
   onSelectedToFarmer(farmerId: number) {
@@ -224,13 +220,12 @@ export class CompletedPlotsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.fbCompletedPlots.value);
     if (this.fbCompletedPlots.valid) {
       this.saveCompletedPlot().subscribe(resp => {
         if (resp) {
           this.initCompleatedPlot(this.currentSeason.seasonId!);
           this.fbCompletedPlots.reset();
-          this.showDialog = false; 
+          this.showDialog = false;
         }
       })
     }
@@ -240,7 +235,7 @@ export class CompletedPlotsComponent implements OnInit {
 
   }
 
-  
+
 
 
 }

@@ -30,7 +30,6 @@ import { PasswordModule } from 'primeng/password';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 
-
 @NgModule({
   exports: [
     TableModule,
@@ -62,7 +61,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     RadioButtonModule,
     PasswordModule,
     ProgressSpinnerModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+
+   
   ]
 })
 export class PrimeNgModule { }

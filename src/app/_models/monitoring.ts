@@ -56,6 +56,7 @@ export class IPlotOfferViewDto {
 }
 
 export interface IFarmerInPlotOfferDto {
+  expanded: boolean;
   offerNo: number;
   offerDate: Date;
   isNewFarmer: boolean;
@@ -263,30 +264,29 @@ export class PlotTransferDto {
 }
 
 
-export class PlotTransferViewDto {
-  plotTransferId?: number
-  seasonId?: number
-  SeasonName?: string
-  plotId?: number
-  plotAssessmentId?: number
-  docNo?: number
-  docDate?: string
-  plotTransferTypeId?: number
-  plotTransferType?: string
-  fromFarmerId?: number
-  fromFarmerCode?: number
-  fromFarmerName?: string
-  transferArea?: number
-  toFarmerId?: number
-  toFarmerCode?: number
-  toFarmerName?: string
-  plotTransferReasonId?: number
-  plotTransferReason?: string
-  isActive?: boolean
-  createdBy?: string
-  createdAt?: string
-  updatedBy?: string
-  updatedAt?: string
+export interface IPlotTransferViewDto {
+  plotTransferId: number;
+  seasonId: number;
+  seasonName: string;
+  plotId: number;
+  docNo: number;
+  docDate: Date;
+  plotTransferTypeId: number;
+  plotTransferType: string;
+  fromFarmerId: number;
+  fromFarmerCode: number;
+  fromFarmerName: string;
+  plotNumber: number;
+  transferArea: number;
+  toFarmerId: number;
+  toFarmerCode: number;
+  toFarmerName: string;
+  plotTransferReasonId: number;
+  plotTransferReason: string;
+  createdBy: string;
+  createdAt: string;
+  updatedBy: string;
+  updatedAt: string;
 }
 
 export class PlotReportDto {
@@ -754,7 +754,7 @@ export class SampleDto {
   serverUpdatedStatus?: boolean
 }
 
-export interface plotsofFarmerViewDto {
+export interface IPlotsofFarmerViewDto {
   plotId: number
   seasonId: number
   farmerId: number

@@ -177,7 +177,7 @@ export const GET_PLOT_REPORTINFO_URI = "Monitoring/PlotReportInfo";
 export const GET_DOCCODE_URI = "Monitoring/GetNewDocNoForPlotTransfer";
 export const CREATE_PLOTTRANSFER_URI = "Monitoring/CreatePlotTransfer";
 export const UPDATE_PLOTTRANSFER_URI = "Monitoring/UpdatePlotTransfer";
-export const GET_PLOTTRANSFER_URI = "Monitoring/GetPlotTransfers";
+export const GET_PLOT_TRANSFERS_URI = "Monitoring/GetPlotTransfers";
 
 export const CREATE_COMPLETED_PLOT_URI = "Monitoring/CreateCompletedPlot";
 export const UPDATE_COMPLETED_PLOT_URI = "Monitoring/UpdateCompletedPlot";
@@ -194,7 +194,6 @@ export const GET_PLOT_NUMBER_URI = "Monitoring/GetPlotNumber";
 export const GET_PLOTS_FORASSESSMENT_URI = "Monitoring/GetPlots";
 export const GET_PLOTS_URI = "Monitoring/GetPlotInformation";
 export const GET_REGISTERED_FARMERS_URI = 'Monitoring/GetRegisteredFarmers'
-export const GET_PLOTTRANSFERS_URI = "Monitoring/GetPlotTransfers";
 export const GET_FARMERS_IN_SEASON_URI = "Monitoring/GetFarmersInSeason";
 export const GET_PLOT_AGREEMENTS_URI = "Monitoring/GetPlotAgreements";
 export const GET_PLOTS_FORAGREEMENT_URI = "Monitoring/GetPlots";
@@ -226,3 +225,4 @@ export const GET_SEASON_SCHEDULE_GROUPS_URI = "Schedule/GetSeasonScheduleGroups"
 
 export const GET_ESTIMATED_TON ="Schedule/GetPlotExcessTonage"
 export const GET_FARMERS_FOR_ESTIMATED_TON ="Schedule/GetFarmersInPlantingDates"
+export const GET_FARMER_PLOTS_IN_SCHEDULE_URI ="Schedule/GetPlotSchedules"
