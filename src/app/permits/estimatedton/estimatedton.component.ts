@@ -152,7 +152,6 @@ export class EstimatedTonComponent implements OnInit {
   }
 
   GetFarmers(){
-    debugger
     var seasonId=this.fbEstimatedTon.value.seasonId;
     var frompltngDate = this.fbEstimatedTon.value.frompltngDate;
     var topltngDate = this.fbEstimatedTon.value.topltngDate;

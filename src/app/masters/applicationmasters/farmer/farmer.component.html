@@ -120,6 +120,9 @@
                       <label htmlFor="age1">Village:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="villages" optionLabel="villageName"
                         optionValue="villageId" (onChange)="initVillages($event.value)" [autoDisplayFirst]="false"
+                        [filter]="true"
+                        filterBy="villageName"
+                       [virtualScroll]="true" [virtualScrollItemSize]="38"
                         formControlName="villageId" placeholder="Select Village"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"></p-dropdown>
                       <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
@@ -130,28 +133,31 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label htmlFor="divisionName">Division:<sup class="p-error">*</sup></label>
-                      <input pInputText id="divisionName" [formControl]="divisionName"  placeholder="Pease Select Village" type="text">
+                      <!-- <input pInputText id="divisionName" [formControl]="divisionName"  placeholder="Pease Select Village" type="text"> -->
+                      <p class="disabled_text">
+                        {{ this.fbfarmers.controls["divisionName"].value }}
+                      </p>
                     
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="inchargeName">Circle:</label>
-                      <input pInputText [formControl]="circleName" type="text"  placeholder="Enter Circle" /> 
+                      <input pInputText [formControl]="circleName" type="text"  placeholder="Enter Circle" readonly /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="sectionName">Section:</label>
-                      <input pInputText [formControl]="sectionName" type="text"  placeholder="Enter Incharge Phone No" /> 
+                      <input pInputText [formControl]="sectionName" type="text"  placeholder="Enter Incharge Phone No"readonly /> 
                     </div>
                     <div class="field col-8 md:col-3">
                       <label htmlFor="districtName">District:</label>
-                      <input pInputText [formControl]="districtName" type="text"  placeholder="District Name" /> 
+                      <input pInputText [formControl]="districtName" type="text"  placeholder="District Name"readonly /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="mandalName">Mandal:</label>
-                      <input pInputText [formControl]="mandalName" type="text"  placeholder="Enter Mandal" /> 
+                      <input pInputText [formControl]="mandalName" type="text"  placeholder="Enter Mandal"readonly /> 
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="pincode">PinCode:</label>
-                      <input pInputText [formControl]="pincode" type="text"  placeholder="Enter PinCode">
+                      <input pInputText [formControl]="pincode" type="text"  placeholder="Enter PinCode"readonly/>
                     </div>
 
                     <div class="field col-8 md:col-3">
@@ -267,11 +273,14 @@
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
                        <label>Bank:<sup class="p-error">*</sup></label>
-                      <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
+                      <p-dropdown placeholder="Select Bank" [filter]="true"
+                      filterBy="name"
+                     [virtualScroll]="true" [virtualScrollItemSize]="38"
+                     divisionName optionLabel="name" [options]="banks" optionValue="bankId"
                       (onChange)="getBranchByBankId($event.value)">
                       </p-dropdown>
                     </div>
-                    <div class="field col-12 md:col-4">
+                    <div class="field col-12 md:col-4">S
                       <label>Branch:<sup class="p-error">*</sup></label>
                       <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
                         optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">

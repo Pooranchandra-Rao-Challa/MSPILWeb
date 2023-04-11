@@ -127,7 +127,8 @@
               <div class="field col-12 md:col-6">
                 <label class="required">Offered No:</label>
                 <p-dropdown placeholder="Select Offered No" optionLabel="DisplayValue" [options]="seasonPlotOffers"
-                  formControlName="plotOfferId" optionValue="id" [virtualScroll]="true" [virtualScrollItemSize]="20"
+                  formControlName="plotOfferId" optionValue="id" [filter]="true"
+                  filterBy="offerNo,farmerCode,farmerName,plotVillageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
                   (onChange)="getOfferInfo($event.value)"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotOfferId'].touched && FormControls['plotOfferId'].errors }">
                   <ng-template let-seasonPlotOffer pTemplate="item">

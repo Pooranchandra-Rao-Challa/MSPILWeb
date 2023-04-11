@@ -42,7 +42,10 @@
                         <label class="required">Plot No:</label>
                         <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
-                          (onChange)="getPlotinfo($event.value)" appendTo="body"
+                          (onChange)="getPlotinfo($event.value)"
+                          [filter]="true"
+                          filterBy="plotNumber"
+                         [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
