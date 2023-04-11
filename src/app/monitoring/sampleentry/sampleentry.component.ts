@@ -192,16 +192,16 @@ export class SampleEntryComponent implements OnInit {
           }
           else {
             this.isSampleCountMatched = true;
-            if (this.addFlag == false)
-              this.messageService.add({
-                key: 'samplesMsg',
-                severity: 'error',
-                summary: 'Error Message',
-                detail: 'Number of entered samples matches with number of expected samples',
-                life: 30000
-              });
           }
         }
+      });
+      if (!this.addFlag && this.isSampleCountMatched)
+      this.messageService.add({
+        key: 'samplesMsg',
+        severity: 'error',
+        summary: 'Error Message',
+        detail: 'Number of entered samples matches with number of expected samples',
+        life: 30000
       });
     });
   }
