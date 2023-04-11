@@ -1,5 +1,7 @@
+import { formatDate } from "@angular/common";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FORMAT_DATE } from "src/app/_helpers/date.format.pipe";
 import { SeasonDto } from "src/app/_models/applicationmaster";
 import {CircleforEstimatedtonDto, DivisionsforEstimatedtonDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforEstimatedtonDto, VillageforEstimatedtonDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
@@ -58,9 +60,10 @@ export class EstimatedTonComponent implements OnInit {
   farmers:FarmersInPlantingDatesDto[]=[];
   divisions:DivisionsforEstimatedtonDto[]=[];
   sections:SectionforEstimatedtonDto[]=[];
+  circle:CircleforEstimatedtonDto ={}
   circles:CircleforEstimatedtonDto[]=[];
   villages:VillageforEstimatedtonDto[]=[];
-
+  village:VillageforEstimatedtonDto = new VillageforEstimatedtonDto()
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterService: AppMasterService,
@@ -68,29 +71,27 @@ export class EstimatedTonComponent implements OnInit {
 
   getEstimatedForm() {
     this.fbEstimatedTon = this.formbuilder.group({
-      seasonId: new FormControl('', [Validators.required]),
-      divisionId: new FormControl('', [Validators.required]),
-      circleId: new FormControl('', [Validators.required]),
-      sectionId: new FormControl('', [Validators.required]),
-      villageId: new FormControl('', [Validators.required]),
-      frompltngDate: new FormControl('', [Validators.required]),
-      topltngDate: new FormControl('', [Validators.required]),
-      farmerCode: new FormControl('', [Validators.required]),
+      seasonId: new FormControl(null, [Validators.required]),
+      divisionId: new FormControl(null, [Validators.required]),
+      circleId: new FormControl(null, [Validators.required]),
+      sectionId: new FormControl(null, [Validators.required]),
+      villageId: new FormControl(null, [Validators.required]),
+      frompltngDate:new FormControl(null, [Validators.required]),
+      topltngDate: new FormControl(null, [Validators.required]),
+      farmerCode: new FormControl(null, [Validators.required]),
     });
   }
 
-  get FormControals() {
+  get FormControls() {
     return this.fbEstimatedTon.controls
   }
   ngOnInit(): void {
-    // this.fillData();
     this.initCurrentSeason(CURRENT_SEASON());
     this.getEstimatedForm();
     this.initDivisions();
     this.initSections();
     this.initCircles();
     this.initVillages();
-    // this.GetFarmers();
   }
   
   headers: IHeader[] = [
@@ -134,7 +135,9 @@ export class EstimatedTonComponent implements OnInit {
     this.permitService.GetDivisionsforEstimatedton().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionsforEstimatedtonDto[];
     });
+    // this.circles = this.circles.filter((circle) => circle.circleId)
   }
+
   initSections() {
     this.permitService.GetSectionsforEstimatedton().subscribe((resp) => {
       this.sections = resp as unknown as SectionforEstimatedtonDto[];
@@ -152,55 +155,23 @@ export class EstimatedTonComponent implements OnInit {
   }
 
   GetFarmers(){
-    var seasonId=this.fbEstimatedTon.value.seasonId;
-    var frompltngDate = this.fbEstimatedTon.value.frompltngDate;
-    var topltngDate = this.fbEstimatedTon.value.topltngDate;
+    if (this.fbEstimatedTon.value.seasonId != null && this.fbEstimatedTon.value.frompltngDate!= null && 
+      this.fbEstimatedTon.value.topltngDate != null && this.fbEstimatedTon.value.villageId != null){
+    var seasonId = this.fbEstimatedTon.value.seasonId;
+    var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd','en-US')
+    var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd','en-US');
     var villageId = this.fbEstimatedTon.value.villageId
     this.permitService.GetFarmersInPlantingDates(seasonId,frompltngDate,topltngDate,villageId).subscribe((resp) => {
     this.farmers = resp as unknown as FarmersInPlantingDatesDto[];
       console.log(resp)
     })
+  }
   }  
   toggleTab() {
     // this.showForm = true;
     this.showForm = !this.showForm;
   }
-
   getEstimatedTon() {
     this.showTable = true;
   }
-
-  // SampleDropdwon() {
-  //   this.sampleDrop = [
-  //     { name: 'New York', code: 'NY' },
-  //     { name: 'Rome', code: 'RM' },
-  //     { name: 'London', code: 'LDN' },
-  //     { name: 'Istanbul', code: 'IST' },
-  //     { name: 'Paris', code: 'PRS' }
-  //   ];
-  // }
-
-  // fillData() {
-  //   for (var i of [1, 2]) {
-  //     this.estimatedTonDto.push(
-  //       {
-  //         FarmerCode: i,
-  //         FarmerName: 'Farmer',
-  //         PlotNo: 1,
-  //         VillageName: 'Village',
-  //         VarityName: 'Varity',
-  //         PlantType: 'planttype',
-  //         PlantingDate: new Date(),
-  //         NetArea: 1,
-  //         Estimatedton: 20,
-  //         IncreasedEstimatedton: 5,
-  //         PermitTon: 0,
-  //         SuppliedTon: 0,
-  //         BalanceTon: 25,
-  //         NoofWeighments: 0,
-  //         UpdatedEstimatedton: 0
-  //       }
-  //     )
-  //   }
-  // }
 }
