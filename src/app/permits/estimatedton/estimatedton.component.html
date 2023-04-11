@@ -14,19 +14,18 @@
         </p-toolbar>
 
         <!-- From Toolbar -->
-
         <p-toolbar styleClass="p-mb-2" *ngIf ="showForm">
             <ng-template pTemplate="left">
                 <div class="flex justify-content-between flex-column sm:flex-row grid">
-                    <from [formGroup]="fbEstimatedTonFilter" >
+                    <from [formGroup]="fbEstimatedTon" >
                         <div class="col-12">
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
                                 
                             <div class="col-2 p-2">
                                 <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                                    formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"  (onChange)="GetFarmers()" 
+                                    formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
                                    optionValue="seasonId" [style]="{'width':'100%'}">
-                                   <!-- (onChange)="initAllottedPlots($event.value)"  -->
+                                   <!-- (onChange)="initAllottedPlots($event.value)" -->
                                 </p-dropdown>
                             </div>
                             <div class="col-2 p-2">
@@ -34,24 +33,21 @@
                                 optionValue="divisionId" formControlName="divisionId" [style]="{'width':'100%'}">
                             </p-dropdown> -->
                           
-                                <p-multiSelect [options]="sampleDrop" placeholder="Select Division"  [(ngModel)]="selectSample"
-                                 [filter]="true" optionLabel="name" formControlName="divisionId" [style]="{'width':'100%'}"></p-multiSelect>
-                         
+                                <p-multiSelect [options]="divisions" placeholder="Select Division"  optionValue="divisionId" appendTo="body"
+                                 [filter]="true" optionLabel="divisionName" formControlName="divisionId" [style]="{'width':'100%'}"></p-multiSelect>
                             </div>
                             <div class="col-2 p-2">
-                                <p-multiSelect [options]="sampleDrop" placeholder="Select Circle "  [(ngModel)]="selectSample"
-                                [filter]="true" optionLabel="name" formControlName="circleId" [style]="{'width':'100%'}"></p-multiSelect>
-                           
+                                <p-multiSelect [options]="circles" placeholder="Select Circle " optionValue="circleId" appendTo="body"
+                                [filter]="true" optionLabel="circleName" formControlName="circleId" [style]="{'width':'100%'}"></p-multiSelect>
                             </div>
                             <div class="col-2 p-2">
-                                <p-multiSelect [options]="sampleDrop" placeholder="Select Section"  [(ngModel)]="selectSample"
-                                 [filter]="true" optionLabel="name" formControlName="sectionId" [style]="{'width':'100%'}"></p-multiSelect>
-                         
+                                <p-multiSelect [options]="sections" placeholder="Select Section " optionValue="sectionId" appendTo="body"
+                                [filter]="true" optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}"></p-multiSelect>
                             </div>
                             <div class="col-2 p-2">
-                                <p-multiSelect [options]="sampleDrop" placeholder="Select Village"  [(ngModel)]="selectSample"
-                                 [filter]="true" optionLabel="name" formControlName="villageId" [style]="{'width':'100%'}"></p-multiSelect>
-                           
+                                <p-multiSelect [options]="villages" placeholder="Select Village"  optionValue="villageId" appendTo="body" 
+                                (onChange)="GetFarmers()"
+                                 [filter]="true" optionLabel="villageName" formControlName="villageId" [style]="{'width':'100%'}"></p-multiSelect>      
                             </div>
                             
                             <div class="col-3 p-2" style="padding-left:14px !important;">
@@ -168,7 +164,5 @@
             <td colspan="16" class="md:text-center">Loading Estimated Ton  Details. Please wait.</td>
         </tr>
      </p-table>
-
-
     </div>
 </div>

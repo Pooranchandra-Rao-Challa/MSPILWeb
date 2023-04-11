@@ -1,7 +1,7 @@
 import {
   IFarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, ProppingViewDto, IPlotYieldViewDto, ProppingDto, EstimatedViewDto, FarmersInPlantingDatesDto
+  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, ProppingViewDto, IPlotYieldViewDto, ProppingDto,
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
@@ -313,12 +313,5 @@ export class MonitoringService extends ApiHttpService {
   public UpdatePropping(propping: ProppingDto) {
     return this.post<ProppingDto>(UPDATE_PROPPING_URI, propping);
   }
-  // Estimatedton
-  public GetEstimatedTon(seasonId: number) {
-    return this.getWithId<EstimatedViewDto>(GET_ESTIMATED_TON, [seasonId]);
-  }
-  public GetFarmersInPlantingDates(seasonId:any,frompltngDate:any,topltngDate:any){
-    debugger
-    return this.getWithParams<FarmersInPlantingDatesDto>(GET_FARMERS_FOR_ESTIMATED_TON, [seasonId,frompltngDate,topltngDate]);
-  }
+  
 }
