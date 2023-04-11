@@ -68,7 +68,7 @@
             Capacity <p-columnFilter type="text" field="capacity" display="menu"></p-columnFilter>
             <p-sortIcon field="capacity"></p-sortIcon>
           </th>
-        
+
           <th style="text-align:center">Is Active
             <p-sortIcon field="isActive">  </p-sortIcon>
           </th>
@@ -119,7 +119,7 @@
           <td class="md:text-center" colspan="50%">No Seasons Data Found.</td>
         </tr>
       </ng-template>
-  
+
     </p-table>
     <!-- dialog box -->
     <p-dialog header="Season With Billing Rate" [(visible)]="showDialog" showEffect="fade"
@@ -263,7 +263,7 @@
               <!-- //formArray -->
               <p-fieldset legend="Category Wise Billing Rates" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="p-fluid">
-                  <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)">
+                  <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)" [(activeIndex)]="activeIndex!">
                     <p-tabPanel *ngFor="let billCategory of billCategories; let i = index" [selected]="i == 0">
                       <ng-template pTemplate="header">
                         <span>{{billCategory.name}}</span>
@@ -272,16 +272,16 @@
                         <div class="grid p-fluid">
                           <div class="col-12" style="padding-left:unset">
                             <div class="col-3" style="float:right">
-                              <button (click)="addItem((billCategory.aliasName?.toLowerCase())+'Rates', billCategory)"
+                              <button (click)="addItem((billCategory.name?.toLowerCase())+'Rates', billCategory)"
                                 pButton pRipple type="button" [label]="'Add '+ billCategory.name" icon="pi pi-plus"
                                 class="p-button-raised p-button-primary" style="white-space: nowrap;"></button>
                             </div>
-                            <div [formArrayName]="(billCategory.aliasName?.toLowerCase())+'Rates' "
+                            <div [formArrayName]="(billCategory.name?.toLowerCase())+'Rates' "
                               class="season-rates-tab-items">
                               <ng-container
-                                *ngIf="fbseasons.get((billCategory.aliasName?.toLowerCase())+'Rates') as formArray">
+                                *ngIf="fbseasons.get((billCategory.name?.toLowerCase())+'Rates') as formArray">
                                 <div
-                                  *ngFor="let item of RateControls((billCategory.aliasName?.toLowerCase())+'Rates').controls; let i = index"
+                                  *ngFor="let item of RateControls((billCategory.name?.toLowerCase())+'Rates').controls; let i = index"
                                   class="season-rates-tab-items">
                                   <div [formGroupName]="i" class="col-12" style="padding-left:unset">
                                     <div class="field col-12 md:col-3" style="display:inline-block;padding-left:unset;">
@@ -289,7 +289,7 @@
                                       <p-dropdown [options]="billCategory.billParams" optionLabel="name"
                                         formControlName="billParameterId" optionValue="billParameterId"
                                         placeholder="Please Select Bill Parameter"></p-dropdown>
-                                     
+
                                     </div>
                                     <div class="field col-12 md:col-3" style="display:inline-block;">
                                       <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
@@ -304,7 +304,7 @@
                                     </div>
                                     <div class="field col-12 md:col-3" style="display:inline-block;">
                                       <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                                        (click)="ratesControls((billCategory.aliasName?.toLowerCase())+'Rates').removeAt(i)"></i>
+                                        (click)="ratesControls((billCategory.name?.toLowerCase())+'Rates').removeAt(i)"></i>
                                     </div>
                                   </div>
                                 </div>

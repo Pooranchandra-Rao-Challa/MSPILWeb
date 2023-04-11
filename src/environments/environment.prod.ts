@@ -16,3 +16,10 @@ function convertParamsToUrlString(params:any[]):any{
   return str;
 }
 export const CURRENT_SEASON = () => {return `${new Date().getFullYear()}-${(new Date().getFullYear()+1).toString().substring(2,2)}`}
+export enum EDocumentNumberScreens{
+  Plots = 1,
+  Samples = 2,
+  Permits = 3,
+  Loans = 4,
+  PlotTransfers = 5,
+}
