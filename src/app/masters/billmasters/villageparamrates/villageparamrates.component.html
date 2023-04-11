@@ -146,10 +146,16 @@
                     <ng-template let-village pTemplate="selectedItem">
                       <div>{{village.villageCode}}</div>
                     </ng-template>
-                    <ng-template let-village pTemplate="item">
-                      <div>{{village.villageCode}}</div>
-                      <div>Code: {{village.villageCode}} Name:{{village.villageName}}</div>
+
+                    <ng-template let-village  pTemplate="item" >
+                      <div class="block align-items-center gap-2">
+                        <div>{{village.villageCode}}</div>
+                        <div>{{village.villageName}}</div>
+                      
+                      </div>
                     </ng-template>
+
+
                   </p-dropdown>
                   <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageId'].errors?.['required']">

@@ -224,16 +224,20 @@
                       <ng-template let-village pTemplate="selectedItem">
                         <div>{{village.villageCode}}</div>
                       </ng-template>
-                      <ng-template let-village pTemplate="item">
-                        <div>{{village.villageCode}}</div>
-                        <div>Code: {{village.villageCode}} Name:{{village.villageName}}</div>
+
+                      <ng-template let-village pTemplate="item" >
+                        <div class="block align-items-center gap-2">
+                          <div>{{village.code}}</div>
+                          <div>{{village.villageName}}</div>
+                        
+                        </div>
                       </ng-template>
+
 
                       <ng-template let-seasonPlotOffer  let-village pTemplate="item" >
                         <div class="block align-items-center gap-2">
                           <div>{{village.villageCode}}</div>
                           <div> {{village.villageName}}</div>
-                        
                         </div>
                       </ng-template>
                     </p-dropdown>
@@ -358,6 +362,10 @@
                   <label class="required">Season:</label>
                   <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
                     formControlName="seasonId" (onChange)="getNewOfferNo($event.value)"
+                    [filter]="true"
+                  filterBy="code"
+                 [virtualScroll]="true" [virtualScrollItemSize]="38"
+				            appendTo="body"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -367,11 +375,15 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Offer No:</label>
-                  <input pInputText id="offerNo" type="text" formControlName="offerNo" readonly>
+                  <p class="disabled_text">
+                    {{ this.fbPlotOffer.controls["offerNo"].value }}
+                  </p>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Ryot Name:</label>
-                  <input pInputText id="ryotName" type="text" formControlName="ryotName" readonly>
+                  <p class="disabled_text">
+                    {{ this.fbPlotOffer.controls["ryotName"].value }}
+                  </p>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Remarks:</label>

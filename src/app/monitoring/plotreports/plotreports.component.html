@@ -262,7 +262,11 @@
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Variety:</label>
-                  <p-dropdown placeholder="Select Variety" optionLabel="name" [options]="varieties"
+                  <p-dropdown 
+                  [filter]="true"
+                  filterBy="name"
+                 [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
+                 placeholder="Select Variety" optionLabel="name" [options]="varieties"
                     optionValue="varietyId" formControlName="varietyId">
                   </p-dropdown>
                   <span *ngIf="FormControls['varietyId'].touched && FormControls['varietyId'].invalid">
@@ -314,9 +318,11 @@
                     locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
                   </p-inputNumber>
                 </div>
-                <div class="field col-12 md:col-4">
-                  <label class="required">Seed Material Used:</label>
-                  <p-dropdown placeholder="Select Seed Material Used" optionLabel="name" [options]="seedMaterialUsed"
+                <div class="field col-12 md:col-4 ">
+                  <label class="required ">Seed Material Used:</label>
+                  <p-dropdown placeholder="Select Seed Material Used"
+                  [filter]="true" filterBy="name"
+                 [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" optionLabel="name" [options]="seedMaterialUsed"
                     optionValue="lookupDetailId" formControlName="seedMaterialUsedId">
                   </p-dropdown>
                   <span
@@ -348,7 +354,9 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-4">
                   <label class="required">Method Of Irrigation:</label>
-                  <p-dropdown placeholder="Select Method of Irrigation" optionLabel="name"
+                  <p-dropdown placeholder="Select Method of Irrigation"
+                  [filter]="true" filterBy="name"
+                 [virtualScroll]="true" [virtualScrollItemSize]="38" optionLabel="name"
                     [options]="methodofIrrigations" optionValue="lookupDetailId"
                     [autoDisplayFirst]="autoDisplayDrowdown" formControlName="methodOfIrrigationId" appendTo="body"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['methodOfIrrigationId'].touched && FormControls['methodOfIrrigationId'].errors }">
@@ -526,11 +534,15 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Offer No:</label>
-                  <input pInputText id="plotOfferId" type="text" formControlName="plotOfferId" readonly>
+                  <p class="disabled_text">
+                    {{ this.fbPlotReport.controls["plotOfferId"].value }}
+                  </p>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Ryot Name:</label>
-                  <input pInputText id="farmerName" type="text" formControlName="farmerName" readonly>
+                  <p class="disabled_text">
+                    {{ this.fbPlotReport.controls["farmerName"].value }}
+                  </p>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Remarks:</label>
