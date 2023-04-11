@@ -2,7 +2,7 @@ import { PlotreportsComponent } from './plotreports/plotreports.component';
 import { PlotofferComponent } from './plotoffer/plotoffer.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PlotTransfersComponent } from './plot-transfers/plot-transfers.component';
+import { PlotTransfersComponent } from './plottransfers/plottransfers.component';
 import { CompletedPlotsComponent } from './completed-plots/completed-plots.component';
 import { PlotassesmentComponent } from './plotassesment/plotassesment.component';
 import { SampleEntryComponent } from './sampleentry/sampleentry.component';

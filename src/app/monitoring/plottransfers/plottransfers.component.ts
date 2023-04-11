@@ -18,8 +18,8 @@ export interface IHeader {
   label: string;
 }
 @Component({
-  selector: 'app-plot-transfers',
-  templateUrl: './plot-transfers.component.html',
+  selector: 'app-plottransfers',
+  templateUrl: './plottransfers.component.html',
   styles: [
   ]
 })

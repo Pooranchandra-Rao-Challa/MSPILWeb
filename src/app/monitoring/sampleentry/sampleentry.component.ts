@@ -201,7 +201,7 @@ export class SampleEntryComponent implements OnInit {
         severity: 'error',
         summary: 'Error Message',
         detail: 'Number of entered samples matches with number of expected samples',
-        life: 30000
+        life: 3000
       });
     });
   }
