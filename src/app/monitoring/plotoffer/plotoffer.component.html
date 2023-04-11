@@ -129,19 +129,18 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Offer No:</label>
-                    <input pInputText id="offerNo" type="text" formControlName="offerNo" readonly>
-                  </div>
+                    <label class="required">Offer Date:</label>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["offerNo"].value }}
+                    </p>
+                    </div>
                   <div class="field col-12 md:col-4">
                     <label class="required">Offer Date:</label>
                     <p-calendar placeholder="Select Offer Date" [readonlyInput]="true" [showIcon]="true"
                       [defaultDate]="plantFrom" formControlName="offerDate" [minDate]="plantFrom" [maxDate]="plantTo"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['offerDate'].touched && FormControls['offerDate'].errors }">
                     </p-calendar>
-                    <span *ngIf="FormControls['offerDate'].touched && FormControls['offerDate'].invalid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['offerDate'].errors?.['required']">
-                        Please Select Offer Date.</div>
-                    </span>
+                    
                   </div>
                 </div>
               </p-fieldset>
@@ -151,16 +150,20 @@
                     <label class="required">Ryot No:</label>
                     <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
                       filterBy="code,aliasName,villageName" formControlName="farmerId" placeholder="Select Farmer"
-                      (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="20"
+                      (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38"
                       appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                       <ng-template let-farmer pTemplate="selectedItem">
                         <div>{{farmer.code}}</div>
                       </ng-template>
-                      <ng-template let-farmer pTemplate="item">
-                        <div>{{farmer.code}}</div>
-                        <div>Code: {{farmer.code}} Name:{{farmer.aliasName}} Village:{{farmer.villageName}}</div>
-                      </ng-template>
+                     <ng-template let-seasonPlotOffer  let-farmer pTemplate="item" >
+                    <div class="block align-items-center gap-2">
+                      <div>{{farmer.code}}</div>
+                      <div>{{farmer.farmerName}}</div>
+                        <div> {{farmer.villageName}}</div>
+                    
+                      </div>
+                  </ng-template>
                     </p-dropdown>
                     <span *ngIf="FormControls['farmerId'].touched && FormControls['farmerId'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['farmerId'].errors?.['required']">
@@ -169,27 +172,39 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Ryot Name:</label>
-                    <input pInputText id="ryotName" type="text" formControlName="ryotName" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["ryotName"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Father Name:</label>
-                    <input pInputText id="fatherName" type="text" formControlName="fatherName" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["fatherName"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Farmer Village:</label>
-                    <input pInputText id="farmerVillage" type="text" formControlName="farmerVillage" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["farmerVillage"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Farmer Division:</label>
-                    <input pInputText id="farmerDivision" type="text" formControlName="farmerDivision" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["farmerDivision"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Farmer Circle:</label>
-                    <input pInputText id="farmerCircle" type="text" formControlName="farmerCircle" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["farmerCircle"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Farmer Section:</label>
-                    <input pInputText id="farmerSection" type="text" formControlName="farmerSection" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["farmerSection"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Is New Farmer:</label><br>
@@ -203,7 +218,7 @@
                     <label class="required">Plot Village:</label>
                     <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
                       filterBy="villageName,villageCode" formControlName="plotVillageId" placeholder="Select Village"
-                      (onChange)="onSelectedVillage($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="20"
+                      (onChange)="onSelectedVillage($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38"
                       appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotVillageId'].touched && FormControls['plotVillageId'].errors }">
                       <ng-template let-village pTemplate="selectedItem">
@@ -212,6 +227,14 @@
                       <ng-template let-village pTemplate="item">
                         <div>{{village.villageCode}}</div>
                         <div>Code: {{village.villageCode}} Name:{{village.villageName}}</div>
+                      </ng-template>
+
+                      <ng-template let-seasonPlotOffer  let-village pTemplate="item" >
+                        <div class="block align-items-center gap-2">
+                          <div>{{village.villageCode}}</div>
+                          <div> {{village.villageName}}</div>
+                        
+                        </div>
                       </ng-template>
                     </p-dropdown>
                     <span *ngIf="FormControls['plotVillageId'].touched && FormControls['plotVillageId'].invalid">
@@ -222,15 +245,21 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plot Division:</label>
-                    <input pInputText id="plotDivision" type="text" formControlName="plotDivision" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["plotDivision"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plot Circle:</label>
-                    <input pInputText id="plotCircle" type="text" formControlName="plotCircle" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["plotCircle"].value }}
+                    </p>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plot Section:</label>
-                    <input pInputText id="plotSection" type="text" formControlName="plotSection" readonly>
+                    <p class="disabled_text">
+                      {{ this.fbPlotOffer.controls["plotSection"].value }}
+                    </p>
                   </div>
                 </div>
               </p-fieldset>
@@ -275,8 +304,8 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label class="required">Expected Varity Code:</label>
-                    <p-dropdown placeholder="Select Expected Varity Code" optionLabel="name" [options]="varieties"
-                      optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body"
+                    <p-dropdown placeholder="Select Expected Varity Code"  filterBy="name" [filter]="true"  optionLabel="name" [options]="varieties"
+                      optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true" [virtualScrollItemSize]="38" 
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['expectedVarietyId'].touched && FormControls['expectedVarietyId'].errors }">
                     </p-dropdown>
                     <span

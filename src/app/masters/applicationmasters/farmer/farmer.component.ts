@@ -19,6 +19,7 @@ import { AlertMessage } from '../../../_alerts/alertMessage';
 import { LazyLoadEvent } from 'primeng/api';
 
 
+
 @Component({
     selector: 'app-farmer',
     templateUrl: './farmer.component.html',
@@ -94,6 +95,7 @@ export class FarmerComponent implements OnInit {
             aadhaarNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_AADHAAR)]),
             oldRyot:  new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
             selfId: [null],
+            divisionName:[''],
             jfno: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
             branchId: ['', (Validators.required)],
             accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
@@ -118,6 +120,7 @@ export class FarmerComponent implements OnInit {
     initGetVillages(){
         this.commonService.GetVillages().subscribe((resp) => {
             this.villages = resp as unknown as VillageDto[]
+            console.log(this.villages)
         })
     }
     initFarmers() {
