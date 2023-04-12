@@ -433,7 +433,11 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-4">
                   <label>Bank:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Bank" optionLabel="name" [options]="banks" optionValue="bankId"
+                  <p-dropdown placeholder="Select Bank" optionLabel="name"
+                  [filter]="true"
+                  filterBy="name"
+                 [virtualScroll]="true" [virtualScrollItemSize]="38"
+                 appendTo="body"[options]="banks" optionValue="bankId"
                     formControlName="bankId" (onChange)="getBranchByBankId($event.value)" appendTo="body"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['bankId'].touched && FormControls['bankId'].errors }">
                   </p-dropdown>

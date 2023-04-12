@@ -15,6 +15,9 @@ import { CURRENT_SEASON } from 'src/environments/environment';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import * as FileSaver from 'file-saver';
 
 export interface IHeader {
   field: string;
@@ -52,6 +55,7 @@ export class PlotassesmentComponent implements OnInit {
   activeIndex1?= 0;
   activeIndex2?= 0;
   permissions: any;
+  exportColumns: any;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -80,6 +84,8 @@ export class PlotassesmentComponent implements OnInit {
     { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date' },
     { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
   ];
+  
+  
 
   initPlotAssesment(plotAssessmentId: number = -1) {
     this.plotAssesment = new PlotAssessmentDto();
@@ -133,6 +139,11 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.exportColumns = this.farmerHeader.map((col) => ({
+      title: col.header,
+      dataKey: col.field,
+    }));
     this.permissions = this.jwtService.Permissions;
     this.currentSeasonCode = CURRENT_SEASON()
     this.plotAssesmentForm();
@@ -140,6 +151,7 @@ export class PlotassesmentComponent implements OnInit {
     this.initSeasons();
     this.initCropType();
     this.initweedstatus();
+    
   }
 
 
@@ -164,6 +176,7 @@ export class PlotassesmentComponent implements OnInit {
     });
   }
 
+ 
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
@@ -341,5 +354,43 @@ export class PlotassesmentComponent implements OnInit {
     this.filter.nativeElement.value = '';
     this.onSearch();
   }
+  
+  exportPdf() {
+   
+    const doc = new jsPDF('l', 'mm', 'a4');
+    (doc as any).autoTable(this.exportColumns, this.plotAssessments);
+
+    // doc['autoTable'](this.exportColumns, this.plotAssessments);
+    // doc.autoTable(this.exportColumns, this.plotAssessments);
+    doc.save('plot_Assessments.pdf');
+  }
+  exportExcel() {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.plotAssessments);
+      const workbook = {
+        Sheets: { data: worksheet },
+        SheetNames: ['data']
+      };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      this.saveAsExcelFile(excelBuffer, 'plotAssessments');
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    FileSaver.saveAs(
+      data,
+      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
+
 
 }

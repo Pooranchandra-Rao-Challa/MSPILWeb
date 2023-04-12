@@ -64,26 +64,26 @@
                                       </div>
                                       <div class="field col-12 md:col-4">
                                           <label>Division:<sup class="p-error">*</sup></label>
-                                          <p-dropdown placeholder="Select To division" optionLabel="code"
-                                              optionValue="division" formControlName="division" appendTo="body">
+                                          <p-dropdown placeholder="Select To division"  [options]="divisions" placeholder="Select Division"  optionValue="divisionId" appendTo="body"
+                                          [filter]="true" optionLabel="divisionName" formControlName="divisionId" [style]="{'width':'100%'}">
                                           </p-dropdown>
                                       </div>
                                       <div class="field col-12 md:col-4">
                                           <label>Circle:<sup class="p-error">*</sup></label>
-                                          <p-dropdown placeholder="Select To Circle" optionLabel="code"
-                                              optionValue="circle" formControlName="circle" appendTo="body">
+                                          <p-dropdown [options]="circles" placeholder="Select Circle " optionValue="circleId" appendTo="body"
+                                          [filter]="true" optionLabel="circleName" formControlName="circleId" [style]="{'width':'100%'}">
                                           </p-dropdown>
                                       </div>
                                       <div class="field col-12 md:col-4">
                                           <label>Section:<sup class="p-error">*</sup></label>
-                                          <p-dropdown placeholder="Select To Section" optionLabel="code"
-                                              optionValue="section" formControlName="section" appendTo="body">
+                                          <p-dropdown [options]="sections" placeholder="Select Section " optionValue="sectionId" appendTo="body"
+                                          [filter]="true" optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}">
                                           </p-dropdown>
                                       </div>
                                       <div class="field col-12 md:col-4">
                                           <label>Village:<sup class="p-error">*</sup></label>
-                                          <p-dropdown placeholder="Select To Village" optionLabel="code"
-                                              optionValue="village" formControlName="village" appendTo="body">
+                                          <p-dropdown [options]="villages" placeholder="Select Village"  optionValue="villageId" appendTo="body" 
+                                           [filter]="true" optionLabel="villageName" formControlName="villageId" [style]="{'width':'100%'}">
                                           </p-dropdown>
                                       </div>
                                       <div class="field col-12 md:col-4">

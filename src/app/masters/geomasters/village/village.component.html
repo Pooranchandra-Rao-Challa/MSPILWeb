@@ -12,7 +12,12 @@
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
                       <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="divisions" optionLabel="divisionName" optionValue="divisionId"
+                      <p-dropdown 
+                      [filter]="true"
+                      filterBy="divisionName"
+                     [virtualScroll]="true" [virtualScrollItemSize]="38"
+                      appendTo="body"
+                      [options]="divisions" optionLabel="divisionName" optionValue="divisionId"
                         (onChange)="initCircles($event.value)" [autoDisplayFirst]="false" formControlName="divisionId"
                         placeholder="Select Division" [ngClass]="{
                           'is-invalid ng-dirty':
@@ -32,7 +37,12 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="circles" optionLabel="name" optionValue="circleId"
+                      <p-dropdown
+                      
+                      [filter]="true"
+                      filterBy="name"
+                     [virtualScroll]="true" [virtualScrollItemSize]="38"
+                      appendTo="body"[options]="circles" optionLabel="name" optionValue="circleId"
                         (onChange)="initSections($event.value)" [autoDisplayFirst]="false" formControlName="circleId"
                         placeholder="Select Circle" [ngClass]="{
                           'is-invalid ng-dirty':
@@ -52,7 +62,11 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="section">Sections:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="sections" optionLabel="name" optionValue="sectionId"
+                      <p-dropdown 
+                      [filter]="true"
+                      filterBy="name"
+                     [virtualScroll]="true" [virtualScrollItemSize]="38"
+                     appendTo="body"[options]="sections" optionLabel="name" optionValue="sectionId"
                         [autoDisplayFirst]="false" formControlName="sectionId" placeholder="Select Section" [ngClass]="{
                           'is-invalid ng-dirty':
                             FormControls['sectionId'].touched &&
@@ -71,7 +85,8 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="age1">State:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="states" optionLabel="stateName" optionValue="stateId"
+                      <p-dropdown
+                     [options]="states" optionLabel="stateName" optionValue="stateId"
                         (onChange)="initDistricts($event.value)" [autoDisplayFirst]="false" formControlName="stateId"
                         placeholder="Select State" [ngClass]="{
                           'is-invalid ng-dirty':
@@ -90,7 +105,11 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="districtId">Districts:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="districts" optionLabel="name" optionValue="districtId"
+                      <p-dropdown  
+                      [filter]="true"
+                      filterBy="name"
+                     [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
+                     [options]="districts" optionLabel="name" optionValue="districtId"
                         (onChange)="initMandals($event.value)" [autoDisplayFirst]="false" formControlName="districtId"
                         placeholder="Select District" [ngClass]="{
                           'is-invalid ng-dirty':
@@ -110,7 +129,11 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="circle">Mandals:<sup class="p-error">*</sup></label>
-                      <p-dropdown [options]="mandals" optionLabel="name" optionValue="mandalId"
+                      <p-dropdown
+                      [filter]="true"
+                      filterBy="name"
+                     [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
+                      [options]="mandals" optionLabel="name" optionValue="mandalId"
                         [autoDisplayFirst]="false" formControlName="mandalId" placeholder="Select Mandal" [ngClass]="{
                           'is-invalid ng-dirty':
                             FormControls['mandalId'].touched &&

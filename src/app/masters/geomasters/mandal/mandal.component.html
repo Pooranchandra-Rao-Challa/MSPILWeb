@@ -51,6 +51,10 @@
                     <label>District:<sup class="p-error">*</sup></label>&nbsp;
                     <p-dropdown [options]="district" optionLabel="districtName" formControlName="districtId"
                       optionValue="districtId" placeholder="Select District" appendTo="body"
+				              [filter]="true"
+                      filterBy="districtName"
+                     [virtualScroll]="true" [virtualScrollItemSize]="38"
+                         appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['districtId'].touched && FormControls['districtId'].errors }">
                     </p-dropdown>
                     <span *ngIf="FormControls['districtId'].touched && FormControls['districtId'].invalid">

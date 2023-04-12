@@ -351,7 +351,7 @@ export class PlotyieldComponent implements OnInit {
       this.fbPlotYield.markAllAsTouched();
     }
   }
-
+     
   ClearForm() {
     var temp = Object.assign({}, this.currentSeason);
     this.fbPlotYield.reset();

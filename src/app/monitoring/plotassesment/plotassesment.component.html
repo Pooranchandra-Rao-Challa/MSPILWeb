@@ -42,7 +42,10 @@
                         <label class="required">Plot No:</label>
                         <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
-                          (onChange)="getPlotinfo($event.value)" appendTo="body"
+                          (onChange)="getPlotinfo($event.value)"
+                          [filter]="true"
+                          filterBy="plotNumber"
+                         [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
@@ -373,15 +376,21 @@
       (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
-          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-            (click)="clear(dtPlotAssessments)"></button>
           <div>
-            <span class="p-input-icon-left mb-2">
+            <button pButton label="Clear" class="p-button-outlined m-2" icon="pi pi-filter-slash"
+            (click)="clear(dtPlotAssessments)"></button>
+            <button (click)="exportPdf()" pButton  class="p-button-outlined m-2"  icon="pi pi-file-pdf"></button>
+            <button (click)="exportExcel()" pButton  class="p-button-outlined m-2" icon="pi pi-file-excel" ></button>
+
+          </div>
+           
+          <div>
+            <span class="p-input-icon-left m-2">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full">
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="m-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssesments($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>

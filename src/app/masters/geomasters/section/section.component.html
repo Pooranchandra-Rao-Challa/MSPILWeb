@@ -12,7 +12,10 @@
 
                   <div class="field col-12 md:col-6">
                     <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
-                    <p-dropdown [options]="divisions" optionLabel="divisionName" formControlName="divisionId"
+                    <p-dropdown [options]="divisions" 
+                    [filter]="true"
+                    filterBy="divisionName"
+                   [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"optionLabel="divisionName" formControlName="divisionId"
                       optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
                       placeholder="Select Division "
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }">
@@ -25,7 +28,13 @@
 
                   <div class="field col-12 md:col-6">
                     <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
-                    <p-dropdown [options]="circles" optionLabel="name" formControlName="circleId" optionValue="circleId"
+                    <p-dropdown 
+                     [options]="circles" 
+                     [filter]="true"
+                     filterBy="name"
+                    [virtualScroll]="true" [virtualScrollItemSize]="38"
+                       appendTo="body"
+                     optionLabel="name" formControlName="circleId" optionValue="circleId"
                       placeholder="Select Circle "
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
                     </p-dropdown>

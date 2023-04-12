@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from "src/app/_helpers/date.format.pipe";
 import { SeasonDto } from "src/app/_models/applicationmaster";
 import {  PlotAgreementDto, PlotInfoDto } from "src/app/_models/monitoring";
-import { IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, } from "src/app/_models/permits";
+import { CircleforEstimatedtonDto, DivisionsforEstimatedtonDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforEstimatedtonDto, VillageforEstimatedtonDto, } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { JWTService } from "src/app/_services/jwt.service";
@@ -47,6 +47,10 @@ export class ScheduleGroupingComponent implements OnInit {
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   objPlotSchedule:IPlotScheduleViewDto[]=[]
+  divisions:DivisionsforEstimatedtonDto[]=[];
+  sections:SectionforEstimatedtonDto[]=[];
+  circles:CircleforEstimatedtonDto[]=[];
+  villages:VillageforEstimatedtonDto[]=[];
 
   farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
@@ -81,6 +85,10 @@ export class ScheduleGroupingComponent implements OnInit {
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.scheduleGroupingForm();
+    this.initDivisions();
+    this.initSections();
+    this.initCircles();
+    this.initVillages();
   }
 
   scheduleGroupingForm() {
@@ -91,10 +99,10 @@ export class ScheduleGroupingComponent implements OnInit {
       toDOP: new FormControl(null, [Validators.required]),
       ryotNo: new FormControl(null, [Validators.required]),
       plot: new FormControl(null, [Validators.required]),
-      division: new FormControl(null, [Validators.required]),
-      circle: new FormControl(null, [Validators.required]),
-      section: new FormControl(null, [Validators.required]),
-      village: new FormControl(null, [Validators.required]),
+      divisionId: new FormControl('', [Validators.required]),
+      circleId: new FormControl('', [Validators.required]),
+      sectionId: new FormControl('', [Validators.required]),
+      villageId: new FormControl('', [Validators.required]),
       plantType: new FormControl(null, [Validators.required]),
       variety: new FormControl(null, [Validators.required]),
 
@@ -117,6 +125,28 @@ export class ScheduleGroupingComponent implements OnInit {
   initScheduleGroups(seasonId: number) {
     this.permitService.GetSeasonScheduleGroups(seasonId).subscribe((resp) => {
       this.scheduleGroupings = resp as unknown as ISeasonScheduleGroupViewDto[];
+
+    });
+  }
+  initDivisions() {
+    this.permitService.GetDivisionsforEstimatedton().subscribe((resp) => {
+      this.divisions = resp as unknown as DivisionsforEstimatedtonDto[];
+      console.log(this.divisions)
+    });
+  }
+  initSections() {
+    this.permitService.GetSectionsforEstimatedton().subscribe((resp) => {
+      this.sections = resp as unknown as SectionforEstimatedtonDto[];
+    });
+  }
+  initCircles() {
+    this.permitService.GetCirclesforEstimatedton().subscribe((resp) => {
+      this.circles = resp as unknown as CircleforEstimatedtonDto[];
+    });
+  }
+  initVillages() {
+    this.permitService.GetVillagesforEstimatedton().subscribe((resp) => {
+      this.villages = resp as unknown as VillageforEstimatedtonDto[];
     });
   }
 
