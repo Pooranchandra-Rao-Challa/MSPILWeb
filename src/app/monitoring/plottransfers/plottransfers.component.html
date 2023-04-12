@@ -199,7 +199,7 @@
                 pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotsTransfer($event.value)" optionValue="seasonId">
+              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotsTransfers($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
         </div>

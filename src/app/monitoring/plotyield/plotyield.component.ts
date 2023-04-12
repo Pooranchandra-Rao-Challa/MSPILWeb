@@ -213,9 +213,7 @@ export class PlotyieldComponent implements OnInit {
     this.plotNumbers = [];
     this.monitoringService.GetPlotsInSeason(season, 'PlotYield', plotId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as PlotInfoDto[];
-      console.log(this.plotNumbers);
-
-      if (plotId) {
+      if (plotId && !this.addFlag) {
         this.fbPlotYield.controls['plotId'].patchValue(plotId);
         this.fbPlotYield.controls['plotId'].disable();
       }
@@ -245,6 +243,7 @@ export class PlotyieldComponent implements OnInit {
   }
 
   addPlotYield() {
+    this.fbPlotYield.controls['plotId'].enable();
     this.submitLabel = "Add Plot Yield";
     this.addFlag = true;
     this.showDialog = true;

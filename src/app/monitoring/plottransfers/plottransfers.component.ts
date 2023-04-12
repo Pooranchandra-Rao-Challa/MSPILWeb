@@ -89,7 +89,6 @@ export class PlotTransfersComponent implements OnInit {
       docDate: [null, (Validators.required)],
       plotTransferTypeId: [null, (Validators.required)],
       fromFarmerId: ['', (Validators.required)],
-      title: [''],
       transferArea: [null, (Validators.required)],
       toFarmerId: [null, (Validators.required)],
       plotTransferReasonId: [null, (Validators.required)],
@@ -107,7 +106,7 @@ export class PlotTransfersComponent implements OnInit {
     return this.fbplotTransfer.controls;
   }
 
-  initPlotsTransfer(seasonId: number) {
+  initPlotsTransfers(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotsTransfers(seasonId, param1).subscribe((resp) => {
       this.plotTransfers = resp as unknown as IPlotTransferViewDto[];
@@ -135,7 +134,7 @@ export class PlotTransfersComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.AppMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
-      this.initPlotsTransfer(this.currentSeason.seasonId!);
+      this.initPlotsTransfers(this.currentSeason.seasonId!);
       this.getFarmerSections(this.currentSeason.seasonId!);
       this.getDocNo();
     });
@@ -166,7 +165,7 @@ export class PlotTransfersComponent implements OnInit {
   }
 
   onSearch() {
-    this.initPlotsTransfer(this.currentSeason.seasonId!);
+    this.initPlotsTransfers(this.currentSeason.seasonId!);
   }
 
   initToRegfarmers() {
@@ -243,7 +242,7 @@ export class PlotTransfersComponent implements OnInit {
     if (this.fbplotTransfer.valid) {
       this.savePlotTransfer().subscribe(resp => {
         if (resp) {
-
+          this.initPlotsTransfers(this.currentSeason.seasonId!);
           this.fbplotTransfer.reset();
           this.showDialog = false;
         }
