@@ -59,25 +59,25 @@ export class ISeasonScheduleGroupViewDto {
       farmerName?: string;
     }
 
-    export class DivisionsforEstimatedtonDto{
+    export class DivisionsforUserDto{
       divisionId?: number;
       divisionCode?:string;
       divisionName?: string;
     }
-    export class CircleforEstimatedtonDto{
+    export class CircleforUserDto{
       circleId?: number;
       divisionId?: number;
       circleCode?:string;
       circleName?: string;
     }
-    export class SectionforEstimatedtonDto{
+    export class SectionforUserDto{
       sectionId?: number;
       divisionId?: number;
       circleId?: number;
       sectionCode?:string;
       sectionName?: string;
     }
-    export class VillageforEstimatedtonDto{
+    export class VillageforUserDto{
       villageId?: number;
       divisionId?: number;
       sectionId?: number;

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CircleforEstimatedtonDto, DivisionsforEstimatedtonDto, EstimatedViewDto, FarmersInPlantingDatesDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforEstimatedtonDto, VillageforEstimatedtonDto, } from "../_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, FarmersInPlantingDatesDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforUserDto, VillageforUserDto, } from "../_models/permits";
 import { ApiHttpService } from "./api.http.service";
-import { GET_CIRCLES_FOR_ESTIMATED_TON, GET_DIVISIONS_FOR_ESTIMATED_TON, GET_ESTIMATED_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_SEASON_SCHEDULE_GROUPS_URI, GET_SECTIONS_FOR_ESTIMATED_TON, GET_VILLAGES_FOR_ESTIMATED_TON } from "./api.uri.service";
+import { GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VILLAGES_FOR_USER } from "./api.uri.service";
 
 
 
@@ -25,18 +25,17 @@ export class permitService extends ApiHttpService {
 public GetFarmersInPlantingDates(seasonId:number,frompltngDate:any,topltngDate:any,villageId:number){
   return this.getWithParams<FarmersInPlantingDatesDto>(GET_FARMERS_FOR_ESTIMATED_TON, [seasonId,frompltngDate,topltngDate,villageId]);
 }
-
-public GetDivisionsforEstimatedton() {
-  return this.get<DivisionsforEstimatedtonDto[]>( GET_DIVISIONS_FOR_ESTIMATED_TON);
+public GetDivisionsforUser() {
+  return this.get<DivisionsforUserDto[]>( GET_DIVISIONS_FOR_USER);
 }
-public GetCirclesforEstimatedton() {
-  return this.get<CircleforEstimatedtonDto[]>(  GET_CIRCLES_FOR_ESTIMATED_TON );
+public GetCirclesforUser() {
+  return this.get<CircleforUserDto[]>(  GET_CIRCLES_FOR_USER);
 }
-public GetSectionsforEstimatedton() {
-  return this.get<SectionforEstimatedtonDto[]>( GET_SECTIONS_FOR_ESTIMATED_TON);
+public GetSectionsforUser() {
+  return this.get<SectionforUserDto[]>( GET_SECTIONS_FOR_USER);
 }
-public GetVillagesforEstimatedton() {
-  return this.get<VillageforEstimatedtonDto[]>(GET_VILLAGES_FOR_ESTIMATED_TON );
+public GetVillagesforUser() {
+  return this.get<VillageforUserDto[]>(GET_VILLAGES_FOR_USER);
 }
 
 }
