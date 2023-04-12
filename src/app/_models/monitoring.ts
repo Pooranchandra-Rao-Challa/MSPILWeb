@@ -834,4 +834,44 @@ export class ProppingDto{
   proppingDate?: Date;
 }
 
+export class SeedDto {
+  seedId?: number;
+  plotId?: number;
+  docNo?: number;
+  docDate?: Date;
+  seedSupplyTypeId?: number;
+  typeOfSeedId?: number;
+  subSeeds?: SeedDetailDto[];
+}
 
+export class SeedDetailDto {
+  seedDetailId?: number;
+  seedId?: number
+  farmerCode?: number;
+  farmerName?: string;
+  uom?: string;
+  qty?: number;
+  rate?: number;
+  amount?: number;
+}
+
+export interface SeedViewDto {
+  seedId?: number;
+  seasonId?: number;
+  season?: string;
+  docNo?: number;
+  docDate?: Date;
+  plotId?: number;
+  plotNumber?: string;
+  farmerId?: number;
+  farmerCode?: string;
+  farmerName?: string;
+  seedSupplyTypeId?: number;
+  seedSupplyType?: string;
+  typeOfSeedId?: number;
+  typeOfSeed?: string;
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+}
