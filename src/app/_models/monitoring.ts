@@ -17,7 +17,7 @@ export class PlotOfferDto {
 export class IPlotOfferViewDto {
   plotOfferId?: number;
   seasonId?: number;
-  name?: string;
+  string?: string;
   isNewFarmer?: boolean;
   offerNo?: number;
   offerDate?: Date;
@@ -62,7 +62,7 @@ export interface IFarmerInPlotOfferDto {
   offerDate: Date;
   isNewFarmer: boolean;
   seasonId: number;
-  name: string;
+  season: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -191,7 +191,7 @@ export class plotWeedicidesDto {
 export interface IPlotAssessmentViewDto {
   plotAssessmentId: number;
   seasonId: number;
-  name: string;
+  seasonName: string;
   plotReportId: number;
   plotNumber: string;
   plotId: any
@@ -315,7 +315,7 @@ export class PlotReportDto {
 
 export interface IFarmerInPlotReportsViewDto {
   seasonId: number;
-  season: string;
+  name: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -633,14 +633,14 @@ export interface IAgreementedPlotsViewDto {
   surveyNo: string;
   reportedArea: string;
   plantingDate: Date;
-  variety: string;
-  plantType: string;
-  plotType: string;
+  varietyName: string;
+  plantTypeName: string;
+  plotTypeName: string;
   weedStatusId: number;
-  weedStatus: string;
+  weedStatusName: string;
   interCropingId: number;
-  interCrop: string;
-  crop: string;
+  interCropName: string;
+  cropName: string;
   fieldName: string;
   birNumber: number;
   birDate: Date;
@@ -678,7 +678,7 @@ export class FarmerSectionViewDto {
 
 export interface IFarmerPlotYieldViewDto {
   seasonId: number;
-  season: Date;
+  SeasonName: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;

@@ -65,28 +65,28 @@ export class PlotassesmentComponent implements OnInit {
     private alertMessage: AlertMessage,) { }
 
   farmerHeader: IHeader[] = [
-    { field: 'name', header: 'name', label: 'Season' },
+    { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' }
   ];
 
   plotHeader: IHeader[] = [
-    { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
-    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'cropTypeName    ', header: 'cropTypeName', label: 'Crop Type' },
-    { field: 'plantTypeName   ', header: 'plantTypeName', label: 'Plant Type' },
-    { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'varietyName  ', header: 'varietyName', label: 'Variety' },
-    { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
-    { field: 'plotTypeName', header: 'plotTypeName', label: 'plot Type' },
-    { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
-    { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date' },
+    { field: 'plotNumber', header:'plotNumber', label: 'Plot Number' },
+    { field: 'plantingDate', header:'plantingDate', label: 'Planting Date' },
+    { field: 'cropTypeName', header:'cropTypeName', label: 'Crop Type' },
+    { field: 'plantTypeName', header:'plantTypeName', label: 'Plant Type' },
+    { field: 'surveyNo', header:'surveyNo', label: 'Survey No' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'fieldName',header:'fieldName', label: 'Field Name' },
+    { field: 'plotTypeName', header:'plotTypeName', label: 'plot Type' },
+    { field: 'assessedArea', header:'assessedArea', label: 'Assessed Area' },
+    { field: 'assessedDate', header:'assessedDate', label: 'Assessed Date' },
     { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
-    { field: 'weedStatusName     ', header: 'weedStatusName  ', label: 'Weed Status' },
-    { field: 'interCropName   ', header: 'interCropName', label: 'Inter Croping' },
+    { field: 'weedStatusName', header: 'weedStatusName  ', label: 'Weed Status' },
+    { field: 'interCropName', header: 'interCropName', label: 'Inter Croping' },
 
-  ];
+  ]; 
   
   
 
@@ -208,6 +208,8 @@ export class PlotassesmentComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
+      console.log(this.plotAssessments);
+      
 
     });
   }
@@ -215,7 +217,6 @@ export class PlotassesmentComponent implements OnInit {
   onRowExpand(source: any) {
     var data = source.data as IFarmerInPlotOfferDto;
     this.monitoringService.GetFarmerPlotsInAssessment(data.seasonId, data.farmerId).subscribe(resp => {
-      console.log(resp)
       data.ObjMeasuredPlots = resp as unknown as IPlotAssessmentViewDto[];
     
     });

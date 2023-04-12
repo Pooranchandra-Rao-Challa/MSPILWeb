@@ -68,15 +68,16 @@ export class PlotagreementComponent implements OnInit {
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'crop', header: 'crop', label: 'Crop' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'cropName', header: 'cropName', label: 'Crop' },
+    { field: 'cropTypeName', header: 'cropTypeName', label: 'Crop Type' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
-    { field: 'plotType', header: 'plotType', label: 'Plot Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
     { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
     { field: 'agreementedArea', header: 'agreementedArea', label: 'Area' },
     { field: 'agreementedDate', header: 'agreementedDate', label: 'Agreemented Date' },
+    
   ];
 
   clear(table: Table) {
@@ -107,6 +108,7 @@ export class PlotagreementComponent implements OnInit {
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
+
     });
   }
 
@@ -129,6 +131,7 @@ export class PlotagreementComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAgreement(seasonId, param1).subscribe((resp) => {
       this.plotAgreements = resp as unknown as IFarmerInPlotOfferDto[];
+      
     });
   }
 

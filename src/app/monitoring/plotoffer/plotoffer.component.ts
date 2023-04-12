@@ -18,6 +18,7 @@ import { CURRENT_SEASON } from 'src/environments/environment';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
+
 export interface IHeader {
   field: string;
   header: string;
@@ -134,6 +135,8 @@ export class PlotofferComponent implements OnInit {
   initSeasons() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp as any;
+      console.log(this.seasons);
+      
     });
   }
 

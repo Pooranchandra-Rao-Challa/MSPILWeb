@@ -70,7 +70,7 @@ export class PlotreportsComponent implements OnInit {
   loading: boolean = false;
 
   farmerHeaders: IHeader[] = [
-    { field: 'season', header: 'season', label: 'Season' },
+    { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
@@ -140,7 +140,10 @@ export class PlotreportsComponent implements OnInit {
 
   getPlotOffersInSeason(seasonId: number, plotId: number) {
     this.monitoringService.PlotOffersInSeason(seasonId, plotId).subscribe((resp) => {
+     
+      
       this.seasonPlotOffers = resp as any;
+     
       this.seasonPlotOffers.forEach(s => {
         s.DisplayValue = `${s.offerNo}-${s.farmerCode}-${s.farmerName}-${s.plotVillageName}`
       })
@@ -256,6 +259,7 @@ export class PlotreportsComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+  
       this.initSeasons();
       this.initPlotReports(this.currentSeason.seasonId!);
     });
