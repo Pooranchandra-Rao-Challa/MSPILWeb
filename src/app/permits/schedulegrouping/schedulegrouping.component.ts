@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from "src/app/_helpers/date.format.pipe";
 import { SeasonDto } from "src/app/_models/applicationmaster";
 import {  PlotAgreementDto, PlotInfoDto } from "src/app/_models/monitoring";
-import { CircleforEstimatedtonDto, DivisionsforEstimatedtonDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforEstimatedtonDto, VillageforEstimatedtonDto, } from "src/app/_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforUserDto, VillageforUserDto, } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { JWTService } from "src/app/_services/jwt.service";
@@ -47,10 +47,10 @@ export class ScheduleGroupingComponent implements OnInit {
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   objPlotSchedule:IPlotScheduleViewDto[]=[]
-  divisions:DivisionsforEstimatedtonDto[]=[];
-  sections:SectionforEstimatedtonDto[]=[];
-  circles:CircleforEstimatedtonDto[]=[];
-  villages:VillageforEstimatedtonDto[]=[];
+  divisions:DivisionsforUserDto[]=[];
+  sections:SectionforUserDto[]=[];
+  circles:CircleforUserDto[]=[];
+  villages:VillageforUserDto[]=[];
 
   farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
@@ -129,24 +129,24 @@ export class ScheduleGroupingComponent implements OnInit {
     });
   }
   initDivisions() {
-    this.permitService.GetDivisionsforEstimatedton().subscribe((resp) => {
-      this.divisions = resp as unknown as DivisionsforEstimatedtonDto[];
+    this.permitService.GetDivisionsforUser().subscribe((resp) => {
+      this.divisions = resp as unknown as DivisionsforUserDto[];
       console.log(this.divisions)
     });
   }
   initSections() {
-    this.permitService.GetSectionsforEstimatedton().subscribe((resp) => {
-      this.sections = resp as unknown as SectionforEstimatedtonDto[];
+    this.permitService.GetSectionsforUser().subscribe((resp) => {
+      this.sections = resp as unknown as SectionforUserDto[];
     });
   }
   initCircles() {
-    this.permitService.GetCirclesforEstimatedton().subscribe((resp) => {
-      this.circles = resp as unknown as CircleforEstimatedtonDto[];
+    this.permitService.GetCirclesforUser().subscribe((resp) => {
+      this.circles = resp as unknown as CircleforUserDto[];
     });
   }
   initVillages() {
-    this.permitService.GetVillagesforEstimatedton().subscribe((resp) => {
-      this.villages = resp as unknown as VillageforEstimatedtonDto[];
+    this.permitService.GetVillagesforUser().subscribe((resp) => {
+      this.villages = resp as unknown as VillageforUserDto[];
     });
   }
 
