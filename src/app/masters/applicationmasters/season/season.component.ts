@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { SeasonDto, LookupDetailDto, SeasonBillingRateViewDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
@@ -53,7 +54,8 @@ export class SeasonComponent implements OnInit {
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService,
-    private alertMessage:AlertMessage,
+    private alertMessage: AlertMessage,
+    private messageService: MessageService,
     private jwtService:JWTService) { }
 
   ngOnInit(): void {
@@ -212,7 +214,15 @@ export class SeasonComponent implements OnInit {
       this.seasonForm();
       this.showDialog = true;
       this.fbseasons.controls['code'].patchValue(this.cSeasonCode);
-    }else alert('Current Season is defined');
+    }else {
+      this.messageService.add({
+        key: 'existCurrentSeasonRecord',
+        severity: 'info',
+        summary: 'Info Message',
+        detail: 'Current Season is defined',
+        life: 5000
+      });
+    }
 
   }
   onGlobalFilter(table: Table, event: Event) {
