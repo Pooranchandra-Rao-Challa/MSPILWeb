@@ -23,6 +23,7 @@ export enum EDocumentNumberScreens{
   Permits = 3,
   Loans = 4,
   PlotTransfers = 5,
+  Seed = 6,
 }
 
 export const CURRENT_SEASON = () => { return  (new Date().getMonth() >= 10 ) ? `${new Date().getFullYear()}-${(new Date().getFullYear()+1).toString().substring(2,4)}` : `${new Date().getFullYear()-1}-${(new Date().getFullYear()).toString().substring(2,4)}`}
