@@ -65,7 +65,7 @@ export class PlotassesmentComponent implements OnInit {
     private alertMessage: AlertMessage,) { }
 
   farmerHeader: IHeader[] = [
-    { field: 'season', header: 'season', label: 'Season' },
+    { field: 'name', header: 'name', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' }
@@ -74,15 +74,18 @@ export class PlotassesmentComponent implements OnInit {
   plotHeader: IHeader[] = [
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'plantType', header: 'PlantType', label: 'Plant Type' },
+    { field: 'cropTypeName    ', header: 'cropTypeName', label: 'Crop Type' },
+    { field: 'plantTypeName   ', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
+    { field: 'varietyName  ', header: 'varietyName', label: 'Variety' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
-    { field: 'plotType', header: 'plotType', label: 'plot Type' },
+    { field: 'plotTypeName', header: 'plotTypeName', label: 'plot Type' },
     { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
     { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date' },
     { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
+    { field: 'weedStatusName     ', header: 'weedStatusName  ', label: 'Weed Status' },
+    { field: 'interCropName   ', header: 'interCropName', label: 'Inter Croping' },
+
   ];
   
   
@@ -180,6 +183,7 @@ export class PlotassesmentComponent implements OnInit {
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
+      console.log(resp)
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
       this.initPlotAssesments(this.currentSeason.seasonId!);
     });
@@ -188,12 +192,15 @@ export class PlotassesmentComponent implements OnInit {
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+ 
     });
   }
 
   initPlotNumbers(season: number, plotId: number) {
     this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
+   
+      
     });
   }
 
@@ -201,13 +208,16 @@ export class PlotassesmentComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
+
     });
   }
 
   onRowExpand(source: any) {
     var data = source.data as IFarmerInPlotOfferDto;
     this.monitoringService.GetFarmerPlotsInAssessment(data.seasonId, data.farmerId).subscribe(resp => {
+      console.log(resp)
       data.ObjMeasuredPlots = resp as unknown as IPlotAssessmentViewDto[];
+    
     });
   }
 

@@ -17,7 +17,7 @@ export class PlotOfferDto {
 export class IPlotOfferViewDto {
   plotOfferId?: number;
   seasonId?: number;
-  seasonName?: string;
+  name?: string;
   isNewFarmer?: boolean;
   offerNo?: number;
   offerDate?: Date;
@@ -39,6 +39,7 @@ export class IPlotOfferViewDto {
   plotSectionName?: string;
   plantTypeId?: number;
   plantType?: string;
+  varietyName?:string;
   varietyId?: number;
   expectedVariety?: string;
   plantingDate?: Date;
@@ -61,7 +62,7 @@ export interface IFarmerInPlotOfferDto {
   offerDate: Date;
   isNewFarmer: boolean;
   seasonId: number;
-  seasonName: string;
+  name: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -190,7 +191,7 @@ export class plotWeedicidesDto {
 export interface IPlotAssessmentViewDto {
   plotAssessmentId: number;
   seasonId: number;
-  season: Date;
+  name: string;
   plotReportId: number;
   plotNumber: string;
   plotId: any
@@ -220,7 +221,7 @@ export interface IPlotAssessmentViewDto {
   reportedArea: number;
   plantingDate: Date;
   varietyId: number;
-  variety: string;
+  varietyName: string;
   fieldName: string;
   birNumber: number;
   birDate: Date;
@@ -531,18 +532,19 @@ export class PlotsDto {
   farmerCode?: string
   farmerName?: string
   fatherName?: string
-  farmerCircle?: string
-  farmerDivision?: string
-  farmerSection?: string
-  farmerDistrict?: string
-  farmerMandal?: string
+  farmerVillageName?:string
+ farmerCircleName?: string
+  farmerDivisionName?: string
+  farmerSectionName ?: string
+  farmerDistrictName ?: string
+  farmerMandalName ?: string
   farmerVillageId?: number
-  farmerVillage?: string
-  plotCircle?: string
-  plotDivision?: string
-  plotSection?: string
-  plotDistrict?: string
-  plotMandal?: string
+  plotVillageName ?: string
+  plotCircleName ?: string
+  plotDivisionName ?: string
+  plotSectionName?: string
+  plotDistrictName  ?: string
+  plotMandalName  ?: string
   plotVillageId?: number
   plotVillage?: string
   reportedArea?: number
@@ -551,15 +553,15 @@ export class PlotsDto {
   birDate?: Date
   plantingDate?: Date
   varietyId?: number
-  variety?: string
+  varietyName ?: string
   surveyNo?: number
   plantTypeId?: number
-  plantType?: string
+  plantTypeName    ?: string
   plotTypeId?: number
-  plotType?: string
+  plotTypeName?: string
   agreedTon?: number
-  cropType?: string
-  Crop?: string
+  cropTypeName  ?: string
+  crop?: string
   measuredArea?: number
   agreementedArea?: number
 }

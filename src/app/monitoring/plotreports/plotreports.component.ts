@@ -80,13 +80,13 @@ export class PlotreportsComponent implements OnInit {
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'previousCrop', header: 'previousCrop', label: 'Previous Crop' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
+    { field: 'previousCropName', header: 'previousCrop', label: 'Previous Crop' },
+    { field: 'cropTypeName', header: 'cropType', label: 'Crop Type' },
     { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'plantTypeName', header: 'plantType', label: 'Plant Type' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
-    { field: 'plotType', header: 'plotType', label: 'Plot Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
   ];
 

@@ -47,6 +47,15 @@
                           filterBy="plotNumber"
                          [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
+                          <ng-template let-plotReport pTemplate="selectedItem">
+                            <div>{{ plotReport.plotNumber }} - {{ plotReport.villageName }}</div>
+                          </ng-template>
+                          <ng-template let-plotReport pTemplate="item">
+                            <div class="block align-items-center gap-2">
+                              <div>{{plotReport.plotNumber}}</div>
+                              <div>{{plotReport.villageName}} </div>
+                            </div>
+                          </ng-template>
                         </p-dropdown>
                         <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -66,23 +75,23 @@
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Name: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerName}}</p>
+                          <p class="disabled_text">{{plotInfo.plotVillageName  }}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Village: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerVillage}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerVillageName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Division: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerDivision}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerDivisionName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold"> Farmer Circle: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerCircle}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerCircleName  }}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Section: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerSection}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerSectionName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Offered No: </label><br />
@@ -90,11 +99,11 @@
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Crop Type: </label><br />
-                          <p class="disabled_text">{{plotInfo.cropType}}</p>
+                          <p class="disabled_text">{{plotInfo.cropTypeName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Crop: </label><br />
-                          <p class="disabled_text">{{plotInfo.Crop}}</p>
+                          <p class="disabled_text">{{plotInfo.crop}}</p>
                         </div>
                       </div>
                     </p-fieldset>
@@ -102,23 +111,23 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Division: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotDivision}}</p>
+                          <p class="disabled_text">{{plotInfo.plotDivisionName}}</p>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Circle: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotCircle}}</p>
+                          <p class="disabled_text">{{plotInfo.plotCircleName}}</p>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Section: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotSection}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerSectionName}}</p>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Village: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotVillage}}</p>
+                          <p class="disabled_text">{{plotInfo.plotVillageName}}</p>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plant Type: </label><br />
-                          <p class="disabled_text">{{plotInfo.plantType}}</p>
+                          <p class="disabled_text">{{plotInfo.plantTypeName}}</p>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Survey No: </label><br />
@@ -134,7 +143,7 @@
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Variety: </label><br />
-                          <p class="disabled_text">{{plotInfo.variety}}</p>
+                          <p class="disabled_text">{{plotInfo.varietyName}}</p>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Agreed Ton: </label><br />
@@ -154,7 +163,7 @@
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Type: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotType}}</p>
+                          <p class="disabled_text">{{plotInfo.plotTypeName}}</p>
                         </div>
                       </div>
                     </p-fieldset>

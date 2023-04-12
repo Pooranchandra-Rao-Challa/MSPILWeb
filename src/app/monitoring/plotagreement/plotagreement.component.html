@@ -47,6 +47,15 @@
 				                 filterBy="plotNumber" [virtualScroll]="true" [virtualScrollItemSize]="38"
                           appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
+                          <ng-template let-plotNumber pTemplate="selectedItem">
+                            <div>{{ plotNumber.plotNumber }} - {{ plotNumber.villageName }}</div>
+                          </ng-template>
+                          <ng-template let-plotNumber pTemplate="item">
+                            <div class="block align-items-center gap-2">
+                              <div>{{plotNumber.plotNumber}}</div>
+                              <div>{{plotNumber.villageName}} </div>
+                            </div>
+                          </ng-template>
                         </p-dropdown>
                         <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -63,11 +72,11 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop:</label>
-                          <p class="disabled_text">{{plotInfo.Crop}}</p>
+                          <p class="disabled_text">{{plotInfo.crop}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop Type:</label>
-                          <p class="disabled_text">{{plotInfo.cropType}}</p>
+                          <p class="disabled_text">{{plotInfo.cropTypeName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Code:</label>
@@ -83,19 +92,19 @@
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Division:</label>
-                          <p class="disabled_text">{{plotInfo.farmerDivision}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerDivisionName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Circle:</label>
-                          <p class="disabled_text">{{plotInfo.farmerCircle}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerCircleName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Section:</label>
-                          <p class="disabled_text">{{plotInfo.farmerSection}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerSectionName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Farmer Village:</label>
-                          <p class="disabled_text">{{plotInfo.farmerVillage}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerVillageName}}</p>
                         </div>
                       </div>
                     </p-fieldset>
@@ -103,27 +112,27 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Division:</label>
-                          <p class="disabled_text">{{plotInfo.plotDivision}}</p>
+                          <p class="disabled_text">{{plotInfo.plotDivisionName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Circle:</label>
-                          <p class="disabled_text">{{plotInfo.plotCircle}}</p>
+                          <p class="disabled_text">{{plotInfo.plotCircleName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Section:</label>
-                          <p class="disabled_text">{{plotInfo.plotSection}}</p>
+                          <p class="disabled_text">{{plotInfo.plotSectionName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Village:</label>
-                          <p class="disabled_text">{{plotInfo.plotVillage}}</p>
+                          <p class="disabled_text">{{plotInfo.plotVillageName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plant Type:</label>
-                          <p class="disabled_text">{{plotInfo.plantType}}</p>
+                          <p class="disabled_text">{{plotInfo.plantTypeName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Planting Date:</label>
-                          <p class="disabled_text">{{plotInfo.plantingDate}}</p>
+                          <p class="disabled_text">{{plotInfo.plantingDate| date: mediumDate}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Survey No:</label>
@@ -135,7 +144,7 @@
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Variety:</label>
-                          <p class="disabled_text">{{plotInfo.variety}}</p>
+                          <p class="disabled_text">{{plotInfo.varietyName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Field Name:</label>
@@ -147,7 +156,7 @@
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>BIR Date:</label>
-                          <p class="disabled_text">{{plotInfo.birDate}}</p>
+                          <p class="disabled_text">{{plotInfo.birDate | date: mediumDate}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Reported Area:</label>
@@ -155,11 +164,11 @@
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Measured Area:</label>
-                          <p class="disabled_text">{{plotInfo.farmerVillage}}</p>
+                          <p class="disabled_text">{{plotInfo.farmerVillageName}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Type:</label>
-                          <p class="disabled_text">{{plotInfo.plotType}}</p>
+                          <p class="disabled_text">{{plotInfo.plotTypeName}}</p>
                         </div>
                       </div>
                     </p-fieldset>
@@ -238,7 +247,7 @@
                         (onChange)="getGuarantor2($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['guarantor1'].touched && fcNomineeDetails.controls['guarantor1'].errors }">
                         <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{farmer.code}} - {{farmer.aliasName}}</div>
+                          <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
                           <div>{{farmer.aliasName}}</div>
@@ -260,7 +269,7 @@
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor3Farmers($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{farmer.code}} - {{farmer.aliasName}}</div>
+                          <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
                           <div>{{farmer.aliasName}}</div>
@@ -276,7 +285,7 @@
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="onGuarantor3($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{farmer.code}} - {{farmer.aliasName}}</div>
+                          <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
                           <div>{{farmer.aliasName}}</div>

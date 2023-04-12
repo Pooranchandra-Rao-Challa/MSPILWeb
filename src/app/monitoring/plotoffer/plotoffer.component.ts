@@ -68,9 +68,9 @@ export class PlotofferComponent implements OnInit {
     { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
     { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'expectedArea', header: 'expectedArea', label: 'Area' },
-    { field: 'expectedVariety', header: 'expectedVariety', label: 'Variety' },
+    { field: 'expectedVarietyName', header: 'expectedVarietyName', label: 'Variety' },
     { field: 'expectedPlantingDate', header: 'expectedPlantingDate', label: 'Planting Date' },
   ];
 
@@ -120,12 +120,14 @@ export class PlotofferComponent implements OnInit {
   initFarmers() {
     this.appMasterservice.GetFarmers().subscribe((resp) => {
       this.farmers = resp as unknown as FarmersViewDto[];
+      console.log(this.farmers)
     })
   }
 
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
+      console.log(this.villages)
     });
   }
 

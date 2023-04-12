@@ -14,6 +14,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 export interface IHeader {
   field: string;
@@ -48,6 +49,7 @@ export class PlotagreementComponent implements OnInit {
   weedStatus: LookupDetailViewDto[] = [];
   crops: LookupDetailViewDto[] = [];
   maintanenceItems?: MaintenanceItems = {}
+  mediumDate: string = MEDIUM_DATE;
   activeIndex?= 0;
   activeIndex1?= 0;
   activeIndex2?= 0;
@@ -55,7 +57,7 @@ export class PlotagreementComponent implements OnInit {
   permissions: any;
 
   farmerHeaders: IHeader[] = [
-    { field: 'season', header: 'season', label: 'Season' },
+    { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
@@ -153,6 +155,7 @@ export class PlotagreementComponent implements OnInit {
 
   getGuarantor2(farmerId: number) {
     this.guarantor2Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
+    console.log(this.guarantor2Farmers)
   }
 
   getGuarantor3Farmers(farmerId: number) {
