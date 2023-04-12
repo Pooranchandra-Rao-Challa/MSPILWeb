@@ -134,6 +134,7 @@ export class PlotTransfersComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.AppMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
+      this.fbplotTransfer.controls['seasonId'].setValue(this.currentSeason.seasonId);
       this.initPlotsTransfers(this.currentSeason.seasonId!);
       this.getFarmerSections(this.currentSeason.seasonId!);
       this.getDocNo();
@@ -141,7 +142,8 @@ export class PlotTransfersComponent implements OnInit {
   }
 
   getDocNo() {
-    this.commonService.GetDocNo(this.currentSeason.seasonId!, EDocumentNumberScreens.PlotTransfers).subscribe((resp) => {
+    this.commonService.GetDocNo(this.fbplotTransfer.controls['seasonId'].value,
+    EDocumentNumberScreens.PlotTransfers).subscribe((resp) => {
       if (resp)
         this.fbplotTransfer.get('docNo')?.setValue(resp);
     });
@@ -172,6 +174,11 @@ export class PlotTransfersComponent implements OnInit {
     this.monitoringService.GetRegisteredFarmers().subscribe((resp) => {
       this.toFarmers = resp as unknown as FarmerSelectInfoViewDto[];
     });
+  }
+
+  onSeasonChange(seasonId:number){
+    this.fbplotTransfer.controls['seasonId'].setValue(seasonId);
+    this.getDocNo();
   }
 
   onSelectedFarmer(fromFarmerId: number) {

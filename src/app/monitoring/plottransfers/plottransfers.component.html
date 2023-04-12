@@ -25,7 +25,7 @@
                     <div class="field col-12 md:col-4">
                       <label class="required">Season:</label>
                       <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                        optionValue="seasonId" formControlName="seasonId" appendTo="body" (onChange)="this.getDocNo();"
+                        optionValue="seasonId" formControlName="seasonId" appendTo="body" (onChange)="onSeasonChange($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
