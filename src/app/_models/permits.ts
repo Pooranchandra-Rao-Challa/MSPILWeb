@@ -25,7 +25,7 @@ export class ISeasonScheduleGroupViewDto {
     farmerCircleName?: string
     farmerSectionName?:string
     netYieldPlots?: string
-  } 
+  }
   export class EstimatedViewDto{
     seasonId?: number;
     seasonName?: string;
@@ -66,16 +66,22 @@ export class ISeasonScheduleGroupViewDto {
     }
     export class CircleforEstimatedtonDto{
       circleId?: number;
+      divisionId?: number;
       circleCode?:string;
       circleName?: string;
     }
     export class SectionforEstimatedtonDto{
       sectionId?: number;
+      divisionId?: number;
+      circleId?: number;
       sectionCode?:string;
       sectionName?: string;
     }
     export class VillageforEstimatedtonDto{
       villageId?: number;
+      divisionId?: number;
+      sectionId?: number;
+      circleId?: number;
       villageCode?:string;
       villageName?: string;
     }

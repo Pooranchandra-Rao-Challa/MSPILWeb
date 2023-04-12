@@ -80,9 +80,9 @@ export class SampleEntryComponent implements OnInit {
 
   ngOnInit(): void {
     this.initSeasons();
+    this.sampleEntryForm();
     this.initCurrentSeason(CURRENT_SEASON());
     this.initAppConstants()
-    this.sampleEntryForm();
   }
 
   sampleEntryForm() {
@@ -127,14 +127,17 @@ export class SampleEntryComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      this.fbSampleEntry.controls['seasonId'].setValue(this.currentSeason.seasonId!);
       this.initFarmerSections(this.currentSeason.seasonId!);
       this.initSampleEntries(this.currentSeason.seasonId!)
+      this.getDocNo();
     });
   }
 
   initFarmerSections(season: number) {
     this.monitoringService.GetFarmerSections(season).subscribe((resp) => {
       this.farmers = resp as unknown as FarmerSectionViewDto[];
+      this.getDocNo();
     })
   }
 
@@ -153,8 +156,11 @@ export class SampleEntryComponent implements OnInit {
   }
 
   getDocNo() {
-    this.commonService.GetDocNo(this.currentSeason.seasonId!, EDocumentNumberScreens.Samples).subscribe((resp) => {
-      this.fbSampleEntry.get('docNo')?.setValue(resp);
+    this.commonService.GetDocNo(this.fbSampleEntry.controls['seasonId'].value,
+    EDocumentNumberScreens.Samples).subscribe((resp) => {
+      console.log(resp);
+
+      this.fbSampleEntry.get('docNo')?.patchValue(resp);
     });
   }
 

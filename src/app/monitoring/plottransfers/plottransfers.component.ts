@@ -137,6 +137,7 @@ export class PlotTransfersComponent implements OnInit {
       this.currentSeason = resp as unknown as SeasonDto;
       this.initPlotsTransfer(this.currentSeason.seasonId!);
       this.getFarmerSections(this.currentSeason.seasonId!);
+      this.getDocNo();
     });
   }
 
@@ -202,7 +203,7 @@ export class PlotTransfersComponent implements OnInit {
 
   addPlotTransfer() {
     this.fbplotTransfer.controls['seasonId'].setValue(this.currentSeason.seasonId);
-    this.getDocNo();
+
     this.submitLabel = "Add Plot Transfer";
     this.addFlag = true;
     this.showDialog = true;

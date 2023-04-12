@@ -6,10 +6,10 @@
                 <h4>Estimated Ton</h4>
             </ng-template>
             <ng-template pTemplate="right">
-       
+
                 <button pButton pRipple label="Filter"  class="p-button-primary w-100" (click)="toggleTab()" ></button>
                 <!-- (click)="getEstimatedTon()" -->
-                
+
             </ng-template>
         </p-toolbar>
 
@@ -19,7 +19,7 @@
                 <div class="flex justify-content-between flex-column sm:flex-row grid">
                     <from [formGroup]="fbEstimatedTon" >
                         <div class="col-12">
-                            <div class="flex justify-content-between flex-column sm:flex-row grid">         
+                            <div class="flex justify-content-between flex-column sm:flex-row grid">
                             <div class="col-2 p-2" >
                                &nbsp;<label class="required">Season:</label>
                                 <p-dropdown class="ml-2" placeholder="Select a Season" optionLabel="name" [options]="seasons"
@@ -37,7 +37,10 @@
                                 <label>Division:</label>
                                 <p-multiSelect [options]="divisions" placeholder="Select Division"  optionValue="divisionId" appendTo="body"
                                  [filter]="true" optionLabel="divisionName" formControlName="divisionId" [style]="{'width':'100%'}"
-                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"></p-multiSelect>
+                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
+                                 (onChange)="SetAllDivisionChilds($event.value)"
+                                 >
+                                </p-multiSelect>
                                  <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
                                     <div class="ng-invalid ng-touched p-error"
                                         *ngIf="FormControls['divisionId'].errors?.['required']">
@@ -46,9 +49,11 @@
                             </div>
                             <div class="col-2 p-2">
                                 <label>Circle:</label>
-                                <p-multiSelect [options]="circles" placeholder="Select Circle " optionValue="circleId" appendTo="body"
+                                <p-multiSelect [options]="filterCircles" placeholder="Select Circle " optionValue="circleId" appendTo="body"
                                 [filter]="true" optionLabel="circleName" formControlName="circleId" [style]="{'width':'100%'}"
-                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }"></p-multiSelect>
+                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }"
+                                >
+                              </p-multiSelect>
                                 <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
                                     <div class="ng-invalid ng-touched p-error"
                                         *ngIf="FormControls['circleId'].errors?.['required']">
@@ -68,20 +73,20 @@
                             </div>
                             <div class="col-2 p-2">
                                 <label class="required">Village:</label>
-                                <p-multiSelect [options]="villages" placeholder="Select Village"  optionValue="villageId" appendTo="body" 
+                                <p-multiSelect [options]="villages" placeholder="Select Village"  optionValue="villageId" appendTo="body"
                                 (onChange)="GetFarmers()"   [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"
-                                 [filter]="true" optionLabel="villageName" formControlName="villageId" [style]="{'width':'100%'}"></p-multiSelect>  
+                                 [filter]="true" optionLabel="villageName" formControlName="villageId" [style]="{'width':'100%'}"></p-multiSelect>
                                  <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
                                     <div class="ng-invalid ng-touched p-error"
                                         *ngIf="FormControls['villageId'].errors?.['required']">
                                         Please Select Village.</div>
                                     </span>
                             </div>
-                            
+
                             <div class="col-3 p-2" style="padding-left:14px !important;">
                                 <label class="required">From Planting Date:</label>
                                 <p-calendar placeholder="From Planting Date" [readonlyInput]="true" [showIcon]="true" (onSelect)="GetFarmers()"
-                                formControlName="frompltngDate" [style]="{'width':'100%'}" 
+                                formControlName="frompltngDate" [style]="{'width':'100%'}"
                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['frompltngDate'].touched && FormControls['frompltngDate'].errors }">
                                 </p-calendar>
                                 <span *ngIf="FormControls['frompltngDate'].touched && FormControls['frompltngDate'].invalid">
@@ -103,7 +108,7 @@
                             </div>
                             <div class="col-3 p-2">
                                 <label class="required">Farmer Code:</label>
-                                <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" 
+                                <p-dropdown placeholder="Farmer Code" optionLabel="farmercode"
                                 [options]="farmers" formControlName="farmerCode" [style]="{'width':'100%'}"
                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerCode'].touched && FormControls['farmerCode'].errors }">
                             </p-dropdown>
@@ -120,7 +125,7 @@
                         </div>
                     </from>
                     <!-- <div class="col-2 p-2">
-                        <button pButton pRipple label="Search" class="p-button-raised p-button-primary" style="width:100%"></button>(click)="onSubmit()" 
+                        <button pButton pRipple label="Search" class="p-button-raised p-button-primary" style="width:100%"></button>(click)="onSubmit()"
                     </div> -->
                 </div>
             </ng-template>
@@ -168,9 +173,9 @@
                             <form>
                                 <label> Update Estimated Ton:<sup class="p-error">*</sup></label>
                                 <div class="grid mt-2">
-                                    
+
                                 <div class="field col-12 md:col-8">
-                                   
+
                                  <input pInputText id="name" type="number" placeholder="Estimated Ton">
                                   </div>
                                   <div class=" col-12 md:col-4">

@@ -213,6 +213,8 @@ export class PlotyieldComponent implements OnInit {
     this.plotNumbers = [];
     this.monitoringService.GetPlotsInSeason(season, 'PlotYield', plotId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as PlotInfoDto[];
+      console.log(this.plotNumbers);
+
       if (plotId) {
         this.fbPlotYield.controls['plotId'].patchValue(plotId);
         this.fbPlotYield.controls['plotId'].disable();
@@ -350,7 +352,7 @@ export class PlotyieldComponent implements OnInit {
       this.fbPlotYield.markAllAsTouched();
     }
   }
-     
+
   ClearForm() {
     var temp = Object.assign({}, this.currentSeason);
     this.fbPlotYield.reset();

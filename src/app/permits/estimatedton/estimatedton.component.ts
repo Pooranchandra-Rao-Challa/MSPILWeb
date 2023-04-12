@@ -1,6 +1,7 @@
 import { formatDate } from "@angular/common";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { BehaviorSubject } from "rxjs";
 import { FORMAT_DATE } from "src/app/_helpers/date.format.pipe";
 import { SeasonDto } from "src/app/_models/applicationmaster";
 import {CircleforEstimatedtonDto, DivisionsforEstimatedtonDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforEstimatedtonDto, VillageforEstimatedtonDto } from "src/app/_models/permits";
@@ -64,6 +65,10 @@ export class EstimatedTonComponent implements OnInit {
   circles:CircleforEstimatedtonDto[]=[];
   villages:VillageforEstimatedtonDto[]=[];
   village:VillageforEstimatedtonDto = new VillageforEstimatedtonDto()
+  filterCircles:CircleforEstimatedtonDto[]=[];
+  filterSections:SectionforEstimatedtonDto[]=[];
+  //subjectCircles: BehaviorSubject<CircleforEstimatedtonDto[]> = new BehaviorSubject<CircleforEstimatedtonDto[]>([]);
+
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterService: AppMasterService,
@@ -93,7 +98,7 @@ export class EstimatedTonComponent implements OnInit {
     this.initCircles();
     this.initVillages();
   }
-  
+
   headers: IHeader[] = [
     { field: 'updatedEstimatedton', header: 'updatedEstimatedton', label: 'Updated Estimated Ton' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
@@ -141,11 +146,14 @@ export class EstimatedTonComponent implements OnInit {
   initSections() {
     this.permitService.GetSectionsforEstimatedton().subscribe((resp) => {
       this.sections = resp as unknown as SectionforEstimatedtonDto[];
+      this.filterSections  = Object.assign([], this.sections);
     });
+
   }
   initCircles() {
     this.permitService.GetCirclesforEstimatedton().subscribe((resp) => {
       this.circles = resp as unknown as CircleforEstimatedtonDto[];
+      this.filterCircles = Object.assign([], this.circles);
     });
   }
   initVillages() {
@@ -154,8 +162,24 @@ export class EstimatedTonComponent implements OnInit {
     });
   }
 
+  SetAllDivisionChilds(values:number[]){
+    console.log(values);
+    let val: string[];
+    this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1)
+    this.filterSections = this.sections.filter(circle => values.indexOf(circle.divisionId!) != -1)
+    //filterCircles
+  }
+
+  SetAllCicleChilds(values:number[]){
+    console.log(values);
+    let val: string[];
+    this.filterCircles = this.circles.filter(circle => values.indexOf(circle.circleId!) != -1)
+    this.filterSections = this.sections.filter(circle => values.indexOf(circle.circleId!) != -1)
+    //filterCircles
+  }
+
   GetFarmers(){
-    if (this.fbEstimatedTon.value.seasonId != null && this.fbEstimatedTon.value.frompltngDate!= null && 
+    if (this.fbEstimatedTon.value.seasonId != null && this.fbEstimatedTon.value.frompltngDate!= null &&
       this.fbEstimatedTon.value.topltngDate != null && this.fbEstimatedTon.value.villageId != null){
     var seasonId = this.fbEstimatedTon.value.seasonId;
     var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd','en-US')
@@ -166,7 +190,7 @@ export class EstimatedTonComponent implements OnInit {
       console.log(resp)
     })
   }
-  }  
+  }
   toggleTab() {
     // this.showForm = true;
     this.showForm = !this.showForm;

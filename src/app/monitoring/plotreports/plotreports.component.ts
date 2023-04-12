@@ -153,6 +153,8 @@ export class PlotreportsComponent implements OnInit {
       let plotOffer2 = resp as any;
       if (plotOffer2 && plotOffer2.length) {
         this.plotOfferDto = plotOffer2[0]
+        console.log(this.plotOfferDto);
+
         this.fbPlotReport.controls['farmerId'].setValue(this.plotOfferDto?.farmerId);
         this.getPlotNumber(plotOfferId);
       }
