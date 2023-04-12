@@ -25,7 +25,8 @@
                     <div class="field col-12 md:col-4">
                       <label class="required">Season:</label>
                       <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
-                        optionValue="seasonId" formControlName="seasonId" appendTo="body" (onChange)="this.getDocNo();">
+                        optionValue="seasonId" formControlName="seasonId" appendTo="body" (onChange)="this.getDocNo();"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
                         <div class="ng-invalid ng-touched p-error"
@@ -69,7 +70,8 @@
                         </ng-template>
                       </p-dropdown>
                       <span *ngIf="FormControls['fromFarmerId'].touched && FormControls['fromFarmerId'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromFarmerId'].errors?.['required']">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['fromFarmerId'].errors?.['required']">
                           Please Select Farmer.</div>
                       </span>
                     </div>
@@ -81,9 +83,17 @@
                     </div>
                     <div class="field col-12 col-4 lg:col-4 ">
                       <label class="required">Plot No:</label>
-                      <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
-                        [options]="plotNumbers" optionValue="plotId" formControlName="plotId" appendTo="body" (onChange)="onSelectedPlot($event.value)"
+                      <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber" [filter]="true"
+                        filterBy="plotNumber,villageName" [options]="plotNumbers" optionValue="plotId"
+                        formControlName="plotId" appendTo="body" (onChange)="onSelectedPlot($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
+                        <ng-template let-plot pTemplate="selectedItem">
+                          <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
+                        </ng-template>
+                        <ng-template let-plot pTemplate="item">
+                          <div>{{plot.plotNumber}}</div>
+                          <div>{{plot.villageName}}</div>
+                        </ng-template>
                       </p-dropdown>
                       <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plotId'].errors?.['required']">
@@ -99,7 +109,8 @@
                     <div class="field col-12 md:col-4">
                       <label class="required">Plot Transfer Type:</label>
                       <p-dropdown optionLabel="name" [options]="plotTransferTypes" optionValue="lookupDetailId"
-                        formControlName="plotTransferTypeId" placeholder="Select Plot Transfer Reason" appendTo="body" (onChange)="onSelectedTransferType($event.value)"
+                        formControlName="plotTransferTypeId" placeholder="Select Plot Transfer Reason" appendTo="body"
+                        (onChange)="onSelectedTransferType($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotTransferTypeId'].touched && FormControls['plotTransferTypeId'].errors }">
                       </p-dropdown>
                       <span
