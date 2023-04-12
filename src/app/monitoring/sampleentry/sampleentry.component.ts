@@ -34,7 +34,7 @@ export class SampleEntryComponent implements OnInit {
   submitLabel!: string;
   showDialog: boolean = false;
   farmers: FarmerSectionViewDto[] = [];
-  plots: IPlotsofFarmerViewDto[] = [];
+  plotNumbers: IPlotsofFarmerViewDto[] = [];
   FarmerSectionViewDto: any
   sample: SampleDetailsDto = {};
   sampleEntries: SampleDetailsDto[] = [];
@@ -143,7 +143,7 @@ export class SampleEntryComponent implements OnInit {
 
   initPlotsofFarmers(seasonId: any, farmerId: any) {
     this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
-      this.plots = resp as unknown as IPlotsofFarmerViewDto[];
+      this.plotNumbers = resp as unknown as IPlotsofFarmerViewDto[];
       if (this.addFlag == false) this.onPlotNumber(this.sample.plotId!);
     });
   }
@@ -204,16 +204,16 @@ export class SampleEntryComponent implements OnInit {
       if (!this.addFlag && this.isSampleCountMatched)
       this.messageService.add({
         key: 'samplesMsg',
-        severity: 'error',
-        summary: 'Error Message',
+        severity: 'info',
+        summary: 'Info Message',
         detail: 'Number of entered samples matches with number of expected samples',
-        life: 3000
+        life: 5000
       });
     });
   }
 
   onPlotNumber(plotId: number) {
-    let plot = this.plots.filter((value) => value.plotId == plotId)[0];
+    let plot = this.plotNumbers.filter((value) => value.plotId == plotId)[0];
     this.netArea = plot && plot.netArea;
     let enteredSamples = this.sampleEntries.filter((sample) => sample.plotId == plotId);
     this.enteredSampleCount = enteredSamples && enteredSamples.length;

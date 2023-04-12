@@ -1,7 +1,7 @@
 <div class="col-12">
   <div class="card">
     <!-- <p-toast key="tst"></p-toast> -->
-    <p-toast key="samplesMsg"></p-toast>
+    <p-toast position="top-center" key="samplesMsg"></p-toast>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -155,8 +155,15 @@
                     <div class="field col-12 md:col-4">
                       <label class="required">Plot No:</label>
                       <p-dropdown placeholder="Plot No" (onChange)="onPlotNumber($event.value)" formControlName="plotId"
-                        optionValue="plotId" [options]="plots" optionLabel="plotNumber"
+                        optionValue="plotId" [options]="plotNumbers" optionLabel="plotNumber" [filter]="true" filterBy="plotNumber,villageName"
                         [ngClass]="{ 'is-invalid ng-dirty': fbSampleEntry.controls['plotId'].touched && fbSampleEntry.controls['plotId'].errors }">
+                        <ng-template let-plot pTemplate="selectedItem">
+                          <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
+                        </ng-template>
+                        <ng-template let-plot pTemplate="item">
+                          <div>{{plot.plotNumber}}</div>
+                          <div>{{plot.villageName}}</div>
+                        </ng-template>
                       </p-dropdown>
                       <span
                         *ngIf="fbSampleEntry.controls['plotId'].touched && fbSampleEntry.controls['plotId'].invalid">

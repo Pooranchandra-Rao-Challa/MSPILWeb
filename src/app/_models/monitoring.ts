@@ -757,11 +757,14 @@ export class SampleDto {
 }
 
 export interface IPlotsofFarmerViewDto {
-  plotId: number
-  seasonId: number
-  farmerId: number
-  plotNumber: string
-  netArea: number
+  plotId: number;
+  seasonId: number;
+  farmerId: number;
+  plotNumber: string;
+  netArea: number;
+  estimatedTon: number;
+  villageId: number;
+  villageName: string;
 }
 
 export class SampleDetailsDto {

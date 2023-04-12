@@ -10,7 +10,7 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
-import { CURRENT_SEASON } from 'src/environments/environment';
+import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
 
 export interface IHeader {
   field: string;
@@ -55,7 +55,7 @@ export class SeedComponent implements OnInit {
   addFlag: boolean = true;
   fbSeed!: FormGroup;
   subSeeds: SubSeedDto[] = [];
-  uom: LookupDetailDto[] = [];
+  UOMs: LookupDetailDto[] = [];
   currentSeason: SeasonDto = {};
   seasons!: any[];
   forapproval: boolean = false;
@@ -101,9 +101,9 @@ export class SeedComponent implements OnInit {
     this.initCurrentSeason(CURRENT_SEASON());
     this.initSeedSupplyTypes();
     this.initTypeOfSeeds();
+    this.initUOMs();
     this.fillData();
     this.seedForm();
-    this.initUom();
   }
 
   initSeasons() {
@@ -124,6 +124,12 @@ export class SeedComponent implements OnInit {
     });
   }
 
+  initUOMs() {
+    this.lookupService.UOMs().subscribe((resp) => {
+      this.UOMs = resp as unknown as LookupDetailDto[];
+    });
+  }
+
   initCurrentSeason(seasonCode: string) {
     this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
@@ -137,11 +143,18 @@ export class SeedComponent implements OnInit {
     });
   }
 
+  getDocNo(seasonId: number) {
+    this.commonService.GetDocNo(seasonId, EDocumentNumberScreens.Seed).subscribe((resp) => {
+      if (resp)
+        this.fbSeed.get('docNo')?.setValue(resp);
+    });
+    this.getFarmerSections(seasonId);
+  }
+
   onSelectedFarmer(farmerId: number) {
     const selectedFarmer = this.farmers.find((farmer) => farmer.farmerId === farmerId);
     if (selectedFarmer) {
       this.fbSeed.controls['farmerName'].setValue(selectedFarmer.farmerName);
-
       this.getPlotsofFarmers(this.currentSeason.seasonId!, this.fbSeed.controls['farmerId'].value);
     }
   }
@@ -149,6 +162,8 @@ export class SeedComponent implements OnInit {
   getPlotsofFarmers(seasonId: number, farmerId: number) {
     this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as IPlotsofFarmerViewDto[];
+      console.log(this.plotNumbers);
+
     });
   }
 
@@ -162,31 +177,33 @@ export class SeedComponent implements OnInit {
 
   seedForm() {
     this.fbSeed = this.formbuilder.group({
-      seedId: [0],
-      seasonId: new FormControl('', [Validators.required]),
-      docNo: new FormControl('', [Validators.required]),
-      docDate: ['', Validators.required],
-      farmerId: new FormControl('', [Validators.required]),
-      farmerName: ['', (Validators.required)],
-      plotId: new FormControl('', [Validators.required]),
+      seedId: [null],
+      seasonId: [null, Validators.required],
+      docNo: [null, Validators.required],
+      docDate: [null, Validators.required],
+      farmerId: [null, Validators.required],
+      farmerName: [null, Validators.required],
+      plotId: [null, Validators.required],
       estimatedTon: [null],
       balancedTon: [null],
-      seedSupplyTypeId: ['', Validators.required],
-      typeOfSeedId: ['', Validators.required],
+      seedSupplyTypeId: [null, Validators.required],
+      typeOfSeedId: [null, Validators.required],
       subSeeds: this.formbuilder.array([]),
     });
   }
 
+  get FormControls() {
+    return this.fbSeed.controls;
+  }
+
   /* Form Array For seed Details */
-  SubSeedfrom(): FormArray {
+  faSubSeedForm(): FormArray {
     return this.fbSeed.get('subSeeds') as FormArray;
   }
 
-  initUom() {
-    this.lookupService.UOMs().subscribe((resp) => {
-      this.uom = resp as unknown as LookupDetailDto[];
-      console.log(this.uom);
-    });
+  addSubSeed() {
+    this.faSubSeedForm().push(this.generateRow());
+    this.showSubSeed = true;
   }
 
   generateRow(subSeeds: SubSeedDto = new SubSeedDto()): FormGroup {
@@ -203,27 +220,28 @@ export class SeedComponent implements OnInit {
     });
   }
 
-  addSubSeed() {
-    this.showSubSeed = true;
-    this.SubSeedfrom().push(this.generateRow());
-  }
-
-  getCompletedPlotBySeason(seasonId: number) {
-    var seasonId = seasonId ? seasonId : 0;
-    this.billMasterService
-      .GetVillageParamRatesBySeasonId(seasonId)
-      .subscribe((resp) => {
-      });
-  }
+  // getCompletedPlotBySeason(seasonId: number) {
+  //   var seasonId = seasonId ? seasonId : 0;
+  //   this.billMasterService
+  //     .GetVillageParamRatesBySeasonId(seasonId)
+  //     .subscribe((resp) => {
+  //     });
+  // }
 
   addSeed() {
+    this.getDocNo(this.currentSeason.seasonId!);
+    this.fbSeed.controls['seasonId'].setValue(this.currentSeason.seasonId);
     this.submitLabel = 'Add Seed';
     this.addFlag = true;
     this.showDialog = true;
   }
 
   onSubmit() {
-    console.log(this.fbSeed.value)
+    if (this.fbSeed.valid) {
+    }
+    else {
+      this.fbSeed.markAllAsTouched();
+    }
   }
 
   fillData() {
