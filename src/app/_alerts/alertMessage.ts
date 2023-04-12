@@ -7,7 +7,7 @@ export class AlertMessage {
   constructor(private service: MessageService) { }
 
   displayAlertMessage(message: string) {
-    this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: message, life: 30000 });
+    this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: message, life: 5000 });
   }
 
 }
