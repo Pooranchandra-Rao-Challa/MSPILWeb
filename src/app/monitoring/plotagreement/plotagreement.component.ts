@@ -74,8 +74,7 @@ export class PlotagreementComponent implements OnInit {
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'varietyName', header: 'varietyName', label: 'Variety' },
     { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
-    { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
-    { field: 'agreementedArea', header: 'agreementedArea', label: 'Area' },
+    { field: 'agreementedArea', header: 'agreementedArea', label: 'Agreemented Area' },
     { field: 'agreementedDate', header: 'agreementedDate', label: 'Agreemented Date' },
     
   ];

@@ -67,9 +67,9 @@ export class PlotyieldComponent implements OnInit {
     { field: 'plotNumber', header: 'plotNumber', label: ' Plot Number' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
+    { field: 'cropTypeName', header: 'cropTypeName', label: 'Crop Type' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'plotType', header: 'plotType', label: 'Plot Type' },
+    { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
     { field: 'reportedArea', header: 'reportedArea', label: 'Reported Area' },
     { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
@@ -77,11 +77,11 @@ export class PlotyieldComponent implements OnInit {
     { field: 'notGrownArea', header: 'notGrownArea', label: 'Not Grown Area' },
     { field: 'isSeedArea', header: 'isSeedArea', label: 'Is Seed Area' },
     { field: 'agreementedArea', header: 'agreementedArea', label: 'Agreemented Area' },
-    { field: 'harvestedArea', header: 'harvestedArea', label: 'Harvested Area' },
+    { field: 'harvestArea', header: 'harvestArea', label: 'Harvested Area' },
     { field: 'poorCropArea', header: 'poorCropArea', label: 'Poor Crop Area' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
-    { field: 'estimatedton', header: 'estimatedton', label: 'Estimated Ton' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
     { field: 'birNumber', header: 'birNumber', label: 'Bir Number' },
     { field: 'birDate', header: 'birDate', label: 'Bir Date' },
     { field: 'inspectionDate', header: 'inspectionDate', label: 'Inspection Date' },
@@ -238,6 +238,7 @@ export class PlotyieldComponent implements OnInit {
       this.plotYields = resp as unknown as IFarmerPlotYieldViewDto[];
       this.plotYields.forEach((value) => {
         value.objNetYieldPlots = JSON.parse(value.netYieldPlots) as IPlotYieldViewDto[];
+        console.log(this.plotYields)
       });
     })
   }

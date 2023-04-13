@@ -209,6 +209,8 @@ export class PlotassesmentComponent implements OnInit {
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
       console.log(this.plotAssessments);
+    console.log(this.plotAssessments);
+    
       
 
     });
