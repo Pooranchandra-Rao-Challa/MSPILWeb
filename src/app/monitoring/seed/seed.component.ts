@@ -176,13 +176,13 @@ export class SeedComponent implements OnInit {
     if (!this.addFlag) seedDetail.seedId = this.seedDto[0].seedId
     return this.formbuilder.group({
       seedDetailId: seedDetail.seedDetailId == undefined ? 0 : seedDetail.seedDetailId,
-      SeedId: seedDetail.seedId,
-      FarmerCode: new FormControl(seedDetail.farmerCode),
-      FarmerName: new FormControl(seedDetail.farmerName),
-      UOM: new FormControl(seedDetail.uom),
-      Qty: [seedDetail.qty, Validators.required],
-      Rate: [seedDetail.rate, Validators.required],
-      Amount: seedDetail.amount,
+      seedId: seedDetail.seedId,
+      farmerCode: new FormControl(seedDetail.farmerCode),
+      farmerName: new FormControl(seedDetail.farmerName),
+      uom: new FormControl(seedDetail.uom),
+      qty: [seedDetail.qty, Validators.required],
+      rate: [seedDetail.rate, Validators.required],
+      amount: seedDetail.amount,
     });
   }
 
