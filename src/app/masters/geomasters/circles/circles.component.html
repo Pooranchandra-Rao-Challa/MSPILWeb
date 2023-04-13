@@ -71,17 +71,15 @@
                   </div>
 
                   <div class="field col-12 md:col-6">
-                    <label>Incharge Name:<sup class="p-error">*</sup></label>
+                    <label>Incharge Name:</label>
 
-                    <input pInputText id="inchargeName" #inchargeName type="text" placeholder="Enter Relation Name"
-                      formControlName="inchargeName" alphaOnly [maxlength]="maxLength.name"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['inchargeName'].touched && FormControls['inchargeName'].errors }">
+                    <input pInputText id="inchargeName" #inchargeName type="text" placeholder="Enter Incharge Name"
+                      formControlName="inchargeName" alphaOnly [maxlength]="maxLength.name">
                     <div class="text-right">
                       <small> {{inchargeName.value.length}}/{{maxLength.name}} </small>
                     </div>
                     <span *ngIf="FormControls['inchargeName'].touched && FormControls['inchargeName'].invalid">
-
-                      <div class="ng-invalid ng-touched p-error"
+                      <div class="ng-invalid ng-touched "
                         *ngIf="FormControls['inchargeName'].errors?.['minlength']">
                         Incharge Name Min Characters Is 2.</div>
                       <div class="ng-invalid ng-touched p-error"
@@ -123,11 +121,11 @@
                   </div>
                   <div class="field col-12 md:col-6">
                     <label>Address:<sup class="p-error">*</sup></label>
-                    <textarea rows="5" cols="30" placeholder="Enter Address" pInputTextarea formControlName="address"
+                    <textarea rows="5" cols="30" #address placeholder="Enter Address" pInputTextarea formControlName="address"
                       [maxlength]="maxLength.address"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
                     <div class="text-right">
-                      <small>{{inchargeName.value.length}}/{{maxLength.address}} </small>
+                      <small>{{address.value.length}}/{{maxLength.address}} </small>
                     </div>
                     <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">

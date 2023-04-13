@@ -202,8 +202,8 @@ export class PlotofferComponent implements OnInit {
       expectedArea: [null, (Validators.required)],
       plantTypeId: [null, (Validators.required)],
       expectedPlantingDate: [null, (Validators.required)],
-      expectedVarietyId: [null, (Validators.required)],
-      reasonForNotPlantingId: [null, (Validators.required)],
+      expectedVarietyId: [null],
+      reasonForNotPlantingId: [null],
       remarks: [''],
     });
   }

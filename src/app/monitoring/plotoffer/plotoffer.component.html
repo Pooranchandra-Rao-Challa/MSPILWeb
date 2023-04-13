@@ -154,7 +154,7 @@
                       appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                       <ng-template let-farmer pTemplate="selectedItem">
-                        <div>{{farmer.code}}</div>
+                        <div>{{farmer.code}}-{{farmer.farmerName}}</div>
                       </ng-template>
                      <ng-template let-seasonPlotOffer  let-farmer pTemplate="item" >
                     <div class="block align-items-center gap-2">
@@ -222,7 +222,7 @@
                       appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotVillageId'].touched && FormControls['plotVillageId'].errors }">
                       <ng-template let-village pTemplate="selectedItem">
-                        <div>{{village.villageCode}}</div>
+                        <div>{{village.villageCode}}-{{village.villageName}}</div>
                       </ng-template>
 
                       <ng-template let-village pTemplate="item" >
@@ -305,33 +305,27 @@
                         *ngIf="FormControls['expectedPlantingDate'].errors?.['required']">
                         Please Select Expected Planting Date.</div>
                     </span>
-                  </div>
-                  <div class="field col-12 md:col-4">
-                    <label class="required">Expected Varity Code:</label>
-                    <p-dropdown placeholder="Select Expected Varity Code"  filterBy="name" [filter]="true"  optionLabel="name" [options]="varieties"
-                      optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true" [virtualScrollItemSize]="38" 
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['expectedVarietyId'].touched && FormControls['expectedVarietyId'].errors }">
-                    </p-dropdown>
-                    <span
-                      *ngIf="FormControls['expectedVarietyId'].touched && FormControls['expectedVarietyId'].invalid">
+                    <span>
                       <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['expectedVarietyId'].errors?.['required']">
-                        Please Select Expected Varity Code.</div>
+                        *ngIf="fbPlotOffer.value.offerDate > fbPlotOffer.value.expectedPlantingDate">
+                        Expected Planting Date Always Greater Than Equals To  Offer Date</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label class="required">Reason For Not Planting:</label>
+                    <label >Expected Varity Code:</label>
+                    <p-dropdown placeholder="Select Expected Varity Code"  filterBy="name" [filter]="true"  optionLabel="name" [options]="varieties"
+                      optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true" [virtualScrollItemSize]="38" >
+                    </p-dropdown>
+                  
+                  </div>
+                  <div class="field col-12 md:col-4">
+                    <label >Reason For Not Planting:</label>
                     <p-dropdown placeholder="Select Reason For Not Planting" optionLabel="name"
                       [options]="resonForNotPlanting" optionValue="lookupDetailId"
-                      formControlName="reasonForNotPlantingId" appendTo="body"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['reasonForNotPlantingId'].touched && FormControls['reasonForNotPlantingId'].errors }">
+                      formControlName="reasonForNotPlantingId" appendTo="body">
+                     
                     </p-dropdown>
-                    <span
-                      *ngIf="FormControls['reasonForNotPlantingId'].touched && FormControls['reasonForNotPlantingId'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['reasonForNotPlantingId'].errors?.['required']">
-                        Please Select Reason For Not Planting.</div>
-                    </span>
+                   
                   </div>
                 </div>
               </p-fieldset>

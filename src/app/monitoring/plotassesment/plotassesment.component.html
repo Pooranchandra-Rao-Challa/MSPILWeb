@@ -44,7 +44,7 @@
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
                           (onChange)="getPlotinfo($event.value)"
                           [filter]="true"
-                          filterBy="plotNumber"
+                          filterBy="plotNumber,villageName"
                          [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                           <ng-template let-plotReport pTemplate="selectedItem">

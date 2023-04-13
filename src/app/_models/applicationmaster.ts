@@ -431,7 +431,7 @@ export class HglViewDto {
   name?: string
   gender?: string
   relationTypeId?: number
-  relationType?: string
+  relationTypeName?: string
   relationName?: string
   address?: string
   pinCode?: string

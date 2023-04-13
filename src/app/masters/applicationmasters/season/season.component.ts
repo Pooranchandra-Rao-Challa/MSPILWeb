@@ -16,6 +16,7 @@ import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERI
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../../_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { MaxLength } from 'src/app/_models/common';
 
 interface Temp {
   seasonBillingRateId: number;
@@ -49,6 +50,7 @@ export class SeasonComponent implements OnInit {
   existCurrentSeasonRecord: boolean = false;
   permissions:any;
   activeIndex: number = 0;
+  maxLength: MaxLength = new MaxLength();
 
   constructor(
     private formbuilder: FormBuilder,
@@ -113,7 +115,7 @@ export class SeasonComponent implements OnInit {
       seasonId: [null],
 
       code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       plantFrom: ['', Validators.required],
       plantTo: ['', Validators.required],
       crushFrom: ['', Validators.required],
@@ -208,6 +210,7 @@ export class SeasonComponent implements OnInit {
   }
 
   addSeason() {
+ 
     if(!this.existCurrentSeasonRecord){
       this.submitLabel = 'Add Season';
       this.addFlag = true;
