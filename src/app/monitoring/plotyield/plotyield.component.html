@@ -317,7 +317,7 @@
                         <div [formGroupName]="i" style="padding-left:unset" class="capitalize form-control">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
                           </p-inputSwitch>
-                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.weedicideName}}</label>
                         </div>
                       </div>
                     </ng-container>
@@ -344,7 +344,7 @@
                         <tr [formGroupName]="i">
                           <td>
                             <div class="font-bold">
-                              {{pestControl.get('name').value}}
+                              {{pestControl.get('pestName').value}}
                             </div>
                           </td>
                           <td>
@@ -385,7 +385,7 @@
                         <div [formGroupName]="i" style="padding-left:unset">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
                           </p-inputSwitch>
-                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.fertilizerName}}</label>
                         </div>
                       </div>
                     </ng-container>
@@ -411,7 +411,7 @@
                         <tr [formGroupName]="i">
                           <td>
                             <div class="font-bold">
-                              {{diseaseControl.get('name').value}}
+                              {{diseaseControl.get('diseaseName').value}}
                             </div>
                           </td>
                           <td>
@@ -449,9 +449,9 @@
 
     <!-- table -->
     <p-table #dtPlotYields dataKey="farmerCode" [value]="plotYields" [columns]="farmerHeaders" [rows]="10"
-      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)"
+      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm table-fixed" [paginator]="true"
+      [globalFilterFields]="globalFilterFields" [autoLayout]="false" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'min-content'}" (onRowExpand)="onRowExpand($event)"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -494,8 +494,9 @@
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-farmer>
         <tr>
-          <td colspan="5">
-            <div class="p-3">
+          <td colspan="5" >
+            <div class="grid p-3" >
+              <div class="col-12" > 
               <p-table [value]="farmer.objNetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId"
                 [tableStyle]="{ width: 'min-content'}"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
@@ -531,16 +532,17 @@
           <td class="md:text-center" colspan="15">There Are No Yields Found Yet.</td>
         </tr>
       </ng-template>
-    </p-table>
-  </div>
-  </td>
-  </tr>
-  </ng-template>
-  <ng-template pTemplate="emptymessage">
-    <tr>
-      <td class="md:text-center" colspan="5">No Yields Found.</td>
-    </tr>
-  </ng-template>
+              </p-table>
+            </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="md:text-center" colspan="5">No Yields Found.</td>
+        </tr>
+      </ng-template>
   </p-table>
 
 </div>

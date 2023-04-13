@@ -62,7 +62,7 @@ export interface IFarmerInPlotOfferDto {
   offerDate: Date;
   isNewFarmer: boolean;
   seasonId: number;
-  season: string;
+  seasonName: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -315,7 +315,7 @@ export class PlotReportDto {
 
 export interface IFarmerInPlotReportsViewDto {
   seasonId: number;
-  name: string;
+  seasonName: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -455,7 +455,6 @@ export class CompletedPlotViewDto {
 export class MaintenanceItems {
   diseases?: MaintDiseaseDto[]
   pests?: MaintPestDto[]
-
   fertilizers?: MaintFertilizerDto[]
   weedicides?: MaintWeedicideDto[]
 
@@ -466,7 +465,7 @@ export class MaintDiseaseDto {
   plotAgreementId?: number
   plotYieldId?: number
   diseaseId?: number
-  name?: string
+  diseaseName?: string
   identifiedDate?: Date
   controlDate?: Date
   remarks?: string
@@ -474,7 +473,9 @@ export class MaintDiseaseDto {
   updatedBy?: string
   createdAt?: Date
   updatedAt?: Date
+ 
 }
+
 
 export class MaintPestDto {
   plotPestId?: number;
@@ -482,7 +483,7 @@ export class MaintPestDto {
   plotAgreementId?: number
   plotYieldId?: number
   pestId?: number
-  name?: string
+  pestName?: string
   identifiedDate?: Date
   controlDate?: Date
   remarks?: string
@@ -498,7 +499,7 @@ export class MaintWeedicideDto {
   plotAgreementId?: number
   plotYieldId?: number
   weedicideId?: number
-  name?: string
+  weedicideName?: string
   selected?: boolean
   createdBy?: string
   updatedBy?: string
@@ -512,7 +513,7 @@ export class MaintFertilizerDto {
   plotAgreementId?: number
   plotYieldId?: number
   fertilizerId?: number
-  name?: string
+  fertilizerName?: string
   selected?: boolean
   createdBy?: string
   updatedBy?: string
