@@ -25,6 +25,11 @@ export interface IHeader {
   selector: 'app-plotyield',
   templateUrl: './plotyield.component.html',
   styles: [
+    `
+    .p-datatable-table {
+      table-layout:fixed !important;
+    }
+  `
   ]
 })
 

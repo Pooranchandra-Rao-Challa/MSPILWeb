@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.userForm = this.formbuilder.group({
       userId: ['',],
-      isAdmin: [false,],
+      isAdmin: [false],
       userName: ['', (Validators.required)],
       password: ['', (Validators.required)],
       firstName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
