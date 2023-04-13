@@ -473,7 +473,7 @@ export class MaintDiseaseDto {
   updatedBy?: string
   createdAt?: Date
   updatedAt?: Date
- 
+
 }
 
 
@@ -764,6 +764,9 @@ export interface IPlotsofFarmerViewDto {
   plotNumber: string;
   netArea: number;
   estimatedTon: number;
+  excessTonage: number;
+  suppliedTon: number;
+  weightmentDate: Date;
   villageId: number;
   villageName: string;
 }
