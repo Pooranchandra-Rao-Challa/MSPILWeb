@@ -11,7 +11,8 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { FarmersViewDto, LookupDetailDto, SeasonDto, } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
-import { CompletedPlotViewDto, CompletedPlotDto } from 'src/app/_models/monitoring';
+import { CompletedPlotViewDto, CompletedPlotDto, FarmerSectionViewDto, IPlotsofFarmerViewDto } from 'src/app/_models/monitoring';
+import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
 
 export interface IHeader {
   field: string;
@@ -29,14 +30,12 @@ export class CompletedPlotsComponent implements OnInit {
   completedPlots: CompletedPlotViewDto[] = [];
   completedPlot: CompletedPlotDto = new CompletedPlotDto();
   showDialog: boolean = false;
-  loading: boolean = true;
   addFlag: boolean = true;
-  globalFilterFields: string[] = ['seasonName', 'divisionName', 'circleName', 'sectionName', 'villageName', 'billParameterName', 'rate', 'isActive',
+  globalFilterFields: string[] = ['seasonName', 'divisionName', 'circleName', 'sectionName', 'villageName', 'billParameterName', 'rate',
     'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   @ViewChild('filter') filter!: ElementRef;
   fbCompletedPlots!: FormGroup;
   seasons: any;
-  toFarmers: CompletedPlotViewDto[] = [];
   transferResons: LookupDetailDto[] = [];
   plotTransferTypes: LookupDetailDto[] = [];
   billParameters: BillParameterViewDto[] = [];
@@ -56,6 +55,8 @@ export class CompletedPlotsComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
+  farmers: FarmerSectionViewDto[] = [];
+  plotNumbers: IPlotsofFarmerViewDto[] = [];
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
@@ -67,27 +68,27 @@ export class CompletedPlotsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initDefaults();
-    this.CompletedPlotsForm();
-    this.initTofarmers();
-    this.CompletedPlotsForm();
-    this.initCompletedPlots()
-    let CurrentSeason = '2020-22';
+    this.initCurrentSeason(CURRENT_SEASON());
+    this.completedPlotsForm();
   }
 
-  CompletedPlotsForm() {
+  completedPlotsForm() {
     this.fbCompletedPlots = this.formbuilder.group({
-      completedPlotId: [0],
-      seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
-      plotAssessmentId: [2],
-      docNo: [{ value: '' }],
-      farmerId: [''],
-      docDate: ['', (Validators.required)],
-      isCompleted: ['', (Validators.required)],
-      isLeftCultivation: ['', (Validators.required)],
-      isUsedForRatoon: ['',],
-      toFarmerName: [''],
-      estimatedTon: [''],
-      "isActive": true
+      completedPlotId: [null],
+      seasonId: [null, (Validators.required)],
+      plotAssessmentId: [null],
+      docNo: [null],
+      docDate: [null, (Validators.required)],
+      farmerId: [null, (Validators.required)],
+      farmerName: [''],
+      plotId: [null, (Validators.required)],
+      estimatedTon: [null],
+      suppliedTon: [null],
+      netArea: [null],
+      lastWeighmentDate: [null, (Validators.required)],
+      isCompleted: [null, (Validators.required)],
+      isLeftCultivation: [null, (Validators.required)],
+      isUsedForRatoon: [null],
     });
   }
 
@@ -96,35 +97,21 @@ export class CompletedPlotsComponent implements OnInit {
   }
 
   onSearch() {
-    this.initCompletedPlot(this.currentSeason.seasonId!);
+    this.initCompletedPlots(this.currentSeason.seasonId!);
   }
 
-  initCompletedPlot(seasonId: number) {
+  initCompletedPlots(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GeAllCompletedPlots(seasonId, param1).subscribe((resp) => {
       this.completedPlots = resp as unknown as CompletedPlotViewDto[];
-      this.loading = false;
     });
   }
 
   initCurrentSeason(seasonCode: string) {
     this.AppMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-      this.initSeasons();
-      this.initCompletedPlot(this.currentSeason.seasonId!);
-    });
-  }
-
-  initSeasons() {
-    this.commonService.GetSeasons().subscribe((resp) => {
-      this.seasons = resp as any;
-    });
-  }
-
-  getCompletedPlotsBySeason(seasonId: number) {
-    var seasonId = seasonId ? seasonId : 0;
-    this.billMasterService.GetVillageParamRatesBySeasonId(seasonId).subscribe((resp) => {
-      this.loading = false;
+      // this.initCompletedPlots(this.currentSeason.seasonId!);
+      this.initFarmerInSections(this.currentSeason.seasonId!);
     });
   }
 
@@ -136,25 +123,46 @@ export class CompletedPlotsComponent implements OnInit {
     this.billMasterService.GetBillParameters().subscribe((resp) => {
       this.billParameters = resp as unknown as BillParameterViewDto[];
     });
-  }
 
-  initTofarmers() {
-    this.AppMasterService.GetFarmers().subscribe((resp) => {
-      this.toFarmers = resp as unknown as FarmersViewDto[];
-    });
-  }
-
-  initCompletedPlots() {
     this.LookupService.PlotTransferTypes().subscribe((resp) => {
       this.plotTransferTypes = resp as unknown as LookupDetailDto[];
     });
   }
 
-  onSelectedToFarmer(farmerId: number) {
-    this.toFarmers.forEach((value) => {
-      if (value.farmerId == farmerId) {
-        this.fbCompletedPlots.controls['toFarmerName'].setValue(value.farmerName);
-      }
+  initFarmerInSections(seasonId: number) {
+    this.monitoringService.GetFarmerSections(seasonId).subscribe((resp) => {
+      this.farmers = resp as unknown as FarmerSectionViewDto[];
+    });
+  }
+
+  onSelectedFarmer(farmerId: number) {
+    const selectedFarmer = this.farmers.find((farmer) => farmer.farmerId === farmerId);
+    if (selectedFarmer) {
+      this.fbCompletedPlots.controls['farmerName'].setValue(selectedFarmer.farmerName);
+      this.getPlotsofFarmers(this.currentSeason.seasonId!, this.fbCompletedPlots.controls['farmerId'].value);
+    }
+  }
+
+  getPlotsofFarmers(seasonId: number, farmerId: number) {
+    this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
+      this.plotNumbers = resp as unknown as IPlotsofFarmerViewDto[];
+    });
+  }
+
+  onSelectedPlot(plotId: number) {
+    let selectedPlot = this.plotNumbers.find(x => x.plotId === plotId);
+    if (selectedPlot) {
+      this.fbCompletedPlots.controls['estimatedTon'].setValue(selectedPlot.estimatedTon);
+      var suppliedTon = this.FormControls['estimatedTon'].value +  selectedPlot.excessTonage;
+      this.fbCompletedPlots.controls['suppliedTon'].setValue(suppliedTon);
+      this.fbCompletedPlots.controls['netArea'].setValue(selectedPlot.netArea);
+    }
+  }
+
+  getDocNo(seasonId: number) {
+    this.commonService.GetDocNo(seasonId, EDocumentNumberScreens.CompletedPlots).subscribe((resp) => {
+      if (resp)
+        this.fbCompletedPlots.get('docNo')?.setValue(resp);
     });
   }
 
@@ -168,6 +176,8 @@ export class CompletedPlotsComponent implements OnInit {
   }
 
   addCompletedPlot() {
+    this.getDocNo(this.currentSeason.seasonId!);
+    this.fbCompletedPlots.controls['seasonId'].setValue(this.currentSeason.seasonId);
     this.submitLabel = "Add Completed Plot";
     this.addFlag = true;
     this.showDialog = true;
@@ -190,7 +200,6 @@ export class CompletedPlotsComponent implements OnInit {
       isCompleted: completedPlot.isCompleted,
       isLeftCultivation: completedPlot.isLeftCultivation,
       isUsedForRatoon: completedPlot.isUsedForRatoon,
-      isActive: completedPlot.isActive
     });
     this.fbCompletedPlots.patchValue({
       docDate: new Date(completedPlot.docDate?.toString() + "")
@@ -209,7 +218,7 @@ export class CompletedPlotsComponent implements OnInit {
     if (this.fbCompletedPlots.valid) {
       this.saveCompletedPlot().subscribe(resp => {
         if (resp) {
-          this.initCompletedPlot(this.currentSeason.seasonId!);
+          this.initCompletedPlots(this.currentSeason.seasonId!);
           this.fbCompletedPlots.reset();
           this.showDialog = false;
         }
