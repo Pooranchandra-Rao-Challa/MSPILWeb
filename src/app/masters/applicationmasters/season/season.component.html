@@ -153,15 +153,21 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label htmlFor="name"> Name:<sup class="p-error">*</sup></label>
-                    <input pInputText id="name" formControlName="name" type="text" placeholder="Enter Name"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                    <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                        Please Enter Name.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                        Name Should Contains Only Alphbets.</div>
-                    </span>
+                    <label>Name:<sup class="p-error">*</sup></label>
+                  <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
+                    alphaOnly [maxlength]="maxLength.name"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
+                  <div class="text-right">
+                    <small>{{name.value.length}}/{{maxLength.name}}</small>
+                  </div>
+                  <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
+                      Please Enter Name.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
+                      Name Min Characters Is 2.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                      Name Should Contains Only Alphabets.</div>
+                  </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plant From:<sup class="p-error">*</sup></label>
@@ -171,7 +177,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['plantFrom'].touched && FormControls['plantFrom'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantFrom'].errors?.['required']">
-                        Please Select From Date.</div>
+                        Please Select Plant From Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -182,7 +188,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['plantTo'].touched && FormControls['plantTo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantTo'].errors?.['required']">
-                        Please Select To Date.</div>
+                        Please Select Plant To Date.</div>
                     </span>
                     <span>
                       <div class="ng-invalid ng-touched p-error"
@@ -199,7 +205,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['crushFrom'].touched && FormControls['crushFrom'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['crushFrom'].errors?.['required']">
-                        Please Select From Date.</div>
+                        Please Crush From Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">

@@ -22,8 +22,8 @@ export class permitService extends ApiHttpService {
  public GetEstimatedTon(seasonId: number) {
   return this.getWithId<EstimatedViewDto>(GET_ESTIMATED_TON, [seasonId]);
 }
-public GetFarmersInPlantingDates(seasonId:number,frompltngDate:any,topltngDate:any,villageId:number){
-  return this.getWithParams<FarmersInPlantingDatesDto>(GET_FARMERS_FOR_ESTIMATED_TON, [seasonId,frompltngDate,topltngDate,villageId]);
+public GetFarmersInPlantingDates(seasonId:number,frompltngDate:any,topltngDate:any,villageId?:number){
+  return this.getWithParams<FarmersInPlantingDatesDto>(GET_FARMERS_FOR_ESTIMATED_TON,[seasonId,frompltngDate,topltngDate,villageId]);
 }
 public GetDivisionsforUser() {
   return this.get<DivisionsforUserDto[]>( GET_DIVISIONS_FOR_USER);

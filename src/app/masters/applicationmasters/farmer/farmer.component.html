@@ -422,10 +422,7 @@
            Name<p-columnFilter type="text" field="farmerName" display="menu"></p-columnFilter>
             <p-sortIcon field="farmerName"></p-sortIcon>
           </th>
-          <th pSortableColumn="aliasName">
-            Alias Name<p-columnFilter type="text" field="aliasName" display="menu"></p-columnFilter>
-            <p-sortIcon field="aliasName"></p-sortIcon>
-          </th>
+          
           <th pSortableColumn="gender">
             Gender<p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
             <p-sortIcon field="gender"></p-sortIcon>
@@ -435,10 +432,7 @@
             <p-sortIcon field="fatherName"></p-sortIcon>
           </th>
         
-          <th pSortableColumn="caste">
-            Caste<p-columnFilter type="text" field="caste" display="menu"></p-columnFilter>
-            <p-sortIcon field="caste"></p-sortIcon>
-          </th>
+          
           <th pSortableColumn="address">
             Address<p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
@@ -572,10 +566,9 @@
               (click)="editFarmer(farmer)" [disabled]="!permissions.CanUpdateFarmer"></button></td>
           <td>{{farmer.code}}</td>
           <td>{{farmer.farmerName}}</td>
-          <td>{{farmer.aliasName}}</td>
+
           <td>{{farmer.gender}}</td>
           <td>{{farmer.fatherName}}</td>
-          <td>{{farmer.caste}}</td>
           <td>{{farmer.address}}</td>
           <td>{{farmer.circleName}}</td>
           <td>{{farmer.divisionName}}</td>

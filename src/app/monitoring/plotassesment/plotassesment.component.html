@@ -14,7 +14,7 @@
     </p-toolbar>
 
     <!-- dialog -->
-    <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true"
+    <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true" [transitionOptions]="'500ms'"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssesment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
@@ -44,7 +44,7 @@
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
                           (onChange)="getPlotinfo($event.value)"
                           [filter]="true"
-                          filterBy="plotNumber"
+                          filterBy="plotNumber,villageName"
                          [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                           <ng-template let-plotReport pTemplate="selectedItem">

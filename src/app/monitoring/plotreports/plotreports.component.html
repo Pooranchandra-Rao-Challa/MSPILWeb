@@ -106,7 +106,7 @@
   </ng-template>
   </p-table>
 
-  <p-dialog header="Plot Report" [(visible)]="showDialog" [modal]="true" showEffect="fade" [style]="{width: '60vw'}"
+  <p-dialog header="Plot Report" [(visible)]="showDialog" [modal]="true" showEffect="fade" [style]="{width: '60vw'}"  [transitionOptions]="'500ms'"
     [breakpoints]="{'960px': '90vw'}" (onHide)="clearForm()">
     <ng-template pTemplate="content">
       <div class="flex flex-column align-items-center justify-content-center">

@@ -122,8 +122,15 @@
                                 <div class="col-3 p-2">
                                     <label class="required">Farmer Code:</label>
                                     <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"
-                                        formControlName="farmerCode" [style]="{'width':'100%'}"
+                                        formControlName="farmerCode" [style]="{'width':'100%'}" [filter]="true"
+                                        filterBy="farmerCode,farmerName,villageName" [virtualScroll]="true"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerCode'].touched && FormControls['farmerCode'].errors }">
+                                        <ng-template let-farmer pTemplate="item">
+                                            <div class="block align-items-center gap-2">
+                                                <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
+                                                <div>{{farmer.villageName}}</div>
+                                            </div>
+                                        </ng-template>
                                     </p-dropdown>
                                     <span
                                         *ngIf="FormControls['farmerCode'].touched && FormControls['farmerCode'].invalid">
@@ -145,6 +152,66 @@
                 </div>
             </ng-template>
         </p-toolbar>
+
+        <!-- popup form -->
+        <p-dialog header="Estimated Ton" [(visible)]="showDialog" [modal]="true" showEffect="fade"
+            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" [transitionOptions]="'500ms'">
+            <!-- (onHide)="fbAllottedPlot.reset()" -->
+            <div class="flex flex-column align-items-center justify-content-center">
+               
+
+                <!-- table -->
+                
+                <p-table #dt2 [value]="estimatedTonFromDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
+                   responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
+                     >
+                    <!-- <ng-template pTemplate="caption">
+                        <div class="flex justify-content-between flex-column sm:flex-row">
+                            <button pButton label="Clear" class="p-button-outlined mb-2"
+                                icon="pi pi-filter-slash"></button>
+                             (click)="clear(dt2)"
+                            <div>
+                                <span class="p-input-icon-left mb-2">
+                                    <!-- <i class="pi pi-search"></i> -
+
+                                </span>
+
+                            </div>
+                        </div>
+                    </ng-template> -->
+
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th></th>
+                            <th *ngFor="let col of header" [pSortableColumn]="col.header">
+                                {{col?.label}} <p-sortIcon field="code">
+                                </p-sortIcon>
+                                <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-getEstimate>
+                        <tr>
+                            <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
+                            <td><button pButton pRipple icon="pi pi-pencil"
+                                    class="p-element p-ripple p-button-text p-button p-component"></button>
+                            </td>
+                            <td *ngFor="let col of header">
+                                <span *ngIf="col?.field != 'FromDate' ">{{getEstimate[col.field]}}</span>
+                                <span *ngIf="col?.field == 'FromDate'">
+                                    {{getEstimate[col.field] | date: 'dd-MM-yyyy'}}
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            
+                
+            </div>
+        </p-dialog>
 
         <!-- table -->
         <p-table #dt1 [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true"

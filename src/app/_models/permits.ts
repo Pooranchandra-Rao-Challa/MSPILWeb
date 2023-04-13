@@ -57,8 +57,9 @@ export class ISeasonScheduleGroupViewDto {
       farmerId?:  number;
       farmercode?: string;
       farmerName?: string;
+      villageName?:string;
     }
-
+    
     export class DivisionsforUserDto{
       divisionId?: number;
       divisionCode?:string;

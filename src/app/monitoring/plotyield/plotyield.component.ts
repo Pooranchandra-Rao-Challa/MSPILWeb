@@ -243,7 +243,6 @@ export class PlotyieldComponent implements OnInit {
       this.plotYields = resp as unknown as IFarmerPlotYieldViewDto[];
       this.plotYields.forEach((value) => {
         value.objNetYieldPlots = JSON.parse(value.netYieldPlots) as IPlotYieldViewDto[];
-        console.log(this.plotYields)
       });
     })
   }

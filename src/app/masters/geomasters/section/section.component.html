@@ -29,6 +29,7 @@
                   <div class="field col-12 md:col-6">
                     <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
                     <p-dropdown 
+                   
                      [options]="circles" 
                      [filter]="true"
                      filterBy="name"
@@ -36,11 +37,12 @@
                        appendTo="body"
                      optionLabel="name" formControlName="circleId" optionValue="circleId"
                       placeholder="Select Circle "
+                      emptyFilterMessage="No Results Found" 
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
                     </p-dropdown>
                     <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['circleId'].errors?.['required']">
-                        Select Circle.
+                        Please Select Circle.
                       </div>
                     </span>
                   </div>
@@ -100,8 +102,7 @@
                     <div class="field col-12 md:col-6">
                       <label>Incharge PhoneNo:</label>
                       <input pInputText id="inchargePhoneNo"  formControlName="inchargePhoneNo"  placeholder="Enter Incharge PhoneNo"
-                         #inchargePhoneNo numericOnly [maxlength]="maxLength.phoneNo"
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].errors }">
+                         #inchargePhoneNo numericOnly [maxlength]="maxLength.phoneNo">
                       <div class="text-right">
                         <small>{{inchargePhoneNo.value.length}}/{{maxLength.phoneNo}}</small>
                       </div>
@@ -137,7 +138,7 @@
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }" />
                     <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
                       <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter Your Order
+                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter Order
                       </div>
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contains Numbers.
