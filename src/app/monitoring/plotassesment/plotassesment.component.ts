@@ -208,11 +208,6 @@ export class PlotassesmentComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
-      console.log(this.plotAssessments);
-    console.log(this.plotAssessments);
-    
-      
-
     });
   }
 
@@ -220,7 +215,6 @@ export class PlotassesmentComponent implements OnInit {
     var data = source.data as IFarmerInPlotOfferDto;
     this.monitoringService.GetFarmerPlotsInAssessment(data.seasonId, data.farmerId).subscribe(resp => {
       data.ObjMeasuredPlots = resp as unknown as IPlotAssessmentViewDto[];
-    
     });
   }
 

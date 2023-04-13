@@ -62,7 +62,7 @@ export interface IFarmerInPlotOfferDto {
   offerDate: Date;
   isNewFarmer: boolean;
   seasonId: number;
-  season: string;
+  seasonName: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -315,7 +315,7 @@ export class PlotReportDto {
 
 export interface IFarmerInPlotReportsViewDto {
   seasonId: number;
-  name: string;
+  seasonName: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
