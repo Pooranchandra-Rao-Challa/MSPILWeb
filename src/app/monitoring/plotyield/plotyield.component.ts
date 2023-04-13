@@ -264,7 +264,7 @@ export class PlotyieldComponent implements OnInit {
       plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotYieldId: [pest.plotYieldId],
-      name: [pest.name],
+      pestName: [pest.pestName],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
       controlDate: [pest.controlDate && new Date(pest.controlDate)]
@@ -283,7 +283,7 @@ export class PlotyieldComponent implements OnInit {
       plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotYieldId: [weed.plotYieldId],
-      name: [weed.name],
+      weedicideName: [weed.weedicideName],
       checked: [weed.selected],
     });
   }
@@ -293,7 +293,7 @@ export class PlotyieldComponent implements OnInit {
       plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotYieldId: [fertilizer.plotYieldId],
-      name: [fertilizer.name],
+      fertilizerName: [fertilizer.fertilizerName],
       checked: [fertilizer.selected],
     });
   }
@@ -303,7 +303,7 @@ export class PlotyieldComponent implements OnInit {
       plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotYieldId: [disease.plotYieldId],
-      name: [disease.name],
+      diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
       controlDate: [disease.controlDate && new Date(disease.controlDate)]

@@ -271,7 +271,7 @@ export class PlotassesmentComponent implements OnInit {
       plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotAssessmentId: [pest.plotAssessmentId],
-      name: [pest.name],
+      pestName: [pest.pestName],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
       controlDate: [pest.controlDate && new Date(pest.controlDate)]
@@ -283,7 +283,7 @@ export class PlotassesmentComponent implements OnInit {
       plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotAssessmentId: [weed.plotAssessmentId],
-      name: [weed.name],
+      weedicideName: [weed.weedicideName],
       checked: [weed.selected],
     });
   }
@@ -293,7 +293,7 @@ export class PlotassesmentComponent implements OnInit {
       plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotAssessmentId: [fertilizer.plotAssessmentId],
-      name: [fertilizer.name],
+      fertilizerName: [fertilizer.fertilizerName],
       checked: [fertilizer.selected],
     });
   }
@@ -303,7 +303,7 @@ export class PlotassesmentComponent implements OnInit {
       plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotAssessmentId: [disease.plotAssessmentId],
-      name: [disease.name],
+      diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
       controlDate: [disease.controlDate && new Date(disease.controlDate)]

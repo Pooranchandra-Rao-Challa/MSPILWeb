@@ -317,7 +317,7 @@
                         <div [formGroupName]="i" style="padding-left:unset" class="capitalize form-control">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
                           </p-inputSwitch>
-                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.weedicideName}}</label>
                         </div>
                       </div>
                     </ng-container>
@@ -344,7 +344,7 @@
                         <tr [formGroupName]="i">
                           <td>
                             <div class="font-bold">
-                              {{pestControl.get('name').value}}
+                              {{pestControl.get('pestName').value}}
                             </div>
                           </td>
                           <td>
@@ -385,7 +385,7 @@
                         <div [formGroupName]="i" style="padding-left:unset">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
                           </p-inputSwitch>
-                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.fertilizerName}}</label>
                         </div>
                       </div>
                     </ng-container>
@@ -411,7 +411,7 @@
                         <tr [formGroupName]="i">
                           <td>
                             <div class="font-bold">
-                              {{diseaseControl.get('name').value}}
+                              {{diseaseControl.get('diseaseName').value}}
                             </div>
                           </td>
                           <td>

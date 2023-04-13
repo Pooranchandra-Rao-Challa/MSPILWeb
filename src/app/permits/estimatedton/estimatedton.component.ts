@@ -1,7 +1,7 @@
 import { formatDate } from "@angular/common";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
-import { SeasonDto } from "src/app/_models/applicationmaster";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
 import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
@@ -21,7 +21,7 @@ export interface IHeader {
 })
 
 export class EstimatedTonComponent implements OnInit {
-  seasons!: any[];
+  seasons: SeasonViewDto[]=[];
   currentSeason: SeasonDto = {};
   loading: boolean = true;
   showTable: boolean = false;
@@ -29,7 +29,7 @@ export class EstimatedTonComponent implements OnInit {
   dateTime = new Date();
   estimatedton: EstimatedViewDto[] = [];
   @ViewChild('filter') filter!: ElementRef;
-  fbEstimatedTon: any;
+  fbEstimatedTon!: FormGroup;
   farmers: FarmersInPlantingDatesDto[] = [];
   divisions: DivisionsforUserDto[] = [];
   sections: SectionforUserDto[] = [];
@@ -41,20 +41,19 @@ export class EstimatedTonComponent implements OnInit {
 
 
   constructor(private formbuilder: FormBuilder,
-    private commonService: CommonService,
     private appMasterService: AppMasterService,
     private permitService: permitService) { }
 
   getEstimatedForm() {
     this.fbEstimatedTon = this.formbuilder.group({
-      seasonId: new FormControl(null, [Validators.required]),
-      divisionId: new FormControl(null, [Validators.required]),
-      circleId: new FormControl(null, [Validators.required]),
-      sectionId: new FormControl(null, [Validators.required]),
-      villageId: new FormControl(null, [Validators.required]),
-      frompltngDate: new FormControl(null, [Validators.required]),
-      topltngDate: new FormControl(null, [Validators.required]),
-      farmerCode: new FormControl(null, [Validators.required]),
+      seasonId: [null, (Validators.required)],
+      divisionId:  [null, (Validators.required)],
+      circleId:  [null, (Validators.required)],
+      sectionId: [null, (Validators.required)],
+      villageId:  [null, (Validators.required)],
+      frompltngDate: [null, (Validators.required)],
+      topltngDate: [null, (Validators.required)],
+      farmerCode:  [null, (Validators.required)],
     });
   }
 
@@ -89,8 +88,8 @@ export class EstimatedTonComponent implements OnInit {
   ];
 
   initSeasons() {
-    this.commonService.GetSeasons().subscribe((resp) => {
-      this.seasons = resp as any;
+    this.appMasterService.Getseason().subscribe((resp) => {
+      this.seasons = resp as unknown as SeasonViewDto[];
     });
   }
   initCurrentSeason(seasonCode: string) {
@@ -131,20 +130,17 @@ export class EstimatedTonComponent implements OnInit {
     });
   }
   SetAllDivisionChilds(values: number[]) {
-    console.log(values);
     let val: string[];
     this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
     this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
     this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
   }
   SetAllCircleChilds(values: number[]) {
-    console.log(values);
     let val: string[];
     this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
     this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
   }
   SetAllSectionChilds(values: number[]) {
-    console.log(values);
     let val: string[];
     this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
   }
