@@ -14,7 +14,7 @@
     </p-toolbar>
 
     <!-- dialog -->
-    <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true"
+    <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true" [transitionOptions]="'500ms'"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssesment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">

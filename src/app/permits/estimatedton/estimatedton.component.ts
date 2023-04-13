@@ -14,6 +14,22 @@ export interface IHeader {
   label: string;
 }
 
+export interface IFromHeader {
+  field: string;
+  header: string;
+  label: string;
+}
+
+export class EstimatedTonFromDto {
+  Division?: string;
+  Circle?: string;
+  Section?: string;
+  Village?: string;
+  EstimatedTon?: number;
+  Quota?: number;
+
+}
+
 @Component({
   selector: 'app-estimatedton',
   templateUrl: './estimatedton.component.html',
@@ -39,6 +55,8 @@ export class EstimatedTonComponent implements OnInit {
   filterSections: SectionforUserDto[] = [];
   filterVillages: VillageforUserDto[] = [];
 
+  showDialog: boolean = false;
+  estimatedTonFromDto: EstimatedTonFromDto[] = [];
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -85,6 +103,16 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'SuppliedTon', header: 'SuppliedTon', label: 'Supplied Ton' },
     { field: 'BalanceTon', header: 'BalanceTon', label: 'Balance Ton' },
     { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments' },
+  ];
+
+  header: IFromHeader[] = [
+    { field: 'Division', header: 'Division', label: 'Division' },
+    { field: 'Circle', header: 'Circle', label: 'Circle' },
+    { field: 'Section', header: 'Section', label: 'Section' },
+    { field: 'Village', header: 'Village', label: 'Village' },
+    { field: 'EstimatedTon', header: 'EstimatedTon', label: 'Estimated Ton' },
+    { field: 'Quota', header: 'Quota', label: 'Quota' },
+
   ];
 
   initSeasons() {
@@ -162,5 +190,6 @@ export class EstimatedTonComponent implements OnInit {
   }
   getEstimatedTon() {
     this.showTable = true;
+    this.showDialog = true;
   }
 }
