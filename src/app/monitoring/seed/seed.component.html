@@ -4,11 +4,11 @@
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
-        <h4>Seed</h4>
+        <h4>Seeds</h4>
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Seed" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addSeed()"></button>
+          (click)="addSeed()" *ngIf="permissions?.CanCreateSeed"></button>
       </ng-template>
     </p-toolbar>
 
@@ -45,9 +45,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-allottedPlot>
         <tr>
-          <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
           <td><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component"></button>
+              class="p-element p-ripple p-button-text p-button p-component" [disabled]="!permissions?.CanUpdateSeed"></button>
           </td>
           <td *ngFor="let col of headers">
             <span
@@ -56,15 +55,19 @@
               *ngIf="col?.field == 'DocDate' || col?.field == 'CreatedAt' || col?.field == 'UpdatedAt'">{{allottedPlot[col.field]
               | date: 'dd-MM-yyyy'}}
             </span>
-
           </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td class="md:text-center" colspan="12">There are no seed for this farmer yet.</td>
         </tr>
       </ng-template>
     </p-table>
 
     <!-- dialog -->
     <p-dialog header="Seed" [(visible)]="showDialog" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-      [style]="{width: '60vw'}">
+      [style]="{width: '60vw'}" (onHide)="onClose()">
       <div class="flex flex-column  justify-content-center">
         <form [formGroup]="fbSeed" (ngSubmit)="onSubmit()">
           <div class="grid">
@@ -73,26 +76,38 @@
                 <div class="field col-12 md:col-4">
                   <label class="required">Season:</label>
                   <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
-                    (onChange)="getCompletedPlotBySeason($event.value)" optionValue="seasonId">
+                    (onChange)="getDocNo($event.value)" optionValue="seasonId" formControlName="seasonId"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                   </p-dropdown>
+                  <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['seasonId'].errors?.['required']">
+                      Please Select Season.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Doc No:</label>
                   <p class="disabled_text">
-                    {{ 1234 }}
+                    {{ this.fbSeed.controls["docNo"].value }}
                   </p>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Doc Date:</label>
-                  <p-calendar placeholder="Select Doc Date" [readonlyInput]="true" [showIcon]="true">
+                  <p-calendar placeholder="Select Doc Date" [readonlyInput]="true" [showIcon]="true"
+                    formControlName="docDate"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['docDate'].touched && FormControls['docDate'].errors }">
                   </p-calendar>
+                  <span *ngIf="FormControls['docDate'].touched && FormControls['docDate'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['docDate'].errors?.['required']">
+                      Please Select Doc Date.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Farmer Code:</label>
                   <p-dropdown optionLabel="farmerCode" [options]="farmers" optionValue="farmerId" [filter]="true"
-                    filterBy="farmerCode,farmerName" formControlName="fromFarmerId" placeholder="Select Farmer"
+                    filterBy="farmerCode,farmerName" formControlName="farmerId" placeholder="Select Farmer"
                     (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="30"
-                    appendTo="body">
+                    appendTo="body"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                     <ng-template let-farmer pTemplate="selectedItem">
                       <div>{{ farmer.farmerCode }} - {{ farmer.farmerName }}</div>
                     </ng-template>
@@ -101,112 +116,136 @@
                       <div>{{farmer.farmerName}}</div>
                     </ng-template>
                   </p-dropdown>
+                  <span *ngIf="FormControls['farmerId'].touched && FormControls['farmerId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['farmerId'].errors?.['required']">
+                      Please Select Farmer.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
-                  <label class="required">Farmer Name :</label>
+                  <label class="required">Farmer Name:</label>
                   <p class="disabled_text">
-                    {{ 1234 }}
+                    {{ this.fbSeed.controls['farmerName'].value }}
                   </p>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Plot No:</label>
                   <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber" [options]="plotNumbers"
-                    optionValue="plotId" formControlName="plotId" appendTo="body"
-                    (onChange)="onSelectedPlot($event.value)">
+                    optionValue="plotId" formControlName="plotId" appendTo="body" [filter]="true"
+                    filterBy="plotNumber,villageName" (onChange)="onSelectedPlot($event.value)"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
+                    <ng-template let-plot pTemplate="selectedItem">
+                      <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
+                    </ng-template>
+                    <ng-template let-plot pTemplate="item">
+                      <div>{{plot.plotNumber}}</div>
+                      <div>{{plot.villageName}}</div>
+                    </ng-template>
                   </p-dropdown>
+                  <span *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plotId'].errors?.['required']">
+                      Please Select Plot No.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Estimated Ton:</label>
                   <p class="disabled_text">
-                    {{ 1234 }}
+                    {{ this.fbSeed.controls['estimatedTon'].value }}
                   </p>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Balanced Ton:</label>
                   <p class="disabled_text">
-                    {{ 1234 }}
+                    {{ this.fbSeed.controls['balancedTon'].value }}
                   </p>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Seed Supply Type:</label>
                   <p-dropdown class="ml-2" placeholder="Select Seed Supply Type" [options]="seedSupplyTypes"
-                    optionLabel="name" optionValue="lookupDetailId" formControlName="seedSupplyTypeId" appendTo="body">
+                    optionLabel="name" optionValue="lookupDetailId" formControlName="seedSupplyTypeId" appendTo="body"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['seedSupplyTypeId'].touched && FormControls['seedSupplyTypeId'].errors }">
                   </p-dropdown>
+                  <span *ngIf="FormControls['seedSupplyTypeId'].touched && FormControls['seedSupplyTypeId'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['seedSupplyTypeId'].errors?.['required']">
+                      Please Select Seed Supply Type.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Type Of Seed:</label>
                   <p-dropdown class="ml-2" placeholder="Select Type Of Seed" [options]="typeOfSeeds" optionLabel="name"
-                    optionValue="lookupDetailId" formControlName="typeOfSeedId" appendTo="body">
+                    optionValue="lookupDetailId" formControlName="typeOfSeedId" appendTo="body"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['typeOfSeedId'].touched && FormControls['typeOfSeedId'].errors }">
                   </p-dropdown>
+                  <span *ngIf="FormControls['typeOfSeedId'].touched && FormControls['typeOfSeedId'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['typeOfSeedId'].errors?.['required']">
+                      Please Select Type Of Seed.</div>
+                  </span>
                 </div>
-                <!-- <div class="field col-12 md:col-2 mt-5">
-                                    <label>Is Active:</label><br>
-                                    <p-inputSwitch></p-inputSwitch>
-                                </div> -->
               </div>
             </div>
             <div class="col-12 ">
               <button pButton pRipple type="button" label="Add Seed Details"
                 class="p-button-raised p-button-success md:col-4 lg:col-3 xl:col-2 md:mt-5 align-self-end "
-                (click)="addSubSeed()"></button>
+                (click)="addSeedDetails()"></button>
             </div>
 
-            <div class="col-12" formArrayName="subSeeds" *ngIf="showSubSeed">
-              <p-table #dt2 [value]="SubSeedfrom().controls" dataKey="id" [rows]="10" [rowHover]="true"
+            <div class="col-12" formArrayName="seedDetails" *ngIf="showSubSeed">
+              <p-table #dt2 [value]="faSeedDetails().controls" dataKey="id" [rows]="10" [rowHover]="true"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
                 [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pSortableColumn="FarmerCode">Former Code <p-sortIcon field="FarmerCode"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="FarmerName">Farmer Name<p-sortIcon field="FarmerName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="UOM"> UOM<p-sortIcon field="UOM"></p-sortIcon>
-                    </th>
-
-                    <th pSortableColumn="Qty">Qty<p-sortIcon field="Qty">
-                      </p-sortIcon>
-                    </th>
-                    <th pSortableColumn="Rate">Rate<p-sortIcon field="Rate">
-                      </p-sortIcon>
-                    </th>
-                    <th pSortableColumn="Amount">Amount<p-sortIcon field="Amount">
-                      </p-sortIcon>
-                    </th>
+                    <th>Farmer Code</th>
+                    <th>Farmer Name</th>
+                    <th>UOM</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                    <th *ngIf="fbSeed.controls['seedDetails'].value.length > 1"></th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-hgl let-subSeedIndex="rowIndex">
-                  <tr [formGroupName]="subSeedIndex">
+                <ng-template pTemplate="body" let-hgl let-seedDetailIndex="rowIndex">
+                  <tr [formGroupName]="seedDetailIndex">
                     <td>
-                      <input pInputText class="form-control" type="text" placeholder=" Farmer Code"
-                        formControlName="FarmerCode">
+                      <input pInputText #code class="form-control" type="text" placeholder=" Farmer Code"
+                        formControlName="FarmerCode" alphaNumeric [maxlength]="20">
+                      <div class="text-right">
+                        <small>{{code.value.length}}/20</small>
+                      </div>
                     </td>
                     <td>
-                      <input pInputText class="form-control" type="text" placeholder=" Farmer Name"
-                        formControlName="FarmerName">
+                      <input pInputText #name class="form-control" type="text" placeholder=" Farmer Name"
+                        formControlName="FarmerName" alphaOnly [maxlength]="maxLength.name">
+                      <div class="text-right">
+                        <small>{{name.value.length}}/{{maxLength.name}}</small>
+                      </div>
                     </td>
                     <td>
-                      <p-dropdown placeholder="Select UOM" [options]="uom" formControlName="UOM" optionLabel="UOM"
+                      <p-dropdown placeholder="Select UOM" [options]="UOMs" formControlName="UOM" optionLabel="name"
                         optionValue="lookupDetailId" appendTo="body">
                       </p-dropdown>
                     </td>
                     <td>
-                      <input pInputText class="form-control" type="number" placeholder=" Qty" formControlName="Qty">
+                      <p-inputNumber inputId="Qty" placeholder="Qty" formControlName="Qty" [showButtons]="true">
+                      </p-inputNumber>
                     </td>
                     <td>
-                      <input pInputText class="form-control" type="number" placeholder=" Rate" formControlName="Rate">
+                      <p-inputNumber inputId="Rate" placeholder="Rate" formControlName="Rate" [showButtons]="true">
+                      </p-inputNumber>
                     </td>
                     <td>
-                      <input pInputText class="form-control" type="number" placeholder=" Amount"
-                        formControlName="Amount">
+                      <p-inputNumber inputId="Amount" placeholder="Amount" formControlName="Amount"
+                        [showButtons]="true">
+                      </p-inputNumber>
                     </td>
-                    <!-- <td>
-                                        <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
-                                          *ngIf="!this.faSubHgl().controls[subHglIndex].get('hglId')?.value"
-                                          (click)="faSubHgl().removeAt(subHglIndex)"></i>
-                                        <i class="pi pi-fw pi-verified text-3xl"
-                                          *ngIf="this.faSubHgl().controls[subHglIndex].get('hglId')?.value"></i>
-                                      </td> -->
+                    <td *ngIf="fbSeed.controls['seedDetails'].value.length > 1">
+                      <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
+                        *ngIf="!this.faSeedDetails().controls[seedDetailIndex].get('seedDetailId')?.value"
+                        (click)="faSeedDetails().removeAt(seedDetailIndex)"></i>
+                      <i class="pi pi-fw pi-verified text-3xl"
+                        *ngIf="this.faSeedDetails().controls[seedDetailIndex].get('seedDetailId')?.value"></i>
+                    </td>
                   </tr>
                 </ng-template>
               </p-table>

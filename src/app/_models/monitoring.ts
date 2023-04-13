@@ -17,7 +17,7 @@ export class PlotOfferDto {
 export class IPlotOfferViewDto {
   plotOfferId?: number;
   seasonId?: number;
-  seasonName?: string;
+  string?: string;
   isNewFarmer?: boolean;
   offerNo?: number;
   offerDate?: Date;
@@ -39,6 +39,7 @@ export class IPlotOfferViewDto {
   plotSectionName?: string;
   plantTypeId?: number;
   plantType?: string;
+  varietyName?:string;
   varietyId?: number;
   expectedVariety?: string;
   plantingDate?: Date;
@@ -190,7 +191,7 @@ export class plotWeedicidesDto {
 export interface IPlotAssessmentViewDto {
   plotAssessmentId: number;
   seasonId: number;
-  season: Date;
+  seasonName: string;
   plotReportId: number;
   plotNumber: string;
   plotId: any
@@ -220,7 +221,7 @@ export interface IPlotAssessmentViewDto {
   reportedArea: number;
   plantingDate: Date;
   varietyId: number;
-  variety: string;
+  varietyName: string;
   fieldName: string;
   birNumber: number;
   birDate: Date;
@@ -314,7 +315,7 @@ export class PlotReportDto {
 
 export interface IFarmerInPlotReportsViewDto {
   seasonId: number;
-  season: string;
+  seasonName: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -454,7 +455,6 @@ export class CompletedPlotViewDto {
 export class MaintenanceItems {
   diseases?: MaintDiseaseDto[]
   pests?: MaintPestDto[]
-
   fertilizers?: MaintFertilizerDto[]
   weedicides?: MaintWeedicideDto[]
 
@@ -465,7 +465,7 @@ export class MaintDiseaseDto {
   plotAgreementId?: number
   plotYieldId?: number
   diseaseId?: number
-  name?: string
+  diseaseName?: string
   identifiedDate?: Date
   controlDate?: Date
   remarks?: string
@@ -473,7 +473,9 @@ export class MaintDiseaseDto {
   updatedBy?: string
   createdAt?: Date
   updatedAt?: Date
+ 
 }
+
 
 export class MaintPestDto {
   plotPestId?: number;
@@ -481,7 +483,7 @@ export class MaintPestDto {
   plotAgreementId?: number
   plotYieldId?: number
   pestId?: number
-  name?: string
+  pestName?: string
   identifiedDate?: Date
   controlDate?: Date
   remarks?: string
@@ -497,7 +499,7 @@ export class MaintWeedicideDto {
   plotAgreementId?: number
   plotYieldId?: number
   weedicideId?: number
-  name?: string
+  weedicideName?: string
   selected?: boolean
   createdBy?: string
   updatedBy?: string
@@ -511,7 +513,7 @@ export class MaintFertilizerDto {
   plotAgreementId?: number
   plotYieldId?: number
   fertilizerId?: number
-  name?: string
+  fertilizerName?: string
   selected?: boolean
   createdBy?: string
   updatedBy?: string
@@ -531,18 +533,19 @@ export class PlotsDto {
   farmerCode?: string
   farmerName?: string
   fatherName?: string
-  farmerCircle?: string
-  farmerDivision?: string
-  farmerSection?: string
-  farmerDistrict?: string
-  farmerMandal?: string
+  farmerVillageName?:string
+ farmerCircleName?: string
+  farmerDivisionName?: string
+  farmerSectionName ?: string
+  farmerDistrictName ?: string
+  farmerMandalName ?: string
   farmerVillageId?: number
-  farmerVillage?: string
-  plotCircle?: string
-  plotDivision?: string
-  plotSection?: string
-  plotDistrict?: string
-  plotMandal?: string
+  plotVillageName ?: string
+  plotCircleName ?: string
+  plotDivisionName ?: string
+  plotSectionName?: string
+  plotDistrictName  ?: string
+  plotMandalName  ?: string
   plotVillageId?: number
   plotVillage?: string
   reportedArea?: number
@@ -551,15 +554,15 @@ export class PlotsDto {
   birDate?: Date
   plantingDate?: Date
   varietyId?: number
-  variety?: string
+  varietyName ?: string
   surveyNo?: number
   plantTypeId?: number
-  plantType?: string
+  plantTypeName    ?: string
   plotTypeId?: number
-  plotType?: string
+  plotTypeName?: string
   agreedTon?: number
-  cropType?: string
-  Crop?: string
+  cropTypeName  ?: string
+  crop?: string
   measuredArea?: number
   agreementedArea?: number
 }
@@ -631,14 +634,14 @@ export interface IAgreementedPlotsViewDto {
   surveyNo: string;
   reportedArea: string;
   plantingDate: Date;
-  variety: string;
-  plantType: string;
-  plotType: string;
+  varietyName: string;
+  plantTypeName: string;
+  plotTypeName: string;
   weedStatusId: number;
-  weedStatus: string;
+  weedStatusName: string;
   interCropingId: number;
-  interCrop: string;
-  crop: string;
+  interCropName: string;
+  cropName: string;
   fieldName: string;
   birNumber: number;
   birDate: Date;
@@ -676,7 +679,7 @@ export class FarmerSectionViewDto {
 
 export interface IFarmerPlotYieldViewDto {
   seasonId: number;
-  season: Date;
+  SeasonName: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -755,11 +758,14 @@ export class SampleDto {
 }
 
 export interface IPlotsofFarmerViewDto {
-  plotId: number
-  seasonId: number
-  farmerId: number
-  plotNumber: string
-  netArea: number
+  plotId: number;
+  seasonId: number;
+  farmerId: number;
+  plotNumber: string;
+  netArea: number;
+  estimatedTon: number;
+  villageId: number;
+  villageName: string;
 }
 
 export class SampleDetailsDto {
@@ -829,4 +835,44 @@ export class ProppingDto{
   proppingDate?: Date;
 }
 
+export class SeedDto {
+  seedId?: number;
+  plotId?: number;
+  docNo?: number;
+  docDate?: Date;
+  seedSupplyTypeId?: number;
+  typeOfSeedId?: number;
+  subSeeds?: SeedDetailDto[];
+}
 
+export class SeedDetailDto {
+  seedDetailId?: number;
+  seedId?: number
+  farmerCode?: number;
+  farmerName?: string;
+  uom?: string;
+  qty?: number;
+  rate?: number;
+  amount?: number;
+}
+
+export interface SeedViewDto {
+  seedId?: number;
+  seasonId?: number;
+  season?: string;
+  docNo?: number;
+  docDate?: Date;
+  plotId?: number;
+  plotNumber?: string;
+  farmerId?: number;
+  farmerCode?: string;
+  farmerName?: string;
+  seedSupplyTypeId?: number;
+  seedSupplyType?: string;
+  typeOfSeedId?: number;
+  typeOfSeed?: string;
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+}

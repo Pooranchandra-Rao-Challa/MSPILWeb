@@ -46,6 +46,8 @@ export class AppMenuComponent implements OnInit {
         || this.jwtService.Permissions.CanViewPlotYields
         || this.jwtService.Permissions.CanViewPlotTransfers
         || this.jwtService.Permissions.CanViewSampleEntrys
+        || this.jwtService.Permissions.CanViewPlotProppings
+        || this.jwtService.Permissions.CanViewSeeds
         case 'Permits':
         return this.jwtService.Permissions.CanViewPlotOffers || this.jwtService.Permissions.CanViewPlotReports
       default: return false;
@@ -168,8 +170,8 @@ export class AppMenuComponent implements OnInit {
               { label: 'Plot Transfers', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/PlotTransfers'], permission: this.jwtService.Permissions.CanViewPlotTransfers },
               { label: 'Completed Plots', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/CompletedPlots'], permission: true },
               { label: 'Sample Entry', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/sampleentry'], permission: this.jwtService.Permissions.CanViewSampleEntrys},
-              { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: true },
-              { label: 'Seed', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/seed'], permission: true },
+              { label: 'Propping', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/propping'], permission: this.jwtService.Permissions.CanViewPlotProppings },
+              { label: 'Seed', icon: 'pi pi-fw pi-circle', routerLink: ['/monitoring/seed'], permission: this.jwtService.Permissions.CanViewSeeds },
             ]
           },
           {

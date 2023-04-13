@@ -14,6 +14,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 export interface IHeader {
   field: string;
@@ -48,6 +49,7 @@ export class PlotagreementComponent implements OnInit {
   weedStatus: LookupDetailViewDto[] = [];
   crops: LookupDetailViewDto[] = [];
   maintanenceItems?: MaintenanceItems = {}
+  mediumDate: string = MEDIUM_DATE;
   activeIndex?= 0;
   activeIndex1?= 0;
   activeIndex2?= 0;
@@ -55,7 +57,7 @@ export class PlotagreementComponent implements OnInit {
   permissions: any;
 
   farmerHeaders: IHeader[] = [
-    { field: 'season', header: 'season', label: 'Season' },
+    { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
@@ -66,15 +68,15 @@ export class PlotagreementComponent implements OnInit {
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'crop', header: 'crop', label: 'Crop' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'cropName', header: 'cropName', label: 'Crop' },
+    { field: 'cropTypeName', header: 'cropTypeName', label: 'Crop Type' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
-    { field: 'plotType', header: 'plotType', label: 'Plot Type' },
-    { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
-    { field: 'agreementedArea', header: 'agreementedArea', label: 'Area' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
+    { field: 'agreementedArea', header: 'agreementedArea', label: 'Agreemented Area' },
     { field: 'agreementedDate', header: 'agreementedDate', label: 'Agreemented Date' },
+    
   ];
 
   clear(table: Table) {
@@ -105,6 +107,7 @@ export class PlotagreementComponent implements OnInit {
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
+
     });
   }
 
@@ -127,6 +130,7 @@ export class PlotagreementComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAgreement(seasonId, param1).subscribe((resp) => {
       this.plotAgreements = resp as unknown as IFarmerInPlotOfferDto[];
+      
     });
   }
 
@@ -153,6 +157,7 @@ export class PlotagreementComponent implements OnInit {
 
   getGuarantor2(farmerId: number) {
     this.guarantor2Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
+    console.log(this.guarantor2Farmers)
   }
 
   getGuarantor3Farmers(farmerId: number) {
@@ -285,7 +290,7 @@ export class PlotagreementComponent implements OnInit {
       plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotAgreementId: [pest.plotAgreementId],
-      name: [pest.name],
+      pestName: [pest.pestName],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
       controlDate: [pest.controlDate && new Date(pest.controlDate)]
@@ -297,7 +302,7 @@ export class PlotagreementComponent implements OnInit {
       plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotAgreementId: [weed.plotAgreementId],
-      name: [weed.name],
+      weedicideName: [weed.weedicideName],
       checked: [weed.selected],
     });
   }
@@ -307,7 +312,7 @@ export class PlotagreementComponent implements OnInit {
       plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotAgreementId: [fertilizer.plotAgreementId],
-      name: [fertilizer.name],
+      fertilizerName: [fertilizer.fertilizerName],
       checked: [fertilizer.selected],
     });
   }
@@ -317,7 +322,7 @@ export class PlotagreementComponent implements OnInit {
       plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotAgreementId: [disease.plotAgreementId],
-      name: [disease.name],
+      diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
       controlDate: [disease.controlDate && new Date(disease.controlDate)]

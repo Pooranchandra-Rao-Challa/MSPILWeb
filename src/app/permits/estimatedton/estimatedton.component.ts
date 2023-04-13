@@ -1,15 +1,10 @@
 import { formatDate } from "@angular/common";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
-import { BehaviorSubject } from "rxjs";
-import { FORMAT_DATE } from "src/app/_helpers/date.format.pipe";
-import { SeasonDto } from "src/app/_models/applicationmaster";
-import {CircleforEstimatedtonDto, DivisionsforEstimatedtonDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforEstimatedtonDto, VillageforEstimatedtonDto } from "src/app/_models/permits";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
-import { BillMasterService } from "src/app/_services/billmaster.service";
 import { CommonService } from "src/app/_services/common.service";
-import { LookupService } from "src/app/_services/lookup.service";
-import { MonitoringService } from "src/app/_services/monitoring.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 
@@ -19,28 +14,6 @@ export interface IHeader {
   label: string;
 }
 
-export class EstimatedTonDto {
-  FarmerCode?: number;
-  FarmerName?: string;
-  PlotNo?: number;
-  VillageName?: string;
-  VarityName?: string;
-  PlantType?: string;
-  PlantingDate?: Date;
-  NetArea?: number;
-  Estimatedton?: number;
-  IncreasedEstimatedton?: number;
-  PermitTon?: number;
-  SuppliedTon?: number;
-  BalanceTon?: number;
-  NoofWeighments?: number;
-  UpdatedEstimatedton?: number;
-}
-interface sampleDropdownValue {
-  name: string;
-  code: string;
-}
-
 @Component({
   selector: 'app-estimatedton',
   templateUrl: './estimatedton.component.html',
@@ -48,8 +21,7 @@ interface sampleDropdownValue {
 })
 
 export class EstimatedTonComponent implements OnInit {
-  // activeTabs: boolean[] = [false];
-  seasons!: any[];
+  seasons: SeasonViewDto[]=[];
   currentSeason: SeasonDto = {};
   loading: boolean = true;
   showTable: boolean = false;
@@ -57,33 +29,31 @@ export class EstimatedTonComponent implements OnInit {
   dateTime = new Date();
   estimatedton: EstimatedViewDto[] = [];
   @ViewChild('filter') filter!: ElementRef;
-  fbEstimatedTon: any;
-  farmers:FarmersInPlantingDatesDto[]=[];
-  divisions:DivisionsforEstimatedtonDto[]=[];
-  sections:SectionforEstimatedtonDto[]=[];
-  circle:CircleforEstimatedtonDto ={}
-  circles:CircleforEstimatedtonDto[]=[];
-  villages:VillageforEstimatedtonDto[]=[];
-  village:VillageforEstimatedtonDto = new VillageforEstimatedtonDto()
-  filterCircles:CircleforEstimatedtonDto[]=[];
-  filterSections:SectionforEstimatedtonDto[]=[];
-  //subjectCircles: BehaviorSubject<CircleforEstimatedtonDto[]> = new BehaviorSubject<CircleforEstimatedtonDto[]>([]);
+  fbEstimatedTon!: FormGroup;
+  farmers: FarmersInPlantingDatesDto[] = [];
+  divisions: DivisionsforUserDto[] = [];
+  sections: SectionforUserDto[] = [];
+  circles: CircleforUserDto[] = [];
+  villages: VillageforUserDto[] = [];
+  filterCircles: CircleforUserDto[] = [];
+  filterSections: SectionforUserDto[] = [];
+  filterVillages: VillageforUserDto[] = [];
+
 
   constructor(private formbuilder: FormBuilder,
-    private commonService: CommonService,
     private appMasterService: AppMasterService,
-    private permitService:permitService) { }
+    private permitService: permitService) { }
 
   getEstimatedForm() {
     this.fbEstimatedTon = this.formbuilder.group({
-      seasonId: new FormControl(null, [Validators.required]),
-      divisionId: new FormControl(null, [Validators.required]),
-      circleId: new FormControl(null, [Validators.required]),
-      sectionId: new FormControl(null, [Validators.required]),
-      villageId: new FormControl(null, [Validators.required]),
-      frompltngDate:new FormControl(null, [Validators.required]),
-      topltngDate: new FormControl(null, [Validators.required]),
-      farmerCode: new FormControl(null, [Validators.required]),
+      seasonId: [null, (Validators.required)],
+      divisionId:  [null, (Validators.required)],
+      circleId:  [null, (Validators.required)],
+      sectionId: [null, (Validators.required)],
+      villageId:  [null, (Validators.required)],
+      frompltngDate: [null, (Validators.required)],
+      topltngDate: [null, (Validators.required)],
+      farmerCode:  [null, (Validators.required)],
     });
   }
 
@@ -118,8 +88,8 @@ export class EstimatedTonComponent implements OnInit {
   ];
 
   initSeasons() {
-    this.commonService.GetSeasons().subscribe((resp) => {
-      this.seasons = resp as any;
+    this.appMasterService.Getseason().subscribe((resp) => {
+      this.seasons = resp as unknown as SeasonViewDto[];
     });
   }
   initCurrentSeason(seasonCode: string) {
@@ -130,69 +100,64 @@ export class EstimatedTonComponent implements OnInit {
       // this.GetFarmers(this.currentSeason.seasonId!);
     });
   }
-  initEstimatedTon(seasonId:any){
+  initEstimatedTon(seasonId: any) {
     this.permitService.GetEstimatedTon(seasonId).subscribe((resp) => {
       this.estimatedton = resp as unknown as EstimatedViewDto[];
       console.log(this.estimatedton)
     });
   }
   initDivisions() {
-    this.permitService.GetDivisionsforEstimatedton().subscribe((resp) => {
-      this.divisions = resp as unknown as DivisionsforEstimatedtonDto[];
+    this.permitService.GetDivisionsforUser().subscribe((resp) => {
+      this.divisions = resp as unknown as DivisionsforUserDto[];
     });
-    // this.circles = this.circles.filter((circle) => circle.circleId)
   }
-
   initSections() {
-    this.permitService.GetSectionsforEstimatedton().subscribe((resp) => {
-      this.sections = resp as unknown as SectionforEstimatedtonDto[];
-      this.filterSections  = Object.assign([], this.sections);
+    this.permitService.GetSectionsforUser().subscribe((resp) => {
+      this.sections = resp as unknown as SectionforUserDto[];
+      this.filterSections = Object.assign([], this.sections);
     });
-
   }
   initCircles() {
-    this.permitService.GetCirclesforEstimatedton().subscribe((resp) => {
-      this.circles = resp as unknown as CircleforEstimatedtonDto[];
+    this.permitService.GetCirclesforUser().subscribe((resp) => {
+      this.circles = resp as unknown as CircleforUserDto[];
       this.filterCircles = Object.assign([], this.circles);
     });
   }
   initVillages() {
-    this.permitService.GetVillagesforEstimatedton().subscribe((resp) => {
-      this.villages = resp as unknown as VillageforEstimatedtonDto[];
+    this.permitService.GetVillagesforUser().subscribe((resp) => {
+      this.villages = resp as unknown as VillageforUserDto[];
+      this.filterVillages = Object.assign([], this.villages);
     });
   }
-
-  SetAllDivisionChilds(values:number[]){
-    console.log(values);
+  SetAllDivisionChilds(values: number[]) {
     let val: string[];
-    this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1)
-    this.filterSections = this.sections.filter(circle => values.indexOf(circle.divisionId!) != -1)
-    //filterCircles
+    this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
+    this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
+    this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
   }
-
-  SetAllCicleChilds(values:number[]){
-    console.log(values);
+  SetAllCircleChilds(values: number[]) {
     let val: string[];
-    this.filterCircles = this.circles.filter(circle => values.indexOf(circle.circleId!) != -1)
-    this.filterSections = this.sections.filter(circle => values.indexOf(circle.circleId!) != -1)
-    //filterCircles
+    this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
+    this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
   }
-
-  GetFarmers(){
-    if (this.fbEstimatedTon.value.seasonId != null && this.fbEstimatedTon.value.frompltngDate!= null &&
-      this.fbEstimatedTon.value.topltngDate != null && this.fbEstimatedTon.value.villageId != null){
-    var seasonId = this.fbEstimatedTon.value.seasonId;
-    var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd','en-US')
-    var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd','en-US');
-    var villageId = this.fbEstimatedTon.value.villageId
-    this.permitService.GetFarmersInPlantingDates(seasonId,frompltngDate,topltngDate,villageId).subscribe((resp) => {
-    this.farmers = resp as unknown as FarmersInPlantingDatesDto[];
-      console.log(resp)
-    })
+  SetAllSectionChilds(values: number[]) {
+    let val: string[];
+    this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
   }
+  GetFarmers() {
+    if (this.fbEstimatedTon.value.seasonId != null && this.fbEstimatedTon.value.frompltngDate != null &&
+      this.fbEstimatedTon.value.topltngDate != null && this.fbEstimatedTon.value.villageId != null) {
+      var seasonId = this.fbEstimatedTon.value.seasonId;
+      var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
+      var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
+      var villageId = this.fbEstimatedTon.value.villageId
+      this.permitService.GetFarmersInPlantingDates(seasonId, frompltngDate, topltngDate, villageId).subscribe((resp) => {
+        this.farmers = resp as unknown as FarmersInPlantingDatesDto[];
+        console.log(this.farmers)
+      })
+    }
   }
   toggleTab() {
-    // this.showForm = true;
     this.showForm = !this.showForm;
   }
   getEstimatedTon() {

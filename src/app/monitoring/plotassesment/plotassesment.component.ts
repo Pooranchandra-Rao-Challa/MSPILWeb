@@ -65,25 +65,28 @@ export class PlotassesmentComponent implements OnInit {
     private alertMessage: AlertMessage,) { }
 
   farmerHeader: IHeader[] = [
-    { field: 'season', header: 'season', label: 'Season' },
+    { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' }
   ];
 
   plotHeader: IHeader[] = [
-    { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
-    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
-    { field: 'plantType', header: 'PlantType', label: 'Plant Type' },
-    { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
-    { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
-    { field: 'plotType', header: 'plotType', label: 'plot Type' },
-    { field: 'assessedArea', header: 'assessedArea', label: 'Assessed Area' },
-    { field: 'assessedDate', header: 'assessedDate', label: 'Assessed Date' },
+    { field: 'plotNumber', header:'plotNumber', label: 'Plot Number' },
+    { field: 'plantingDate', header:'plantingDate', label: 'Planting Date' },
+    { field: 'cropTypeName', header:'cropTypeName', label: 'Crop Type' },
+    { field: 'plantTypeName', header:'plantTypeName', label: 'Plant Type' },
+    { field: 'surveyNo', header:'surveyNo', label: 'Survey No' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'fieldName',header:'fieldName', label: 'Field Name' },
+    { field: 'plotTypeName', header:'plotTypeName', label: 'plot Type' },
+    { field: 'assessedArea', header:'assessedArea', label: 'Assessed Area' },
+    { field: 'assessedDate', header:'assessedDate', label: 'Assessed Date' },
     { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
-  ];
+    { field: 'weedStatusName', header: 'weedStatusName  ', label: 'Weed Status' },
+    { field: 'interCropName', header: 'interCropName', label: 'Inter Croping' },
+
+  ]; 
   
   
 
@@ -180,6 +183,7 @@ export class PlotassesmentComponent implements OnInit {
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
+      console.log(resp)
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
       this.initPlotAssesments(this.currentSeason.seasonId!);
     });
@@ -188,12 +192,15 @@ export class PlotassesmentComponent implements OnInit {
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+ 
     });
   }
 
   initPlotNumbers(season: number, plotId: number) {
     this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
+   
+      
     });
   }
 
@@ -260,7 +267,7 @@ export class PlotassesmentComponent implements OnInit {
       plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotAssessmentId: [pest.plotAssessmentId],
-      name: [pest.name],
+      pestName: [pest.pestName],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
       controlDate: [pest.controlDate && new Date(pest.controlDate)]
@@ -272,7 +279,7 @@ export class PlotassesmentComponent implements OnInit {
       plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotAssessmentId: [weed.plotAssessmentId],
-      name: [weed.name],
+      weedicideName: [weed.weedicideName],
       checked: [weed.selected],
     });
   }
@@ -282,7 +289,7 @@ export class PlotassesmentComponent implements OnInit {
       plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotAssessmentId: [fertilizer.plotAssessmentId],
-      name: [fertilizer.name],
+      fertilizerName: [fertilizer.fertilizerName],
       checked: [fertilizer.selected],
     });
   }
@@ -292,7 +299,7 @@ export class PlotassesmentComponent implements OnInit {
       plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotAssessmentId: [disease.plotAssessmentId],
-      name: [disease.name],
+      diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
       controlDate: [disease.controlDate && new Date(disease.controlDate)]
