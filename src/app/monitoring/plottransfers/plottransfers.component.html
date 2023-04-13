@@ -231,9 +231,9 @@
               (click)="editPlotTransfer(plotTransfer)" [disabled]="!permissions?.CanUpdatePlotTransfer"></button>
           </td>
           <td *ngFor="let col of headers">
-            <span *ngIf="col?.field != 'docDate' && col?.field != 'plantingDate'">{{plotTransfer[col.field]}}</span>
-            <span *ngIf="col?.field == 'docDate' || col?.field == 'plantingDate'">
-              {{plotTransfer[col.field] | date: 'dd-MM-yyyy'}}
+            <span *ngIf="col?.field != 'docDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{plotTransfer[col.field]}}</span>
+            <span *ngIf="col?.field == 'docDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              {{plotTransfer[col.field] | date: mediumDate}}
             </span>
           </td>
         </tr>

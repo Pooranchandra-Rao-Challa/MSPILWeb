@@ -46,6 +46,8 @@ export class PlotTransfersComponent implements OnInit {
   selectedFarmer: any;
   selectedPlot: any;
   permissions: any;
+  plotNumbers: IPlotsofFarmerViewDto[] = [];
+  enableValidation: boolean = true;
 
   headers: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
@@ -53,17 +55,16 @@ export class PlotTransfersComponent implements OnInit {
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'docNo', header: 'docNo', label: 'Doc No' },
     { field: 'docDate', header: 'docDate', label: 'Doc Date' },
-    { field: 'plotTransferType', header: 'plotTransferType', label: 'Plot Transfer Type' },
+    { field: 'plotTransferTypeName', header: 'plotTransferTypeName', label: 'Plot Transfer Type' },
     { field: 'transferArea', header: 'transferArea', label: 'Transfer Area' },
     { field: 'toFarmerName', header: 'toFarmerName', label: 'To Farmer Name' },
-    { field: 'plotTransferReason', header: 'plotTransferReason', label: 'Plot Transfer Reason' },
+    { field: 'plotTransferReasonName', header: 'plotTransferReasonName', label: 'Plot Transfer Reason' },
     { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
     { field: 'createdBy', header: 'createdBy', label: 'Created By' },
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
-  plotNumbers: IPlotsofFarmerViewDto[] = [];
-  enableValidation: boolean = true;
+
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private AppMasterService: AppMasterService,
@@ -110,6 +111,8 @@ export class PlotTransfersComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotsTransfers(seasonId, param1).subscribe((resp) => {
       this.plotTransfers = resp as unknown as IPlotTransferViewDto[];
+      console.log(this.plotTransfers);
+
     });
   }
 
