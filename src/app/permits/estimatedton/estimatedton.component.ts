@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
 import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
-import { CommonService } from "src/app/_services/common.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 
@@ -50,7 +49,7 @@ export class EstimatedTonComponent implements OnInit {
       divisionId:  [null, (Validators.required)],
       circleId:  [null, (Validators.required)],
       sectionId: [null, (Validators.required)],
-      villageId:  [null, (Validators.required)],
+      villageId:  [, (Validators.required)],
       frompltngDate: [null, (Validators.required)],
       topltngDate: [null, (Validators.required)],
       farmerCode:  [null, (Validators.required)],
@@ -130,28 +129,44 @@ export class EstimatedTonComponent implements OnInit {
     });
   }
   SetAllDivisionChilds(values: number[]) {
-    let val: string[];
-    this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
-    this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
-    this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
+    if(values.length == 0){
+      this.filterCircles = Object.assign([], this.circles);
+      this.filterSections = Object.assign([], this.sections);
+      this.filterVillages = Object.assign([], this.villages);
+    }
+    else{ 
+      this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
+      this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
+      this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
+    }
   }
   SetAllCircleChilds(values: number[]) {
-    let val: string[];
+    if(values.length == 0){
+      this.filterSections = Object.assign([], this.sections);
+      this.filterVillages = Object.assign([], this.villages);
+    }
+    else{ 
     this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
     this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
+    }
   }
   SetAllSectionChilds(values: number[]) {
-    let val: string[];
+    if(values.length == 0){
+      this.filterSections = Object.assign([], this.sections);
+      this.filterVillages = Object.assign([], this.villages);
+    }
+    else{ 
     this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
+    }
   }
   GetFarmers() {
     if (this.fbEstimatedTon.value.seasonId != null && this.fbEstimatedTon.value.frompltngDate != null &&
-      this.fbEstimatedTon.value.topltngDate != null && this.fbEstimatedTon.value.villageId != null) {
+      this.fbEstimatedTon.value.topltngDate != null ) {
       var seasonId = this.fbEstimatedTon.value.seasonId;
       var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
       var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
       var villageId = this.fbEstimatedTon.value.villageId
-      this.permitService.GetFarmersInPlantingDates(seasonId, frompltngDate, topltngDate, villageId).subscribe((resp) => {
+      this.permitService.GetFarmersInPlantingDates(seasonId, frompltngDate, topltngDate,villageId).subscribe((resp) => {
         this.farmers = resp as unknown as FarmersInPlantingDatesDto[];
         console.log(this.farmers)
       })

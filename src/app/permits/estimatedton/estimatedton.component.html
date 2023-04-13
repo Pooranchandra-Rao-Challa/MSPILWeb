@@ -122,8 +122,15 @@
                                 <div class="col-3 p-2">
                                     <label class="required">Farmer Code:</label>
                                     <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"
-                                        formControlName="farmerCode" [style]="{'width':'100%'}"
+                                        formControlName="farmerCode" [style]="{'width':'100%'}" [filter]="true"
+                                        filterBy="farmerCode,farmerName,villageName" [virtualScroll]="true"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerCode'].touched && FormControls['farmerCode'].errors }">
+                                        <ng-template let-farmer pTemplate="item">
+                                            <div class="block align-items-center gap-2">
+                                                <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
+                                                <div>{{farmer.villageName}}</div>
+                                            </div>
+                                        </ng-template>
                                     </p-dropdown>
                                     <span
                                         *ngIf="FormControls['farmerCode'].touched && FormControls['farmerCode'].invalid">
