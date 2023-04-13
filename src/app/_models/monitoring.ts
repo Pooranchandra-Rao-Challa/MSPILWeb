@@ -273,7 +273,7 @@ export interface IPlotTransferViewDto {
   docNo: number;
   docDate: Date;
   plotTransferTypeId: number;
-  plotTransferType: string;
+  plotTransferTypeName: string;
   fromFarmerId: number;
   fromFarmerCode: number;
   fromFarmerName: string;
@@ -283,7 +283,7 @@ export interface IPlotTransferViewDto {
   toFarmerCode: number;
   toFarmerName: string;
   plotTransferReasonId: number;
-  plotTransferReason: string;
+  plotTransferReasonName: string;
   createdBy: string;
   createdAt: string;
   updatedBy: string;

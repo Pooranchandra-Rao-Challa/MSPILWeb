@@ -183,6 +183,23 @@
             <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initCompletedPlots($event.value)" optionValue="seasonId">
             </p-dropdown>
+
+            <div class="md:inline-flex">
+              <div class="field-radiobutton px-2">
+                <p-radioButton name="purpose" value="Is Over" [(ngModel)]="purpose" inputId="isOver"></p-radioButton>
+                <label for="isOver">Is Over</label>
+              </div>
+              <div class="field-radiobutton px-2">
+                <p-radioButton name="purpose" value="Is Left Over" [(ngModel)]="purpose" inputId="isLeftOver">
+                </p-radioButton>
+                <label for="isLeftOver">Is Left Over</label>
+              </div>
+              <div class="field-radiobutton px-2">
+                <p-radioButton name="purpose" value="Ratoon" [(ngModel)]="purpose" inputId="ratoon"></p-radioButton>
+                <label for="ratoon">Ratoon</label>
+              </div>
+            </div>
+
           </div>
         </div>
       </ng-template>

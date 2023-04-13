@@ -42,7 +42,7 @@ export class CompletedPlotsComponent implements OnInit {
   submitLabel!: string;
   currentSeason: SeasonDto = {};
   mediumDate: string = MEDIUM_DATE;
-
+  purpose!: string;
   headers: IHeader[] = [
     { field: 'season', header: 'season', label: 'Season' },
     { field: 'docNo', header: 'docNo', label: 'Doc No' },
