@@ -74,8 +74,7 @@ export class PlotagreementComponent implements OnInit {
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'varietyName', header: 'varietyName', label: 'Variety' },
     { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
-    { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
-    { field: 'agreementedArea', header: 'agreementedArea', label: 'Area' },
+    { field: 'agreementedArea', header: 'agreementedArea', label: 'Agreemented Area' },
     { field: 'agreementedDate', header: 'agreementedDate', label: 'Agreemented Date' },
     
   ];
@@ -291,7 +290,7 @@ export class PlotagreementComponent implements OnInit {
       plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotAgreementId: [pest.plotAgreementId],
-      name: [pest.name],
+      pestName: [pest.pestName],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
       controlDate: [pest.controlDate && new Date(pest.controlDate)]
@@ -303,7 +302,7 @@ export class PlotagreementComponent implements OnInit {
       plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotAgreementId: [weed.plotAgreementId],
-      name: [weed.name],
+      weedicideName: [weed.weedicideName],
       checked: [weed.selected],
     });
   }
@@ -313,7 +312,7 @@ export class PlotagreementComponent implements OnInit {
       plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotAgreementId: [fertilizer.plotAgreementId],
-      name: [fertilizer.name],
+      fertilizerName: [fertilizer.fertilizerName],
       checked: [fertilizer.selected],
     });
   }
@@ -323,7 +322,7 @@ export class PlotagreementComponent implements OnInit {
       plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotAgreementId: [disease.plotAgreementId],
-      name: [disease.name],
+      diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
       controlDate: [disease.controlDate && new Date(disease.controlDate)]

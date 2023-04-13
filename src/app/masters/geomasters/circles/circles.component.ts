@@ -18,6 +18,11 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import * as FileSaver from 'file-saver';
+
 import {
   MAX_LENGTH_20,
   MAX_LENGTH_50,
@@ -49,14 +54,22 @@ export class CirclesComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
-
+  @ViewChild('dt1') table?: Table;
+  exportColumns: any;
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
-    private AlertMessage: AlertMessage
-  ) { }
+    private AlertMessage: AlertMessage,
+
+  ) { 
+    
+  // this.table?._columns.map((col) => ({
+  //   title: col.field,
+  //   dataKey: col.field,
+  // }))
+  }
   InitCircle() {
     this.circle = new CircleDto();
     this.fbcircles.reset();
@@ -68,6 +81,11 @@ export class CirclesComponent implements OnInit {
     return this.fbcircles.controls;
   }
   ngOnInit() {
+
+    // this.exportColumns = this.dt1.map((col) => ({
+    //   title: col.label,
+    //   dataKey: col.field,
+    // }));
     this.permissions = this.jwtService.Permissions;
     this.initCircles();
     this.commonService.GetDivision().subscribe((resp) => {
@@ -78,7 +96,7 @@ export class CirclesComponent implements OnInit {
       divisionId: ['', Validators.required],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      inchargeName: new FormControl(null, [Validators.required, Validators.pattern(RG_PHONE_NO)]),
+      inchargeName: new FormControl(null, [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
 
       listingOrder: new FormControl('', [
         Validators.required,
@@ -145,4 +163,69 @@ export class CirclesComponent implements OnInit {
     this.divisions = [];
     this.circles = [];
   }
+
+
+
+  exportPdf() {
+    const doc = new jsPDF('l', 'mm', 'a4');
+
+    const head = [['Division', 'Code', 'Name','Incharge Name', 'Incharge PhoneNo', 'Order', 'Address', 'Is Active']];
+
+    autoTable(doc, {
+        head: head,
+        body: this.toPdfFormat(),
+        didDrawCell: (data) => { },
+    });
+    doc.save('circles.pdf');
+}
+toPdfFormat() {
+    let data = [];
+    for (var i = 0; i < this.circles.length; i++) {
+        data.push([
+            this.circles[i].divisionName,
+            this.circles[i].circleCode,
+            this.circles[i].circleName,
+            this.circles[i].inchargeName,
+            this.circles[i].inchargePhoneNo,
+            this.circles[i].listingOrder,
+            this.circles[i].address,
+            this.circles[i].isActive
+
+        ]);
+    }
+    return data;
+}
+
+exportExcel() {
+  debugger
+  import('xlsx').then((xlsx) => {
+    const worksheet = xlsx.utils.json_to_sheet(this.circles);
+    const workbook = {
+      Sheets: { data: worksheet },
+      SheetNames: ['data']
+    };
+    const excelBuffer: any = xlsx.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    this.saveAsExcelFile(excelBuffer, 'circles');
+  });
+}
+
+saveAsExcelFile(buffer: any, fileName: string): void {
+  let EXCEL_TYPE =
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  let EXCEL_EXTENSION = '.xlsx';
+  const data: Blob = new Blob([buffer], {
+    type: EXCEL_TYPE,
+  });
+  FileSaver.saveAs(
+    data,
+    fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+  );
+}
+
+
+
+
 }

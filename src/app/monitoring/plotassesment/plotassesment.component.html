@@ -245,7 +245,7 @@
                         <div [formGroupName]="i" style="padding-left:unset" class="capitalize form-control">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
                           </p-inputSwitch>
-                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.weedicideName}}</label>
                         </div>
                       </div>
                     </ng-container>
@@ -272,7 +272,7 @@
                         <tr [formGroupName]="i">
                           <td>
                             <div class="font-bold">
-                              {{pestControl.get('name').value}}
+                              {{pestControl.get('pestName').value}}
                             </div>
                           </td>
                           <td>
@@ -312,7 +312,7 @@
                         <div [formGroupName]="i" style="padding-left:unset">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
                           </p-inputSwitch>
-                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.name}}</label>
+                          <label for="ny" class="ml-2 vertical-align-top">{{item.value.fertilizerName}}</label>
                         </div>
                       </div>
                     </ng-container>
@@ -338,7 +338,7 @@
                         <tr [formGroupName]="i">
                           <td>
                             <div class="font-bold">
-                              {{diseaseControl.get('name').value}}
+                              {{diseaseControl.get('diseaseName').value}}
                             </div>
                           </td>
                           <td>
@@ -388,7 +388,7 @@
           <div>
             <button pButton label="Clear" class="p-button-outlined m-2" icon="pi pi-filter-slash"
             (click)="clear(dtPlotAssessments)"></button>
-            <button (click)="exportPdf()" pButton  class="p-button-outlined m-2"  icon="pi pi-file-pdf"></button>
+            <button (click)="exportPdf()" pButton  class="p-button-outlined p-button-warning m-2"  icon="pi pi-file-pdf"></button>
             <button (click)="exportExcel()" pButton  class="p-button-outlined m-2" icon="pi pi-file-excel" ></button>
 
           </div>

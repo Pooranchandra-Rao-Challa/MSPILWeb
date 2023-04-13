@@ -25,6 +25,11 @@ export interface IHeader {
   selector: 'app-plotyield',
   templateUrl: './plotyield.component.html',
   styles: [
+    `
+    .p-datatable-table {
+      table-layout:fixed !important;
+    }
+  `
   ]
 })
 
@@ -67,9 +72,9 @@ export class PlotyieldComponent implements OnInit {
     { field: 'plotNumber', header: 'plotNumber', label: ' Plot Number' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'cropType', header: 'cropType', label: 'Crop Type' },
+    { field: 'cropTypeName', header: 'cropTypeName', label: 'Crop Type' },
     { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
-    { field: 'plotType', header: 'plotType', label: 'Plot Type' },
+    { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
     { field: 'reportedArea', header: 'reportedArea', label: 'Reported Area' },
     { field: 'measuredArea', header: 'measuredArea', label: 'Measured Area' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
@@ -77,11 +82,11 @@ export class PlotyieldComponent implements OnInit {
     { field: 'notGrownArea', header: 'notGrownArea', label: 'Not Grown Area' },
     { field: 'isSeedArea', header: 'isSeedArea', label: 'Is Seed Area' },
     { field: 'agreementedArea', header: 'agreementedArea', label: 'Agreemented Area' },
-    { field: 'harvestedArea', header: 'harvestedArea', label: 'Harvested Area' },
+    { field: 'harvestArea', header: 'harvestArea', label: 'Harvested Area' },
     { field: 'poorCropArea', header: 'poorCropArea', label: 'Poor Crop Area' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
-    { field: 'estimatedton', header: 'estimatedton', label: 'Estimated Ton' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
     { field: 'birNumber', header: 'birNumber', label: 'Bir Number' },
     { field: 'birDate', header: 'birDate', label: 'Bir Date' },
     { field: 'inspectionDate', header: 'inspectionDate', label: 'Inspection Date' },
@@ -238,6 +243,7 @@ export class PlotyieldComponent implements OnInit {
       this.plotYields = resp as unknown as IFarmerPlotYieldViewDto[];
       this.plotYields.forEach((value) => {
         value.objNetYieldPlots = JSON.parse(value.netYieldPlots) as IPlotYieldViewDto[];
+        console.log(this.plotYields)
       });
     })
   }
@@ -264,7 +270,7 @@ export class PlotyieldComponent implements OnInit {
       plotPestId: [pest.plotPestId],
       pestId: [pest.pestId],
       plotYieldId: [pest.plotYieldId],
-      name: [pest.name],
+      pestName: [pest.pestName],
       remarks: [pest.remarks],
       identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
       controlDate: [pest.controlDate && new Date(pest.controlDate)]
@@ -283,7 +289,7 @@ export class PlotyieldComponent implements OnInit {
       plotWeedicideId: [weed.plotWeedicideId],
       weedicideId: [weed.weedicideId],
       plotYieldId: [weed.plotYieldId],
-      name: [weed.name],
+      weedicideName: [weed.weedicideName],
       checked: [weed.selected],
     });
   }
@@ -293,7 +299,7 @@ export class PlotyieldComponent implements OnInit {
       plotFertilizerId: [fertilizer.plotFertilizerId],
       fertilizerId: [fertilizer.fertilizerId],
       plotYieldId: [fertilizer.plotYieldId],
-      name: [fertilizer.name],
+      fertilizerName: [fertilizer.fertilizerName],
       checked: [fertilizer.selected],
     });
   }
@@ -303,7 +309,7 @@ export class PlotyieldComponent implements OnInit {
       plotDiseaseId: [disease.plotDiseaseId],
       diseaseId: [disease.diseaseId],
       plotYieldId: [disease.plotYieldId],
-      name: [disease.name],
+      diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
       identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
       controlDate: [disease.controlDate && new Date(disease.controlDate)]

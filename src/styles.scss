@@ -111,3 +111,36 @@ div.season-rates-tab-items:not(:first-child) {
 .p-inputtextarea{
   resize: vertical;
 } 
+:host ::ng-deep .ui-tree {
+  border: 1px solid #adabab;
+  border-radius: 0px 5px 5px 0px;
+  background-color: rgba(0, 0, 0, 0.38);
+  color: #eaeaea;
+  padding: 0em 0em;
+  padding-right: 5px;
+  width: 22em; /* This constrains the width and creates the horizontal scrollbar when a p-tree node is expanded past this width. */
+  line-height: 15px !important;
+  max-height: 75vh;
+  overflow: overlay; /* Changed from auto to overlay */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* This creates the horizontal scrollbar visible on top of the inner divs */
+:host ::ng-deep .ui-tree .ui-tree-container {
+  overflow: initial;
+}
+
+
+
+/* This keeps a margin between horizontal overflow and the vertical scrollbar. Without it content would be hidden behind the scrollbar */
+:host ::ng-deep .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-treenode-label {
+  margin-right: 10px;
+}
+
+.width_min{
+  min-width:500px;
+}
+
+.table-fixed.p-datatable .p-datatable-wrapper table.p-datatable-table:not(.p-datatable-tbody tr td .p-datatable table.p-datatable-table){
+  table-layout: fixed !important;
+}
