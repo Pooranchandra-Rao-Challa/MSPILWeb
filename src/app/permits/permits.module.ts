@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { PanelModule } from 'primeng/panel';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { CancelPermitComponent } from './cancelpermit/cancelpermit.component';
 import { CuttingOrderComponent } from './cuttingorder/cuttingorder.component';
@@ -30,7 +31,8 @@ import { SpecialPermitsComponent } from './specialpermits/specialpermits.compone
   ],
   imports: [
     SharedModule,
-    PermitsRoutingModule
+    PermitsRoutingModule,
+    PanelModule,
   ],
 })
 export class PermitsModule { }

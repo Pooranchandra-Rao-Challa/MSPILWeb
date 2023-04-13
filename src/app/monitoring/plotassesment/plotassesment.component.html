@@ -14,7 +14,7 @@
     </p-toolbar>
 
     <!-- dialog -->
-    <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true"
+    <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true" [transitionOptions]="'500ms'"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssesment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
@@ -388,7 +388,7 @@
           <div>
             <button pButton label="Clear" class="p-button-outlined m-2" icon="pi pi-filter-slash"
             (click)="clear(dtPlotAssessments)"></button>
-            <button (click)="exportPdf()" pButton  class="p-button-outlined m-2"  icon="pi pi-file-pdf"></button>
+            <button (click)="exportPdf()" pButton  class="p-button-outlined p-button-warning m-2"  icon="pi pi-file-pdf"></button>
             <button (click)="exportExcel()" pButton  class="p-button-outlined m-2" icon="pi pi-file-excel" ></button>
 
           </div>
