@@ -6,7 +6,7 @@ import {
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
 import { ApiHttpService } from "src/app/_services/api.http.service";
-import { CompletedPlotDto, CompletedPlotViewDto } from '../_models/monitoring';
+import { CompletedPlotDto, ICompletedPlotViewDto } from '../_models/monitoring';
 import {
   CREATE_PLOT_OFFER_URI, GET_PLOT_OFFERS_URI, GET_OFFERCODE_URI, UPDATE_PLOT_OFFER_URI, IS_NEW_FARMAR_URI, CREATE_PLOT_REPORT_URI,
   UPDATE_PLOT_REPORT_URI, GET_PLOT_REPORTS_URI, GET_PLOTASSESSMENT_URI, GET_DOCCODE_URI, CREATE_PLOTTRANSFER_URI, UPDATE_PLOTTRANSFER_URI,
@@ -190,26 +190,20 @@ export class MonitoringService extends ApiHttpService {
     return this.post<CompletedPlotDto>(UPDATE_COMPLETED_PLOT_URI, completedPlot);
   }
 
-  public GetCompletedPlots(seasonId: number) {
-    return this.getWithId<any>(GET_COMPLETED_PLOT_IN_SEASON_URI, seasonId);
-  }
-
-
-
   public GetNewDocNoForCompletedPlots(seasonId: number) {
     return this.getWithId<any>(GET_DONOFORCOMPLETEDPLOTS_URI, seasonId);
   }
 
-
-  public GeAllCompletedPlots(seasonId: number, param1 = null) {
+  public GetCompletedPlots(seasonId: number, param1 = null, purpose: string) {
     let arr: any[] = [];
     arr.push(seasonId);
+    arr.push(purpose);
     if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<CompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, arr);
+      return this.getWithParams<ICompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, arr);
     }
     else {
-      return this.getWithParams<CompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, arr);
+      return this.getWithParams<ICompletedPlotViewDto[]>(GET_COMPLETED_PLOTS_URI, arr);
     }
   }
 
@@ -313,5 +307,5 @@ export class MonitoringService extends ApiHttpService {
   public UpdatePropping(propping: ProppingDto) {
     return this.post<ProppingDto>(UPDATE_PROPPING_URI, propping);
   }
-  
+
 }

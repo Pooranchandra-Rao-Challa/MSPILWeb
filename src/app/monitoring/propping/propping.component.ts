@@ -30,7 +30,7 @@ export class ProppingComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('opPropping') opPropping!: OverlayPanel;
   fbPropping!: FormGroup;
-  proppingStage: LookupDetailDto[] = [];
+  proppingStages: LookupDetailDto[] = [];
   proppings: ProppingViewDto[] = [];
   propping: ProppingDto = {};
   permissions: any;
@@ -62,8 +62,8 @@ export class ProppingComponent implements OnInit {
     this.permissions = this.jwtService.Permissions;
     this.initSeasons();
     this.initCurrentSeason(CURRENT_SEASON());
+    this.initProppingStages();
     this.proppingForm();
-    this.initProppingStage();
   }
 
   initSeasons() {
@@ -84,10 +84,10 @@ export class ProppingComponent implements OnInit {
     });
   }
 
-  initProppingStage() {
+  initProppingStages() {
     this.lookupService.ProppingStages().subscribe((resp) => {
-      this.proppingStage = resp as unknown as LookupDetailDto[];
-      if (this.proppingStage) this.initProppings(this.currentSeason.seasonId!, this.proppingStage[0].lookupDetailId!);
+      this.proppingStages = resp as unknown as LookupDetailDto[];
+      if (this.proppingStages) this.initProppings(this.currentSeason.seasonId!, this.proppingStages[0].lookupDetailId!);
     });
   }
 
