@@ -429,27 +429,20 @@ export class CompletedPlotDto {
   isActive?: boolean
 
 }
-export class CompletedPlotViewDto {
-  completedPlotId?: number
-  seasonId?: number
-  season?: string
-  docNo?: number
-  docDate?: string
-  plotAssessmentId?: number
-  farmerId?: number
-  farmerName?: string
-  farmerCode?: string
-  plotNumber?: string
-  estimatedTon?: number
-  netArea?: number
-  isCompleted?: boolean
-  isLeftCultivation?: boolean
-  isUsedForRatoon?: boolean
-  isActive?: boolean
-  createdAt?: string
-  createdBy?: string
-  updatedAt?: string
-  updatedBy?: string
+export interface ICompletedPlotViewDto {
+  plotId: number;
+  seasonId: number;
+  seasonName: string;
+  farmerId: number;
+  farmerCode: string;
+  farmerName: string;
+  plotNumber: string;
+  estimatedTon: number;
+  excessTonage: number;
+  suppliedTon: number;
+  weightmentDate: Date;
+  netArea: number;
+  status: string;
 }
 
 export class MaintenanceItems {
