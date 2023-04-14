@@ -24,7 +24,13 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": [
-              "jspdf"
+              "raf",
+              "jspdf",
+              "canvg",
+              "jspdf-autotable",
+              "file-saver",
+              "rgbcolor",
+              "rxjs"
            ],
             "assets": [
               "src/favicon.ico",
