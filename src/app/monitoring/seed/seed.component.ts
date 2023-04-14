@@ -182,7 +182,7 @@ export class SeedComponent implements OnInit {
       uom: new FormControl(seedDetail.uom),
       qty: [seedDetail.qty, Validators.required],
       rate: [seedDetail.rate, Validators.required],
-      amount: seedDetail.amount,
+      amount: [{ value: seedDetail.amount, disabled: true }],
     });
   }
 
