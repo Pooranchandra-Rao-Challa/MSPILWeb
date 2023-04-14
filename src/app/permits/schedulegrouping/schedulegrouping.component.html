@@ -63,40 +63,84 @@
                                           </p-dropdown>
                                       </div>
                                       <div class="field col-12 md:col-4">
-                                          <label>Division:<sup class="p-error">*</sup></label>
-                                          <p-dropdown placeholder="Select To division"  [options]="divisions" placeholder="Select Division"  optionValue="divisionId" appendTo="body"
-                                          [filter]="true" optionLabel="divisionName" formControlName="divisionId" [style]="{'width':'100%'}">
-                                          </p-dropdown>
-                                      </div>
-                                      <div class="field col-12 md:col-4">
-                                          <label>Circle:<sup class="p-error">*</sup></label>
-                                          <p-dropdown [options]="circles" placeholder="Select Circle " optionValue="circleId" appendTo="body"
-                                          [filter]="true" optionLabel="circleName" formControlName="circleId" [style]="{'width':'100%'}">
-                                          </p-dropdown>
-                                      </div>
-                                      <div class="field col-12 md:col-4">
-                                          <label>Section:<sup class="p-error">*</sup></label>
-                                          <p-dropdown [options]="sections" placeholder="Select Section " optionValue="sectionId" appendTo="body"
-                                          [filter]="true" optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}">
-                                          </p-dropdown>
-                                      </div>
-                                      <div class="field col-12 md:col-4">
-                                          <label>Village:<sup class="p-error">*</sup></label>
-                                          <p-dropdown [options]="villages" placeholder="Select Village"  optionValue="villageId" appendTo="body" 
-                                           [filter]="true" optionLabel="villageName" formControlName="villageId" [style]="{'width':'100%'}">
-                                          </p-dropdown>
-                                      </div>
+                                        <label>Division:</label>
+                                        <p-multiSelect [options]="divisions" placeholder="Select Division"
+                                            optionValue="divisionId" appendTo="body" [filter]="true"
+                                            optionLabel="divisionName" formControlName="divisionId"
+                                            [style]="{'width':'100%'}"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
+                                            (onChange)="SetAllDivisionChilds($event.value)">
+                                        </p-multiSelect>
+                                        <span
+                                            *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['divisionId'].errors?.['required']">
+                                                Please Select Division.</div>
+                                        </span>
+                                    </div>
+                                    <div class="field col-12 md:col-4">
+                                        <label>Circle:</label>
+                                        <p-multiSelect [options]="filterCircles" placeholder="Select Circle "
+                                            optionValue="circleId" appendTo="body" [filter]="true" optionLabel="circleName"
+                                            formControlName="circleId" [style]="{'width':'100%'}"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }"
+                                            (onChange)="SetAllCircleChilds($event.value)">
+                                        </p-multiSelect>
+                                        <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['circleId'].errors?.['required']">
+                                                Please Select Circle.</div>
+                                        </span>
+                                    </div>
+                                    <div class="field col-12 md:col-4">
+                                        <label>Section:</label>
+                                        <p-multiSelect [options]="filterSections" placeholder="Select Section "
+                                            optionValue="sectionId" appendTo="body" [filter]="true"
+                                            optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }"
+                                            (onChange)="SetAllSectionChilds($event.value)"></p-multiSelect>
+                                        <span
+                                            *ngIf="FormControls['sectionId'].touched && FormControls['sectionId'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['sectionId'].errors?.['required']">
+                                                Please Select Section.</div>
+                                        </span>
+                                    </div>
+                                    <div class="field col-12 md:col-4">
+                                        <label class="required">Village:</label>
+                                        <p-multiSelect [options]="filterVillages" placeholder="Select Village"
+                                            optionValue="villageId" appendTo="body"
+                                            [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"
+                                            [filter]="true" optionLabel="villageName" formControlName="villageId"
+                                            [style]="{'width':'100%'}"></p-multiSelect>
+                                        <span
+                                            *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControls['villageId'].errors?.['required']">
+                                                Please Select Village.</div>
+                                        </span>
+                                    </div>
                                       <div class="field col-12 md:col-4">
                                           <label>Plant Type:<sup class="p-error">*</sup></label>
-                                          <p-dropdown placeholder="Select To Plant Type" optionLabel="code"
-                                              optionValue="plantType" formControlName="plantType" appendTo="body">
-                                          </p-dropdown>
+                                          <p-dropdown [options]="planttype" optionLabel="name" appendTo="body"
+                                          formControlName="plantTypeId" placeholder="Select Plant Type Name "
+                                          optionValue="plantTypeId" placeholder="Select Plant Type Name." appendTo="body"
+                                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantTypeId'].touched && FormControls['plantTypeId'].errors }">
+                                      </p-dropdown>
                                       </div>
                                       <div class="field col-12 md:col-4">
-                                          <label>Variety:<sup class="p-error">*</sup></label>
-                                          <p-dropdown placeholder="Select To Variety" optionLabel="code"
-                                              optionValue="variety" formControlName="variety" appendTo="body">
-                                          </p-dropdown>
+                                        <label class="required">Variety:</label>
+                                        <p-dropdown 
+                                        [filter]="true"
+                                        filterBy="name"
+                                       [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
+                                       placeholder="Select Variety" optionLabel="name" [options]="varieties"
+                                          optionValue="varietyId" formControlName="varietyId">
+                                        </p-dropdown>
+                                        <span *ngIf="FormControls['varietyId'].touched && FormControls['varietyId'].invalid">
+                                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['varietyId'].errors?.['required']">
+                                            Please Select Variety.</div>
+                                        </span>
                                       </div>
                                       <div class="field col-12 md:col-8">
                                         <button pButton pRipple type="submit" label="Get Order"

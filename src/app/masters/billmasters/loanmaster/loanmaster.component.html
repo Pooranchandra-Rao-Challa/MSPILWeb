@@ -192,7 +192,8 @@
                   <div class="field col-12 md:col-4">
 
                     <label>InterestRate:<sup class="p-error">*</sup></label>
-                    <input pInputText id="interestRate" type="number" formControlName="interestRate" [ngClass]="{
+                    <input pInputText id="interestRate"  placeholder="Enter Interest Rate" numericOnly
+                     formControlName="interestRate" [ngClass]="{
                         'is-invalid ng-dirty':
                           FormControls['interestRate'].touched && FormControls['interestRate'].errors}" />
                     <span *ngIf="
@@ -208,7 +209,7 @@
 
                   <div class="field col-12 md:col-4">
                     <label>Priority:<sup class="p-error">*</sup></label>
-                    <input pInputText id="priority" type="number" placeholder="Enter Priority"formControlName="priority" 
+                    <input pInputText id="priority"  placeholder="Enter Priority"formControlName="priority" numericOnly
                     [ngClass]="{'is-invalid ng-dirty':FormControls['priority'].touched &&FormControls['priority'].errors}" />
                     <span *ngIf="
                         FormControls['priority'].touched &&FormControls['priority'].invalid">
@@ -216,7 +217,7 @@
                         Please Enter Priority.
                       </div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['pattern']">
-                        priority Should Contains Only Alphbets.
+                        Priority Should Contain Only Numbers
                       </div>
                     </span>
                   </div>
@@ -253,10 +254,7 @@
                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
 
                   </div>
-                  <div class="field col-12 md:col-3 mt-4">
-                    <button pButton pRipple type="button" label="Add SubloanType"
-                      class="p-button-raised p-button-primary" (click)="addLoanSubType()"></button>
-                  </div>
+                 
 
                 </div>
               </p-fieldset>
@@ -269,11 +267,12 @@
               <!-- //formArray -->
               <p-fieldset legend="Loan SubType" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
+                  <div class="field col-12 md:col-10"></div>
+                  <div class="field col-12 md:col-2 ">
+                    <button pButton pRipple type="button" label="Add LoanSubType"
+                      class="p-button-raised p-button-primary" (click)="addLoanSubType()"></button>
+                  </div>
               
-
-                
-                 
-
                   <div formArrayName="loanSubTypes" *ngIf="showloantype">
                     <p-table #dt2 [value]="faLoanSubType().controls" dataKey="id" [rowHover]="true" [autoLayout]="true"
                       responsiveLayout="scroll" [tableStyle]="{ width: '150%'}"
@@ -304,11 +303,11 @@
                           </td>
                           <td>
                             <input pInputText class="form-control" type="number" placeholder="Enter Priority"
-                              formControlName="priority" />
+                              formControlName="priority" numericOnly />
                           </td>
                           <td>
                             <p-inputNumber inputId="interestRate" formControlName="interestRate"
-                              placeholder="Enter Intrest Rate" [showButtons]="true">
+                              placeholder="Enter Intrest Rate" numericOnly [showButtons]="true">
                             </p-inputNumber>
                           </td>
                           <td>

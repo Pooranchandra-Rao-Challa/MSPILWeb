@@ -279,24 +279,14 @@
                   <p class="disabled_text" style="font-weight: 800;">{{FormControls['agreed'].value}}</p>
                 </div>
                 <div class="field col-12 md:col-4">
-                  <label class="required">BIR Number:</label>
-                  <input pInputText id="birnumber" placeholder="Enter BIR No" formControlName="birnumber"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['birnumber'].touched && FormControls['birnumber'].errors }">
-                  <span *ngIf="FormControls['birnumber'].touched && FormControls['birnumber'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['birnumber'].errors?.['required']">
-                      Please Select BIR No.</div>
-                  </span>
+                  <label >BIR Number:</label>
+                  <input pInputText id="birnumber" placeholder="Enter BIR No" formControlName="birnumber">
                 </div>
                 <div class="field col-12 md:col-4">
-                  <label class="required">BIR Date:</label>
+                  <label >BIR Date:</label>
                   <p-calendar placeholder="Select BIR Date" [readonlyInput]="true" [showIcon]="true"
-                    formControlName="birdate"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['birdate'].touched && FormControls['birdate'].errors }">
+                    formControlName="birdate">
                   </p-calendar>
-                  <span *ngIf="FormControls['birdate'].touched && FormControls['birdate'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['birdate'].errors?.['required']">
-                      Please Select BIR Date.</div>
-                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Field Name:</label>
@@ -358,15 +348,9 @@
                   [filter]="true" filterBy="name"
                  [virtualScroll]="true" [virtualScrollItemSize]="38" optionLabel="name"
                     [options]="methodofIrrigations" optionValue="lookupDetailId"
-                    [autoDisplayFirst]="autoDisplayDrowdown" formControlName="methodOfIrrigationId" appendTo="body"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['methodOfIrrigationId'].touched && FormControls['methodOfIrrigationId'].errors }">
+                    [autoDisplayFirst]="autoDisplayDrowdown" formControlName="methodOfIrrigationId" appendTo="body">
                   </p-dropdown>
-                  <span
-                    *ngIf="FormControls['methodOfIrrigationId'].touched && FormControls['methodOfIrrigationId'].invalid">
-                    <div class="ng-invalid ng-touched p-error"
-                      *ngIf="FormControls['methodOfIrrigationId'].errors?.['required']">
-                      Please Select Method Of Irrigation.</div>
-                  </span>
+                 
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Distance From Plot(KM):</label>
@@ -378,14 +362,8 @@
                   <label class="required">Planting Method:</label>
                   <p-dropdown placeholder="Select Planting Method" optionLabel="name" [options]="plantingMethods"
                     optionValue="lookupDetailId" formControlName="plantingMethodId" appendTo="body"
-                    [autoDisplayFirst]="autoDisplayDrowdown"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingMethodId'].touched && FormControls['plantingMethodId'].errors }">
+                    [autoDisplayFirst]="autoDisplayDrowdown">
                   </p-dropdown>
-                  <span *ngIf="FormControls['plantingMethodId'].touched && FormControls['plantingMethodId'].invalid">
-                    <div class="ng-invalid ng-touched p-error"
-                      *ngIf="FormControls['plantingMethodId'].errors?.['required']">
-                      Please Select Planting Method.</div>
-                  </span>
                 </div>
               </div>
             </p-fieldset>

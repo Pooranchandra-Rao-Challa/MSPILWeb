@@ -115,7 +115,7 @@ export class SeasonComponent implements OnInit {
       seasonId: [null],
 
       code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      name:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       plantFrom: ['', Validators.required],
       plantTo: ['', Validators.required],
       crushFrom: ['', Validators.required],
@@ -210,22 +210,26 @@ export class SeasonComponent implements OnInit {
   }
 
   addSeason() {
- 
-    if(!this.existCurrentSeasonRecord){
-      this.submitLabel = 'Add Season';
+    this.submitLabel = 'Add Season';
       this.addFlag = true;
       this.seasonForm();
       this.showDialog = true;
-      this.fbseasons.controls['code'].patchValue(this.cSeasonCode);
-    }else {
-      this.messageService.add({
-        key: 'existCurrentSeasonRecord',
-        severity: 'info',
-        summary: 'Info Message',
-        detail: 'Current Season is defined',
-        life: 5000
-      });
-    }
+
+    // if(!this.existCurrentSeasonRecord){
+    //   this.submitLabel = 'Add Season';
+    //   this.addFlag = true;
+    //   this.seasonForm();
+    //   this.showDialog = true;
+    //   this.fbseasons.controls['code'].patchValue(this.cSeasonCode);
+    // }else {
+    //   this.messageService.add({
+    //     key: 'existCurrentSeasonRecord',
+    //     severity: 'info',
+    //     summary: 'Info Message',
+    //     detail: 'Current Season is defined',
+    //     life: 5000
+    //   });
+    // }
 
   }
   onGlobalFilter(table: Table, event: Event) {
