@@ -22,4 +22,5 @@ export enum EDocumentNumberScreens{
   Permits = 3,
   Loans = 4,
   PlotTransfers = 5,
+  Seed = 6,
 }
