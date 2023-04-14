@@ -69,8 +69,8 @@ export class ScheduleGroupingComponent implements OnInit {
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
-    { field: 'variety', header: 'variety', label: 'Variety' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
   ];

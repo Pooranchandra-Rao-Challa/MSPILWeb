@@ -80,10 +80,10 @@
                   </div>
                   <div class="field col-12 md:col-6">
                     <label>Address:<sup class="p-error">*</sup></label>
-                    <textarea rows="5" cols="30" placeholder="Enter Address" pInputTextarea formControlName="address" [maxlength]="maxLength.address"
+                    <textarea rows="5"  cols="30" #address placeholder="Enter Address" pInputTextarea formControlName="address" [maxlength]="maxLength.address"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
                       <div class="text-right">
-                        <small>{{inchargeName.value.length}}/{{maxLength.address}} </small>
+                        <small>{{address.value.length}}/{{maxLength.address}} </small>
                       </div>
                       <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
@@ -101,7 +101,7 @@
                     </div>
                     <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
                       <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['listingOrder'].errors?.['required']">Order Is Required.</div>
+                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter listingOrder.</div>
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contains Numbers.
                       </div>

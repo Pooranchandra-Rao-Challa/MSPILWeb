@@ -125,6 +125,10 @@ export class HglComponent implements OnInit {
   inithgls() {
     this.appMasterService.GetHgls().subscribe((resp) => {
       this.hgls = resp as unknown as HglViewDto[];
+      console.log(  this.hgls
+
+      );
+      
     });
   }
 

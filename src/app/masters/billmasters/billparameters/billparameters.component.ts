@@ -86,7 +86,7 @@ export class BillParametersComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       caluclationType: ['', Validators.required],
       priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
-      formula: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
+      formula: new FormControl('', [Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [true]
     });
   }

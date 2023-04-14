@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
 import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
-import { CommonService } from "src/app/_services/common.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 
@@ -12,6 +11,22 @@ export interface IHeader {
   field: string;
   header: string;
   label: string;
+}
+
+export interface IFromHeader {
+  field: string;
+  header: string;
+  label: string;
+}
+
+export class EstimatedTonFromDto {
+  Division?: string;
+  Circle?: string;
+  Section?: string;
+  Village?: string;
+  EstimatedTon?: number;
+  Quota?: number;
+
 }
 
 @Component({
@@ -39,6 +54,8 @@ export class EstimatedTonComponent implements OnInit {
   filterSections: SectionforUserDto[] = [];
   filterVillages: VillageforUserDto[] = [];
 
+  showDialog: boolean = false;
+  estimatedTonFromDto: EstimatedTonFromDto[] = [];
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -50,7 +67,7 @@ export class EstimatedTonComponent implements OnInit {
       divisionId:  [null, (Validators.required)],
       circleId:  [null, (Validators.required)],
       sectionId: [null, (Validators.required)],
-      villageId:  [null, (Validators.required)],
+      villageId:  [, (Validators.required)],
       frompltngDate: [null, (Validators.required)],
       topltngDate: [null, (Validators.required)],
       farmerCode:  [null, (Validators.required)],
@@ -85,6 +102,16 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'SuppliedTon', header: 'SuppliedTon', label: 'Supplied Ton' },
     { field: 'BalanceTon', header: 'BalanceTon', label: 'Balance Ton' },
     { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments' },
+  ];
+
+  header: IFromHeader[] = [
+    { field: 'Division', header: 'Division', label: 'Division' },
+    { field: 'Circle', header: 'Circle', label: 'Circle' },
+    { field: 'Section', header: 'Section', label: 'Section' },
+    { field: 'Village', header: 'Village', label: 'Village' },
+    { field: 'EstimatedTon', header: 'EstimatedTon', label: 'Estimated Ton' },
+    { field: 'Quota', header: 'Quota', label: 'Quota' },
+
   ];
 
   initSeasons() {
@@ -130,28 +157,44 @@ export class EstimatedTonComponent implements OnInit {
     });
   }
   SetAllDivisionChilds(values: number[]) {
-    let val: string[];
-    this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
-    this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
-    this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
+    if(values.length == 0){
+      this.filterCircles = Object.assign([], this.circles);
+      this.filterSections = Object.assign([], this.sections);
+      this.filterVillages = Object.assign([], this.villages);
+    }
+    else{ 
+      this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
+      this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
+      this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
+    }
   }
   SetAllCircleChilds(values: number[]) {
-    let val: string[];
+    if(values.length == 0){
+      this.filterSections = Object.assign([], this.sections);
+      this.filterVillages = Object.assign([], this.villages);
+    }
+    else{ 
     this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
     this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
+    }
   }
   SetAllSectionChilds(values: number[]) {
-    let val: string[];
+    if(values.length == 0){
+      this.filterSections = Object.assign([], this.sections);
+      this.filterVillages = Object.assign([], this.villages);
+    }
+    else{ 
     this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
+    }
   }
   GetFarmers() {
     if (this.fbEstimatedTon.value.seasonId != null && this.fbEstimatedTon.value.frompltngDate != null &&
-      this.fbEstimatedTon.value.topltngDate != null && this.fbEstimatedTon.value.villageId != null) {
+      this.fbEstimatedTon.value.topltngDate != null ) {
       var seasonId = this.fbEstimatedTon.value.seasonId;
       var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
       var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
       var villageId = this.fbEstimatedTon.value.villageId
-      this.permitService.GetFarmersInPlantingDates(seasonId, frompltngDate, topltngDate, villageId).subscribe((resp) => {
+      this.permitService.GetFarmersInPlantingDates(seasonId, frompltngDate, topltngDate,villageId).subscribe((resp) => {
         this.farmers = resp as unknown as FarmersInPlantingDatesDto[];
         console.log(this.farmers)
       })
@@ -162,5 +205,6 @@ export class EstimatedTonComponent implements OnInit {
   }
   getEstimatedTon() {
     this.showTable = true;
+    this.showDialog = true;
   }
 }

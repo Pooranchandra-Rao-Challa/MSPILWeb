@@ -191,10 +191,10 @@
                 <div class="field col-12 md:col-6">
                   <label>Priority:<sup class="p-error">*</sup></label>
                   <input pInputText id="priority" type="text" placeholder="Enter Priority" formControlName="priority"
-                    #formula numericOnly [maxlength]="10"
+                    #priority numericOnly [maxlength]="10"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['priority'].touched && FormControls['priority'].errors }">
                   <div class="text-right">
-                    <small>{{formula.value.length}}/{{10}}</small>
+                    <small>{{priority.value.length}}/{{10}}</small>
                   </div>
                   <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
@@ -204,8 +204,8 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Formula:<sup class="p-error">*</sup></label>
-                  <textarea pInputTextarea id="formula" type="text" placeholder="Enter Formula"
+                  <label>Formula:</label>
+                  <textarea pInputTextarea #formula id="formula" type="text" placeholder="Enter Formula"
                     formControlName="formula" alphaNumeric [maxlength]="maxLength.address"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['formula'].touched && FormControls['formula'].errors }">
                     </textarea>
@@ -213,8 +213,6 @@
                     <small>{{formula.value.length}}/{{maxLength.address}}</small>
                   </div>
                   <span *ngIf="FormControls['formula'].touched && FormControls['formula'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['formula'].errors?.['required']">
-                      Please Enter Formula.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['formula'].errors?.['minlength']">
                       Formula Min Characters Is 2.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['formula'].errors?.['pattern']">

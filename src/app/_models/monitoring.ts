@@ -273,7 +273,7 @@ export interface IPlotTransferViewDto {
   docNo: number;
   docDate: Date;
   plotTransferTypeId: number;
-  plotTransferType: string;
+  plotTransferTypeName: string;
   fromFarmerId: number;
   fromFarmerCode: number;
   fromFarmerName: string;
@@ -283,7 +283,7 @@ export interface IPlotTransferViewDto {
   toFarmerCode: number;
   toFarmerName: string;
   plotTransferReasonId: number;
-  plotTransferReason: string;
+  plotTransferReasonName: string;
   createdBy: string;
   createdAt: string;
   updatedBy: string;
@@ -473,7 +473,7 @@ export class MaintDiseaseDto {
   updatedBy?: string
   createdAt?: Date
   updatedAt?: Date
- 
+
 }
 
 
@@ -764,6 +764,9 @@ export interface IPlotsofFarmerViewDto {
   plotNumber: string;
   netArea: number;
   estimatedTon: number;
+  excessTonage: number;
+  suppliedTon: number;
+  weightmentDate: Date;
   villageId: number;
   villageName: string;
 }
