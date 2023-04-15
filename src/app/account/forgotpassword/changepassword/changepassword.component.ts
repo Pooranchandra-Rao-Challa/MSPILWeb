@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SecurityService } from 'src/app/_services/security.service';
 
 @Component({
   selector: 'app-changepassword',
@@ -8,8 +9,10 @@ import { Router } from '@angular/router';
   ]
 })
 export class ChangePasswordComponent implements OnInit {
-
-  constructor(private router: Router) { }
+  userName?:string;
+  constructor(private router: Router,
+    private securityService:SecurityService,
+    private activatedRoute:ActivatedRoute) { }
 
   navigateToPrev(){
     this.router.navigate(['/forgotpassword/securityquestion'])
@@ -18,6 +21,7 @@ export class ChangePasswordComponent implements OnInit {
     this.router.navigate(['/forgotpassword/successmessage'])
   }
   ngOnInit(): void {
+    this.userName = this.activatedRoute.snapshot.queryParams['username'];
   }
 
 }

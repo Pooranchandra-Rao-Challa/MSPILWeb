@@ -74,4 +74,17 @@ export class JWTService {
     return jwt.Id;
   }
 
+  public get HasQuestions():boolean{
+    const jwt = this.DecodedJWT;
+    if(!jwt || jwt == "")  return false;
+    return  jwt.SecureQuestions > 0;
+  }
+
+  public get IsFirstTimeLogin():boolean{
+    const jwt = this.DecodedJWT;
+    console.log(jwt);
+
+    if(!jwt || jwt == "")  return false;
+    return  jwt.IsFirstTimeLogin > 0;
+  }
 }

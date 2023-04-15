@@ -115,5 +115,11 @@ export class ApiHttpService {
   saveToken(token: ResponseModel){
     this.jwtService.SaveToken(token);
   }
+  get IsFirstTimeLogin(): boolean{
+    return this.jwtService.IsFirstTimeLogin;
+  }
+  get HasQuestions(): boolean{
+    return this.jwtService.HasQuestions;
+  }
 }
 

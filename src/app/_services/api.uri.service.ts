@@ -15,6 +15,7 @@ export const GET_ALL_SECTIONS_URI = "Security/GetAllSections"
 export const GET_ROLES_URI = "Security/GetRoles"
 export const CREATE_ROLE_URI = "Security/CreateRole"
 export const UPDATE_ROLE_URI = "Security/UpdateRole"
+export const USER_SECURITY_QUESTIONS = "Security/UserQuestions";
 export const GET_ROLE_PERMISSIONS_URI = "Security/GetRolePermissions"
 export const GET_PERMISSIONS_URI = "Security/GetPermissions"
 export const CREATE_DISTRICT_URI = "GeoMaster/CreateDistrict"

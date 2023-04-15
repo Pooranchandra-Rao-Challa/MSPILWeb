@@ -12,7 +12,7 @@ export class UserNameComponent implements OnInit {
   constructor(private router: Router) { }
 
   navigateToNext(){
-    this.router.navigate(['/forgotpassword/securityquestion'])
+    this.router.navigate(['/forgotpassword/securityquestion'],{ queryParams: { username: 'superuser' }})
   }
 
   ngOnInit(): void {

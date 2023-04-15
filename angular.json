@@ -24,9 +24,9 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": [
+
               "raf",
               "jspdf",
-              "canvg",
               "jspdf-autotable",
               "file-saver",
               "rgbcolor",

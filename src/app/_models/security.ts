@@ -5,7 +5,7 @@ export class UserViewDto {
   lastName?: string;
   password?: string;
   roleId?: string;
-  roleName?:string;
+  roleName?: string;
   userName?: string;
   email?: string;
   mobileNumber?: string;
@@ -70,13 +70,27 @@ export class RoleDto {
   name?: string
   code?: string
   isActive?: boolean
-  permissions?:RolePermissionDto[]
+  permissions?: RolePermissionDto[]
 }
 
 export class RolePermissionDto {
   permissionId?: string
   label?: string
   screenName?: string
-  displayName?:string
+  displayName?: string
   assigned?: boolean = false;
+}
+
+export class SecureQuestionDto {
+  questionId?: number
+  question?: string
+}
+
+export class UserQuestionDto {
+  userQuestionId?: number
+  userId?: string
+  questionId?: number
+  question?: string
+  answer?: string
+  userAnswer?:string;
 }

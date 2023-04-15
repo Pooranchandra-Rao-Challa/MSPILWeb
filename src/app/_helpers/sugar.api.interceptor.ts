@@ -20,6 +20,7 @@ export class SugarAPIInterceptor implements HttpInterceptor {
     this.loaderService.isLoading.next(true);
     const isApiUrl = request.url.startsWith(environment.ApiUrl);
     const isLoggedIn = this.jwtService.IsLoggedIn;
+
     //isLogin true block
     if (isLoggedIn && isApiUrl) {
       let authReq = request;
