@@ -106,18 +106,19 @@
                   </div>
 
                   <div class="field col-12 md:col-6">
-                    <label htmlFor="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
-                    <input pInputText id="listingOrder" formControlName="listingOrder" placeholder="Enter Listing Order"
-                      type="text"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }" />
-                    <div
-                      *ngIf="FormControls['listingOrder'].invalid &&  FormControls['listingOrder'].touched && FormControls['listingOrder'].errors?.['required']"
-                      class="error-message p-error">
-                      Please Enter Listing.
+                    <label>Listing Order:<sup class="p-error">*</sup></label>
+                    <input pInputText inputId="listingOrder" #listingOrder  placeholder="Enter Listing Order" formControlName="listingOrder" numericOnly [maxlength]="6"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
+                    <div class="text-right">
+                      <small>{{listingOrder.value.length}}/6</small>
                     </div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['listingOrder'].errors?.['pattern']">
-                      Order Should Only Contains Integers.
-                    </div>
+                    <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter listingOrder.</div>
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contains Numbers.
+                      </div>
+                    </span>
                   </div>
                   <div class="field col-12 md:col-6">
                     <label>Address:<sup class="p-error">*</sup></label>
@@ -162,8 +163,9 @@
       </ng-template>
     </p-toolbar>
     <p-table #dt1 [value]="circles" dataKey="id" [rows]="10" [rowHover]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="['divisionId','code','name','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo',
-          'listingOrder','createdByUser','updatedByUser','createAt','updatedAt']" [autoLayout]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="['divisionId','code','address',
+      'name','divisionName','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo' ,'listingOrder',
+          'listingOrder','createdAt','createdBy','updatedAt','updatedBy']" [autoLayout]="true"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">

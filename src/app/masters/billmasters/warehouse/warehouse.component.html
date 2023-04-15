@@ -130,10 +130,10 @@
 
                   <label>Code:<sup class="p-error">*</sup></label>
                   <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                    alphaNumeric [readonly]="fbwarehouse.value.id" [maxlength]="20"
+                    alphaNumeric [readonly]="fbwarehouse.value.id" [maxlength]="10"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <div class="text-right">
-                    <small>{{code.value.length}}/20</small>
+                    <small>{{code.value.length}}/10</small>
                   </div>
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
@@ -167,10 +167,10 @@
                 <div class="field col-12 md:col-6">
                   <label>GL Code:</label>
                   <input pInputText id="glcode" #glcode type="text" placeholder="Enter GL Code" formControlName="glcode"
-                    alphaNumeric [maxlength]="20"
+                    alphaNumeric [maxlength]="10"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
                   <div class="text-right">
-                    <small> {{glcode.value.length}}/20 </small>
+                    <small> {{glcode.value.length}}/10 </small>
                   </div>
                   <span *ngIf="FormControls['glcode'].touched && FormControls['glcode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['pattern']">
@@ -184,7 +184,7 @@
                     formControlName="subGlcode" alphaNumeric [maxlength]="20"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
                   <div class="text-right">
-                    <small> {{subGlcode.value.length}}/20 </small>
+                    <small> {{subGlcode.value.length}}/10 </small>
                   </div>
                   <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">

@@ -25,15 +25,18 @@ import {
   MAX_LENGTH_20,
   MAX_LENGTH_6,
   MIN_LENGTH_2,
+ 
   RG_ADDRESS,
   RG_ALPHA_NUMERIC,
   RG_ALPHA_ONLY,
   RG_NUMERIC_ONLY,
   RG_PHONE_NO,
 } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { MaxLength} from 'src/app/_models/common';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../../_alerts/alertMessage';
+import { MAX_LENGTH_25 } from 'src/app/_shared/regex';
+import { MIN_LENGTH_6 } from '../../../_shared/regex';
 
 @Component({
   selector: 'app-section',
@@ -87,17 +90,10 @@ export class SectionComponent implements OnInit {
     this.fbsections = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      listingOrder: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
+      listingOrder: new FormControl(null,[Validators.required]),
       address: new FormControl(null, [Validators.required,Validators.pattern(RG_ADDRESS)]),
       circleId: new FormControl('', Validators.required),
-      divisionId: new FormControl('', [
-        Validators.required,]),
-      inchargePhoneNo: new FormControl('', [
-        Validators.pattern(RG_PHONE_NO),
-      ]),
+      divisionId: new FormControl('', [Validators.required,]),inchargePhoneNo: new FormControl('', [Validators.pattern(RG_PHONE_NO),]),
       inchargeName: new FormControl('', [Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [this.valSwitch, Validators.required],
       sectionId: [''],
@@ -119,7 +115,7 @@ export class SectionComponent implements OnInit {
     this.fbsections = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      listingOrder: [ section.listingOrder,[Validators.required, Validators.pattern(RG_NUMERIC_ONLY)], ],
+      listingOrder: [ section.listingOrder,[Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]],
       address: [section.address, Validators.required],
       circleId: [section.circleId, Validators.required],
       divisionId: [section.divisionId],

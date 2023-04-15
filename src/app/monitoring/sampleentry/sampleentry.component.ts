@@ -56,7 +56,7 @@ export class SampleEntryComponent implements OnInit {
   netArea: number = 0;
 
   headers: IHeader[] = [
-    { field: 'season', header: 'season', label: 'Season' },
+    { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'docNo', header: 'docNo', label: 'Doc No' },
@@ -157,11 +157,11 @@ export class SampleEntryComponent implements OnInit {
 
   getDocNo() {
     this.commonService.GetDocNo(this.fbSampleEntry.controls['seasonId'].value,
-    EDocumentNumberScreens.Samples).subscribe((resp) => {
-      console.log(resp);
+      EDocumentNumberScreens.Samples).subscribe((resp) => {
+        console.log(resp);
 
-      this.fbSampleEntry.get('docNo')?.patchValue(resp);
-    });
+        this.fbSampleEntry.get('docNo')?.patchValue(resp);
+      });
   }
 
   calculatePurityAndCCS() {
@@ -202,23 +202,34 @@ export class SampleEntryComponent implements OnInit {
         }
       });
       if (!this.addFlag && this.isSampleCountMatched)
-      this.messageService.add({
-        key: 'samplesMsg',
-        severity: 'info',
-        summary: 'Info Message',
-        detail: 'Number of entered samples matches with number of expected samples',
-        life: 5000
-      });
+        this.messageService.add({
+          key: 'samplesMsg',
+          severity: 'info',
+          summary: 'Info Message',
+          detail: 'Number of entered samples matches with number of expected samples',
+          life: 5000
+        });
     });
   }
 
   onPlotNumber(plotId: number) {
     let plot = this.plotNumbers.filter((value) => value.plotId == plotId)[0];
-    this.netArea = plot && plot.netArea;
-    let enteredSamples = this.sampleEntries.filter((sample) => sample.plotId == plotId);
-    this.enteredSampleCount = enteredSamples && enteredSamples.length;
-    this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(this.enteredSampleCount);
-    this.initSampleslabs();
+    if (plot) {
+      this.netArea = plot && plot.netArea;
+      let enteredSamples = this.sampleEntries.filter((sample) => sample.plotId == plotId);
+      this.enteredSampleCount = enteredSamples && enteredSamples.length;
+      this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(this.enteredSampleCount);
+      this.initSampleslabs();
+    }
+    else {
+      this.messageService.add({
+        key: 'samplesMsg',
+        severity: 'info',
+        summary: 'Info Message',
+        detail: 'This Plot Is Not Exsits In Plot Yield',
+        life: 5000
+      });
+    }
   }
 
   initSeasons() {

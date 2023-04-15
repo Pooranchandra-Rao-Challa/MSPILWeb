@@ -93,7 +93,7 @@ export class LoanMasterComponent implements OnInit {
       categoryId: ['', Validators.required],
       name:  new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       interestRate: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
-      priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode:['', Validators.pattern(RG_ALPHA_NUMERIC)],
       isActive: [false],

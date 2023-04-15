@@ -132,14 +132,15 @@
                   </div>
 
                   <div class="field col-12 md:col-6">
-                    <label htmlFor="listingOrder">Order:<sup class="p-error">*</sup></label>
-                    <input pInputText id="listingOrder" class="form-control" formControlName="listingOrder"
-                      placeholder="Enter Order" type="text"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }" />
+                    <label>Listing Order:<sup class="p-error">*</sup></label>
+                    <input pInputText inputId="listingOrder" #listingOrder  placeholder="Enter Listing Order" formControlName="listingOrder" numericOnly [maxlength]="6"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
+                    <div class="text-right">
+                      <small>{{listingOrder.value.length}}/6</small>
+                    </div>
                     <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
                       <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter Order
-                      </div>
+                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter listingOrder.</div>
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contains Numbers.
                       </div>

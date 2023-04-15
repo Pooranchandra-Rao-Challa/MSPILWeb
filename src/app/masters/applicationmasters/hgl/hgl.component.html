@@ -289,13 +289,15 @@
 
                   <div class="field col-12 md:col-3">
                     <label>Address:<sup class="p-error">*</sup></label>
-                    <textarea pInputTextarea formControlName="address" placeholder="Address" maxLength="256"
-                      style="height: 53px; resize: vertical;"
+                    <textarea pInputTextarea formControlName="address" placeholder="Address"
+                      style="height: 42px; resize: vertical;"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
                     <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                         Please Enter Address.</div>
-                    </span>                  
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
+                        Address Is Incorrect.</div>
+                    </span>
                   </div>
 
                   <div class="field col-12 md:col-3">
@@ -353,7 +355,7 @@
                   </div>
                   <div class="field col-12 md:col-3">
                     <label for="panNo">PAN No:</label>
-                    <input pInputText id="panNo" type="text" placeholder="Enter PAN No" formControlName="panNo" maxLength="10" style="text-transform:uppercase"
+                    <input pInputText id="panNo" type="text" placeholder="Enter Pan No " formControlName="panNo" maxLength="10" 
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].invalid }">
                     <div *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
                       <small class="form-text text-danger" *ngIf="FormControls['panNo'].errors?.['pattern']">
@@ -598,7 +600,7 @@
 
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-primary"
+          <button pButton pRipple type="button" label="submit" class="p-button-raised p-button-primary"
           [disabled]="fbHgl.invalid"  (click)="onSubmit()"></button>
         </div>
       </ng-template>

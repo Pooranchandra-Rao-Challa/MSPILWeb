@@ -9,6 +9,7 @@ export const RG_ADDRESS = /^[-a-zA-Z0-9-/]+(\s+[-a-zA-Z0-9-/]+)*$/;
 export const RG_PANNO = '^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$';
 export const RG_PINCODE = '^[1-9][0-9]{5}$';
 export const RG_AADHAAR = '[0-9]*';
+export const RG_SEASON_NAME = '^[1-9][0-9]{5}$';
 
 
 
@@ -38,3 +39,5 @@ export const MAX_LENGTH_30 = 30;
 export const MAX_LENGTH_50 = 50;
 export const MAX_LENGTH_25 = 25;
 export const MAX_LENGTH_2 = 2;
+export const MAX_LENGTH_3 = 3;
+

@@ -136,10 +136,10 @@
                   <div class="field col-12 md:col-4">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="20"
+                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="9"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <div class="text-right">
-                      <small>{{code.value.length}}/20</small>
+                      <small>{{code.value.length}}/9</small>
                     </div>
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
@@ -245,7 +245,7 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['caneRate'].errors?.['required']">
                         Please Enter Cane Rate.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['caneRate'].errors?.['pattern']">
-                        Burn Cane Rate Should Contains Only Numbers.</div>
+                      Cane Rate Should Contains Only Numbers.</div>
                     </span>
                   </div>
 
@@ -294,7 +294,7 @@
                                   <div [formGroupName]="i" class="col-12" style="padding-left:unset">
                                     <div class="field col-12 md:col-3" style="display:inline-block;padding-left:unset;">
                                       <label htmlFor="billPeram">Bill Parameter:<sup class="p-error">*</sup></label>
-                                      <p-dropdown [options]="billCategory.billParams" optionLabel="name"
+                                      <p-dropdown [options]="billCategory.billParams" optionLabel="name"appendTo="body"
                                         formControlName="billParameterId" optionValue="billParameterId"
                                         placeholder="Please Select Bill Parameter"></p-dropdown>
 

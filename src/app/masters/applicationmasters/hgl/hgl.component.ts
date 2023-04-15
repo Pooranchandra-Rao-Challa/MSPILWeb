@@ -1,6 +1,6 @@
 import { BankDto, BranchDto } from './../../../_models/applicationmaster';
 import { LookupService } from './../../../_services/lookup.service';
-import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, RG_AADHAAR, } from './../../../_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, RG_AADHAAR, RG_ADDRESS, } from './../../../_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
@@ -92,7 +92,7 @@ export class HglComponent implements OnInit {
       relationTypeId: new FormControl('', [Validators.required]),
       relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       gender: ['', Validators.required],
-      address: ['', Validators.required],
+     address: new FormControl('', [Validators.required, Validators.pattern(RG_ADDRESS)]),
       pinCode: new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_6)]),
       phoneNo: ['', Validators.pattern(RG_PHONE_NO)],
       tax: ['', Validators.required],
