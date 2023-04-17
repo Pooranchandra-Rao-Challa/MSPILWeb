@@ -26,7 +26,7 @@
                                         placeholder="Enter Code" #code [maxlength]="20" alphaNumeric
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                                     <div class="text-right">
-                                        <small>{{code.value.length}}/6</small>
+                                        <small>{{code.value.length}}/20</small>
                                     </div>
                                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                                         <div class="ng-invalid ng-touched p-error"

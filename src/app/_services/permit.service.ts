@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, FarmersInPlantingDatesDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforUserDto, VillageforUserDto, } from "../_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, FarmersInPlantingDatesDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforUserDto, VillageforUserDto, } from "../_models/permits";
 import { ApiHttpService } from "./api.http.service";
-import { GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VILLAGES_FOR_USER } from "./api.uri.service";
+import { GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VILLAGES_FOR_USER, UPDATE_EXCESS_TON } from "./api.uri.service";
 
 
 
@@ -24,6 +24,12 @@ export class permitService extends ApiHttpService {
 }
 public GetFarmersInPlantingDates(seasonId:number,frompltngDate:any,topltngDate:any,villageId?:number){
   return this.getWithParams<FarmersInPlantingDatesDto>(GET_FARMERS_FOR_ESTIMATED_TON,[seasonId,frompltngDate,topltngDate,villageId]);
+}
+public GetExcessTon(seasonId: number,frompltngDate:any,topltngDate:any) {
+  return this.getWithParams<ExcessTonViewDto>(GET_EXCESS_TON, [seasonId,frompltngDate,topltngDate]);
+}
+public UpdateExcessTon(excesston: ExcessTonDto) {
+  return this.post<ExcessTonDto>( UPDATE_EXCESS_TON, excesston);
 }
 public GetDivisionsforUser() {
   return this.get<DivisionsforUserDto[]>( GET_DIVISIONS_FOR_USER);

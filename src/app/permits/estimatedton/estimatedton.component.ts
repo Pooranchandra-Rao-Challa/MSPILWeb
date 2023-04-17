@@ -1,8 +1,9 @@
 import { formatDate } from "@angular/common";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { OverlayPanel } from "primeng/overlaypanel";
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
-import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
@@ -17,16 +18,6 @@ export interface IFromHeader {
   field: string;
   header: string;
   label: string;
-}
-
-export class EstimatedTonFromDto {
-  Division?: string;
-  Circle?: string;
-  Section?: string;
-  Village?: string;
-  EstimatedTon?: number;
-  Quota?: number;
-
 }
 
 @Component({
@@ -44,7 +35,9 @@ export class EstimatedTonComponent implements OnInit {
   dateTime = new Date();
   estimatedton: EstimatedViewDto[] = [];
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('opexcesston') opexcesston!: OverlayPanel;
   fbEstimatedTon!: FormGroup;
+  fbexcesston!:  FormGroup;
   farmers: FarmersInPlantingDatesDto[] = [];
   divisions: DivisionsforUserDto[] = [];
   sections: SectionforUserDto[] = [];
@@ -53,9 +46,8 @@ export class EstimatedTonComponent implements OnInit {
   filterCircles: CircleforUserDto[] = [];
   filterSections: SectionforUserDto[] = [];
   filterVillages: VillageforUserDto[] = [];
-
   showDialog: boolean = false;
-  estimatedTonFromDto: EstimatedTonFromDto[] = [];
+  excessTons: ExcessTonViewDto[] = [];
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -67,11 +59,18 @@ export class EstimatedTonComponent implements OnInit {
       divisionId:  [null, (Validators.required)],
       circleId:  [null, (Validators.required)],
       sectionId: [null, (Validators.required)],
-      villageId:  [, (Validators.required)],
+      villageId:  [null, (Validators.required)],
       frompltngDate: [null, (Validators.required)],
       topltngDate: [null, (Validators.required)],
       farmerCode:  [null, (Validators.required)],
     });
+  }
+  getExcesstonForm() {
+    this.fbexcesston = this.formbuilder.group({
+      plotExcessTonId: [ ],
+      plotYieldId:  [null],
+      excessTonage:  [null,(Validators.required)],
+    })
   }
 
   get FormControls() {
@@ -80,14 +79,18 @@ export class EstimatedTonComponent implements OnInit {
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.getEstimatedForm();
+    this.getExcesstonForm();
     this.initDivisions();
     this.initSections();
     this.initCircles();
     this.initVillages();
   }
-
+  get FormControl() {
+    return this.fbexcesston.controls
+  }
   headers: IHeader[] = [
-    { field: 'updatedEstimatedton', header: 'updatedEstimatedton', label: 'Updated Estimated Ton' },
+    { field: 'excessTonage', header: 'excessTonage', label: 'Updated Estimated Ton' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
@@ -96,8 +99,7 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
-    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
-    { field: 'excessTonage', header: 'excessTonage', label: 'Increased Estimated Ton' },
+    // { field: 'excessTonage', header: 'excessTonage', label: 'Increased Estimated Ton' },
     { field: 'PermitTon', header: 'PermitTon', label: 'Permit Ton' },
     { field: 'SuppliedTon', header: 'SuppliedTon', label: 'Supplied Ton' },
     { field: 'BalanceTon', header: 'BalanceTon', label: 'Balance Ton' },
@@ -105,15 +107,24 @@ export class EstimatedTonComponent implements OnInit {
   ];
 
   header: IFromHeader[] = [
-    { field: 'Division', header: 'Division', label: 'Division' },
-    { field: 'Circle', header: 'Circle', label: 'Circle' },
-    { field: 'Section', header: 'Section', label: 'Section' },
-    { field: 'Village', header: 'Village', label: 'Village' },
-    { field: 'EstimatedTon', header: 'EstimatedTon', label: 'Estimated Ton' },
-    { field: 'Quota', header: 'Quota', label: 'Quota' },
-
+    { field: 'excessTonage', header: 'excessTonage', label: 'Updated Estimated Ton' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
+    { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
+    { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
+    { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
+    { field: 'sectionName', header: 'sectionName', label: 'section Name' },
+    { field: 'villageName', header: 'villageName', label: 'Village Name' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    // { field: 'variety', header: 'variety', label: 'Variety Name' },
+    // { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'netArea', header: 'netArea', label: 'Net Area' },
+    // { field: 'excessTonage', header: 'excessTonage', label: 'Increased Estimated Ton' },
+    // { field: 'PermitTon', header: 'PermitTon', label: 'Permit Ton' },
+    // { field: 'SuppliedTon', header: 'SuppliedTon', label: 'Supplied Ton' },
+    // { field: 'BalanceTon', header: 'BalanceTon', label: 'Balance Ton' },
+    // { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments' },
   ];
-
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
@@ -124,7 +135,7 @@ export class EstimatedTonComponent implements OnInit {
       this.currentSeason = resp as SeasonDto;
       this.initSeasons();
       this.initEstimatedTon(this.currentSeason.seasonId!);
-      // this.GetFarmers(this.currentSeason.seasonId!);
+      // this.initExcessTon(this.currentSeason.seasonId!);
     });
   }
   initEstimatedTon(seasonId: any) {
@@ -200,10 +211,42 @@ export class EstimatedTonComponent implements OnInit {
       })
     }
   }
+  initExcessTon(){
+        var seasonId = this.fbEstimatedTon.value.seasonId;
+        var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
+        var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
+        this.permitService.GetExcessTon(seasonId,frompltngDate,topltngDate).subscribe((resp) => {
+        this.excessTons = resp as unknown as ExcessTonViewDto[];
+         console.log(this.excessTons)
+        }) 
+  }
+getExcessTonDetails(){
+ this.GetFarmers() 
+}
+editExecesston(event: Event, excesston: ExcessTonDto){
+  this.fbexcesston.patchValue(excesston);
+  this.fbexcesston.controls['excessTonage'].setValue(excesston.excessTonage);
+  this.opexcesston.toggle(event);
+}
+onSubmit() {
+  if (this.fbexcesston.valid) {
+    this.permitService.UpdateExcessTon(this.fbexcesston.value).subscribe(resp => {
+      if (resp) {
+        this.initEstimatedTon(this.currentSeason.seasonId!)
+        // this.alertMessage.displayAlertMessage(ALERT_CODES["SMOP002"]);
+        this.fbexcesston.reset();
+      }
+    })
+  }
+  else {
+    this.fbexcesston.markAllAsTouched();
+  }
+}
   toggleTab() {
     this.showForm = !this.showForm;
   }
   getEstimatedTon() {
+    this.initExcessTon()
     this.showTable = true;
     this.showDialog = true;
   }

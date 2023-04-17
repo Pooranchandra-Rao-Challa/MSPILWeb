@@ -86,8 +86,8 @@ export class BankComponent implements OnInit {
     return this.formbuilder.group({
       bankId: [branchDetail.bankId],
       branchId: [branchDetail.branchId],
-      code: new FormControl(branchDetail.code, [Validators.required, Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name: new FormControl(branchDetail.name, [Validators.required, Validators.minLength(MIN_LENGTH_2)]),
+      code: new FormControl(branchDetail.code, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl(branchDetail.name, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       ifsc: new FormControl(branchDetail.ifsc, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_25),Validators.minLength(MIN_LENGTH_11)]),
       abbr: [""],
       address: [branchDetail.address, (Validators.required)],

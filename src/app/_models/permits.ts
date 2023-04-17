@@ -86,3 +86,28 @@ export class ISeasonScheduleGroupViewDto {
       villageCode?:string;
       villageName?: string;
     }
+    export class ExcessTonViewDto{
+      seasonId?: number;
+      seasonName?: number;
+      divisionCode?:string;
+      divisionName?: string;
+      circleCode?: string;
+      circleName?: string;
+      sectionCode?: string;
+      sectionName?: string;
+      villageCode?:string;
+      villageName?: string;
+      plantingDate?: Date;
+      plotNumber?: string;
+      farmerId?: number;
+      farmerName?: string;
+      farmerCode?: string;
+      estimatedTon?: number;
+      netArea?: number;
+  }
+
+export class ExcessTonDto{
+  plotExcessTonId?: number;
+  plotYieldId?:number;
+  excessTonage?: number;
+}

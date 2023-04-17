@@ -226,6 +226,8 @@ export const GET_SEASON_SCHEDULE_GROUPS_URI = "Schedule/GetSeasonScheduleGroups"
 
 export const GET_ESTIMATED_TON ="Schedule/GetPlotExcessTonage";
 export const GET_FARMERS_FOR_ESTIMATED_TON ="Schedule/GetFarmersInPlantingDates";
+export const GET_EXCESS_TON ="Schedule/GetExcessTon";
+export const UPDATE_EXCESS_TON ="Schedule/UpdatePlotExcessTon";
 export const GET_DIVISIONS_FOR_USER ="Schedule/GetDivisionsForUser";
 export const GET_CIRCLES_FOR_USER ="Schedule/GetCirclesForUser";
 export const GET_SECTIONS_FOR_USER="Schedule/GetSectionsForUser";

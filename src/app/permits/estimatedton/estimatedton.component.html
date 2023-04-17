@@ -12,10 +12,11 @@
         </p-toolbar>
 
         <!-- From Toolbar -->
+
         <p-toolbar styleClass="p-mb-2" *ngIf="showForm">
             <ng-template pTemplate="left">
-                <div class="flex justify-content-between flex-column sm:flex-row grid">
-                    <from [formGroup]="fbEstimatedTon">
+                <from [formGroup]="fbEstimatedTon">
+                    <div class="flex justify-content-between flex-column sm:flex-row grid">
                         <div class="col-12">
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
                                 <div class="col-2 p-2">
@@ -23,7 +24,7 @@
                                     <p-dropdown class="ml-2" placeholder="Select a Season" optionLabel="name"
                                         [options]="seasons" formControlName="seasonId"
                                         [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
-                                        [style]="{'width':'100%'}"
+                                        [style]="{'width':'100%'}" (onChange)="getExcessTonDetails()"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                                     </p-dropdown>
                                     <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -79,7 +80,7 @@
                                 <div class="col-2 p-2">
                                     <label class="required">Village:</label>
                                     <p-multiSelect [options]="filterVillages" placeholder="Select Village"
-                                        optionValue="villageId" appendTo="body" (onChange)="GetFarmers()"
+                                        optionValue="villageId" appendTo="body" (onChange)="getExcessTonDetails()"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"
                                         [filter]="true" optionLabel="villageName" formControlName="villageId"
                                         [style]="{'width':'100%'}"></p-multiSelect>
@@ -94,8 +95,8 @@
                                 <div class="col-3 p-2" style="padding-left:14px !important;">
                                     <label class="required">From Planting Date:</label>
                                     <p-calendar placeholder="From Planting Date" [readonlyInput]="true"
-                                        [showIcon]="true" (onSelect)="GetFarmers()" formControlName="frompltngDate"
-                                        [style]="{'width':'100%'}"
+                                        [showIcon]="true" (onSelect)="getExcessTonDetails()"
+                                        formControlName="frompltngDate" [style]="{'width':'100%'}"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['frompltngDate'].touched && FormControls['frompltngDate'].errors }">
                                     </p-calendar>
                                     <span
@@ -108,8 +109,8 @@
                                 <div class="col-3 p-2">
                                     <label class="required">To Planting Date:</label>
                                     <p-calendar placeholder="To Planting Date" [readonlyInput]="true" [showIcon]="true"
-                                        [maxDate]="dateTime" formControlName="topltngDate" (onSelect)="GetFarmers()"
-                                        [style]="{'width':'100%'}"
+                                        [maxDate]="dateTime" formControlName="topltngDate"
+                                        (onSelect)="getExcessTonDetails()" [style]="{'width':'100%'}"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['topltngDate'].touched && FormControls['topltngDate'].errors }">
                                     </p-calendar>
                                     <span
@@ -145,11 +146,8 @@
                                 </div>
                             </div>
                         </div>
-                    </from>
-                    <!-- <div class="col-2 p-2">
-                        <button pButton pRipple label="Search" class="p-button-raised p-button-primary" style="width:100%"></button>(click)="onSubmit()"
-                    </div> -->
-                </div>
+                    </div>
+                </from>
             </ng-template>
         </p-toolbar>
 
@@ -158,58 +156,68 @@
             [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" [transitionOptions]="'500ms'">
             <!-- (onHide)="fbAllottedPlot.reset()" -->
             <div class="flex flex-column align-items-center justify-content-center">
-               
-
                 <!-- table -->
-                
-                <p-table #dt2 [value]="estimatedTonFromDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+                <p-table #dt2 [value]="excessTons" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
-                   responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
-                     >
-                    <!-- <ng-template pTemplate="caption">
-                        <div class="flex justify-content-between flex-column sm:flex-row">
-                            <button pButton label="Clear" class="p-button-outlined mb-2"
-                                icon="pi pi-filter-slash"></button>
-                             (click)="clear(dt2)"
-                            <div>
-                                <span class="p-input-icon-left mb-2">
-                                    <!-- <i class="pi pi-search"></i> -
-
-                                </span>
-
-                            </div>
-                        </div>
-                    </ng-template> -->
-
-
+                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
                     <ng-template pTemplate="header">
                         <tr>
                             <th></th>
                             <th *ngFor="let col of header" [pSortableColumn]="col.header">
                                 {{col?.label}} <p-sortIcon field="code">
                                 </p-sortIcon>
-                                <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                                <p-columnFilter type="text" [field]="col.header" display="menu">
+                                </p-columnFilter>
                             </th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-getEstimate>
+                    <ng-template pTemplate="body" let-excesston>
                         <tr>
                             <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
-                            <td><button pButton pRipple icon="pi pi-pencil"
+                            <td>
+                                <p-overlayPanel #opexcesston>
+                                    <ng-template pTemplate="content">
+                                        <form [formGroup]="fbexcesston">
+                                        <label> Update Estimated Ton:<sup class="p-error">*</sup></label>
+                                        <div class="grid mt-2">
+                                            <div class="field col-12 md:col-8">
+                                                <input pInputText id="name" type="number" placeholder="Estimated Ton"
+                                                    formControlName="excessTonage"
+                                                    [ngClass]="{ 'is-invalid ng-dirty': FormControl['excessTonage'].touched && FormControl['excessTonage'].errors }">
+                                                <span
+                                                    *ngIf="FormControl['excessTonage'].touched && FormControl['excessTonage'].invalid">
+                                                    <div class="ng-invalid ng-touched p-error"
+                                                        *ngIf="FormControl['excessTonage'].errors?.['required']">
+                                                        Please Enter Estimated Ton.</div>
+                                                </span>
+                                            </div>
+                                            <div class=" col-12 md:col-4">
+                                                <button pButton class="p-button-outlined " icon="pi pi-check" (click)="onSubmit()"></button>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </ng-template>
+                                </p-overlayPanel>
+                                <button pButton pRipple icon="pi pi-pencil" (click)="editExecesston($event,excesston)"
                                     class="p-element p-ripple p-button-text p-button p-component"></button>
                             </td>
                             <td *ngFor="let col of header">
-                                <span *ngIf="col?.field != 'FromDate' ">{{getEstimate[col.field]}}</span>
-                                <span *ngIf="col?.field == 'FromDate'">
-                                    {{getEstimate[col.field] | date: 'dd-MM-yyyy'}}
+                                <span *ngIf="col?.field != 'plantingDate' ">{{excesston[col.field]}}</span>
+                                <span *ngIf="col?.field == 'plantingDate'">
+                                    {{excesston[col.field] | date: 'dd-MM-yyyy'}}
                                 </span>
                             </td>
                         </tr>
                     </ng-template>
-
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="16" class="md:text-center">No Excess Ton Details Found.</td>
+                        </tr>
+                    </ng-template>
+                    <tr>
+                        <td colspan="16" class="md:text-center">Loading Excess Ton Details. Please wait.</td>
+                    </tr>
                 </p-table>
-            
-                
             </div>
         </p-dialog>
 
@@ -239,7 +247,7 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th></th>
+                    <!-- <th></th> -->
                     <th *ngFor="let col of headers" [pSortableColumn]="col.header">
                         {{col?.label}} <p-sortIcon field="code">
                         </p-sortIcon>
@@ -248,9 +256,8 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-EstimatedTon>
-                <tr>
-                    <!-- (click)="editAllottedPlot(EstimatedTon)" *ngIf="!forapproval"-->
-                    <td>
+                <!-- (click)="editAllottedPlot(EstimatedTon)" *ngIf="!forapproval"-->
+                <!-- <td>
                         <p-overlayPanel #op>
                             <ng-template pTemplate="content">
                                 <form>
@@ -270,10 +277,11 @@
                         </p-overlayPanel>
                         <button pButton pRipple icon="pi pi-pencil" (click)="op.toggle($event)"
                             class="p-element p-ripple p-button-text p-button p-component"></button>
-                    </td>
+                    </td> -->
+                <tr>
                     <td *ngFor="let col of headers">
-                        <span *ngIf="col?.field != 'PlantingDate' ">{{EstimatedTon[col.field]}}</span>
-                        <span *ngIf="col?.field == 'PlantingDate'">
+                        <span *ngIf="col?.field != 'plantingDate' ">{{EstimatedTon[col.field]}}</span>
+                        <span *ngIf="col?.field == 'plantingDate'">
                             {{EstimatedTon[col.field] | date: 'dd-MM-yyyy'}}
                         </span>
                     </td>
