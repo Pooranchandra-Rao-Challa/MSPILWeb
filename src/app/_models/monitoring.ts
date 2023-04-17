@@ -809,20 +809,20 @@ export class PlotYieldDto {
   pests?: plotPestsDto[];
   weedicides?: plotWeedicidesDto[];
 }
-export class ProppingViewDto{
-  plotId?: number;
-  plotNumber?: string;
-  farmerCode?: string;
-  farmerName?: string;
-  divisionName?: string;
-  circleName?: string;
-  sectionName?: string;
-  villageName?: string;
-  varietyName?:string;
-  plantTypeName?:string;
-  plantingDate?: Date;
-  netArea?: number;
-  proppingDate?: Date;
+export interface IProppingViewDto{
+  plotId: number;
+  plotNumber: string;
+  farmerCode: string;
+  farmerName: string;
+  divisionName: string;
+  circleName: string;
+  sectionName: string;
+  villageName: string;
+  varietyName:string;
+  plantTypeName:string;
+  plantingDate: Date;
+  netArea: number;
+  proppingDate: Date;
 }
 export class ProppingDto{
   plotProppingId?: number;

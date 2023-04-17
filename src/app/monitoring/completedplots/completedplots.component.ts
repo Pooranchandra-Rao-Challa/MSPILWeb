@@ -49,11 +49,11 @@ export class CompletedPlotsComponent implements OnInit {
     { field: 'suppliedTon', header: 'suppliedTon', label: 'Supplied Ton' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
     { field: 'status', header: 'status', label: 'Plot Status' },
-    { field: 'docNo', header: 'docNo', label: 'Doc No' },
-    { field: 'docDate', header: 'docDate', label: 'Doc Date' },
   ];
   farmers: FarmerSectionViewDto[] = [];
   plotNumbers: IPlotsofFarmerViewDto[] = [];
+  diffGreaterThanEqualsToOne: boolean = false;
+  diffLessThanOne: boolean = false;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
@@ -71,22 +71,21 @@ export class CompletedPlotsComponent implements OnInit {
 
   completedPlotsForm() {
     this.fbCompletedPlots = this.formbuilder.group({
-      completedPlotId: [null],
       seasonId: [null, (Validators.required)],
-      plotAssessmentId: [null],
-      docNo: [null],
-      docDate: [null, (Validators.required)],
-      farmerId: [null, (Validators.required)],
-      farmerName: [''],
       plotId: [null, (Validators.required)],
-      estimatedTon: [null],
-      suppliedTon: [null],
-      netArea: [null],
       lastWeighmentDate: [null, (Validators.required)],
       isOver: [null],
       isLeftOver: [null],
       isRatoon: [null],
-      isreopen: [null]
+      isReopen: [null],
+
+      // Not required for the server call.
+      farmerId: [null, (Validators.required)],
+      farmerName: [''],
+      estimatedTon: [null],
+      suppliedTon: [null],
+      netArea: [null],
+
     });
   }
 
@@ -155,36 +154,27 @@ export class CompletedPlotsComponent implements OnInit {
       this.fbCompletedPlots.controls['suppliedTon'].setValue(suppliedTon);
       this.fbCompletedPlots.controls['netArea'].setValue(selectedPlot.netArea);
     }
-    var diff = this.FormControls['estimatedTon'].value - this.FormControls['suppliedTon'].value;
-    if(diff < 1){
+    var diffOfTon = this.FormControls['estimatedTon'].value - this.FormControls['suppliedTon'].value;
+    if(diffOfTon >= 1){
       this.FormControls['isOver'].setValue(true);
-      this.FormControls['isOver'].disable();
+      // this.FormControls['isOver'].disable();
       this.FormControls['isLeftOver'].setValue(false);
-      this.FormControls['isLeftOver'].disable();
+      // this.FormControls['isLeftOver'].disable();
       this.FormControls['isRatoon'].setValue(false);
-      this.FormControls['isRatoon'].enable();
+      // this.FormControls['isRatoon'].enable();
+      this.diffLessThanOne = true;
     }
     else {
       this.FormControls['isOver'].setValue(false);
-      this.FormControls['isOver'].disable();
+      // this.FormControls['isOver'].disable();
       this.FormControls['isRatoon'].setValue(false);
-      this.FormControls['isRatoon'].disable();
-      this.FormControls['isLeftOver'].setValidators(Validators.required);
+      // this.FormControls['isRatoon'].disable();
+      this.FormControls['isLeftOver'].setValidators(Validators.requiredTrue);
       this.FormControls['isLeftOver'].updateValueAndValidity();
       this.FormControls['isLeftOver'].setValue(null);
-      this.FormControls['isLeftOver'].enable();
+      this.diffGreaterThanEqualsToOne = true;
+      // this.FormControls['isLeftOver'].enable();
     }
-  }
-
-  getDocNo(seasonId: number) {
-    this.commonService.GetDocNo(seasonId, EDocumentNumberScreens.CompletedPlots).subscribe((resp) => {
-      if (resp)
-        this.fbCompletedPlots.get('docNo')?.setValue(resp);
-    });
-  }
-
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
   clear(table: Table) {
@@ -193,10 +183,9 @@ export class CompletedPlotsComponent implements OnInit {
   }
 
   addCompletedPlot() {
-    this.getDocNo(this.currentSeason.seasonId!);
     this.fbCompletedPlots.controls['seasonId'].setValue(this.currentSeason.seasonId);
-    this.FormControls['isreopen'].clearValidators();
-    this.FormControls['isreopen'].updateValueAndValidity();
+    this.FormControls['isReopen'].clearValidators();
+    this.FormControls['isReopen'].updateValueAndValidity();
     this.submitLabel = "Add Completed Plot";
     this.addFlag = true;
     this.showDialog = true;
@@ -213,8 +202,8 @@ export class CompletedPlotsComponent implements OnInit {
     this.fbCompletedPlots.patchValue(completedPlot);
     this.addFlag = false;
     // this.submitLabel = 'Update Completed Plot';
-    this.FormControls['isreopen'].setValidators(Validators.required);
-    this.FormControls['isreopen'].updateValueAndValidity();
+    this.FormControls['isReopen'].setValidators(Validators.required);
+    this.FormControls['isReopen'].updateValueAndValidity();
     this.submitLabel = 'Reopen Plot';
     this.showDialog = true;
   }
@@ -237,7 +226,12 @@ export class CompletedPlotsComponent implements OnInit {
     else {
       this.fbCompletedPlots.markAllAsTouched();
     }
+  }
 
+  clearForm(){
+    this.fbCompletedPlots.reset();
+    this.diffLessThanOne = false;
+    this.diffGreaterThanEqualsToOne = false;
   }
 
 }
