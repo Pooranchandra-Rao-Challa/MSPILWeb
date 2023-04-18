@@ -173,23 +173,21 @@ export class PlotofferComponent implements OnInit {
       });
   }
 
-  get IsAdd(): boolean { return this.plotOffer?.plotOfferId == null; }
-
   plotOfferForm() {
     this.fbPlotOffer = this.formbuilder.group({
       plotOfferId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
-      offerNo: [{ value: null, disabled: true }],
+      offerNo: [null],
       offerDate: [null, (Validators.required)],
       isNewFarmer: [{ value: false, disabled: true }],
-      farmerId: [{ value: null, disabled: !this.IsAdd }, (Validators.required)], /* Here farmerId is ryotNo */
+      farmerId: [null, (Validators.required)], /* Here farmerId is ryotNo */
       ryotName: [{ value: '', disabled: true }],
       fatherName: [{ value: '', disabled: true }],
       farmerVillage: [{ value: '', disabled: true }],
       farmerDivision: [{ value: '', disabled: true }],
       farmerCircle: [{ value: '', disabled: true }],
       farmerSection: [{ value: '', disabled: true }],
-      plotVillageId: [{ value: null, disabled: !this.IsAdd }, (Validators.required)], /* Here villageId is plotVillageId */
+      plotVillageId: [null, (Validators.required)], /* Here villageId is plotVillageId */
       plotDivision: [{ value: '', disabled: true }],
       plotCircle: [{ value: '', disabled: true }],
       plotSection: [{ value: '', disabled: true }],
@@ -208,7 +206,7 @@ export class PlotofferComponent implements OnInit {
 
   addPlotOffer() {
     this.plotOffer = new PlotOfferDto();
-    this.submitLabel = 'Add Allotted Plot';
+    this.submitLabel = 'Add Plot Offer';
     this.fbPlotOffer.controls['seasonId'].enable();
     this.fbPlotOffer.controls['isNewFarmer'].setValue(false);
     this.fbPlotOffer.controls['seasonId'].setValue(this.currentSeason.seasonId);
@@ -285,7 +283,7 @@ export class PlotofferComponent implements OnInit {
     this.fbPlotOffer.controls['plotSection'].setValue(plotOffer.plotSectionName);
 
     this.addFlag = false;
-    this.submitLabel = 'Update Allotted Plot';
+    this.submitLabel = 'Update Plot Offer';
     this.showDialog = true;
   }
 

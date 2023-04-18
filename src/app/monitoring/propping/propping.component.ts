@@ -57,8 +57,8 @@ export class ProppingComponent implements OnInit {
     this.permissions = this.jwtService.Permissions;
     this.initSeasons();
     this.initCurrentSeason(CURRENT_SEASON());
-    this.initProppingStages();
     this.proppingForm();
+    this.initProppingStages();
   }
 
   initSeasons() {

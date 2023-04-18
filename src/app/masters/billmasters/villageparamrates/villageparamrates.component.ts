@@ -1,3 +1,4 @@
+import { AppMasterService } from './../../../_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
@@ -10,6 +11,9 @@ import { CommonService } from 'src/app/_services/common.service';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { VillageParamRateViewDto, VillageParamRateDto, BillParameterViewDto } from 'src/app/_models/billingmaster';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { SeasonDto } from 'src/app/_models/applicationmaster';
+import { CURRENT_SEASON } from 'src/environments/environment';
 
 @Component({
   selector: 'app-villageparamrates',
@@ -30,17 +34,22 @@ export class VillageParamRatesComponent implements OnInit {
   billParameters: BillParameterViewDto[] = [];
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
-  permissions: any
+  permissions: any;
+  currentSeason: SeasonDto = {};
+
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
+    private appMasterservice: AppMasterService,
     private commonService: CommonService,
     private geoMasterService: GeoMasterService,
-    private jwtService:JWTService ) { }
+    private jwtService:JWTService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
     this.initVillageParamRates();
     this.initDefaults();
+    this.initCurrentSeason(CURRENT_SEASON());
     this.villageParamRateForm();
   }
 
@@ -71,15 +80,21 @@ export class VillageParamRatesComponent implements OnInit {
     });
   }
 
+  initCurrentSeason(seasonCode: string) {
+    this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
+      this.currentSeason = resp as SeasonDto;
+    });
+  }
+
   villageParamRateForm() {
     this.fbVillageParamRate = this.formbuilder.group({
       id: [null],
-      seasonsId: ['', (Validators.required)],
+      seasonsId: [null, (Validators.required)],
       villageName: ['', (Validators.required)],
-      villageId: ['', (Validators.required)],
-      billParameterId: ['', (Validators.required)],
+      villageId: [null, (Validators.required)],
+      billParameterId: [null, (Validators.required)],
       rate: [null, Validators.required],
-      isActive: [true]
+      isActive: [null]
     });
   }
 
@@ -97,6 +112,8 @@ export class VillageParamRatesComponent implements OnInit {
   }
 
   addVillageParamRate() {
+    this.fbVillageParamRate.controls['seasonsId'].setValue(this.currentSeason.seasonId);
+    this.fbVillageParamRate.controls['isActive'].setValue(true);
     this.submitLabel = "Add Village Param Rate";
     this.addFlag = true;
     this.showDialog = true;
@@ -127,6 +144,7 @@ export class VillageParamRatesComponent implements OnInit {
           this.initVillageParamRates();
           this.fbVillageParamRate.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMVPR001" : "SMBMVPR002"]);
         }
       })
     }

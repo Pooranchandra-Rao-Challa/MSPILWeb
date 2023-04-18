@@ -1,5 +1,6 @@
 <div class="col-12">
   <div class="card">
+    <p-toast key="tst"></p-toast>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -128,7 +129,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Season Code:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Season" optionLabel="name" [options]="seasons"
+                  <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
                     optionValue="seasonId" formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
@@ -146,16 +147,12 @@
                     <ng-template let-village pTemplate="selectedItem">
                       <div>{{village.villageCode}}</div>
                     </ng-template>
-
                     <ng-template let-village  pTemplate="item" >
                       <div class="block align-items-center gap-2">
                         <div>{{village.villageCode}}</div>
                         <div>{{village.villageName}}</div>
-                      
                       </div>
                     </ng-template>
-
-
                   </p-dropdown>
                   <span *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['villageId'].errors?.['required']">
@@ -163,12 +160,16 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Village Name:<sup class="p-error">*</sup></label>
-                  <input pInputText formControlName="villageName" readonly>
+                  <label class="required">Village Name:</label>
+                  <p class="disabled_text">
+                    {{ FormControls["villageName"].value }}
+                  </p>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Village Id:<sup class="p-error">*</sup></label>
-                  <input pInputText formControlName="villageId" readonly>
+                  <label class="required">Village Id:</label>
+                  <p class="disabled_text">
+                    {{ FormControls["villageId"].value }}
+                  </p>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Bill Param:<sup class="p-error">*</sup></label>
@@ -200,7 +201,7 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"  [disabled]="fbVillageParamRate.invalid"
             (click)="onSubmit()"></button>
         </div>
       </ng-template>
