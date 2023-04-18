@@ -15,12 +15,8 @@ import { Observable } from 'rxjs';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { ITableHeader } from 'src/app/_models/common';
 
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
 @Component({
   selector: 'app-plotagreement',
   templateUrl: './plotagreement.component.html',
@@ -56,7 +52,7 @@ export class PlotagreementComponent implements OnInit {
   todayDate = new Date();
   permissions: any;
 
-  farmerHeaders: IHeader[] = [
+  farmerHeaders: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
@@ -64,7 +60,7 @@ export class PlotagreementComponent implements OnInit {
     { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
   ];
 
-  plotHeaders: IHeader[] = [
+  plotHeaders: ITableHeader[] = [
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
@@ -76,7 +72,7 @@ export class PlotagreementComponent implements OnInit {
     { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
     { field: 'agreementedArea', header: 'agreementedArea', label: 'Agreemented Area' },
     { field: 'agreementedDate', header: 'agreementedDate', label: 'Agreemented Date' },
-    
+
   ];
 
   clear(table: Table) {
@@ -130,7 +126,7 @@ export class PlotagreementComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAgreement(seasonId, param1).subscribe((resp) => {
       this.plotAgreements = resp as unknown as IFarmerInPlotOfferDto[];
-      
+
     });
   }
 

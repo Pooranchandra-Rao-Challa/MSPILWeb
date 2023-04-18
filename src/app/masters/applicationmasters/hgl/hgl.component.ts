@@ -108,7 +108,7 @@ export class HglComponent implements OnInit {
       bankId: ['', Validators.required],
       branchId: ['', Validators.required],
       accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
-      aadhaarNo: new FormControl('', [Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
+      aadhaarNo: new FormControl('', [Validators.required,Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
       isActive: [true],
       subHgls: this.formbuilder.array([]),
     });

@@ -80,6 +80,11 @@ export class AlertMessage {
  * Plot Agreements : PAG
  * Plot Yields : PY
  * Propping: P
+ * 
+ * -----------------------------------------------
+ * Permits:
+ * -------------------------------------------
+ * Estimated Ton:ET
  * -------------------------------------
  * If the screens has more funcitonal items then
  * Like in settings use frist letter as code, if same
@@ -102,6 +107,10 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
 
+    // Village Param Rate Message
+    'SMBMVPR001': 'Village Param Rate Added Successfully',
+    'SMBMVPR002': 'Village Param Rate Updated Successfully',
+
   //Application Master =>
 
   //Seasons Message
@@ -109,8 +118,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMAMSE002': 'Season Updated Successfully',
 
   //Sample Slab Message
-  'SMAMSS001': 'Shift Added Successfully',
-  'SMAMSS002': 'Shift Updated Successfully',
+  'SMAMSS001': 'Sample Slab Added Successfully',
+  'SMAMSS002': 'Sample Slab Updated Successfully',
 
   //Shift Message
   'SMAMSH001': 'Shift Added Successfully',
@@ -222,5 +231,8 @@ export const ALERT_CODES: { [key: string]: string } = {
 
   // Propping
   'SMOP002': 'Propping Date Is Updated Successfully',
-
+ 
+//  Permits
+  // Estimated Ton
+   'SMPET002': 'Estimated Ton Is Updated Successfully'
 }

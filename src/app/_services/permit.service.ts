@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, FarmersInPlantingDatesDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, SectionforUserDto, VillageforUserDto, } from "../_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, FarmersInPlantingDatesDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "../_models/permits";
 import { ApiHttpService } from "./api.http.service";
-import { GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VILLAGES_FOR_USER, UPDATE_EXCESS_TON } from "./api.uri.service";
+import { GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMERS_IN_PLOTS_FOR_USER, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_PLANT_TYPE_FOR_USER, GET_PLOTS_FOR_USER, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VARIETIES_FOR_USER,  GET_VILLAGES_FOR_USER, UPDATE_EXCESS_TON, UPDATE_EXCESS_TONNAGE, } from "./api.uri.service";
 
 
 
@@ -25,11 +25,14 @@ export class permitService extends ApiHttpService {
 public GetFarmersInPlantingDates(seasonId:number,frompltngDate:any,topltngDate:any,villageId?:number){
   return this.getWithParams<FarmersInPlantingDatesDto>(GET_FARMERS_FOR_ESTIMATED_TON,[seasonId,frompltngDate,topltngDate,villageId]);
 }
-public GetExcessTon(seasonId: number,frompltngDate:any,topltngDate:any) {
-  return this.getWithParams<ExcessTonViewDto>(GET_EXCESS_TON, [seasonId,frompltngDate,topltngDate]);
+public GetExcessTon(seasonId: number,divisionId:any,circleId:any,sectionId:any,villageId:any,frompltngDate:any,topltngDate:any,farmerId:any) {
+  return this.getWithParams<ExcessTonViewDto>(GET_EXCESS_TON, [seasonId,divisionId,circleId,sectionId,villageId,frompltngDate,topltngDate,farmerId]);
 }
 public UpdateExcessTon(excesston: ExcessTonDto) {
   return this.post<ExcessTonDto>( UPDATE_EXCESS_TON, excesston);
+}
+public UpdateExcessTonnage(excesston: ExcessTonDto) {
+  return this.post<ExcessTonDto>( UPDATE_EXCESS_TONNAGE, excesston);
 }
 public GetDivisionsforUser() {
   return this.get<DivisionsforUserDto[]>( GET_DIVISIONS_FOR_USER);
@@ -43,5 +46,24 @@ public GetSectionsforUser() {
 public GetVillagesforUser() {
   return this.get<VillageforUserDto[]>(GET_VILLAGES_FOR_USER);
 }
+
+
+public GetVarietiesForUser(seasonId: number) {
+  return this.getWithId<VarietiesForUserDto[]>(GET_VARIETIES_FOR_USER, seasonId);
+}
+
+public GetPlantTypeForUser(seasonId: number) {
+  return this.getWithId<PlantTypeForUserDto[]>(GET_PLANT_TYPE_FOR_USER, seasonId);
+}
+public GetFarmersInPlotsForUser(seasonId: number,villageId :number) {
+  return this.getWithParams<FarmersInPlotsForUserDto>(GET_FARMERS_IN_PLOTS_FOR_USER, [seasonId,villageId]);
+
+
+}
+public GetPlotsForUser(seasonId: number,farmerId  :number) {
+  return this.getWithParams<PlotsForUserDto>(GET_PLOTS_FOR_USER, [seasonId,farmerId]);
+
+}
+
 
 }

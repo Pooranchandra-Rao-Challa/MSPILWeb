@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { Table } from 'primeng/table';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
-import { ProppingDto, ProppingViewDto } from 'src/app/_models/monitoring';
+import { ProppingDto, IProppingViewDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
@@ -11,12 +11,7 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'propping',
@@ -31,11 +26,11 @@ export class ProppingComponent implements OnInit {
   @ViewChild('opPropping') opPropping!: OverlayPanel;
   fbPropping!: FormGroup;
   proppingStages: LookupDetailDto[] = [];
-  proppings: ProppingViewDto[] = [];
+  proppings: IProppingViewDto[] = [];
   propping: ProppingDto = {};
   permissions: any;
 
-  headers: IHeader[] = [
+  headers: ITableHeader[] = [
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
@@ -62,8 +57,8 @@ export class ProppingComponent implements OnInit {
     this.permissions = this.jwtService.Permissions;
     this.initSeasons();
     this.initCurrentSeason(CURRENT_SEASON());
-    this.initProppingStages();
     this.proppingForm();
+    this.initProppingStages();
   }
 
   initSeasons() {
@@ -79,8 +74,9 @@ export class ProppingComponent implements OnInit {
   }
 
   initProppings(seasonId: number, stageId: number) {
-    this.monitoringService.GetPropping(seasonId, stageId).subscribe((resp) => {
-      this.proppings = resp as unknown as ProppingViewDto[];
+    let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
+    this.monitoringService.GetProppings(seasonId, stageId, param1).subscribe((resp) => {
+      this.proppings = resp as unknown as IProppingViewDto[];
     });
   }
 
@@ -122,7 +118,7 @@ export class ProppingComponent implements OnInit {
     this.onSearch();
   }
 
-  editPropping(event: Event, propping: ProppingViewDto) {
+  editPropping(event: Event, propping: IProppingViewDto) {
     this.fbPropping.patchValue(propping);
     this.fbPropping.controls['proppingDate'].setValue(propping.proppingDate && new Date(propping.proppingDate?.toString() + ""));
     this.opPropping.toggle(event);

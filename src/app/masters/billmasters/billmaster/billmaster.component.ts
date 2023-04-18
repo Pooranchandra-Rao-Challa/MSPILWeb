@@ -63,10 +63,10 @@ export class BillMasterComponent implements OnInit {
     this.fbBillMaster = this.formbuilder.group({
       billId: [null],
       billNo: [null],
-      categoryId: ['', (Validators.required)],
-      seasonsId: ['', (Validators.required)],
-      fromDate: ['', (Validators.required)],
-      toDate: ['', (Validators.required)],
+      categoryId: [null, (Validators.required)],
+      seasonsId: [null, (Validators.required)],
+      fromDate: [null, (Validators.required)],
+      toDate: [null, (Validators.required)],
       isFinal: [true],
       isActive: [true]
     });
@@ -86,6 +86,8 @@ export class BillMasterComponent implements OnInit {
   }
 
   addBill() {
+    this.fbBillMaster.controls['isFinal'].setValue(true);
+    this.fbBillMaster.controls['isActive'].setValue(true);
     this.submitLabel = "Add Bill";
     this.addFlag = true;
     this.showDialog = true;

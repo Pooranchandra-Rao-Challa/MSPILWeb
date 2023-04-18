@@ -1,7 +1,8 @@
 import {
   IFarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, ProppingViewDto, IPlotYieldViewDto, ProppingDto,
+  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, IProppingViewDto,
+  IPlotYieldViewDto, ProppingDto,
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
 import { PlotOfferDto } from "src/app/_models/monitoring";
@@ -15,7 +16,7 @@ import {
   GET_OFFER_INFO_URI, APPROVE_PLOT_OFFER_URI, GET_PLOT_TRANSFERS_URI, GET_REGISTERED_FARMERS_URI, GET_FARMERS_IN_SEASON_URI, CREATE_PLOTASSESSMENT_URI,
   UPDATE_PLOTASSESSMENT_URI, DENY_PLOT_OFFER_URI, GET_PLOT_AGREEMENTS_URI, GET_FARMER_IN_SECTIONS_URI, GET_PLOTS_FORYIELDS_URI, GET_PLOTYIELDS_URI, CREATE_PLOT_AGREEMENT_URI,
   UPDATE_PLOT_AGREEMENT_URI, GET_PLOTS_OF_FARMERS_URI, GET_MAINTANANCE_ITEMS_AGREEMENT_URI, GET_SAMPLES_OF_PLOT_URI, GET_SAMPLES_ENTRY_URI, CREATE_PLOT_YIELD_URI,
-  UPDATE_PLOT_YIELD_URI, GET_MAINTANANCE_ITEMS_YIELD_URI, CREATE_SAMPLES_ENTRY_URI, GET_PROPPING, UPDATE_FARMER_PLOTS_IN_YIELD_URI, GET_FARMER_PLOTS_IN_AGREEMENT_URI,
+  UPDATE_PLOT_YIELD_URI, GET_MAINTANANCE_ITEMS_YIELD_URI, CREATE_SAMPLES_ENTRY_URI, GET_PROPPINGS_URI, UPDATE_FARMER_PLOTS_IN_YIELD_URI, GET_FARMER_PLOTS_IN_AGREEMENT_URI,
   GET_FARMER_PLOTS_IN_ASSESSMENT_URI, GET_FARMER_PLOTS_IN_REPORT_URI, GET_FARMER_PLOTS_IN_OFFER_URI, UPDATE_SAMPLE_ENTRY_URI, UPDATE_PROPPING_URI, GET_ESTIMATED_TON, GET_FARMERS_FOR_ESTIMATED_TON
 } from "src/app/_services/api.uri.service";
 
@@ -280,28 +281,37 @@ export class MonitoringService extends ApiHttpService {
   }
 
   public GetFarmerPlotsInYield(seasonId: number, farmerId: number) {
-    return this.getWithParams<IPlotYieldViewDto>(UPDATE_FARMER_PLOTS_IN_YIELD_URI, [seasonId,farmerId]);
+    return this.getWithParams<IPlotYieldViewDto>(UPDATE_FARMER_PLOTS_IN_YIELD_URI, [seasonId, farmerId]);
   }
 
   public GetFarmerPlotsInAgreement(seasonId: number, farmerId: number) {
-    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_AGREEMENT_URI, [seasonId,farmerId]);
+    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_AGREEMENT_URI, [seasonId, farmerId]);
   }
 
   public GetFarmerPlotsInAssessment(seasonId: number, farmerId: number) {
-    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_ASSESSMENT_URI, [seasonId,farmerId]);
+    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_ASSESSMENT_URI, [seasonId, farmerId]);
   }
 
   public GetFarmerPlotsInReport(seasonId: number, farmerId: number) {
-    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_REPORT_URI, [seasonId,farmerId]);
+    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_REPORT_URI, [seasonId, farmerId]);
   }
 
   public GetFarmerPlotsInOffer(seasonId: number, farmerId: number) {
-    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_OFFER_URI, [seasonId,farmerId]);
+    return this.getWithParams<IPlotYieldViewDto>(GET_FARMER_PLOTS_IN_OFFER_URI, [seasonId, farmerId]);
   }
 
   // Propping
-  public GetPropping(seasonId: number, stageId: number) {
-    return this.getWithParams<ProppingViewDto>(GET_PROPPING, [seasonId,stageId]);
+  public GetProppings(seasonId: number, stageId: number, param1 = null) {
+    let arr: any[] = [];
+    arr.push(seasonId);
+    arr.push(stageId);
+    if (param1 != null) arr.push(param1);
+    if (param1 == null) {
+      return this.getWithParams<IProppingViewDto[]>(GET_PROPPINGS_URI, arr);
+    }
+    else {
+      return this.getWithParams<IProppingViewDto[]>(GET_PROPPINGS_URI, arr);
+    }
   }
 
   public UpdatePropping(propping: ProppingDto) {

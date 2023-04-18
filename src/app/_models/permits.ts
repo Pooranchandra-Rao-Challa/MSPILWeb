@@ -44,7 +44,9 @@ export class ISeasonScheduleGroupViewDto {
     farmerName?:  string;
     estimatedTon?: number;
     netArea?: number;
+    plotExcessTonId?: number;
     excessTonage?: number;
+    plotYieldId?: number;
     plantType?:  string;
     variety?:  string;
     createdAt?: Date
@@ -53,6 +55,7 @@ export class ISeasonScheduleGroupViewDto {
     updateBy?: string;
     isActive?: boolean;
     }
+  
     export class FarmersInPlantingDatesDto{
       farmerId?:  number;
       farmercode?: string;
@@ -111,3 +114,56 @@ export class ExcessTonDto{
   plotYieldId?:number;
   excessTonage?: number;
 }
+
+export class VarietiesForUserDto  {
+  varietyId?: number
+  varietyName?: string
+  villageId?: number;
+  divisionId?: number;
+  sectionId?: number;
+  circleId?: number;
+  planttypeId?: number;
+  plotId?: number
+  farmerId?:number
+}
+export class PlantTypeForUserDto {
+  plantTypeId?: number
+  plantTypeName?: string
+  villageId?: number;
+  divisionId?: number;
+  sectionId?: number;
+   circleId?: number;  
+  planttypeId?: number;
+  plotId?: number;
+  farmerId?:number
+}
+
+export class FarmersInPlotsForUserDto {
+  farmerId?: number
+  farmercode?: string
+  villageName?: string
+  farmerName?: string
+  divisionId?: number;
+  sectionId?: number;
+  circleId?: number;  
+  villageId?:number
+  
+}
+
+export class PlotsForUserDto {
+  farmerId?: number
+  farmercode?: string
+  plotId?: number
+  plotNumber?: string
+  farmerName?: string
+  villageName?: string
+  divisionId?: number;
+  sectionId?: number;
+  circleId?: number;  
+  villageId?:number
+
+}
+
+
+
+

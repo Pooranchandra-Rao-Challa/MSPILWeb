@@ -87,7 +87,7 @@ export class BillParametersComponent implements OnInit {
       caluclationType: ['', Validators.required],
       priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
       formula: new FormControl('', [Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
-      isActive: [true]
+      isActive: [null]
     });
   }
 
@@ -105,6 +105,7 @@ export class BillParametersComponent implements OnInit {
   }
 
   addBillParam() {
+    this.fbBillParameters.controls['isActive'].setValue(true);
     this.submitLabel = "Add Bill Parameter";
     this.addFlag = true;
     this.showDialog = true;
