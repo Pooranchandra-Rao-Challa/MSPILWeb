@@ -343,6 +343,7 @@ export class SeasonDto {
   burnCaneRate?: number
   caneRate?: number
   capacity?: number
+  villageId?: number;
   currentSeason?: string
   isActive?: boolean
   farmerRates?: FarmerRate[]

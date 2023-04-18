@@ -11,8 +11,7 @@
             </ng-template>
         </p-toolbar>
 
-
-
+ 
           <!-- popup form -->
           <p-dialog header="Schedule Grouping" [(visible)]="showDialog" [modal]="true" showEffect="fade"
           [breakpoints]="{'950px': '70vw', '630px': '900vw' }" [style]="{width: '70vw'}">
@@ -75,22 +74,42 @@
                                         <p-multiSelect [options]="filterVillages" placeholder="Select Village"
                                             optionValue="villageId" appendTo="body"
                                             [filter]="true" optionLabel="villageName" formControlName="villageId"
-                                            [style]="{'width':'100%'}"(onChange)="SetAllVillageChilds($event.value)"></p-multiSelect>
+                                            [style]="{'width':'100%'}"(onChange)="SetAllVillageChilds($event.value)"
+                                             (onChange)="GetFarmers()"  > 
+                                             </p-multiSelect>
+      
                                     </div>
 
                                     <div class="field col-12 md:col-3">
                                       <label>Ryot No:<sup class="p-error">*</sup></label>
-                                      <p-dropdown placeholder="Select To Ryot" optionLabel="code"
-                                          optionValue="ryotNo" formControlName="ryotNo" appendTo="body"
-                                          (onChange)="SetAllFarmerChilds($event.value)">
+                                      <p-dropdown placeholder="Select To Ryot" [options]="farmers"  optionLabel="farmercode"
+                                          optionValue="farmerId" formControlName="ryotNo" appendTo="body"
+                                        (onChange)="SetAllFarmerChilds($event.value)"
+                                        (onChange)=" GetPlots()"
+                                    >
+                                   
+                                          <ng-template let-farmer pTemplate="selectedItem">
+                                            <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
+                                          </ng-template>
+                                          <ng-template let-farmer pTemplate="item">
+                                            <div class="block align-items-center gap-2">
+                                                <div>{{farmer.farmercode}} </div>
+                                                <div></div>{{farmer.farmerName}}</div>
+                                                <div>{{farmer.villageName}}</div>
+                                          
+                                        </ng-template>
                                       </p-dropdown>
                                    </div>                         
                                   <div class="field col-12 md:col-3">
                                       <label>Plot:<sup class="p-error">*</sup></label>
-                                      <p-dropdown placeholder="Select To plot" optionLabel="code"
-                                          optionValue="plot" formControlName="plot" appendTo="body"
-                                          (onChange)=" SetAllPlotsChilds($event.value)">
+                                      <p-dropdown placeholder="Select To plot" [options]="plots" optionLabel="plotNumber"
+                                          optionValue="plotId" formControlName="plotId" appendTo="body"
+                                         (onChange)=" SetAllPlotsChilds($event.value)"
+                                         >
+                                         
                                       </p-dropdown>
+                                 
+                                      <!--  -->
                                   </div>
                                       <div class="field col-12 md:col-3">
                                           <label>Plant Type:</label>

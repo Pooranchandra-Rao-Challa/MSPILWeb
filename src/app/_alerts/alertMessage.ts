@@ -80,6 +80,11 @@ export class AlertMessage {
  * Plot Agreements : PAG
  * Plot Yields : PY
  * Propping: P
+ * 
+ * -----------------------------------------------
+ * Permits:
+ * -------------------------------------------
+ * Estimated Ton:ET
  * -------------------------------------
  * If the screens has more funcitonal items then
  * Like in settings use frist letter as code, if same
@@ -226,5 +231,8 @@ export const ALERT_CODES: { [key: string]: string } = {
 
   // Propping
   'SMOP002': 'Propping Date Is Updated Successfully',
-
+ 
+//  Permits
+  // Estimated Ton
+   'SMPET002': 'Estimated Ton Is Updated Successfully'
 }

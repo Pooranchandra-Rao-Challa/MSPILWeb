@@ -6,8 +6,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from "src/app/_helpers/date.format.pipe";
 import { plantTypeDto, SeasonDto, SeasonViewDto, VarietyViewDto } from "src/app/_models/applicationmaster";
-import {  PlotAgreementDto, PlotInfoDto } from "src/app/_models/monitoring";
-import { CircleforUserDto, DivisionsforUserDto, ExcessTonViewDto, FarmersInPlantingDatesDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
+import {  IPlotsofFarmerViewDto, PlotAgreementDto, PlotInfoDto } from "src/app/_models/monitoring";
+import { CircleforUserDto, DivisionsforUserDto, ExcessTonViewDto, FarmersInPlantingDatesDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { JWTService } from "src/app/_services/jwt.service";
@@ -46,14 +46,13 @@ export class ScheduleGroupingComponent implements OnInit {
   @ViewChild('dtSchedulegrouping') dtSchedulegrouping!: Table;
   submitLabel!: string;
   permissions: any;
-  plotNumbers: PlotInfoDto[] = [];
   todayDate = new Date();
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   planttypes: PlantTypeForUserDto[] = [];
   varieties: VarietiesForUserDto[] = [];
-  farmers:any[]=[];
-  plots:any[]=[];
+  farmers:FarmersInPlotsForUserDto[]=[];
+  plots:PlotsForUserDto[]=[];
   objPlotSchedule:IPlotScheduleViewDto[]=[]
   divisions: DivisionsforUserDto[] = [];
   sections: SectionforUserDto[] = [];
@@ -62,8 +61,8 @@ export class ScheduleGroupingComponent implements OnInit {
   filterCircles: CircleforUserDto[] = [];
   filterSections: SectionforUserDto[] = [];
   filterVillages: VillageforUserDto[] = [];
-  filterFarmers:any[]=[];
-  filterPlots:any[]=[]
+  filterFarmers:FarmersInPlotsForUserDto[]=[];
+  filterPlots:PlotsForUserDto[]=[]
   filterPlantTypes:PlantTypeForUserDto[]=[];
   filterVarieties:VarietiesForUserDto[]=[];
   excessTons: ExcessTonViewDto[] = [];
@@ -105,9 +104,6 @@ export class ScheduleGroupingComponent implements OnInit {
     this.initSections();
     this.initCircles();
     this.initVillages();
-  
-
-
   }
 
   scheduleGroupingForm() {
@@ -116,7 +112,7 @@ export class ScheduleGroupingComponent implements OnInit {
       scheduleGroupNo: new FormControl(null, [Validators.required]),
       fromDOP: new FormControl(null, [Validators.required]),
       toDOP: new FormControl(null, [Validators.required]),
-      ryotNo: new FormControl(null, [Validators.required]),
+      ryotNo: new FormControl('', [Validators.required]),
       plotId: new FormControl(null, [Validators.required]),
       divisionId: new FormControl('', [Validators.required]),
       circleId: new FormControl('', [Validators.required]),
@@ -124,7 +120,6 @@ export class ScheduleGroupingComponent implements OnInit {
       villageId: new FormControl('', [Validators.required]),
       plantTypeId: new FormControl(null, [Validators.required]),
       varietyId: new FormControl(null, [Validators.required]),
-
     })
   }
 
@@ -136,11 +131,10 @@ export class ScheduleGroupingComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-      this.initSeasons()
-      // this.initPlotNumbers(this.currentSeason.seasonId!, -1);
+      this.initSeasons();
       this.initScheduleGroups(this.currentSeason.seasonId!);
       this.initVarieties(this.currentSeason.seasonId!);
-      this.initPlantType(this.currentSeason.seasonId!)
+      this.initPlantType(this.currentSeason.seasonId!) 
     });
   }
   initScheduleGroups(seasonId: number) {
@@ -163,8 +157,6 @@ export class ScheduleGroupingComponent implements OnInit {
   initCircles() {
     this.permitService.GetCirclesforUser().subscribe((resp) => {
       this.circles = resp as unknown as CircleforUserDto[];
-
-      
     });
   }
   initVillages() {
@@ -185,40 +177,29 @@ export class ScheduleGroupingComponent implements OnInit {
     });
   }
 
-  // SetAllDivisionChilds(values: number[]) {
-  //   if(values.length == 0){
-  //     this.filterCircles = Object.assign([], this.circles);
-  //     this.filterSections = Object.assign([], this.sections);
-  //     this.filterVillages = Object.assign([], this.villages);
-  //   }
-  //   else{ 
-  //     this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
-  //     this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
-  //     this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
-  //   }
-  // }
-  // SetAllCircleChilds(values: number[]) {
-  //   if(values.length == 0){
-  //     this.filterSections = Object.assign([], this.sections);
-  //     this.filterVillages = Object.assign([], this.villages);
-  //   }
-  //   else{ 
-  //   this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
-  //   this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
-  //   }
-  // }
-  // SetAllSectionChilds(values: number[]) {
-  //   if(values.length == 0){
-  //     this.filterSections = Object.assign([], this.sections);
-  //     this.filterVillages = Object.assign([], this.villages);
-  //   }
-  //   else{ 
-  //   this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
-  //   }
-  // }
+  GetFarmers() {
+    debugger
+    if (this.fbScheduleGrouping.value.seasonId != null && this.fbScheduleGrouping.value.villageId != null) {
+      var seasonId = this.fbScheduleGrouping.value.seasonId;
+      var villageId = this.fbScheduleGrouping.value.villageId
+      this.permitService.GetFarmersInPlotsForUser(seasonId, villageId).subscribe((resp) => {
+        this.farmers = resp as unknown as FarmersInPlotsForUserDto[];
+        console.log('farmers', this.farmers);
+      })
+    }
+  }
+  GetPlots() {
+    if (this.fbScheduleGrouping.value.seasonId != null && this.fbScheduleGrouping.value.farmerId != null) {
+      var seasonId = this.fbScheduleGrouping.value.seasonId;
+      var farmerId = this.fbScheduleGrouping.value.farmerId
+      this.permitService.GetPlotsForUser(seasonId, farmerId).subscribe((resp) => {
+        this.plots = resp as unknown as PlotsForUserDto[];
+        console.log('plots', this.plots);
+      })
+    }
+  }
 
-
-
+ 
   SetAllDivisionChilds(values: number[]) {
     if(values.length == 0){
       this.filterCircles = Object.assign([], this.circles);
@@ -268,13 +249,13 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterVarieties = Object.assign([], this.varieties);
     }
     else{ 
-      this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
-      this.filterFarmers = this.farmers.filter(farmer => values.indexOf(farmer.circleId!) != -1)
-      this.filterPlots = this.plots.filter(plot => values.indexOf(plot.circleId!) != -1)
-      this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.circleId!) != -1)
-      this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.circleId!) != -1)
-    }}
-
+      this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
+      this.filterFarmers = this.farmers.filter(farmer => values.indexOf(farmer.sectionId!) != -1)
+      this.filterPlots = this.plots.filter(plot => values.indexOf(plot.sectionId!) != -1)
+      this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.sectionId!) != -1)
+      this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.sectionId!) != -1)
+    }
+  }
     SetAllVillageChilds(values: number[]) {
       if(values.length == 0){
         this.filterFarmers = Object.assign([], this.farmers);
@@ -283,24 +264,23 @@ export class ScheduleGroupingComponent implements OnInit {
         this.filterVarieties = Object.assign([], this.varieties);
       }
       else{ 
-        this.filterFarmers = this.farmers.filter(farmer => values.indexOf(farmer.circleId!) != -1)
-        this.filterPlots = this.plots.filter(plot => values.indexOf(plot.circleId!) != -1)
-        this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.circleId!) != -1)
-        this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.circleId!) != -1)
+        this.filterFarmers = this.farmers.filter(farmer => values.indexOf(farmer.villageId!) != -1)
+        this.filterPlots = this.plots.filter(plot => values.indexOf(plot.villageId!) != -1)
+        this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.villageId!) != -1)
+        this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.villageId!) != -1)
       }}
 
       SetAllFarmerChilds(values: number[]) {
-        if(values.length == 0){
+        if (Array.isArray(values) && values.length === 0) {
           this.filterPlots = Object.assign([], this.plots);
           this.filterPlantTypes = Object.assign([], this.planttypes);
           this.filterVarieties = Object.assign([], this.varieties);
+        } else {
+          this.filterPlots = this.plots.filter(plot => Array.isArray(values) && values.indexOf(plot.farmerId!) !== -1);
+          this.filterPlantTypes = this.planttypes.filter(planttype => Array.isArray(values) && values.indexOf(planttype.farmerId!) !== -1);
+          this.filterVarieties = this.varieties.filter(variety => Array.isArray(values) && values.indexOf(variety.farmerId!) !== -1);
         }
-        else{ 
-          this.filterPlots = this.plots.filter(plot => values.indexOf(plot.circleId!) != -1)
-          this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.circleId!) != -1)
-          this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.circleId!) != -1)
-        }}
-
+      }
         SetAllPlotsChilds(values: number[]) {
           if (values.length == 0) {
             this.filterPlantTypes = Object.assign([], this.planttypes);
@@ -310,7 +290,6 @@ export class ScheduleGroupingComponent implements OnInit {
             this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.plotId!) != -1);
           }
         }
-        
         SetAllPlanttypeChilds(values: number[]) {
           if (values.length == 0) {
             this.filterVarieties = Object.assign([], this.varieties);
@@ -318,19 +297,6 @@ export class ScheduleGroupingComponent implements OnInit {
             this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.planttypeId!) != -1);
           }
         }
-  
-
-
-
-
-  // initPlotNumbers(season: number, plotId: number) {
-  //   this.plotNumbers = [];
-  //   this.monitoringService.GetPlotsInSeason(season, 'Agreement', plotId).subscribe((resp) => {
-  //     this.plotNumbers = resp as unknown as PlotInfoDto[];
-  //     console.log(this.plotNumbers)
-  //   });
-  // }
-
 
   onRowExpand(source: any) {
     var data = source.data as ISeasonScheduleGroupViewDto;
