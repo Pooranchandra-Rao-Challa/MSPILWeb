@@ -124,8 +124,8 @@
                                 <div class="col-3 p-2">
                                     <label class="required">Farmer Code:</label>
                                     <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"  optionValue="farmerId"
-                                        formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true" (onChange)="getExcessTonDetails()"
-                                        filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true"
+                                        formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true"
+                                        filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                                         <ng-template let-farmer pTemplate="item">
                                             <div class="block align-items-center gap-2">
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="col-3 p-2 mt-3">
                                     <button pButton pRipple label="Get Estimted Ton" class="p-button-primary w-100"
-                                        (click)="getEstimatedTon()"></button>
+                                    [disabled]="fbEstimatedTon.invalid" (click)="getEstimatedTon()" ></button>
                                 </div>
                             </div>
                         </div>
