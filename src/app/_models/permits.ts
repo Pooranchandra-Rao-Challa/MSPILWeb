@@ -44,7 +44,9 @@ export class ISeasonScheduleGroupViewDto {
     farmerName?:  string;
     estimatedTon?: number;
     netArea?: number;
+    plotExcessTonId?: number;
     excessTonage?: number;
+    plotYieldId?: number;
     plantType?:  string;
     variety?:  string;
     createdAt?: Date
@@ -53,6 +55,7 @@ export class ISeasonScheduleGroupViewDto {
     updateBy?: string;
     isActive?: boolean;
     }
+  
     export class FarmersInPlantingDatesDto{
       farmerId?:  number;
       farmercode?: string;

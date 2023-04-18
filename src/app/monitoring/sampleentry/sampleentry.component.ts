@@ -13,12 +13,7 @@ import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environ
 import { MessageService } from 'primeng/api';
 import { HttpEvent } from '@angular/common/http';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'sampleentry',
@@ -55,7 +50,7 @@ export class SampleEntryComponent implements OnInit {
   enteredSampleCount: number = 0;
   netArea: number = 0;
 
-  headers: IHeader[] = [
+  headers: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },

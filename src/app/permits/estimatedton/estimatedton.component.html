@@ -1,5 +1,6 @@
 <div class="col-12">
     <div class="card">
+        <p-toast key="tst"></p-toast>
         <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
@@ -78,7 +79,7 @@
                                     </span>
                                 </div>
                                 <div class="col-2 p-2">
-                                    <label class="required">Village:</label>
+                                    <label>Village:</label>
                                     <p-multiSelect [options]="filterVillages" placeholder="Select Village"
                                         optionValue="villageId" appendTo="body" (onChange)="getExcessTonDetails()"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"
@@ -122,10 +123,10 @@
                                 </div>
                                 <div class="col-3 p-2">
                                     <label class="required">Farmer Code:</label>
-                                    <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"
-                                        formControlName="farmerCode" [style]="{'width':'100%'}" [filter]="true"
-                                        filterBy="farmerCode,farmerName,villageName" [virtualScroll]="true"
-                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerCode'].touched && FormControls['farmerCode'].errors }">
+                                    <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"  optionValue="farmerId"
+                                        formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true" (onChange)="getExcessTonDetails()"
+                                        filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true"
+                                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                                         <ng-template let-farmer pTemplate="item">
                                             <div class="block align-items-center gap-2">
                                                 <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
@@ -134,9 +135,9 @@
                                         </ng-template>
                                     </p-dropdown>
                                     <span
-                                        *ngIf="FormControls['farmerCode'].touched && FormControls['farmerCode'].invalid">
+                                        *ngIf="FormControls['farmerId'].touched && FormControls['farmerId'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="FormControls['farmerCode'].errors?.['required']">
+                                            *ngIf="FormControls['farmerId'].errors?.['required']">
                                             Please Select Farmer Code.</div>
                                     </span>
                                 </div>
@@ -183,7 +184,7 @@
                                             <div class="field col-12 md:col-8">
                                                 <input pInputText id="name" type="number" placeholder="Estimated Ton"
                                                     formControlName="excessTonage"
-                                                    [ngClass]="{ 'is-invalid ng-dirty': FormControl['excessTonage'].touched && FormControl['excessTonage'].errors }">
+                                                    [ngClass]="{'is-invalid ng-dirty': FormControl['excessTonage'].touched && FormControl['excessTonage'].errors }">
                                                 <span
                                                     *ngIf="FormControl['excessTonage'].touched && FormControl['excessTonage'].invalid">
                                                     <div class="ng-invalid ng-touched p-error"
@@ -247,8 +248,8 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <!-- <th></th> -->
-                    <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+                    <th></th>
+                    <th *ngFor="let col of excesstonage" [pSortableColumn]="col.header">
                         {{col?.label}} <p-sortIcon field="code">
                         </p-sortIcon>
                         <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -257,29 +258,36 @@
             </ng-template>
             <ng-template pTemplate="body" let-EstimatedTon>
                 <!-- (click)="editAllottedPlot(EstimatedTon)" *ngIf="!forapproval"-->
-                <!-- <td>
-                        <p-overlayPanel #op>
+                <tr>
+                <td>
+                        <p-overlayPanel #opEstimatedTon>
                             <ng-template pTemplate="content">
-                                <form>
-                                    <label> Update Estimated Ton:<sup class="p-error">*</sup></label>
+                                <form [formGroup]="fbEstimatedTon" >
+                                    <label> Update Excess Tonage:<sup class="p-error">*</sup></label>
                                     <div class="grid mt-2">
-
                                         <div class="field col-12 md:col-8">
-
-                                            <input pInputText id="name" type="number" placeholder="Estimated Ton">
+                                            <input pInputText id="name" type="number" placeholder=" Excess Tonage"
+                                                formControlName="excessTonage"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['excessTonage'].touched && FormControls['excessTonage'].errors }">
+                                            <span
+                                                *ngIf="FormControls['excessTonage'].touched && FormControls['excessTonage'].invalid">
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControls['excessTonage'].errors?.['required']">
+                                                    Please Enter Excess Tonage.</div>
+                                            </span>
                                         </div>
                                         <div class=" col-12 md:col-4">
-                                            <button pButton class="p-button-outlined " icon="pi pi-check"></button>
+                                            <button pButton class="p-button-outlined " icon="pi pi-check" (click)="SubmitEstimatedTonnage()"></button>
                                         </div>
                                     </div>
                                 </form>
                             </ng-template>
                         </p-overlayPanel>
-                        <button pButton pRipple icon="pi pi-pencil" (click)="op.toggle($event)"
+                        <button pButton pRipple icon="pi pi-pencil" (click)="editEstimatedTonnage($event,EstimatedTon)"
                             class="p-element p-ripple p-button-text p-button p-component"></button>
-                    </td> -->
-                <tr>
-                    <td *ngFor="let col of headers">
+                    </td>
+            
+                    <td *ngFor="let col of excesstonage">
                         <span *ngIf="col?.field != 'plantingDate' ">{{EstimatedTon[col.field]}}</span>
                         <span *ngIf="col?.field == 'plantingDate'">
                             {{EstimatedTon[col.field] | date: 'dd-MM-yyyy'}}

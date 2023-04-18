@@ -12,11 +12,8 @@ import { LookupService } from 'src/app/_services/lookup.service';
 import { IPlotsofFarmerViewDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto, FarmerSectionViewDto, FarmerSelectInfoViewDto } from 'src/app/_models/monitoring'
 import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
 import { JWTService } from 'src/app/_services/jwt.service';
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader } from 'src/app/_models/common';
+
 @Component({
   selector: 'app-plottransfers',
   templateUrl: './plottransfers.component.html',
@@ -49,7 +46,7 @@ export class PlotTransfersComponent implements OnInit {
   plotNumbers: IPlotsofFarmerViewDto[] = [];
   enableValidation: boolean = true;
 
-  headers: IHeader[] = [
+  headers: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'fromFarmerName', header: 'fromFarmerName', label: 'Farmer' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },

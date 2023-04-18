@@ -13,12 +13,7 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { ICompletedPlotViewDto, CompletedPlotDto, FarmerSectionViewDto, IPlotsofFarmerViewDto } from 'src/app/_models/monitoring';
 import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-completedplots',
@@ -41,7 +36,7 @@ export class CompletedPlotsComponent implements OnInit {
   currentSeason: SeasonDto = {};
   mediumDate: string = MEDIUM_DATE;
   purpose: string = 'Is Over';
-  headers: IHeader[] = [
+  headers: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },

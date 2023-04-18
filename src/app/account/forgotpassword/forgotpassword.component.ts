@@ -50,7 +50,7 @@ export class ForgotpasswordComponent implements OnInit {
         routerLink: 'username',
       },
       {
-        label: 'security Question',
+        label: 'Security Question',
         routerLink: 'securityquestion',
       },
       {

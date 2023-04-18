@@ -20,3 +20,9 @@ export class ApplicationConstantDto {
   updatedAt?: Date;
 
 }
+
+export interface ITableHeader {
+  field: string;
+  header: string;
+  label: string;
+}

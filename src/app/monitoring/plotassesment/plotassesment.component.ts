@@ -18,12 +18,8 @@ import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as FileSaver from 'file-saver';
+import { ITableHeader } from 'src/app/_models/common';
 
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
 @Component({
   selector: 'app-plotassesment',
   templateUrl: './plotassesment.component.html',
@@ -64,14 +60,14 @@ export class PlotassesmentComponent implements OnInit {
     private jwtService: JWTService,
     private alertMessage: AlertMessage,) { }
 
-  farmerHeader: IHeader[] = [
+  farmerHeader: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' }
   ];
 
-  plotHeader: IHeader[] = [
+  plotHeader: ITableHeader[] = [
     { field: 'plotNumber', header:'plotNumber', label: 'Plot Number' },
     { field: 'plantingDate', header:'plantingDate', label: 'Planting Date' },
     { field: 'cropTypeName', header:'cropTypeName', label: 'Crop Type' },
@@ -86,9 +82,9 @@ export class PlotassesmentComponent implements OnInit {
     { field: 'weedStatusName', header: 'weedStatusName  ', label: 'Weed Status' },
     { field: 'interCropName', header: 'interCropName', label: 'Inter Croping' },
 
-  ]; 
-  
-  
+  ];
+
+
 
   initPlotAssesment(plotAssessmentId: number = -1) {
     this.plotAssesment = new PlotAssessmentDto();
@@ -142,7 +138,7 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.exportColumns = this.farmerHeader.map((col) => ({
       title: col.header,
       dataKey: col.field,
@@ -154,24 +150,24 @@ export class PlotassesmentComponent implements OnInit {
     this.initSeasons();
     this.initCropType();
     this.initweedstatus();
-    
+
   }
 
 
   loadPlotassessmentLazy(event: IPlotAssessmentViewDto) {
-     
+
 
     setTimeout(() => {
-      
+
         let loadedCars = this.plotAssessments.slice(1000);
-        
+
         // Array.prototype.splice.apply(this.plotAssessments, [
         //   ...[1000],
         //   ...loadedCars
         // ]);
         this.plotAssessments = [...this.plotAssessments];
     }, Math.random() * 1000 + 250);
-} 
+}
 
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
@@ -179,7 +175,7 @@ export class PlotassesmentComponent implements OnInit {
     });
   }
 
- 
+
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
@@ -192,15 +188,15 @@ export class PlotassesmentComponent implements OnInit {
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
- 
+
     });
   }
 
   initPlotNumbers(season: number, plotId: number) {
     this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
-   
-      
+
+
     });
   }
 
@@ -361,9 +357,9 @@ export class PlotassesmentComponent implements OnInit {
     this.filter.nativeElement.value = '';
     this.onSearch();
   }
-  
+
   exportPdf() {
-   
+
     const doc = new jsPDF('l', 'mm', 'a4');
     (doc as any).autoTable(this.exportColumns, this.plotAssessments);
 

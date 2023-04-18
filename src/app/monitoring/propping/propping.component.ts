@@ -11,12 +11,7 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { FORMAT_DATE } from 'src/app/_helpers/date.format.pipe';
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'propping',
@@ -35,7 +30,7 @@ export class ProppingComponent implements OnInit {
   propping: ProppingDto = {};
   permissions: any;
 
-  headers: IHeader[] = [
+  headers: ITableHeader[] = [
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
