@@ -1,7 +1,7 @@
 import { RoleDto, RoleViewDto, UserDto, UserViewDto, RolePermissionDto, SecureQuestionDto, UserQuestionDto, ForgotUserPasswordDto } from './../_models/security';
 import { Injectable } from "@angular/core";
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_ROLE_URI, CREATE_USER_URI, FORGOT_PASSWORD, GET_ALL_SECTIONS_URI, GET_PERMISSIONS_URI, GET_ROLES_URI, GET_ROLE_PERMISSIONS_URI, GET_USERS_URI, GET_USER_SECTIONS_URI, UPDATE_ROLE_URI, UPDATE_USER_URI, USER_SECURITY_QUESTIONS, } from "./api.uri.service";
+import { CREATE_ROLE_URI, CREATE_USER_URI, FORGOT_PASSWORD, GET_ALL_SECTIONS_URI, GET_PERMISSIONS_URI, GET_ROLES_URI, GET_ROLE_PERMISSIONS_URI, GET_USERS_URI, GET_USER_SECTIONS_URI, SECURE_QUESTIONS, UPDATE_ROLE_URI, UPDATE_USER_URI, USER_SECURITY_QUESTIONS, } from "./api.uri.service";
 
 
 @Injectable({ providedIn: 'root' })
@@ -52,5 +52,8 @@ export class SecurityService extends ApiHttpService {
 
   public UpdateForgotPassword(forgotDto: ForgotUserPasswordDto){
     return this.post(FORGOT_PASSWORD,forgotDto);
+  }
+  public GetSecureQuestions(){
+    return this.get<SecureQuestionDto[]>(SECURE_QUESTIONS);
   }
 }
