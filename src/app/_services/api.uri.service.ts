@@ -235,3 +235,5 @@ export const GET_VILLAGES_FOR_USER ="Schedule/GetVillagesForUser";
 export const GET_FARMER_PLOTS_IN_SCHEDULE_URI ="Schedule/GetPlotSchedules"
 export const GET_VARIETIES_FOR_USER ="Schedule/GetVarietiesForUser";
 export const GET_PLANT_TYPE_FOR_USER ="Schedule/GetPlantTypeForUser";
+export const GET_FARMERS_IN_PLOTS_FOR_USER ="Schedule/GetFarmersInPlotsForUser";
+export const GET_PLOTS_FOR_USER ="Schedule/GetPlotsForUser";

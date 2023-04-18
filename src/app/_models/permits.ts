@@ -121,6 +121,7 @@ export class VarietiesForUserDto  {
   circleId?: number;
   planttypeId?: number;
   plotId?: number
+  farmerId?:number
 }
 export class PlantTypeForUserDto {
   plantTypeId?: number
@@ -131,6 +132,35 @@ export class PlantTypeForUserDto {
    circleId?: number;  
   planttypeId?: number;
   plotId?: number;
+  farmerId?:number
 }
+
+export class FarmersInPlotsForUserDto {
+  farmerId?: number
+  farmercode?: string
+  villageName?: string
+  farmerName?: string
+  divisionId?: number;
+  sectionId?: number;
+  circleId?: number;  
+  villageId?:number
+  
+}
+
+export class PlotsForUserDto {
+  farmerId?: number
+  farmercode?: string
+  plotId?: number
+  plotNumber?: string
+  farmerName?: string
+  villageName?: string
+  divisionId?: number;
+  sectionId?: number;
+  circleId?: number;  
+  villageId?:number
+
+}
+
+
 
 
