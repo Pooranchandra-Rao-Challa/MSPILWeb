@@ -289,9 +289,12 @@
 
                   <div class="field col-12 md:col-3">
                     <label>Address:<sup class="p-error">*</sup></label>
-                    <textarea pInputTextarea formControlName="address" placeholder="Address"
-                      style="height: 42px; resize: vertical;"
+                    <textarea rows="2" cols="30" placeholder="Enter Address" #address pInputTextarea
+                      formControlName="address" [maxlength]="maxLength.address"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                    <div class="text-right">
+                      <small>{{address.value.length}}/{{maxLength.address}} </small>
+                    </div>
                     <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                         Please Enter Address.</div>
@@ -356,11 +359,13 @@
                   <div class="field col-12 md:col-3">
                     <label for="panNo">PAN No:</label>
                     <input pInputText id="panNo" type="text" placeholder="Enter Pan No " formControlName="panNo" maxLength="10" 
+                    style="text-transform:uppercase" alphaNumeric
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].invalid }">
                     <div *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
-                      <small class="form-text text-danger" *ngIf="FormControls['panNo'].errors?.['pattern']">
-                        Invalid PAN number format, eg: ABCDE1234X.
-                      </small>
+                      <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
+                          Invalid Pan Number, Eg: ABCDE01234X</div>
+                      </span>
                     </div>
                   </div>
 
@@ -385,7 +390,21 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
                         Please Enter Valid Aadhaar No.</div>
                     </span>
-                       
+                     
+                  </div>
+                  
+                  <div class="field col-12 md:col-3">
+                    <label>TAX:</label>
+                    <input pInputText id="tax" #aadhaarNo placeholder=" Enter tax "  formControlName="tax"   maxlength="9"
+                   numericOnly>
+                   <span *ngIf="FormControls['tax'].touched && FormControls['tax'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['tax'].errors?.['required']">
+                      Please Enter TAX Number.</div>
+                   
+                  </span>
+      
+                   
+                     
                   </div>
                 <div class="field col-12 md:col-3">
                   <label>Guarantor1:</label>
@@ -549,7 +568,7 @@
                           <th>Name</th>
                           <th>Vehicle Type</th>
                           <th>No Of Persons</th>
-                          <th>Action</th>
+                           <th *ngIf="fbHgl.controls['subHgls'].value.length > 1"></th>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-hgl let-subHglIndex="rowIndex">
@@ -600,7 +619,7 @@
 
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" label="submit" class="p-button-raised p-button-primary"
+          <button pButton pRipple type="button" label={{submitLabel}} class="p-button-raised p-button-primary"
           [disabled]="fbHgl.invalid"  (click)="onSubmit()"></button>
         </div>
       </ng-template>

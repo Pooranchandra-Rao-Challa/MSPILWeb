@@ -14,7 +14,7 @@
 
     <!-- dialog -->
     <p-dialog header="Completed Plot" [(visible)]="showDialog" [modal]="true"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="fbCompletedPlots.reset()">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="clearForm()">
       <div class="flex flex-column  justify-content-center">
         <form [formGroup]="fbCompletedPlots" (ngSubmit)="onSubmit()">
           <div class="grid">
@@ -34,26 +34,8 @@
                           Please Select Season.</div>
                       </span>
                     </div>
-                    <div class="field col-12 md:col-4">
-                      <label class="required">Doc No:</label>
-                      <p class="disabled_text">
-                        {{ FormControls["docNo"].value }}
-                      </p>
-                    </div>
-                    <div class="field col-12 md:col-4">
-                      <label class="required">Doc Date:</label>
-                      <p-calendar formControlName="docDate" placeholder="Select Doc Date" [readonlyInput]="true"
-                        [showIcon]="true"
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['docDate'].touched && FormControls['docDate'].errors }">
-                      </p-calendar>
-                      <span *ngIf="FormControls['docDate'].touched && FormControls['docDate'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['docDate'].errors?.['required']">
-                          Please Select Doc Date.</div>
-                      </span>
-                    </div>
                   </div>
                 </p-fieldset>
-
                 <p-fieldset legend="Plot Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
@@ -139,11 +121,11 @@
                     </div>
                     <div class="field col-12 md:col-2" *ngIf="addFlag">
                       <label>Is Over:</label><br>
-                      <p-inputSwitch formControlName="isOver"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isOver" [disabled]="diffLessThanOne || diffGreaterThanEqualsToOne"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-2" *ngIf="addFlag">
-                      <label>Is Left Over:</label><br>
-                      <p-inputSwitch formControlName="isLeftOver"
+                      <label [class.required]="diffGreaterThanEqualsToOne">Is Left Over:</label><br>
+                      <p-inputSwitch formControlName="isLeftOver" [disabled]="diffLessThanOne"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['isLeftOver'].touched && FormControls['isLeftOver'].errors }">
                       </p-inputSwitch>
                       <span *ngIf="FormControls['isLeftOver'].touched && FormControls['isLeftOver'].invalid">
@@ -154,16 +136,16 @@
                     </div>
                     <div class="field col-12 md:col-2" *ngIf="addFlag">
                       <label>Is Ratoon:</label><br>
-                      <p-inputSwitch formControlName="isRatoon"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isRatoon" [disabled]="diffGreaterThanEqualsToOne"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-2" *ngIf="!addFlag">
                       <label class="required">Reopen:</label><br>
-                      <p-inputSwitch formControlName="isreopen"
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['isreopen'].touched && FormControls['isreopen'].errors }">
+                      <p-inputSwitch formControlName="isReopen"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['isReopen'].touched && FormControls['isReopen'].errors }">
                       </p-inputSwitch>
-                      <span *ngIf="FormControls['isreopen'].touched && FormControls['isreopen'].invalid">
+                      <span *ngIf="FormControls['isReopen'].touched && FormControls['isReopen'].invalid">
                         <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['isreopen'].errors?.['required']">
+                          *ngIf="FormControls['isReopen'].errors?.['required']">
                           Please Select Left Over.</div>
                       </span>
                     </div>
@@ -205,15 +187,15 @@
 
             <div class="md:inline-flex">
               <div class="field-radiobutton px-2">
-                <p-radioButton name="purpose" value="Is Over" [(ngModel)]="purpose" inputId="isOver"
+                <p-radioButton name="purpose" value="Is Over" [(ngModel)]="purpose" inputId="over"
                   (onClick)="onSearch()"></p-radioButton>
-                <label for="isOver">Is Over</label>
+                <label for="over">Is Over</label>
               </div>
               <div class="field-radiobutton px-2">
-                <p-radioButton name="purpose" value="Is Left Over" [(ngModel)]="purpose" inputId="isLeftOver"
+                <p-radioButton name="purpose" value="Is Left Over" [(ngModel)]="purpose" inputId="leftOver"
                   (onClick)="onSearch()">
                 </p-radioButton>
-                <label for="isLeftOver">Is Left Over</label>
+                <label for="leftOver">Is Left Over</label>
               </div>
               <div class="field-radiobutton px-2">
                 <p-radioButton name="purpose" value="Ratoon" [(ngModel)]="purpose" inputId="ratoon"
@@ -241,11 +223,7 @@
               (click)="editCompletedPlot(completedPlot)" [disabled]="completedPlot.status != 'Closed'"></button>
           </td>
           <td *ngFor="let col of headers">
-            <span *ngIf="col?.field != 'docDate'">{{completedPlot[col.field]}}</span>
-            <span *ngIf="col?.field == 'docDate'">
-              {{completedPlot[col.field] | date: mediumDate}}
-            </span>
-          </td>
+            {{completedPlot[col.field]}} </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

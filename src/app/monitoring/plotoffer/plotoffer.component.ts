@@ -17,13 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-plotoffer',
@@ -58,14 +52,14 @@ export class PlotofferComponent implements OnInit {
   plantFrom!: Date;
   plantTo!: Date;
 
-  farmerHeaders: IHeader[] = [
+  farmerHeaders: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
   ];
 
-  plotHeaders: IHeader[] = [
+  plotHeaders: ITableHeader[] = [
     { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
     { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
@@ -136,7 +130,7 @@ export class PlotofferComponent implements OnInit {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp as any;
       console.log(this.seasons);
-      
+
     });
   }
 

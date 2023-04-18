@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
+import { ITableHeader } from 'src/app/_models/common';
 import {
   IFarmerPlotYieldViewDto, MaintDiseaseDto, MaintenanceItems, MaintFertilizerDto, MaintPestDto, MaintWeedicideDto, PlotAgreementDto, PlotInfoDto,
   PlotsDto, IPlotYieldViewDto
@@ -16,11 +17,6 @@ import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
 
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
 @Component({
   selector: 'app-plotyield',
   templateUrl: './plotyield.component.html',
@@ -61,14 +57,14 @@ export class PlotyieldComponent implements OnInit {
   permissions: any;
   plotNumbers: PlotInfoDto[] = [];
 
-  farmerHeaders: IHeader[] = [
+  farmerHeaders: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
-  ]; 
+  ];
 
-  plotHeaders: IHeader[] = [
+  plotHeaders: ITableHeader[] = [
     { field: 'plotNumber', header: 'plotNumber', label: ' Plot Number' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },

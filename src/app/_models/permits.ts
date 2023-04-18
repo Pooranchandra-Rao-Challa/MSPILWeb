@@ -114,3 +114,26 @@ export class ExcessTonDto{
   plotYieldId?:number;
   excessTonage?: number;
 }
+
+export class VarietiesForUserDto  {
+  varietyId?: number
+  varietyName?: string
+  villageId?: number;
+  divisionId?: number;
+  sectionId?: number;
+  circleId?: number;
+  planttypeId?: number;
+  plotId?: number
+}
+export class PlantTypeForUserDto {
+  plantTypeId?: number
+  plantTypeName?: string
+  villageId?: number;
+  divisionId?: number;
+  sectionId?: number;
+   circleId?: number;  
+  planttypeId?: number;
+  plotId?: number;
+}
+
+
