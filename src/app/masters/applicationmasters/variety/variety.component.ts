@@ -4,7 +4,7 @@ import { Table } from 'primeng/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, MAX_LENGTH_6 } from 'src/app/_shared/regex';
+import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, MAX_LENGTH_6 } from 'src/app/_shared/regex';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { VarietyViewDto, VarietyDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
@@ -32,7 +32,7 @@ export class VarietyComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions:any;
-  
+
   constructor(private formbuilder: FormBuilder,
     private lookupService: LookupService,
     private appMasterService: AppMasterService,
@@ -63,12 +63,12 @@ export class VarietyComponent implements OnInit {
       varietyId: [null],
       varietyTypeId: ['', (Validators.required)],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       plantAge: [null, (Validators.required)],
       ratoonAge: [null, (Validators.required)],
       sugarContent: ['', (Validators.required)],
       plantSuitability: ['', (Validators.required)],
-      isActive: [true]
+      isActive: [null]
     });
   }
 
@@ -77,6 +77,7 @@ export class VarietyComponent implements OnInit {
   }
 
   addVariety() {
+    this.fbVariety.controls['isActive'].setValue(true);
     this.submitLabel = "Add Variety";
     this.addFlag = true;
     this.showDialog = true;
