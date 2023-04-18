@@ -8,13 +8,7 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
-import { MaxLength } from 'src/app/_models/common';
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 
 @Component({
   selector: 'seed',
@@ -36,7 +30,7 @@ export class SeedComponent implements OnInit {
   farmers: FarmerSectionViewDto[] = [];
   maxLength: MaxLength = new MaxLength();
 
-  headers: IHeader[] = [
+  headers: ITableHeader[] = [
     { field: 'SeasonId', header: 'SeasonId', label: 'Season' },
     { field: 'FarmerCode', header: 'FarmerCode', label: 'Farmer' },
     { field: 'PlotNo', header: 'PlotNo', label: 'Plot No' },

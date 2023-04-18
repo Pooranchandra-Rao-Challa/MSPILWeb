@@ -17,12 +17,7 @@ import { IFarmerInPlotReportsViewDto, IPlotReportViewDto, PlotReportDto } from '
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { LazyLoadEvent } from 'primeng/api';
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-plotreports',
@@ -69,14 +64,14 @@ export class PlotreportsComponent implements OnInit {
 
   loading: boolean = false;
 
-  farmerHeaders: IHeader[] = [
+  farmerHeaders: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
   ];
 
-  plotHeaders: IHeader[] = [
+  plotHeaders: ITableHeader[] = [
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
@@ -140,10 +135,10 @@ export class PlotreportsComponent implements OnInit {
 
   getPlotOffersInSeason(seasonId: number, plotId: number) {
     this.monitoringService.PlotOffersInSeason(seasonId, plotId).subscribe((resp) => {
-     
-      
+
+
       this.seasonPlotOffers = resp as any;
-     
+
       this.seasonPlotOffers.forEach(s => {
         s.DisplayValue = `${s.offerNo}-${s.farmerCode}-${s.farmerName}-${s.plotVillageName}`
       })
@@ -259,7 +254,7 @@ export class PlotreportsComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-  
+
       this.initSeasons();
       this.initPlotReports(this.currentSeason.seasonId!);
     });
