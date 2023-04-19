@@ -29,7 +29,7 @@
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Name, Farmer Code, Village Name, Plot No, Offer No" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotReports($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
@@ -242,27 +242,27 @@
                   <p-calendar placeholder="Select Planting Date" [readonlyInput]="true" [showIcon]="true"
                     formControlName="plantingDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingDate'].touched && FormControls['plantingDate'].errors }">
-                    <span *ngIf="FormControls['plantingDate'].touched && FormControls['plantingDate'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['plantingDate'].errors?.['required']">
-                        Please Select Planting Date.</div>
-                    </span>
                   </p-calendar>
+                  <span *ngIf="FormControls['plantingDate'].touched && FormControls['plantingDate'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['plantingDate'].errors?.['required']">
+                      Please Select Planting Date.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Plant Sub Type:</label>
                   <p-dropdown placeholder="Select Plant Sub Type" optionLabel="name" [options]="plantSubTypes"
                     optionValue="plantSubTypeId" formControlName="plantSubTypeId">
-                    <span *ngIf="FormControls['plantSubTypeId'].touched && FormControls['plantSubTypeId'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['plantSubTypeId'].errors?.['required']">
-                        Please Select Plant Sub Type.</div>
-                    </span>
                   </p-dropdown>
+                  <span *ngIf="FormControls['plantSubTypeId'].touched && FormControls['plantSubTypeId'].invalid">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['plantSubTypeId'].errors?.['required']">
+                      Please Select Plant Sub Type.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Variety:</label>
-                  <p-dropdown 
+                  <p-dropdown
                   [filter]="true"
                   filterBy="name"
                  [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
@@ -350,7 +350,10 @@
                     [options]="methodofIrrigations" optionValue="lookupDetailId"
                     [autoDisplayFirst]="autoDisplayDrowdown" formControlName="methodOfIrrigationId" appendTo="body">
                   </p-dropdown>
-                 
+                  <span *ngIf="FormControls['methodOfIrrigationId'].touched && FormControls['methodOfIrrigationId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['methodOfIrrigationId'].errors?.['required']">
+                      Please Select Method Of Irrigation.</div>
+                  </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Distance From Plot(KM):</label>
@@ -364,6 +367,10 @@
                     optionValue="lookupDetailId" formControlName="plantingMethodId" appendTo="body"
                     [autoDisplayFirst]="autoDisplayDrowdown">
                   </p-dropdown>
+                  <span *ngIf="FormControls['plantingMethodId'].touched && FormControls['plantingMethodId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['plantingMethodId'].errors?.['required']">
+                      Please Select Planting Method.</div>
+                  </span>
                 </div>
               </div>
             </p-fieldset>

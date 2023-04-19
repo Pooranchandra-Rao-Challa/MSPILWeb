@@ -27,12 +27,12 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
-                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+                        <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
                           optionValue="seasonId" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
 
-                        
+
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -463,7 +463,7 @@
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" [virtualScrollItemSize]="30">
             </p-dropdown>
           </div>
@@ -496,7 +496,7 @@
         <tr>
           <td colspan="5" >
             <div class="grid p-3" >
-              <div class="col-12" > 
+              <div class="col-12" >
               <p-table [value]="farmer.objNetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId"
                 [tableStyle]="{ width: 'min-content'}"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">

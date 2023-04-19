@@ -12,7 +12,7 @@
         </p-toolbar>
 
 
-       
+
 
         <!-- popup form -->
         <p-dialog header="Cutting Order" [(visible)]="showDialog" [modal]="true" showEffect="fade"
@@ -193,7 +193,7 @@
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
                      >
-                    
+
 
 
                     <ng-template pTemplate="header">
@@ -208,7 +208,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-getOrder>
                         <tr>
-                            
+
                             <td><button pButton pRipple icon="pi pi-pencil"
                                     class="p-element p-ripple p-button-text p-button p-component"></button>
                             </td>
@@ -238,7 +238,7 @@
                     <!--  (click)="clear(dt1)"-->
                     <div>
                         <span class="p-input-icon-left mx-2">
-                            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
                                 [options]="seasons"  [(ngModel)]="currentSeason.seasonId"
                                 (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
                                 [style]="{'width':'100%'}">

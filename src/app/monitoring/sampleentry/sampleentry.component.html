@@ -29,7 +29,7 @@
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initSampleEntries($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>

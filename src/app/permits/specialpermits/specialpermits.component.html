@@ -6,7 +6,7 @@
                 <h4>Special Permit</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                
+
                 <!-- (click)="getSpecialPermit()" -->
             </ng-template>
         </p-toolbar>
@@ -19,7 +19,7 @@
                         <div class="col-12">
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
                                 <div class="col-3 p-2">
-                                    <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                                    <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
                                         [options]="seasons" formControlName="seasonId"
                                         [(ngModel)]="currentSeason.seasonId"
                                         (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
@@ -63,13 +63,13 @@
                                         formControlName="farmerSection">
                                 </div>
                                 <div class="col-3 p-2">
- 
+
                                     <input pInputText id="farmerVillage" placeholder="Farmer Village" type="text" [style]="{'width':'100%'}"
                                         formControlName="farmerVillage">
                                 </div>
 
                                 <div class="col-3 p-2">
-                                    <p-dropdown placeholder="Plot" optionLabel="plot" optionValue="plot" 
+                                    <p-dropdown placeholder="Plot" optionLabel="plot" optionValue="plot"
                                         formControlName="plot" [style]="{'width':'100%'}">
                                     </p-dropdown>
                                 </div>
@@ -131,11 +131,11 @@
 
                                 </div>
                             </div>
-                            
+
                         </div>
                     </from>
                     <!-- <div class="col-2 p-2">
-                        <button pButton pRipple label="Search" class="p-button-raised p-button-success" style="width:100%"></button><!-- (click)="onSubmit()" 
+                        <button pButton pRipple label="Search" class="p-button-raised p-button-success" style="width:100%"></button><!-- (click)="onSubmit()"
                     </div> -->
                 </div>
             </ng-template>
