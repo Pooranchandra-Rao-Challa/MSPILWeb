@@ -92,9 +92,9 @@ export interface IFarmerPlotOffersViewDto {
   plotCircleName: string;
   plotSectionName: string;
   plantTypeId: number;
-  plantType: string;
+  plantTypeName: string;
   expectedVarietyId: number;
-  expectedVariety: string;
+  expectedVarietyName: string;
   expectedPlantingDate: Date;
   expectedArea: number;
   reasonForNotPlantingId: number;

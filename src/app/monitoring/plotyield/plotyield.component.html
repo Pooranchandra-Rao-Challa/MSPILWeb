@@ -31,8 +31,6 @@
                           optionValue="seasonId" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
-
-
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
@@ -47,7 +45,6 @@
                           formControlName="plotNumber" [virtualScrollItemSize]="20" formControlName="plotId"
                           (onChange)="getPlotinfo($event.value)"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
-
                           <ng-template let-season pTemplate="selectedItem">
                             <div>{{ season.plotNumber }} - {{ season.villageName }}</div>
                           </ng-template>

@@ -26,7 +26,7 @@
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label>Season:</label>
+                        <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
                           [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
