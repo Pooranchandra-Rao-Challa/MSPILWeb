@@ -41,7 +41,8 @@ export class IPlotOfferViewDto {
   plantType?: string;
   varietyName?:string;
   varietyId?: number;
-  expectedVariety?: string;
+  expectedVarietyId?:number;
+  expectedVarietyName?: string;
   plantingDate?: Date;
   expectedArea?: number;
   reasonForNotPlantingId?: number;

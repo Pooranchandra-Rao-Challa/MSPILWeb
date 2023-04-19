@@ -30,7 +30,7 @@
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotOffers($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
@@ -137,7 +137,7 @@
                   <div class="field col-12 md:col-4">
                     <label class="required">Offer Date:</label>
                     <p-calendar placeholder="Select Offer Date" [readonlyInput]="true" [showIcon]="true"
-                      [defaultDate]="plantFrom" formControlName="offerDate" [minDate]="plantFrom" [maxDate]="plantTo"
+                      formControlName="offerDate" [defaultDate]="plantFrom" [minDate]="plantFrom" [maxDate]="plantTo"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['offerDate'].touched && FormControls['offerDate'].errors }">
                     </p-calendar>
                     <span *ngIf="FormControls['offerDate'].touched && FormControls['offerDate'].invalid">
@@ -159,7 +159,7 @@
                       <ng-template let-farmer pTemplate="selectedItem">
                         <div>{{farmer.code}}-{{farmer.farmerName}}</div>
                       </ng-template>
-                     <ng-template let-seasonPlotOffer  let-farmer pTemplate="item" >
+                     <ng-template let-seasonPlotOffer  let-farmer pTemplate="item">
                     <div class="block align-items-center gap-2">
                       <div>{{farmer.code}}</div>
                       <div>{{farmer.farmerName}}</div>
@@ -297,25 +297,21 @@
                   <div class="field col-12 md:col-4">
                     <label class="required">Expected Planting Date:</label>
                     <p-calendar placeholder="Select Expected Planting Date" [readonlyInput]="true" [showIcon]="true"
-                      formControlName="expectedPlantingDate" appendTo="body"
+                      formControlName="expectedPlantingDate" appendTo="body" [defaultDate]="plantFrom" [minDate]="FormControls['offerDate'].value" [maxDate]="plantTo"
+                      [disabled]="!FormControls['offerDate'].value" [pTooltip]="!FormControls['offerDate'].value ? 'Please Select Offer Date First' : ''"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['expectedPlantingDate'].touched && FormControls['expectedPlantingDate'].errors }">
                     </p-calendar>
                     <span
                       *ngIf="FormControls['expectedPlantingDate'].touched && FormControls['expectedPlantingDate'].invalid">
                       <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['expectedPlantingDate'].errors?.['required']">
+                        *ngIf="FormControls['expectedPlantingDate'].errors?.['required'] && !FormControls['offerDate'].errors?.['required']">
                         Please Select Expected Planting Date.</div>
-                    </span>
-                    <span>
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="fbPlotOffer.value.offerDate > fbPlotOffer.value.expectedPlantingDate">
-                        Expected Planting Date Always Greater Than Equals To  Offer Date</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Expected Varity Code:</label>
-                    <p-dropdown placeholder="Select Expected Varity Code"  filterBy="name" [filter]="true"  optionLabel="name" [options]="varieties"
-                      optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true" [virtualScrollItemSize]="38" >
+                    <label>Expected Variety Code:</label>
+                    <p-dropdown placeholder="Select Expected Variety Code"  filterBy="name" [filter]="true"  optionLabel="name" [options]="varieties" appendTo="body"
+                      optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true" [virtualScrollItemSize]="38">
                     </p-dropdown>
                   </div>
                   <div class="field col-12 md:col-4">

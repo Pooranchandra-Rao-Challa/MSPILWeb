@@ -253,6 +253,7 @@ export class PlotofferComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+    this.onSearch();
   }
 
   editPlotOffer(plotOffer: IFarmerPlotOffersViewDto, farmer: IFarmerInPlotOfferDto) {
