@@ -108,7 +108,7 @@
   </p-table>
 
   <!-- Plot Offer Dialog -->
-  <p-dialog header="Plot Offer" [(visible)]="showDialog" [modal]="true" showEffect="fade"  [transitionOptions]="'500ms'"
+  <p-dialog header="Plot Offer" [(visible)]="showDialog" [modal]="true" showEffect="fade"  [transitionOptions]="'300ms'"
     [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="fbPlotOffer.reset()" [maximizable]="true">
     <div class="flex flex-column align-items-center justify-content-center">
       <form [formGroup]="fbPlotOffer" (ngSubmit)="onSubmit()">
