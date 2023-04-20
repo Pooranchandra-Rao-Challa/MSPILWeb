@@ -1,7 +1,9 @@
 <div class="col-12">
     <div class="card">
         <p-toast key="tst"></p-toast>
+
         <!-- toolbar -->
+        
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <h4>Estimated Ton</h4>
@@ -39,7 +41,7 @@
                                     <p-multiSelect [options]="divisions" placeholder="Select Division"
                                         optionValue="divisionId" appendTo="body" [filter]="true"
                                         optionLabel="divisionName" formControlName="divisionId"
-                                        [style]="{'width':'100%'}"
+                                        [style]="{'width':'100%'}" 
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
                                         (onChange)="SetAllDivisionChilds($event.value)">
                                     </p-multiSelect>
@@ -122,7 +124,7 @@
                                     </span>
                                 </div>
                                 <div class="col-3 p-2">
-                                    <label class="required">Farmer Code:</label>
+                                    <label>Farmer Code:</label>
                                     <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"  optionValue="farmerId"
                                         formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true"
                                         filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
@@ -154,7 +156,7 @@
 
         <!-- popup form -->
         <p-dialog header="Estimated Ton" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" [transitionOptions]="'500ms'">
+            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" [transitionOptions]="'500ms'">
             <!-- (onHide)="fbAllottedPlot.reset()" -->
             <div class="flex flex-column align-items-center justify-content-center">
                 <!-- table -->
@@ -223,19 +225,19 @@
         </p-dialog>
 
         <!-- table -->
-        <p-table #dt1 [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true"
+        <p-table #dtesstimatedton [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
             responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
-                    <!--  (click)="clear(dt1)"-->
+                    <button pButton label="Clear" class="p-button-outlined mb-2" 
+                    (click)="clear(dtesstimatedton)" icon="pi pi-filter-slash"></button>
                     <div>
-                        <span class="p-input-icon-left mb-2">
+                         <span class="p-input-icon-left m-2">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter placeholder="Search Keyword"
-                                pTooltip="Search By Farmer Code, Farmer Name, Village Name,Plot No." class="w-full" />
-                        </span>
+                            <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                              pTooltip="Search By Farmer Code, Farmer Name, Village Name" class="w-full">
+                          </span>
                         <span class="p-input-icon-left mb-2">
                             <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
                                 [options]="seasons" [(ngModel)]="currentSeason.seasonId"

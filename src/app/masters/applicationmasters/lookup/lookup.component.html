@@ -14,7 +14,7 @@
 
         <!-- dialog -->
         <p-dialog header="Lookup" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width:'60%'}" (onHide)="onClose()">
+            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width:'auto'}" (onHide)="onClose()">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fblookup">
                     <div class="grid">
@@ -95,7 +95,7 @@
                                 <tr [formGroupName]="lookUpDetailsIndex">
                                     <td>
                                         <input pInputText class="form-control" formControlName="code"
-                                            placeholder="Enter Code" [maxlength]="20" alphaNumeric [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
+                                            placeholder="Enter Code" [maxlength]="20" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
                                 formArrayControls(lookUpDetailsIndex, 'code')?.errors }">
                                         <span
                                             *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched && formArrayControls(lookUpDetailsIndex,'code')?.invalid">
@@ -115,7 +115,7 @@
                                     </td>
                                     <td>
                                         <input pInputText class="form-control" formControlName="name"
-                                            placeholder="Enter Name" alphaNumeric [maxlength]="maxLength.name"
+                                            placeholder="Enter Name" [maxlength]="maxLength.name"
                                             [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'name')?.touched &&
                                     formArrayControls(lookUpDetailsIndex,'name')?.errors }">
                                         <span

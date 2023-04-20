@@ -37,6 +37,7 @@ export class DistrictComponent implements OnInit {
 
   InitDistrict() {
     this.district = new DistrictDto();
+    this.fbdistricts.controls['isActive'].setValue(true);
     this.submitLabel = "Add District";
     this.addFlag = true;
     this.display = true;
@@ -58,7 +59,7 @@ export class DistrictComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       stateId: [null, (Validators.required)],
       districtId: [null],
-      isActive: [true]
+      isActive: [null]
     });
   }
 
