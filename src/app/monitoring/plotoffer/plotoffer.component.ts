@@ -18,6 +18,7 @@ import { CURRENT_SEASON } from 'src/environments/environment';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { ITableHeader } from 'src/app/_models/common';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
   selector: 'app-plotoffer',
@@ -68,6 +69,7 @@ export class PlotofferComponent implements OnInit {
     { field: 'expectedVarietyName', header: 'expectedVarietyName', label: 'Variety' },
     { field: 'expectedPlantingDate', header: 'expectedPlantingDate', label: 'Planting Date' },
   ];
+  loading: boolean = false;
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
@@ -97,6 +99,8 @@ export class PlotofferComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotOffers = resp as unknown as IFarmerInPlotOfferDto[];
+      console.log(this.plotOffers);
+
     });
   }
 
@@ -104,6 +108,8 @@ export class PlotofferComponent implements OnInit {
     var data = source.data as IFarmerInPlotOfferDto;
     this.monitoringService.GetFarmerPlotsInOffer(data.seasonId, data.farmerId).subscribe(resp => {
       data.ObjOfferedPlots = resp as unknown as IFarmerPlotOffersViewDto[];
+      console.log(resp);
+
     });
   }
 
@@ -161,6 +167,7 @@ export class PlotofferComponent implements OnInit {
   }
 
   getNewOfferNo(seasonId: number) {
+    this.fbPlotOffer.controls["offerNo"].setValue(null);
     this.seasons?.forEach((value) => {
       if (value.seasonId == seasonId) {
         this.plantFrom = value.plantFrom && new Date(value.plantFrom?.toString() + "");
@@ -170,6 +177,8 @@ export class PlotofferComponent implements OnInit {
     if (this.plotOffer.plotOfferId == null)
       this.monitoringService.GetNewOfferNo(seasonId).subscribe((resp) => {
         if (resp) this.fbPlotOffer.controls['offerNo'].setValue(resp);
+        console.log(this.fbPlotOffer.controls['offerNo'].value);
+
       });
   }
 
@@ -177,7 +186,7 @@ export class PlotofferComponent implements OnInit {
     this.fbPlotOffer = this.formbuilder.group({
       plotOfferId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
-      offerNo: [null],
+      offerNo: [null, (Validators.required)],
       offerDate: [null, (Validators.required)],
       isNewFarmer: [{ value: false, disabled: true }],
       farmerId: [null, (Validators.required)], /* Here farmerId is ryotNo */
@@ -253,6 +262,7 @@ export class PlotofferComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
+    this.onSearch();
   }
 
   editPlotOffer(plotOffer: IFarmerPlotOffersViewDto, farmer: IFarmerInPlotOfferDto) {

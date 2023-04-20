@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, ExcessViewDto, FarmersInPlantingDatesDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "../_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, ExcessViewDto, FarmersInPlantingDatesDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupPlotsViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "../_models/permits";
 import { ApiHttpService } from "./api.http.service";
-import { GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMERS_IN_PLOTS_FOR_USER, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_PLANT_TYPE_FOR_USER, GET_PLOTS_FOR_USER, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VARIETIES_FOR_USER,  GET_VILLAGES_FOR_USER, UPDATE_EXCESS_TON, UPDATE_EXCESS_TONNAGE, } from "./api.uri.service";
+import { GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMERS_IN_PLOTS_FOR_USER, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_PLANT_TYPE_FOR_USER, GET_PLOTS_FOR_USER, GET_SCHEDULE_GROUP_PLOTS_URI, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VARIETIES_FOR_USER,  GET_VILLAGES_FOR_USER, UPDATE_EXCESS_TON, UPDATE_EXCESS_TONNAGE, } from "./api.uri.service";
 
 
 
@@ -79,6 +79,10 @@ public GetFarmersInPlotsForUser(seasonId: number,villageId :number) {
 }
 public GetPlotsForUser(seasonId: number,farmerId  :number) {
   return this.getWithParams<PlotsForUserDto>(GET_PLOTS_FOR_USER, [seasonId,farmerId]);
+
+}
+public GetScheduleGroupPlots(scheduleReq: any) {
+  return this.post<ScheduleGroupPlotsViewDto>(GET_SCHEDULE_GROUP_PLOTS_URI, scheduleReq);
 
 }
 

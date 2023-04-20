@@ -40,7 +40,7 @@ export class LoginComponent {
     this.submitted = true;
     this.accountService.Authenticate(this.loginForm.value as LoginModel)
       .subscribe(
-        {
+      {
           next: (resp: LogInSuccessModel) => {
             if(resp.isLoginSuccess && !resp.isFirstTimeLogin)
             setTimeout(() => {

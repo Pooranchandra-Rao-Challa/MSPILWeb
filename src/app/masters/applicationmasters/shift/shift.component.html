@@ -11,8 +11,8 @@
                         <div class="p-fluid p-formgrid grid">
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="code">Shift Code:<sup class="p-error">*</sup></label>
-                                    <input pInputText id="code" #code formControlName="code" type="text" placeholder="Enter Shift Code"
-                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"/>
+                                    <input pInputText id="code" #code formControlName="code" type="text"  placeholder="Enter Shift Code"  alphaNumeric
+                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }" [maxlength]="20"/>
                                     <div class="text-right">
                                         <small>{{code.value.length}}/20</small>
                                       </div>
@@ -49,7 +49,7 @@
 
                                 <div class="field col-12 md:col-6">
                                     <label>From Time:<sup class="p-error">*</sup></label>
-                                    <p-calendar class="cursor-pointer" [timeOnly]="true" [showIcon]="true" icon="fa-clock-o"  placeholder="From time" [showSeconds]="false" dataType="string" [readonlyInput]="true" 
+                                    <p-calendar class="cursor-pointer" [timeOnly]="true"    [showIcon]="true" icon="pi pi-clock" placeholder="From Time" [showSeconds]="false" dataType="string" [readonlyInput]="true" 
                                     formControlName="strFromTime"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['strFromTime'].touched && FormControls['strFromTime'].errors }">
                                     </p-calendar>
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>To Time:<sup class="p-error">*</sup></label>
-                                    <p-calendar [readonlyInput]="true" [timeOnly]="true" [showIcon]="true" icon="fa-clock" placeholder="To time"  [showSeconds]="false" dataType="string"  formControlName="strToTime"
+                                    <p-calendar [readonlyInput]="true" [timeOnly]="true" [showIcon]="true" icon="pi pi-clock" placeholder="To Time"  [showSeconds]="false" dataType="string"  formControlName="strToTime"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['strToTime'].touched && FormControls['strToTime'].errors }">
                                     </p-calendar>
                                     <span *ngIf="FormControls['strToTime'].touched && FormControls['strToTime'].invalid">
@@ -70,14 +70,14 @@
                                 </div>
 
                                 <div class="field col-12 md:col-6">
-                                    <label htmlFor="isNextDay">Is Next day?:</label><br>
-                                    <p-inputSwitch [(ngModel)]="nextSwitch" formControlName="isNextDay"></p-inputSwitch>
+                                    <label htmlFor="isNextDay">Is NextDay?:</label><br>
+                                    <p-inputSwitch formControlName="isNextDay"></p-inputSwitch>
 
                                 </div>
 
                                 <div class="field col-12 md:col-6">
                                     <label htmlFor="isActive">Is Active?:</label><br>
-                                    <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                                    <p-inputSwitch formControlName="isActive"></p-inputSwitch>
 
                                 </div>
                             </div>
@@ -103,12 +103,12 @@
                     (click)="InitShift();" *ngIf="permissions.CanCreateShift"></button>
             </ng-template>
         </p-toolbar>
-        <p-table #dt1 [value]="shifts" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading"
+        <p-table #dt1 [value]="shifts" dataKey="id" [rows]="10" [loading]="loading"
             [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true"
-            [globalFilterFields]="['shiftId','code','name','divisionId','divisionName','inchargeName','inchargePhoneNo',
-           'address','listingOrder','updatedAt','createdAt','updatedBy','createdBy' ]" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
+            [globalFilterFields]="['shiftId','code','name','fromTime','toTime','createdAt','createdBy', 'updatedAt', 'updatedBy' ]"
+             responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}"
             [autoLayout]="true" [rowsPerPageOptions]="[10,25,50]">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
@@ -138,7 +138,7 @@
                     <th pSortableColumn="toTime">To Time<p-columnFilter type="text" field="toTime"
                         display="menu"></p-columnFilter><p-sortIcon field="toTime"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="isNextDay">Is Next Day <p-columnFilter type="text" field="isNextDay"
+                    <th pSortableColumn="isNextDay">Is NextDay <p-columnFilter type="text" field="isNextDay"
                         display="menu"></p-columnFilter><p-sortIcon field="isNextDay"></p-sortIcon>
                     </th>
                     <th pSortableColumn="isActive">Is Active  <p-columnFilter type="text" field="isActive"

@@ -12,7 +12,7 @@ import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
 import { BillParameterDto, BillParameterViewDto, } from 'src/app/_models/billingmaster';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, RG_SEASON_CODE, RG_SEASON_NAME, } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../../_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
@@ -51,6 +51,7 @@ export class SeasonComponent implements OnInit {
   permissions:any;
   activeIndex: number = 0;
   maxLength: MaxLength = new MaxLength();
+  invalidSeasonCode: boolean = false;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -114,8 +115,8 @@ export class SeasonComponent implements OnInit {
     this.fbseasons = this.formbuilder.group({
       seasonId: [null],
 
-      code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),Validators.minLength(MIN_LENGTH_2)]),
+      code: new FormControl('',[Validators.required, Validators.pattern(RG_SEASON_CODE)]),
+      name:new FormControl('', [Validators.required, Validators.pattern(RG_SEASON_NAME)]),
       plantFrom: ['', Validators.required],
       plantTo: ['', Validators.required],
       crushFrom: ['', Validators.required],
@@ -131,6 +132,7 @@ export class SeasonComponent implements OnInit {
       seedRates: this.formbuilder.array([]),
     });
   }
+
   createItem(billCategory: LookupDetailDto): FormGroup {
     return this.formbuilder.group({
       seasonBillingRateId: [],
@@ -245,17 +247,35 @@ export class SeasonComponent implements OnInit {
     else return this.appMasterService.UpdateSeason(this.fbseasons.value);
   }
   onSubmit() {
-    if (this.fbseasons.valid) {
-      this.saveSeason().subscribe((resp) => {
-        if (resp) {
-          this.initSeasons();
-          this.seasonForm();
-          this.showDialog = false;
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMSE001" : "SMAMSE002"]);
-        }
-      });
-    } else {
+    if (this.fbseasons.valid && !this.invalidSeasonCode) {
+        this.saveSeason().subscribe((resp) => {
+          if (resp) {
+            this.initSeasons();
+            this.seasonForm();
+            this.showDialog = false;
+            this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMSE001" : "SMAMSE002"]);
+          }
+        });
+    }
+    else {
       this.fbseasons.markAllAsTouched();
+    }
+  }
+
+  onValidateSeasonCode(){
+    if(this.fbseasons.controls['code'].valid){
+      var fromYear = parseInt(this.fbseasons.controls['code'].value.substring(2,4));
+      var toYear = parseInt(this.fbseasons.controls['code'].value.substring(5,7));
+      var supposedToYear = fromYear + 1;
+      if(toYear != supposedToYear){
+        this.invalidSeasonCode = true;
+      }
+      else {
+        this.invalidSeasonCode = false;
+      }
+    }
+    else {
+      this.fbseasons.controls['code'].markAllAsTouched();
     }
   }
   onClose() {

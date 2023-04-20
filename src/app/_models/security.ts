@@ -92,5 +92,11 @@ export class UserQuestionDto {
   questionId?: number
   question?: string
   answer?: string
-  userAnswer?:string;
+  userAnswer?: string;
+}
+export class ForgotUserPasswordDto {
+  UserName?: string
+  Password?: string
+  ConfirmPassword?:string;
+  UserQuestions?: UserQuestionDto[]
 }

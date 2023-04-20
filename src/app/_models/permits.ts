@@ -172,6 +172,24 @@ export class PlotsForUserDto {
   villageId?:number
 
 }
+export class ScheduleGroupPlotsViewDto {
+  farmerId?: number
+  farmerCode?: string
+  farmerName?: string
+  plotId?: number
+  plotNumber?: string
+  divisionName?: string
+  circleName?: string
+  sectionName?: string
+  villageName?: string
+  netArea?: number
+  estimatedTon?: number
+  surveyNo?: string
+  plantType?: string
+  variety?: string
+  plantingDate?: string
+}
+
 
 
 
