@@ -240,3 +240,4 @@ export const GET_VARIETIES_FOR_USER ="Schedule/GetVarietiesForUser";
 export const GET_PLANT_TYPE_FOR_USER ="Schedule/GetPlantTypeForUser";
 export const GET_FARMERS_IN_PLOTS_FOR_USER ="Schedule/GetFarmersInPlotsForUser";
 export const GET_PLOTS_FOR_USER ="Schedule/GetPlotsForUser";
+export const GET_SCHEDULE_GROUP_PLOTS_URI ="Schedule/GetScheduleGroupPlots";

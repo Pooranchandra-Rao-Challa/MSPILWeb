@@ -1,7 +1,6 @@
 <div class="col-12">
   <div class="card">
     <p-toast key="tst"></p-toast>
-    <p-toast position="top-center" key="existCurrentSeasonRecord"></p-toast>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -135,7 +134,7 @@
                   <div class="field col-12 md:col-4">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="7"
+                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="7" (input)="onValidateSeasonCode()"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <div class="flex justify-content-between">
                       <b>Hint: Code Should Like - 2022-23</b>
@@ -146,6 +145,10 @@
                         Please Enter Code.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
                         Code Is Invalid, Ex: 2022-23.</div>
+                    </span>
+                    <span *ngIf="invalidSeasonCode">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="!FormControls['code'].errors?.['pattern']">
+                        Invalid Season Code: To Year Should Excatly Greater Than One.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -331,7 +334,7 @@
         <div class="col-12">
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            (click)="onSubmit()"></button>
+            [disabled]="fbseasons.invalid" (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>
