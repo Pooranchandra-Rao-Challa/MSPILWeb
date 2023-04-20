@@ -147,6 +147,7 @@ export class PlotreportsComponent implements OnInit {
 
 
   getOfferInfo(plotOfferId: number) {
+    debugger
     this.monitoringService.GetOfferInfo(plotOfferId).subscribe((resp) => {
       let plotOffer2 = resp as any;
       if (plotOffer2 && plotOffer2.length) {
@@ -154,6 +155,8 @@ export class PlotreportsComponent implements OnInit {
         console.log(this.plotOfferDto);
 
         this.fbPlotReport.controls['farmerId'].setValue(this.plotOfferDto?.farmerId);
+        this.fbPlotReport.controls['varietyId'].setValue(this.plotOfferDto.expectedVarietyId);
+        this.fbPlotReport.patchValue(this.plotOfferDto);
         this.getPlotNumber(plotOfferId);
       }
     });
@@ -300,10 +303,10 @@ export class PlotreportsComponent implements OnInit {
       plotVillageName: [{ value: '', disabled: true }],
 
       plantTypeId: [null, (Validators.required)],
-      plotNumber: ['', (Validators.required)],
-      surveyNo: ['', (Validators.required)],
+      plotNumber: [null, (Validators.required)],
+      surveyNo: [null, (Validators.required)],
       reportedArea: [null, (Validators.required)],
-      plantingDate: ['', (Validators.required)],
+      plantingDate: [null, (Validators.required)],
       plantSubTypeId: [null, (Validators.required)],
       varietyId: [null, (Validators.required)],
       agreed: [{ value: null, disabled: true }],
@@ -318,8 +321,8 @@ export class PlotreportsComponent implements OnInit {
       cultivatedArea: [null],
       distanceFromPlot: [null],
       enabledValidation: [false],
-      methodOfIrrigationId: [null],
-      plantingMethodId: [null],
+      methodOfIrrigationId: [null, (Validators.required)],
+      plantingMethodId: [null, (Validators.required)],
 
       plotReportsAdditionalInfo: this.formbuilder.group({
         plotReportAddlInfoId: [null],
@@ -345,7 +348,7 @@ export class PlotreportsComponent implements OnInit {
         plotTypeId: [null],
         plantTypeId: [null],
         plotNumber: [''],
-        plantingDate: [''],
+        plantingDate: [null],
       }),
 
       remarks: [''],

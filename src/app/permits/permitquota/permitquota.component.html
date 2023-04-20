@@ -12,7 +12,7 @@
             </ng-template>
         </p-toolbar>
 
-      
+
 
         <!-- popup form -->
         <p-dialog header="Permit Quota" [(visible)]="showDialog" [modal]="true" showEffect="fade"
@@ -74,7 +74,7 @@
                                                     [value]="category" [(ngModel)]="selectedCategory"></p-radioButton>
                                                 <label [for]="category.key">{{ category.name }}</label>
                                             </div> -->
-                                            <div class="grid mt-1">                                           
+                                            <div class="grid mt-1">
                                                 <div class="col col-3">
                                                     <p-radioButton name="test" formControlName="test" value="Division" label="Division"></p-radioButton>
                                                 </div>
@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                         <div class="field col-12 md:col-4">
-                                            <button pButton pRipple type="submit" label="Get Quota" 
+                                            <button pButton pRipple type="submit" label="Get Quota"
                                                 class="p-button-raised p-button-primary" (click)="onSubmit()"></button>
                                         </div>
                                     </div>
@@ -104,7 +104,7 @@
 
 
                 <!-- table -->
-                
+
                 <p-table #dt1 [value]="permitQuotaFromDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
@@ -151,8 +151,8 @@
                     </ng-template>
 
                 </p-table>
-            
-                
+
+
             </div>
         </p-dialog>
 
@@ -169,7 +169,7 @@
                     <!--  (click)="clear(dt1)"-->
                     <div>
                         <span class="p-input-icon-left mb-2">
-                            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
                             [options]="seasons"  [(ngModel)]="currentSeason.seasonId"
                             (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
                             [style]="{'width':'100%'}">

@@ -107,6 +107,10 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
 
+    // Village Param Rate Message
+    'SMBMVPR001': 'Village Param Rate Added Successfully',
+    'SMBMVPR002': 'Village Param Rate Updated Successfully',
+
   //Application Master =>
 
   //Seasons Message
@@ -114,8 +118,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMAMSE002': 'Season Updated Successfully',
 
   //Sample Slab Message
-  'SMAMSS001': 'Shift Added Successfully',
-  'SMAMSS002': 'Shift Updated Successfully',
+  'SMAMSS001': 'Sample Slab Added Successfully',
+  'SMAMSS002': 'Sample Slab Updated Successfully',
 
   //Shift Message
   'SMAMSH001': 'Shift Added Successfully',

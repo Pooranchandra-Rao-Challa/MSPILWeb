@@ -124,6 +124,8 @@ export class UsersComponent implements OnInit {
   }
   onSubmit() {
     if (this.userForm.valid) {
+      console.log(this.userForm.value);
+
       this.saveUser().subscribe((resp) => {
         if (resp) {
           this.dialog = false;

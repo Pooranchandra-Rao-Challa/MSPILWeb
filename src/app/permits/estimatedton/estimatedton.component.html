@@ -22,7 +22,7 @@
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
                                 <div class="col-2 p-2">
                                     &nbsp;<label class="required">Season:</label>
-                                    <p-dropdown class="ml-2" placeholder="Select a Season" optionLabel="name"
+                                    <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
                                         [options]="seasons" formControlName="seasonId"
                                         [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
                                         [style]="{'width':'100%'}" (onChange)="getExcessTonDetails()"
@@ -124,8 +124,8 @@
                                 <div class="col-3 p-2">
                                     <label class="required">Farmer Code:</label>
                                     <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"  optionValue="farmerId"
-                                        formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true" (onChange)="getExcessTonDetails()"
-                                        filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true"
+                                        formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true"
+                                        filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                                         <ng-template let-farmer pTemplate="item">
                                             <div class="block align-items-center gap-2">
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="col-3 p-2 mt-3">
                                     <button pButton pRipple label="Get Estimted Ton" class="p-button-primary w-100"
-                                        (click)="getEstimatedTon()"></button>
+                                    [disabled]="fbEstimatedTon.invalid" (click)="getEstimatedTon()" ></button>
                                 </div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@
                                 pTooltip="Search By Farmer Code, Farmer Name, Village Name,Plot No." class="w-full" />
                         </span>
                         <span class="p-input-icon-left mb-2">
-                            <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name"
+                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
                                 [options]="seasons" [(ngModel)]="currentSeason.seasonId"
                                 (onChange)="initEstimatedTon($event.value)" optionValue="seasonId">
                             </p-dropdown>
@@ -286,7 +286,7 @@
                         <button pButton pRipple icon="pi pi-pencil" (click)="editEstimatedTonnage($event,EstimatedTon)"
                             class="p-element p-ripple p-button-text p-button p-component"></button>
                     </td>
-            
+
                     <td *ngFor="let col of excesstonage">
                         <span *ngIf="col?.field != 'plantingDate' ">{{EstimatedTon[col.field]}}</span>
                         <span *ngIf="col?.field == 'plantingDate'">

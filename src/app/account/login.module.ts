@@ -10,6 +10,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RippleModule } from 'primeng/ripple';
 import { ChangepasswordComponent } from 'src/app/account/changepassword/changepassword.component';
+import { SharedModule } from 'src/app/_shared/shared.module';
+import { SecurityQueComponent } from 'src/app/account/securityquestions/securityque.component';
+
+
 
 @NgModule({
   imports: [
@@ -22,8 +26,9 @@ import { ChangepasswordComponent } from 'src/app/account/changepassword/changepa
     PasswordModule,
     ReactiveFormsModule,
     RippleModule,
+    SharedModule,
   ],
-  declarations: [LoginComponent, ChangepasswordComponent],
+  declarations: [LoginComponent, ChangepasswordComponent, SecurityQueComponent],
   bootstrap: [LoginComponent]
 })
 export class LoginModule { }

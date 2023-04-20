@@ -25,17 +25,17 @@ export class SecurityQuestionComponent implements OnInit {
     let flag = true;
     this.userQuestions.forEach(question => {
       if(flag)
-        flag = question.answer ==  question.userAnswer
-    })
+        flag = question.answer?.toLowerCase() ==  question.userAnswer?.toLowerCase()
+    });
+
     if(flag)
-      this.router.navigate(['/forgotpassword/changepassword'],{ queryParams: { username: 'superuser' }})
+      this.router.navigate(['/forgotpassword/changepassword'],{ queryParams: { username: this.userName }})
   }
   ngOnInit(): void {
     this.userName = this.activatedRoute.snapshot.queryParams['username'];
     this.securityService.UserSecurityQuestions(this.userName!).subscribe({
       next: (resp) =>{
-        this.userQuestions = resp as unknown as UserQuestionDto[]
-
+        this.userQuestions = resp as unknown as UserQuestionDto[];
       }
     })
   }

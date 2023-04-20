@@ -132,24 +132,20 @@
             <form [formGroup]="fbseasons" (ngSubmit)="onSubmit()">
               <p-fieldset legend="Season" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-
                   <div class="field col-12 md:col-4">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="9"
+                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="7"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                    <div class="text-right">
-                      <small>{{code.value.length}}/9</small>
+                    <div class="flex justify-content-between">
+                      <b>Hint: Code Should Like - 2022-23</b>
+                      <small>{{code.value.length}}/7</small>
                     </div>
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                         Please Enter Code.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-                        Code Min Length Is 2 .</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-                        Code Max Length Is 20.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                        Code Should Contains Only Alpha Numeric.</div>
+                        Code Is Invalid, Ex: 2022-23.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -335,7 +331,7 @@
         <div class="col-12">
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            [disabled]="fbseasons.invalid" (click)="onSubmit()"></button>
+            (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>

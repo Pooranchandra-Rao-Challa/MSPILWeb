@@ -11,7 +11,7 @@
             </ng-template>
         </p-toolbar>
 
- 
+
           <!-- popup form -->
           <p-dialog header="Schedule Grouping" [(visible)]="showDialog" [modal]="true" showEffect="fade"
           [breakpoints]="{'950px': '70vw', '630px': '900vw' }" [style]="{width: '70vw'}">
@@ -27,7 +27,7 @@
                                           <label>Season:<sup class="p-error">*</sup></label>
                                           <p-dropdown placeholder="Select Season" optionLabel="code"
                                               [options]="seasons"  [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
-                                              appendTo="body"></p-dropdown>   
+                                              appendTo="body"></p-dropdown>
                                       </div>
                                       <div class="field col-12 md:col-3">
                                           <label>Schedule Group No:<sup class="p-error">*</sup></label>
@@ -45,7 +45,7 @@
                                               appendTo="body" formControlName="toDOP" [style]="{'width':'100%'}">
                                           </p-calendar>
                                       </div>
-                             
+
                                       <div class="field col-12 md:col-3">
                                         <label>Division:</label>
                                         <p-multiSelect [options]="divisions" placeholder="Select Division"
@@ -60,14 +60,14 @@
                                             optionValue="circleId" appendTo="body" [filter]="true" optionLabel="circleName"
                                             formControlName="circleId" [style]="{'width':'100%'}"(onChange)="SetAllCircleChilds($event.value)">
                                         </p-multiSelect>
-                                       
+
                                     </div>
                                     <div class="field col-12 md:col-3">
                                         <label>Section:</label>
                                         <p-multiSelect [options]="filterSections" placeholder="Select Section "
                                             optionValue="sectionId" appendTo="body" [filter]="true"
                                             optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}"(onChange)="SetAllSectionChilds($event.value)"></p-multiSelect>
-                                        
+
                                     </div>
                                     <div class="field col-12 md:col-3">
                                         <label class="required">Village:</label>
@@ -75,9 +75,9 @@
                                             optionValue="villageId" appendTo="body"
                                             [filter]="true" optionLabel="villageName" formControlName="villageId"
                                             [style]="{'width':'100%'}"(onChange)="SetAllVillageChilds($event.value)"
-                                             (onChange)="GetFarmers()"  > 
+                                             (onChange)="GetFarmers()"  >
                                              </p-multiSelect>
-      
+
                                     </div>
 
                                     <div class="field col-12 md:col-3">
@@ -89,7 +89,7 @@
                                         (onChange)="SetAllFarmerChilds($event.value)"
                                        (onChange)="GetPlots()"
                                     >
-                                   
+
                                           <ng-template let-farmer pTemplate="selectedItem">
                                             <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
                                           </ng-template>
@@ -97,6 +97,7 @@
                                             <div class="block align-items-center gap-2">
                                                 <div>{{farmer.farmercode}} </div>
                                                 <div></div>{{farmer.farmerName}}</div>
+<<<<<<< HEAD
                                                 <div>{{farmer.villageName}}</div>     
                                         </ng-template>
                                       </p-dropdown>
@@ -118,6 +119,23 @@
                                         </div>
                                       </ng-template>
                                     </p-dropdown>
+=======
+                                                <div>{{farmer.villageName}}</div>
+
+                                        </ng-template>
+                                      </p-dropdown>
+                                   </div>
+                                  <div class="field col-12 md:col-3">
+                                      <label>Plot:<sup class="p-error">*</sup></label>
+                                      <p-dropdown placeholder="Select To plot" [options]="plots" optionLabel="plotNumber"
+                                          optionValue="plotId" formControlName="plotId" appendTo="body"
+                                         (onChange)=" SetAllPlotsChilds($event.value)"
+                                         >
+
+                                      </p-dropdown>
+
+                                      <!--  -->
+>>>>>>> 1d79b422d2285b9a1b4e584a9d180d5f9f975cec
                                   </div>
                                       <div class="field col-12 md:col-3">
                                           <label>Plant Type:</label>
@@ -129,14 +147,14 @@
                                       </div>
                                       <div class="field col-12 md:col-3">
                                         <label >Variety:</label>
-                                        <p-dropdown 
+                                        <p-dropdown
                                         [filter]="true"
                                         filterBy="name"
                                        [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
                                        placeholder="Select Variety" optionLabel="varietyName" [options]="varieties"
                                           optionValue="varietyId" formControlName="varietyId">
                                         </p-dropdown>
-                                        
+
                                       </div>
                                       <!-- <div class="field col-12 md:col-9"></div> -->
                                       <div class="col-12 p-0">
@@ -151,15 +169,15 @@
                         </div>
                       </div>
               </form>
-              
+
               <!-- popup table -->
               <p-fieldset legend="Plot Details" class="col-12" [toggleable]="true"
                 [transitionOptions]="'500ms'">
                 <p-table  #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="seasonScheduleId" [rows]="10" [rowHover]="true"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-                [globalFilterFields]="globalFilterFields" [autoLayout]="true" 
+                [globalFilterFields]="globalFilterFields" [autoLayout]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-                responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" 
+                responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
                 (onRowExpand)="onRowExpand($event)" >
                 <ng-template pTemplate="caption">
                   <div class="flex justify-content-between flex-column sm:flex-row">
@@ -171,7 +189,7 @@
                         <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                           pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety" class="w-full" />
                       </span>
-                      <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+                      <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
                         [(ngModel)]="currentSeason.seasonId" (onChange)="initScheduleGroups($event.value)" optionValue="seasonId">
                       </p-dropdown>
                     </div>
@@ -184,7 +202,7 @@
                       {{col?.label}} <p-sortIcon field="name">
                       </p-sortIcon>
                       <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
-        
+
                     </th>
                   </tr>
                 </ng-template>
@@ -215,19 +233,19 @@
                     <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
                       {{col?.label}}
                     </th>
-                    
+
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-scheduleGrouping>
                   <tr>
-                   
+
                     <td *ngFor="let col of plotHeaders">
                       <span *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{scheduleGrouping[col.field]}}</span>
                       <span *ngIf="col?.field == 'toDOP' || col?.field == 'fromDOP'  || col?.field == 'createdAt'|| col?.field == 'updatedAt'">
                         {{farmer[col.field] | date: 'dd-MM-yyyy'}}
                       </span>
-        
-                     
+
+
                     </td>
                   </tr>
                 </ng-template>
@@ -247,13 +265,13 @@
               </tr>
             </ng-template>
             </p-table>
-                        
-                </p-fieldset> 
-                
+
+                </p-fieldset>
+
             </div>
-                
-              
-          
+
+
+
             </p-dialog>
 
         <!-- table -->
@@ -261,7 +279,7 @@
         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
         [globalFilterFields]="globalFilterFields" [autoLayout]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" 
+        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
         (onRowExpand)="onRowExpand($event)" >
         <ng-template pTemplate="caption">
           <div class="flex justify-content-between flex-column sm:flex-row">
@@ -273,7 +291,7 @@
                 <input pInputText type="text" #filters (input)="onSearch()" placeholder="Search Keyword"
                   pTooltip="Search By Group No, To DOP, From DOP, Created At, Created By,Updated At,Updated By" class="w-full" />
               </span>
-              <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+              <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
                 [(ngModel)]="currentSeason.seasonId" (onChange)="initScheduleGroups($event.value)" optionValue="seasonId">
               </p-dropdown>
             </div>
@@ -318,7 +336,7 @@
             <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
               {{col?.label}}
             </th>
-            
+
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-scheduleGrouping>
@@ -332,7 +350,7 @@
                 {{farmer[col.field] | date: 'dd-MM-yyyy'}}
               </span>
 
-             
+
             </td>
           </tr>
         </ng-template>

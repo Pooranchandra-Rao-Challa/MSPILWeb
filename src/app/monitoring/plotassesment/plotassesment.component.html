@@ -26,8 +26,8 @@
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label>Season:</label>
-                        <p-dropdown class="ml-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+                        <label class="required">Season:</label>
+                        <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
                           [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
@@ -392,14 +392,14 @@
             <button (click)="exportExcel()" pButton  class="p-button-outlined m-2" icon="pi pi-file-excel" ></button>
 
           </div>
-           
+
           <div>
             <span class="p-input-icon-left m-2">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full">
             </span>
-            <p-dropdown class="m-2" placeholder="Select a season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="m-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssesments($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>

@@ -67,7 +67,7 @@ export class EstimatedTonComponent implements OnInit {
       topltngDate: [null, (Validators.required)],
       farmerId: [null,(Validators.required)],
       plotExcessTonId: [null],
-      excessTonage: [null, (Validators.required)],
+      excessTonage: [null,],
       plotYieldId: [null],
       isActive: [false]
     });
@@ -251,7 +251,8 @@ export class EstimatedTonComponent implements OnInit {
         if (resp) {
           this.initEstimatedTon(this.currentSeason.seasonId!)
           this.alertMessage.displayAlertMessage(ALERT_CODES["SMPET002"]);
-          this.fbexcesston.reset();
+           this.fbexcesston.reset();
+          this.getEstimatedTon()
         }
       })
     }

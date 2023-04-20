@@ -10,6 +10,7 @@ export const RG_PANNO = '^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$';
 export const RG_PINCODE = '^[1-9][0-9]{5}$';
 export const RG_AADHAAR = /^(?!0{12}|1{12}|2{12}|3{12}|4{12}|5{12}|6{12}|7{12}|8{12}|9{12})\d{12}$/;
 export const RG_SEASON_NAME = '^[1-9][0-9]{5}$';
+export const RG_SEASON_CODE = '^[0-9]{4}[-][0-9]{2}$';
 
 
 

@@ -175,7 +175,7 @@
                       <div class="field col-12 md:col-6">
                         <label>Password:<sup class="p-error">*</sup></label>&nbsp;
                         <input pInputText id="password" type="password" formControlName="password"
-                          placeholder="Enter Password" [disabled]="user.userId != null"
+                          placeholder="Enter Password"
                           [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
                         <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
                           <div class="ng-invalid ng-touched p-error"
