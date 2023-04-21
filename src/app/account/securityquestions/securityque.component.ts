@@ -9,7 +9,7 @@ export interface IHeader {
 }
 
 export interface SecurQuestion {
-  value: number,
+  code: number,
   name: string
 }
 
@@ -17,8 +17,6 @@ export class SecurityDto {
   id? : string;
   SecurityQuestions?: string;
   Answer?: string;
-
-
 
 }
 
@@ -38,27 +36,29 @@ export class SecurityDto {
 export class SecurityQueComponent implements OnInit {
 
   securityquestions: SecurQuestion[];
-  securityDto: SecurityDto[] = [];
   selectedQuestion!: SecurQuestion;
+
+  securityDto: SecurityDto[] = [];
   security!: SecurityDto;
   productDialog: boolean = false;
   submitted: boolean = true;
+  
   constructor(
     private messageService: MessageService,
    
   ) { 
     this.securityquestions = [
-      { value: 1, name: 'New York' },
-      { value: 2, name: 'Rome' },
-      { value: 3, name: 'London' },
-      { value: 4, name: 'Istanbul' },
-      {value: 5, name: 'Paris' }
+      { code: 1, name: 'New York' },
+      { code: 2, name: 'Rome' },
+      { code: 3, name: 'London' },
+      { code: 4, name: 'Istanbul' },
+      {code: 5, name: 'Paris' }
     ];
+    this.selectedQuestion = this.securityquestions[0];
   }
   headers: IHeader[] = [
     { field: 'SecurityQuestions', header: 'SecurityQuestions', label: 'Security Questions' },
     { field: 'Answer', header: 'Answer', label: 'Answer' },
-
 
   ];
 
@@ -77,13 +77,13 @@ export class SecurityQueComponent implements OnInit {
     for (var i of [1, 2]) {
       this.securityDto.push(
         {
+          id: "one",
           SecurityQuestions: "Code",
           Answer: "name",
         }
       )
     }
     console.log(this.securityDto);
-    
   }
 
   editProduct(security: SecurityDto) {
@@ -97,7 +97,24 @@ export class SecurityQueComponent implements OnInit {
     this.submitted = false;
 }
 
+
+
+    onChange(event:any) {  
+
+      // let myIndex = this.securityquestions.findIndex(fruit => fruit.name === event.value);
+      // debugger
+      // this.securityquestions.splice(myIndex, 1);
+
+      this.securityquestions.splice(this.securityquestions.findIndex(item => item.name === event.value), 1);
+       
+        console.log(this.securityquestions);
+  }
+
 saveProduct() {
+  debugger
+  
+  // this.deleteMsg(event);
+  
         this.submitted = true;
 
         if(this.security.Answer?.trim()){
