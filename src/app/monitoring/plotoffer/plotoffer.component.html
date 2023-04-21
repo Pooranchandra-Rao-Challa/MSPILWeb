@@ -40,9 +40,9 @@
         <tr>
           <th style="width: 5rem"></th>
           <th *ngFor="let col of farmerHeaders" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
+            {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -68,7 +68,7 @@
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
+          <th *ngFor="let col of plotHeaders">
             {{col?.label}}
           </th>
         </tr>
@@ -108,7 +108,7 @@
   </p-table>
 
   <!-- Plot Offer Dialog -->
-  <p-dialog header="Plot Offer" [(visible)]="showDialog" [modal]="true" showEffect="fade"  [transitionOptions]="'500ms'"
+  <p-dialog header="Plot Offer" [(visible)]="showDialog" [modal]="true" showEffect="fade"  [transitionOptions]="'300ms'"
     [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="fbPlotOffer.reset()" [maximizable]="true">
     <div class="flex flex-column align-items-center justify-content-center">
       <form [formGroup]="fbPlotOffer" (ngSubmit)="onSubmit()">

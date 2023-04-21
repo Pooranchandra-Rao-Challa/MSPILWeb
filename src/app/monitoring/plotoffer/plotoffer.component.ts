@@ -65,7 +65,7 @@ export class PlotofferComponent implements OnInit {
     { field: 'offerDate', header: 'offerDate', label: 'Offer Date' },
     { field: 'plotVillageName', header: 'plotVillageName', label: 'Plot Village' },
     { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
-    { field: 'expectedArea', header: 'expectedArea', label: 'Area' },
+    { field: 'expectedArea', header: 'expectedArea', label: 'Expected Area' },
     { field: 'expectedVarietyName', header: 'expectedVarietyName', label: 'Variety' },
     { field: 'expectedPlantingDate', header: 'expectedPlantingDate', label: 'Planting Date' },
   ];
@@ -99,8 +99,6 @@ export class PlotofferComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotOffers = resp as unknown as IFarmerInPlotOfferDto[];
-      console.log(this.plotOffers);
-
     });
   }
 
@@ -108,8 +106,6 @@ export class PlotofferComponent implements OnInit {
     var data = source.data as IFarmerInPlotOfferDto;
     this.monitoringService.GetFarmerPlotsInOffer(data.seasonId, data.farmerId).subscribe(resp => {
       data.ObjOfferedPlots = resp as unknown as IFarmerPlotOffersViewDto[];
-      console.log(resp);
-
     });
   }
 
@@ -121,22 +117,18 @@ export class PlotofferComponent implements OnInit {
   initFarmers() {
     this.appMasterservice.GetFarmers().subscribe((resp) => {
       this.farmers = resp as unknown as FarmersViewDto[];
-      console.log(this.farmers)
-    })
+    });
   }
 
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
-      console.log(this.villages)
     });
   }
 
   initSeasons() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp as any;
-      console.log(this.seasons);
-
     });
   }
 
@@ -177,8 +169,6 @@ export class PlotofferComponent implements OnInit {
     if (this.plotOffer.plotOfferId == null)
       this.monitoringService.GetNewOfferNo(seasonId).subscribe((resp) => {
         if (resp) this.fbPlotOffer.controls['offerNo'].setValue(resp);
-        console.log(this.fbPlotOffer.controls['offerNo'].value);
-
       });
   }
 
@@ -316,6 +306,7 @@ export class PlotofferComponent implements OnInit {
       this.fbPlotOffer.value.expectedPlantingDate = FORMAT_DATE(this.fbPlotOffer.value.expectedPlantingDate);
       this.saveAllottedPlot().subscribe(resp => {
         if (resp) {
+          this.dtPlotOffer.expandedRowKeys = {};
           this.initPlotOffers(this.currentSeason.seasonId!);
           this.fbPlotOffer.reset();
           this.showDialog = false;
@@ -337,6 +328,7 @@ export class PlotofferComponent implements OnInit {
     if (this.fbPlotOffer.valid) {
       this.saveApproveOrDeny().subscribe(resp => {
         if (resp) {
+          this.dtPlotOffer.expandedRowKeys = {};
           this.initPlotOffers(this.currentSeason.seasonId!);
           this.fbPlotOffer.reset();
           this.showApprovalDialog = false;

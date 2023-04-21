@@ -179,7 +179,6 @@ export class PlotassesmentComponent implements OnInit {
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
-      console.log(resp)
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
       this.initPlotAssesments(this.currentSeason.seasonId!);
     });
@@ -340,6 +339,7 @@ export class PlotassesmentComponent implements OnInit {
       this.fbPlotAssesment.controls['plotId'].enable();
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
+          this.dtPlotAssessments.expandedRowKeys = {};
           this.savePlotAssessment();
           this.fbPlotAssesment.reset();
           this.showDialog = false;

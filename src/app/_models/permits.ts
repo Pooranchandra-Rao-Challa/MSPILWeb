@@ -114,7 +114,16 @@ export class ExcessTonDto{
   plotYieldId?:number;
   excessTonage?: number;
 }
-
+export class ExcessViewDto{
+  seasonId?: number;
+  frompltngDate?: Date;
+  topltngDate?: Date;
+  divisionId?: string;
+  circleId?: string;
+  sectionId?: string;
+  villageId?: string;
+  farmerId?: number;
+}
 export class VarietiesForUserDto  {
   varietyId?: number
   varietyName?: string

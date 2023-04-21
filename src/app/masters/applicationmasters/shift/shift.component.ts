@@ -55,7 +55,7 @@ export class ShiftsComponent implements OnInit {
     this.fbshifts = this.formbuilder.group({
       shiftId: [null],
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20) ]),
       strFromTime: new FormControl('', [Validators.required]),
       strToTime: new FormControl('', [Validators.required]),
       isNextDay: [true],

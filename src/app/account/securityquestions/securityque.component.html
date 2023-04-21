@@ -11,43 +11,24 @@
                         <p-toolbar>
                             <ng-template pTemplate="left">
                             </ng-template>
-                                <ng-template pTemplate="right">
-                                <button pButton pRipple label="Add New Question " icon="pi pi-plus" class="p-button-success p-mr-2"
-                                    (click)="openNew()"></button>
+                            <ng-template pTemplate="right">
+                                <button pButton pRipple label="Add New Question " icon="pi pi-plus"
+                                    class="p-button-success p-mr-2" (click)="openNew()"></button>
                             </ng-template>
                         </p-toolbar>
 
                         <!-- table -->
-                        <p-table #dt [value]="securityDto" dataKey="id" [rows]="10" [rowHover]="true"
-                            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-                            [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
-                            [tableStyle]="{ width: 'autoLayout'}">
-                            <!-- <ng-template pTemplate="caption">
-                        <div class="p-d-flex p-ai-center p-jc-between">
-                          <h5 class="p-m-0">Manage Products</h5>
-                          <span class="p-input-icon-left">
-                            <i class="pi pi-search"></i>
-                            <input
-                              pInputText
-                              type="text"
-                              (input)="dt.filterGlobal($event.target.value, 'contains')"
-                              placeholder="Search..."
-                            />
-                          </span>
-                        </div>
-                      </ng-template> -->
-
+                        <p-table #dt [value]="securityDto" dataKey="id" [rowHover]="true"
+                            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [autoLayout]="true"
+                            responsiveLayout="scroll" [tableStyle]="{ width: 'autoLayout'}">
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th></th>
-                                    <!-- <th *ngFor="let col of headers" [pSortableColumn]="col.header">
-                                        {{col?.label}} <p-sortIcon field="code">
+                                    <th pSortableColumn="SecurityQuestions">SecurityQuestions <p-sortIcon field="code">
                                         </p-sortIcon>
-                                        <p-columnFilter type="text" [field]="col.header" display="menu">
-                                        </p-columnFilter>
-                                    </th> -->
-                                    <th pSortableColumn="SecurityQuestions">SecurityQuestions <p-sortIcon field="code"></p-sortIcon></th>
-                                    <th pSortableColumn="Answer">Answer <p-sortIcon field="code"></p-sortIcon></th>
+                                    </th>
+                                    <th pSortableColumn="Answer">Answer <p-sortIcon field="code"></p-sortIcon>
+                                    </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-permitApproval>
@@ -58,10 +39,6 @@
                                         <button pButton pRipple icon="pi pi-trash"
                                             class="p-element p-ripple p-button-text p-button p-component"></button>
                                     </td>
-                                    <!-- <td *ngFor="let col of headers">
-                                        <span>{{permitApproval[col.field]}}</span>
-                                        
-                                    </td> -->
                                     <td>{{permitApproval.SecurityQuestions}}</td>
                                     <td>{{permitApproval.Answer}}</td>
                                 </tr>
@@ -71,34 +48,40 @@
 
                         <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details"
                             [modal]="true" styleClass="p-fluid">
+
                             <ng-template pTemplate="content">
-                                <div class="p-field">
-                                    <label for="SecurityQuestions">Security Questions</label>
-                                    <!-- <p-dropdown  [options]="securityquestions" [(ngModel)]="selectedQuestion"
-                                        placeholder="Select a Security Questions" optionLabel="selectedQuestion.name " optionValue="selectedQuestion.value"
-                                        [showClear]="true">
-                                    </p-dropdown> -->
-                                    <p-dropdown [options]="securityquestions"   [(ngModel)]="selectedQuestion" appendTo="body" optionValue="name" placeholder="Select a Security Questions" optionLabel="name"
-                                        [showClear]="true"></p-dropdown>
-                                </div>
-                                <div class="p-field">
-                                    <label for="Answer">Answer</label>
-                                    <input type="text" pInputText id="Answer" [(ngModel)]="security.Answer" required autofocus />
-                                    <small class="p-invalid" *ngIf="submitted && !security.Answer">Answer is
-                                        required.</small>
-                                </div>
+                                <!-- <from [formGroup]="fbSecureQue"> -->
 
+                                    <div class="p-field">
+                                        <label for="SecurityQuestions">Security Questions</label>
 
+                                        <p-dropdown [options]="securityquestions" (onChange)="onChange($event)"
+                                            [(ngModel)]="security.SecurityQuestions" appendTo="body" optionValue="name"
+                                            placeholder="Select a Security Questions" optionLabel="name"
+                                            [showClear]="true" #drop>
+                                        </p-dropdown>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <label for="Answer">Answer</label>
+                                        <input type="text" pInputText id="Answer" [(ngModel)]="security.Answer" required
+                                            autofocus />
+                                        <small class="p-invalid" *ngIf="submitted && !security.Answer">Answer is
+                                            required.</small>
+                                    </div>
+
+                                <!-- </from> -->
                             </ng-template>
                             <ng-template pTemplate="footer">
-                                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+                                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                                    (click)="hideDialog()"></button>
+                                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                                    (click)="saveProduct()"></button>
                             </ng-template>
+
                         </p-dialog>
 
-
                     </div>
-
                 </div>
             </div>
         </div>

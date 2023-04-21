@@ -2,9 +2,10 @@ import { formatDate } from "@angular/common";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { OverlayPanel } from "primeng/overlaypanel";
+import { Table } from "primeng/table";
 import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
-import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonViewDto, ExcessViewDto, FarmersInPlantingDatesDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
@@ -50,6 +51,11 @@ export class EstimatedTonComponent implements OnInit {
   filterVillages: VillageforUserDto[] = [];
   showDialog: boolean = false;
   excessTons: ExcessTonViewDto[] = [];
+  divisionIds?:string;
+  circleIds?:string;
+  sectionIds?:string;
+  villageIds?:string;
+ 
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -65,7 +71,7 @@ export class EstimatedTonComponent implements OnInit {
       villageId: [null],
       frompltngDate: [null, (Validators.required)],
       topltngDate: [null, (Validators.required)],
-      farmerId: [null,(Validators.required)],
+      farmerId: [null],
       plotExcessTonId: [null],
       excessTonage: [null,],
       plotYieldId: [null],
@@ -108,11 +114,10 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'plantType', header: 'plantType', label: 'Plant Type' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
-    // { field: 'excessTonage', header: 'excessTonage', label: 'Increased Estimated Ton' },
     { field: 'PermitTon', header: 'PermitTon', label: 'Permit Ton' },
     { field: 'SuppliedTon', header: 'SuppliedTon', label: 'Supplied Ton' },
     { field: 'BalanceTon', header: 'BalanceTon', label: 'Balance Ton' },
-    { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments' },
+    { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments'},
   ];
 
   header: IFromHeader[] = [
@@ -121,6 +126,7 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
+    { field: 'circleName', header: 'circleName', label: 'Circle Name' },
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
@@ -133,6 +139,9 @@ export class EstimatedTonComponent implements OnInit {
     // { field: 'BalanceTon', header: 'BalanceTon', label: 'Balance Ton' },
     // { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments' },
   ];
+  onSearch(){
+    this.initEstimatedTon(this.currentSeason.seasonId!);
+  }
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
@@ -181,7 +190,8 @@ export class EstimatedTonComponent implements OnInit {
       this.filterSections = Object.assign([], this.sections);
       this.filterVillages = Object.assign([], this.villages);
     }
-    else {
+    else {  
+      this.divisionIds =  values.join(',');
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
       this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
@@ -193,6 +203,7 @@ export class EstimatedTonComponent implements OnInit {
       this.filterVillages = Object.assign([], this.villages);
     }
     else {
+      this.circleIds =  values.join(',');
       this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
     }
@@ -202,6 +213,7 @@ export class EstimatedTonComponent implements OnInit {
       this.filterVillages = Object.assign([], this.villages);
     }
     else {
+      this.sectionIds =  values.join(',');
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
   }
@@ -222,19 +234,33 @@ export class EstimatedTonComponent implements OnInit {
       })
     }
   }
+  
   initExcessTon() {
-    var seasonId = this.fbEstimatedTon.value.seasonId;
-    var divisionId = this.fbEstimatedTon.value.divisionId;
-    var circleId = this.fbEstimatedTon.value.circleId;
-    var sectionId = this.fbEstimatedTon.value.sectionId;   
-    var villageId = this.fbEstimatedTon.value.villageId;
-    var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
-    var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
-    var farmerId = this.fbEstimatedTon.value.farmerId;
-    this.permitService.GetExcessTon(seasonId,divisionId, circleId,sectionId, villageId, frompltngDate, topltngDate, farmerId).subscribe((resp) => {
-      this.excessTons = resp as unknown as ExcessTonViewDto[];
+    // var seasonId = this.fbEstimatedTon.value.seasonId;
+    // var divisionId = this.fbEstimatedTon.value.divisionId;
+    // var circleId = this.fbEstimatedTon.value.circleId;
+    // var sectionId = this.fbEstimatedTon.value.sectionId;   
+    // var villageId = this.fbEstimatedTon.value.villageId;
+    // var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
+    // var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
+    // var farmerId = this.fbEstimatedTon.value.farmerId;
+    console.log( this.fbEstimatedTon.controls['divisionId'].value);  
+    this.fbEstimatedTon.controls['divisionId'].setValue(this.divisionIds);
+    this.fbEstimatedTon.controls['circleId'].setValue(this.circleIds);
+    this.fbEstimatedTon.controls['sectionId'].setValue(this.sectionIds);
+    this.fbEstimatedTon.controls['villageId'].setValue(this.villageIds);
+    this.permitService.GetExcessTon(this.fbEstimatedTon.value).subscribe((resp) => {
+      this.excessTons = resp as unknown as ExcessViewDto[];
       console.log(this.excessTons)
+      // var arrdivisionids = this.divisionIds?.split(',');
+      //  arrdivisionids = Object.assign([],arrdivisionids);
+      //  arrdivisionids.forEach(data => {
+      //   parseInt(data)
+      //  })
+      // console.log(arrdivisionids)
+      // this.fbEstimatedTon.controls['divisionId'].setValue(arrdivisionids); 
     })
+    console.log(this.fbEstimatedTon.controls['divisionId'].value);
   }
 
   editExecesston(event: Event, excesston: EstimatedViewDto) {
@@ -266,6 +292,7 @@ export class EstimatedTonComponent implements OnInit {
   }
   getEstimatedTon() {
     this.initExcessTon()
+  //  this.fbEstimatedTon.reset()
     this.showTable = true;
     this.showDialog = true;
   }
@@ -287,5 +314,11 @@ export class EstimatedTonComponent implements OnInit {
         this.fbEstimatedTon.reset();
       }
     })
+  }
+
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+    this.onSearch();
   }
 }

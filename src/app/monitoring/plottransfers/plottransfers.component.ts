@@ -108,8 +108,6 @@ export class PlotTransfersComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotsTransfers(seasonId, param1).subscribe((resp) => {
       this.plotTransfers = resp as unknown as IPlotTransferViewDto[];
-      console.log(this.plotTransfers);
-
     });
   }
 

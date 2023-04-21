@@ -341,6 +341,7 @@ export class PlotyieldComponent implements OnInit {
       this.fbPlotYield.controls['plotId'].enable();
       this.savePlotYield().subscribe(resp => {
         if (resp) {
+          this.dtPlotYields.expandedRowKeys = {};
           this.initPlotYields(this.currentSeason.seasonId!);
           this.fbPlotYield.reset();
           this.showDialog = false;

@@ -153,7 +153,6 @@ export class PlotagreementComponent implements OnInit {
 
   getGuarantor2(farmerId: number) {
     this.guarantor2Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
-    console.log(this.guarantor2Farmers)
   }
 
   getGuarantor3Farmers(farmerId: number) {
@@ -370,6 +369,7 @@ export class PlotagreementComponent implements OnInit {
       this.fbPlotAgreement.controls['plotId'].enable();
       this.savePlotAgreement().subscribe(resp => {
         if (resp) {
+          this.dtPlotAgreements.expandedRowKeys = {};
           this.initPlotAgreements(this.currentSeason.seasonId!);
           this.fbPlotAgreement.reset();
           this.showDialog = false;

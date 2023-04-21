@@ -106,7 +106,7 @@
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true"
-            [globalFilterFields]="['code','name','inchargeName','circleName','inchargePhoneNo','inchargePhoneNo',
+            [globalFilterFields]="['code','name','inchargeName','estimatedTon','loanEligible',
        'createdByUser','updatedByUser','createAt','updatedAt']" [autoLayout]="true" responsiveLayout="scroll"
             [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
@@ -136,9 +136,9 @@
                             display="menu"></p-columnFilter>
                         <p-sortIcon field="estimatedTon"></p-sortIcon>
                     </th>
-                    <th pSortableColumn=" loanEligible">Loan Eligible<p-columnFilter type="text" field="loanEligible"
+                    <th pSortableColumn="loanEligible">Loan Eligible<p-columnFilter type="text" field="loanEligible"
                             display="menu"></p-columnFilter>
-                        <p-sortIcon field="loanEligible"></p-sortIcon>
+                            <p-sortIcon field="loanEligible"></p-sortIcon>
                     </th>
                     <th pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive"
                             display="menu">

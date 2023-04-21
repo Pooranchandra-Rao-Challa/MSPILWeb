@@ -409,9 +409,9 @@
         <tr>
           <th></th>
           <th *ngFor="let col of farmerHeader" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
+            {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -437,7 +437,7 @@
                 <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th *ngFor="let col of plotHeader" [pSortableColumn]="col.header">
+          <th *ngFor="let col of plotHeader">
             {{col?.label}}
           </th>
         </tr>

@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class NumericDirective {
 
-  private regex: RegExp = new RegExp(/^[0-9]*$/);
+  private regex: RegExp = new RegExp(/^[0-9-]*$/);
 
   private specialKeys: Array<string> = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'End', 'Home'];
   constructor(private el: ElementRef) {
