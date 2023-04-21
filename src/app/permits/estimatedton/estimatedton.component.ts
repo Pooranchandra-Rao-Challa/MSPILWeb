@@ -191,7 +191,7 @@ export class EstimatedTonComponent implements OnInit {
       this.filterVillages = Object.assign([], this.villages);
     }
     else {  
-      this.divisionIds =  values.join(',');
+      // this.divisionIds =  values.join(',');
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
       this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
@@ -203,7 +203,7 @@ export class EstimatedTonComponent implements OnInit {
       this.filterVillages = Object.assign([], this.villages);
     }
     else {
-      this.circleIds =  values.join(',');
+      // this.circleIds =  values.join(',');
       this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
     }
@@ -213,7 +213,7 @@ export class EstimatedTonComponent implements OnInit {
       this.filterVillages = Object.assign([], this.villages);
     }
     else {
-      this.sectionIds =  values.join(',');
+      // this.sectionIds =  values.join(',');
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
   }
@@ -234,34 +234,39 @@ export class EstimatedTonComponent implements OnInit {
       })
     }
   }
-  
   initExcessTon() {
-    // var seasonId = this.fbEstimatedTon.value.seasonId;
-    // var divisionId = this.fbEstimatedTon.value.divisionId;
-    // var circleId = this.fbEstimatedTon.value.circleId;
-    // var sectionId = this.fbEstimatedTon.value.sectionId;   
-    // var villageId = this.fbEstimatedTon.value.villageId;
-    // var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
-    // var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
-    // var farmerId = this.fbEstimatedTon.value.farmerId;
-    console.log( this.fbEstimatedTon.controls['divisionId'].value);  
-    this.fbEstimatedTon.controls['divisionId'].setValue(this.divisionIds);
-    this.fbEstimatedTon.controls['circleId'].setValue(this.circleIds);
-    this.fbEstimatedTon.controls['sectionId'].setValue(this.sectionIds);
-    this.fbEstimatedTon.controls['villageId'].setValue(this.villageIds);
     this.permitService.GetExcessTon(this.fbEstimatedTon.value).subscribe((resp) => {
       this.excessTons = resp as unknown as ExcessViewDto[];
-      console.log(this.excessTons)
-      // var arrdivisionids = this.divisionIds?.split(',');
-      //  arrdivisionids = Object.assign([],arrdivisionids);
-      //  arrdivisionids.forEach(data => {
-      //   parseInt(data)
-      //  })
-      // console.log(arrdivisionids)
-      // this.fbEstimatedTon.controls['divisionId'].setValue(arrdivisionids); 
+      console.log(this.excessTons);
     })
-    console.log(this.fbEstimatedTon.controls['divisionId'].value);
   }
+  // initExcessTon() {
+  //   var seasonId = this.fbEstimatedTon.value.seasonId;
+  //   var divisionId = this.fbEstimatedTon.value.divisionId;
+  //   var circleId = this.fbEstimatedTon.value.circleId;
+  //   var sectionId = this.fbEstimatedTon.value.sectionId;   
+  //   var villageId = this.fbEstimatedTon.value.villageId;
+  //   var frompltngDate = formatDate(this.fbEstimatedTon.value.frompltngDate, 'yyyy-MM-dd', 'en-US')
+  //   var topltngDate = formatDate(this.fbEstimatedTon.value.topltngDate, 'yyyy-MM-dd', 'en-US');
+  //   var farmerId = this.fbEstimatedTon.value.farmerId;
+  //   console.log( this.fbEstimatedTon.value);  
+  //   this.fbEstimatedTon.controls['divisionId'].setValue(this.divisionIds);
+  //   this.fbEstimatedTon.controls['circleId'].setValue(this.circleIds);
+  //   this.fbEstimatedTon.controls['sectionId'].setValue(this.sectionIds);
+  //   this.fbEstimatedTon.controls['villageId'].setValue(this.villageIds);
+  //   this.permitService.GetExcessTon(this.fbEstimatedTon.value).subscribe((resp) => {
+  //     this.excessTons = resp as unknown as ExcessViewDto[];
+  //     console.log(this.excessTons)
+  //     var arrdivisionids = this.divisionIds?.split(',');
+  //      arrdivisionids = Object.assign([],arrdivisionids);
+  //      arrdivisionids.forEach(data => {
+  //       parseInt(data)
+  //      })
+  //     console.log(arrdivisionids)
+  //     this.fbEstimatedTon.controls['divisionId'].setValue(arrdivisionids); 
+  //   })
+  //   console.log(this.fbEstimatedTon.controls['divisionId'].value);
+  // }
 
   editExecesston(event: Event, excesston: EstimatedViewDto) {
     this.fbexcesston.patchValue(excesston);
