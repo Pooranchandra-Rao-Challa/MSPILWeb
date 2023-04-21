@@ -122,8 +122,6 @@ export class SeedComponent implements OnInit {
   getPlotsofFarmers(seasonId: number, farmerId: number) {
     this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as IPlotsofFarmerViewDto[];
-      console.log(this.plotNumbers);
-
     });
   }
 

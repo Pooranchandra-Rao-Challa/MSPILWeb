@@ -219,9 +219,9 @@
         <tr>
           <th></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
-            {{col?.label}} <p-sortIcon field="code">
-            </p-sortIcon>
+            {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
