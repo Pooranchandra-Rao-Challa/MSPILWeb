@@ -34,6 +34,7 @@ export class PlanttypeComponent implements OnInit {
     private alertMessage: AlertMessage) { }
 
   initPlant() {
+    this.fbplantType.controls['isActive'].setValue(true);
     this.submitLabel = "Add Plant Type";
     this.addFlag = true;
     this.showDialog = true;
@@ -53,7 +54,7 @@ export class PlanttypeComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       estimatedTon: ['', (Validators.required)],
       loanEligible: ['', (Validators.required)],
-      isActive: [true],
+      isActive: [null],
     });
   }
   onClose() {

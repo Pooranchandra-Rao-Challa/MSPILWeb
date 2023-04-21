@@ -33,13 +33,12 @@ export class StateComponent implements OnInit {
     public jwtService: JWTService,
     private alertMessage: AlertMessage) { }
 
-  InitState() {
+  InitState( ) {
     this.state = new StateDto();
+    this.fbstates.controls['isActive'].setValue(true);
     this.submitLabel = "Add State";
     this.addFlag = true;
     this.display = true;
-
-
   }
 
   get FormControls() {
@@ -52,7 +51,7 @@ export class StateComponent implements OnInit {
     this.fbstates = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
-      isActive: [true],
+      isActive: [null],
       stateId: new FormControl(null),
     });
   }

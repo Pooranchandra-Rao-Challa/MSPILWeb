@@ -37,6 +37,7 @@ export class MandalComponent implements OnInit {
 
   InitMandal() {
     this.mandal = new MandalDto();
+    this.fbmandals.controls['isActive'].setValue(true);
     this.submitLabel = "Add Mandal";
     this.addFlag = true;
     this.display = true;
@@ -59,7 +60,7 @@ export class MandalComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       districtId:[null, [Validators.required]],
       mandalId: [0],
-      isActive: new FormControl(true, Validators.required),
+      isActive: new FormControl(null),
     });
   }
 

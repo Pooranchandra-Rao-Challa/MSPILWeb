@@ -63,7 +63,7 @@ export class BankComponent implements OnInit {
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       abbr: ['',[ Validators.minLength(MIN_LENGTH_2)]],
-      isActive: [true],
+      isActive: [null],
       branches: this.formbuilder.array([]),
     });
   }
@@ -77,6 +77,7 @@ export class BankComponent implements OnInit {
   }
   initBankdailog() {
     this.addBranches();
+    this.fbbank.controls['isActive'].setValue(true);
     this.submitLabel = "Add Bank";
     this.addFlag = true;
     this.showDialog = true;

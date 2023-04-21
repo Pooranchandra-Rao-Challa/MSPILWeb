@@ -65,8 +65,8 @@ export class PlantsubtypeComponent implements OnInit {
       plantSubTypeId: [null],
       plantTypeId: [null, [Validators.required]],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      isActive: [true]
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      isActive: [null]
     });
   }
 
@@ -106,6 +106,7 @@ export class PlantsubtypeComponent implements OnInit {
   }
 
   initPlantsub() {
+    this.fbplantsubtype.controls['isActive'].setValue(true);
     this.submitLabel = "Add Plant Sub Type";
     this.addFlag = true;
     this.showDialog = true;
