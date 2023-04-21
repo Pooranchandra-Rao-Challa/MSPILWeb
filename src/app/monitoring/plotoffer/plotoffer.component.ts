@@ -328,6 +328,7 @@ export class PlotofferComponent implements OnInit {
     if (this.fbPlotOffer.valid) {
       this.saveApproveOrDeny().subscribe(resp => {
         if (resp) {
+          this.dtPlotOffer.expandedRowKeys = {};
           this.initPlotOffers(this.currentSeason.seasonId!);
           this.fbPlotOffer.reset();
           this.showApprovalDialog = false;

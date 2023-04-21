@@ -339,6 +339,7 @@ export class PlotassesmentComponent implements OnInit {
       this.fbPlotAssesment.controls['plotId'].enable();
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
+          this.dtPlotAssessments.expandedRowKeys = {};
           this.savePlotAssessment();
           this.fbPlotAssesment.reset();
           this.showDialog = false;

@@ -369,6 +369,7 @@ export class PlotagreementComponent implements OnInit {
       this.fbPlotAgreement.controls['plotId'].enable();
       this.savePlotAgreement().subscribe(resp => {
         if (resp) {
+          this.dtPlotAgreements.expandedRowKeys = {};
           this.initPlotAgreements(this.currentSeason.seasonId!);
           this.fbPlotAgreement.reset();
           this.showDialog = false;
