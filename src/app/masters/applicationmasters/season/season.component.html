@@ -134,10 +134,10 @@
                   <div class="field col-12 md:col-4">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                      alphaNumeric [readonly]="fbseasons.value.tptId" [maxlength]="7" (input)="onValidateSeasonCode()"
+                    numericOnly [readonly]="fbseasons.value.tptId" [maxlength]="7" (input)="onValidateSeasonCode()"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <div class="flex justify-content-between">
-                      <b>Hint: Code Should Like - 2022-23</b>
+                      <b>Hint: Code Should Be Like - 2022-23</b>
                       <small>{{code.value.length}}/7</small>
                     </div>
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
@@ -148,24 +148,22 @@
                     </span>
                     <span *ngIf="invalidSeasonCode">
                       <div class="ng-invalid ng-touched p-error" *ngIf="!FormControls['code'].errors?.['pattern']">
-                        Invalid Season Code: To Year Should Excatly Greater Than One.</div>
+                        Invalid Season Code: To Year Should Excatly Greater Than From Year.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
-                    alphaOnly [maxlength]="maxLength.name"
+                  numericOnly [maxlength]="9"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <div class="text-right">
-                    <small>{{name.value.length}}/{{maxLength.name}}</small>
+                    <small>{{name.value.length}}/9</small>
                   </div>
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
-                      Name Min Characters Is 2.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                      Name Should Contains Only Alphabets.</div>
+                      Name Pattern Should Be Like 2022-2023.</div>
                   </span>
                   </div>
                   <div class="field col-12 md:col-4">

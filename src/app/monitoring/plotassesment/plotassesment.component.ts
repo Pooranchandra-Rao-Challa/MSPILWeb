@@ -179,7 +179,6 @@ export class PlotassesmentComponent implements OnInit {
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
-      console.log(resp)
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
       this.initPlotAssesments(this.currentSeason.seasonId!);
     });

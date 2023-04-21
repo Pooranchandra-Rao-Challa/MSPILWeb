@@ -151,9 +151,7 @@ export class PlotreportsComponent implements OnInit {
     this.monitoringService.GetOfferInfo(plotOfferId).subscribe((resp) => {
       let plotOffer2 = resp as any;
       if (plotOffer2 && plotOffer2.length) {
-        this.plotOfferDto = plotOffer2[0]
-        console.log(this.plotOfferDto);
-
+        this.plotOfferDto = plotOffer2[0];
         this.fbPlotReport.controls['farmerId'].setValue(this.plotOfferDto?.farmerId);
         this.fbPlotReport.controls['varietyId'].setValue(this.plotOfferDto.expectedVarietyId);
         this.fbPlotReport.patchValue(this.plotOfferDto);

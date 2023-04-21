@@ -12,7 +12,7 @@ import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from '../../../_models/applicationmaster';
 import { BillParameterDto, BillParameterViewDto, } from 'src/app/_models/billingmaster';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, RG_SEASON_CODE, } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, RG_SEASON_CODE, RG_SEASON_NAME, } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../../_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
@@ -116,7 +116,7 @@ export class SeasonComponent implements OnInit {
       seasonId: [null],
 
       code: new FormControl('',[Validators.required, Validators.pattern(RG_SEASON_CODE)]),
-      name:new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
+      name:new FormControl('', [Validators.required, Validators.pattern(RG_SEASON_NAME)]),
       plantFrom: ['', Validators.required],
       plantTo: ['', Validators.required],
       crushFrom: ['', Validators.required],
@@ -247,9 +247,7 @@ export class SeasonComponent implements OnInit {
     else return this.appMasterService.UpdateSeason(this.fbseasons.value);
   }
   onSubmit() {
-    debugger
     if (this.fbseasons.valid && !this.invalidSeasonCode) {
-      return
         this.saveSeason().subscribe((resp) => {
           if (resp) {
             this.initSeasons();

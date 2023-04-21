@@ -42,6 +42,7 @@ export class DivisionsComponent implements OnInit {
 
   InitDivision() {
     this.division = new DivisionDto();
+    this.fbdivisions.controls['isActive'].setValue(true);
     this.submitLabel = "Add Division";
     this.addFlag = true;
     this.display = true;
@@ -65,7 +66,7 @@ export class DivisionsComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       inchargePhoneNo: new FormControl('',[Validators.pattern(RG_PHONE_NO)]),
       address: new FormControl(null, [Validators.required,Validators.pattern(RG_ADDRESS)]),
-      isActive: new FormControl(true, Validators.required),
+      isActive: new FormControl(null),
     });
 
 

@@ -52,6 +52,7 @@ export class LookupComponent implements OnInit {
   }
   addLookupDialog() {
    this.addLookupDetails();
+   this.fblookup.controls['isActive'].setValue(true);
     this.submitLabel = "Add Lookup";
     this.addFlag = true;
     this.showDialog = true;
@@ -68,7 +69,7 @@ export class LookupComponent implements OnInit {
       lookUpId: [null],
       code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      isActive: [true],
+      isActive: [null],
       lookUpDetails: this.formbuilder.array([]),
     });
   }
@@ -86,7 +87,7 @@ export class LookupComponent implements OnInit {
     return this.formbuilder.group({
       lookupId: [lookupDetail.lookupId],
       lookupDetailId: [lookupDetail.lookupDetailId],
-      code: new FormControl(lookupDetail.code, [Validators.required,Validators.pattern(RG_ALPHA_NUMERIC),]),
+      code: new FormControl(lookupDetail.code, [Validators.required,]),
       name:new FormControl(lookupDetail.name, [Validators.required,Validators.minLength(MIN_LENGTH_2)]),
       remarks:new FormControl (lookupDetail.remarks,[Validators.pattern(RG_ALPHA_NUMERIC),Validators.minLength(MIN_LENGTH_2)]),
       listingorder: new FormControl (lookupDetail.listingorder,[Validators.required,Validators.minLength(MAX_LENGTH_2),]),

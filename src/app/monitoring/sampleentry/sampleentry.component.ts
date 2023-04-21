@@ -153,8 +153,6 @@ export class SampleEntryComponent implements OnInit {
   getDocNo() {
     this.commonService.GetDocNo(this.fbSampleEntry.controls['seasonId'].value,
       EDocumentNumberScreens.Samples).subscribe((resp) => {
-        console.log(resp);
-
         this.fbSampleEntry.get('docNo')?.patchValue(resp);
       });
   }
