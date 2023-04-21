@@ -163,7 +163,7 @@ export class PlotsForUserDto {
   villageId?:number
 
 }
-export class ScheduleGroupPlotsViewDto {
+export class ScheduleGroupPlotsDto {
   farmerId?: number
   farmerCode?: string
   farmerName?: string

@@ -6,7 +6,7 @@ import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from "src/app/_helpers/date.format.pipe";
 import { plantTypeDto, SeasonDto, SeasonViewDto, VarietyViewDto } from "src/app/_models/applicationmaster";
 import { IPlotsofFarmerViewDto, PlotAgreementDto, PlotInfoDto } from "src/app/_models/monitoring";
-import { CircleforUserDto, DivisionsforUserDto, ExcessTonViewDto, FarmersInPlantingDatesDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupPlotsViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, ExcessTonViewDto, FarmersInPlantingDatesDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupPlotsDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { JWTService } from "src/app/_services/jwt.service";
@@ -35,7 +35,8 @@ export class ScheduleGroupingComponent implements OnInit {
   scheduleGroupings: ISeasonScheduleGroupViewDto[] = [];
   scheduleGrouping: PlotAgreementDto = {};
   fbScheduleGrouping!: FormGroup;
-  scheduleGroupingPlots: ScheduleGroupPlotsViewDto[] = [];
+  scheduleGroupingPlots: ScheduleGroupPlotsDto[] = [];
+  schedule: ScheduleGroupPlotsDto[] = [];
   currentSeason: SeasonDto = {};
   loading: boolean = true;
   showTable: boolean = true;
@@ -262,6 +263,7 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlots = Object.assign([], this.plots);
       this.filterPlantTypes = Object.assign([], this.planttypes);
       this.filterVarieties = Object.assign([], this.varieties);
+
     }
     else {
       this.filterFarmers = this.farmers.filter(farmer => values.indexOf(farmer.villageId!) != -1)
@@ -287,15 +289,15 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlantTypes = Object.assign([], this.planttypes);
       this.filterVarieties = Object.assign([], this.varieties);
     } else {
-      this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.plotId!) != -1);
-      this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.plotId!) != -1);
+      this.filterPlantTypes = this.planttypes.filter(planttype =>  Array.isArray(values) && values.indexOf(planttype.plotId!) != -1);
+      this.filterVarieties = this.varieties.filter(variety => Array.isArray(values) &&  values.indexOf(variety.plotId!) != -1);
     }
   }
   SetAllPlanttypeChilds(values: number[]) {
     if (values.length == 0) {
       this.filterVarieties = Object.assign([], this.varieties);
     } else {
-      this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.planttypeId!) != -1);
+      this.filterVarieties = this.varieties.filter(variety => Array.isArray(values) &&  values.indexOf(variety.planttypeId!) != -1);
     }
   }
 
@@ -327,27 +329,29 @@ export class ScheduleGroupingComponent implements OnInit {
 
   onSubmit() {
      let obj = this.fbScheduleGrouping.getRawValue();
-    // obj.fromDOP =  formatDate(obj.fromDOP, 'yyyy-mm-dd', 'en-US');
-    // obj.toDOP =  formatDate(obj.toDOP, 'yyyy-mm-dd', 'en-US');
-    let obj2 = {
+    //  obj.fromDOP =  formatDate(obj.fromDOP, 'yyyy-mm-dd', 'en-US');
+    //  obj.toDOP =  formatDate(obj.toDOP, 'yyyy-mm-dd', 'en-US');
+ 
+   let obj2 = {
       "seasonId": this.fbScheduleGrouping.value.seasonId,
-      "divisionId": "string",
+      "divisionId": this.fbScheduleGrouping.value.divisionId.map((a:any) => JSON.stringify(a)).join(),
       "circleId": this.fbScheduleGrouping.value.circleId.map((a:any) => JSON.stringify(a)).join(),
-      "sectionId": "string",
-      "villageId": "string",
-      "fromDOP":formatDate(obj.fromDOP, 'yyyy-mm-dd', 'en-US'),
-      "toDOP":formatDate(obj.toDOP,'yyyy-mm-dd', 'en-US'),
-      "farmerId": "string",
-      "plotId": "string",
-      "plantTypeId": "string",
+      "sectionId": this.fbScheduleGrouping.value.sectionId.map((a:any) => JSON.stringify(a)).join(),
+      "villageId": this.fbScheduleGrouping.value.villageId.map((a:any) => JSON.stringify(a)).join(),
+      "fromDOP":formatDate(obj.fromDOP, 'yyyy-MM-dd', 'en-US'),
+      "toDOP":formatDate(obj.toDOP,'yyyy-MM-dd', 'en-US'),
+      "farmerId": this.fbScheduleGrouping.value.farmerId.toString(),
+      "plotId": this.fbScheduleGrouping.value.plotId.toString(),
+      "plantTypeId": this.fbScheduleGrouping.value.plantTypeId.toString(),
+      "varietyId":this.fbScheduleGrouping.value.varietyId.toString(),
     }
     console.log(obj2);
-    
     this.permitService.GetScheduleGroupPlots(obj2).subscribe((resp) => {
-      console.log(resp)
-          this.scheduleGroupingPlots = resp as unknown as ScheduleGroupPlotsViewDto[];
-        });
-  }
+          this.schedule = resp as unknown as ScheduleGroupPlotsDto[];
+          console.log(this.schedule);
+          
+          });
+        }
 
   clear(table: Table) {
     table.clear();
