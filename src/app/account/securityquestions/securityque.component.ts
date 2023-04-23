@@ -48,11 +48,11 @@ export class SecurityQueComponent implements OnInit {
    
   ) { 
     this.securityquestions = [
-      { code: 1, name: 'New York' },
-      { code: 2, name: 'Rome' },
-      { code: 3, name: 'London' },
-      { code: 4, name: 'Istanbul' },
-      {code: 5, name: 'Paris' }
+      { code: 1, name: 'What city were you born in?' },
+      { code: 2, name: 'What is the name of your first pet?' },
+      { code: 3, name: 'What is the title and artist of your favorite song?' },
+      { code: 4, name: 'What is your astrological sign?' },
+      {code: 5, name: 'What is your date of birth?' }
     ];
     this.selectedQuestion = this.securityquestions[0];
   }
