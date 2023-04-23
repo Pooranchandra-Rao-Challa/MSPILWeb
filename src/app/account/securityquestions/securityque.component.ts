@@ -14,7 +14,7 @@ export interface SecurQuestion {
 }
 
 export class SecurityDto {
-  id? : string;
+  id?: string;
   SecurityQuestions?: string;
   Answer?: string;
 
@@ -42,17 +42,17 @@ export class SecurityQueComponent implements OnInit {
   security!: SecurityDto;
   productDialog: boolean = false;
   submitted: boolean = true;
-  
+
   constructor(
     private messageService: MessageService,
-   
-  ) { 
+
+  ) {
     this.securityquestions = [
       { code: 1, name: 'What city were you born in?' },
       { code: 2, name: 'What is the name of your first pet?' },
       { code: 3, name: 'What is the title and artist of your favorite song?' },
       { code: 4, name: 'What is your astrological sign?' },
-      {code: 5, name: 'What is your date of birth?' }
+      { code: 5, name: 'What is your date of birth?' }
     ];
     this.selectedQuestion = this.securityquestions[0];
   }
@@ -95,56 +95,56 @@ export class SecurityQueComponent implements OnInit {
   hideDialog() {
     this.productDialog = false;
     this.submitted = false;
-}
-
-
-
-    onChange(event:any) {  
-
-      // let myIndex = this.securityquestions.findIndex(fruit => fruit.name === event.value);
-      // debugger
-      // this.securityquestions.splice(myIndex, 1);
-
-      this.securityquestions.splice(this.securityquestions.findIndex(item => item.name === event.value), 1);
-       
-        console.log(this.securityquestions);
   }
 
-saveProduct() {
-  debugger
-  
-  // this.deleteMsg(event);
-  
-        this.submitted = true;
 
-        if(this.security.Answer?.trim()){
-            if (this.security.id) {
-                this.securityDto[this.findIndexById(this.security.id)] = this.security;                
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-            }
-            else {
-                // this.security.id = this.createId();
-                // this.security.image = 'security-placeholder.svg';
-                this.securityDto.push(this.security);
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
-            }
 
-            this.securityDto = [...this.securityDto];
-            this.productDialog = false;
-            this.security = {};
-          }
-    }
+  onChange(event: any) {
 
-    findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.securityDto.length; i++) {
-          if (this.securityDto[i].id === id) {
-              index = i;
-              break;
-          }
+    // let myIndex = this.securityquestions.findIndex(fruit => fruit.name === event.value);
+    // debugger
+    // this.securityquestions.splice(myIndex, 1);
+
+    this.securityquestions.splice(this.securityquestions.findIndex(item => item.name === event.value), 1);
+
+    console.log(this.securityquestions);
+  }
+
+  saveProduct() {
+    debugger
+
+    // this.deleteMsg(event);
+
+    this.submitted = true;
+
+    if (this.security.Answer?.trim()) {
+      if (this.security.id) {
+        this.securityDto[this.findIndexById(this.security.id)] = this.security;
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+      }
+      else {
+        // this.security.id = this.createId();
+        // this.security.image = 'security-placeholder.svg';
+        this.securityDto.push(this.security);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
       }
 
-      return index;
+      this.securityDto = [...this.securityDto];
+      this.productDialog = false;
+      this.security = {};
+    }
+  }
+
+  findIndexById(id: string): number {
+    let index = -1;
+    for (let i = 0; i < this.securityDto.length; i++) {
+      if (this.securityDto[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+
+    return index;
   }
 
 }
