@@ -7,7 +7,17 @@
                 style="border-radius:53px">
                 <div class="grid flex flex-column align-items-center width_min">
                     <h1 class="text-900 font-bold text-4xl lg:text-5xl mb-2">Security Questions</h1>
+                   
                     <div class="card" style="min-width:600px;">
+                        <div class="note">
+                            <p class="head_note">Note:</p>
+                            <ol>
+                                <li>Minimum two questions need to be answered out of 15 questions for recovering the password when you lost it.</li> 
+    
+                                <li>When you selected more questions while recovering a password system randomly request 2 questions only </li>
+                      
+                            </ol>
+                        </div>
                         <p-toolbar>
                             <ng-template pTemplate="left">
                             </ng-template>
@@ -52,25 +62,25 @@
 
                         </p-table>
  
-                        <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details"
-                            [modal]="true" styleClass="p-fluid">
+                        <p-dialog [(visible)]="productDialog" [style]="{ width: '550px' }" header="Select Security Question"
+                                                    [modal]="true" styleClass="p-fluid">
 
                             <ng-template pTemplate="content">
                                 <!-- <from [formGroup]="fbSecureQue"> -->
 
-                                    <div class="p-field">
-                                        <label for="SecurityQuestions">Security Questions</label>
+                                    <div class="p-field mb-3">
+                                        <label for="SecurityQuestions"  >Security Questions</label><br/>
 
-                                        <p-dropdown [options]="securityquestions" (onChange)="onChange($event)"
+                                        <p-dropdown [options]="securityquestions" (onChange)="onChange($event)"   class="mt-4"
                                             [(ngModel)]="security.SecurityQuestions" appendTo="body" optionValue="name"
                                             placeholder="Select a Security Questions" optionLabel="name"
                                             [showClear]="true" #drop>
                                         </p-dropdown>
                                     </div>
 
-                                    <div class="p-field">
-                                        <label for="Answer">Answer</label>
-                                        <input type="text" pInputText id="Answer" [(ngModel)]="security.Answer" required
+                                    <div class="p-field mb-3">
+                                        <label for="Answer" >Answer</label>
+                                        <input type="text" pInputText id="Answer" [(ngModel)]="security.Answer" required  class="mt-2"
                                             autofocus />
                                         <small class="p-invalid" *ngIf="submitted && !security.Answer">Answer is
                                             required.</small>
@@ -93,11 +103,7 @@
                         <button pButton pRipple label="Submit Questions"
                                     class="p-button-success p-mr-2 m-5 sQuestion"></button>
                     </div>
-                    <div class="note">
-                        <p>Minimum two questions need to be answered out of 15 questions for recovering the password when you lost it.</p> 
-
-                        <p>When you selected more questions while recovering a password system randomly request 2 questions only </p>
-                    </div>
+                    
 
                 </div>
             </div>
