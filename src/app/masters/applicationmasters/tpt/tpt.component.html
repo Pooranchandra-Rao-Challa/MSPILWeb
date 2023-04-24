@@ -521,7 +521,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-tpt let-tptDetailIndex="rowIndex">
                       <tr [formGroupName]="tptDetailIndex">
-                        <td>
+                        <td class="vertical-align-top">
                           <input pInputText class="form-control" placeholder="Enter Vehicle No"
                             formControlName="vehicleNo" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleNo')?.touched &&
                           formArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
@@ -532,7 +532,7 @@
                               Invalid Vehicle Number, Eg: XY00-XY-0000 / XY00 XY 0000.</div>
                           </span>
                         </td>
-                        <td>
+                        <td class="vertical-align-top">
                           <p-dropdown placeholder="Select Vehicle" [options]="vehicleTypes"
                             formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId"
                             appendTo="body" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched &&
@@ -545,31 +545,31 @@
                               Please Select Vehicle Type.</div>
                           </span>
                         </td>
-                        <td>
+                        <td class="vertical-align-top">
                           <input pInputText class="form-control" placeholder="Enter Insurance No"
                             formControlName="insuranceNo" alphaNumeric>
                         </td>
-                        <td>
+                        <td class="vertical-align-top">
                           <p-inputNumber inputId="receivableAmt" placeholder="Enter Receivable Amount"
                             formControlName="receivableAmt" [showButtons]="true">
                           </p-inputNumber>
                         </td>
-                        <td>
+                        <td class="vertical-align-top">
                           <p-inputNumber inputId="receivedAmt" placeholder="Enter Received Amount"
                             formControlName="receivedAmt" [showButtons]="true">
                           </p-inputNumber>
                         </td>
-                        <td>
+                        <td class="vertical-align-top">
                           <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" [options]="defaults"
                             formControlName="gateEntryFreeze" appendTo="body">
                           </p-dropdown>
                         </td>
-                        <td>
+                        <td class="vertical-align-top">
                           <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" [options]="defaults"
                             formControlName="transporterFreeze" appendTo="body">
                           </p-dropdown>
                         </td>
-                        <td *ngIf="fbTpt.controls['tptdetails'].value.length > 1">
+                        <td *ngIf="fbTpt.controls['tptdetails'].value.length > 1" class="vertical-align-top">
                           <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
                             *ngIf="!this.faTptDetails().controls[tptDetailIndex].get('id')?.value"
                             (click)="faTptDetails().removeAt(tptDetailIndex)"></i>
