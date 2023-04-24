@@ -13,9 +13,7 @@
                             <p class="head_note">Note:</p>
                             <ol>
                                 <li>Minimum two questions need to be answered out of 15 questions for recovering the password when you lost it.</li> 
-    
                                 <li>When you selected more questions while recovering a password system randomly request 2 questions only </li>
-                      
                             </ol>
                         </div>
                         <p-toolbar>
@@ -68,20 +66,19 @@
                             <ng-template pTemplate="content">
                                 <!-- <from [formGroup]="fbSecureQue"> -->
 
-                                    <div class="p-field mb-3">
-                                        <label for="SecurityQuestions"  >Security Questions</label><br/>
-
-                                        <p-dropdown [options]="securityquestions" (onChange)="onChange($event)"   class="mt-4"
-                                            [(ngModel)]="security.SecurityQuestions" appendTo="body" optionValue="name"
-                                            placeholder="Select a Security Questions" optionLabel="name"
-                                            [showClear]="true" #drop>
+                                    <div class="p-field mb-3 ">
+                                        <label for="SecurityQuestions"  >Security Questions</label><br/><br/>
+                                        <p-dropdown [options]="getSecureQuestions" (onChange)="onChange($event)" 
+                                            [(ngModel)]="security.SecurityQuestions" appendTo="body" optionValue="question"
+                                            placeholder="Select a Security Questions" optionLabel="question"
+                                            [showClear]="true" #drop class="pt-5">
                                         </p-dropdown>
                                     </div>
 
                                     <div class="p-field mb-3">
                                         <label for="Answer" >Answer</label>
-                                        <input type="text" pInputText id="Answer" [(ngModel)]="security.Answer" required  class="mt-2"
-                                            autofocus />
+                                        <input type="text" pInputText id="Answer" [(ngModel)]="security.Answer" required  class="mt-3"
+                                             />
                                         <small class="p-invalid" *ngIf="submitted && !security.Answer">Answer is
                                             required.</small>
                                     </div>

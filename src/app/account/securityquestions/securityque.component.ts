@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { SecureQuestionDto } from 'src/app/_models/security';
+import { SecurityService } from 'src/app/_services/security.service';
 
 
 export interface IHeader {
@@ -34,10 +37,9 @@ export class SecurityDto {
   ],
 })
 export class SecurityQueComponent implements OnInit {
-
+  getSecureQuestions:SecureQuestionDto[] = []
   securityquestions: SecurQuestion[];
   selectedQuestion!: SecurQuestion;
-
   securityDto: SecurityDto[] = [];
   security!: SecurityDto;
   productDialog: boolean = false;
@@ -45,6 +47,8 @@ export class SecurityQueComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
+    private formbuilder: FormBuilder,
+    private securityService: SecurityService,
 
   ) {
     this.securityquestions = [
@@ -68,8 +72,15 @@ export class SecurityQueComponent implements OnInit {
     this.submitted = false;
     this.productDialog = true;
   }
+  initGetSecureQuestions() {
+    this.securityService.GetSecureQuestions().subscribe((resp) => {
+      this.getSecureQuestions = resp as unknown as SecureQuestionDto[];
+    });
+  }
   ngOnInit(): void {
     // this.fillData();
+    // this.getSecurequsForm();
+    this.initGetSecureQuestions();
   }
 
   fillData() {
