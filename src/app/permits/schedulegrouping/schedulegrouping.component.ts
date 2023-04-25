@@ -47,7 +47,6 @@ export class ScheduleGroupingComponent implements OnInit {
   showTable: boolean = true;
   showDialog: boolean = false;
   showDialog1: boolean = false
-  globalFilterFields: any
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('dtSchedulegrouping') dtSchedulegrouping!: Table;
   submitLabel!: string;
@@ -245,14 +244,12 @@ initExcessTon() {
     console.log('schedule',this.schedule);
   })
 }
-
   toggleTab() {
     this.showForm = !this.showForm;
   }
-
-
-
-
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
   SetAllDivisionChilds(values: number[]) {
     if (values.length == 0) {
       this.filterCircles = Object.assign([], this.circles);
@@ -273,7 +270,6 @@ initExcessTon() {
       this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.divisionId!) != -1)
     }
   }
-
   SetAllCircleChilds(values: number[]) {
     if (values.length == 0) {
       this.filterSections = Object.assign([], this.sections);

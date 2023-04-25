@@ -151,7 +151,7 @@
     <!-- table -->
     <p-table #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="seasonScheduleId"
       [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
-      [paginator]="true" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+      [paginator]="true"  [globalFilterFields]="['seasonName','groupNo','toDOP','fromDOP','createdAt','createdBy','updatedAt','updatedBy']" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
       (onRowExpand)="onRowExpand($event)">
@@ -162,8 +162,8 @@
           <div>
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
-              <input pInputText type="text" #filters (input)="onSearch()" placeholder="Search Keyword"
-                pTooltip="Search By Group No, To DOP, From DOP, Created At, Created By,Updated At,Updated By"
+              <input pInputText type="text" #filters (input)="onGlobalFilter(dtSchedulegrouping, $event)" placeholder="Search Keyword"
+                pTooltip="Search By seasonName, groupNo,toDOP, fromDOP, Created By,Updated At,Updated By"
                 class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
@@ -269,7 +269,7 @@
               <span class="p-input-icon-left m-2">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                  pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety"
+                  pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
                   class="w-full" />
                   
               </span>
