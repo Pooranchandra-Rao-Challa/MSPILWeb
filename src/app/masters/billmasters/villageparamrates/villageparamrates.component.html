@@ -16,8 +16,8 @@
     <!-- table -->
     <p-table #dt1 [value]="villageParamRates" dataKey="id" [rows]="10" [rowHover]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+    [showCurrentPageReport]="true" [alwaysShowPaginator]="false"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
@@ -113,7 +113,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="text-center" colspan="13">No Village Param Rates Found.</td>
+          <td class="text-center m-5" colspan="13">No Village Param Rates Found.</td>
         </tr>
       </ng-template>
     </p-table>
