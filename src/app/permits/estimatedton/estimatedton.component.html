@@ -124,7 +124,7 @@
                                     </span>
                                 </div>
                                 <div class="col-3 p-2">
-                                    <label>Farmer Code:</label>
+                                    <label class="required">Farmer Code:</label>
                                     <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"  optionValue="farmerId"
                                         formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true"
                                         filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
@@ -181,17 +181,17 @@
                                 <p-overlayPanel #opexcesston>
                                     <ng-template pTemplate="content">
                                         <form [formGroup]="fbexcesston">
-                                        <label> Update Estimated Ton:<sup class="p-error">*</sup></label>
+                                        <label> Add Excess Ton:<sup class="p-error">*</sup></label>
                                         <div class="grid mt-2">
                                             <div class="field col-12 md:col-8">
-                                                <input pInputText id="name" type="number" placeholder="Estimated Ton"
+                                                <input pInputText id="name" type="number" placeholder="Excess Ton"
                                                     formControlName="excessTonage"
                                                     [ngClass]="{'is-invalid ng-dirty': FormControl['excessTonage'].touched && FormControl['excessTonage'].errors }">
                                                 <span
                                                     *ngIf="FormControl['excessTonage'].touched && FormControl['excessTonage'].invalid">
                                                     <div class="ng-invalid ng-touched p-error"
                                                         *ngIf="FormControl['excessTonage'].errors?.['required']">
-                                                        Please Enter Estimated Ton.</div>
+                                                        Please Enter Excess Ton.</div>
                                                 </span>
                                             </div>
                                             <div class=" col-12 md:col-4">

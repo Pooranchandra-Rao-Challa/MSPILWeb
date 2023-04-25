@@ -6,7 +6,7 @@ import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from "src/app/_helpers/date.format.pipe";
 import { plantTypeDto, SeasonDto, SeasonViewDto, VarietyViewDto } from "src/app/_models/applicationmaster";
 import { IPlotsofFarmerViewDto, PlotAgreementDto, PlotInfoDto } from "src/app/_models/monitoring";
-import { CircleforUserDto, DivisionsforUserDto, ExcessTonViewDto, FarmersInPlantingDatesDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupPlotsDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, ExcessTonViewDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupPlotsDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { JWTService } from "src/app/_services/jwt.service";
@@ -101,7 +101,6 @@ export class ScheduleGroupingComponent implements OnInit {
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.scheduleGroupingForm();
-    this.initDivisions();
     this.initSections();
     this.initCircles();
     this.initVillages();
@@ -135,7 +134,10 @@ export class ScheduleGroupingComponent implements OnInit {
       this.initSeasons();
       this.initScheduleGroups(this.currentSeason.seasonId!);
       this.initVarieties(this.currentSeason.seasonId!);
-      this.initPlantType(this.currentSeason.seasonId!)
+      this.initPlantType(this.currentSeason.seasonId!);
+      this.initDivisions(this.currentSeason.seasonId!);
+      
+
     });
   }
   initScheduleGroups(seasonId: number) {
@@ -144,27 +146,27 @@ export class ScheduleGroupingComponent implements OnInit {
     });
   }
 
-  initDivisions() {
-    this.permitService.GetDivisionsforUser().subscribe((resp) => {
+  initDivisions(seasonId:any) {
+    this.permitService.GetDivisionsforUser(seasonId,'ScheduleGroups').subscribe((resp) => {
       this.divisions = resp as unknown as DivisionsforUserDto[];
-
+      console.log(this.divisions)
     });
   }
   initSections() {
-    this.permitService.GetSectionsforUser().subscribe((resp) => {
-      this.sections = resp as unknown as SectionforUserDto[];
-    });
+    // this.permitService.GetSectionsforUser().subscribe((resp) => {
+    //   this.sections = resp as unknown as SectionforUserDto[];
+    // });
   }
   initCircles() {
-    this.permitService.GetCirclesforUser().subscribe((resp) => {
-      this.circles = resp as unknown as CircleforUserDto[];
-    });
+    // this.permitService.GetCirclesforUser().subscribe((resp) => {
+    //   this.circles = resp as unknown as CircleforUserDto[];
+    // });
   }
   initVillages() {
-    this.permitService.GetVillagesforUser().subscribe((resp) => {
-      this.villages = resp as unknown as VillageforUserDto[];
-      console.log(this.villages)
-    });
+    // this.permitService.GetVillagesforUser().subscribe((resp) => {
+    //   this.villages = resp as unknown as VillageforUserDto[];
+    //   console.log(this.villages)
+    // });
   }
   initVarieties(seasonId: number) {
     this.permitService.GetVarietiesForUser(seasonId).subscribe((resp) => {
@@ -180,14 +182,14 @@ export class ScheduleGroupingComponent implements OnInit {
   }
 
   GetFarmers() {
-    if (this.fbScheduleGrouping.value.seasonId != null && this.fbScheduleGrouping.value.villageId != null) {
-      var seasonId = this.fbScheduleGrouping.value.seasonId;
-      var villageId = this.fbScheduleGrouping.value.villageId
-      this.permitService.GetFarmersInPlotsForUser(seasonId, villageId).subscribe((resp) => {
-        this.farmers = resp as unknown as FarmersInPlotsForUserDto[];
-        console.log('farmers', this.farmers);
-      })
-    }
+    // if ( this.fbScheduleGrouping.value.villageId != null) {
+    //   var seasonId = this.fbScheduleGrouping.value.seasonId;
+    //   var villageId = this.fbScheduleGrouping.value.villageId
+    //   this.permitService.GetFarmersInPlotsForUser(seasonId, villageId).subscribe((resp) => {
+    //     this.farmers = resp as unknown as FarmersInPlotsForUserDto[];
+    //     console.log('farmers', this.farmers);
+    //   })
+    // }
   }
   GetPlots() {
     if (this.fbScheduleGrouping.value.seasonId != null && this.fbScheduleGrouping.value.farmerId != null) {
