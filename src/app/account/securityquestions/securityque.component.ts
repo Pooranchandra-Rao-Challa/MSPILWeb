@@ -17,7 +17,7 @@ export interface SecurQuestion {
 }
 
 export class SecurityDto {
-  id?: string;
+  id?: number;
   SecurityQuestions?: string;
   Answer?: string;
 
@@ -38,12 +38,14 @@ export class SecurityDto {
 })
 export class SecurityQueComponent implements OnInit {
   getSecureQuestions:SecureQuestionDto[] = []
+  allSecureQuestions:SecureQuestionDto[] = []
   securityquestions: SecurQuestion[];
   selectedQuestion!: SecurQuestion;
   securityDto: SecurityDto[] = [];
   security!: SecurityDto;
   productDialog: boolean = false;
   submitted: boolean = true;
+  qstnSubmitLabel: String = "Add";
 
   constructor(
     private messageService: MessageService,
@@ -70,11 +72,13 @@ export class SecurityQueComponent implements OnInit {
     debugger
     this.security = {};
     this.submitted = false;
+    this.qstnSubmitLabel = "Add";
     this.productDialog = true;
   }
   initGetSecureQuestions() {
     this.securityService.GetSecureQuestions().subscribe((resp) => {
       this.getSecureQuestions = resp as unknown as SecureQuestionDto[];
+      this.allSecureQuestions = [...this.getSecureQuestions];
     });
   }
   ngOnInit(): void {
@@ -88,7 +92,7 @@ export class SecurityQueComponent implements OnInit {
     for (var i of [1, 2]) {
       this.securityDto.push(
         {
-          id: "one",
+          id: 1,
           SecurityQuestions: "Code",
           Answer: "name",
         }
@@ -99,8 +103,15 @@ export class SecurityQueComponent implements OnInit {
 
   editProduct(security: SecurityDto) {
     debugger
+    this.getSecureQuestions = [...this.allSecureQuestions]
     this.security = { ...security };
+    this.qstnSubmitLabel = "Update";
     this.productDialog = true;
+  }
+
+  deleteProduct(question: String){
+    this.securityDto.splice(this.securityDto.findIndex(item => item.SecurityQuestions === question), 1);
+    this.securityDto = [...this.securityDto];
   }
 
   hideDialog() {
@@ -115,10 +126,10 @@ export class SecurityQueComponent implements OnInit {
     // let myIndex = this.securityquestions.findIndex(fruit => fruit.name === event.value);
     // debugger
     // this.securityquestions.splice(myIndex, 1);
+    this.security.id = this.getSecureQuestions[this.getSecureQuestions.findIndex(item => item.question === event.value)].questionId;
+    this.getSecureQuestions.splice(this.getSecureQuestions.findIndex(item => item.question === event.value), 1);
 
-    this.securityquestions.splice(this.securityquestions.findIndex(item => item.name === event.value), 1);
-
-    console.log(this.securityquestions);
+    console.log(this.getSecureQuestions);
   }
 
   saveProduct() {
@@ -130,15 +141,18 @@ export class SecurityQueComponent implements OnInit {
 
     if (this.security.Answer?.trim()) {
       if (this.security.id) {
-        this.securityDto[this.findIndexById(this.security.id)] = this.security;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        if(this.findIndexById(this.security.id) >= 0){
+          this.securityDto[this.findIndexById(this.security.id)] = this.security;
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        }
+        else {
+          // this.security.id = this.createId();
+          // this.security.image = 'security-placeholder.svg';
+          this.securityDto.push(this.security);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+        }
       }
-      else {
-        // this.security.id = this.createId();
-        // this.security.image = 'security-placeholder.svg';
-        this.securityDto.push(this.security);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-      }
+      
 
       this.securityDto = [...this.securityDto];
       this.productDialog = false;
@@ -146,7 +160,7 @@ export class SecurityQueComponent implements OnInit {
     }
   }
 
-  findIndexById(id: string): number {
+  findIndexById(id: number): number {
     let index = -1;
     for (let i = 0; i < this.securityDto.length; i++) {
       if (this.securityDto[i].id === id) {
