@@ -47,6 +47,7 @@ export class ScheduleGroupingComponent implements OnInit {
   @ViewChild('dtSchedulegrouping') dtSchedulegrouping!: Table;
   submitLabel!: string;
   permissions: any;
+  showForm: boolean = false;
   todayDate = new Date();
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
@@ -180,7 +181,9 @@ export class ScheduleGroupingComponent implements OnInit {
       
     });
   }
-
+  toggleTab() {
+    this.showForm = !this.showForm;
+  }
   GetFarmers() {
     // if ( this.fbScheduleGrouping.value.villageId != null) {
     //   var seasonId = this.fbScheduleGrouping.value.seasonId;
