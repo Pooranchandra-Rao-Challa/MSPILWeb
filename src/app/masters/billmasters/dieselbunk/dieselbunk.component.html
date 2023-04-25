@@ -15,9 +15,9 @@
 
     <!-- table -->
     <p-table #dt1 [value]="dieselBunks" dataKey="id" [rows]="10" [rowHover]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
+      [showCurrentPageReport]="true" [alwaysShowPaginator]="false"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
@@ -117,7 +117,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="text-center" colspan="15">No Diesel Bunks Found.</td>
+          <td class="text-center m-5" colspan="15">No Diesel Bunks Found.</td>
         </tr>
       </ng-template>
     </p-table>

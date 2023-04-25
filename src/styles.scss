@@ -164,3 +164,6 @@ div.season-rates-tab-items:not(:first-child) {
 .head_note{
   color:orange;
 }
+::ng-deep p-calendar .p-calendar .p-datepicker .p-yearpicker .p-yearpicker-year {
+  width:33.3% !important;
+}
