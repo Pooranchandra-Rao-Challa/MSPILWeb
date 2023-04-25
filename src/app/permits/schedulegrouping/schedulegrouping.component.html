@@ -29,6 +29,7 @@
                       <label>Season:<sup class="p-error">*</sup></label>
                       <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
                         [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
+                        (onChange)="updateDivisionsSectionsCircles()"
                         appendTo="body" [style]="{'width':'100%'}" ></p-dropdown>
                     </div>
                     <div class=" col-12 md:col-3">
@@ -37,7 +38,7 @@
                     </div>
                     <div class=" col-12 md:col-3">
                       <label>From DOP/DOR:<sup class="p-error">*</sup></label>
-                      <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true" appendTo="body"
+                      <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true" appendTo="body" [maxDate]="dateTime"
                         formControlName="fromDOP" [style]="{'width':'100%'}">
                       </p-calendar>
                     </div>
@@ -75,18 +76,17 @@
                       <p-multiSelect [options]="filterVillages" placeholder="Select Village" optionValue="villageId"
                         appendTo="body" [filter]="true" optionLabel="villageName" formControlName="villageId"
                         [style]="{'width':'100%'}" (onChange)="SetAllVillageChilds($event.value)"
-                        (onChange)="GetFarmers()" [style]="{'width':'100%'}" >
+                       [style]="{'width':'100%'}" >
                       </p-multiSelect>
 
                     </div>
 
                     <div class=" col-12 md:col-3">
                       <label>Ryot No:<sup class="p-error">*</sup></label>
-                      <p-dropdown placeholder="Select To Ryot" [options]="farmers" optionLabel="farmercode"
+                      <p-dropdown placeholder="Select To Ryot" [options]="filterFarmers" optionLabel="farmercode"
                         optionValue="farmerId" formControlName="farmerId" [filter]="true"
                         filterBy="plotNumber,villageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                        appendTo="body" (onChange)="SetAllFarmerChilds($event.value)" (onChange)="GetPlots()" [style]="{'width':'100%'}" >
-
+                        appendTo="body" (onChange)="SetAllFarmerChilds($event.value)"  [style]="{'width':'100%'}" >
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
                         </ng-template>
@@ -106,12 +106,12 @@
                         [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" [style]="{'width':'100%'}" 
                         (onChange)="SetAllPlotsChilds($event.value)">
                         <ng-template let-plot pTemplate="selectedItem">
-                          <div>{{ plot.plotNumber }} - {{ plot.farmerName }}</div>
+                          <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
                         </ng-template>
                         <ng-template let-plot pTemplate="item">
                           <div class="block align-items-center gap-2">
                             <div>{{plot.plotNumber}}</div>
-                            <div>{{plot.farmerName}} </div>
+                            <div>{{plot.villageName}} </div>
                           </div>
                         </ng-template>
                       </p-dropdown>
@@ -136,7 +136,7 @@
                     <div class="col-12 p-0">
                       <div class="md:col-3 p-3 mb-3" style="float: right;">
                         <button pButton pRipple type="submit" label="Get Order"
-                          class="p-button-raised p-button-primary mt-2" (click)="getScheduleGrouping()"  [style]="{'width':'100%'}"></button>
+                          class="p-button-raised p-button-primary mt-2" (click)="getEstimatedTon()"  [style]="{'width':'100%'}"></button>
                           <!-- (click)="onSubmit()" -->
                       </div>
                     </div>
@@ -258,7 +258,67 @@
       [breakpoints]="{'950px': '70vw', '630px': '900vw' }" [style]="{width: '70vw'}">
       <div class="flex flex-column align-items-center justify-content-center">
         <!-- popup table -->
-          <p-table #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="seasonScheduleId"
+        <p-table #dt2 [value]="schedule" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
+        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th *ngFor="let col of GroupingPlotHeaders" [pSortableColumn]="col.header">
+                    {{col?.label}} <p-sortIcon field="code">
+                    </p-sortIcon>
+                    <p-columnFilter type="text" [field]="col.header" display="menu">
+                    </p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-excesston>
+            <tr>
+                <td>
+                    <!-- <p-overlayPanel #opexcesston>
+                        <ng-template pTemplate="content">
+                             <form [formGroup]="fbexcesston">
+                            <label> Add Excess Ton:<sup class="p-error">*</sup></label>
+                            <div class="grid mt-2">
+                                <div class="field col-12 md:col-8">
+                                    <input pInputText id="name" type="number" placeholder="Excess Ton"
+                                        formControlName="excessTonage"
+                                        [ngClass]="{'is-invalid ng-dirty': FormControl['excessTonage'].touched && FormControl['excessTonage'].errors }">
+                                    <span
+                                        *ngIf="FormControl['excessTonage'].touched && FormControl['excessTonage'].invalid">
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="FormControl['excessTonage'].errors?.['required']">
+                                            Please Enter Excess Ton.</div>
+                                    </span>
+                                </div>
+                                <div class=" col-12 md:col-4">
+                                    <button pButton class="p-button-outlined " icon="pi pi-check" (click)="onSubmit()"></button>
+                                </div>
+                            </div>
+                            </form> -->
+                        <!-- </ng-template>
+                    </p-overlayPanel> --> 
+                    <button pButton pRipple icon="pi pi-pencil"
+                        class="p-element p-ripple p-button-text p-button p-component"></button>
+                </td>
+                <td *ngFor="let col of GroupingPlotHeaders">
+                    <span *ngIf="col?.field != 'plantingDate' ">{{excesston[col.field]}}</span>
+                    <span *ngIf="col?.field == 'plantingDate'">
+                        {{excesston[col.field] | date: 'dd-MM-yyyy'}}
+                    </span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="16" class="md:text-center">No Excess Ton Details Found.</td>
+            </tr>
+        </ng-template>
+        <tr>
+            <td colspan="16" class="md:text-center">Loading Excess Ton Details. Please wait.</td>
+        </tr>
+    </p-table>
+          <!-- <p-table #dtSchedulegrouping [value]="scheduleGroupings" [columns]="farmerHeaders" dataKey="seasonScheduleId"
             [rows]="10" [rowHover]="true"  styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100"
             [paginator]="true" [globalFilterFields]="globalFilterFields" 
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
@@ -355,7 +415,7 @@
           <td class="md:text-center" colspan="50%">No Schedule Groupings Found.</td>
         </tr>
       </ng-template>
-          </p-table>
+          </p-table> -->
       </div>
     </p-dialog>
   </div>

@@ -56,13 +56,9 @@ public GetVillagesforUser(seasonId: number,type: string) {
 }
 
 
-public GetVarietiesForUser(seasonId: number) {
-  return this.getWithId<VarietiesForUserDto[]>(GET_VARIETIES_FOR_USER, seasonId);
-}
 
-public GetPlantTypeForUser(seasonId: number) {
-  return this.getWithId<PlantTypeForUserDto[]>(GET_PLANT_TYPE_FOR_USER, seasonId);
-}
+
+
 public GetFarmersInPlotsForUser(seasonId: number,villageId :number,type: string) {
   let arr: any[] = [];
   arr.push(seasonId);
@@ -70,13 +66,34 @@ public GetFarmersInPlotsForUser(seasonId: number,villageId :number,type: string)
   arr.push(type);
   return this.getWithParams<FarmersInPlotsForUserDto>(GET_FARMERS_IN_PLOTS_FOR_USER, arr);
 }
-public GetPlotsForUser(seasonId: number,farmerId  :number) {
-  return this.getWithParams<PlotsForUserDto>(GET_PLOTS_FOR_USER, [seasonId,farmerId]);
+
+public GetPlotsForUser(seasonId: number,farmerId:number ,villageId :number,type: string) {
+  let arr: any[] = [];
+  arr.push(seasonId);
+  arr.push(farmerId);
+  arr.push(villageId);
+  arr.push(type);
+  return this.getWithParams<PlotsForUserDto>(GET_PLOTS_FOR_USER, arr);
+}
+public GetScheduleGroupPlots(scheduleGroupingPlots: ScheduleGroupPlotsDto) {
+  return this.post<ScheduleGroupPlotsDto>(GET_SCHEDULE_GROUP_PLOTS_URI, scheduleGroupingPlots);
 
 }
-public GetScheduleGroupPlots(scheduleReq: any) {
-  return this.post<ScheduleGroupPlotsDto>(GET_SCHEDULE_GROUP_PLOTS_URI, scheduleReq);
-
+public GetVarietiesForUser(seasonId: number,farmerId:number ,villageId :number,plotId : number) {
+  let arr: any[] = [];
+  arr.push(seasonId);
+  arr.push(farmerId);
+  arr.push(villageId);
+  arr.push(plotId );
+  return this.getWithParams<VarietiesForUserDto>(GET_VARIETIES_FOR_USER, arr);
+}
+public GetPlantTypeForUser(seasonId: number,farmerId:number ,villageId :number,plotId : number) {
+  let arr: any[] = [];
+  arr.push(seasonId);
+  arr.push(farmerId);
+  arr.push(villageId);
+  arr.push(plotId );
+  return this.getWithParams<PlantTypeForUserDto>(GET_PLANT_TYPE_FOR_USER, arr);
 }
 
 }

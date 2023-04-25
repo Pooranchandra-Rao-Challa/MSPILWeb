@@ -168,6 +168,7 @@ export class PlantTypeForUserDto {
   planttypeId?: number;
   plotId?: number;
   farmerId?:number
+  seasonName:any
 }
 
 export class FarmersInPlotsForUserDto {
@@ -201,6 +202,25 @@ export class PlotsForUserDto {
 
 }
 export class ScheduleGroupPlotsDto {
+  seasonId?: number
+  farmerId?: number
+  farmercode?: string
+  farmerName?: string
+  villageId?: number
+  villageName?: string
+  sectionId?: number
+  sectionName?: string
+  circleId?: number
+  circleName?: string
+  divisionId?: number
+  divisionName?: string
+  fromDOP?:  Date;
+  toDOP?:  Date;
+  plotId?: number
+  plantTypeId?: number
+  varietyId?: number
+}
+export class ScheduleGroupPlotsViewDto {
   farmerId?: number
   farmerCode?: string
   farmerName?: string
