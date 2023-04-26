@@ -147,7 +147,6 @@ export class PlotreportsComponent implements OnInit {
 
 
   getOfferInfo(plotOfferId: number) {
-    debugger
     this.monitoringService.GetOfferInfo(plotOfferId).subscribe((resp) => {
       let plotOffer2 = resp as any;
       if (plotOffer2 && plotOffer2.length) {

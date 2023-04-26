@@ -67,7 +67,6 @@ export class SecurityQueComponent implements OnInit {
   ];
 
   openNew() {
-    debugger
     this.security = {};
     this.submitted = false;
     this.productDialog = true;
@@ -84,7 +83,6 @@ export class SecurityQueComponent implements OnInit {
   }
 
   fillData() {
-    debugger
     for (var i of [1, 2]) {
       this.securityDto.push(
         {
@@ -98,7 +96,6 @@ export class SecurityQueComponent implements OnInit {
   }
 
   editProduct(security: SecurityDto) {
-    debugger
     this.security = { ...security };
     this.productDialog = true;
   }
@@ -113,7 +110,6 @@ export class SecurityQueComponent implements OnInit {
   onChange(event: any) {
 
     // let myIndex = this.securityquestions.findIndex(fruit => fruit.name === event.value);
-    // debugger
     // this.securityquestions.splice(myIndex, 1);
 
     this.securityquestions.splice(this.securityquestions.findIndex(item => item.name === event.value), 1);
@@ -122,7 +118,7 @@ export class SecurityQueComponent implements OnInit {
   }
 
   saveProduct() {
-    debugger
+
 
     // this.deleteMsg(event);
 

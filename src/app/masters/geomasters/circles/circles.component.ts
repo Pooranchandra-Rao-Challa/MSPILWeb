@@ -63,8 +63,8 @@ export class CirclesComponent implements OnInit {
     public jwtService: JWTService,
     private AlertMessage: AlertMessage,
 
-  ) { 
-    
+  ) {
+
   // this.table?._columns.map((col) => ({
   //   title: col.field,
   //   dataKey: col.field,
@@ -196,7 +196,6 @@ toPdfFormat() {
 }
 
 exportExcel() {
-  debugger
   import('xlsx').then((xlsx) => {
     const worksheet = xlsx.utils.json_to_sheet(this.circles);
     const workbook = {
