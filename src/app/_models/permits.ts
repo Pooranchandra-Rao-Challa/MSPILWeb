@@ -56,38 +56,61 @@ export class ISeasonScheduleGroupViewDto {
     isActive?: boolean;
     }
   
-    export class FarmersInPlantingDatesDto{
+    export class FarmersDto{
       farmerId?:  number;
-      farmercode?: string;
-      farmerName?: string;
-      villageName?:string;
+        farmercode?:  string;
+        farmerName?:  string;
+        villageName?: string;
+        sectionName?:  string;
+        circleName?:  string;
+        divisionName?:  string;
     }
     
     export class DivisionsforUserDto{
-      divisionId?: number;
-      divisionCode?:string;
+      seasonId?:  number;
+      seasonName?: string;
+      divisionId?:  number;
+      divisionCode?: string;
       divisionName?: string;
     }
     export class CircleforUserDto{
+      seasonId?:number;
+      seasonName?:string;
       circleId?: number;
       divisionId?: number;
       circleCode?:string;
       circleName?: string;
+      divisionCode?: string;
+      divisionName?: string;
     }
     export class SectionforUserDto{
-      sectionId?: number;
-      divisionId?: number;
-      circleId?: number;
-      sectionCode?:string;
-      sectionName?: string;
+        seasonId?: number;
+        seasonName?: string;
+        sectionId?:number;
+        sectionCode?: string;
+        sectionName?: string;
+        circleId?: number;
+        circleCode?: string;
+        circleName?: string;
+        divisionId?:number;
+        divisionCode?: string;
+        divisionName?: string;
     }
     export class VillageforUserDto{
-      villageId?: number;
-      divisionId?: number;
-      sectionId?: number;
-      circleId?: number;
-      villageCode?:string;
+      seasonId?: number;
+      seasonName?: string;
+      villageId?:  number;
+      villageCode?: string;
       villageName?: string;
+      sectionId?:  number;
+      sectionCode?:string;
+      sectionName?:string;
+      circleId?:  number;
+      circleCode?: string;
+      circleName?: string;
+      divisionId?: number;
+      divisionCode?: string;
+      divisionName?: string;
     }
     export class ExcessTonViewDto{
       seasonId?: number;
@@ -145,6 +168,7 @@ export class PlantTypeForUserDto {
   planttypeId?: number;
   plotId?: number;
   farmerId?:number
+  seasonName:any
 }
 
 export class FarmersInPlotsForUserDto {
@@ -155,7 +179,12 @@ export class FarmersInPlotsForUserDto {
   divisionId?: number;
   sectionId?: number;
   circleId?: number;  
-  villageId?:number
+  villageId?:number;
+  sectionName?: string;
+  circleName?:string;
+  divisionName?:string; 
+  seasonId?: number;
+  seasonName?: string; 
   
 }
 
@@ -173,6 +202,25 @@ export class PlotsForUserDto {
 
 }
 export class ScheduleGroupPlotsDto {
+  seasonId?: number
+  farmerId?: number
+  farmercode?: string
+  farmerName?: string
+  villageId?: number
+  villageName?: string
+  sectionId?: number
+  sectionName?: string
+  circleId?: number
+  circleName?: string
+  divisionId?: number
+  divisionName?: string
+  fromDOP?:  Date;
+  toDOP?:  Date;
+  plotId?: number
+  plantTypeId?: number
+  varietyId?: number
+}
+export class ScheduleGroupPlotsViewDto {
   farmerId?: number
   farmerCode?: string
   farmerName?: string

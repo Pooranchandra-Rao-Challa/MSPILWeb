@@ -15,8 +15,8 @@
 
     <!-- table -->
     <p-table #dt1 [value]="bills" dataKey="id" [rows]="10" [rowHover]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [alwaysShowPaginator]="false"
       [showCurrentPageReport]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
@@ -107,7 +107,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="text-center" colspan="12">No Bills Found.</td>
+          <td class="text-center m-5" colspan="12">No Bills Found.</td>
         </tr>
       </ng-template>
       <!-- <ng-template pTemplate="loadingbody">
@@ -139,7 +139,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Season:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Season" optionLabel="name" [options]="seasons" optionValue="seasonId"
+                  <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
                     formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
