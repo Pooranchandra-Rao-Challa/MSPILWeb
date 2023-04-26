@@ -11,9 +11,6 @@
             </ng-template>
         </p-toolbar>
 
-
-
-
         <!-- popup form -->
         <p-dialog header="Cutting Order" [(visible)]="showDialog" [modal]="true" showEffect="fade"
             [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
@@ -29,7 +26,7 @@
                                     <div class="p-fluid p-formgrid grid">
                                         <div class="field col-12 md:col-3">
                                             <label>Season:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select Season" optionLabel="code"
+                                            <p-dropdown placeholder="Select Season" optionLabel="code"  [(ngModel)]="currentSeason.seasonId"
                                                 [options]="seasons" optionValue="seasonId" formControlName="seasonId"
                                                 appendTo="body">
                                                 <!-- [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }" -->
@@ -50,24 +47,20 @@
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>From Schedule Group No:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select From Schedule" optionLabel="code"
+                                            <input pInputText id="toCCS" type="number" formControlName="toCCS">
+                                            <!-- <p-dropdown placeholder="Select From Schedule" optionLabel="code"
                                                 optionValue="fromScheduleGroupNo" formControlName="fromScheduleGroupNo"
                                                 appendTo="body">
-
-                                            </p-dropdown>
+                                            </p-dropdown> -->
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>To Schedule Group No:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To Schedule" optionLabel="code"
+                                            <input pInputText id="toCCS" type="number" formControlName="toCCS">
+                                            <!-- <p-dropdown placeholder="Select To Schedule" optionLabel="code"
                                                 optionValue="toScheduleGroupNo" formControlName="toScheduleGroupNo"
                                                 appendTo="body">
-
-                                            </p-dropdown>
+                                            </p-dropdown> -->
                                         </div>
-
-
-
-
                                     </div>
                                 </p-fieldset>
                                 <p-fieldset legend="Cutting Order" class="col-12" [toggleable]="true"
@@ -120,63 +113,91 @@
                                                 appendTo="body" formControlName="toDOP" [style]="{'width':'100%'}">
                                             </p-calendar>
                                         </div>
-                                        <div class="field col-12 md:col-3">
-                                            <label>Ryot No:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To Ryot" optionLabel="code"
-                                                optionValue="ryotNo" formControlName="ryotNo" appendTo="body">
-                                            </p-dropdown>
-                                        </div>
+                                
                                     </div>
                                 </p-fieldset>
-
                                 <p-fieldset legend="Cutting Order" class="col-12" [toggleable]="true"
                                     [transitionOptions]="'500ms'">
                                     <div class="p-fluid p-formgrid grid">
                                         <div class="field col-12 md:col-3">
+                                            <label>Ryot No:<sup class="p-error">*</sup></label>
+                                            <p-dropdown placeholder="Select To Ryot" [options]="farmers" optionLabel="farmercode"
+                                            optionValue="farmerId" formControlName="farmerId" [filter]="true"
+                                            filterBy="plotNumber,villageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                                            appendTo="body">
+                                            <ng-template let-farmer pTemplate="selectedItem">
+                                                <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
+                                              </ng-template>
+                                              <ng-template let-farmer pTemplate="item">
+                                                <div class="block align-items-center gap-2">
+                                                  <div>{{farmer.farmercode}} </div>
+                                                  <div></div>{{farmer.farmerName}}
+                                                </div>
+                                                <div>{{farmer.villageName}}</div>
+                                              </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="field col-12 md:col-3">
                                             <label>Plot:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To plot" optionLabel="code"
-                                                optionValue="plot" formControlName="plot" appendTo="body">
+                                            <p-dropdown placeholder="Select To plot" [options]="plots" optionLabel="plotNumber"
+                                            optionValue="plotId" formControlName="plotId" [filter]="true" filterBy="plotNumber,villageName"
+                                            [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" [style]="{'width':'100%'}">
+                                            <ng-template let-plot pTemplate="selectedItem">
+                                                <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
+                                              </ng-template>
+                                              <ng-template let-plot pTemplate="item">
+                                                <div class="block align-items-center gap-2">
+                                                  <div>{{plot.plotNumber}}</div>
+                                                  <div>{{plot.villageName}} </div>
+                                                </div>
+                                              </ng-template>
                                             </p-dropdown>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>Division:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To division" optionLabel="code"
-                                                optionValue="division" formControlName="division" appendTo="body">
-                                            </p-dropdown>
+                                            <p-multiSelect [options]="divisions" placeholder="Select Division"
+                                            optionValue="divisionId" appendTo="body" [filter]="true"
+                                            optionLabel="divisionName" formControlName="divisionId"
+                                            [style]="{'width':'100%'}">
+                                        </p-multiSelect>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>Circle:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To Circle" optionLabel="code"
-                                                optionValue="circle" formControlName="circle" appendTo="body">
-                                            </p-dropdown>
+                                            <p-multiSelect [options]="circles" placeholder="Select Circle "
+                                            optionValue="circleId" appendTo="body" [filter]="true" optionLabel="circleName"
+                                            formControlName="circleId" [style]="{'width':'100%'}">
+                                        </p-multiSelect>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>Section:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To Section" optionLabel="code"
-                                                optionValue="section" formControlName="section" appendTo="body">
-                                            </p-dropdown>
+                                            <p-multiSelect [options]="sections" placeholder="Select Section "
+                                            optionValue="sectionId" appendTo="body" [filter]="true"
+                                            optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}">
+                                        </p-multiSelect>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>Village:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To Village" optionLabel="code"
-                                                optionValue="village" formControlName="village" appendTo="body">
-                                            </p-dropdown>
+                                            <p-multiSelect  [options]="villages" placeholder="Select Village"
+                                            optionValue="villageId" appendTo="body" [filter]="true"
+                                            optionLabel="villageName" formControlName="villageId" [style]="{'width':'100%'}">
+                                        </p-multiSelect>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>Plant Type:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To Plant Type" optionLabel="code"
-                                                optionValue="plantType" formControlName="plantType" appendTo="body">
-                                            </p-dropdown>
+                                            <p-multiSelect [options]="planttypes" optionLabel="plantTypeName" appendTo="body"
+                                            formControlName="plantTypeId" placeholder="Select Plant Type Name " optionValue="plantTypeId"
+                                            placeholder="Select Plant Type Name." appendTo="body" [style]="{'width':'100%'}" >
+                                            </p-multiSelect>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>Variety:<sup class="p-error">*</sup></label>
-                                            <p-dropdown placeholder="Select To Variety" optionLabel="code"
-                                                optionValue="variety" formControlName="variety" appendTo="body">
-                                            </p-dropdown>
+                                            <p-multiSelect [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                                            appendTo="body" placeholder="Select Variety" optionLabel="varietyName" [options]="varieties"
+                                            optionValue="varietyId" formControlName="varietyId" [style]="{'width':'100%'}">
+                                            </p-multiSelect>
                                         </div>
                                     </div>
                                 </p-fieldset>
-
                                 <div class="field col-12 md:col-4">
                                     <button pButton pRipple type="submit" label="Get Order"
                                         class="p-button-raised p-button-primary" (click)="onSubmit()"></button>
@@ -186,16 +207,12 @@
                     </div>
                 </form>
 
-
                 <!-- popup table -->
 
                 <!-- <p-table #dt1 [value]="permitQuotaFromDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
                      >
-
-
-
                     <ng-template pTemplate="header">
                         <tr>
                             <th></th>
@@ -220,41 +237,33 @@
                             </td>
                         </tr>
                     </ng-template>
-
                 </p-table> -->
-
-
             </div>
         </p-dialog>
 
-
         <!-- table -->
-        <p-table #dt1 [value]="cuttingOrderDto" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
-            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+        <p-table #dt1 [value]="seasoncuttingOrders" dataKey="id"  [columns]="seasonCuttingOrder" [rows]="10" [rowHover]="true" *ngIf="showTable"
+            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true" [globalFilterFields]="globalFilterFields"
+            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="initPlotCuttingOrders($event)"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
-                    <!--  (click)="clear(dt1)"-->
                     <div>
                         <span class="p-input-icon-left mx-2">
                             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code"
                                 [options]="seasons"  [(ngModel)]="currentSeason.seasonId"
-                                (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
+                               optionValue="seasonId" (onChange)="initSeasonCuttingOrders($event.value)"
                                 [style]="{'width':'100%'}">
-                                <!-- formControlName="seasonId" -->
                             </p-dropdown>
                         </span>
-
                     </div>
                 </div>
             </ng-template>
-
-
             <ng-template pTemplate="header">
                 <tr>
                     <th></th>
-                    <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+                    <th *ngFor="let col of seasonCuttingOrder" [pSortableColumn]="col.header">
                         {{col?.label}} <p-sortIcon field="code">
                         </p-sortIcon>
                         <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -267,7 +276,7 @@
                     <td><button pButton pRipple icon="pi pi-pencil"
                             class="p-element p-ripple p-button-text p-button p-component"></button>
                     </td>
-                    <td *ngFor="let col of headers">
+                    <td *ngFor="let col of seasonCuttingOrder">
                         <span *ngIf="col?.field != 'FromDate' ">{{cuttingOrder[col.field]}}</span>
                         <span *ngIf="col?.field == 'FromDate'">
                             {{cuttingOrder[col.field] | date: 'dd-MM-yyyy'}}
@@ -275,7 +284,53 @@
                     </td>
                 </tr>
             </ng-template>
-
+            <ng-template pTemplate="rowexpansion" let-plot>
+                <tr>
+                  <td colspan="6">
+                    <div class="p-3">
+                      <p-table [value]="plot.objPlotCuttingOrder" [columns]="plotCuttingOrder" dataKey="plotOfferId"
+                        [tableStyle]="{ width: 'min-content'}"
+                        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+                        <ng-template pTemplate="header">
+                <tr>
+                  <th></th>
+                  <th *ngFor="let col of plotCuttingOrder">
+                    {{col?.label}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-plotOrder>
+                <tr>
+                  <td><button pButton pRipple icon="pi pi-pencil"
+                      class="p-element p-ripple p-button-text p-button p-component"></button>
+                  </td>
+                  <!-- <td *ngFor="let col of plotCuttingOrder">
+                    <span
+                      *ngIf="col?.field != 'plantingDate' && col?.field != 'agreementedDate'">{{plotOrder[col.field]}}</span>
+                    <span *ngIf="col?.field == 'plantingDate' || col?.field == 'agreementedDate'">
+                      {{plotOrder[col.field] | date: 'dd-MM-yyyy'}}
+                    </span>
+                  </td> -->
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td class="md:text-center" colspan="13">There Are No plot Cutting Orders Found Yet.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          </td>
+          </tr>
+          </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="20" class="md:text-center">No Cutting Order Details Found.</td>
+                </tr>
+            </ng-template>
+            <tr>
+                <td colspan="20" class="md:text-center">Loading Cutting Order Details. Please wait.</td>
+            </tr>
         </p-table>
     </div>
 </div>

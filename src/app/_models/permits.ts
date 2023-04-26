@@ -238,7 +238,78 @@ export class ScheduleGroupPlotsViewDto {
   plantingDate?: string
 }
 
+export class SeasonCuttingOrderViewDto {
+  seasonCuttingOrderId?: number;
+  seasonId?: number;
+  seasonName?: string;
+  cuttingOrderNo?: number;
+  cuttingOrderDate?: Date;
+  fromSchGroupNo?: number;
+  toSchGroupNo?:  number;
+  fromDOP?:  Date;
+  toDOP?:  Date;
+  fromCCS?: number;
+  toCCS?: number;
+  fromBrix?:  number;
+  toBrix?: number;
+  fromPol?: number;
+  toPol?: number;
+  fromPurity?: number;
+  toPurity?: number;
+  createdAt?:  Date;
+  createdBy ?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+  objPlotCuttingOrder?: PlotCuttingOrderViewDto[];
+}
+export class SeasonQuotaViewDto {
+  seasonQuotaId?: number
+  seasonId?: number
+  seasonName?: string
+  docNo?: number
+  docDate?: string
+  fromSchGroupNo?: number
+  toSchGroupNo?: number
+  fromDate?: string
+  toDate?: string
+  quotaReleased?: number
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+  objPlotQuotas?:PlotQuotaViewDto[];
+}
+export class PlotQuotaViewDto {
+  PlotQuotaId?: number
+  SeasonQuotaId?: number
+  QuotaReleased?: number
+  DivisionCode?: string
+  DivisionName?: string
+  CircleCode?: string
+  CircleName?: string
+  SectionCode?: string
+  SectionName?: string
+  VillageCode?: string
+  VillageName?: string
+  NetArea?: number
+  EstimatedTon?: number
+}
 
 
 
-
+export class PlotCuttingOrderViewDto{
+  farmerCode?: string;
+  farmerName?:string;
+  divisionCode?: string;
+  divisionName?: string;
+  circleCode?: string;
+  circleName?: string;
+  sectionCode?: string;
+  sectionName?: string;
+  villageCode?:string;
+  villageName?: string;
+  cuttingOrderNo?: number;
+  orderQuantity?: number;
+  netArea?: number;
+  estimatedTon?: number;
+}
