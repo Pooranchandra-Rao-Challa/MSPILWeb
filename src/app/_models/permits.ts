@@ -238,7 +238,44 @@ export class ScheduleGroupPlotsViewDto {
   plantingDate?: string
 }
 
+export class SeasonCuttingOrderViewDto {
+  seasonCuttingOrderId?: number;
+  seasonId?: number;
+  seasonName?: string;
+  cuttingOrderNo?: number;
+  cuttingOrderDate?: Date;
+  fromSchGroupNo?: number;
+  toSchGroupNo?:  number;
+  fromDOP?:  Date;
+  toDOP?:  Date;
+  fromCCS?: number;
+  toCCS?: number;
+  fromBrix?:  number;
+  toBrix?: number;
+  fromPol?: number;
+  toPol?: number;
+  fromPurity?: number;
+  toPurity?: number;
+  createdAt?:  Date;
+  createdBy ?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
+  objPlotCuttingOrder?: PlotCuttingOrderViewDto[];
+}
 
-
-
-
+export class PlotCuttingOrderViewDto{
+  farmerCode?: string;
+  farmerName?:string;
+  divisionCode?: string;
+  divisionName?: string;
+  circleCode?: string;
+  circleName?: string;
+  sectionCode?: string;
+  sectionName?: string;
+  villageCode?:string;
+  villageName?: string;
+  cuttingOrderNo?: number;
+  orderQuantity?: number;
+  netArea?: number;
+  estimatedTon?: number;
+}

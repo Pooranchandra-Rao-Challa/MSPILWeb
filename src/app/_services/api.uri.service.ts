@@ -241,3 +241,5 @@ export const GET_PLANT_TYPE_FOR_USER ="Schedule/GetPlantTypeForUser";
 export const GET_FARMERS_IN_PLOTS_FOR_USER ="Schedule/GetFarmersInPlotsForUser";
 export const GET_PLOTS_FOR_USER ="Schedule/GetPlotsForUser";
 export const GET_SCHEDULE_GROUP_PLOTS_URI ="Schedule/GetScheduleGroupPlots";
+export const GET_SEASON_CUTTING_ORDERS ="Schedule/GetSeasonCuttingOrders";
+export const GET_PLOT_CUTTING_ORDERS ="Schedule/GetPlotCuttingOrders";

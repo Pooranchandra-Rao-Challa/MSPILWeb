@@ -257,6 +257,18 @@
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label class="required">Estimated Ton:</label>
+                        <p-inputNumber placeholder="Enter Estimated Ton" formControlName="estimatedTon" mode="decimal"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['estimatedTon'].touched && FormControls['estimatedTon'].errors }"
+                          locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                        </p-inputNumber>
+                        <span *ngIf="FormControls['estimatedTon'].touched && FormControls['estimatedTon'].invalid">
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['estimatedTon'].errors?.['required']">
+                            Enter Estimated Ton.</div>
+                        </span>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Not Grown Area:</label>
                         <p-inputNumber placeholder="Enter Not Grown Area" formControlName="notGrownArea" mode="decimal"
                           locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">

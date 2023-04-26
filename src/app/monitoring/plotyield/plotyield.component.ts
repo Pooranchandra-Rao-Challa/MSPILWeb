@@ -157,6 +157,7 @@ export class PlotyieldComponent implements OnInit {
       isSeedArea: [null],
       notGrownArea: [null],
       netArea: [null, (Validators.required)],
+      estimatedTon: [null, (Validators.required)],
       reasonForPerishedAreaId: [null, (Validators.required)],
       divertedArea: [null],
       harvestArea: [null],
