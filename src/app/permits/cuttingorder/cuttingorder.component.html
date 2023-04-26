@@ -251,7 +251,7 @@
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
                     <div>
                         <span class="p-input-icon-left mx-2">
-                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
+                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code"
                                 [options]="seasons"  [(ngModel)]="currentSeason.seasonId"
                                optionValue="seasonId" (onChange)="initSeasonCuttingOrders($event.value)"
                                 [style]="{'width':'100%'}">

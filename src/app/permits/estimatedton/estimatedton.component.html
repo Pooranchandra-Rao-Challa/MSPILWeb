@@ -24,7 +24,7 @@
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
                                 <div class="col-2 p-2">
                                     &nbsp;<label class="required">Season:</label>
-                                    <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
+                                    <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code"
                                         [options]="seasons" formControlName="seasonId"
                                         [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
                                         [style]="{'width':'100%'}" (onChange)="getExcessTonDetails()"

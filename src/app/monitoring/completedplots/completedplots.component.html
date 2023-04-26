@@ -181,7 +181,7 @@
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Name, Plot No, Farmer Code" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initCompletedPlots($event.value)" optionValue="seasonId">
             </p-dropdown>
 
