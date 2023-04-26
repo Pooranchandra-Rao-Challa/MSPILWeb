@@ -28,7 +28,7 @@
                 pTooltip="Search By Farmer Name, Village Name, Plot No" class="w-full" />
               <!-- (input)="onSearch()"-->
             </span>
-            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" optionValue="seasonId">
             </p-dropdown>
           </div>
@@ -75,7 +75,7 @@
             <div class="p-fluid p-formgrid grid">
               <div class="field col-12 md:col-4">
                 <label class="required">Season:</label>
-                <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+                <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
                   (onChange)="getDocNo($event.value)" optionValue="seasonId" formControlName="seasonId"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                 </p-dropdown>

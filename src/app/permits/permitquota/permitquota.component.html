@@ -13,7 +13,6 @@
         </p-toolbar>
 
 
-
         <!-- popup form -->
         <p-dialog header="Permit Quota" [(visible)]="showDialog" [modal]="true" showEffect="fade"
             [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
@@ -83,20 +82,15 @@
                                         </div>
                                         <div class="field col-12 md:col-4">
                                             <button pButton pRipple type="submit" label="Get Quota"
-                                                class="p-button-raised p-button-primary" (click)="onSubmit()"></button>
+       class="p-button-raised p-button-primary" (click)="onSubmit()"></button>
                                         </div>
                                     </div>
                                 </p-fieldset>
-
-
                             </div>
                         </div>
                     </div>
                 </form>
-
-
                 <!-- table -->
-
                 <p-table #dt1 [value]="permitquotas" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
                     responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
@@ -126,8 +120,6 @@
                     </ng-template>
 
                 </p-table>
-
-
             </div>
         </p-dialog>
         <!-- popup table -->
@@ -149,6 +141,12 @@
                                 placeholder="Search Keyword"
                                 pTooltip="Search By seasonName, groupNo,toDOP, fromDOP, Created By,Updated At,Updated By"
                                 class="w-full" />
+                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code"
+                            [options]="seasons"  [(ngModel)]="currentSeason.seasonId"
+                            (onChange)="initSeasonQuotas($event.value)" optionValue="seasonId"
+                            [style]="{'width':'100%'}">
+                            <!-- formControlName="seasonId" -->
+                        </p-dropdown>
                         </span>
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
                             [(ngModel)]="currentSeason.seasonId" (onChange)=" initSeasonQuotas($event.value)"

@@ -31,7 +31,7 @@ export class SeedComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
 
   headers: ITableHeader[] = [
-    { field: 'SeasonId', header: 'SeasonId', label: 'Season' },
+    { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'FarmerCode', header: 'FarmerCode', label: 'Farmer' },
     { field: 'PlotNo', header: 'PlotNo', label: 'Plot No' },
     { field: 'DocNo', header: 'DocNo', label: 'Doc No' },
