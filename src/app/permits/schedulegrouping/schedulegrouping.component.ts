@@ -381,7 +381,7 @@ export class ScheduleGroupingComponent implements OnInit {
     this.addFlag = false;
     this.submitLabel = 'Update Plot Agreement';
     this.showDialog = true;
-  }
+  }  
 
   get FormControls() {
     return this.fbScheduleGrouping.controls
