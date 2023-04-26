@@ -58,7 +58,7 @@ export class PlotyieldComponent implements OnInit {
   plotNumbers: PlotInfoDto[] = [];
 
   farmerHeaders: ITableHeader[] = [
-    { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
+    { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
