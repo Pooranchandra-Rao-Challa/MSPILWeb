@@ -1,12 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Table } from 'primeng/table';
 import { SeasonDto } from "src/app/_models/applicationmaster";
 import { IPlotOfferViewDto } from "src/app/_models/monitoring";
+import { PlotQuotaViewDto, SeasonQuotaViewDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { BillMasterService } from "src/app/_services/billmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { LookupService } from "src/app/_services/lookup.service";
 import { MonitoringService } from "src/app/_services/monitoring.service";
+import { CURRENT_SEASON } from "src/environments/environment";
+import { permitService } from '../../_services/permit.service';
 
 export interface IHeader {
   field: string;
@@ -29,18 +33,6 @@ export class PermitQuotaDto {
 
 }
 
-export class PermitQuotaFromDto {
-  Division?: string;
-  Circle?: string;
-  Section?: string;
-  Village?: string;
-  EstimatedTon?: number;
-  Quota?: number;
-
-}
-
-
-
 @Component({
   selector: 'app-permitquota',
   templateUrl: './permitquota.component.html',
@@ -49,53 +41,53 @@ export class PermitQuotaFromDto {
 export class PermitQuotaComponent implements OnInit {
   seasons!: any[];
   fbPermitQuota!: FormGroup;
+  permitquotas:SeasonQuotaViewDto[]=[]
   currentSeason: SeasonDto = {};
   allottedPlots: IPlotOfferViewDto[] = [];
   loading: boolean = true;
   showTable: boolean = true;
   showDialog: boolean = false;
-  forapproval: boolean = false;
-
   submitLabel!: string;
-
+  @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('dtSchedulegrouping') dtpermitquotas!: Table;
   selectedCategory: any = null;
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
-
   permitQuotaDto: PermitQuotaDto[] = [];
-  permitQuotaFromDto: PermitQuotaFromDto[] = [];
+  objPlotQuotas:PlotQuotaViewDto[]=[];
 
-  @ViewChild('filter') filter!: ElementRef;
-
-  constructor(private formbuilder: FormBuilder,
-    private billMasterService: BillMasterService,
+  constructor(
+    private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterService: AppMasterService,
-    private monitoringService: MonitoringService,
-    private lookupService: LookupService,
+    private permitService:permitService
 
   ) { }
 
-  headers: IHeader[] = [
-    { field: 'SeasonCode', header: 'SeasonCode', label: 'Season Code' },
-    { field: 'DocNo', header: 'DocNo', label: 'Doc No' },
-    { field: 'FromScheduleGroupNo', header: 'FromScheduleGroupNo', label: 'From SchGroup No' },
-    { field: 'ToScheduleGroupNo', header: 'ToScheduleGroupNo', label: 'To SchGroup No' },
-    { field: 'Type', header: 'Type', label: 'Type' },
-    { field: 'FromDate', header: 'FromDate', label: 'From Date' },
-    { field: 'Quota', header: 'Quota', label: 'Quota' },
+  farmerHeaders: IHeader[] = [
+    { field:'seasonName', header: 'seasonName', label: 'Season' },
+    { field:'docNo',header:'docNo',label: 'Doc No' },
+    { field:'fromSchGroupNo', header:'fromSchGroupNo', label: 'From Schedule Group No' },
+    { field:'toSchGroupNo', header: 'toSchGroupNo', label: 'To Schedule Group No' },
+    { field:'fromDate', header: 'fromDate', label: 'From Date' },
+    { field:'toDate', header: 'toDate', label: 'To Date' },
+    { field:'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field:'createdBy', header: 'createdBy', label: 'Created By' },
+    { field:'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field:'updatedBy', header: 'updatedBy', label: 'Updated By' },
 
+  ];
+  plotHeaders: IHeader[] = [
+    { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
+    { field: 'circleName', header: 'circleName', label: 'Circle Name' },
+    { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
+    { field: 'villageName', header: 'villageName', label: 'Village Name' },
+    { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety' },
+    { field: 'netArea', header: 'netArea', label: 'Net Area' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
   ];
   
-  header: IFromHeader[] = [
-    { field: 'Division', header: 'Division', label: 'Division' },
-    { field: 'Circle', header: 'Circle', label: 'Circle' },
-    { field: 'Section', header: 'Section', label: 'Section' },
-    { field: 'Village', header: 'Village', label: 'Village' },
-    { field: 'EstimatedTon', header: 'EstimatedTon', label: 'Estimated Ton' },
-    { field: 'Quota', header: 'Quota', label: 'Quota' },
-
-  ];
-
   getFilterPermitQuota() {
     this.fbPermitQuota = this.formbuilder.group({
       seasonId: new FormControl('', [Validators.required]),
@@ -117,8 +109,9 @@ export class PermitQuotaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initCurrentSeason(CURRENT_SEASON());
     this.fillData();
-    this.fillFromData();
+   
     this.selectedCategory = this.categories[1];
     this.initSeasons();
     this.getFilterPermitQuota();
@@ -128,20 +121,32 @@ export class PermitQuotaComponent implements OnInit {
       this.seasons = resp as any;
     });
   }
-  initAllottedPlots(seasonId: number) {
-    let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
-    this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
-      this.allottedPlots = resp as unknown as IPlotOfferViewDto[];
-      this.loading = false;
-    });
-  }
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
-      this.currentSeason = resp as SeasonDto;
+      this.currentSeason = resp as unknown as SeasonDto;
       this.initSeasons();
-      this.initAllottedPlots(this.currentSeason.seasonId!);
+      this.initSeasonQuotas(this.currentSeason.seasonId!)
+
     });
   }
+
+  initSeasonQuotas(seasonId: number) {
+    this.permitService.GetSeasonQuotas(seasonId).subscribe((resp) => {
+      this.permitquotas = resp as unknown as SeasonQuotaViewDto[];
+      console.log('permitquotas',this.permitquotas);
+      
+    });
+  }
+  onRowExpand(source: any) {
+    var data = source.data as SeasonQuotaViewDto;
+    this.permitService.GetPlotQuotas(data.seasonId, data.seasonQuotaId).subscribe(resp => {
+      data.objPlotQuotas = resp as unknown as PlotQuotaViewDto[];
+    });
+  }
+
+
+  
+
   onSubmit() {
     this.submitLabel = 'Get Quota';
   }
@@ -162,21 +167,37 @@ export class PermitQuotaComponent implements OnInit {
       )
     }
   }
-  
+  onGlobalFilter(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
 
-  fillFromData() {
-    for (var i of [1, 2]) {
-      this.permitQuotaFromDto.push(
-        {
-          Division: 'Division',
-          Circle: '',
-          Section: '',  
-          Village: '',
-          EstimatedTon: 4525,
-          Quota: 4520,
-
-        }
-      )
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
+  restrictToRange(event:any) {
+    const value = parseInt(event.target.value);
+    if (isNaN(value) || value < 1) {
+      event.target.value = 1;
+    } else if (value > 5) {
+      event.target.value = 5;
     }
   }
+  
+
+  // fillFromData() {
+  //   for (var i of [1, 2]) {
+  //     this.permitQuotaFromDto.push(
+  //       {
+  //         Division: 'Division',
+  //         Circle: '',
+  //         Section: '',  
+  //         Village: '',
+  //         EstimatedTon: 4525,
+  //         Quota: 4520,
+
+  //       }
+  //     )
+  //   }
+  // }
 }
