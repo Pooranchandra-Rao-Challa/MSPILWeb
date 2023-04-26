@@ -47,7 +47,7 @@ export class PlotTransfersComponent implements OnInit {
   enableValidation: boolean = true;
 
   headers: ITableHeader[] = [
-    { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'fromFarmerName', header: 'fromFarmerName', label: 'Farmer' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'docNo', header: 'docNo', label: 'Doc No' },
