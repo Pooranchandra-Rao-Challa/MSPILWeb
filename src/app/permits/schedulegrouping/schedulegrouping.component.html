@@ -23,8 +23,8 @@
           <div class="flex justify-content-between flex-column sm:flex-row grid">
             <div class="col-12">
                 <div class="flex justify-content-between flex-column sm:flex-row grid">
-                
-                 
+
+
                     <div class=" col-12 md:col-3">
                       <label>Season:<sup class="p-error">*</sup></label>
                       <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
@@ -102,7 +102,7 @@
                       <label>Plot:<sup class="p-error">*</sup></label>
                       <p-multiSelect  placeholder="Select To plot" [options]="plots" optionLabel="plotNumber"
                       optionValue="plotId" formControlName="plotId" [filter]="true" filterBy="plotNumber,villageName"
-                      [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" [style]="{'width':'100%'}" 
+                      [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" [style]="{'width':'100%'}"
                       (onChange)="SetAllPlotsChilds($event.value)">
                       <ng-template let-plot pTemplate="selectedItem">
                         <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
@@ -139,8 +139,8 @@
                           <!-- (click)="onSubmit()" -->
                       </div>
                     </div>
-                  
-                
+
+
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@
                 pTooltip="Search By seasonName, groupNo,toDOP, fromDOP, Created By,Updated At,Updated By"
                 class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initScheduleGroups($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
@@ -265,21 +265,21 @@
             <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
               (click)="clear(dtSchedulegrouping)"></button>
             <div>
-              
+
               <span class="p-input-icon-left m-2">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                   pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
                   class="w-full" />
-                  
+
               </span>
               <span class="p-input-icon-left m-2">
                 <input pInputText type="text" #filter  placeholder="Schedule Group ID"  class="w-full" />
             </span>
-             
+
                 <button pButton label="Submit" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
                   ></button>
-               
+
             </div>
           </div>
         </ng-template>
@@ -316,7 +316,7 @@
             <td colspan="16" class="md:text-center">Loading Excess Ton Details. Please wait.</td>
         </tr>
     </p-table>
-         
+
       </div>
     </p-dialog>
   </div>

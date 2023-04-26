@@ -30,7 +30,7 @@
               <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
                 class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [showClear]="true" (onChange)="getVillageParamRatesBySeason($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>

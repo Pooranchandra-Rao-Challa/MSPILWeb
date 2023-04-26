@@ -29,7 +29,7 @@
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Name, Farmer Code, Village Name, Plot No, Offer No" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotReports($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
@@ -218,17 +218,19 @@
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Survey No:</label>
-                  <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo"
+                  <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo" alphaNumeric
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
                   <span *ngIf="FormControls['surveyNo'].touched && FormControls['surveyNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['required']">
                       Please Enter Survey No.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['pattern']">Survey No
+                        Should Contains Alphabets And Numbers.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Reported Area (Acer):</label>
                   <p-inputNumber placeholder="Enter Reported Area" formControlName="reportedArea" mode="decimal"
-                    locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" (keyup)="onCalculation()"
+                    locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" (onBlur)="onCalculation()"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['reportedArea'].touched && FormControls['reportedArea'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['reportedArea'].touched && FormControls['reportedArea'].invalid">
@@ -426,7 +428,7 @@
                   <div class="field col-12 md:col-3">
                     <label>Previous Land Use:<sup class="p-error"
                         *ngIf="this.subPlot.get('enabledValidation')?.value">*</sup></label>
-                    <p-dropdown placeholder="Select Sugar Cane" optionLabel="name" [options]="crops"
+                    <p-dropdown placeholder="Select Previous Land Use" optionLabel="name" [options]="crops"
                       optionValue="lookupDetailId" formControlName="previousCropId" appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': insideFormControls.controls['previousCropId'].touched && insideFormControls.controls['previousCropId'].errors }">
                     </p-dropdown>

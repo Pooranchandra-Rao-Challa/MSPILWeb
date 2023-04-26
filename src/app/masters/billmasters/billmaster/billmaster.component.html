@@ -139,7 +139,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Season:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Season" optionLabel="name" [options]="seasons" optionValue="seasonId"
+                  <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
                     formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
