@@ -262,6 +262,40 @@ export class SeasonCuttingOrderViewDto {
   updatedBy?: string;
   objPlotCuttingOrder?: PlotCuttingOrderViewDto[];
 }
+export class SeasonQuotaViewDto {
+  seasonQuotaId?: number
+  seasonId?: number
+  seasonName?: string
+  docNo?: number
+  docDate?: string
+  fromSchGroupNo?: number
+  toSchGroupNo?: number
+  fromDate?: string
+  toDate?: string
+  quotaReleased?: number
+  createdAt?: string
+  createdBy?: string
+  updatedAt?: string
+  updatedBy?: string
+  objPlotQuotas?:PlotQuotaViewDto[];
+}
+export class PlotQuotaViewDto {
+  PlotQuotaId?: number
+  SeasonQuotaId?: number
+  QuotaReleased?: number
+  DivisionCode?: string
+  DivisionName?: string
+  CircleCode?: string
+  CircleName?: string
+  SectionCode?: string
+  SectionName?: string
+  VillageCode?: string
+  VillageName?: string
+  NetArea?: number
+  EstimatedTon?: number
+}
+
+
 
 export class PlotCuttingOrderViewDto{
   farmerCode?: string;

@@ -8,15 +8,13 @@
       <ng-template pTemplate="right">
         <button pButton pRipple label="Add Schedule Grouping" class="p-button-primary w-100" icon="pi pi-plus"
           (click)="toggleTab()"></button>
-        <!-- (click)="getEstimatedTon()" -->
+        <!-- (click)="getScheduleGrouping()" -->
       </ng-template>
       <!-- <ng-template pTemplate="right">
                 <button pButton pRipple label="Add Schedule Grouping" icon="pi pi-plus" class="p-button-success p-mr-2"
                  (click)="getScheduleGrouping()"></button>
             </ng-template> -->
     </p-toolbar>
-
-
     <p-toolbar styleClass="p-mb-2" *ngIf="showForm">
       <ng-template pTemplate="left">
         <form [formGroup]="fbScheduleGrouping">
@@ -33,10 +31,6 @@
                         appendTo="body" [style]="{'width':'100%'}" ></p-dropdown>
                     </div>
                     <div class=" col-12 md:col-3">
-                      <label>Schedule Group No:<sup class="p-error">*</sup></label>
-                      <input pInputText id="scheduleGroupNo" type="number" formControlName="scheduleGroupNo" [style]="{'width':'100%'}" >
-                    </div>
-                    <div class=" col-12 md:col-3">
                       <label>From DOP/DOR:<sup class="p-error">*</sup></label>
                       <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true" appendTo="body" [maxDate]="dateTime"
                         formControlName="fromDOP" [style]="{'width':'100%'}">
@@ -48,7 +42,6 @@
                         formControlName="toDOP" [style]="{'width':'100%'}">
                       </p-calendar>
                     </div>
-
                     <div class=" col-12 md:col-3">
                       <label>Division:</label>
                       <p-multiSelect [options]="divisions" placeholder="Select Division" optionValue="divisionId"
@@ -75,12 +68,9 @@
                       <label class="required">Village:</label>
                       <p-multiSelect [options]="filterVillages" placeholder="Select Village" optionValue="villageId"
                         appendTo="body" [filter]="true" optionLabel="villageName" formControlName="villageId"
-                        [style]="{'width':'100%'}" (onChange)="SetAllVillageChilds($event.value)"
-                       [style]="{'width':'100%'}" >
+                        [style]="{'width':'100%'}" (onChange)="SetAllVillageChilds($event.value)" >
                       </p-multiSelect>
-
                     </div>
-
                     <div class=" col-12 md:col-3">
                       <label>Ryot No:<sup class="p-error">*</sup></label>
                       <p-multiSelect  placeholder="Select To Ryot" [options]="filterFarmers" optionLabel="farmercode"
@@ -131,11 +121,11 @@
                     </p-multiSelect>
 
                     </div>
-                    <!-- <div class="field col-12 md:col-9"></div> -->
+             
                     <div class="col-12 p-0">
                       <div class="md:col-3 p-3 mb-3" style="float: right;">
                         <button pButton pRipple type="submit" label="Get Order"
-                          class="p-button-raised p-button-primary mt-2" (click)="getEstimatedTon()"  [style]="{'width':'100%'}"></button>
+                          class="p-button-raised p-button-primary mt-2" (click)="getScheduleGrouping()"  [style]="{'width':'100%'}"></button>
                           <!-- (click)="onSubmit()" -->
                       </div>
                     </div>
@@ -250,63 +240,65 @@
   </ng-template>
     </p-table>
 
-
+   
 
     <!-- popup form -->
     <p-dialog header="Schedule Grouping" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'950px': '70vw', '630px': '900vw' }" [style]="{width: '90vw'}">
-      <div class="flex flex-column align-items-center justify-content-center">
-        <!-- popup table -->
-        <p-table #dt2 [value]="schedule" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
-        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
-        responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-        <ng-template pTemplate="caption">
-          <div class="flex justify-content-between flex-column sm:flex-row">
-            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-              (click)="clear(dtSchedulegrouping)"></button>
-            <div>
-
-              <span class="p-input-icon-left m-2">
-                <i class="pi pi-search"></i>
-                <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                  pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
-                  class="w-full" />
-
-              </span>
-              <span class="p-input-icon-left m-2">
-                <input pInputText type="text" #filter  placeholder="Schedule Group ID"  class="w-full" />
+  [breakpoints]="{'950px': '70vw', '630px': '900vw' }" [style]="{width: '90vw'}">
+  <div class="flex flex-column align-items-center justify-content-center">
+    <!-- popup table -->
+    <p-table #dt2 [value]="schedule" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
+    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" (onRowSelect)="onRowSelect($event)"
+    (onRowUnselect)="onRowUnselect($event)">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-column sm:flex-row">
+          <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+            (click)="clear(dtSchedulegrouping)"></button>
+          <div>
+            
+            <span class="p-input-icon-left m-2">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
+                class="w-full" />
+                
             </span>
-
-                <button pButton label="Submit" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                  ></button>
-
-            </div>
+            <span class="p-input-icon-left m-2">
+              <input pInputText type="text" #scheduleGroupNoInput placeholder="Schedule Group No"  class="w-full" />
+          </span>
+           
+              <button pButton label="Submit" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+              (click)="submitSelection()"></button>
+             
           </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th></th>
-                <th *ngFor="let col of GroupingPlotHeaders" [pSortableColumn]="col.header">
-                    {{col?.label}} <p-sortIcon field="code">
-                    </p-sortIcon>
-                    <p-columnFilter type="text" [field]="col.header" display="menu">
-                    </p-columnFilter>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-excesston>
-            <tr>
-                <td>
-                  <p-checkbox  [binary]="true" inputId="binary"></p-checkbox>
-                </td>
-                <td *ngFor="let col of GroupingPlotHeaders">
-                    <span *ngIf="col?.field != 'plantingDate' ">{{excesston[col.field]}}</span>
-                    <span *ngIf="col?.field == 'plantingDate'">
-                        {{excesston[col.field] | date: 'dd-MM-yyyy'}}
-                    </span>
-                </td>
-            </tr>
-        </ng-template>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th></th>
+              <th *ngFor="let col of GroupingPlotHeaders" [pSortableColumn]="col.header">
+                  {{col?.label}} <p-sortIcon field="code">
+                  </p-sortIcon>
+                  <p-columnFilter type="text" [field]="col.header" display="menu">
+                  </p-columnFilter>
+              </th>
+          </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-excesston>
+          <tr>
+              <td>
+                  <p-checkbox [binary]="true" [(ngModel)]="excesston.selected" inputId="{{excesston.id}}"></p-checkbox>
+              </td>
+              <td *ngFor="let col of GroupingPlotHeaders">
+                  <span *ngIf="col?.field != 'plantingDate' ">{{excesston[col.field]}}</span>
+                  <span *ngIf="col?.field == 'plantingDate'">
+                      {{excesston[col.field] | date: 'dd-MM-yyyy'}}
+                  </span>
+              </td>
+          </tr>
+      </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
                 <td colspan="16" class="md:text-center">No Excess Ton Details Found.</td>
