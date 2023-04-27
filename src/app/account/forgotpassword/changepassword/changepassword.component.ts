@@ -10,15 +10,20 @@ import { SecurityService } from 'src/app/_services/security.service';
   ]
 })
 export class ChangePasswordComponent implements OnInit {
+
+  message: string = '';
+     
   changePassword: ForgotUserPasswordDto ={}
   constructor(private router: Router,
     private securityService:SecurityService,
     private activatedRoute:ActivatedRoute) { }
 
   navigateToPrev(){
-    this.router.navigate(['/forgotpassword/securityquestion'],{ queryParams: { username: 'superuser' }})
+    debugger
+    this.router.navigate(['/forgotpassword/securityquestion'],{ queryParams: { username: this.changePassword.UserName }})
   }
   navigateToNext(){
+    debugger
     if(this.changePassword.Password == this.changePassword.ConfirmPassword){
       this.securityService.UpdateForgotPassword(this.changePassword).subscribe(resp =>{
         if(resp as unknown as boolean){
@@ -26,6 +31,7 @@ export class ChangePasswordComponent implements OnInit {
         }
       })
     }
+   this.message = "password and confirm password does not match Please check "
   }
   ngOnInit(): void {
     this.changePassword.UserName = this.activatedRoute.snapshot.queryParams['username'];
