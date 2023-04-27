@@ -54,7 +54,7 @@ export class PlotofferComponent implements OnInit {
   plantTo!: Date;
 
   farmerHeaders: ITableHeader[] = [
-    { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
@@ -178,7 +178,7 @@ export class PlotofferComponent implements OnInit {
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       offerNo: [null, (Validators.required)],
       offerDate: [null, (Validators.required)],
-      isNewFarmer: [{ value: false, disabled: true }],
+      isNewFarmer: [null],
       farmerId: [null, (Validators.required)], /* Here farmerId is ryotNo */
       ryotName: [{ value: '', disabled: true }],
       fatherName: [{ value: '', disabled: true }],
@@ -215,7 +215,7 @@ export class PlotofferComponent implements OnInit {
   }
 
   onSelectedFarmer(farmerId: number) {
-    this.fbPlotOffer.controls['isNewFarmer'].setValue(this.IsNewFarmer(farmerId));
+    this.IsNewFarmer(farmerId);
     this.farmers.forEach((value) => {
       if (value.farmerId == farmerId) {
         this.fbPlotOffer.controls['ryotName'].setValue(value.farmerName);
@@ -228,16 +228,15 @@ export class PlotofferComponent implements OnInit {
     });
   }
 
-  IsNewFarmer(farmerId: number): boolean {
+  IsNewFarmer(farmerId: number) {
     var returnvalue = false;
     this.monitoringService.IsNewFarmer(farmerId).subscribe(
       (resp) => {
         returnvalue = resp as unknown as boolean;
-        return returnvalue;
-      }
-    )
-    return returnvalue;
+        this.fbPlotOffer.controls['isNewFarmer'].setValue(returnvalue);
+      });
   }
+
   onSelectedVillage(plotVillageId: number) {
     this.villages.forEach((value) => {
       if (value.villageId == plotVillageId) {

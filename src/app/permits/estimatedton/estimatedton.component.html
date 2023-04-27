@@ -3,13 +3,13 @@
         <p-toast key="tst"></p-toast>
 
         <!-- toolbar -->
-        
+
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <h4>Estimated Ton</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Filter" class="p-button-primary w-100" (click)="toggleTab()"></button>
+                <button  pButton pRipple label="Add Excess Ton" class="p-button-primary w-100" icon="pi pi-plus" (click)="toggleTab()"></button>
                 <!-- (click)="getEstimatedTon()" -->
             </ng-template>
         </p-toolbar>
@@ -24,7 +24,7 @@
                             <div class="flex justify-content-between flex-column sm:flex-row grid">
                                 <div class="col-2 p-2">
                                     &nbsp;<label class="required">Season:</label>
-                                    <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
+                                    <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code"
                                         [options]="seasons" formControlName="seasonId"
                                         [(ngModel)]="currentSeason.seasonId" optionValue="seasonId"
                                         [style]="{'width':'100%'}" (onChange)="getExcessTonDetails()"
@@ -39,8 +39,8 @@
                                 <div class="col-2 p-2">
                                     <label>Division:</label>
                                     <p-multiSelect [options]="divisions" placeholder="Select Division"
-                                        optionValue="divisionId" appendTo="body" [filter]="true"
-                                        optionLabel="divisionName" formControlName="divisionId"
+                                        optionValue="divisionId" appendTo="body" [filter]="true" 
+                                        optionLabel="divisionName" formControlName="divisionId" 
                                         [style]="{'width':'100%'}" 
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
                                         (onChange)="SetAllDivisionChilds($event.value)">
@@ -56,7 +56,7 @@
                                     <label>Circle:</label>
                                     <p-multiSelect [options]="filterCircles" placeholder="Select Circle "
                                         optionValue="circleId" appendTo="body" [filter]="true" optionLabel="circleName"
-                                        formControlName="circleId" [style]="{'width':'100%'}"
+                                        formControlName="circleId" [style]="{'width':'100%'}" filterBy="circleName"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }"
                                         (onChange)="SetAllCircleChilds($event.value)">
                                     </p-multiSelect>
@@ -69,7 +69,7 @@
                                 <div class="col-2 p-2">
                                     <label>Section:</label>
                                     <p-multiSelect [options]="filterSections" placeholder="Select Section "
-                                        optionValue="sectionId" appendTo="body" [filter]="true"
+                                        optionValue="sectionId" appendTo="body" [filter]="true"  filterBy="sectionName"
                                         optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }"
                                         (onChange)="SetAllSectionChilds($event.value)"></p-multiSelect>
@@ -85,7 +85,7 @@
                                     <p-multiSelect [options]="filterVillages" placeholder="Select Village"
                                         optionValue="villageId" appendTo="body" (onChange)="getExcessTonDetails()"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"
-                                        [filter]="true" optionLabel="villageName" formControlName="villageId"
+                                        [filter]="true" optionLabel="villageName" formControlName="villageId" 
                                         [style]="{'width':'100%'}"></p-multiSelect>
                                     <span
                                         *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
@@ -125,9 +125,10 @@
                                 </div>
                                 <div class="col-3 p-2">
                                     <label class="required">Farmer Code:</label>
-                                    <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"  optionValue="farmerId"
-                                        formControlName="farmerId" [style]="{'width':'100%'}" [filter]="true"
-                                        filterBy="farmercode ,farmerName,villageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                                    <p-dropdown placeholder="Farmer Code" optionLabel="farmercode" [options]="farmers"
+                                        optionValue="farmerId" formControlName="farmerId" [style]="{'width':'100%'}"
+                                        [filter]="true" filterBy="farmercode ,farmerName,villageName"
+                                        [virtualScroll]="true" [virtualScrollItemSize]="38"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                                         <ng-template let-farmer pTemplate="item">
                                             <div class="block align-items-center gap-2">
@@ -136,8 +137,7 @@
                                             </div>
                                         </ng-template>
                                     </p-dropdown>
-                                    <span
-                                        *ngIf="FormControls['farmerId'].touched && FormControls['farmerId'].invalid">
+                                    <span *ngIf="FormControls['farmerId'].touched && FormControls['farmerId'].invalid">
                                         <div class="ng-invalid ng-touched p-error"
                                             *ngIf="FormControls['farmerId'].errors?.['required']">
                                             Please Select Farmer Code.</div>
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="col-3 p-2 mt-3">
                                     <button pButton pRipple label="Get Estimted Ton" class="p-button-primary w-100"
-                                    [disabled]="fbEstimatedTon.invalid" (click)="getEstimatedTon()" ></button>
+                                        [disabled]="fbEstimatedTon.invalid" (click)="getEstimatedTon()"></button>
                                 </div>
                             </div>
                         </div>
@@ -181,27 +181,28 @@
                                 <p-overlayPanel #opexcesston>
                                     <ng-template pTemplate="content">
                                         <form [formGroup]="fbexcesston">
-                                        <label> Add Excess Ton:<sup class="p-error">*</sup></label>
-                                        <div class="grid mt-2">
-                                            <div class="field col-12 md:col-8">
-                                                <input pInputText id="name" type="number" placeholder="Excess Ton"
-                                                    formControlName="excessTonage"
-                                                    [ngClass]="{'is-invalid ng-dirty': FormControl['excessTonage'].touched && FormControl['excessTonage'].errors }">
-                                                <span
-                                                    *ngIf="FormControl['excessTonage'].touched && FormControl['excessTonage'].invalid">
-                                                    <div class="ng-invalid ng-touched p-error"
-                                                        *ngIf="FormControl['excessTonage'].errors?.['required']">
-                                                        Please Enter Excess Ton.</div>
-                                                </span>
+                                            <label> Add Excess Ton:<sup class="p-error">*</sup></label>
+                                            <div class="grid mt-2">
+                                                <div class="field col-12 md:col-8">
+                                                    <input pInputText id="name" type="number" placeholder="Excess Ton"
+                                                        formControlName="excessTonage"
+                                                        [ngClass]="{'is-invalid ng-dirty': FormControl['excessTonage'].touched && FormControl['excessTonage'].errors }">
+                                                    <span
+                                                        *ngIf="FormControl['excessTonage'].touched && FormControl['excessTonage'].invalid">
+                                                        <div class="ng-invalid ng-touched p-error"
+                                                            *ngIf="FormControl['excessTonage'].errors?.['required']">
+                                                            Please Enter Excess Ton.</div>
+                                                    </span>
+                                                </div>
+                                                <div class=" col-12 md:col-4">
+                                                    <button pButton class="p-button-outlined " icon="pi pi-check"
+                                                        (click)="onSubmit()"></button>
+                                                </div>
                                             </div>
-                                            <div class=" col-12 md:col-4">
-                                                <button pButton class="p-button-outlined " icon="pi pi-check" (click)="onSubmit()"></button>
-                                            </div>
-                                        </div>
                                         </form>
                                     </ng-template>
                                 </p-overlayPanel>
-                                <button pButton pRipple icon="pi pi-pencil" (click)="editExecesston($event,excesston)"
+                                <button pButton pRipple icon="pi pi-pencil" (click)="addExecesston($event,excesston)"
                                     class="p-element p-ripple p-button-text p-button p-component"></button>
                             </td>
                             <td *ngFor="let col of header">
@@ -230,18 +231,18 @@
             responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
-                    <button pButton label="Clear" class="p-button-outlined mb-2" 
-                    (click)="clear(dtesstimatedton)" icon="pi pi-filter-slash"></button>
+                    <button pButton label="Clear" class="p-button-outlined mb-2" (click)="clear(dtesstimatedton)"
+                        icon="pi pi-filter-slash"></button>
                     <div>
-                         <span class="p-input-icon-left m-2">
+                        <span class="p-input-icon-left m-2">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                              pTooltip="Search By Farmer Code, Farmer Name, Village Name" class="w-full">
-                          </span>
+                                pTooltip="Search By Farmer Code, Farmer Name, Village Name" class="w-full">
+                        </span>
                         <span class="p-input-icon-left mb-2">
-                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name"
-                                [options]="seasons" [(ngModel)]="currentSeason.seasonId"
-                                (onChange)="initEstimatedTon($event.value)" optionValue="seasonId">
+                            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+                                [(ngModel)]="currentSeason.seasonId" (onChange)="initEstimatedTon($event.value)"
+                                optionValue="seasonId">
                             </p-dropdown>
                         </span>
                     </div>
@@ -261,10 +262,10 @@
             <ng-template pTemplate="body" let-EstimatedTon>
                 <!-- (click)="editAllottedPlot(EstimatedTon)" *ngIf="!forapproval"-->
                 <tr>
-                <td>
+                    <td>
                         <p-overlayPanel #opEstimatedTon>
                             <ng-template pTemplate="content">
-                                <form [formGroup]="fbEstimatedTon" >
+                                <form [formGroup]="fbEstimatedTon">
                                     <label> Update Excess Tonage:<sup class="p-error">*</sup></label>
                                     <div class="grid mt-2">
                                         <div class="field col-12 md:col-8">
@@ -279,7 +280,8 @@
                                             </span>
                                         </div>
                                         <div class=" col-12 md:col-4">
-                                            <button pButton class="p-button-outlined " icon="pi pi-check" (click)="SubmitEstimatedTonnage()"></button>
+                                            <button pButton class="p-button-outlined " icon="pi pi-check"
+                                                (click)="SubmitEstimatedTonnage()"></button>
                                         </div>
                                     </div>
                                 </form>

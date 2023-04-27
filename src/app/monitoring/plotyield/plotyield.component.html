@@ -27,7 +27,7 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
-                        <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+                        <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
                           optionValue="seasonId" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
@@ -257,6 +257,18 @@
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3 ">
+                        <label class="required">Estimated Ton:</label>
+                        <p-inputNumber placeholder="Enter Estimated Ton" formControlName="estimatedTon" mode="decimal"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['estimatedTon'].touched && FormControls['estimatedTon'].errors }"
+                          locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                        </p-inputNumber>
+                        <span *ngIf="FormControls['estimatedTon'].touched && FormControls['estimatedTon'].invalid">
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['estimatedTon'].errors?.['required']">
+                            Enter Estimated Ton.</div>
+                        </span>
+                      </div>
+                      <div class="field col-12 md:col-4 lg:col-3 ">
                         <label>Not Grown Area:</label>
                         <p-inputNumber placeholder="Enter Not Grown Area" formControlName="notGrownArea" mode="decimal"
                           locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
@@ -460,7 +472,7 @@
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" [virtualScrollItemSize]="30">
             </p-dropdown>
           </div>

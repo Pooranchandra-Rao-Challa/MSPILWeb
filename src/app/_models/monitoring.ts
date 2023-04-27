@@ -39,9 +39,9 @@ export class IPlotOfferViewDto {
   plotSectionName?: string;
   plantTypeId?: number;
   plantType?: string;
-  varietyName?:string;
+  varietyName?: string;
   varietyId?: number;
-  expectedVarietyId?:number;
+  expectedVarietyId?: number;
   expectedVarietyName?: string;
   plantingDate?: Date;
   expectedArea?: number;
@@ -64,6 +64,7 @@ export interface IFarmerInPlotOfferDto {
   isNewFarmer: boolean;
   seasonId: number;
   seasonName: string;
+  seasonCode: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -270,6 +271,7 @@ export interface IPlotTransferViewDto {
   plotTransferId: number;
   seasonId: number;
   seasonName: string;
+  seasonCode: string;
   plotId: number;
   docNo: number;
   docDate: Date;
@@ -317,6 +319,7 @@ export class PlotReportDto {
 export interface IFarmerInPlotReportsViewDto {
   seasonId: number;
   seasonName: string;
+  seasonCode: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -434,6 +437,7 @@ export interface ICompletedPlotViewDto {
   plotId: number;
   seasonId: number;
   seasonName: string;
+  seasonCode: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -527,19 +531,19 @@ export class PlotsDto {
   farmerCode?: string
   farmerName?: string
   fatherName?: string
-  farmerVillageName?:string
- farmerCircleName?: string
+  farmerVillageName?: string
+  farmerCircleName?: string
   farmerDivisionName?: string
-  farmerSectionName ?: string
-  farmerDistrictName ?: string
-  farmerMandalName ?: string
+  farmerSectionName?: string
+  farmerDistrictName?: string
+  farmerMandalName?: string
   farmerVillageId?: number
-  plotVillageName ?: string
-  plotCircleName ?: string
-  plotDivisionName ?: string
+  plotVillageName?: string
+  plotCircleName?: string
+  plotDivisionName?: string
   plotSectionName?: string
-  plotDistrictName  ?: string
-  plotMandalName  ?: string
+  plotDistrictName?: string
+  plotMandalName?: string
   plotVillageId?: number
   plotVillage?: string
   reportedArea?: number
@@ -548,14 +552,14 @@ export class PlotsDto {
   birDate?: Date
   plantingDate?: Date
   varietyId?: number
-  varietyName ?: string
+  varietyName?: string
   surveyNo?: number
   plantTypeId?: number
-  plantTypeName    ?: string
+  plantTypeName?: string
   plotTypeId?: number
   plotTypeName?: string
   agreedTon?: number
-  cropTypeName  ?: string
+  cropTypeName?: string
   crop?: string
   measuredArea?: number
   agreementedArea?: number
@@ -674,6 +678,7 @@ export class FarmerSectionViewDto {
 export interface IFarmerPlotYieldViewDto {
   seasonId: number;
   SeasonName: string;
+  seasonCode: string;
   farmerId: number;
   farmerCode: string;
   farmerName: string;
@@ -692,7 +697,7 @@ export interface IPlotYieldViewDto {
   offerNo: number;
   plotNumber: number;
   plotYieldId: number;
-  plotVillageName:number;
+  plotVillageName: number;
   plotDivisionName: string;
   plotCircleName: string;
   plotSectionName: string;
@@ -768,7 +773,8 @@ export interface IPlotsofFarmerViewDto {
 export class SampleDetailsDto {
   sampleId?: number;
   seasonId?: number
- season?: string
+  season?: string;
+  seasonCode?: string;
   docNo?: number
   docDate?: string
   plotId?: number
@@ -810,7 +816,7 @@ export class PlotYieldDto {
   pests?: plotPestsDto[];
   weedicides?: plotWeedicidesDto[];
 }
-export interface IProppingViewDto{
+export interface IProppingViewDto {
   plotId: number;
   plotNumber: string;
   farmerCode: string;
@@ -819,21 +825,22 @@ export interface IProppingViewDto{
   circleName: string;
   sectionName: string;
   villageName: string;
-  varietyName:string;
-  plantTypeName:string;
+  varietyName: string;
+  plantTypeName: string;
   plantingDate: Date;
   netArea: number;
   proppingDate: Date;
 }
-export class ProppingDto{
+export class ProppingDto {
   plotProppingId?: number;
   plotId?: number;
-  proppingStageId?:number;
+  proppingStageId?: number;
   proppingDate?: Date;
 }
 
 export class SeedDto {
   seedId?: number;
+  seasonCode?: string;
   plotId?: number;
   docNo?: number;
   docDate?: Date;

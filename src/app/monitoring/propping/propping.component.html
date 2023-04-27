@@ -27,7 +27,7 @@
                 <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword" class="w-full" />
               </span>
               <span class="p-input-icon-left mb-2">
-                <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
+                <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
                   [(ngModel)]="currentSeason.seasonId" [ngModelOptions]="{standalone: true}" optionValue="seasonId"
                   (onChange)="onSelectionSeason($event.value)" [style]="{'width':'100%'}" appendTo="body">
                 </p-dropdown>

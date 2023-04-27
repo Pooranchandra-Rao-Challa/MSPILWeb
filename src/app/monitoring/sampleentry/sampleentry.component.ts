@@ -51,7 +51,7 @@ export class SampleEntryComponent implements OnInit {
   netArea: number = 0;
 
   headers: ITableHeader[] = [
-    { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'docNo', header: 'docNo', label: 'Doc No' },
