@@ -1,6 +1,6 @@
-import { BankDto, BranchDto } from './../../../_models/applicationmaster';
-import { LookupService } from './../../../_services/lookup.service';
-import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, RG_AADHAAR, RG_ADDRESS, } from './../../../_shared/regex';
+import { BankDto, BranchDto } from 'src/app/_models/applicationmaster';
+import { LookupService } from 'src/app/_services/lookup.service';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, RG_AADHAAR, RG_ADDRESS, } from 'src/app/_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
@@ -9,9 +9,9 @@ import { FormGroup, FormBuilder, FormControl, FormArray, Validators, } from '@an
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { HglViewDto, SubHglViewDto, HglDto, } from '../../../_models/applicationmaster'
+import { HglViewDto, SubHglViewDto, HglDto, } from 'src/app/_models/applicationmaster'
 import { MaxLength } from 'src/app/_models/common';
-import { MIN_LENGTH_6 } from '../../../_shared/regex';
+import { MIN_LENGTH_6 } from 'src/app/_shared/regex';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
 
@@ -27,7 +27,7 @@ export class HglComponent implements OnInit {
   globalFilterFields: string[] = [
     'code',
     'name',
-    'relationTypeId',
+    'relationTypeName',
     'relationName',
     'relationType',
     'gender',
@@ -71,7 +71,6 @@ export class HglComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
   permissions: any;
 
-
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -86,18 +85,18 @@ export class HglComponent implements OnInit {
 
   hglform() {
     this.fbHgl = this.formbuilder.group({
-      hglId: [0],
+      hglId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      relationTypeId: new FormControl('', [Validators.required]),
+      relationTypeId: new FormControl(null, [Validators.required]),
       relationName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      gender: ['', Validators.required],
-     address: new FormControl('', [Validators.required, Validators.pattern(RG_ADDRESS)]),
-      pinCode: new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_6)]),
-      phoneNo: ['', Validators.pattern(RG_PHONE_NO)],
-      tax: ['', Validators.required],
+      gender: [null, Validators.required],
+      address: new FormControl('', [Validators.required, Validators.pattern(RG_ADDRESS)]),
+      pinCode: new FormControl(null, [Validators.required, Validators.minLength(MIN_LENGTH_6)]),
+      phoneNo: [null, Validators.pattern(RG_PHONE_NO)],
+      tax: [null, Validators.required],
       email: ['', (Validators.pattern(RG_EMAIL))],
-      panNo: new FormControl('', [Validators.pattern(RG_PANNO)]),
+      panNo: new FormControl(null, [Validators.pattern(RG_PANNO)]),
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -105,14 +104,15 @@ export class HglComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      bankId: ['', Validators.required],
-      branchId: ['', Validators.required],
-      accountNo: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
-      aadhaarNo: new FormControl('', [Validators.required,Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
+      bankId: [null, Validators.required],
+      branchId: [null, Validators.required],
+      accountNo: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
+      aadhaarNo: new FormControl(null, [Validators.required, Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
       isActive: [true],
       subHgls: this.formbuilder.array([]),
     });
   }
+
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
     this.inithgls();
@@ -125,10 +125,6 @@ export class HglComponent implements OnInit {
   inithgls() {
     this.appMasterService.GetHgls().subscribe((resp) => {
       this.hgls = resp as unknown as HglViewDto[];
-      console.log(  this.hgls
-
-      );
-      
     });
   }
 
@@ -136,16 +132,20 @@ export class HglComponent implements OnInit {
     this.appMasterService.GetSubHgl(hglId).subscribe((resp) => {
       this.subHgls = resp as unknown as SubHglViewDto[];
       this.faSubHgl().clear();
-      this.subHgls.forEach((subHgl) => {
-        this.faSubHgl().push(this.generateRow(subHgl));
-      });
+      if (this.subHgls.length > 0) {
+        this.subHgls.forEach((subHgl) => {
+          this.faSubHgl().push(this.generateRow(subHgl));
+        });
+      }
+      else {
+        this.addSubHgl();
+      }
     });
   }
 
   initRelationTypes() {
     this.LookupService.RelationTypes().subscribe((resp) => {
       this.relationTypes = resp;
-      console.log(this.relationTypes);
     });
   }
 
@@ -160,29 +160,38 @@ export class HglComponent implements OnInit {
       this.vehicleTypes = resp as unknown as VehicleTypeViewDto[];
     });
   }
+
   get FormControls() {
     return this.fbHgl.controls;
   }
+
+  formArrayControls(i: number, formControlName: string) {
+    return this.faSubHgl().controls[i].get(formControlName);
+  }
+
   /* Form Array For hgl Details */
   faSubHgl(): FormArray {
     return this.fbHgl.get('subHgls') as FormArray;
   }
+
   addSubHgl() {
     this.showSubHgl = true;
     this.faSubHgl().push(this.generateRow());
   }
+
   generateRow(subHgls: SubHglViewDto = new SubHglViewDto()): FormGroup {
     if (!this.addFlag) subHgls.hglId = this.hgl.hglId;
     return this.formbuilder.group({
-      subHglId: subHgls.subHglId == undefined ? 0 : subHgls.subHglId,
+      subHglId: subHgls.subHglId == undefined ? null : subHgls.subHglId,
       hglId: subHgls.hglId,
-      code: new FormControl(subHgls.code),
-      name: [subHgls.name, Validators.required],
+      code: new FormControl(subHgls.code, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl(subHgls.name, [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       vehicleTypeId: [subHgls.vehicleTypeId, Validators.required],
       noOfPersons: [subHgls.noOfPersons, Validators.required],
       isActive: subHgls.isActive,
     });
   }
+
   getBranchByBankId(Id: number) {
     this.appMasterService.GetBank(Id).subscribe((resp) => {
       if (resp) {
@@ -191,11 +200,13 @@ export class HglComponent implements OnInit {
       }
     });
   }
+
   getIFSCByBranch(Id: number) {
     let branch = this.branches.find((x) => x.branchId == Id);
     if (branch) this.IFSC = branch.ifsc;
     else this.IFSC = '';
   }
+
   editHgl(hgl: HglViewDto) {
     this.hglform();
     this.initsubHgls(hgl.hglId);
@@ -233,6 +244,7 @@ export class HglComponent implements OnInit {
     this.showDialog = true;
     this.showSubHgl = true;
   }
+
   addHgl() {
     this.addSubHgl();
     this.submitLabel = 'Add Hgl';
@@ -240,17 +252,21 @@ export class HglComponent implements OnInit {
     this.hglform();
     this.showDialog = true;
   }
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
+
   saveHgl(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.appMasterService.CreateHgl(this.fbHgl.value);
     else return this.appMasterService.UpdateHgl(this.fbHgl.value);
   }
+
   onSubmit() {
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';
     if (this.fbHgl.valid) {
@@ -260,7 +276,6 @@ export class HglComponent implements OnInit {
           this.hglform();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMAMHG001" : "SMAMHG002"]);
-
         }
       });
     } else {
@@ -273,6 +288,7 @@ export class HglComponent implements OnInit {
     this.faSubHgl().clear();
     this.showSubHgl = false;
   }
+
   ngOnDestroy() {
     this.hgls = [];
     this.subHgls = [];
