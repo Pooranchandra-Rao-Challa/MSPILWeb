@@ -99,7 +99,7 @@ export class MandalDto{
   isActive?: boolean;
 }
 
-export interface SectionsViewDto {
+export interface ISectionsViewDto {
   sectionId: number,
   sectionCode: any,
   sectionName: any,
