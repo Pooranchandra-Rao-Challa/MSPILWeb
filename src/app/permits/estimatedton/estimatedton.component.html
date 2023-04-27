@@ -176,7 +176,6 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-excesston>
                         <tr>
-                            <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
                             <td>
                                 <p-overlayPanel #opexcesston>
                                     <ng-template pTemplate="content">
@@ -228,7 +227,7 @@
         <!-- table -->
         <p-table #dtesstimatedton [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+            [globalFilterFields]="globalFilterFields" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" (click)="clear(dtesstimatedton)"
@@ -236,7 +235,7 @@
                     <div>
                         <span class="p-input-icon-left m-2">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                            <input pInputText type="text" #filter (input)="onSearch(dtesstimatedton,$event)" placeholder="Search Keyword"
                                 pTooltip="Search By Farmer Code, Farmer Name, Village Name" class="w-full">
                         </span>
                         <span class="p-input-icon-left mb-2">

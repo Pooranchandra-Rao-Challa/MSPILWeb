@@ -1,8 +1,10 @@
 import { formatDate } from "@angular/common";
+import { HttpEvent } from "@angular/common/http";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { OverlayPanel } from "primeng/overlaypanel";
 import { Table } from "primeng/table";
+import { Observable } from "rxjs";
 import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
 import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonViewDto, ExcessViewDto, FarmersInPlotsForUserDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
@@ -29,6 +31,8 @@ export interface IFromHeader {
 })
 
 export class EstimatedTonComponent implements OnInit {
+  globalFilterFields: string[] =['excessTonage','estimatedTon','farmerCode','farmerName','plotNumber','villageName','plantTypeName','plantingDate',
+'netArea','PermitTon','SuppliedTon','BalanceTon','NoofWeighments']
   seasons: SeasonViewDto[] = [];
   currentSeason: SeasonDto = {};
   loading: boolean = true;
@@ -58,7 +62,6 @@ export class EstimatedTonComponent implements OnInit {
   villageIds?: string;
   circleId: any;
 
-
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private permitService: permitService,
@@ -77,7 +80,7 @@ export class EstimatedTonComponent implements OnInit {
       plotExcessTonId: [null],
       excessTonage: [null,],
       plotYieldId: [null],
-      isActive: [false]
+      isActive: [null]
     });
   }
 
@@ -86,7 +89,7 @@ export class EstimatedTonComponent implements OnInit {
       plotExcessTonId: [null],
       excessTonage: [null, (Validators.required)],
       plotYieldId: [null],
-      isActive: [false]
+      isActive: [null]
     })
   }
 
@@ -108,8 +111,8 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
-    { field: 'variety', header: 'variety', label: 'Variety Name' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
     { field: 'PermitTon', header: 'PermitTon', label: 'Permit Ton' },
@@ -128,12 +131,12 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
-    { field: 'variety', header: 'variety', label: 'Variety Name' },
-    { field: 'plantType', header: 'plantType', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
   ];
-  onSearch() {
-    this.initEstimatedTon(this.currentSeason.seasonId!);
+  onSearch(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
@@ -226,16 +229,15 @@ export class EstimatedTonComponent implements OnInit {
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
   }
-  getExcessTonDetails() {
-    this.initDivisions(this.currentSeason.seasonId!);
-    this.initSections(this.currentSeason.seasonId!);
-    this.initCircles(this.currentSeason.seasonId!);
-    this.initVillages(this.currentSeason.seasonId!);
-    this.initFarmers(this.currentSeason.seasonId!)
+  getExcessTonDetails() {  
+      this.initDivisions(this.currentSeason.seasonId!);
+      this.initSections(this.currentSeason.seasonId!);
+      this.initCircles(this.currentSeason.seasonId!);
+      this.initVillages(this.currentSeason.seasonId!);
+      this.initFarmers(this.currentSeason.seasonId!);   
   }
 
   initExcessTon() {
-    debugger
     this.permitService.GetExcessTon(this.fbEstimatedTon.value).subscribe((resp) => {
       this.excessTons = resp as unknown as ExcessViewDto[];
       console.log(this.excessTons);
@@ -244,22 +246,23 @@ export class EstimatedTonComponent implements OnInit {
 
   addExecesston(event: Event, excesston: EstimatedViewDto) {
     this.fbexcesston.patchValue(excesston);
-    this.fbexcesston.controls['excessTonage'].setValue(excesston.excessTonage);
-    this.fbexcesston.controls['plotExcessTonId'].setValue(excesston.plotExcessTonId);
     this.fbEstimatedTon.controls['plotYieldId'].setValue(excesston.plotYieldId);
     this.fbEstimatedTon.controls['isActive'].setValue(excesston.isActive);
     this.opexcesston.toggle(event);
   }
+
   onSubmit() {
     if (this.fbexcesston.valid) {
-      this.permitService.UpdateExcessTon(this.fbexcesston.value).subscribe(resp => {
+      this.permitService.CreateExcessTon(this.fbexcesston.value).subscribe(resp => {
         if (resp) {
           this.initEstimatedTon(this.currentSeason.seasonId!)
-          this.alertMessage.displayAlertMessage(ALERT_CODES["SMPET002"]);
-          this.fbexcesston.reset();
-          this.getEstimatedTon()
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SMPET001"]);
+          this.getEstimatedTon(); 
+          const seasonId = this.fbEstimatedTon.value.seasonId;
+          this.fbEstimatedTon.reset()
+          this.fbEstimatedTon.patchValue({ seasonId });      
         }
-      })
+      }) 
     }
     else {
       this.fbexcesston.markAllAsTouched();
@@ -269,8 +272,7 @@ export class EstimatedTonComponent implements OnInit {
     this.showForm = !this.showForm;
   }
   getEstimatedTon() {
-    this.initExcessTon()
-    this.fbEstimatedTon.reset()
+    this.initExcessTon() 
     this.showTable = true;
     this.showDialog = true;
   }
@@ -297,6 +299,8 @@ export class EstimatedTonComponent implements OnInit {
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
-    this.onSearch();
+
   }
 }
+
+

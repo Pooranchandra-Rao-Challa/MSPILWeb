@@ -1,23 +1,15 @@
-import { formatDate } from "@angular/common";
-import { ThisReceiver } from "@angular/compiler";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from "src/app/_helpers/date.format.pipe";
-import { plantTypeDto, SeasonDto, SeasonViewDto, VarietyViewDto } from "src/app/_models/applicationmaster";
-import { IPlotsofFarmerViewDto, PlotAgreementDto, PlotInfoDto } from "src/app/_models/monitoring";
-import { CircleforUserDto, DivisionsforUserDto, ExcessTonViewDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupDto, ScheduleGroupPlotsDto, ScheduleGroupPlotsViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
+import {  SeasonDto, SeasonViewDto, } from "src/app/_models/applicationmaster";
+import { CircleforUserDto, DivisionsforUserDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupDto, ScheduleGroupPlotsDto, ScheduleGroupPlotsViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
-import { JWTService } from "src/app/_services/jwt.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 import { permitService } from '../../_services/permit.service';
-import { Observable } from "rxjs";
-import { HttpEvent } from "@angular/common/http";
-import { MonitoringModule } from '../../monitoring/monitoring.module';
 import { MonitoringService } from '../../_services/monitoring.service';
-
-
+import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
 export interface IHeader {
   field: string;
   header: string;
@@ -77,7 +69,6 @@ export class ScheduleGroupingComponent implements OnInit {
   filterPlantTypes: PlantTypeForUserDto[] = [];
   filterVarieties: VarietiesForUserDto[] = [];
   filterDivisions: DivisionsforUserDto[] = []
-  excessTons: ExcessTonViewDto[] = [];
   scheduleGroup!: FormArray;
   selectedRows: any[] = [];
 
@@ -103,7 +94,6 @@ export class ScheduleGroupingComponent implements OnInit {
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
   ];
-
   GroupingPlotHeaders: IGroupingHeader[] = [
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
@@ -117,27 +107,24 @@ export class ScheduleGroupingComponent implements OnInit {
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
   ];
-
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterService: AppMasterService,
     private permitService: permitService,
-    private MonitoringService: MonitoringService
+    private MonitoringService: MonitoringService,
+    private alertMessage: AlertMessage
 
   ) { }
-
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.scheduleGroupingForm();
   }
-
-
   scheduleGroupingForm() {
     this.fbScheduleGrouping = this.formbuilder.group({
       seasonId: new FormControl(null, [Validators.required]),
-      scheduleGroupNo: new FormControl('', [Validators.required]),
-      fromDOP: new FormControl(null, [Validators.required]),
-      toDOP: new FormControl(null, [Validators.required]),
+      groupNo: new FormControl(null, [Validators.required]),
+      fromDOP: new FormControl('', [Validators.required]),
+      toDOP: new FormControl('', [Validators.required]),
       farmerId: new FormControl(null,),
       plotId: new FormControl(null,),
       divisionId: new FormControl(null),
@@ -159,14 +146,15 @@ export class ScheduleGroupingComponent implements OnInit {
       farmerId: rowData.farmerId,
       plantTypeId: rowData.plantTypeId,
       varietyId: rowData.varietyId,
-      plotYieldId: rowData.plotId,
+      plotYieldId: rowData.plotYieldId,
       villageId: rowData.villageId,
     })
   }
-  get scheduleControls(){
+  get scheduleControls() {
     return this.fbScheduleGrouping.get('plotSchedules') as FormArray;
   }
   addSchedule(rowData: any) {
+
     const formArray = this.fbScheduleGrouping.get('plotSchedules') as FormArray;
     formArray.push(this.plotScheduleForm(rowData));
   }
@@ -174,33 +162,17 @@ export class ScheduleGroupingComponent implements OnInit {
     const formArray = this.fbScheduleGrouping.get('plotSchedules') as FormArray;
     formArray.removeAt(index);
   }
-  onRowSelect(event: any,excesston: any) {
-    console.log(excesston);
-    if(event.checked){
-      this.addSchedule(excesston);
-    }else{      
-      let index = this.scheduleControls.value.findIndex((s: any) => s.farmerId == excesston.farmerId && s.plotYieldId == excesston.plotId)
+  onRowSelect(event: any, scheduleGrouping: any) {
+
+    console.log(scheduleGrouping);
+    if (event.checked) {
+      this.addSchedule(scheduleGrouping);
+    } else {
+      let index = this.scheduleControls.value.findIndex((s: any) => s.farmerId == scheduleGrouping.farmerId && s.plotYieldId == scheduleGrouping.plotId)
       this.removeSchedule(index);
     }
     console.log(this.scheduleControls.value);
   }
-
-  // onRowUnselect(event: any) {
-  //   const index = this.selectedRows.findIndex(row => row.id === event.data.id);
-  //   if (index !== -1) {
-  //     this.selectedRows.splice(index, 1);
-  //   }
-  // }
-  // // function to push the selected values to the form array
-  // submitSelection() {
-  //   const scheduleGroupArray = this.fbScheduleGrouping.get('scheduleGroup') as FormArray;
-  //   const selectedGroups = scheduleGroupArray.controls.filter((control) => control.value.selectedRows.length > 0);
-  //   const data = selectedGroups.map((group) => ({ 
-  //     ...group.value, 
-  //     selectedRows: group.value.selectedRows.map((row:any) => row.id) 
-  //   }));
-  //   console.log('Form data:', data);
-  // }
 
   initSeasons() {
     this.commonService.GetSeasons().subscribe((resp) => {
@@ -235,8 +207,6 @@ export class ScheduleGroupingComponent implements OnInit {
     var data = source.data as ISeasonScheduleGroupViewDto;
     this.permitService.GetFarmerPlotsInSchedule(data.seasonId, data.seasonScheduleId).subscribe(resp => {
       data.objPlotSchedule = resp as unknown as IPlotScheduleViewDto[];
-      console.log('Childplots', this.objPlotSchedule);
-
     });
   }
 
@@ -244,7 +214,6 @@ export class ScheduleGroupingComponent implements OnInit {
     this.permitService.GetDivisionsforUser(seasonId, 'ScheduleGroups').subscribe((resp) => {
       this.divisions = resp as unknown as DivisionsforUserDto[];
       this.filterDivisions = Object.assign([], this.divisions);
-      console.log(this.divisions)
     });
   }
   initSections(seasonId: any) {
@@ -263,7 +232,6 @@ export class ScheduleGroupingComponent implements OnInit {
     this.permitService.GetVillagesforUser(seasonId, 'ScheduleGroups').subscribe((resp) => {
       this.villages = resp as unknown as VillageforUserDto[];
       this.filterVillages = Object.assign([], this.villages);
-      console.log(this.villages)
     });
   }
   initFarmers(seasonId: any) {
@@ -271,7 +239,7 @@ export class ScheduleGroupingComponent implements OnInit {
     this.permitService.GetFarmersInPlotsForUser(seasonId, villageId, 'ScheduleGroups').subscribe((resp) => {
       this.farmers = resp as unknown as FarmersInPlotsForUserDto[];
       this.filterFarmers = Object.assign([], this.farmers);
-      console.log('filterFarmers', this.farmers);
+
     })
   }
   initPlots(seasonId: any) {
@@ -280,7 +248,6 @@ export class ScheduleGroupingComponent implements OnInit {
     this.permitService.GetPlotsForUser(seasonId, farmerId, villageId, 'ScheduleGroups').subscribe((resp) => {
       this.plots = resp as unknown as PlotsForUserDto[];
       this.filterPlots = Object.assign([], this.plots);
-      console.log('filterPlots', this.filterPlots);
     })
   }
   initPlantType(seasonId: any) {
@@ -290,7 +257,6 @@ export class ScheduleGroupingComponent implements OnInit {
     this.permitService.GetPlantTypeForUser(seasonId, farmerId, villageId, plotId).subscribe((resp) => {
       this.planttypes = resp as unknown as PlantTypeForUserDto[];
       this.filterPlantTypes = Object.assign([], this.planttypes);
-      console.log('planttypes', this.planttypes);
     })
   }
   initVarieties(seasonId: any) {
@@ -300,29 +266,29 @@ export class ScheduleGroupingComponent implements OnInit {
     this.permitService.GetVarietiesForUser(seasonId, farmerId, villageId, plotId).subscribe((resp) => {
       this.varieties = resp as unknown as VarietiesForUserDto[];
       this.filterVarieties = Object.assign([], this.varieties);
-      console.log('varieties', this.varieties);
     })
   }
-  initExcessTon() {
-    let obj = {
-      circleId: this.fbScheduleGrouping.value.circleId,
-      plotScheduleId: this.fbScheduleGrouping.value.plotScheduleId,
-      scheduleGroupId: this.fbScheduleGrouping.value.scheduleGroupId,
-      divisionId: this.fbScheduleGrouping.value.divisionId,
-      sectionId:  this.fbScheduleGrouping.value.sectionId,
-      farmerId: this.fbScheduleGrouping.value.farmerId,
-      plantTypeId: this.fbScheduleGrouping.value.plantTypeId,
-      varietyId:  this.fbScheduleGrouping.value.varietyId,
-      plotYieldId: this.fbScheduleGrouping.value.plotYieldId,
-      villageId:  this.fbScheduleGrouping.value.villageId,
-    }
-    this.permitService.GetScheduleGroupPlots(obj).subscribe((resp) => {
+  initScheduleGrouping() {
+    this.permitService.GetScheduleGroupPlots(this.fbScheduleGrouping.value).subscribe((resp) => {
       this.schedule = resp as unknown as ScheduleGroupPlotsViewDto[];
       console.log('schedule', this.schedule);
     })
   }
   toggleTab() {
     this.showForm = !this.showForm;
+  }
+  get isFormValid(): boolean {
+    const fromDOP = this.fbScheduleGrouping.get('fromDOP')?.value;
+    const toDOP = this.fbScheduleGrouping.get('toDOP')?.value;
+    return fromDOP !== null && toDOP !== null && !isNaN(Date.parse(fromDOP)) && !isNaN(Date.parse(toDOP));
+  }
+  restrictToRange(event:any) {
+    const value = parseInt(event.target.value);
+    if (isNaN(value) || value < 1) {
+      event.target.value = 1;
+    } else if (value > 5) {
+      event.target.value = 5;
+    }
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -423,13 +389,6 @@ export class ScheduleGroupingComponent implements OnInit {
     }
   }
 
-  editscheduleGrouping(scheduleGrouping: ISeasonScheduleGroupViewDto) {
-    this.fbScheduleGrouping.patchValue(scheduleGrouping);
-    this.addFlag = false;
-    this.submitLabel = 'Update Plot Agreement';
-    this.showDialog = true;
-  }
-
   get FormControls() {
     return this.fbScheduleGrouping.controls
   }
@@ -438,37 +397,29 @@ export class ScheduleGroupingComponent implements OnInit {
     this.initScheduleGroups(this.currentSeason.seasonId!);
   }
   getScheduleGrouping() {
-    this.initExcessTon()
-    //  this.fbEstimatedTon.reset()
+    this.initScheduleGrouping()
     this.showTable = true;
     this.showDialog = true;
   }
 
-  saveScheduleGrouping(): Observable<HttpEvent<any>> {
-    if (this.addFlag) return this.permitService.CreateScheduleGroup(this.fbScheduleGrouping.value)
-    else return this.MonitoringService.UpdateCompletedPlot(this.fbScheduleGrouping.value)
-  }
-
-onSubmit(){
-  console.log(this.fbScheduleGrouping.value);
-  
+  onSubmit() {
+    console.log(this.fbScheduleGrouping.value);
+    if (this.fbScheduleGrouping.valid) {
+      this.permitService.CreateScheduleGroup(this.fbScheduleGrouping.value).subscribe((resp) => {
+        if (resp) {
+          const seasonId = this.fbScheduleGrouping.value.seasonId;
+          this.scheduleGroupingForm();
+          this.fbScheduleGrouping.patchValue({ seasonId });
+          this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SMPSG001"]);
+        }
+      });
+    }
 }
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
-  // data = [{ farmerId: "" }]
-  // getdata(row: any) {
-  //   debugger
-  //   if (this.data.filter(x => x.farmerId == row.farmerId)) {
-  //     this.data.splice(row.farmerId)
-  //   }
-  //   else {
-  //     this.data.push(row.farmerId)
-  //   }
-  // }
-
 
 }
 
