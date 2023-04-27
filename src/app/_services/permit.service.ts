@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, ExcessViewDto, FarmersDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotCuttingOrderViewDto, PlotQuotaViewDto, PlotsForUserDto, ScheduleGroupDto, ScheduleGroupPlotsDto, SeasonCuttingOrderViewDto, SeasonQuotaViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "../_models/permits";
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_SCHEDULE_GROUP_URI, GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMERS_IN_PLOTS_FOR_USER, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_PLANT_TYPE_FOR_USER, GET_PLOTS_FOR_USER, GET_PLOT_CUTTING_ORDERS, GET_PLOT_QUOTAS_URI, GET_SCHEDULE_GROUP_PLOTS_URI, GET_SEASON_CUTTING_ORDERS, GET_SEASON_QUOTAS, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VARIETIES_FOR_USER,  GET_VILLAGES_FOR_USER, UPDATE_EXCESS_TON, UPDATE_EXCESS_TONNAGE, } from "./api.uri.service";
+import { CREATE_EXCESS_TON, CREATE_SCHEDULE_GROUP_URI, GET_CIRCLES_FOR_USER, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMERS_IN_PLOTS_FOR_USER, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_PLANT_TYPE_FOR_USER, GET_PLOTS_FOR_USER, GET_PLOT_CUTTING_ORDERS, GET_PLOT_QUOTAS_URI, GET_SCHEDULE_GROUP_PLOTS_URI, GET_SEASON_CUTTING_ORDERS, GET_SEASON_QUOTAS, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VARIETIES_FOR_USER,  GET_VILLAGES_FOR_USER,UPDATE_EXCESS_TONNAGE, } from "./api.uri.service";
 
 
 
@@ -24,8 +24,8 @@ export class permitService extends ApiHttpService {
 public GetExcessTon(excesston: ExcessViewDto) {
   return this.post<ExcessViewDto>(GET_EXCESS_TON, excesston);
 }
-public UpdateExcessTon(excesston: ExcessTonDto) {
-  return this.post<ExcessTonDto>( UPDATE_EXCESS_TON, excesston);
+public CreateExcessTon(excesston: ExcessTonDto) {
+  return this.post<ExcessTonDto>( CREATE_EXCESS_TON, excesston);
 }
 public UpdateExcessTonnage(excesston: ExcessTonDto) {
   return this.post<ExcessTonDto>( UPDATE_EXCESS_TONNAGE, excesston);
