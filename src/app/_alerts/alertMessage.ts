@@ -236,4 +236,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Estimated Ton
    'SMPET001': 'Excess Ton Is Added Successfully',
    'SMPET002': 'Estimated Ton Is Updated Successfully',
+
+   //  Permits
+  //  scheduleGrouping
+  'SMPSG001': 'Schedule Grouping Is Add Successfully'
 }
