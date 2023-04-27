@@ -313,3 +313,34 @@ export class PlotCuttingOrderViewDto{
   netArea?: number;
   estimatedTon?: number;
 }
+
+export class ScheduleGroupDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  scheduleGroupId?: number
+  seasonId?: number
+  groupNo?: number
+  fromDop?: string
+  toDop?: string
+  isActive?: boolean
+  plotSchedules?: PlotSchedule[]
+
+}
+export class PlotSchedule {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  plotScheduleId?: number
+  scheduleGroupId?: number
+  divisionId?: number
+  circleId?: number
+  sectionId?: number
+  farmerId?: number
+  plantTypeId?: number
+  varietyId?: number
+  plotYieldId?: number
+  villageId?: number
+}

@@ -249,8 +249,8 @@
     <!-- popup table -->
     <p-table #dt2 [value]="schedule" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
-    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" (onRowSelect)="onRowSelect($event)"
-    (onRowUnselect)="onRowUnselect($event)">
+    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" >
+    <!-- (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" -->
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -264,12 +264,12 @@
                 class="w-full" />
                 
             </span>
-            <span class="p-input-icon-left m-2">
-              <input pInputText type="text" #scheduleGroupNoInput placeholder="Schedule Group No"  class="w-full" />
+            <span class="p-input-icon-left m-2" [formGroup]="fbScheduleGrouping">
+              <input pInputText type="text" #scheduleGroupNoInput formControlName="scheduleGroupNo" placeholder="Schedule Group No"  class="w-full" />
           </span>
            
-              <button pButton label="Submit" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-              (click)="submitSelection()"></button>
+              <button pButton label="Submit" (click)="onSubmit()" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+             ></button>
              
           </div>
         </div>
@@ -286,10 +286,10 @@
           </tr>
       </ng-template>
       
-      <ng-template pTemplate="body" let-excesston>
+      <ng-template pTemplate="body" let-excesston let-rowIndex="rowIndex">
           <tr>
               <td>
-                  <p-checkbox [binary]="true" [(ngModel)]="excesston.selected" inputId="{{excesston.id}}"></p-checkbox>
+                  <p-checkbox [binary]="true" (onChange)="onRowSelect($event,excesston)" [(ngModel)]="excesston.selected" inputId="{{excesston.id}}"></p-checkbox>
               </td>
               <td *ngFor="let col of GroupingPlotHeaders">
                   <span *ngIf="col?.field != 'plantingDate' ">{{excesston[col.field]}}</span>

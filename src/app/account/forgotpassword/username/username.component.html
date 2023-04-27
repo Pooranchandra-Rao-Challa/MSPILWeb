@@ -1,12 +1,15 @@
 <div class="content-container col-12">
   <div class="grid">
-  <form class="col-12">
-    <label for="username" class="block text-900 font-medium text-md mb-1 mt-5"  >User Name</label>
-    <input id="username" type="text" [(ngModel)]="userName" placeholder="User Name" [ngModelOptions]="{standalone:true}"  pInputText class="w-full md:w-100  mb-6"
-      style="padding:1rem">
-  </form>
-  <div class="col-6"></div>
-  <div class="col-6"> <button pButton pRipple label="Next" class="w-full p-3 text-md"  (click)="navigateToNext()"></button></div>
+    <form class="col-12" >
+      <label for="username" class="block text-900 font-medium text-md mb-1 mt-5">User Name</label>
+      <input id="username" type="text" [(ngModel)]="userName" placeholder="User Name"
+        [ngModelOptions]="{standalone:true}" pInputText class="w-full md:w-100 " #username="ngModel" style="padding:1rem" required>
+        <small class="p-invalid p-error  mb-6" *ngIf="!userName && (username.dirty || username.touched)">User Name is
+          required.</small>
+    </form>
+    <div class="col-6"></div>
+    <div class="col-6"> <button pButton pRipple label="Next" [disabled]="!userName" class="w-full p-3 text-md"
+        (click)="navigateToNext()"></button></div>
 
-</div>
+  </div>
 </div>
