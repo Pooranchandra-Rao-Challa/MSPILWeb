@@ -41,16 +41,14 @@ import { AlertMessage, ALERT_CODES } from '../../../_alerts/alertMessage';
   templateUrl: './circles.component.html',
 })
 export class CirclesComponent implements OnInit {
-
   dialog: boolean = false;
   circles: CirclesViewDto[] = [];
   circle: CircleDto = new CircleDto();
-  fbcircles!: FormGroup;
+  fbcircle!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
   addFlag: boolean = true;
   divisions: DivisionDto[] = [];
-  valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
@@ -63,25 +61,27 @@ export class CirclesComponent implements OnInit {
     public jwtService: JWTService,
     private AlertMessage: AlertMessage,
 
-  ) { 
-    
-  // this.table?._columns.map((col) => ({
-  //   title: col.field,
-  //   dataKey: col.field,
-  // }))
+  ) {
+
+    // this.table?._columns.map((col) => ({
+    //   title: col.field,
+    //   dataKey: col.field,
+    // }))
   }
-  InitCircle() {
+
+  addCircle() {
+    this.fbcircle.controls['isActive'].setValue(true);
     this.circle = new CircleDto();
-    this.fbcircles.reset();
     this.submitLabel = 'Add Circle';
     this.addFlag = true;
     this.dialog = true;
   }
-  get FormControls() {
-    return this.fbcircles.controls;
-  }
-  ngOnInit() {
 
+  get FormControls() {
+    return this.fbcircle.controls;
+  }
+
+  ngOnInit() {
     // this.exportColumns = this.dt1.map((col) => ({
     //   title: col.label,
     //   dataKey: col.field,
@@ -92,28 +92,25 @@ export class CirclesComponent implements OnInit {
       this.divisions = resp as unknown as DivisionDto[];
     });
 
-    this.fbcircles = this.formbuilder.group({
-      divisionId: ['', Validators.required],
+    this.fbcircle = this.formbuilder.group({
+      circleId: [null],
+      divisionId: [null, Validators.required],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      inchargeName: new FormControl(null, [ Validators.pattern(RG_ALPHA_ONLY)]),
-      listingOrder: new FormControl('', [
-        Validators.required,
-        Validators.pattern(RG_NUMERIC_ONLY),
-      ]),
-      isActive: [Validators.required],
-
-      inchargePhoneNo: new FormControl('', [Validators.pattern(RG_PHONE_NO),
-      ]),
+      inchargeName: new FormControl(null, [Validators.pattern(RG_ALPHA_ONLY)]),
+      listingOrder: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY)]),
+      isActive: [null, (Validators.required)],
+      inchargePhoneNo: new FormControl('', [Validators.pattern(RG_PHONE_NO)]),
       address: ['', Validators.required],
-      circleId: [''],
     });
   }
+
   initCircles() {
     this.geoMasterService.GetCircles().subscribe((resp) => {
       this.circles = resp as unknown as CirclesViewDto[];
     });
   }
+
   editProduct(circle: CirclesViewDto) {
     this.circle.code = circle.circleCode;
     this.circle.name = circle.circleName;
@@ -124,107 +121,102 @@ export class CirclesComponent implements OnInit {
     this.circle.listingOrder = circle.listingOrder;
     this.circle.address = circle.address;
     this.circle.circleId = circle.circleId;
-    this.fbcircles.setValue(this.circle);
+    this.fbcircle.setValue(this.circle);
     this.submitLabel = 'Update Circle';
     this.addFlag = false;
     this.dialog = true;
   }
-  onClose() {
-    this.fbcircles.reset();
-  }
+
   saveCircle(): Observable<HttpEvent<CircleDto>> {
     if (this.addFlag)
-      return this.geoMasterService.CreateCircle(this.fbcircles.value);
-    else return this.geoMasterService.UpdateCircle(this.fbcircles.value);
+      return this.geoMasterService.CreateCircle(this.fbcircle.value);
+    else return this.geoMasterService.UpdateCircle(this.fbcircle.value);
   }
+
   onSubmit() {
-    if (this.fbcircles.valid) {
+    if (this.fbcircle.valid) {
       this.saveCircle().subscribe((resp) => {
         if (resp) {
           this.initCircles();
-          this.onClose();
           this.dialog = false;
           this.AlertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMGMCI001" : "SMGMCI002"]);
         }
       });
     } else {
-      this.fbcircles.markAllAsTouched();
+      this.fbcircle.markAllAsTouched();
     }
   }
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
+
   ngOnDestroy() {
     this.divisions = [];
     this.circles = [];
   }
 
-
-
   exportPdf() {
     const doc = new jsPDF('l', 'mm', 'a4');
 
-    const head = [['Division', 'Code', 'Name','Incharge Name', 'Incharge PhoneNo', 'Order', 'Address', 'Is Active']];
+    const head = [['Division', 'Code', 'Name', 'Incharge Name', 'Incharge PhoneNo', 'Order', 'Address', 'Is Active']];
 
     autoTable(doc, {
-        head: head,
-        body: this.toPdfFormat(),
-        didDrawCell: (data) => { },
+      head: head,
+      body: this.toPdfFormat(),
+      didDrawCell: (data) => { },
     });
     doc.save('circles.pdf');
-}
-toPdfFormat() {
+  }
+
+  toPdfFormat() {
     let data = [];
     for (var i = 0; i < this.circles.length; i++) {
-        data.push([
-            this.circles[i].divisionName,
-            this.circles[i].circleCode,
-            this.circles[i].circleName,
-            this.circles[i].inchargeName,
-            this.circles[i].inchargePhoneNo,
-            this.circles[i].listingOrder,
-            this.circles[i].address,
-            this.circles[i].isActive
-
-        ]);
+      data.push([
+        this.circles[i].divisionName,
+        this.circles[i].circleCode,
+        this.circles[i].circleName,
+        this.circles[i].inchargeName,
+        this.circles[i].inchargePhoneNo,
+        this.circles[i].listingOrder,
+        this.circles[i].address,
+        this.circles[i].isActive
+      ]);
     }
     return data;
-}
+  }
 
-exportExcel() {
-  debugger
-  import('xlsx').then((xlsx) => {
-    const worksheet = xlsx.utils.json_to_sheet(this.circles);
-    const workbook = {
-      Sheets: { data: worksheet },
-      SheetNames: ['data']
-    };
-    const excelBuffer: any = xlsx.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
+  exportExcel() {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.circles);
+      const workbook = {
+        Sheets: { data: worksheet },
+        SheetNames: ['data']
+      };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      this.saveAsExcelFile(excelBuffer, 'circles');
     });
-    this.saveAsExcelFile(excelBuffer, 'circles');
-  });
-}
+  }
 
-saveAsExcelFile(buffer: any, fileName: string): void {
-  let EXCEL_TYPE =
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  let EXCEL_EXTENSION = '.xlsx';
-  const data: Blob = new Blob([buffer], {
-    type: EXCEL_TYPE,
-  });
-  FileSaver.saveAs(
-    data,
-    fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-  );
-}
-
-
-
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    FileSaver.saveAs(
+      data,
+      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
 
 }
