@@ -2,7 +2,6 @@ import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
 import {
   FormBuilder,
   FormControl,
@@ -22,11 +21,8 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as FileSaver from 'file-saver';
-
 import {
   MAX_LENGTH_20,
-  MAX_LENGTH_50,
-  MAX_LENGTH_6,
   MIN_LENGTH_2,
   RG_ALPHA_NUMERIC,
   RG_ALPHA_ONLY,
@@ -34,7 +30,7 @@ import {
   RG_PHONE_NO,
 } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
-import { AlertMessage, ALERT_CODES } from '../../../_alerts/alertMessage';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-circle',
@@ -60,14 +56,7 @@ export class CirclesComponent implements OnInit {
     private commonService: CommonService,
     public jwtService: JWTService,
     private AlertMessage: AlertMessage,
-
-  ) {
-
-    // this.table?._columns.map((col) => ({
-    //   title: col.field,
-    //   dataKey: col.field,
-    // }))
-  }
+  ) { }
 
   addCircle() {
     this.fbcircle.controls['isActive'].setValue(true);
