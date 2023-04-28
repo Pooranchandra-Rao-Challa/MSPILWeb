@@ -97,13 +97,13 @@
             Guarantor3 <p-columnFilter type="text" field="guarantor3" display="menu"></p-columnFilter>
             <p-sortIcon field="guarantor3"></p-sortIcon>
           </th>
-          <th pSortableColumn="branchName">
-            Branch Name <p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
-            <p-sortIcon field="branchName"></p-sortIcon>
-          </th>
           <th pSortableColumn="bankName">
             Bank Name <p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
             <p-sortIcon field="bankName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="branchName">
+            Branch Name <p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
+            <p-sortIcon field="branchName"></p-sortIcon>
           </th>
           <th pSortableColumn="ifsc">
             IFSC <p-columnFilter type="text" field="ifsc" display="menu"></p-columnFilter>
@@ -170,8 +170,8 @@
           <td>{{hgl.guarantor1}}</td>
           <td>{{hgl.guarantor2}}</td>
           <td>{{hgl.guarantor3}}</td>
-          <td>{{hgl.branchName}}</td>
           <td>{{hgl.bankName}}</td>
+          <td>{{hgl.branchName}}</td>
           <td>{{hgl.ifsc}}</td>
           <td>{{hgl.accountNo}}</td>
           <td>{{hgl.glCode}}</td>
@@ -293,7 +293,7 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                         Please Enter Address.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
-                        Field Cannot Start Or End With Spaces..</div>
+                        Field Cannot Start Or End With Spaces.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-3">
