@@ -243,6 +243,7 @@ export const GET_PLOTS_FOR_USER ="Schedule/GetPlotsForUser";
 export const GET_SCHEDULE_GROUP_PLOTS_URI ="Schedule/GetScheduleGroupPlots";
 export const GET_SEASON_CUTTING_ORDERS ="Schedule/GetSeasonCuttingOrders";
 export const GET_PLOT_CUTTING_ORDERS ="Schedule/GetPlotCuttingOrders";
+export const GET_CUTTING_ORDERS ="Schedule/GetCuttingOrders";
 export const GET_SEASON_QUOTAS ="Schedule/GetSeasonQuotas";
 export const GET_PLOT_QUOTAS_URI ="Schedule/GetPlotQuotas";
 export const CREATE_SCHEDULE_GROUP_URI = "Schedule/CreateScheduleGroup";

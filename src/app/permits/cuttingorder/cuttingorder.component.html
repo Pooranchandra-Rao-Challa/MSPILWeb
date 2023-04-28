@@ -28,7 +28,7 @@
                                             <label>Season:<sup class="p-error">*</sup></label>
                                             <p-dropdown placeholder="Select Season" optionLabel="code"
                                                 [(ngModel)]="currentSeason.seasonId" [options]="seasons"
-                                                optionValue="seasonId" formControlName="seasonId" appendTo="body"
+                                                optionValue="seasonId" formControlName="seasonId" appendTo="body" (onChange)="initdropdownsbinding()"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                                             </p-dropdown> <!-- (onChange)="getNewOfferNo($event.value)" -->
                                             <span
@@ -55,29 +55,29 @@
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>From Schedule Group No:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="fromScheduleGroupNo" type="number"
-                                                formControlName="fromScheduleGroupNo"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromScheduleGroupNo'].touched && FormControls['fromScheduleGroupNo'].errors }">
+                                            <input pInputText id="fromSchGroupNo" type="number"
+                                                formControlName="fromSchGroupNo"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromSchGroupNo'].touched && FormControls['fromSchGroupNo'].errors }">
                                             <span
-                                                *ngIf="FormControls['fromScheduleGroupNo'].touched && FormControls['fromScheduleGroupNo'].invalid">
+                                                *ngIf="FormControls['fromSchGroupNo'].touched && FormControls['fromSchGroupNo'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['fromScheduleGroupNo'].errors?.['required']">
+                                                    *ngIf="FormControls['fromSchGroupNo'].errors?.['required']">
                                                     Please Enter From Schedule Group No.</div>
                                             </span>
                                             <!-- <p-dropdown placeholder="Select From Schedule" optionLabel="code"
-                                                optionValue="fromScheduleGroupNo" formControlName="fromScheduleGroupNo"
+                                                optionValue="fromSchGroupNo" formControlName="fromSchGroupNo"
                                                 appendTo="body">
                                             </p-dropdown> -->
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>To Schedule Group No:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="toScheduleGroupNo" type="number"
-                                                formControlName="toScheduleGroupNo"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['toScheduleGroupNo'].touched && FormControls['toScheduleGroupNo'].errors }">
+                                            <input pInputText id="toSchGroupNo" type="number"
+                                                formControlName="toSchGroupNo"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['toSchGroupNo'].touched && FormControls['toSchGroupNo'].errors }">
                                             <span
-                                                *ngIf="FormControls['toScheduleGroupNo'].touched && FormControls['toScheduleGroupNo'].invalid">
+                                                *ngIf="FormControls['toSchGroupNo'].touched && FormControls['toSchGroupNo'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['toScheduleGroupNo'].errors?.['required']">
+                                                    *ngIf="FormControls['toSchGroupNo'].errors?.['required']">
                                                     Please Enter To Schedule Group No.</div>
                                             </span>
                                             <!-- <p-dropdown placeholder="Select To Schedule" optionLabel="code"
@@ -182,13 +182,13 @@
                                         <div class="field col-12 md:col-3">
                                             <label>From DOP/DOR:<sup class="p-error">*</sup></label>
                                             <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true"
-                                                appendTo="body" formControlName="fromDOP" [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDOP'].touched && FormControls['fromDOP'].errors }">
+                                                appendTo="body" formControlName="fromPlantingDate" [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromPlantingDate'].touched && FormControls['fromPlantingDate'].errors }">
                                             </p-calendar>
                                             <span
-                                                *ngIf="FormControls['fromDOP'].touched && FormControls['fromDOP'].invalid">
+                                                *ngIf="FormControls['fromPlantingDate'].touched && FormControls['fromPlantingDate'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['fromDOP'].errors?.['required']">
+                                                    *ngIf="FormControls['fromPlantingDate'].errors?.['required']">
                                                     Select From DOP/DOR.</div>
                                             </span>
                                         </div>
@@ -196,13 +196,13 @@
                                         <div class="field col-12 md:col-3">
                                             <label>To DOP/DOR:<sup class="p-error">*</sup></label>
                                             <p-calendar placeholder="To DOP" [readonlyInput]="true" [showIcon]="true"
-                                                appendTo="body" formControlName="toDOP" [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDOP'].touched && FormControls['toDOP'].errors }">
+                                                appendTo="body" formControlName="toPlantingDate" [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['toPlantingDate'].touched && FormControls['toPlantingDate'].errors }">
                                             </p-calendar>
                                             <span
-                                                *ngIf="FormControls['toDOP'].touched && FormControls['toDOP'].invalid">
+                                                *ngIf="FormControls['toPlantingDate'].touched && FormControls['toPlantingDate'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['toDOP'].errors?.['required']">
+                                                    *ngIf="FormControls['toPlantingDate'].errors?.['required']">
                                                     Select To DOP/DOR.</div>
                                             </span>
                                         </div>
@@ -267,7 +267,8 @@
                                             <p-multiSelect [options]="divisions" placeholder="Select Division"
                                                 optionValue="divisionId" appendTo="body" [filter]="true"
                                                 optionLabel="divisionName" formControlName="divisionId"[style]="{'width':'100%'}" 
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }">
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
+                                                (onChange)="SetAllDivisionChilds($event.value)">
                                             </p-multiSelect>
                                             <span
                                             *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
@@ -281,7 +282,8 @@
                                             <p-multiSelect [options]="circles" placeholder="Select Circle "
                                                 optionValue="circleId" appendTo="body" [filter]="true"
                                                 optionLabel="circleName" formControlName="circleId" [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }"
+                                                (onChange)="SetAllCircleChilds($event.value)">
                                             </p-multiSelect>
                                             <span
                                             *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
@@ -295,7 +297,8 @@
                                             <p-multiSelect [options]="sections" placeholder="Select Section "
                                                 optionValue="sectionId" appendTo="body" [filter]="true"
                                                 optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }" >
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }"
+                                                (onChange)="SetAllSectionChilds($event.value)" >
                                             </p-multiSelect>
                                             <span
                                             *ngIf="FormControls['sectionId'].touched && FormControls['sectionId'].invalid">
@@ -323,7 +326,7 @@
                                             <p-multiSelect [options]="planttypes" optionLabel="plantTypeName"
                                                 appendTo="body" formControlName="plantTypeId"
                                                 placeholder="Select Plant Type Name " optionValue="plantTypeId"
-                                                placeholder="Select Plant Type Name." appendTo="body" [style]="{'width':'100%'}"
+                                                appendTo="body" [style]="{'width':'100%'}"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantTypeId'].touched && FormControls['plantTypeId'].errors }">
                                             </p-multiSelect>
                                             <span
@@ -339,13 +342,13 @@
                                                 [virtualScrollItemSize]="38" appendTo="body"
                                                 placeholder="Select Variety" optionLabel="varietyName"
                                                 [options]="varieties" optionValue="varietyId"
-                                                formControlName="variety" [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['variety'].touched && FormControls['variety'].errors }">
+                                                formControlName="varietyId" [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['varietyId'].touched && FormControls['varietyId'].errors }">
                                             </p-multiSelect>
                                             <span
-                                            *ngIf="FormControls['variety'].touched && FormControls['variety'].invalid">
+                                            *ngIf="FormControls['varietyId'].touched && FormControls['varietyId'].invalid">
                                             <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="FormControls['variety'].errors?.['required']">
+                                                *ngIf="FormControls['varietyId'].errors?.['required']">
                                                 Select Variety.</div>
                                         </span>
                                         </div>
