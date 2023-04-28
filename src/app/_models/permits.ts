@@ -295,8 +295,6 @@ export class PlotQuotaViewDto {
   EstimatedTon?: number
 }
 
-
-
 export class PlotCuttingOrderViewDto{
   farmerCode?: string;
   farmerName?:string;
@@ -343,4 +341,29 @@ export class PlotSchedule {
   varietyId?: number
   plotYieldId?: number
   villageId?: number
+}
+
+export class GetCuttingOrderViewDto{
+  seasonId?: number;
+  divisionId?: string;
+  circleId?: string;
+  sectionId?: string;
+  villageId?: string;
+  fromPlantingDate?: Date;
+  toPlantingDate?:  Date;
+  farmerId?: string;
+  plotId?: string;
+  plantTypeId?: string;
+  varietyId?: string;
+  fromSchGroupNo?: number;
+  toSchGroupNo?: number;
+  fromCCS?: number;
+  toCCS?: number;
+  fromBrix?: number;
+  toBrix?: number;
+  fromPol?: number;
+  toPol?:  number;
+  fromPurity?: number;
+  toPurity?: number;
+
 }
