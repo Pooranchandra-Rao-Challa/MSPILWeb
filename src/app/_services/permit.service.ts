@@ -107,8 +107,8 @@ public GetPlotCuttingOrder(seasonId:any,seasonCuttingOrderId: any) {
 public GetSeasonQuotas(seasonId: number) {
   return this.getWithId<SeasonQuotaViewDto>(GET_SEASON_QUOTAS, seasonId);
 }
-public GetPlotQuotas(seasonId: any, SeasonQuotaId : any) {
-  return this.getWithParams<PlotQuotaViewDto>(GET_PLOT_QUOTAS_URI, seasonId,SeasonQuotaId);
+public GetPlotQuotas(seasonId:any,SeasonQuotaId :any) {
+  return this.getWithParams<PlotQuotaViewDto>(GET_PLOT_QUOTAS_URI,[seasonId,SeasonQuotaId]);
   }
 
   public CreateScheduleGroup(ScheduleGroup: any) {
