@@ -6,12 +6,14 @@ import { AlphaDirective } from 'src/app/_directives/alphaOnly.directive';
 import { AlphaNumericDirective } from 'src/app/_directives/alphaNumeric.directive';
 import { NumericDirective } from "src/app/_directives/numericOnly.directive";
 import { AlertMessage } from "src/app/_alerts/alertMessage";
+import { AddressDirective } from "src/app/_directives/address.directive";
 
 @NgModule({
   declarations: [
     AlphaDirective,
     AlphaNumericDirective,
     NumericDirective,
+    AddressDirective,
   ],
   exports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { AlertMessage } from "src/app/_alerts/alertMessage";
     AlphaDirective,
     AlphaNumericDirective,
     NumericDirective,
+    AddressDirective,
   ],
   providers: [AlertMessage]
 })

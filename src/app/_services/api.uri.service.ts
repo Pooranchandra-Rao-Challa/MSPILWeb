@@ -229,7 +229,7 @@ export const GET_SEASON_SCHEDULE_GROUPS_URI = "Schedule/GetSeasonScheduleGroups"
 export const GET_ESTIMATED_TON ="Schedule/GetPlotExcessTonage";
 export const GET_FARMERS_FOR_ESTIMATED_TON ="Schedule/GetFarmersInPlantingDates";
 export const GET_EXCESS_TON ="Schedule/GetExcessTon";
-export const UPDATE_EXCESS_TON ="Schedule/UpdatePlotExcessTon";
+export const CREATE_EXCESS_TON ="Schedule/CreateExcessTon";
 export const UPDATE_EXCESS_TONNAGE ="Schedule/UpdateExcessTon";
 export const GET_DIVISIONS_FOR_USER ="Schedule/GetDivisionsForUser";
 export const GET_CIRCLES_FOR_USER ="Schedule/GetCirclesForUser";
@@ -241,3 +241,11 @@ export const GET_PLANT_TYPE_FOR_USER ="Schedule/GetPlantTypeForUser";
 export const GET_FARMERS_IN_PLOTS_FOR_USER ="Schedule/GetFarmersInPlotsForUser";
 export const GET_PLOTS_FOR_USER ="Schedule/GetPlotsForUser";
 export const GET_SCHEDULE_GROUP_PLOTS_URI ="Schedule/GetScheduleGroupPlots";
+export const GET_SEASON_CUTTING_ORDERS ="Schedule/GetSeasonCuttingOrders";
+export const GET_PLOT_CUTTING_ORDERS ="Schedule/GetPlotCuttingOrders";
+export const GET_CUTTING_ORDERS ="Schedule/GetCuttingOrders";
+export const GET_SEASON_QUOTAS ="Schedule/GetSeasonQuotas";
+export const GET_PLOT_QUOTAS_URI ="Schedule/GetPlotQuotas";
+export const CREATE_SCHEDULE_GROUP_URI = "Schedule/CreateScheduleGroup";
+
+

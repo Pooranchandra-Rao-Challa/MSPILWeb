@@ -66,7 +66,7 @@ export class PlotreportsComponent implements OnInit {
   loading: boolean = false;
 
   farmerHeaders: ITableHeader[] = [
-    { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },

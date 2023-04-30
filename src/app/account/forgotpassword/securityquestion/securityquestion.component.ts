@@ -21,6 +21,7 @@ export class SecurityQuestionComponent implements OnInit {
     this.router.navigate(['/forgotpassword/username']);
   }
   navigateToNext(){
+    debugger
     console.log(this.userQuestions);
     let flag = true;
     this.userQuestions.forEach(question => {

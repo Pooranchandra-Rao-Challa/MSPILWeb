@@ -166,7 +166,7 @@
                 <div class="field col-12 md:col-6">
                   <label>Address:<sup class="p-error">*</sup></label>
                   <textarea pInputTextarea id="address" type="text" placeholder="Enter Address"
-                    formControlName="address" #address [maxlength]="maxLength.address"
+                    formControlName="address" #address [maxlength]="maxLength.address" address
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }">
                   </textarea>
                   <div class="text-right">
@@ -176,7 +176,7 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                       Please Enter Address.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
-                      Address Is Incorrect.</div>
+                      Field Cannot Start Or End With Spaces.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">

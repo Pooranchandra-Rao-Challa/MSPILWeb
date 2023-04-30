@@ -37,7 +37,7 @@ export class CompletedPlotsComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   purpose: string = 'Is Over';
   headers: ITableHeader[] = [
-    { field: 'seasonName', header: 'seasonName', label: 'Season' },
+    { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },

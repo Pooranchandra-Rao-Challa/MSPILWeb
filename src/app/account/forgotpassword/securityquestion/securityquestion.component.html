@@ -1,14 +1,16 @@
 <div class="content-container col-12">
     <div class="grid">
         <form class="col-12">
-        <label for="SelectQuestion" class="block text-900 font-medium text-md mb-1 mt-5">Security Questions</label>
+       
         <div *ngFor="let question of userQuestions">
           <label for="SelectQuestion" class="block text-900 font-medium text-md mb-1 mt-5">{{question.question}}</label>
-          <input  [(ngModel)]="question.userAnswer" [ngModelOptions]="{standalone:true}" type="text" placeholder="Add answer for the question" pInputText class="w-full md:w-100  mb-2"
-            style="padding:1rem" required>
+          <input  [(ngModel)]="question.userAnswer" #useranswer="ngModel" [ngModelOptions]="{standalone:true}" type="text" placeholder="Add answer for the question" pInputText class="w-full md:w-100"
+             required>
+            <small class="p-invalid p-error mb-2" *ngIf="!question.userAnswer && (useranswer.dirty || useranswer.touched)">User answer is
+                required.</small>
         </div>
         </form>
         <div class="col-6"><button pButton pRipple label="Back to  User Name" class="w-full p-3 text-md" (click)="navigateToPrev()"></button></div>
-        <div class="col-6"><button pButton pRipple label="Next" class="w-full p-3 text-md"(click)="navigateToNext()"></button></div>
+        <div class="col-6"><button pButton pRipple label="Next" class="w-full p-3  text-md"  (click)="navigateToNext()"></button></div>
     </div>
 </div>

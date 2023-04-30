@@ -1,43 +1,35 @@
 <div class="col-12">
   <div class="card">
     <p-toast key="tst"></p-toast>
+
     <p-dialog header="Section" [(visible)]="display" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}" [modal]="true">
+      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}" [modal]="true"
+      (onHide)="fbsections.reset()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbsections" (ngSubmit)="onSubmit()" >
+          <form [formGroup]="fbsections" (ngSubmit)="onSubmit()">
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
-
                   <div class="field col-12 md:col-6">
                     <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
-                    <p-dropdown [options]="divisions" 
-                    [filter]="true"
-                    filterBy="divisionName"
-                   [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"optionLabel="divisionName" formControlName="divisionId"
-                      optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
-                      placeholder="Select Division "
+                    <p-dropdown [options]="divisions" [filter]="true" filterBy="divisionName" [virtualScroll]="true"
+                      [virtualScrollItemSize]="38" appendTo="body" optionLabel="divisionName"
+                      formControlName="divisionId" optionValue="divisionId" (onChange)="initCircles($event.value)"
+                      [autoDisplayFirst]="false" placeholder="Select Division "
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }">
-                  </p-dropdown>
-                  <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['divisionId'].errors?.['required']">
-                      Please Select Division.</div>
-                  </span>
+                    </p-dropdown>
+                    <span *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['divisionId'].errors?.['required']">
+                        Please Select Division.</div>
+                    </span>
                   </div>
-
                   <div class="field col-12 md:col-6">
                     <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
-                    <p-dropdown 
-                   
-                     [options]="circles" 
-                     [filter]="true"
-                     filterBy="name"
-                    [virtualScroll]="true" [virtualScrollItemSize]="38"
-                       appendTo="body"
-                     optionLabel="name" formControlName="circleId" optionValue="circleId"
-                      placeholder="Select Circle "
-                      emptyFilterMessage="No Results Found" 
+                    <p-dropdown [options]="circles" [filter]="true" filterBy="name" [virtualScroll]="true"
+                      [virtualScrollItemSize]="38" appendTo="body" optionLabel="name" formControlName="circleId"
+                      optionValue="circleId" placeholder="Select Circle " emptyFilterMessage="No Results Found"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }">
                     </p-dropdown>
                     <span *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
@@ -46,27 +38,25 @@
                       </div>
                     </span>
                   </div>
-
                   <div class="field col-12 md:col-6">
                     <label>Code:<sup class="p-error">*</sup></label>
-                  <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                    alphaNumeric [readonly]="fbsections.value.tptId" [maxlength]="20"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                  <div class="text-right">
-                    <small>{{code.value.length}}/20</small>
+                    <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
+                      alphaNumeric [readonly]="fbsections.value.tptId" [maxlength]="20"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                    <div class="text-right">
+                      <small>{{code.value.length}}/20</small>
+                    </div>
+                    <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
+                        Please Enter Code.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
+                        Code Min Length Is 2 .</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
+                        Code Max Length Is 20.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
+                        Code Should Contains Only Alpha Numeric.</div>
+                    </span>
                   </div>
-                  <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                      Please Enter Code.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
-                      Code Min Length Is 2 .</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
-                      Code Max Length Is 20.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code Should Contains Only Alpha Numeric.</div>
-                  </span>
-                  </div>
-
                   <div class="field col-12 md:col-6">
                     <label>Name:<sup class="p-error">*</sup></label>
                     <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
@@ -84,56 +74,51 @@
                         Name Should Contains Only Alphabets.</div>
                     </span>
                   </div>
-
                   <div class="field col-12 md:col-6">
                     <label>Incharge Name:</label>
-                    <input pInputText type="text" #inchargeName formControlName="inchargeName" alphaOnly placeholder="Enter Incharge Name" [maxlength]="50">
-                      <div class="text-right">
-                        <small>{{inchargeName.value.length}}/50</small>
-                      </div>
+                    <input pInputText type="text" #inchargeName formControlName="inchargeName" alphaOnly
+                      placeholder="Enter Incharge Name" [maxlength]="50">
+                    <div class="text-right">
+                      <small>{{inchargeName.value.length}}/50</small>
+                    </div>
                     <span *ngIf="FormControls['inchargeName'].touched && FormControls['inchargeName'].invalid">
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['inchargeName'].errors?.['pattern']">Incharge Name Should Contains
                         Alphabets.</div>
                     </span>
                   </div>
-
-                 
-                    <div class="field col-12 md:col-6">
-                      <label>Incharge PhoneNo:</label>
-                      <input pInputText id="inchargePhoneNo"  formControlName="inchargePhoneNo"  placeholder="Enter Incharge PhoneNo"
-                         #inchargePhoneNo numericOnly [maxlength]="maxLength.phoneNo">
-                      <div class="text-right">
-                        <small>{{inchargePhoneNo.value.length}}/{{maxLength.phoneNo}}</small>
-                      </div>
-                      <span *ngIf="FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].invalid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['inchargePhoneNo'].errors?.['required']">Please Enter Phone Number.</div>
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">
-                          First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
-                      </span>
+                  <div class="field col-12 md:col-6">
+                    <label>Incharge PhoneNo:</label>
+                    <input pInputText id="inchargePhoneNo" formControlName="inchargePhoneNo"
+                      placeholder="Enter Incharge PhoneNo" #inchargePhoneNo numericOnly [maxlength]="maxLength.phoneNo">
+                    <div class="text-right">
+                      <small>{{inchargePhoneNo.value.length}}/{{maxLength.phoneNo}}</small>
                     </div>
-                  
-
+                    <span *ngIf="FormControls['inchargePhoneNo'].touched && FormControls['inchargePhoneNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['inchargePhoneNo'].errors?.['pattern']">
+                        First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
+                    </span>
+                  </div>
                   <div class="field col-12 md:col-6">
                     <label>Address:<sup class="p-error">*</sup></label>
-                    <textarea rows="5" cols="30" placeholder="Enter Address"#address pInputTextarea formControlName="address" [maxlength]="maxLength.address"
+                    <textarea rows="5" cols="30" placeholder="Enter Address" #address pInputTextarea
+                      formControlName="address" [maxlength]="maxLength.address" address
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
-                      <div class="text-right">
-                        <small>{{address.value.length}}/{{maxLength.address}} </small>
-                      </div>
-                      <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
-                          Please Enter Address.</div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
-                          Address Is Incorrect.</div>
-                      </span>
+                    <div class="text-right">
+                      <small>{{address.value.length}}/{{maxLength.address}} </small>
+                    </div>
+                    <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
+                        Please Enter Address.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
+                        Field Cannot Start Or End With Spaces.</div>
+                    </span>
                   </div>
-
                   <div class="field col-12 md:col-6">
                     <label>Listing Order:<sup class="p-error">*</sup></label>
-                    <input pInputText inputId="listingOrder" #listingOrder  placeholder="Enter Listing Order" formControlName="listingOrder" numericOnly [maxlength]="6"
+                    <input pInputText inputId="listingOrder" #listingOrder placeholder="Enter Listing Order"
+                      formControlName="listingOrder" numericOnly [maxlength]="6"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
                     <div class="text-right">
                       <small>{{listingOrder.value.length}}/6</small>
@@ -146,10 +131,9 @@
                       </div>
                     </span>
                   </div>
-
                   <div class="field col-12 md:col-6">
                     <label htmlFor="isActive">Is Active?:<sup class="p-error">*</sup></label><br><br>
-                    &nbsp; <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive" class="form-control">
+                    &nbsp; <p-inputSwitch formControlName="isActive" class="form-control">
                     </p-inputSwitch>
                     <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
                       class="error-message p-error">
@@ -165,7 +149,7 @@
       <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-          [disabled]="fbsections.invalid" (click)="onSubmit()"></button>
+            [disabled]="fbsections.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>
@@ -176,22 +160,20 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Section" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitSection()" *ngIf="permissions.CanCreateSection"></button>
+          (click)="addSection()" *ngIf="permissions.CanCreateSection"></button>
       </ng-template>
     </p-toolbar>
 
     <p-table #dt1 [value]="sections" dataKey="id" [rows]="10" [rowHover]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="['sectionId','sectionName','circleId','circleId','circleName',
+      [globalFilterFields]="['sectionCode','sectionName','circleId','circleId','circleName',
             'divisionId','divisionName','inchargeName','inchargePhoneNo','address','listingOrder','updatedAt','createdAt','updatedBy','createdBy']" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
             (click)="clear(dt1)"></button>
-
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
             <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
@@ -199,31 +181,25 @@
           </span>
         </div>
       </ng-template>
-
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-
-          <th pSortableColumn="divisionName">Division<p-columnFilter type="text" field="divisionName"
-            display="menu"></p-columnFilter>
-          <p-sortIcon field="divisionName"></p-sortIcon>
-        </th>
-
-        <th pSortableColumn="circleName">Circle<p-columnFilter type="text" field="circleName" display="menu">
-        </p-columnFilter>
-        <p-sortIcon field="circleName"></p-sortIcon>
-      </th>
-     
-         
-          <th pSortableColumn="sectionId">Section Code<p-columnFilter type="text" field="sectionId" display="menu">
+          <th pSortableColumn="divisionName">Division<p-columnFilter type="text" field="divisionName" display="menu">
             </p-columnFilter>
-            <p-sortIcon field="sectionId"></p-sortIcon>
+            <p-sortIcon field="divisionName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="circleName">Circle<p-columnFilter type="text" field="circleName" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="circleName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="sectionCode">Section Code<p-columnFilter type="text" field="sectionCode" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="sectionCode"></p-sortIcon>
           </th>
           <th pSortableColumn="sectionName">Section Name <p-columnFilter type="text" field="sectionName" display="menu">
             </p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
-          
           <th pSortableColumn="inchargeName">Incharge Name <p-columnFilter type="text" field="inchargeName"
               display="menu"></p-columnFilter>
             <p-sortIcon field="inchargeName"></p-sortIcon>
@@ -232,53 +208,47 @@
               display="menu"></p-columnFilter>
             <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
           </th>
-
-          <th pSortableColumn="listingOrder">Order <p-columnFilter type="text" field="listingOrder"
-            display="menu"></p-columnFilter>
-          <p-sortIcon field="listingOrder"></p-sortIcon>
-        </th>
-         
+          <th pSortableColumn="listingOrder">Order <p-columnFilter type="text" field="listingOrder" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="listingOrder"></p-sortIcon>
+          </th>
           <th pSortableColumn="address">Address <p-columnFilter type="text" field="address" display="menu">
             </p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
           </th>
-        
           <th class="text-center" pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive"
               display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedAt">Created Date<p-columnFilter type="text" field="updatedAt" display="menu">
-          </p-columnFilter>
-          <p-sortIcon field="updatedAt"></p-sortIcon>
-        </th>
-        <th pSortableColumn="createdAt">Created By<p-columnFilter type="text" field="createdAt" display="menu">
-          </p-columnFilter>
-          <p-sortIcon field="createdAt"></p-sortIcon>
-        </th>
-        <th pSortableColumn="updatedBy">Updated Date<p-columnFilter type="text" field="updatedBy" display="menu">
-          </p-columnFilter>
-          <p-sortIcon field="updatedBy"></p-sortIcon>
-        </th>
-        <th pSortableColumn="createdBy">Updated By<p-columnFilter type="text" field="createdBy" display="menu">
-          </p-columnFilter>
-          <p-sortIcon field="createdBy"></p-sortIcon>
-        </th>
+          <th pSortableColumn="createdAt">Created Date<p-columnFilter type="date" field="createdAt" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdBy">Created By<p-columnFilter type="date" field="createdBy" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="createdBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedAt">Updated Date<p-columnFilter type="text" field="updatedAt" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedBy">Updated By<p-columnFilter type="text" field="updatedBy" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="updatedBy"></p-sortIcon>
+          </th>
       </ng-template>
-
       <ng-template pTemplate="body" let-section>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editProduct(section)" [disabled]="!permissions.CanUpdateSection"></button></td>
-
-              <td>{{section.divisionName}}</td>
-              <td>{{section.circleName}}</td>
+          <td>{{section.divisionName}}</td>
+          <td>{{section.circleName}}</td>
           <td>{{section.sectionCode}}</td>
           <td>{{section.sectionName}}</td>
           <td>{{section.inchargeName}}</td>
           <td>{{section.inchargePhoneNo}}</td>
           <td>{{section.listingOrder}}</td>
           <td>{{section.address}}</td>
-     
           <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="section.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>
@@ -287,19 +257,14 @@
           <td>{{section.createdBy}}</td>
           <td>{{section.updatedAt | date: mediumDate }}</td>
           <td>{{section.updatedBy}}</td>
-          
-         
-          
-          
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center"colspan="16" >No Sections Found.</td>
+          <td class="md:text-center" colspan="16">No Sections Found.</td>
         </tr>
       </ng-template>
-  
     </p-table>
-  </div>
 
+  </div>
 </div>

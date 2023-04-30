@@ -610,7 +610,7 @@ export class FarmersViewDto {
   phoneNo?: string;
   email?: string;
   panNo?: string;
-  aadharNo?: any;
+  aadhaarNo?: string;
   oldRyot?: string;
   jfNo?: string;
   bankId?: number;

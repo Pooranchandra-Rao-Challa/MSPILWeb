@@ -228,7 +228,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-4">
-                  <label class="required">Reported Area (Acer):</label>
+                  <label class="required">Reported Area (Acre):</label>
                   <p-inputNumber placeholder="Enter Reported Area" formControlName="reportedArea" mode="decimal"
                     locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" (onBlur)="onCalculation()"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['reportedArea'].touched && FormControls['reportedArea'].errors }">
@@ -292,7 +292,7 @@
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Field Name:</label>
-                  <input pInputText id="fieldName" type="text" formControlName="fieldName">
+                  <input pInputText id="fieldName" placeholder="Enter Field Name" type="text" formControlName="fieldName">
                 </div>
                 <div class="field col-12 md:col-4">
                   <label class="required">Plot Type:</label>
@@ -305,8 +305,8 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-4">
-                  <label>Demo Plant Area:</label>
-                  <p-inputNumber placeholder="Enter Demo PlantArea" formControlName="demoPlotArea" mode="decimal"
+                  <label>Demo Plot Area(Acre):</label>
+                  <p-inputNumber placeholder="Enter Demo Plot Area" formControlName="demoPlotArea" mode="decimal"
                     locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
                   </p-inputNumber>
                 </div>

@@ -64,7 +64,6 @@
 
                             <ng-template pTemplate="content">
                                 <!-- <from [formGroup]="fbSecureQue"> -->
-
                                     <div class="p-field mb-3 ">
                                         <label for="SecurityQuestions"  >Security Questions</label><br/><br/>
                                         <p-dropdown name="SecurityQuestions" [options]="getSecureQuestions" (onChange)="onChange($event)" 
@@ -82,7 +81,6 @@
                                         <small class="p-invalid p-error" *ngIf="!security.Answer && (answer.dirty || answer.touched)">Answer is
                                             required.</small>
                                     </div>
-
                                 <!-- </from> -->
                             </ng-template>
                             <ng-template pTemplate="footer">

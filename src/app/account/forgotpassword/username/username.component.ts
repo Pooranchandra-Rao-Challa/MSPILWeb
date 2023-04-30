@@ -13,7 +13,10 @@ export class UserNameComponent implements OnInit {
   userName?: string;
   constructor(private router: Router) { }
 
+
+
   navigateToNext(){
+    debugger
     console.log(this.userName);
 
     this.router.navigate(['/forgotpassword/securityquestion'],{ queryParams: { username: this.userName }})
