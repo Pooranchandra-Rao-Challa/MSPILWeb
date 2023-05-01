@@ -23,6 +23,7 @@ export class CuttingOrderComponent implements OnInit {
   divisions: DivisionsforUserDto[] = [];
   sections: SectionforUserDto[] = [];
   circles: CircleforUserDto[] = [];
+  showForm: boolean = false;
   villages: VillageforUserDto[] = [];
   filterDivisions: DivisionsforUserDto[] = [];
   filterCircles: CircleforUserDto[] = [];
@@ -83,7 +84,9 @@ export class CuttingOrderComponent implements OnInit {
     // { field: 'weedStatusName', header: 'weedStatusName  ', label: 'Weed Status' },
     // { field: 'interCropName', header: 'interCropName', label: 'Inter Croping' },
   ];
-
+  toggleTab() {
+    this.showForm = !this.showForm;
+  }
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];

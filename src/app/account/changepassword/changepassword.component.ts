@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import {  SecureQuestionDto } from 'src/app/_models/security';
 import { SecurityService } from 'src/app/_services/security.service';
 import { SecurityDto, SecurQuestion } from '../securityquestions/securityque.component';
 
-
+export class ThemeDropdownItems {
+  // UserName?: string
+  Name?: string;
+  Label?: string;
+  icon?: string;
+  Value?:string;
+}
 export class ChangePasswordDto {
   // UserName?: string
   CurrentPassword?: string
@@ -21,6 +28,8 @@ export class ChangePasswordDto {
   ]
 })
 export class ChangepasswordComponent implements OnInit {
+
+  setting_items!: ThemeDropdownItems[];
   getSecureQuestions:SecureQuestionDto[] = []
   allSecureQuestions:SecureQuestionDto[] = []
   selectedQuestion!: SecurQuestion;
@@ -37,6 +46,7 @@ export class ChangepasswordComponent implements OnInit {
     private messageService: MessageService,
     private formbuilder: FormBuilder,
     private securityService: SecurityService,
+    public layoutService: LayoutService,
   ) {
     
    }
@@ -56,6 +66,55 @@ export class ChangepasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.initGetSecureQuestions();
+
+    this.setting_items = [
+      { Label: 'Green (Default)', icon: 'pi pi-external-link', Name: 'lara-light-indigo' },
+      { Label: 'Dark Green',      icon: 'pi pi-external-link', Name: 'lara-dark-indigo' },
+      { Label: 'Light Blue',      icon: 'pi pi-external-link', Name: 'lara-light-blue' },
+      { Label: 'Dark Blue',       icon: 'pi pi-external-link', Name: 'lara-dark-blue' },
+      { Label: 'Light Purple',    icon: 'pi pi-external-link', Name: 'lara-light-purple' },
+      { Label: 'Dark Purple',     icon: 'pi pi-external-link', Name: 'lara-dark-purple'},
+      { Label: 'Light Teal',      icon: 'pi pi-external-link', Name: 'lara-light-teal'},
+      { Label: 'Dark Teal',       icon: 'pi pi-external-link', Name: 'lara-dark-teal'},
+    ];
+  }
+
+  
+
+  onDropChange(event: any) {
+    debugger
+    const dropvalue = event.value;
+    console.log(dropvalue);
+    this.changeTheme(dropvalue);
+  }
+
+  changeTheme(theme: string) {
+    
+    const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
+    const newHref = themeLink.getAttribute('href')!.replace(this.layoutService.config.theme, theme);
+    this.layoutService.config.colorScheme
+    this.replaceThemeLink(newHref, () => {
+        this.layoutService.config.theme = theme;
+        // this.layoutService.config.colorScheme = colorScheme;
+        this.layoutService.onConfigUpdate();
+    });
+  }
+
+  replaceThemeLink(href: string, onComplete: Function) {
+      const id = 'theme-css';
+      const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
+      const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
+
+      cloneLinkElement.setAttribute('href', href);
+      cloneLinkElement.setAttribute('id', id + '-clone');
+
+      themeLink.parentNode!.insertBefore(cloneLinkElement, themeLink.nextSibling);
+
+      cloneLinkElement.addEventListener('load', () => {
+          themeLink.remove();
+          cloneLinkElement.setAttribute('id', id);
+          onComplete();
+      });
   }
 
   editProduct(security: SecurityDto) {
@@ -75,6 +134,7 @@ export class ChangepasswordComponent implements OnInit {
     this.productDialog = false;
     this.submitted = false;
   }
+
 
 
 

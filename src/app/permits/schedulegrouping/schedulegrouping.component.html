@@ -169,14 +169,14 @@
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
             (click)="clear(dtSchedulegrouping)"></button>
           <div>
-            <span class="p-input-icon-left mb-2">
+            <span class="p-input-icon-left ">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filters (input)="onGlobalFilter(dtSchedulegrouping, $event)"
                 placeholder="Search Keyword"
                 pTooltip="Search By seasonName, groupNo,toDOP, fromDOP, Created By,Updated At,Updated By"
                 class="w-full" />
             </span>
-            <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
+            <p-dropdown class="" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initScheduleGroups($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
