@@ -119,10 +119,10 @@
 
     <!-- dialog box -->
     <p-dialog header="Bill" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
-      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbBillMaster.reset()">
+    [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}"
+      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbBillMaster.reset()" showEffect="fade">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbBillMaster" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbBillMaster" (ngSubmit)="onSubmit()" >
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">

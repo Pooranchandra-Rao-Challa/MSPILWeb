@@ -109,7 +109,7 @@
 
   <!-- Plot Offer Dialog -->
   <p-dialog header="Plot Offer" [(visible)]="showDialog" [modal]="true" showEffect="fade"  [transitionOptions]="'300ms'"
-    [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="fbPlotOffer.reset()" [maximizable]="true">
+  [breakpoints]="{'960px': '60%', '640px': '80%'}"  [style]="{width: '60%'}" (onHide)="fbPlotOffer.reset()" [maximizable]="true">
     <div class="flex flex-column align-items-center justify-content-center">
       <form [formGroup]="fbPlotOffer" (ngSubmit)="onSubmit()">
         <div class="grid">
@@ -117,7 +117,7 @@
             <div class="p-fluid p-formgrid grid">
               <p-fieldset legend="Offer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="p-fluid p-formgrid grid">
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Season:</label>
                     <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
                       optionValue="seasonId" formControlName="seasonId" (onChange)="getNewOfferNo($event.value)"
@@ -128,13 +128,13 @@
                         Please Select Season.</div>
                     </span>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Offer No:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["offerNo"].value }}
                     </p>
                     </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Offer Date:</label>
                     <p-calendar placeholder="Select Offer Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="offerDate" [defaultDate]="plantFrom" [minDate]="plantFrom" [maxDate]="plantTo"
@@ -149,7 +149,7 @@
               </p-fieldset>
               <p-fieldset legend="Ryot Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="p-fluid p-formgrid grid">
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Ryot No:</label>
                     <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
                       filterBy="code,farmerName,villageName" formControlName="farmerId" placeholder="Select Farmer"
@@ -172,43 +172,43 @@
                         Please Select Farmer.</div>
                     </span>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Ryot Name:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["ryotName"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Father Name:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["fatherName"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Farmer Village:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["farmerVillage"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Farmer Division:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["farmerDivision"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Farmer Circle:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["farmerCircle"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Farmer Section:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["farmerSection"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Is New Farmer:</label><br>
                     <p-inputSwitch formControlName="isNewFarmer" [disabled]="true"> </p-inputSwitch>
                   </div>
@@ -216,7 +216,7 @@
               </p-fieldset>
               <p-fieldset legend="Plot Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="p-fluid p-formgrid grid">
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Plot Village:</label>
                     <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
                       filterBy="villageName,villageCode" formControlName="plotVillageId" placeholder="Select Village"
@@ -245,19 +245,19 @@
                         Please Select Village.</div>
                     </span>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Plot Division:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["plotDivision"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Plot Circle:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["plotCircle"].value }}
                     </p>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label>Plot Section:</label>
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["plotSection"].value }}
@@ -267,7 +267,7 @@
               </p-fieldset>
               <p-fieldset legend="Cultivable Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="p-fluid p-formgrid grid">
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Expected Area:</label>
                     <p-inputNumber #expectedArea placeholder="Enter Expected Area" formControlName="expectedArea" mode="decimal"
                       [maxlength]="10" [minFractionDigits]="2" [maxFractionDigits]="2"
@@ -282,7 +282,7 @@
                         Please Enter Expected Area.</div>
                     </span>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Plant Type:</label>
                     <p-dropdown placeholder="Select Plant Type" optionLabel="name" [options]="plantTypes"
                       optionValue="plantTypeId" formControlName="plantTypeId" appendTo="body"
@@ -294,7 +294,7 @@
                         Please Select Plant Type.</div>
                     </span>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Expected Planting Date:</label>
                     <p-calendar placeholder="Select Expected Planting Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="expectedPlantingDate" appendTo="body" [defaultDate]="plantFrom" [minDate]="FormControls['offerDate'].value" [maxDate]="plantTo"
@@ -308,13 +308,13 @@
                         Please Select Expected Planting Date.</div>
                     </span>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Expected Variety Code:</label>
                     <p-dropdown placeholder="Select Expected Variety Code"  filterBy="name" [filter]="true"  optionLabel="name" [options]="varieties" appendTo="body"
                       optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true" [virtualScrollItemSize]="38">
                     </p-dropdown>
                   </div>
-                  <div class="field col-12 md:col-4">
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Reason For Not Planting:</label>
                     <p-dropdown placeholder="Select Reason For Not Planting" optionLabel="name"
                       [options]="resonForNotPlanting" optionValue="lookupDetailId"
@@ -329,7 +329,7 @@
       </form>
     </div>
     <ng-template pTemplate="footer">
-      <div class="col-4" style="float:right">
+      <div class="col-6" style="float:right">
         <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
           [disabled]="fbPlotOffer.invalid" (click)="onSubmit()"></button>
       </div>
@@ -338,7 +338,7 @@
 
   <!-- Plot Offer Approval Dialog -->
   <p-dialog header="Plot Offer For Approval" [(visible)]="showApprovalDialog" showEffect="fade"
-    [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '30vw'}" [modal]="true"
+  [breakpoints]="{'960px': '50%', '640px': '80%'}"  [style]="{width: '50%'}" [modal]="true"
     (onHide)="fbPlotOffer.reset()">
     <ng-template pTemplate="content">
       <div class="flex flex-column align-items-center justify-content-center">

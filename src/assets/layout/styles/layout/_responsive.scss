@@ -94,6 +94,7 @@
             .layout-mask {
                 display: block;
                 animation: fadein $transitionDuration;
+                z-index:auto;
             }
         }
     }
