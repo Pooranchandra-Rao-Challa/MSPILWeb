@@ -274,6 +274,8 @@
               <p-fieldset legend="Category Wise Billing Rates" class="col-12" [toggleable]="true"
                 [transitionOptions]="'500ms'">
                 <div class="p-fluid">
+                  <p class="head_note">Note: Need To Add Below (Farmers, Harvester, Transporter & Seed) Billing Category Rates are Mandatory. </p>
+                           
                   <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)"
                     [(activeIndex)]="activeIndex!">
                     <p-tabPanel *ngFor="let billCategory of billCategories; let i = index" [selected]="i == 0">
