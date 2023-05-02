@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="card">
         <!-- toolbar -->
-        <p-toolbar styleClass="p-mb-4">                                                                                                                                                                                                     
+        <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <h4>Cutting Order</h4>
             </ng-template>
@@ -59,7 +59,8 @@
                                             <label>From Schedule Group No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" id="fromSchGroupNo" type="number"
                                                 [maxlength]="2" formControlName="fromSchGroupNo" [min]="1" [max]="5"
-                                                placeholder="From Schedule Group No" [(ngModel)]="fromvalue"  (onInput)="checkValue()"
+                                                placeholder="From Schedule Group No" [(ngModel)]="fromvalue"
+                                                (onInput)="checkValue()"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromSchGroupNo'].touched && FormControls['fromSchGroupNo'].errors }">
                                             </p-inputNumber>
                                             <span
@@ -68,13 +69,16 @@
                                                     *ngIf="FormControls['fromSchGroupNo'].errors?.['required']">
                                                     Please Enter From Schedule Group No.</div>
                                             </span>
-                                            
+                                            <span class="ng-invalid  p-error" *ngIf="error">
+                                                From Schedule Group No is Lessthan To Schedule Group No.
+                                            </span>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>To Schedule Group No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" id="toSchGroupNo" type="number"
                                                 [maxlength]="2" formControlName="toSchGroupNo" [min]="1" [max]="5"
-                                                placeholder="To Schedule Group No" [(ngModel)]="tovalue" (onInput)="checkValue()"  
+                                                placeholder="To Schedule Group No" [(ngModel)]="tovalue"
+                                                (onInput)="checkValue()"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['toSchGroupNo'].touched && FormControls['toSchGroupNo'].errors }">
                                             </p-inputNumber>
                                             <span
@@ -83,9 +87,8 @@
                                                     *ngIf="FormControls['toSchGroupNo'].errors?.['required']">
                                                     Please Enter To Schedule Group No.</div>
                                             </span>
-                                            <span class="ng-invalid  p-error"
-                                            *ngIf="error">
-                                            To Schedule Group No is greater than From Schedule Group No
+                                            <span class="ng-invalid  p-error" *ngIf="error">
+                                                To Schedule Group No is greater than From Schedule Group No.
                                             </span>
                                         </div>
                                     </div>
@@ -117,7 +120,7 @@
                                         <div class="field col-12 md:col-2">
                                             <label>From Brix:</label>
                                             <input pInputText id="fromBrix" formControlName="fromBrix"
-                                                placeholder="From Brix" numericOnly 
+                                                placeholder="From Brix" numericOnly
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromBrix'].touched && FormControls['fromBrix'].errors }">
                                             <span
                                                 *ngIf="FormControls['fromBrix'].touched && FormControls['fromBrix'].invalid">
@@ -217,6 +220,74 @@
                                             </span>
                                         </div>
                                         <div class="field col-12 md:col-2">
+                                            <label>Division:</label>
+                                            <p-multiSelect [options]="filterDivisions" placeholder="Select Division"
+                                                optionValue="divisionId" appendTo="body" [filter]="true"
+                                                optionLabel="divisionName" formControlName="divisionId"
+                                                [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
+                                                (onChange)="SetAllDivisionChilds($event.value)">
+                                            </p-multiSelect>
+                                            <span
+                                                *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControls['divisionId'].errors?.['required']">
+                                                    Select Division.</div>
+                                            </span>
+                                        </div>
+                                        <div class="field col-12 md:col-2">
+                                            <label>Circle:</label>
+                                            <p-multiSelect [options]="filterCircles" placeholder="Select Circle "
+                                                optionValue="circleId" appendTo="body" [filter]="true"
+                                                optionLabel="circleName" formControlName="circleId"
+                                                [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }"
+                                                (onChange)="SetAllCircleChilds($event.value)">
+                                            </p-multiSelect>
+                                            <span
+                                                *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControls['circleId'].errors?.['required']">
+                                                    Select Circle.</div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-fluid p-formgrid grid">
+
+
+                                        <div class="field col-12 md:col-2">
+                                            <label>Section:</label>
+                                            <p-multiSelect [options]="filterSections" placeholder="Select Section "
+                                                optionValue="sectionId" appendTo="body" [filter]="true"
+                                                optionLabel="sectionName" formControlName="sectionId"
+                                                [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }"
+                                                (onChange)="SetAllSectionChilds($event.value)">
+                                            </p-multiSelect>
+                                            <span
+                                                *ngIf="FormControls['sectionId'].touched && FormControls['sectionId'].invalid">
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControls['sectionId'].errors?.['required']">
+                                                    Select Section.</div>
+                                            </span>
+                                        </div>
+                                        <div class="field col-12 md:col-2">
+                                            <label>Village:</label>
+                                            <p-multiSelect [options]="filterVillages" placeholder="Select Village"
+                                                optionValue="villageId" appendTo="body" [filter]="true"
+                                                optionLabel="villageName" formControlName="villageId"
+                                                [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }">
+                                            </p-multiSelect>
+                                            <span
+                                                *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControls['villageId'].errors?.['required']">
+                                                    Select Village.</div>
+                                            </span>
+                                        </div>
+                                        <div class="field col-12 md:col-2">
                                             <label>Ryot No:</label>
                                             <p-dropdown placeholder="Select To Ryot" [options]="farmers"
                                                 optionLabel="farmercode" optionValue="farmerId"
@@ -264,74 +335,6 @@
                                                 <div class="ng-invalid ng-touched p-error"
                                                     *ngIf="FormControls['plotId'].errors?.['required']">
                                                     Select plot.</div>
-                                            </span>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="p-fluid p-formgrid grid">
-
-                                        <div class="field col-12 md:col-2">
-                                            <label>Division:</label>
-                                            <p-multiSelect [options]="divisions" placeholder="Select Division"
-                                                optionValue="divisionId" appendTo="body" [filter]="true"
-                                                optionLabel="divisionName" formControlName="divisionId"
-                                                [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
-                                                (onChange)="SetAllDivisionChilds($event.value)">
-                                            </p-multiSelect>
-                                            <span
-                                                *ngIf="FormControls['divisionId'].touched && FormControls['divisionId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['divisionId'].errors?.['required']">
-                                                    Select Division.</div>
-                                            </span>
-                                        </div>
-                                        <div class="field col-12 md:col-2">
-                                            <label>Circle:</label>
-                                            <p-multiSelect [options]="circles" placeholder="Select Circle "
-                                                optionValue="circleId" appendTo="body" [filter]="true"
-                                                optionLabel="circleName" formControlName="circleId"
-                                                [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['circleId'].touched && FormControls['circleId'].errors }"
-                                                (onChange)="SetAllCircleChilds($event.value)">
-                                            </p-multiSelect>
-                                            <span
-                                                *ngIf="FormControls['circleId'].touched && FormControls['circleId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['circleId'].errors?.['required']">
-                                                    Select Circle.</div>
-                                            </span>
-                                        </div>
-                                        <div class="field col-12 md:col-2">
-                                            <label>Section:</label>
-                                            <p-multiSelect [options]="sections" placeholder="Select Section "
-                                                optionValue="sectionId" appendTo="body" [filter]="true"
-                                                optionLabel="sectionName" formControlName="sectionId"
-                                                [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }"
-                                                (onChange)="SetAllSectionChilds($event.value)">
-                                            </p-multiSelect>
-                                            <span
-                                                *ngIf="FormControls['sectionId'].touched && FormControls['sectionId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['sectionId'].errors?.['required']">
-                                                    Select Section.</div>
-                                            </span>
-                                        </div>
-                                        <div class="field col-12 md:col-2">
-                                            <label>Village:</label>
-                                            <p-multiSelect [options]="villages" placeholder="Select Village"
-                                                optionValue="villageId" appendTo="body" [filter]="true"
-                                                optionLabel="villageName" formControlName="villageId"
-                                                [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }">
-                                            </p-multiSelect>
-                                            <span
-                                                *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['villageId'].errors?.['required']">
-                                                    Select Village.</div>
                                             </span>
                                         </div>
                                         <div class="field col-12 md:col-2">
@@ -389,9 +392,7 @@
             <!-- (onHide)="fbAllottedPlot.reset()" -->
             <div class="flex flex-column align-items-center justify-content-center">
 
-
                 <!-- popup table -->
-
                 <p-table #dtcuttingorders [value]="cuttingorders" dataKey="id" [rows]="10" [rowHover]="true"
                     *ngIf="showTable" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100"
                     [paginator]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
@@ -406,9 +407,9 @@
                                         (input)="onSearch(dtcuttingorders,$event)"
                                         pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
                                         class="w-full" />
-
                                 </span>
-                                <button pButton label="Submit" class="p-button-raised p-button-primary m-2"></button>
+                                <button pButton label="Submit" (click)="onSubmit()"
+                                class="p-button-raised p-button-primary m-2"></button>
                             </div>
                         </div>
                     </ng-template>
@@ -422,16 +423,17 @@
                             </th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-getOrder>
+                    <ng-template pTemplate="body" let-getOrder let-rowIndex="rowIndex">
                         <tr>
                             <!-- <td><button pButton pRipple icon="pi pi-pencil"
                                     class="p-element p-ripple p-button-text p-button p-component"></button>
                             </td> -->
                             <td>
-                                <p-checkbox [binary]="true"> </p-checkbox>
+                                <p-checkbox [binary]="true" (onChange)="onRowSelect($event,getOrder)"
+                                    [(ngModel)]="getOrder.selected"> </p-checkbox>
                             </td>
                             <td *ngFor="let col of CuttingOrder">
-                                <span *ngIf="col?.field != 'plantingDate' ">{{getOrder[col.field]}}</span>
+                                <span *ngIf="col?.field != 'plantingDate'">{{getOrder[col.field]}}</span>
                                 <span *ngIf="col?.field == 'plantingDate'">
                                     {{getOrder[col.field] | date: 'dd-MM-yyyy'}}
                                 </span>
@@ -486,52 +488,56 @@
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-cuttingOrder>
+            <ng-template pTemplate="body" let-plot let-rowIndex="rowIndex" let-expanded="expanded">
                 <tr>
                     <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
-                    <td><button pButton pRipple icon="pi pi-pencil"
-                            class="p-element p-ripple p-button-text p-button p-component"></button>
+                    <td>
+                        <button type="button" pButton pRipple [pRowToggler]="plot"
+                        class="p-button-text p-button-rounded p-button-plain"
+                        [icon]="rowIndex === expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                     </td>
                     <td *ngFor="let col of seasonCuttingOrder">
-                        <span *ngIf="col?.field != 'FromDate' ">{{cuttingOrder[col.field]}}</span>
-                        <span *ngIf="col?.field == 'FromDate'">
-                            {{cuttingOrder[col.field] | date: 'dd-MM-yyyy'}}
+                        <span *ngIf="col?.field != 'cuttingOrderDate'  && col?.field != 'fromDOP'
+                        &&  col?.field != 'toDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{plot[col.field]}}</span>
+                        <span *ngIf="col?.field == 'cuttingOrderDate' || col?.field == 'fromDOP' ||  col?.field == 'toDOP' 
+                        || col?.field == 'createdAt' || col?.field == 'updatedAt' ">
+                            {{plot[col.field] | date: 'dd-MM-yyyy'}}
                         </span>
                     </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="rowexpansion" let-plot>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="21">
                         <div class="p-3">
-                            <p-table [value]="plot.objPlotCuttingOrder" [columns]="CuttingOrder"
-                                dataKey="plotOfferId" [tableStyle]="{ width: 'min-content'}"
+                            <p-table [value]="plot.objPlotCuttingOrder" [columns]="CuttingOrder" dataKey="plotOfferId"
+                                [tableStyle]="{ width: 'min-content'}"
                                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                                 <ng-template pTemplate="header">
                 <tr>
-                    <th></th>
-                    <th *ngFor="let col of CuttingOrder">
+                    <!-- <th></th> -->
+                    <th *ngFor="let col of plotCuttingOrder">
                         {{col?.label}}
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-plotOrder>
                 <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil"
+                    <!-- <td><button pButton pRipple icon="pi pi-pencil"
                             class="p-element p-ripple p-button-text p-button p-component"></button>
-                    </td>
-                    <!-- <td *ngFor="let col of plotCuttingOrder">
+                    </td> -->
+                    <td *ngFor="let col of plotCuttingOrder">
                     <span
-                      *ngIf="col?.field != 'plantingDate' && col?.field != 'agreementedDate'">{{plotOrder[col.field]}}</span>
-                    <span *ngIf="col?.field == 'plantingDate' || col?.field == 'agreementedDate'">
+                      *ngIf="col?.field != 'plantingDate'">{{plotOrder[col.field]}}</span>
+                    <span *ngIf="col?.field == 'plantingDate'">
                       {{plotOrder[col.field] | date: 'dd-MM-yyyy'}}
                     </span>
-                  </td> -->
+                  </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td class="md:text-center" colspan="13">There Are No plot Cutting Orders Found Yet.</td>
+                    <td class="md:text-center" colspan="21">There Are No plot Cutting Orders Found Yet.</td>
                 </tr>
             </ng-template>
         </p-table>

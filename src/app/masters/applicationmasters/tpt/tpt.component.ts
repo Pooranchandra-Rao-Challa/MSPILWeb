@@ -103,6 +103,7 @@ export class TptComponent implements OnInit {
   }
 
   getBranchByBankId(Id: number, edit: boolean = false) {
+    this.IFSC = '';
     this.appMasterService.GetBank(Id).subscribe(resp => {
       if (resp) {
         this.bank = resp as unknown as BankDto;

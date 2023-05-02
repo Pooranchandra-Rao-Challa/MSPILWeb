@@ -150,13 +150,13 @@
       </ng-template>
     </p-table>
 
-    <p-dialog header="User" [(visible)]="dialog" [modal]="true" showEffect="fade" [style]="{width: '60vw'}"
-      [breakpoints]="{'960px': '90vw'}" (onHide)="userForm.reset()">
+    <p-dialog header="User" [(visible)]="dialog" [modal]="true" showEffect="fade" 
+    [breakpoints]="{'960px': '50%', '640px': '80%'}"  [style]="{width: '50%'}" (onHide)="userForm.reset()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <p-tabView orientation="left" class="users-container">
-              <p-tabPanel header="User Info" class="line-height-3 m-0 col-12">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="tpt_form">
+            <p-tabView orientation="left" class="users-container tpt_form">
+              <p-tabPanel header="User Info" class="line-height-3 m-0 col-12 ">
                 <div class="grid">
                   <div class="col-12">
                     <h6>User Info</h6>
@@ -269,28 +269,28 @@
                     </div>
                     <h6>User Rights</h6>
                     <div class="grid md:flex">
-                      <div class="field col-12 md:col-4 xl:col-3">
+                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
                         <label class="col-12">IP Restriction:<sup class="p-error">*</sup></label>
                         <p-inputSwitch [trueValue]="true" [falseValue]="false" placeholder="IP Ristriction"
                           formControlName="iprestriction" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="field col-12 md:col-4 xl:col-3">
+                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
                         <label class="col-12">Is AdminGate:<sup class="p-error">*</sup></label>
                         <p-inputSwitch formControlName="isAdminGate" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="field col-12 md:col-4 xl:col-3">
+                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
                         <label class="col-12">Is Gross:<sup class="p-error">*</sup></label>
                         <p-inputSwitch formControlName="isGross" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="field col-12 md:col-4 xl:col-3">
+                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
                         <label class="col-12">Is Tare:<sup class="p-error">*</sup></label>
                         <p-inputSwitch formControlName="isTare" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="field col-12 md:col-4 xl:col-3">
+                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
                         <label class="col-12">Is DumpYard:<sup class="p-error">*</sup></label>
                         <p-inputSwitch formControlName="isDumpYard" class="col-12"></p-inputSwitch>
                       </div>
-                      <div class="field col-12 md:col-4 xl:col-3">
+                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
                         <label class="col-12">Is Active?:<sup class="p-error">*</sup></label>
                         <p-inputSwitch formControlName="isActive" class="col-12"></p-inputSwitch>
                       </div>
@@ -298,10 +298,10 @@
                   </div>
                 </div>
               </p-tabPanel>
-              <p-tabPanel header="User Sections" class="line-height-3 m-0">
+              <p-tabPanel header="User Sections" class="line-height-3 m-0 ">
                 <div class="grid col-12">
-                  <div class="col-3" *ngFor="let userSection of user.userSections">
-                    <div class="field-checkbox">
+                  <div class="col-12 lg:col-3 md:col-6 sm:col-6" *ngFor="let userSection of user.userSections">
+                    <div class="field-checkbox user_checkbox">
                       <p-inputSwitch [(ngModel)]="userSection.isActive" [ngModelOptions]="{standalone: true}">
                       </p-inputSwitch>
                       <label for="ny">{{userSection.sectionName}}</label>
@@ -314,7 +314,7 @@
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
-        <div class="col-4" style="float:right">
+        <div class="col-6" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
             (click)="onSubmit()"></button>
         </div>

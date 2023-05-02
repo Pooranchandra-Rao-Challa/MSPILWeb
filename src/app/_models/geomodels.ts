@@ -170,7 +170,7 @@ export class VillagesViewDto {
   pinCode?: string
   distance?: number
   divertedDistance?: number
-  noOfEbservices?: number
+  noOfEBServices?: number
   tptRate?: number
   totalArea?: number
   cultivableArea?: number

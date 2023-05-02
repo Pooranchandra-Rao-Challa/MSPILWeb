@@ -40,12 +40,12 @@ export class SugarAPIInterceptor implements HttpInterceptor {
               this.jwtService.Logout();
             }
             else if ([400].includes(err.status) && this.jwtService.IsLoggedIn) {
-              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.message });
+              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.error });
             }
             else if ([404].includes(err.status) && this.jwtService.IsLoggedIn) {
-              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.message });
+              this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error' + ' ' + err.status, detail: err.error });
             }
-            const error = (err && err.error && err.error.message) || err.statusText;
+            const error = (err && err.error) || err.statusText;
             console.error(error);
             console.error(JSON.stringify(err.error))
             console.error(err.error)
@@ -64,7 +64,7 @@ export class SugarAPIInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       map(resp => {
         let response = resp as unknown as HttpResponse<any>;
-        // if ([200].includes(response.status)) { 
+        // if ([200].includes(response.status)) {
         //   this.messageService.add({ severity: 'success', key: 'myToast', summary: 'Success!', detail: 'Signing in...!' });
         // }
         return resp;

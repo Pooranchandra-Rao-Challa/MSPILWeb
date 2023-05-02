@@ -160,6 +160,8 @@ export class PlotofferComponent implements OnInit {
 
   getNewOfferNo(seasonId: number) {
     this.fbPlotOffer.controls["offerNo"].setValue(null);
+    this.fbPlotOffer.controls["offerDate"].setValue(null);
+    this.fbPlotOffer.controls["expectedPlantingDate"].setValue(null);
     this.seasons?.forEach((value) => {
       if (value.seasonId == seasonId) {
         this.plantFrom = value.plantFrom && new Date(value.plantFrom?.toString() + "");

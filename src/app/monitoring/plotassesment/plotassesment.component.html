@@ -42,10 +42,8 @@
                         <label class="required">Plot No:</label>
                         <p-dropdown class="ml-2" placeholder="Select Plot" optionLabel="plotNumber"
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
-                          (onChange)="getPlotinfo($event.value)"
-                          [filter]="true"
-                          filterBy="plotNumber,villageName"
-                         [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
+                          (onChange)="getPlotinfo($event.value)" [filter]="true" filterBy="plotNumber,villageName"
+                          [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                           <ng-template let-plotReport pTemplate="selectedItem">
                             <div>{{ plotReport.plotNumber }} - {{ plotReport.villageName }}</div>
@@ -75,7 +73,7 @@
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Name: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotVillageName  }}</p>
+                          <p class="disabled_text">{{plotInfo.plotVillageName }}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Village: </label><br />
@@ -87,7 +85,7 @@
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold"> Farmer Circle: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerCircleName  }}</p>
+                          <p class="disabled_text">{{plotInfo.farmerCircleName }}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Section: </label><br />
@@ -173,8 +171,10 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label class="required">Assessed Area:</label>
-                        <input pInputText type="name" formControlName="measuredArea" placeholder="Enter Assessed Area"
+                        <p-inputNumber formControlName="measuredArea" placeholder="Enter Assessed Area" mode="decimal"
+                          [maxlength]="10" [minFractionDigits]="2" [maxFractionDigits]="2"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['measuredArea'].touched && FormControls['measuredArea'].errors }">
+                        </p-inputNumber>
                         <span *ngIf="FormControls['measuredArea'].touched && FormControls['measuredArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['measuredArea'].errors?.['required']">
@@ -258,7 +258,6 @@
                     <p-table #dt2 dataKey="id" [value]="getFormArrayControl('pests').controls" [rows]="10"
                       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
                       [paginator]="false" [autoLayout]="true" responsiveLayout="scroll"
-
                       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: '100%'}">
                       <ng-template pTemplate="header">
                         <tr>
@@ -376,8 +375,8 @@
 
     <!-- table -->
     <!-- [lazy]="true" -->
-    <p-table #dtPlotAssessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true" [lazy]="true"
-      (onLazyLoad)="loadPlotassessmentLazy($event)"
+    <p-table #dtPlotAssessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true"
+      [lazy]="true" (onLazyLoad)="loadPlotassessmentLazy($event)"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [autoLayout]="true" scrollHeight="350px"
       [virtualScroll]="true" [virtualRowHeight]="50" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
@@ -387,9 +386,10 @@
         <div class="flex justify-content-between flex-column sm:flex-row">
           <div>
             <button pButton label="Clear" class="p-button-outlined m-2" icon="pi pi-filter-slash"
-            (click)="clear(dtPlotAssessments)"></button>
-            <button (click)="exportPdf()" pButton  class="p-button-outlined p-button-warning m-2"  icon="pi pi-file-pdf"></button>
-            <button (click)="exportExcel()" pButton  class="p-button-outlined m-2" icon="pi pi-file-excel" ></button>
+              (click)="clear(dtPlotAssessments)"></button>
+            <button (click)="exportPdf()" pButton class="p-button-outlined p-button-warning m-2"
+              icon="pi pi-file-pdf"></button>
+            <button (click)="exportExcel()" pButton class="p-button-outlined m-2" icon="pi pi-file-excel"></button>
 
           </div>
 

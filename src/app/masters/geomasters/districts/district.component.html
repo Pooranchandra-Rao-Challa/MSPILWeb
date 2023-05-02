@@ -3,7 +3,7 @@
     <p-toast key="tst"></p-toast>
     <!-- dialog box -->
     <p-dialog header="District" [(visible)]="display" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw',height:'27vw'}" [modal]="true" (onHide)="onClose()">
+    [breakpoints]="{'960px': '40%', '640px': '80%'}" [style]="{width: '40%'}"  [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="fbdistricts" (ngSubmit)="onSubmit()">

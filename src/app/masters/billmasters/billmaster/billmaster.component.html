@@ -151,7 +151,7 @@
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
                   <p-calendar  placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
-                    formControlName="fromDate" [maxDate]="fbBillMaster.value.toDate"
+                    formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
@@ -162,21 +162,21 @@
                 <div class="field col-12 md:col-6">
                   <label>To Date:<sup class="p-error">*</sup></label>
                   <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
-                    formControlName="toDate" [minDate]="fbBillMaster.value.fromDate"
+                    formControlName="toDate" [minDate]="fbBillMaster.value.fromDate" [disabled]="!FormControls['fromDate'].value"
+                    [pTooltip]="!FormControls['fromDate'].value ? 'Please Select From Date First' : ''" tooltipPosition="top"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required'] && !FormControls['fromDate'].errors?.['required']">
+                    <div class="ng-invalid ng-touched p-error"
+                      *ngIf="FormControls['toDate'].errors?.['required'] && !FormControls['fromDate'].errors?.['required']">
                       Please Select To Date.</div>
-                      <div class="ng-invalid ng-touched p-error"
-                      *ngIf="FormControls['fromDate'].errors?.['required']">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
                       Please Select From Date First.</div>
                   </span>
-                  <!-- <span>
-                    <div class="ng-invalid ng-touched p-error"
-                      *ngIf="fbBillMaster.value.fromDate > fbBillMaster.value.toDate">
+                  <span>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="fbBillMaster.hasError('fromDate')">
                       To Date Always Greater Than Equals To From Date</div>
-                  </span> -->
+                  </span>
                 </div>
                 <div class="col-12">
                   <label>Is Final:</label><br>

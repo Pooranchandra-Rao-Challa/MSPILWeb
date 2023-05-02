@@ -1,14 +1,13 @@
-import { Component, DoCheck, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component,ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Table } from "primeng/table";
+import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
 import { ITableHeader } from "src/app/_models/common";
 import { IPlotOfferViewDto } from "src/app/_models/monitoring";
 import { CircleforUserDto, DivisionsforUserDto, FarmersInPlotsForUserDto, GetCuttingOrderViewDto, PlantTypeForUserDto, PlotCuttingOrderViewDto, PlotsForUserDto, SeasonCuttingOrderViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
-import { MonitoringService } from "src/app/_services/monitoring.service";
 import { permitService } from "src/app/_services/permit.service";
-import { MAX_LENGTH_2 } from "src/app/_shared/regex";
 import { CURRENT_SEASON } from "src/environments/environment";
 
 @Component({
@@ -29,6 +28,10 @@ export class CuttingOrderComponent implements OnInit {
   filterCircles: CircleforUserDto[] = [];
   filterSections: SectionforUserDto[] = [];
   filterVillages: VillageforUserDto[] = [];
+  filterFarmers: FarmersInPlotsForUserDto[] = [];
+  filterPlots: PlotsForUserDto[] = []
+  filterPlantTypes: PlantTypeForUserDto[] = [];
+  filterVarieties: VarietiesForUserDto[] = [];
   farmers: FarmersInPlotsForUserDto[] = [];
   plots: PlotsForUserDto[] = [];
   allottedPlots: IPlotOfferViewDto[] = [];
@@ -50,7 +53,8 @@ export class CuttingOrderComponent implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
     private permitService: permitService,
-    private appMasterService: AppMasterService) { }
+    private appMasterService: AppMasterService,
+    private alertMessage: AlertMessage) { }
 
   seasonCuttingOrder: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
@@ -73,10 +77,25 @@ export class CuttingOrderComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated At' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
+  plotCuttingOrder: ITableHeader[] = [
+    { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
+    { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
+    { field: 'circleName', header: 'circleName', label: 'Circle Name' },
+    { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
+    { field: 'villageName', header: 'villageName', label: 'Village Name' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
+    { field: 'netArea', header: 'netArea', label: 'Net Area' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
+    { field: 'cuttingOrderNo', header: 'cuttingOrderNo', label: 'Cutting Order No' },
+    { field: 'orderQuantity', header: 'orderQuantity ', label: 'Order Quantity' },
+  ];
+
   CuttingOrder: ITableHeader[] = [
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
-    { field: 'divisonName', header: 'divisonName', label: 'Division Name' },
+    { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
     { field: 'circleName', header: 'circleName', label: 'Circle Name' },
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
@@ -112,24 +131,28 @@ export class CuttingOrderComponent implements OnInit {
   initDivisions(seasonId: any) {
     this.permitService.GetDivisionsforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.divisions = resp as unknown as DivisionsforUserDto[];
+      this.filterDivisions = Object.assign([], this.divisions);
       console.log('initDivisions', this.divisions)
     });
   }
   initCircles(seasonId: any) {
     this.permitService.GetCirclesforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.circles = resp as unknown as CircleforUserDto[];
+      this.filterCircles = Object.assign([], this.circles);
       console.log('initCircles', this.circles);
     });
   }
   initSections(seasonId: any) {
     this.permitService.GetSectionsforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.sections = resp as unknown as SectionforUserDto[];
+      this.filterSections = Object.assign([], this.sections);
       console.log('initSections', this.sections)
     });
   }
   initVillages(seasonId: any) {
     this.permitService.GetVillagesforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.villages = resp as unknown as VillageforUserDto[];
+      this.filterVillages = Object.assign([], this.villages);
       console.log('initVillages', this.villages);
     });
   }
@@ -137,6 +160,7 @@ export class CuttingOrderComponent implements OnInit {
     var villageId = this.fbCuttingOrder.value.villageId;
     this.permitService.GetFarmersInPlotsForUser(seasonId, villageId, 'ScheduleGroups').subscribe((resp) => {
       this.farmers = resp as unknown as FarmersInPlotsForUserDto[];
+      this.filterFarmers = Object.assign([], this.farmers);
       console.log('initFarmers', this.farmers);
     })
   }
@@ -145,6 +169,7 @@ export class CuttingOrderComponent implements OnInit {
     var villageId = this.fbCuttingOrder.value.villageId
     this.permitService.GetPlotsForUser(seasonId, farmerId, villageId, 'ScheduleGroups').subscribe((resp) => {
       this.plots = resp as unknown as PlotsForUserDto[];
+      this.filterPlots = Object.assign([], this.plots);
       console.log('initPlots', this.plots);
     })
   }
@@ -154,6 +179,7 @@ export class CuttingOrderComponent implements OnInit {
     var plotId = this.fbCuttingOrder.value.plotId
     this.permitService.GetPlantTypeForUser(seasonId, farmerId, villageId, plotId).subscribe((resp) => {
       this.planttypes = resp as unknown as PlantTypeForUserDto[];
+      this.filterPlantTypes = Object.assign([], this.planttypes);
       console.log('initPlantType', this.planttypes);
     })
   }
@@ -163,6 +189,7 @@ export class CuttingOrderComponent implements OnInit {
     var plotId = this.fbCuttingOrder.value.plotId
     this.permitService.GetVarietiesForUser(seasonId, farmerId, villageId, plotId).subscribe((resp) => {
       this.varieties = resp as unknown as VarietiesForUserDto[];
+      this.filterVarieties = Object.assign([], this.varieties);
       console.log('initVarieties', this.varieties);
     })
   }
@@ -201,6 +228,7 @@ export class CuttingOrderComponent implements OnInit {
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
   }
+
   initdropdownsbinding() {
     this.initDivisions(this.currentSeason.seasonId!);
     this.initSections(this.currentSeason.seasonId!);
@@ -238,7 +266,42 @@ export class CuttingOrderComponent implements OnInit {
       villageId: [null],
       plantTypeId: [null],
       varietyId: [null],
+      plotCuttingOrder: this.formbuilder.array([])
     });
+  }
+  plotCuttingOrderForm(rowData: any) {
+    return this.formbuilder.group({
+      plotScheduleId: 0,
+      divisionId: rowData.divisionId,
+      circleId: rowData.circleId,
+      sectionId: rowData.sectionId,
+      farmerId: rowData.farmerId,
+      plantTypeId: rowData.plantTypeId,
+      varietyId: rowData.varietyId,
+      plotYieldId: rowData.plotYieldId,
+      villageId: rowData.villageId,
+    })
+  }
+  get CuttingOrderControls() {
+    return this.fbCuttingOrder.get('plotCuttingOrder') as FormArray;
+  }
+  addPlot(rowData: any) {
+    const formArray = this.fbCuttingOrder.get('plotCuttingOrder') as FormArray;
+    formArray.push(this.plotCuttingOrderForm(rowData));
+  }
+  removePlot(index: any) {
+    const formArray = this.fbCuttingOrder.get('plotCuttingOrder') as FormArray;
+    formArray.removeAt(index);
+  }
+  onRowSelect(event: any, CuttingOrder: any) {
+    console.log(CuttingOrder);
+    if (event.checked) {
+      this.addPlot(CuttingOrder);
+    } else {
+      let index = this.CuttingOrderControls.value.findIndex((s: any) => s.farmerId == CuttingOrder.farmerId && s.plotYieldId == CuttingOrder.plotId)
+      this.removePlot(index);
+    }
+    console.log(this.CuttingOrderControls.value);
   }
   get FormControals() {
     return this.fbCuttingOrder.controls
@@ -261,7 +324,6 @@ export class CuttingOrderComponent implements OnInit {
     });
   }
   initCuttingOrder() {
-    debugger
     this.permitService.GetCuttingOrder(this.fbCuttingOrder.value).subscribe((resp) => {
       this.cuttingorders = resp as unknown as GetCuttingOrderViewDto[];
       console.log('initCuttingOrder', this.cuttingorders);
@@ -278,7 +340,6 @@ export class CuttingOrderComponent implements OnInit {
     }
     else {
       this.error = true;
-
     }
   }
   clear(table: Table) {
@@ -293,4 +354,19 @@ export class CuttingOrderComponent implements OnInit {
     this.initCuttingOrder();
     this.showDialog = true;
   }
+  onSubmit() {
+    console.log(this.fbCuttingOrder.value);
+    if (this.fbCuttingOrder.valid) {
+      return
+      this.permitService.CreateScheduleGroup(this.fbCuttingOrder.value).subscribe((resp) => {
+        if (resp) {
+          const seasonId = this.fbCuttingOrder.value.seasonId;
+          this.addCuttingOrder();
+          this.fbCuttingOrder.patchValue({ seasonId });
+          this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SMPCO001"]);
+        }
+      });
+    }
+}
 }

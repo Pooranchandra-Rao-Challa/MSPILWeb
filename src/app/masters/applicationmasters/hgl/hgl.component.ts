@@ -193,6 +193,7 @@ export class HglComponent implements OnInit {
   }
 
   getBranchByBankId(Id: number) {
+    this.IFSC = '';
     this.appMasterService.GetBank(Id).subscribe((resp) => {
       if (resp) {
         this.bank = resp as unknown as BankDto;

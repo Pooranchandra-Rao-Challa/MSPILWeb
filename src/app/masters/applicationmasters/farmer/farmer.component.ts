@@ -27,7 +27,6 @@ export class FarmerComponent implements OnInit {
   farmer: FarmerDto = new FarmerDto();
   fbfarmer!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
-  valSwitch: boolean = true;
   submitLabel!: string;
   banks: BankViewDto[] = [];
   bank: BankDto = new BankDto();
@@ -85,7 +84,7 @@ export class FarmerComponent implements OnInit {
       email: ['', (Validators.pattern(RG_EMAIL))],
       panno: new FormControl(null, [Validators.pattern(RG_PANNO)]),
       aadhaarNo: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_AADHAAR)]),
-      oldRyot: new FormControl(null, [Validators.pattern(RG_NUMERIC_ONLY)]),
+      oldRyot: new FormControl(null, [Validators.pattern(RG_ALPHA_NUMERIC)]),
       selfId: [null],
       jfno: new FormControl('', [Validators.pattern(RG_NUMERIC_ONLY)]),
       bankId: [null, (Validators.required)],
@@ -141,7 +140,6 @@ export class FarmerComponent implements OnInit {
   addFarmer() {
     this.farmer = new SampleSlabDto();
     this.fbfarmer.patchValue({
-      sampleSlabId: 0,
       isRegistered: true,
       isActive: true
     });
@@ -184,7 +182,6 @@ export class FarmerComponent implements OnInit {
     this.fbfarmer.controls['jfno'].setValue(farmer.jfNo);
     this.fbfarmer.controls['glcode'].setValue(farmer.glCode);
     this.fbfarmer.controls['subGlcode'].setValue(farmer.subGLCode);
-
     this.fbfarmer.patchValue(farmer);
     this.addFlag = false;
     this.submitLabel = 'Update Farmer';
