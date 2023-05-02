@@ -33,6 +33,8 @@ export class SecurityQuestionComponent implements OnInit {
 
     if(flag)
       this.router.navigate(['/forgotpassword/changepassword'],{ queryParams: { username: this.userName }})
+      else  this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Entered Answer is invalid" });
+
   }
   ngOnInit(): void {
     this.userName = this.activatedRoute.snapshot.queryParams['username'];
@@ -46,6 +48,19 @@ export class SecurityQuestionComponent implements OnInit {
         }
       }
     })
+  }
+
+  onDisabled(): boolean{
+    var securityAnswerCount = 0;
+    this.userQuestions.forEach(question => {
+      if(question.userAnswer){
+        securityAnswerCount = securityAnswerCount + 1;
+      }
+    });
+    if(securityAnswerCount == 2){
+      return false;
+    }
+    else return true;
   }
 
 }
