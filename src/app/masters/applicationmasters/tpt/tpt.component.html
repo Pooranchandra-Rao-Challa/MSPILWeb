@@ -8,16 +8,15 @@
         <h4>TPTs</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New TPT" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addTPT()" *ngIf="permissions.CanCreateTpt"></button>
+        <button pButton pRipple label="New TPT" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addTPT()"
+          *ngIf="permissions.CanCreateTpt"></button>
       </ng-template>
     </p-toolbar>
 
     <!-- table -->
     <p-table #dt1 [value]="tpts" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
@@ -186,8 +185,9 @@
     </p-table>
 
     <!-- dialog box -->
-    <p-dialog header="TPT" [(visible)]="showDialog" [modal]="true" [responsive]="true" showEffect="fade" [responsive]="true"
-      (onHide)="onClose()" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
+    <p-dialog header="TPT" [(visible)]="showDialog" [modal]="true" [responsive]="true" showEffect="fade"
+      [responsive]="true" (onHide)="onClose()" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+      [style]="{width: '60vw'}">
       <div class="flex flex-column align-items-center justify-content-center">
         <div class="container">
           <form [formGroup]="fbTpt" (ngSubmit)="onSubmit()">
@@ -433,12 +433,10 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-4">
                   <label>Bank:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Bank" optionLabel="name"
-                  [filter]="true"
-                  filterBy="name"
-                 [virtualScroll]="true" [virtualScrollItemSize]="38"
-                 appendTo="body"[options]="banks" optionValue="bankId"
-                    formControlName="bankId" (onChange)="getBranchByBankId($event.value)" appendTo="body"
+                  <p-dropdown placeholder="Select Bank" optionLabel="name" [filter]="true" filterBy="name"
+                    [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" [options]="banks"
+                    optionValue="bankId" formControlName="bankId" (onChange)="getBranchByBankId($event.value)"
+                    appendTo="body"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['bankId'].touched && FormControls['bankId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
@@ -464,8 +462,7 @@
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>IFSC:</label>
-                  <input pInputText id="ifsc" type="text" placeholder="Enter IFSC Code" [(ngModel)]="IFSC"
-                    [ngModelOptions]="{standalone: true}" readonly disabled="true">
+                  <p class="disabled_text">{{IFSC}}</p>
                 </div>
                 <div class="field col-12 md:col-4">
                   <label>Account Number:<sup class="p-error">*</sup></label>
