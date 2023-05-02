@@ -64,28 +64,28 @@ export class SugarAPIInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       map(resp => {
         let response = resp as unknown as HttpResponse<any>;
-        if ([200].includes(response.status)) {
-          this.messageService.add({ severity: 'success', key: 'myToast', summary: 'Success!', detail: 'Signing in...!' });
-        }
+        // if ([200].includes(response.status)) { 
+        //   this.messageService.add({ severity: 'success', key: 'myToast', summary: 'Success!', detail: 'Signing in...!' });
+        // }
         return resp;
       }),
 
-      catchError(err => {
-        if ([401].includes(err.status)) {
-          this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Invalid Credentials!" });
-          console.log(err);
-          return throwError(err)
-        } else if ([400].includes(err.status)) {
-          this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "User Not found" });
-          return throwError(err)
-        }
-        else {
-          const error = (err && err.error && err.error.message) || err.statusText;
-          console.error(err);
-          return throwError(() => error);
-        }
+    //   catchError(err => {
+    //     if ([401].includes(err.status)) {
+    //       this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Invalid Credentials!" });
+    //       console.log(err);
+    //       return throwError(err)
+    //     } else if ([400].includes(err.status)) {
+    //       this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "User Not found" });
+    //       return throwError(err)
+    //     }
+    //     else {
+    //       const error = (err && err.error && err.error.message) || err.statusText;
+    //       console.error(err);
+    //       return throwError(() => error);
+    //     }
 
-      })
+    //   })
     );
   };
 

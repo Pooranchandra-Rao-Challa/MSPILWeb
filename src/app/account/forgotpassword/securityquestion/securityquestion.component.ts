@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserQuestionDto } from 'src/app/_models/security';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-securityquestion',
   templateUrl: './securityquestion.component.html',
@@ -14,6 +15,7 @@ export class SecurityQuestionComponent implements OnInit {
   userName?:string;
   constructor(private router: Router,
     private securityService:SecurityService,
+    private messageService: MessageService,
     private activatedRoute:ActivatedRoute) { }
 
 
@@ -37,6 +39,11 @@ export class SecurityQuestionComponent implements OnInit {
     this.securityService.UserSecurityQuestions(this.userName!).subscribe({
       next: (resp) =>{
         this.userQuestions = resp as unknown as UserQuestionDto[];
+        if(this.userQuestions.length < 1){
+          this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Invalid User Name!" });
+         
+          this.navigateToPrev();
+        }
       }
     })
   }
