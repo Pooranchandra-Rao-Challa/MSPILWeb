@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, DoCheck, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Table } from "primeng/table";
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
 import { ITableHeader } from "src/app/_models/common";
 import { IPlotOfferViewDto } from "src/app/_models/monitoring";
@@ -7,6 +8,7 @@ import { CircleforUserDto, DivisionsforUserDto, FarmersInPlotsForUserDto, GetCut
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { MonitoringService } from "src/app/_services/monitoring.service";
 import { permitService } from "src/app/_services/permit.service";
+import { MAX_LENGTH_2 } from "src/app/_shared/regex";
 import { CURRENT_SEASON } from "src/environments/environment";
 
 @Component({
@@ -15,8 +17,6 @@ import { CURRENT_SEASON } from "src/environments/environment";
   styles: [],
 })
 export class CuttingOrderComponent implements OnInit {
-  globalFilterFields: string[] = ['seasonName', 'cuttingOrderNo', 'cuttingOrderDate', 'fromSchGroupNo', 'toSchGroupNo', 'fromDOP', 'toDOP', 'fromCCS', 'toCCS',
-    'fromBrix', 'toBrix', 'fromPol', 'toPol', 'fromPurity', 'toPurity', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   seasons: SeasonViewDto[] = [];
   fbCuttingOrder!: FormGroup;
   currentSeason: SeasonDto = {};
@@ -37,12 +37,16 @@ export class CuttingOrderComponent implements OnInit {
   seasoncuttingOrders: SeasonCuttingOrderViewDto[] = [];
   plotcuttingOrders: PlotCuttingOrderViewDto[] = [];
   cuttingorders: GetCuttingOrderViewDto[] = [];
+  @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('dtcuttingorders') dtcuttingorders!: ElementRef;
   loading: boolean = true;
   showTable: boolean = true;
   showDialog: boolean = false;
   forapproval: boolean = false;
-  @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
+  fromvalue: any;
+  tovalue: any;
+  error: boolean = false;
 
   constructor(private formbuilder: FormBuilder,
     private permitService: permitService,
@@ -69,21 +73,26 @@ export class CuttingOrderComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated At' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
-  plotCuttingOrder: ITableHeader[] = [
+  CuttingOrder: ITableHeader[] = [
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
-    { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
+    { field: 'divisonName', header: 'divisonName', label: 'Division Name' },
     { field: 'circleName', header: 'circleName', label: 'Circle Name' },
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
+    { field: 'plantingDate', header: 'plantingDate ', label: 'Planting Date ' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
-    // { field: 'assessedArea', header:'assessedArea', label: 'Assessed Area' },
-    // { field: 'assessedDate', header:'assessedDate', label: 'Assessed Date' },
-    // { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
-    // { field: 'weedStatusName', header: 'weedStatusName  ', label: 'Weed Status' },
-    // { field: 'interCropName', header: 'interCropName', label: 'Inter Croping' },
+    { field: 'ccs', header: 'ccs', label: 'CCS' },
+    { field: 'brix', header: 'brix ', label: 'Brix' },
+    { field: 'pol', header: 'pol', label: 'Pol' },
+    { field: 'purity', header: 'purity', label: 'Purity' },
+    { field: 'scheduleGroupNo', header: 'scheduleGroupNo', label: 'Schedule Group No' },
+    { field: 'noOfSample', header: 'noOfSample', label: 'No Of Sample ' },
   ];
+
   toggleTab() {
     this.showForm = !this.showForm;
   }
@@ -208,27 +217,27 @@ export class CuttingOrderComponent implements OnInit {
   getcuttingoderForm() {
     this.fbCuttingOrder = this.formbuilder.group({
       seasonId: [null, (Validators.required)],
-      cuttingOrderDate: [null, (Validators.required)],
-      fromSchGroupNo: [0, (Validators.required)],
-      toSchGroupNo: [0, (Validators.required)],
-      fromCCS: [0, (Validators.required)],
-      toCCS: [0, (Validators.required)],
-      fromBrix: [null, (Validators.required)],
-      toBrix: [null, (Validators.required)],
-      fromPol: [null, (Validators.required)],
-      toPol: [null, (Validators.required)],
-      fromPurity: [null, (Validators.required)],
-      toPurity: [null, (Validators.required)],
-      fromPlantingDate: [null, (Validators.required)],
-      toPlantingDate: [null, (Validators.required)],
-      farmerId: [null, (Validators.required)],
-      plotId: [null, (Validators.required)],
-      divisionId: [null, (Validators.required)],
-      circleId: [null, (Validators.required)],
-      sectionId: [null, (Validators.required)],
-      villageId: [null, (Validators.required)],
-      plantTypeId: [null, (Validators.required)],
-      varietyId: [null, (Validators.required)],
+      cuttingOrderDate: [null],
+      fromSchGroupNo: [null, (Validators.required)],
+      toSchGroupNo: [null, (Validators.required)],
+      fromCCS: [null, (Validators.required)],
+      toCCS: [null, (Validators.required)],
+      fromBrix: [null],
+      toBrix: [null],
+      fromPol: [null],
+      toPol: [null],
+      fromPurity: [null],
+      toPurity: [null],
+      fromPlantingDate: [null],
+      toPlantingDate: [null],
+      farmerId: [null],
+      plotId: [null],
+      divisionId: [null],
+      circleId: [null],
+      sectionId: [null],
+      villageId: [null],
+      plantTypeId: [null],
+      varietyId: [null],
     });
   }
   get FormControals() {
@@ -237,7 +246,6 @@ export class CuttingOrderComponent implements OnInit {
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.getcuttingoderForm();
-    this.initCuttingOrder();
   }
   initSeasonCuttingOrders(seasonId: number) {
     this.permitService.GetSeasonCuttingOrder(seasonId).subscribe((resp) => {
@@ -259,11 +267,30 @@ export class CuttingOrderComponent implements OnInit {
       console.log('initCuttingOrder', this.cuttingorders);
     })
   }
-  onSubmit() {
-    this.submitLabel = 'Get Order';
-    this.showDialog = true;
+  checkValue() {
+    if (this.fromvalue < this.tovalue) {
+      this.error = false;
+      return;
+    }
+    else if (this.tovalue == undefined) {
+      this.error = false;
+      return;
+    }
+    else {
+      this.error = true;
+
+    }
+  }
+  clear(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+    this.dtcuttingorders.nativeElement.value = '';
+  }
+  onSearch(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
   addCuttingOrder() {
+    this.initCuttingOrder();
     this.showDialog = true;
   }
 }
