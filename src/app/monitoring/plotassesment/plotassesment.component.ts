@@ -340,7 +340,8 @@ export class PlotassesmentComponent implements OnInit {
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
           this.dtPlotAssessments.expandedRowKeys = {};
-          this.savePlotAssessment();
+          // this.savePlotAssessment();
+          this.initPlotAssesments(this.currentSeason.seasonId!);
           this.fbPlotAssesment.reset();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAS001" : "SMOPAS002"]);

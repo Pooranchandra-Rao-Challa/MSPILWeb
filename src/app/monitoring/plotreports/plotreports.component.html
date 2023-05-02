@@ -242,7 +242,7 @@
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label class="required">Planting Date:</label>
                   <p-calendar placeholder="Select Planting Date" [readonlyInput]="true" [showIcon]="true"
-                    formControlName="plantingDate"
+                    formControlName="plantingDate" [defaultDate]="plantFrom" [minDate]="FormControls['plantingDate'].value" [maxDate]="plantTo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingDate'].touched && FormControls['plantingDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['plantingDate'].touched && FormControls['plantingDate'].invalid">
@@ -337,7 +337,7 @@
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label>Enable For Adding Plot Additional Information:</label><br>
-                  <p-inputSwitch formControlName="enabledValidation" (click)="onValidations()"> </p-inputSwitch>
+                  <p-inputSwitch formControlName="enabledValidation" [disabled]="this.subPlot.get('plotReportAddlInfoId')?.value" (click)="onValidations()"> </p-inputSwitch>
                 </div>
               </div>
             </p-fieldset>
@@ -377,7 +377,7 @@
               </div>
             </p-fieldset>
           </p-fieldset>
-
+          <!-- <p class="disabled_text" style="color: #e73816;">Note: If you want to pass Plot Additional Info you have to select Enable For Adding Plot Additional Information.</p> -->
           <p-fieldset legend="Plot Additional Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
             <div formGroupName="plotReportsAdditionalInfo">
               <p-fieldset legend="Details1" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
@@ -426,18 +426,10 @@
               <p-fieldset legend="Details2" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                    <label>Previous Land Use:<sup class="p-error"
-                        *ngIf="this.subPlot.get('enabledValidation')?.value">*</sup></label>
+                    <label>Previous Land Use:</label>
                     <p-dropdown placeholder="Select Previous Land Use" optionLabel="name" [options]="crops"
-                      optionValue="lookupDetailId" formControlName="previousCropId" appendTo="body"
-                      [ngClass]="{ 'is-invalid ng-dirty': insideFormControls.controls['previousCropId'].touched && insideFormControls.controls['previousCropId'].errors }">
+                      optionValue="lookupDetailId" formControlName="previousCropId" appendTo="body">
                     </p-dropdown>
-                    <span
-                      *ngIf="insideFormControls.controls['previousCropId'].touched && insideFormControls.controls['previousCropId'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="insideFormControls.controls['previousCropId'].errors?.['required']">
-                        Select Previous Land Use.</div>
-                    </span>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Source Of Irrigation:</label>

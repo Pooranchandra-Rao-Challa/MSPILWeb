@@ -33,7 +33,7 @@ export class PlotreportsComponent implements OnInit {
   globalFilterFields: any;
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('dtPlotReports') dtPlotReports!: Table;
-  seasons!: any;
+  seasons!: any[];
   currentSeason: SeasonDto = {};
   showDialog: boolean = false;
   showApprovalDialog: boolean = false;
@@ -62,8 +62,9 @@ export class PlotreportsComponent implements OnInit {
   selectAll: boolean = false;
   selectedplotReports: IFarmerInPlotReportsViewDto[] = [];
   totalRecords: number = 0;
-
   loading: boolean = false;
+  plantFrom!: Date;
+  plantTo!: Date;
 
   farmerHeaders: ITableHeader[] = [
     { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
@@ -135,14 +136,18 @@ export class PlotreportsComponent implements OnInit {
   }
 
   getPlotOffersInSeason(seasonId: number, plotId: number) {
+    this.fbPlotReport.controls["plantingDate"].setValue(null);
     this.monitoringService.PlotOffersInSeason(seasonId, plotId).subscribe((resp) => {
-
-
       this.seasonPlotOffers = resp as any;
-
       this.seasonPlotOffers.forEach(s => {
         s.DisplayValue = `${s.offerNo}-${s.farmerCode}-${s.farmerName}-${s.plotVillageName}`
-      })
+      });
+     this.seasons?.forEach((value) => {
+        if (value.seasonId == seasonId) {
+          this.plantFrom = value.plantFrom && new Date(value.plantFrom?.toString() + "");
+          this.plantTo = value.plantTo && new Date(value.plantTo?.toString() + "");
+        }
+      });
     });
   }
 
@@ -362,7 +367,6 @@ export class PlotreportsComponent implements OnInit {
 
   get insideFormControls() {
     return this.fbPlotReport.get('plotReportsAdditionalInfo') as FormGroup;
-
   }
 
   addPlotReport() {
@@ -375,6 +379,7 @@ export class PlotreportsComponent implements OnInit {
   }
 
   editPlotReport(plotReport: IPlotReportViewDto, farmer: IFarmerInPlotReportsViewDto) {
+    this.addFlag = false;
     this.getPlotOffersInSeason(this.currentSeason.seasonId || 0, plotReport.plotId);
     this.plotOfferDto = JSON.parse(JSON.stringify(farmer));
     this.plotOfferDto.plotSectionName = plotReport.plotSectionName;
@@ -395,9 +400,9 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['distanceFromPlot'].setValue(plotReport.distanceFromPlot);
     this.fbPlotReport.controls['plantingMethodId'].setValue(plotReport.plantingMethodId);
     if (plotReport.plotReportAddlInfoId) {
-      this.subPlot.get('enabledValidation')?.setValue(true);
-      this.subPlot.get('enabledValidation')?.disable();
-      this.onValidations();}
+      this.fbPlotReport.controls['enabledValidation'].setValue(true);
+      this.onValidations();
+    }
     this.subPlot.get('plotReportAddlInfoId')?.setValue(plotReport.plotReportAddlInfoId);
     this.subPlot.get('soilTypeId')?.setValue(plotReport.soilTypeId);
     this.subPlot.get('isNeedHotWaterTreatment')?.setValue(plotReport.isNeedHotWaterTreatment);
@@ -413,14 +418,13 @@ export class PlotreportsComponent implements OnInit {
     this.subPlot.get('isGreenManures')?.setValue(plotReport.isGreenManures);
 
     this.mainPlot.get('plotOfferId')?.setValue(plotReport.plotOfferId);
-    this.onCalculation();
     this.fbPlotReport.patchValue(plotReport);
-    this.fbPlotReport.controls['plantingDate'].setValue(plotReport.plantingDate && new Date(plotReport.plantingDate?.toString() + ""));
     this.fbPlotReport.controls['birdate'].setValue(plotReport.birDate && new Date(plotReport.birDate?.toString() + ""));
+    this.fbPlotReport.controls['plantingDate'].setValue(plotReport.plantingDate && new Date(plotReport.plantingDate?.toString() + ""));
 
-    this.addFlag = false;
     this.submitLabel = 'Update Plot Report';
     this.showDialog = true;
+    this.onCalculation();
   }
 
   editApproval(plotReport: IPlotReportViewDto, farmer: IFarmerInPlotReportsViewDto) {
@@ -437,7 +441,7 @@ export class PlotreportsComponent implements OnInit {
 
   savePlotReport(): Observable<HttpEvent<any>> {
     var temp = this.fbPlotReport.value;
-    if (!temp.plotReportsAdditionalInfo.enabledValidation)
+    if (!temp.enabledValidation)
       temp.plotReportsAdditionalInfo = null;
 
     if (this.addFlag) {
@@ -497,16 +501,10 @@ export class PlotreportsComponent implements OnInit {
     if (this.fbPlotReport.controls['enabledValidation']?.value) {
       this.subPlot.get('soilTypeId')?.setValidators(Validators.required);
       this.subPlot.get('soilTypeId')?.updateValueAndValidity();
-
-      this.subPlot.get('previousCropId')?.setValidators(Validators.required);
-      this.subPlot.get('previousCropId')?.updateValueAndValidity();
     }
     else {
       this.subPlot.get('soilTypeId')?.clearValidators();
       this.subPlot.get('soilTypeId')?.updateValueAndValidity();
-
-      this.subPlot.get('previousCropId')?.clearValidators();
-      this.subPlot.get('previousCropId')?.updateValueAndValidity();
     }
   }
 

@@ -14,8 +14,8 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dtPlotOffer [value]="plotOffers" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+    <p-table #dtPlotOffer [value]="plotOffers" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10"
+      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
@@ -108,8 +108,9 @@
   </p-table>
 
   <!-- Plot Offer Dialog -->
-  <p-dialog header="Plot Offer" [(visible)]="showDialog" [modal]="true" showEffect="fade"  [transitionOptions]="'300ms'"
-  [breakpoints]="{'960px': '60%', '640px': '80%'}"  [style]="{width: '60%'}" (onHide)="fbPlotOffer.reset()" [maximizable]="true">
+  <p-dialog header="Plot Offer" [(visible)]="showDialog" [modal]="true" showEffect="fade" [transitionOptions]="'300ms'"
+    [breakpoints]="{'960px': '60%', '640px': '80%'}" [style]="{width: '60%'}" (onHide)="fbPlotOffer.reset()"
+    [maximizable]="true">
     <div class="flex flex-column align-items-center justify-content-center">
       <form [formGroup]="fbPlotOffer" (ngSubmit)="onSubmit()">
         <div class="grid">
@@ -133,7 +134,7 @@
                     <p class="disabled_text">
                       {{ this.fbPlotOffer.controls["offerNo"].value }}
                     </p>
-                    </div>
+                  </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Offer Date:</label>
                     <p-calendar placeholder="Select Offer Date" [readonlyInput]="true" [showIcon]="true"
@@ -159,13 +160,13 @@
                       <ng-template let-farmer pTemplate="selectedItem">
                         <div>{{farmer.code}}-{{farmer.farmerName}}</div>
                       </ng-template>
-                     <ng-template let-seasonPlotOffer  let-farmer pTemplate="item">
-                    <div class="block align-items-center gap-2">
-                      <div>{{farmer.code}}</div>
-                      <div>{{farmer.farmerName}}</div>
-                        <div> {{farmer.villageName}}</div>
-                      </div>
-                  </ng-template>
+                      <ng-template let-seasonPlotOffer let-farmer pTemplate="item">
+                        <div class="block align-items-center gap-2">
+                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.farmerName}}</div>
+                          <div> {{farmer.villageName}}</div>
+                        </div>
+                      </ng-template>
                     </p-dropdown>
                     <span *ngIf="FormControls['farmerId'].touched && FormControls['farmerId'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['farmerId'].errors?.['required']">
@@ -226,13 +227,13 @@
                       <ng-template let-village pTemplate="selectedItem">
                         <div>{{village.villageCode}}-{{village.villageName}}</div>
                       </ng-template>
-                      <ng-template let-village pTemplate="item" >
+                      <ng-template let-village pTemplate="item">
                         <div class="block align-items-center gap-2">
                           <div>{{village.code}}</div>
                           <div>{{village.villageName}}</div>
                         </div>
                       </ng-template>
-                      <ng-template let-seasonPlotOffer  let-village pTemplate="item" >
+                      <ng-template let-seasonPlotOffer let-village pTemplate="item">
                         <div class="block align-items-center gap-2">
                           <div>{{village.villageCode}}</div>
                           <div> {{village.villageName}}</div>
@@ -269,12 +270,13 @@
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Expected Area:</label>
-                    <p-inputNumber #expectedArea placeholder="Enter Expected Area" formControlName="expectedArea" mode="decimal"
-                      [maxlength]="10" [minFractionDigits]="2" [maxFractionDigits]="2"
+                    <p-inputNumber #expectedArea placeholder="Enter Expected Area" formControlName="expectedArea"
+                      mode="decimal" [maxlength]="10" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['expectedArea'].touched && FormControls['expectedArea'].errors }">
                     </p-inputNumber>
                     <div class="text-right">
-                      <small>{{ expectedArea?.value?.toString()?.length ? expectedArea?.value?.toString()?.length : 0 }}/9</small>
+                      <small>{{ expectedArea?.value?.toString()?.length ? expectedArea?.value?.toString()?.length : 0
+                        }}/9</small>
                     </div>
                     <span *ngIf="FormControls['expectedArea'].touched && FormControls['expectedArea'].invalid">
                       <div class="ng-invalid ng-touched p-error"
@@ -297,8 +299,11 @@
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Expected Planting Date:</label>
                     <p-calendar placeholder="Select Expected Planting Date" [readonlyInput]="true" [showIcon]="true"
-                      formControlName="expectedPlantingDate" appendTo="body" [defaultDate]="plantFrom" [minDate]="FormControls['offerDate'].value" [maxDate]="plantTo"
-                      [disabled]="!FormControls['offerDate'].value" [pTooltip]="!FormControls['offerDate'].value ? 'Please Select Offer Date First' : ''"
+                      formControlName="expectedPlantingDate" appendTo="body" [defaultDate]="plantFrom"
+                      [minDate]="FormControls['offerDate'].value" [maxDate]="plantTo"
+                      [disabled]="!FormControls['offerDate'].value"
+                      [pTooltip]="!FormControls['offerDate'].value ? 'Please Select Offer Date First' : ''"
+                      tooltipPosition="top"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['expectedPlantingDate'].touched && FormControls['expectedPlantingDate'].errors }">
                     </p-calendar>
                     <span
@@ -310,8 +315,10 @@
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Expected Variety Code:</label>
-                    <p-dropdown placeholder="Select Expected Variety Code"  filterBy="name" [filter]="true"  optionLabel="name" [options]="varieties" appendTo="body"
-                      optionValue="varietyId" formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true" [virtualScrollItemSize]="38">
+                    <p-dropdown placeholder="Select Expected Variety Code" filterBy="name" [filter]="true"
+                      optionLabel="name" [options]="varieties" appendTo="body" optionValue="varietyId"
+                      formControlName="expectedVarietyId" appendTo="body" [virtualScroll]="true"
+                      [virtualScrollItemSize]="38">
                     </p-dropdown>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
@@ -338,7 +345,7 @@
 
   <!-- Plot Offer Approval Dialog -->
   <p-dialog header="Plot Offer For Approval" [(visible)]="showApprovalDialog" showEffect="fade"
-  [breakpoints]="{'960px': '50%', '640px': '80%'}"  [style]="{width: '50%'}" [modal]="true"
+    [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" [modal]="true"
     (onHide)="fbPlotOffer.reset()">
     <ng-template pTemplate="content">
       <div class="flex flex-column align-items-center justify-content-center">
@@ -349,11 +356,8 @@
                 <div class="field col-12 md:col-6">
                   <label class="required">Season:</label>
                   <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
-                    formControlName="seasonId" (onChange)="getNewOfferNo($event.value)"
-                    [filter]="true"
-                  filterBy="code"
-                 [virtualScroll]="true" [virtualScrollItemSize]="38"
-				            appendTo="body"
+                    formControlName="seasonId" (onChange)="getNewOfferNo($event.value)" [filter]="true" filterBy="code"
+                    [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
