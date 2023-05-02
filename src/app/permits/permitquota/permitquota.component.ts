@@ -104,8 +104,8 @@ export class PermitQuotaComponent implements OnInit {
   PermitQuotaform() {
     this.fbPermitQuota = this.formbuilder.group({
       seasonQuotaId: [0],
-      docNo:[null],
-      docDate:[null],
+      docNo:[],
+      docDate:[],
       seasonId: ['', Validators.required],
       toGrpNo: ['', Validators.required],
       fromGrpNo: ['', Validators.required],
@@ -118,13 +118,21 @@ export class PermitQuotaComponent implements OnInit {
   
   plotQuotasForm() {
     return this.formbuilder.group({
+     // plotQuotaId: 0,
+      //seasonQuotaId:0,
+      // scheduledTons:[],
+      // divisionId:[],
+      // circleId:[],
+      // sectionId: [],
+      // villageId:[],
+      // serverUpdatedStatus: true
       plotQuotaId: 0,
-      seasonQuotaId:0,
-      scheduledTons:[],
+      seasonQuotaId: 0,
       divisionId:[],
       circleId:[],
       sectionId: [],
       villageId:[],
+      quotaReleased: 0,
       serverUpdatedStatus: true
     });
   }
@@ -188,31 +196,41 @@ export class PermitQuotaComponent implements OnInit {
   }
 
   savePermitQuota(): Observable<HttpEvent<any>> {
+    debugger
     if (this.addFlag) return this.permitService.CreatepermitQuota(this.fbPermitQuota.value);
     else return this.permitService.UpdatePermitQuota(this.fbPermitQuota.value);
   }
   onSubmit() {
     console.log(this.fbPermitQuota.value);
     const quotaValues = this.fbPermitQuota.value;
-    for(let i=0; this.Quotas.length-1>0; i++)
+    console.log(this.Quotas)
+    for(let i=0; i<this.Quotas.length; i++)
     {
+     
       this.addSchedule();
+
       this.scheduleControls.controls[i].get("divisionId")?.patchValue(this.Quotas[i].divisionId);
       this.scheduleControls.controls[i].get("circleId")?.patchValue(this.Quotas[i].circleId);
       this.scheduleControls.controls[i].get("sectionId")?.patchValue(this.Quotas[i].sectionId);
       this.scheduleControls.controls[i].get("villageId")?.patchValue(this.Quotas[i].villageId);
-      this.scheduleControls.controls[i].get("plotQuotaId")?.patchValue(this.Quotas[i].plotQuotaId);
+      // this.scheduleControls.controls[i].get("plotQuotaId")?.patchValue(this.Quotas[i].plotQuotaId);
       this.scheduleControls.controls[i].get("scheduledTons")?.patchValue(this.Quotas[i].scheduledTons);
     }
-    if (this.fbPermitQuota.valid) {
-      this.savePermitQuota().subscribe(resp => {
-        if (resp) {
-          this.initQuotas();
-          this.showDialog = false;
+    // if (this.fbPermitQuota.valid) {
+    //   this.savePermitQuota().subscribe(resp => {
+    //     if (resp) {
+    //       this.initQuotas();
+    //       this.showDialog = false;
        
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
+    console.log(this.fbPermitQuota.value);
+    
+    this.permitService.CreatepermitQuota(this.fbPermitQuota.value).subscribe(resp=>{
+      var res=resp;
+    });
+    // else return this.permitService.UpdatePermitQuota(this.fbPermitQuota.value);
     
   }
   
