@@ -311,7 +311,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="isRegistered">Is Registered:</label><br>
-                        <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isRegistered"></p-inputSwitch>
+                        <p-inputSwitch formControlName="isRegistered"></p-inputSwitch>
                       </div>
                       <div class="field col-12 md:col-6">
                         <label class="required">Please Select Gender:</label><br>
@@ -447,7 +447,7 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label class="required">Aadhaar No:</label>
-                      <input pInputText id="aadhaarNo" placeholder=" Enter Aadhaar No" #aadhaarNo
+                      <input pInputText id="aadhaarNo" placeholder="Enter Aadhaar No" #aadhaarNo
                         formControlName="aadhaarNo" maxlength="12" [maxlength]="maxLength.aadhaarNo" numericOnly
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
                       <div class="text-right">
@@ -595,7 +595,7 @@
                 <div class="field col-12 md:col-3 ">
                   <div class="col-6">
                     <label htmlFor="isActive">Is Active:</label><br><br>
-                    <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                    <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                   </div>
                 </div>
               </div>

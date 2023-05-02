@@ -12,7 +12,7 @@ import { HttpEvent } from '@angular/common/http';
 import { SeasonViewDto } from 'src/app/_models/applicationmaster';
 import { BillParameterViewDto, } from 'src/app/_models/billingmaster';
 import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { RG_NUMERIC_ONLY, RG_SEASON_CODE, RG_SEASON_NAME, } from 'src/app/_shared/regex';
+import { RG_SEASON_CODE, RG_SEASON_NAME, } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
@@ -109,9 +109,9 @@ export class SeasonComponent implements OnInit {
       plantTo: new FormControl(null, [Validators.required]),
       crushFrom: [null, Validators.required],
       crushTo: [null, Validators.required],
-      burnCaneRate: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
-      caneRate: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
-      capacity: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      burnCaneRate: new FormControl(null, [Validators.required]),
+      caneRate: new FormControl(null, [Validators.required]),
+      capacity: new FormControl(null, [Validators.required]),
       currentSeason: [''],
       isActive: [true],
       farmerRates: this.formbuilder.array([]),
@@ -130,10 +130,10 @@ export class SeasonComponent implements OnInit {
     return this.formbuilder.group({
       seasonBillingRateId: [],
       seasonId: [],
-      billParameterId: ['', Validators.required],
+      billParameterId: [null, Validators.required],
       billCatetoryId: [billCategory.lookupDetailId, Validators.required],
-      rate: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
-      priority: new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      rate: new FormControl(null, [Validators.required]),
+      priority: new FormControl(null, [Validators.required]),
       isActive: [true],
     });
   }
@@ -144,8 +144,8 @@ export class SeasonComponent implements OnInit {
       seasonId: [billParam.seasonId],
       billParameterId: [billParam.billParameterId, Validators.required],
       billCatetoryId: [billParam.billCategoryId, Validators.required],
-      rate: new FormControl(billParam.rate, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
-      priority: new FormControl(billParam.priority, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY),]),
+      rate: new FormControl(billParam.rate, [Validators.required]),
+      priority: new FormControl(billParam.priority, [Validators.required]),
       isActive: [billParam.isActive],
     });
   }

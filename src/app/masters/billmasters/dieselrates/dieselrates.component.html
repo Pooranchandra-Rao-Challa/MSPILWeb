@@ -16,10 +16,9 @@
     <!-- table -->
     <p-table #dt1 [value]="dieselRates" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true" [alwaysShowPaginator]="false" 
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      [rowsPerPageOptions]="[10,25,50]">
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+      [alwaysShowPaginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -71,8 +70,8 @@
       <ng-template pTemplate="body" let-rate>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component mr-2"
-              (click)="editDieselRate(rate)" [disabled]="!permissions.CanUpdateDieselRate"></button></td>
+              class="p-element p-ripple p-button-text p-button p-component mr-2" (click)="editDieselRate(rate)"
+              [disabled]="!permissions.CanUpdateDieselRate"></button></td>
           <td>{{rate.fromDate | date: mediumDate}}</td>
           <td>{{rate.toDate | date: mediumDate}}</td>
           <td>{{rate.rate}}</td>
@@ -88,7 +87,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="text-center p-5" colspan="9" >No Diesel Rates Found.</td>
+          <td class="text-center p-5" colspan="9">No Diesel Rates Found.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -105,7 +104,7 @@
                 <div class="field col-12 md:col-6">
                   <label>From Date:<sup class="p-error">*</sup></label>
                   <p-calendar appendTo="body" placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
-                    formControlName="fromDate" [maxDate]="fbDieselRate.value.toDate"
+                    formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['fromDate'].touched && FormControls['fromDate'].invalid">
@@ -117,17 +116,21 @@
                   <label>To Date:<sup class="p-error">*</sup></label>
                   <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
                     formControlName="toDate" mask="99/99/9999" [minDate]="fbDieselRate.value.fromDate"
+                    [disabled]="!FormControls['fromDate'].value"
+                    [pTooltip]="!FormControls['fromDate'].value ? 'Please Select From Date First' : ''" tooltipPosition="top"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toDate'].errors?.['required']">
-                      Please Select To Date.</div>
-                  </span>
-                  <!-- <span>
                     <div class="ng-invalid ng-touched p-error"
-                      *ngIf="fbDieselRate.value.fromDate > fbDieselRate.value.toDate">
+                      *ngIf="FormControls['toDate'].errors?.['required'] && !FormControls['fromDate'].errors?.['required']">
+                      Please Select To Date.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromDate'].errors?.['required']">
+                      Please Select From Date First.</div>
+                  </span>
+                  <span>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="fbDieselRate.hasError('fromDate')">
                       To Date Always Greater Than Equals To From Date</div>
-                  </span> -->
+                  </span>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate:<sup class="p-error">*</sup></label>
@@ -152,8 +155,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
           <button pButton pRipple type="button" [label]="submitLabel" class="p-button-raised p-button-primary"
-            [disabled]="fbDieselRate.invalid"
-            (click)="onSubmit()"></button>
+            [disabled]="fbDieselRate.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

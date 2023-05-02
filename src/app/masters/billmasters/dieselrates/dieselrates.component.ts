@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 
 @Component({
   selector: 'app-dieselrates',
@@ -26,7 +27,7 @@ export class DieselRatesComponent implements OnInit {
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
   permissions: any;
-  
+
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private alertMessage: AlertMessage,
@@ -51,6 +52,10 @@ export class DieselRatesComponent implements OnInit {
       toDate: ['', (Validators.required)],
       rate: [null, (Validators.required)],
       isActive: [true]
+    }, {
+      validators: Validators.compose([
+        DateValidators.dateRangeValidator('fromDate', 'toDate', { 'fromDate': true }),
+      ])
     });
   }
 

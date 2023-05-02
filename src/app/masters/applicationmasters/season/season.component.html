@@ -182,6 +182,9 @@
                     <label>Plant To:<sup class="p-error">*</sup></label>
                     <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="plantTo" [minDate]="fbseasons.value.plantFrom"
+                      [disabled]="!FormControls['plantFrom'].value"
+                      [pTooltip]="!FormControls['plantFrom'].value ? 'Please Select Plant From Date First' : ''"
+                      tooltipPosition="top"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantTo'].touched && FormControls['plantTo'].errors }">
                     </p-calendar>
                     <span *ngIf="FormControls['plantTo'].touched && FormControls['plantTo'].invalid">
@@ -213,6 +216,8 @@
                     <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="crushTo" [minDate]="fbseasons.value.crushFrom"
                       [disabled]="!FormControls['crushFrom'].value"
+                      [pTooltip]="!FormControls['crushFrom'].value ? 'Please Select Crush From Date First' : ''"
+                      tooltipPosition="top"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushTo'].touched && FormControls['crushTo'].errors }">
                     </p-calendar>
                     <span *ngIf="FormControls['crushTo'].touched && FormControls['crushTo'].invalid">
@@ -226,9 +231,10 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label htmlFor="burnCaneRate"> Burn Cane Rate (₹):<sup class="p-error">*</sup></label>
-                    <input pInputText id="burnCaneRate" formControlName="burnCaneRate" type="text"
-                      placeholder=" Enter Burn Cane Rate "
+                    <p-inputNumber id="burnCaneRate" formControlName="burnCaneRate" mode="decimal" locale="en-IN"
+                      [minFractionDigits]="2" [maxFractionDigits]="2" placeholder="Enter Burn Cane Rate"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['burnCaneRate'].touched && FormControls['burnCaneRate'].errors }">
+                    </p-inputNumber>
                     <span *ngIf="FormControls['burnCaneRate'].touched && FormControls['burnCaneRate'].invalid">
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['burnCaneRate'].errors?.['required']">
@@ -240,9 +246,10 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label htmlFor="caneRate">Cane Rate (₹):<sup class="p-error">*</sup></label>
-                    <input pInputText id="caneRate" formControlName="caneRate" type="text"
-                      placeholder=" Enter Cane Rate"
+                    <p-inputNumber id="caneRate" formControlName="caneRate" placeholder="Enter Cane Rate" mode="decimal"
+                      locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['caneRate'].touched && FormControls['caneRate'].errors }">
+                    </p-inputNumber>
                     <span *ngIf="FormControls['caneRate'].touched && FormControls['caneRate'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['caneRate'].errors?.['required']">
                         Please Enter Cane Rate.</div>
@@ -253,8 +260,10 @@
 
                   <div class="field col-12 md:col-4">
                     <label htmlFor="capacity"> Capacity(Tonnes):<sup class="p-error">*</sup></label>
-                    <input pInputText id="capacity" formControlName="capacity" type="text" placeholder=" Enter Capacity"
+                    <p-inputNumber id="capacity" formControlName="capacity" placeholder="Enter Capacity" mode="decimal"
+                      locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['capacity'].touched && FormControls['capacity'].errors }">
+                    </p-inputNumber>
                     <span *ngIf="FormControls['capacity'].touched && FormControls['capacity'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['capacity'].errors?.['required']">
                         Please Enter Capacity.</div>
@@ -274,8 +283,9 @@
               <p-fieldset legend="Category Wise Billing Rates" class="col-12" [toggleable]="true"
                 [transitionOptions]="'500ms'">
                 <div class="p-fluid">
-                  <p class="head_note">Note: Need To Add Below (Farmers, Harvester, Transporter & Seed) Billing Category Rates are Mandatory. </p>
-                           
+                  <p class="head_note">Note: Need To Add Below (Farmers, Harvester, Transporter & Seed) Billing Category
+                    Rates are Mandatory. </p>
+
                   <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)"
                     [(activeIndex)]="activeIndex!">
                     <p-tabPanel *ngFor="let billCategory of billCategories; let i = index" [selected]="i == 0">
@@ -307,14 +317,14 @@
                                     </div>
                                     <div class="field col-12 md:col-3" style="display:inline-block;">
                                       <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
-
-                                      <input pInputText id="rate" formControlName="rate" type="text"
-                                        placeholder=" Enter Rate" />
+                                      <p-inputNumber id="rate" formControlName="rate" mode="decimal" locale="en-IN"
+                                        [minFractionDigits]="2" [maxFractionDigits]="2" placeholder="Enter Rate">
+                                      </p-inputNumber>
                                     </div>
                                     <div class="field col-12 md:col-3" style="display:inline-block;">
                                       <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>
-                                      <input pInputText id="priority" formControlName="priority" type="text"
-                                        placeholder=" Enter Priority" />
+                                      <input pInputText id="priority" formControlName="priority" type="text" numericOnly
+                                        placeholder="Enter Priority" />
                                       <input pInputText id="billCatetoryId" formControlName="billCatetoryId"
                                         type="hidden" [value]="billCategory.lookupDetailId" />
                                     </div>

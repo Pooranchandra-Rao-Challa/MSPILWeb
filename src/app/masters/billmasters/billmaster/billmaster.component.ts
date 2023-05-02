@@ -8,6 +8,7 @@ import { Table } from 'primeng/table';
 import { BillViewDto } from 'src/app/_models/billingmaster';
 import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 
 @Component({
   selector: 'app-billmaster',
@@ -69,6 +70,10 @@ export class BillMasterComponent implements OnInit {
       toDate: [null, (Validators.required)],
       isFinal: [true],
       isActive: [true]
+    }, {
+      validators: Validators.compose([
+        DateValidators.dateRangeValidator('fromDate', 'toDate', { 'fromDate': true }),
+      ])
     });
   }
 
