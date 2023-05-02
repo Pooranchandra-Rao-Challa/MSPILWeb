@@ -81,13 +81,13 @@
       </ng-template>
     </p-table>
     <p-dialog header="Role" [(visible)]="dialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '80vw'}">
+    [breakpoints]="{'960px': '70%', '640px': '80%'}"  [style]="{width: '70%'}">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
           <div class="grid">
             <div class="col-12 roles-container">
               <div class="p-fluid p-formgrid grid">
-                <div class="field col-12 md:col-6">
+                <div class="field col-12 md:col-4">
                   <label>Code:<sup class="p-error">*</sup></label>&nbsp;
                   <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Role Code"
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['code'].touched && roleFormControls['code'].errors }" />
@@ -102,7 +102,7 @@
                       Code Should Contains Only Characters.</div>
                   </span>
                 </div>
-                <div class="field col-12 md:col-6">
+                <div class="field col-12 md:col-4">
                   <label>Name:<sup class="p-error">*</sup></label>&nbsp;
                   <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Role Name"
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['name'].touched && roleFormControls['name'].errors }" />
@@ -113,7 +113,7 @@
                       Name Should Contains Only Letters.</div>
                   </span>
                 </div>
-                <div class="field col-12">
+                <div class="field col-12 md:col-4">
                   <label>Is Active?:<sup class="p-error">*</sup></label><br>
                   &nbsp;<p-inputSwitch formControlName="isActive"
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['isActive'].touched && roleFormControls['isActive'].errors }">
@@ -127,7 +127,7 @@
                 <div class="field col-12">
                   <label>Permissions:<sup class="p-error">*</sup></label><br>
                   <div class="grid col-12">
-                    <p-accordion *ngFor="let screen of screens" class="col-3" [multiple]="false">
+                    <p-accordion *ngFor="let screen of screens" class="col-12 xl:col-3 md:col-6 sm:col-6 accordion_roles" [multiple]="false">
                       <p-accordionTab [header]="screen" [selected]="false" [cache]="false">
                         <div class="col-12 role-accordian-view" *ngFor="let permission of getPermissions(screen)">
                           <p-inputSwitch [(ngModel)]="permission.assigned" [ngModelOptions]="{standalone: true}">
