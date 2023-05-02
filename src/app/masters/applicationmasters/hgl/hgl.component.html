@@ -203,7 +203,7 @@
             <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
               <p-fieldset legend="HGL Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
                       alphaNumeric [readonly]="fbHgl.value.hglId" [maxlength]="20"
@@ -222,7 +222,7 @@
                         Code Should Contains Only Alpha Numeric.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Name:<sup class="p-error">*</sup></label>
                     <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                       alphaOnly [maxlength]="maxLength.name"
@@ -239,7 +239,7 @@
                         Name Should Contains Only Alphabets.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Relationship Type:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Relation Type" optionLabel="name" [options]="relationTypes"
                       optionValue="lookupDetailId" formControlName="relationTypeId"
@@ -251,7 +251,7 @@
                         Please Select Relation.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Relationship Name:<sup class="p-error">*</sup></label>
                     <input pInputText id="relationName" #relationName type="text" placeholder="Enter Relation Name"
                       formControlName="relationName" alphaOnly [maxlength]="maxLength.name"
@@ -271,7 +271,7 @@
                         Relationship Name Should Contains Only Alphabets.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Gender:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Gender" [options]="genders" formControlName="gender"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['gender'].touched && FormControls['gender'].errors }">
@@ -281,22 +281,8 @@
                         Please Select Gender.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
-                    <label>Address:<sup class="p-error">*</sup></label>
-                    <textarea rows="2" cols="30" placeholder="Enter Address" #address pInputTextarea
-                      formControlName="address" [maxlength]="maxLength.address" address
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
-                    <div class="text-right">
-                      <small>{{address.value.length}}/{{maxLength.address}} </small>
-                    </div>
-                    <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
-                        Please Enter Address.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
-                        Field Cannot Start Or End With Spaces.</div>
-                    </span>
-                  </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                 
+                  <div class="field col-12 md:col-3">
                     <label>PinCode:<sup class="p-error">*</sup></label>
                     <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
                       formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
@@ -313,7 +299,7 @@
                         Please Enter Pin Code.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Mobile No:</label>
                     <input pInputText id="phoneNo" #phoneNo placeholder="Enter Mobile No" formControlName="phoneNo"
                       numericOnly [maxlength]="maxLength.phoneNo"
@@ -328,11 +314,27 @@
                         First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                     </span>
                   </div>
+                  <div class="field col-12 md:col-3">
+                    <label>Address:<sup class="p-error">*</sup></label>
+                    <textarea rows="2" cols="30" placeholder="Enter Address" #address pInputTextarea
+                      formControlName="address" [maxlength]="maxLength.address" address
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
+                    <div class="text-right">
+                      <small>{{address.value.length}}/{{maxLength.address}} </small>
+                    </div>
+                    <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
+                        Please Enter Address.</div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
+                        Field Cannot Start Or End With Spaces.</div>
+                    </span>
+                  </div>
                 </div>
+                
               </p-fieldset>
               <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Email:</label>
                     <input pInputText id="email" type="text" placeholder="Enter Email" formControlName="email"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['email'].touched && FormControls['email'].errors }">
@@ -343,7 +345,7 @@
                         Email Contains Only Alphabets, Integers And Periods(.)</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label for="panNo">PAN No:</label>
                     <input pInputText id="panNo" type="text" placeholder="Enter Pan No " formControlName="panNo"
                       maxLength="10" style="text-transform:uppercase" alphaNumeric
@@ -355,7 +357,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label class="required">Aadhaar No:</label>
                     <input pInputText id="aadhaarNo" #aadhaarNo placeholder=" Enter Aadhaar No"
                       formControlName="aadhaarNo" maxlength="12" [maxlength]="maxLength.aadhaarNo" numericOnly
@@ -373,7 +375,7 @@
                         Please Enter Valid Aadhaar No.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label class="required">TAX:</label>
                     <input pInputText id="tax" #aadhaarNo placeholder=" Enter tax " formControlName="tax" maxlength="9"
                       numericOnly
@@ -383,7 +385,7 @@
                         Please Enter Tax Number.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Guarantor1:</label>
                     <input pInputText id="guarantor1" type="text" placeholder=" Enter Guarantor1"
                       formControlName="guarantor1"
@@ -393,7 +395,7 @@
                         Guarantor1 Contains Only Characters And Integers.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Guarantor2:</label>
                     <input pInputText id="guarantor2" type="text" placeholder=" Enter Guarantor2"
                       formControlName="guarantor2"
@@ -403,7 +405,7 @@
                         Guarantor2 Contains Only Characters And Integers.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Guarantor3:</label>
                     <input pInputText id="guarantor3" type="text" placeholder=" Enter Guarantor3"
                       formControlName="guarantor3"
@@ -413,7 +415,7 @@
                         Guarantor3 Contains Only Characters And Integers.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>GL Code:</label>
                     <input pInputText id="glcode" type="text" placeholder=" Enter Sub GLCode" formControlName="glcode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
@@ -422,7 +424,7 @@
                         Sub Glcode Contains Only Characters And Integers.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>SubGL Code:</label>
                     <input pInputText id="subGlcode" type="text" placeholder=" Enter Sub GLCode"
                       formControlName="subGlcode"
@@ -432,7 +434,7 @@
                         Sub Glcode Contains Only Characters And Integers.</div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Other Code:</label>
                     <input pInputText id="otherCode" type="text" placeholder=" Enter Other Code"
                       formControlName="otherCode"
@@ -446,14 +448,14 @@
               </p-fieldset>
               <p-fieldset legend="Bank Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Bank:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Bank" [filter]="true" filterBy="name" [virtualScroll]="true"
                       [virtualScrollItemSize]="38" appendTo="body" optionLabel="name" [options]="banks"
                       formControlName="bankId" optionValue="bankId" (onChange)="getBranchByBankId($event.value)">
                     </p-dropdown>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Branch:<sup class="p-error">*</sup></label>
                     <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
                       optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
@@ -471,11 +473,11 @@
                       </div>
                     </span>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>IFSC:</label>
                       <p class="disabled_text">{{IFSC}}</p>
                   </div>
-                  <div class="field col-12 lg:col-3 md:col-6 sm:col-6">
+                  <div class="field col-12 md:col-3">
                     <label>Account Number:<sup class="p-error">*</sup></label>
                     <input pInputText id="accountNo" #accountNo type="text" placeholder="Enter Account Number"
                       formControlName="accountNo" [maxlength]="maxLength.accountNo" numericOnly
@@ -507,8 +509,8 @@
               <!-- //formArray -->
               <p-fieldset legend="Sub Hgl" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
-                  <div class="field col-12 lg:col-9 md:col-7"></div>
-                  <div class="field col-12 lg:col-3 md:col-5">
+                  <div class="field col-12 md:col-9 "></div>
+                  <div class="field col-12 md:col-3">
                     <button pButton pRipple type="button" label="Add Sub HGL Details"
                       class="p-button-raised p-button-primary md:col-4 lg:col-3 xl:col-2 md:mt-5 align-self-end "
                       (click)="addSubHgl()"></button>

@@ -171,5 +171,21 @@ div.season-rates-tab-items:not(:first-child) {
   width:100%;
 }
 .tpt_form{
-  width: -webkit-fill-available;
+  width: -webkit-fill-available !important;
+}
+.p-tabview-panels{
+  width: -webkit-fill-available !important;
+}
+.user_checkbox{
+    display: grid;
+    align-items: center;
+    text-align: center;
+}
+.role-accordian-view{
+  overflow: hidden;
+}
+.p-accordion-header-link {
+
+overflow: hidden;
+
 }

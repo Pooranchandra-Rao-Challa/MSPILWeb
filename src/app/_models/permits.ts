@@ -296,6 +296,10 @@ export class PlotQuotaViewDto {
 }
 
 export class PlotCuttingOrderViewDto{
+  plotCuttingOrderId?:number;
+  seasonCuttingOrderId?:number;
+  cuttingOrderNo?: number;
+  orderQuantity?: number;
   farmerCode?: string;
   farmerName?:string;
   divisionCode?: string;
@@ -306,12 +310,11 @@ export class PlotCuttingOrderViewDto{
   sectionName?: string;
   villageCode?:string;
   villageName?: string;
-  cuttingOrderNo?: number;
-  orderQuantity?: number;
+  plantTypeName?: string;
+  varietyName?: string;
   netArea?: number;
   estimatedTon?: number;
 }
-
 export class ScheduleGroupDto {
   createdBy?: string
   createdAt?: string

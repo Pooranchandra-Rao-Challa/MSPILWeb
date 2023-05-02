@@ -85,6 +85,7 @@ export class AlertMessage {
  * Permits:
  * -------------------------------------------
  * Estimated Ton:ET
+ * Cutting Order:CO
  * -------------------------------------
  * If the screens has more funcitonal items then
  * Like in settings use frist letter as code, if same
@@ -237,7 +238,9 @@ export const ALERT_CODES: { [key: string]: string } = {
    'SMPET001': 'Excess Ton Is Added Successfully',
    'SMPET002': 'Estimated Ton Is Updated Successfully',
 
-   //  Permits
   //  scheduleGrouping
-  'SMPSG001': 'Schedule Grouping Is Add Successfully'
+  'SMPSG001': 'Schedule Grouping Is Add Successfully',
+
+  // Cutting Order
+  'SMPCO001': 'Schedule Grouping Is Add Successfully',
 }
