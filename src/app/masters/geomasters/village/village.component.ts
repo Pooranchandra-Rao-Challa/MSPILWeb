@@ -2,7 +2,6 @@ import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
 import {
   FormBuilder,
   FormControl,
@@ -11,7 +10,6 @@ import {
 } from '@angular/forms';
 import {
   CircleDto,
-  CirclesViewDto,
   DivisionDto,
   VillageDto,
   VillagesViewDto,
@@ -26,21 +24,20 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import {
   MAX_LENGTH_20,
-  MAX_LENGTH_6,
   MIN_LENGTH_2,
-  MIN_LENGTH_6,
   RG_ADDRESS,
   RG_ALPHA_NUMERIC,
   RG_ALPHA_ONLY,
   RG_PHONE_NO,
+  RG_PINCODE,
 } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { AlertMessage } from '../../../_alerts/alertMessage';
+import { AlertMessage } from 'src/app/_alerts/alertMessage';
 @Component({
   selector: 'app-village',
   templateUrl: './village.component.html',
-  // providers: [MessageService, ConfirmationService],
+  providers: [],
 })
 export class VillageComponent implements OnInit {
   display: boolean = false;
@@ -57,10 +54,9 @@ export class VillageComponent implements OnInit {
   sections: SectionDto[] = [];
   mandals: MandalDto[] = [];
   districts: DistrictDto[] = [];
-  valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
-  permissions:any;
+  permissions: any;
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -70,7 +66,7 @@ export class VillageComponent implements OnInit {
   ) { }
 
   InitVillage(village: VillagesViewDto) {
-    this.fbvillages.reset();
+    this.fbvillages.controls['isActive'].setValue(true);
     this.village = new VillageDto();
     this.selectedVillage = village;
     this.clearParents();
@@ -99,14 +95,14 @@ export class VillageComponent implements OnInit {
       this.village.irrigationArea = village.irrigationArea;
       this.village.isActive = village.isActive;
       this.village.listingOrder = village.listingOrder;
-      this.village.noOfEbservices = village.noOfEbservices;
+      this.village.noOfEbservices = village.noOfEBServices;
       this.village.notSuitableArea = village.notSuitableArea;
       this.village.pinCode = village.pinCode;
       this.village.potentialArea = village.potentialArea;
       this.village.targetArea = village.targetArea;
       this.village.totalArea = village.totalArea;
       this.village.tptrate = village.tptRate;
-      this.village.targetArea = 0;
+      // this.village.targetArea = 0;
       this.fbvillages.setValue(this.village);
       this.fbvillages.patchValue({
         stateId: village.stateId?.toString()
@@ -119,16 +115,17 @@ export class VillageComponent implements OnInit {
     }
     this.display = true;
   }
+
   clearParents() {
     this.districts = [];
     this.mandals = [];
     this.circles = [];
     this.sections = [];
-
   }
   get FormControls() {
     return this.fbvillages.controls;
   }
+
   ngOnInit() {
     this.permissions = this.jwtService.Permissions;
     this.initVillages();
@@ -141,44 +138,45 @@ export class VillageComponent implements OnInit {
     });
 
     this.fbvillages = this.formbuilder.group({
-      villageId: [''],
-      divisionId: ['', Validators.required],
-      circleId: ['', Validators.required],
-      sectionId: ['', Validators.required],
-      targetArea: ['', Validators.required],
-      mandalId: ['', Validators.required],
-      districtId: ['', Validators.required],
-      stateId: ['', Validators.required],
+      villageId: [null],
+      divisionId: [null, Validators.required],
+      circleId: [null, Validators.required],
+      sectionId: [null, Validators.required],
+      targetArea: [null, Validators.required],
+      mandalId: [null, Validators.required],
+      districtId: [null, Validators.required],
+      stateId: [null, Validators.required],
       address: new FormControl('', [Validators.required, Validators.pattern(RG_ADDRESS)]),
-      pinCode: new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_6)]),
+      pinCode: new FormControl(null, [Validators.required, Validators.pattern(RG_PINCODE)]),
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      inchargeName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      inchargeName: new FormControl('', [Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       inchargePhoneNo: ['', Validators.pattern(RG_PHONE_NO)],
-      distance: ['', Validators.required],
-      divertedDistance: ['', Validators.required],
-      noOfEbservices: ['', Validators.required],
-      tptrate: ['', Validators.required],
-      cultivableArea: ['', Validators.required],
-      totalArea: ['', Validators.required],
-      irrigationArea: ['', Validators.required],
-      dryArea: ['', Validators.required],
-      potentialArea: ['', Validators.required],
-      notSuitableArea: ['', Validators.required],
-      listingOrder: ['', Validators.required],
-      isActive: [''],
+      distance: [null, Validators.required],
+      divertedDistance: [null, Validators.required],
+      noOfEbservices: [null, Validators.required],
+      tptrate: [null, Validators.required],
+      cultivableArea: [null, Validators.required],
+      totalArea: [null, Validators.required],
+      irrigationArea: [null, Validators.required],
+      dryArea: [null, Validators.required],
+      potentialArea: [null, Validators.required],
+      notSuitableArea: [null, Validators.required],
+      listingOrder: [null, Validators.required],
+      isActive: [null],
     });
   }
-
-
 
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
+      console.log(this.villages);
+
     });
   }
 
   initCircles(division: any) {
+    this.sections = [];
     this.commonService.GetCirclesForDivision(division).subscribe((resp) => {
       this.circles = resp as unknown as CircleDto[];
     });
@@ -197,6 +195,7 @@ export class VillageComponent implements OnInit {
   }
 
   initDistricts(stateId: any) {
+    this.mandals = [];
     this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {
       this.districts = resp as unknown as DistrictDto[];
     });
@@ -211,6 +210,7 @@ export class VillageComponent implements OnInit {
       return this.geoMasterService.CreateVillage(this.fbvillages.value);
     else return this.geoMasterService.UpdateVillage(this.fbvillages.value);
   }
+
   onSubmit() {
     this.fbvillages.value.pinCode = this.fbvillages.value.pinCode + '';
     this.fbvillages.value.inchargePhoneNo =

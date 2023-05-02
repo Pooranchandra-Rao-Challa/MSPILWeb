@@ -1,92 +1,20 @@
 <div class="col-12">
   <div class="card">
     <p-toast key="tst"></p-toast>
+
     <p-dialog header="Village" [(visible)]="display" showEffect="fade"
-      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '70vw' }" [modal]="true">
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '70vw' }" [modal]="true"
+      (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()" >
+          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()">
             <div class="container">
               <div class="grid p-fluid">
                 <p-fieldset legend="Geographic Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-                      <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
-                      <p-dropdown 
-                      [filter]="true"
-                      filterBy="divisionName"
-                     [virtualScroll]="true" [virtualScrollItemSize]="38"
-                      appendTo="body"
-                      [options]="divisions" optionLabel="divisionName" optionValue="divisionId"
-                        (onChange)="initCircles($event.value)" [autoDisplayFirst]="false" formControlName="divisionId"
-                        placeholder="Select Division" [ngClass]="{
-                          'is-invalid ng-dirty':
-                            FormControls['divisionId'].touched &&
-                            FormControls['divisionId'].errors
-                        }">
-                      </p-dropdown>
-                      <span *ngIf="
-                          FormControls['divisionId'].touched &&
-                          FormControls['divisionId'].invalid
-                        ">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['divisionId'].errors?.['required']">
-                          Please Select Division.
-                        </div>
-                      </span>
-                    </div>
-                    <div class="field col-12 md:col-4">
-                      <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
-                      <p-dropdown
-                      
-                      [filter]="true"
-                      filterBy="name"
-                     [virtualScroll]="true" [virtualScrollItemSize]="38"
-                      appendTo="body"[options]="circles" optionLabel="name" optionValue="circleId"
-                        (onChange)="initSections($event.value)" [autoDisplayFirst]="false" formControlName="circleId"
-                        placeholder="Select Circle" [ngClass]="{
-                          'is-invalid ng-dirty':
-                            FormControls['circleId'].touched &&
-                            FormControls['circleId'].errors
-                        }">
-                      </p-dropdown>
-                      <span *ngIf="
-                          FormControls['circleId'].touched &&
-                          FormControls['circleId'].invalid
-                        ">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['circleId'].errors?.['required']">
-                          Please Select Circle.
-                        </div>
-                      </span>
-                    </div>
-                    <div class="field col-12 md:col-4">
-                      <label htmlFor="section">Sections:<sup class="p-error">*</sup></label>
-                      <p-dropdown 
-                      [filter]="true"
-                      filterBy="name"
-                     [virtualScroll]="true" [virtualScrollItemSize]="38"
-                     appendTo="body"[options]="sections" optionLabel="name" optionValue="sectionId"
-                        [autoDisplayFirst]="false" formControlName="sectionId" placeholder="Select Section" [ngClass]="{
-                          'is-invalid ng-dirty':
-                            FormControls['sectionId'].touched &&
-                            FormControls['sectionId'].errors
-                        }">
-                      </p-dropdown>
-                      <span *ngIf="
-                          FormControls['sectionId'].touched &&
-                          FormControls['sectionId'].invalid
-                        ">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['sectionId'].errors?.['required']">
-                          Please Select Section.
-                        </div>
-                      </span>
-                    </div>
-                    <div class="field col-12 md:col-4">
                       <label htmlFor="age1">State:<sup class="p-error">*</sup></label>
-                      <p-dropdown
-                     [options]="states" optionLabel="stateName" optionValue="stateId"
+                      <p-dropdown [options]="states" optionLabel="stateName" optionValue="stateId"
                         (onChange)="initDistricts($event.value)" [autoDisplayFirst]="false" formControlName="stateId"
                         placeholder="Select State" [ngClass]="{
                           'is-invalid ng-dirty':
@@ -105,11 +33,8 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="districtId">Districts:<sup class="p-error">*</sup></label>
-                      <p-dropdown  
-                      [filter]="true"
-                      filterBy="name"
-                     [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
-                     [options]="districts" optionLabel="name" optionValue="districtId"
+                      <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                        appendTo="body" [options]="districts" optionLabel="name" optionValue="districtId"
                         (onChange)="initMandals($event.value)" [autoDisplayFirst]="false" formControlName="districtId"
                         placeholder="Select District" [ngClass]="{
                           'is-invalid ng-dirty':
@@ -129,11 +54,8 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="circle">Mandals:<sup class="p-error">*</sup></label>
-                      <p-dropdown
-                      [filter]="true"
-                      filterBy="name"
-                     [virtualScroll]="true" [virtualScrollItemSize]="38"appendTo="body"
-                      [options]="mandals" optionLabel="name" optionValue="mandalId"
+                      <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                        appendTo="body" [options]="mandals" optionLabel="name" optionValue="mandalId"
                         [autoDisplayFirst]="false" formControlName="mandalId" placeholder="Select Mandal" [ngClass]="{
                           'is-invalid ng-dirty':
                             FormControls['mandalId'].touched &&
@@ -150,13 +72,74 @@
                         </div>
                       </span>
                     </div>
+                    <div class="field col-12 md:col-4">
+                      <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
+                      <p-dropdown [filter]="true" filterBy="divisionName" [virtualScroll]="true"
+                        [virtualScrollItemSize]="38" appendTo="body" [options]="divisions" optionLabel="divisionName"
+                        optionValue="divisionId" (onChange)="initCircles($event.value)" [autoDisplayFirst]="false"
+                        formControlName="divisionId" placeholder="Select Division" [ngClass]="{
+                          'is-invalid ng-dirty':
+                            FormControls['divisionId'].touched &&
+                            FormControls['divisionId'].errors
+                        }">
+                      </p-dropdown>
+                      <span *ngIf="
+                          FormControls['divisionId'].touched &&
+                          FormControls['divisionId'].invalid
+                        ">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['divisionId'].errors?.['required']">
+                          Please Select Division.
+                        </div>
+                      </span>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
+                      <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                        appendTo="body" [options]="circles" optionLabel="name" optionValue="circleId"
+                        (onChange)="initSections($event.value)" [autoDisplayFirst]="false" formControlName="circleId"
+                        placeholder="Select Circle" [ngClass]="{
+                          'is-invalid ng-dirty':
+                            FormControls['circleId'].touched &&
+                            FormControls['circleId'].errors
+                        }">
+                      </p-dropdown>
+                      <span *ngIf="
+                          FormControls['circleId'].touched &&
+                          FormControls['circleId'].invalid
+                        ">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['circleId'].errors?.['required']">
+                          Please Select Circle.
+                        </div>
+                      </span>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                      <label htmlFor="section">Sections:<sup class="p-error">*</sup></label>
+                      <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                        appendTo="body" [options]="sections" optionLabel="name" optionValue="sectionId"
+                        [autoDisplayFirst]="false" formControlName="sectionId" placeholder="Select Section" [ngClass]="{
+                          'is-invalid ng-dirty':
+                            FormControls['sectionId'].touched &&
+                            FormControls['sectionId'].errors
+                        }">
+                      </p-dropdown>
+                      <span *ngIf="
+                          FormControls['sectionId'].touched &&
+                          FormControls['sectionId'].invalid
+                        ">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['sectionId'].errors?.['required']">
+                          Please Select Section.
+                        </div>
+                      </span>
+                    </div>
                   </div>
                 </p-fieldset>
 
                 <p-fieldset legend="Village Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-
                       <label>Code:<sup class="p-error">*</sup></label>
                       <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
                         alphaNumeric [readonly]="fbvillages.value.tptId" [maxlength]="20"
@@ -175,7 +158,6 @@
                           Code Should Contains Only Alpha Numeric.</div>
                       </span>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label>Name:<sup class="p-error">*</sup></label>
                       <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
@@ -192,9 +174,7 @@
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
                           Name Should Contains Only Alphabets.</div>
                       </span>
-
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label>Incharge Name:</label>
                       <input pInputText type="text" #inchargeName formControlName="inchargeName" alphaOnly
@@ -208,8 +188,6 @@
                           Alphabets.</div>
                       </span>
                     </div>
-
-
                     <div class="field col-12 md:col-4">
                       <label>Incharge PhoneNo:</label>
                       <input pInputText id="inchargePhoneNo" formControlName="inchargePhoneNo"
@@ -227,9 +205,6 @@
                           First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                       </span>
                     </div>
-
-
-
                     <div class="field col-12 md:col-4">
                       <label>PinCode:<sup class="p-error">*</sup></label>
                       <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
@@ -241,14 +216,12 @@
                         </small>
                       </div>
                       <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['pinCode'].errors?.['minlength']">
-                          Please Enter 6 Digits PinCode .</div>
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
                           Please Enter Pin Code.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['pattern']">
+                          Pin Code Should Not Start With Zero And Contains 6 Digits.</div>
                       </span>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="distance">Distance:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2"
@@ -275,7 +248,6 @@
                         Diverted Distance Required
                       </div>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
@@ -294,7 +266,7 @@
                     <div class="field col-8 md:col-4">
                       <label>Address:<sup class="p-error">*</sup></label>
                       <textarea rows="5" cols="30" placeholder="Enter Address" #address pInputTextarea
-                        formControlName="address" [maxlength]="maxLength.address"
+                        formControlName="address" [maxlength]="maxLength.address" address
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
                       <div class="text-right">
                         <small>{{address.value.length}}/{{maxLength.address}} </small>
@@ -308,12 +280,10 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <div class="col-6">
-                        <label htmlFor="isActive">Is Active?:</label><br />
-                        <p-inputSwitch [(ngModel)]="valSwitch" formControlName="isActive"></p-inputSwitch>
+                        <label htmlFor="isActive">Is Active:</label><br />
+                        <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                       </div>
                     </div>
-
-
                   </div>
                 </p-fieldset>
 
@@ -331,13 +301,11 @@
                         Cultivatable Area Is Required.
                       </div>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="irrigationArea">Irrigation Area(In Peek Summer):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2"
                         placeholder="Enter Irrigation Area">
                       </p-inputNumber>
-
                       <div *ngIf="
                           FormControls['irrigationArea'].invalid &&
                           FormControls['irrigationArea'].touched
@@ -351,7 +319,6 @@
                         placeholder="Suitable Area" locale="en-US" placeholder="Enter Suitable Area"
                         [minFractionDigits]="2">
                       </p-inputNumber>
-
                       <div *ngIf="
                           FormControls['potentialArea'].invalid &&
                           FormControls['potentialArea'].touched
@@ -359,7 +326,6 @@
                         Suitable Area For Cane is required.
                       </div>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="totalArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2"
@@ -373,13 +339,11 @@
                         Total Geographic Area iIs Required.
                       </div>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="dryArea">Dry Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2"
                         placeholder="Enter Dry Area">
                       </p-inputNumber>
-
                       <div *ngIf="
                           FormControls['dryArea'].invalid &&
                           FormControls['dryArea'].touched
@@ -387,13 +351,11 @@
                         Dry Area Is Required
                       </div>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="notSuitableArea">Not Suitable Area:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="notSuitableArea" formControlName="notSuitableArea" mode="decimal"
                         placeholder="Enter Not Suitable Area" locale="de-DE" [minFractionDigits]="2">
                       </p-inputNumber>
-
                       <div *ngIf="
                           FormControls['notSuitableArea'].invalid &&
                           FormControls['notSuitableArea'].touched
@@ -401,16 +363,15 @@
                         Not Suitable Area Required.
                       </div>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="target">Target Area</label>
-                      <p-inputNumber formControlName="targetArea" inputId="target" placeholder="Enter Target Area">
+                      <p-inputNumber formControlName="targetArea" inputId="target" [minFractionDigits]="2"
+                        placeholder="Enter Target Area">
                       </p-inputNumber>
                     </div>
-
                     <div class="field col-12 md:col-4">
                       <label for="noOfEbservices">No Of EB Services:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="0"
+                      <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="2"
                         placeholder="Enter No of EB Services">
                       </p-inputNumber>
                       <div *ngIf="
@@ -425,7 +386,6 @@
                       <p-inputNumber inputId="tptRate" formControlName="tptrate" [minFractionDigits]="2"
                         placeholder="Enter TPT Rate">
                       </p-inputNumber>
-
                       <div *ngIf="
                           FormControls['tptrate'].invalid &&
                           FormControls['tptrate'].touched
@@ -459,8 +419,7 @@
     </p-toolbar>
 
     <p-table #dt1 [value]="villages" dataKey="id" [rows]="10" [rowHover]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="[
         'divisionName',
         'circleName',
@@ -469,6 +428,7 @@
         'mandalName',
         'mandalName',
         'address',
+        'pinCode',
         'villageName',
         'villageCode',
         'inchargeName',
@@ -491,8 +451,6 @@
         'updatedAt',
         'updatedBy',
         'updatedBy',
-      
-
       ]" [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10, 25, 50]"
       [tableStyle]="{ width: 'max-content' }">
       <ng-template pTemplate="caption">
@@ -506,7 +464,6 @@
           </span>
         </div>
       </ng-template>
-
       <ng-template pTemplate="header">
         <tr>
           <th></th>
@@ -524,7 +481,6 @@
             </p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
-
           <th pSortableColumn="districtName">
             District<p-columnFilter type="text" field="districtName" display="menu"></p-columnFilter>
             <p-sortIcon field="districtName"></p-sortIcon>
@@ -539,13 +495,11 @@
             </p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
           </th>
-
           <th pSortableColumn="pinCode">
             Pincode<p-columnFilter type="text" field="pinCode" display="menu">
             </p-columnFilter>
             <p-sortIcon field="pinCode"></p-sortIcon>
           </th>
-
           <th pSortableColumn="villageCode">
             Code<p-columnFilter type="text" field="villageCode" display="menu">
             </p-columnFilter>
@@ -556,7 +510,6 @@
             </p-columnFilter>
             <p-sortIcon field="villageName"></p-sortIcon>
           </th>
-
           <th pSortableColumn="inchargeName">
             Incharge Name<p-columnFilter type="text" field="inchargeName" display="menu"></p-columnFilter>
             <p-sortIcon field="inchargeName"></p-sortIcon>
@@ -565,8 +518,6 @@
             InchargePhone No<p-columnFilter type="text" field="inchargePhoneNo" display="menu"></p-columnFilter>
             <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
           </th>
-
-
           <th pSortableColumn="distance">
             Distance<p-columnFilter type="text" field="distance" display="menu">
             </p-columnFilter>
@@ -607,7 +558,6 @@
             Potential Area<p-columnFilter type="text" field="potentialArea" display="menu"></p-columnFilter>
             <p-sortIcon field="potentialArea"></p-sortIcon>
           </th>
-
           <th pSortableColumn="notSuitableArea">
             Not Suitable Area<p-columnFilter type="text" field="notSuitableArea" display="menu"></p-columnFilter>
             <p-sortIcon field="notSuitableArea"></p-sortIcon>
@@ -691,5 +641,6 @@
         </tr>
       </ng-template>
     </p-table>
+
   </div>
 </div>
