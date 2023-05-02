@@ -247,5 +247,9 @@ export const GET_CUTTING_ORDERS ="Schedule/GetCuttingOrders";
 export const GET_SEASON_QUOTAS ="Schedule/GetSeasonQuotas";
 export const GET_PLOT_QUOTAS_URI ="Schedule/GetPlotQuotas";
 export const CREATE_SCHEDULE_GROUP_URI = "Schedule/CreateScheduleGroup";
+export const GET_QUOTAS_URI = "Schedule/GetQuotas";
+export const CREATE_PERMIT_QUOTA = "Schedule/CreatepermitQuota";
+export const UPDATE_PERMIT_QUOTA_URI ="Schedule/UpdatePermitQuota";
+
 
 

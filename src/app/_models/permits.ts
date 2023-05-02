@@ -367,3 +367,64 @@ export class GetCuttingOrderViewDto{
   toPurity?: number;
 
 }
+
+export class PlotQuotaDto {
+  seasonId?: number
+  fromGrpNo?: number
+  toGrpNo?: number
+  quota?: number
+  filterName?: string
+}
+export class GetQuotasViewDto {
+  sectionId?: number
+  sectionName?: string
+  circleId?: number
+  circleName?: string
+  divisionId?: number
+  divisionName?: string
+  villageId?: number
+  villageName?: string
+  tons?: number
+  excessTonage?: number
+  totalTons?: number
+  scheduledTons?: number
+  plotQuotaId?:number
+  seasonQuotaId?:number
+
+}
+
+export class PermitQuotaDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  seasonQuotaId?: number
+  seasonId?: number
+  docNo?: number
+  docDate?: string
+  fromSchGroupNo?: number
+  toSchGroupNo?: number
+  fromDate?: string
+  toDate?: string
+  quotaReleased?: number
+  groupBy?: string
+  serverUpdatedStatus?: boolean
+  plotQuotas?: PlotQuotaDto[]
+}
+
+export interface PlotQuotaDto {
+  createdBy?: string
+  createdAt?: string
+  updatedBy?: string
+  updatedAt?: string
+  plotQuotaId?: number
+  seasonQuotaId?: number
+  divisionId?: number
+  circleId?: number
+  sectionId?: number
+  villageId?: number
+  quotaReleased?: number
+}
+
+
+

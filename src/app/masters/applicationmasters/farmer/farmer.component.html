@@ -81,34 +81,6 @@
             Village Name<p-columnFilter type="text" field="villageName" display="menu"></p-columnFilter>
             <p-sortIcon field="villageName"></p-sortIcon>
           </th>
-          <th pSortableColumn="pinCode">
-            Pin Code<p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="pinCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="phoneNo">
-            Phone No<p-columnFilter type="text" field="phoneNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="phoneNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="email">
-            Email<p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
-            <p-sortIcon field="email"></p-sortIcon>
-          </th>
-          <th pSortableColumn="panNo">
-            PAN No<p-columnFilter type="text" field="panNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="panNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="aadhaarNo">
-            Aadhaar Number<p-columnFilter type="text" field="aadhaarNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="aadhaarNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="oldRyot">
-            Old Ryot<p-columnFilter type="text" field="oldRyot" display="menu"></p-columnFilter>
-            <p-sortIcon field="oldRyot"></p-sortIcon>
-          </th>
-          <th pSortableColumn="jfNo">
-            JF No<p-columnFilter type="text" field="jfNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="jfNo"></p-sortIcon>
-          </th>
           <th pSortableColumn="bankName">
             Bank Name<p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
             <p-sortIcon field="bankName"></p-sortIcon>
@@ -133,18 +105,9 @@
             Cultivated Area<p-columnFilter type="text" field="cultivatedArea" display="menu"></p-columnFilter>
             <p-sortIcon field="cultivatedArea"></p-sortIcon>
           </th>
-          <th pSortableColumn="glCode">
-            GL Code<p-columnFilter type="text" field="glCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="glCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="subGLCode">
-            Sub GL Code <p-columnFilter type="text" field="subGLCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="subGLCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="otherCode">
-            Other Code <p-columnFilter type="text" field="otherCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="otherCode"></p-sortIcon>
-          </th>
+      
+          
+         
           <th pSortableColumn="isRegistered">
             Is Registered <p-columnFilter type="text" field="isRegistered" display="menu"></p-columnFilter>
             <p-sortIcon field="isRegistered"></p-sortIcon>
@@ -186,22 +149,12 @@
           <td>{{farmer.districtName}}</td>
           <td>{{farmer.mandalName}}</td>
           <td>{{farmer.villageName}}</td>
-          <td>{{farmer.pinCode}}</td>
-          <td>{{farmer.phoneNo}}</td>
-          <td>{{farmer.email}}</td>
-          <td>{{farmer.panNo}}</td>
-          <td>{{farmer.aadhaarNo}}</td>
-          <td>{{farmer.oldRyot}}</td>
-          <td>{{farmer.jfNo}}</td>
           <td>{{farmer.bankName}}</td>
           <td>{{farmer.branchName}}</td>
           <td>{{farmer.ifsc}}</td>
           <td>{{farmer.accountNo}}</td>
           <td>{{farmer.totalArea}}</td>
           <td>{{farmer.cultivatedArea}}</td>
-          <td>{{farmer.glCode}}</td>
-          <td>{{farmer.subGLCode}}</td>
-          <td>{{farmer.otherCode}}</td>
           <td>
             <p-checkbox name="active" value="active" [(ngModel)]="farmer.isRegistered" [binary]="true"
               [disabled]="true">

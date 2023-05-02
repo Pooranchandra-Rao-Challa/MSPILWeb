@@ -3,7 +3,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@ang
 import { Table } from 'primeng/table';
 import { MEDIUM_DATE } from "src/app/_helpers/date.format.pipe";
 import {  SeasonDto, SeasonViewDto, } from "src/app/_models/applicationmaster";
-import { CircleforUserDto, DivisionsforUserDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupDto, ScheduleGroupPlotsDto, ScheduleGroupPlotsViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, FarmersInPlotsForUserDto, IPlotScheduleViewDto,
+ ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotsForUserDto, ScheduleGroupDto, ScheduleGroupPlotsDto, ScheduleGroupPlotsViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { CURRENT_SEASON } from "src/environments/environment";
@@ -119,6 +120,7 @@ export class ScheduleGroupingComponent implements OnInit {
     this.initCurrentSeason(CURRENT_SEASON());
     this.scheduleGroupingForm();
   }
+
   scheduleGroupingForm() {
     this.fbScheduleGrouping = this.formbuilder.group({
       seasonId: new FormControl(null, [Validators.required]),
@@ -154,7 +156,6 @@ export class ScheduleGroupingComponent implements OnInit {
     return this.fbScheduleGrouping.get('plotSchedules') as FormArray;
   }
   addSchedule(rowData: any) {
-
     const formArray = this.fbScheduleGrouping.get('plotSchedules') as FormArray;
     formArray.push(this.plotScheduleForm(rowData));
   }
@@ -163,7 +164,6 @@ export class ScheduleGroupingComponent implements OnInit {
     formArray.removeAt(index);
   }
   onRowSelect(event: any, scheduleGrouping: any) {
-
     console.log(scheduleGrouping);
     if (event.checked) {
       this.addSchedule(scheduleGrouping);

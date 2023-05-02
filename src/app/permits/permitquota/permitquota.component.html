@@ -37,7 +37,7 @@
                                             <label class="mb-2 block font-bold" for="stacked">From Schedule Group
                                                 No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
-                                                inputStyleClass="p-numeric-input"
+                                                inputStyleClass="p-numeric-input" formControlName="fromGrpNo"
                                                 (onValueChange)="restrictToRange($event)"></p-inputNumber>
                                         </div>
 
@@ -46,7 +46,7 @@
                                                     class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
                                                 inputStyleClass="p-numeric-input"
-                                                (onValueChange)="restrictToRange($event)"></p-inputNumber>
+                                                (onValueChange)="restrictToRange($event)" formControlName="toGrpNo"></p-inputNumber>
                                         </div>
 
                                         <div class="field col-12 md:col-3">
@@ -59,31 +59,33 @@
                                             <label>Quota:<sup class="p-error">*</sup></label>
                                             <input pInputText id="quota" type="number" formControlName="quota">
                                         </div>
+                                       
                                         <div class="field col-12 md:col-8">
-                                            <label>Type:<sup class="p-error">*</sup></label>
-                                            <div class="grid mt-1">
-                                                <div class="col col-3">
-                                                    <p-radioButton name="test" formControlName="test" value="Division"
-                                                        label="Division"></p-radioButton>
-                                                </div>
-                                                <div class="col col-3">
-                                                    <p-radioButton name="test" formControlName="test" value="Circle"
-                                                        label="Circle"></p-radioButton>
-                                                </div>
-                                                <div class="col col-3">
-                                                    <p-radioButton name="test" formControlName="test" value="Section"
-                                                        label="Section"></p-radioButton>
-                                                </div>
-                                                <div class="col col-3">
-                                                    <p-radioButton name="test" formControlName="test" value="Village"
-                                                        label="Village"></p-radioButton>
-                                                </div>
-                                            </div>
+                                          <label>Type:<sup class="p-error">*</sup></label>
+                                          <div class="grid mt-1">
+
+                                        <div class="col col-3">
+                                          <p-radioButton name="filterName" formControlName="filterName" value="Division" label="Division"
+                                            (click)="fbPermitQuota.get('division')?.setValue('Division')"></p-radioButton>
                                         </div>
+                                        <div class="col col-3">
+                                          <p-radioButton name="filterName" formControlName="filterName" value="Circle" label="Circle"
+                                            (click)="fbPermitQuota.get('division')?.setValue('Circle')"></p-radioButton>
+                                        </div>
+                                        <div class="col col-3">
+                                          <p-radioButton name="filterName" formControlName="filterName" value="Section" label="Section"
+                                            (click)="fbPermitQuota.get('division')?.setValue('Section')"></p-radioButton>
+                                        </div>
+                                        <div class="col col-3">
+                                          <p-radioButton name="filterName" formControlName="filterName" value="Village" label="Village"
+                                            (click)="fbPermitQuota.get('division')?.setValue('Village'); fbPermitQuota.get('village')?.setValue('selected village')"></p-radioButton>
+                                        </div>
+                                      </div>
+                                    </div>
                                           <div class="col-12 p-0">
                                             <div class="md:col-3 p-3 mb-3" style="float: right;">
                                                 <button pButton pRipple type="submit" label="Get Quota"
-                                                class="p-button-raised p-button-primary" (click)="showTable = true"></button>
+                                                class="p-button-raised p-button-primary" (click)="initQuotas()" (click)="showTable = true"></button>
                                               
                                             </div>
                                           </div>
@@ -96,7 +98,7 @@
                 </form>
                 <!-- table -->
                 
-                <p-table #dtpermitquota [value]="permitquotas" dataKey="id" [rows]="5" [rowHover]="true"
+                <p-table #dtpermitquota [value]="Quotas" dataKey="id" [rows]="10" [rowHover]="true"
                 [style.display]="showTable ? 'table' : 'none'"*ngIf="showTable"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
                 responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
@@ -129,16 +131,20 @@
                     </th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-getQuota>
-                    <tr>
-                      <td *ngFor="let col of PermitQuotaHeaders">
-                        <span *ngIf="col?.field != 'Quota' ">{{getQuota[col.field]}}</span>
-                        <span *ngIf="col?.field == 'Quota'">
-                          <p-inputNumber inputId="quotaInput" [(ngModel)]="getQuota[col.field]"></p-inputNumber>
-                        </span>
-                      </td>
-                    </tr>
-                  </ng-template>
+                <ng-template pTemplate="body" let-Quotas let-rowIndex="rowIndex">
+                  <tr>
+                    <td *ngFor="let col of PermitQuotaHeaders">
+                      <span *ngIf="col?.field != 'Quota'">{{ Quotas[col.field] }}</span>
+                      <span *ngIf="col?.field == 'Quota'">
+                        <p-inputNumber inputId="quotaInput" [(ngModel)]="Quotas.scheduledTons"></p-inputNumber>
+                      </span>
+                      <span *ngIf="col?.field == 'DivisionId'">{{ Quotas.plotQuotas[rowIndex].divisionId }}</span>
+                      <span *ngIf="col?.field == 'CircleId'">{{ Quotas.plotQuotas[rowIndex].circleId }}</span>
+                      <span *ngIf="col?.field == 'SectionId'">{{ Quotas.plotQuotas[rowIndex].sectionId }}</span>
+                      <span *ngIf="col?.field == 'VillageId'">{{ Quotas.plotQuotas[rowIndex].villageId }}</span>
+                    </td>
+                  </tr>
+                </ng-template>
               </p-table>
                
                   

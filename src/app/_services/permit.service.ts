@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, ExcessViewDto, FarmersDto, FarmersInPlotsForUserDto, GetCuttingOrderViewDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PlantTypeForUserDto, PlotCuttingOrderViewDto, PlotQuotaViewDto, PlotsForUserDto, ScheduleGroupDto, ScheduleGroupPlotsDto, SeasonCuttingOrderViewDto, SeasonQuotaViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "../_models/permits";
+import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonDto, ExcessTonViewDto, ExcessViewDto, FarmersDto, FarmersInPlotsForUserDto, GetCuttingOrderViewDto, GetQuotasViewDto, IPlotScheduleViewDto, ISeasonScheduleGroupViewDto, PermitQuotaDto, PlantTypeForUserDto, PlotCuttingOrderViewDto, PlotQuotaViewDto, PlotsForUserDto, ScheduleGroupDto, ScheduleGroupPlotsDto, SeasonCuttingOrderViewDto, SeasonQuotaViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto, } from "../_models/permits";
 import { ApiHttpService } from "./api.http.service";
-import { CREATE_EXCESS_TON, CREATE_SCHEDULE_GROUP_URI, GET_CIRCLES_FOR_USER, GET_CUTTING_ORDERS, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMERS_IN_PLOTS_FOR_USER, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_PLANT_TYPE_FOR_USER, GET_PLOTS_FOR_USER, GET_PLOT_CUTTING_ORDERS, GET_PLOT_QUOTAS_URI, GET_SCHEDULE_GROUP_PLOTS_URI, GET_SEASON_CUTTING_ORDERS, GET_SEASON_QUOTAS, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VARIETIES_FOR_USER,  GET_VILLAGES_FOR_USER,UPDATE_EXCESS_TONNAGE, } from "./api.uri.service";
+import { CREATE_EXCESS_TON, CREATE_PERMIT_QUOTA, CREATE_SCHEDULE_GROUP_URI, GET_CIRCLES_FOR_USER, GET_CUTTING_ORDERS, GET_DIVISIONS_FOR_USER, GET_ESTIMATED_TON, GET_EXCESS_TON, GET_FARMERS_FOR_ESTIMATED_TON, GET_FARMERS_IN_PLOTS_FOR_USER, GET_FARMER_PLOTS_IN_SCHEDULE_URI, GET_PLANT_TYPE_FOR_USER, GET_PLOTS_FOR_USER, GET_PLOT_CUTTING_ORDERS, GET_PLOT_QUOTAS_URI, GET_QUOTAS_URI, GET_SCHEDULE_GROUP_PLOTS_URI, GET_SEASON_CUTTING_ORDERS, GET_SEASON_QUOTAS, GET_SEASON_SCHEDULE_GROUPS_URI,  GET_SECTIONS_FOR_USER,  GET_VARIETIES_FOR_USER,  GET_VILLAGES_FOR_USER,UPDATE_EXCESS_TONNAGE, UPDATE_PERMIT_QUOTA_URI, } from "./api.uri.service";
 
 
 
@@ -116,5 +116,17 @@ public GetPlotQuotas(seasonId:any,SeasonQuotaId :any) {
 
   public CreateScheduleGroup(ScheduleGroup: any) {
     return this.post<ScheduleGroupDto>(CREATE_SCHEDULE_GROUP_URI, ScheduleGroup);
+  }
+
+  public GetQuotas(GetQuotas: GetQuotasViewDto) {
+    return this.post<GetQuotasViewDto>(GET_QUOTAS_URI, GetQuotas);
+  }
+
+  public CreatepermitQuota(permitQuota: PermitQuotaDto) {
+    return this.post<PermitQuotaDto>(CREATE_PERMIT_QUOTA, permitQuota);
+  }
+
+  public UpdatePermitQuota(permitQuota: PermitQuotaDto) {
+    return this.post<PermitQuotaDto>(UPDATE_PERMIT_QUOTA_URI, permitQuota);
   }
 }

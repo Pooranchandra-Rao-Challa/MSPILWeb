@@ -262,7 +262,7 @@
     [breakpoints]="{'950px': '70vw', '630px': '900vw' }" [style]="{width: '90vw'}">
     <div class="flex flex-column align-items-center justify-content-center">
       <!-- popup table -->
-      <p-table #dt2 [value]="schedule" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+      <p-table #dt2 [value]="schedule" dataKey="id" [rows]="10" [rowHover]="true"  formGroupName="scheduleForm" *ngIf="showTable"
         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
         responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
         <!-- (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" -->
@@ -307,7 +307,7 @@
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-scheduleGrouping let-rowIndex="rowIndex">
+        <ng-template pTemplate="body" let-scheduleGrouping let-rowIndex="rowIndex" >
           <tr>
             <td>
               <p-checkbox [binary]="true" (onChange)="onRowSelect($event,scheduleGrouping)"
