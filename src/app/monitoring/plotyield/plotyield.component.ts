@@ -92,6 +92,7 @@ export class PlotyieldComponent implements OnInit {
     { field: 'offerNo', header: 'offerNo', label: 'Offer No' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
   ];
+  currentSeasonId?: number;
 
   clear(table: Table) {
     table.clear();
@@ -200,6 +201,7 @@ export class PlotyieldComponent implements OnInit {
   initCurrentSeasons(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.initPlotYields(this.currentSeason.seasonId!);
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
     });
@@ -246,6 +248,8 @@ export class PlotyieldComponent implements OnInit {
 
   addPlotYield() {
     this.fbPlotYield.controls['plotId'].enable();
+    this.fbPlotYield.controls['seasonId'].setValue(this.currentSeasonId);
+    this.initPlotNumbers(this.currentSeasonId!, -1);
     this.submitLabel = "Add Plot Yield";
     this.addFlag = true;
     this.showDialog = true;

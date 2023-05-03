@@ -47,6 +47,7 @@ export class SeedComponent implements OnInit {
   plotNumbers: IPlotsofFarmerViewDto[] = [];
   seedSupplyTypes: LookupDetailDto[] = [];
   typeOfSeeds: LookupDetailDto[] = [];
+  currentSeasonId?: number;
 
   constructor(private commonService: CommonService,
     private appMasterservice: AppMasterService,
@@ -93,6 +94,7 @@ export class SeedComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.getFarmerSections(this.currentSeason.seasonId!);
     });
   }
@@ -180,8 +182,8 @@ export class SeedComponent implements OnInit {
 
   addSeed() {
     this.addSeedDetails();
-    this.getDocNo(this.currentSeason.seasonId!);
-    this.fbSeed.controls['seasonId'].setValue(this.currentSeason.seasonId);
+    this.getDocNo(this.currentSeasonId!);
+    this.fbSeed.controls['seasonId'].setValue(this.currentSeasonId);
     this.submitLabel = 'Add Seed';
     this.addFlag = true;
     this.showDialog = true;

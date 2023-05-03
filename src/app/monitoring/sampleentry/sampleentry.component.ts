@@ -63,6 +63,7 @@ export class SampleEntryComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
+  currentSeasonId?: number;
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
@@ -122,6 +123,7 @@ export class SampleEntryComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.fbSampleEntry.controls['seasonId'].setValue(this.currentSeason.seasonId!);
       this.initFarmerSections(this.currentSeason.seasonId!);
       this.initSampleEntries(this.currentSeason.seasonId!)
@@ -235,7 +237,8 @@ export class SampleEntryComponent implements OnInit {
   addSampleEntry() {
     this.isSampleCountMatched = false;
     this.fbSampleEntry.controls['seasonId'].enable();
-    this.fbSampleEntry.controls['seasonId'].patchValue(this.currentSeason.seasonId);
+    this.fbSampleEntry.controls['seasonId'].setValue(this.currentSeasonId);
+    this.initFarmerSections(this.currentSeasonId!);
     this.submitLabel = 'Add Sample Entry';
     this.addFlag = true;
     this.showDialog = true;

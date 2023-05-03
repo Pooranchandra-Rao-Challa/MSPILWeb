@@ -61,6 +61,7 @@ export class PlotTransfersComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
+  currentSeasonId?: number;
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
@@ -132,6 +133,7 @@ export class PlotTransfersComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.AppMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.fbplotTransfer.controls['seasonId'].setValue(this.currentSeason.seasonId);
       this.initPlotsTransfers(this.currentSeason.seasonId!);
       this.getFarmerSections(this.currentSeason.seasonId!);
@@ -206,8 +208,8 @@ export class PlotTransfersComponent implements OnInit {
   }
 
   addPlotTransfer() {
-    this.fbplotTransfer.controls['seasonId'].setValue(this.currentSeason.seasonId);
-
+    this.fbplotTransfer.controls['seasonId'].setValue(this.currentSeasonId);
+    this.onSeasonChange(this.currentSeasonId!);
     this.submitLabel = "Add Plot Transfer";
     this.addFlag = true;
     this.showDialog = true;

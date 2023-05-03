@@ -86,6 +86,7 @@ export class PlotreportsComponent implements OnInit {
     { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
   ];
+  currentSeasonId?: number;
 
   constructor(private formbuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -261,7 +262,7 @@ export class PlotreportsComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.initSeasons();
       this.initPlotReports(this.currentSeason.seasonId!);
     });
@@ -372,8 +373,8 @@ export class PlotreportsComponent implements OnInit {
   addPlotReport() {
     this.fbPlotReport.controls['seasonId'].enable();
     this.fbPlotReport.controls['plotOfferId'].enable();
-    this.fbPlotReport.controls['seasonId'].setValue(this.currentSeason.seasonId);
-    this.getPlotOffersInSeason(this.currentSeason.seasonId || 0, -1);
+    this.fbPlotReport.controls['seasonId'].setValue(this.currentSeasonId);
+    this.getPlotOffersInSeason(this.currentSeasonId || 0, -1);
     this.onValidations();
     this.showDialog = true;
   }

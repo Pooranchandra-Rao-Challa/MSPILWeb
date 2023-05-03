@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Plot Assesment" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="initPlotAssesment()" *ngIf="permissions?.CanCreatePlotAssessment"></button>
+          (click)="addPlotAssesment()" *ngIf="permissions?.CanCreatePlotAssessment"></button>
       </ng-template>
     </p-toolbar>
 
@@ -28,7 +28,7 @@
                       <div class="field col-12 md:col-4 lg:col-3 ">
                         <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-                          [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
+                          optionValue="seasonId" formControlName="seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Name: </label><br />
-                          <p class="disabled_text">{{plotInfo.plotVillageName }}</p>
+                          <p class="disabled_text">{{plotInfo.farmerName }}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Village: </label><br />
@@ -117,7 +117,7 @@
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Section: </label><br />
-                          <p class="disabled_text">{{plotInfo.farmerSectionName}}</p>
+                          <p class="disabled_text">{{plotInfo.plotSectionName}}</p>
                         </div>
                         <div class="field col-12 md:col-4 lg:col-4">
                           <label class="font-bold">Plot Village: </label><br />

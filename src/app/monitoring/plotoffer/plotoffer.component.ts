@@ -70,6 +70,7 @@ export class PlotofferComponent implements OnInit {
     { field: 'expectedPlantingDate', header: 'expectedPlantingDate', label: 'Planting Date' },
   ];
   loading: boolean = false;
+  currentSeasonId?: number;
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
@@ -135,6 +136,7 @@ export class PlotofferComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.initSeasons();
       this.initPlotOffers(this.currentSeason.seasonId!);
     });
@@ -210,8 +212,8 @@ export class PlotofferComponent implements OnInit {
     this.submitLabel = 'Add Plot Offer';
     this.fbPlotOffer.controls['seasonId'].enable();
     this.fbPlotOffer.controls['isNewFarmer'].setValue(false);
-    this.fbPlotOffer.controls['seasonId'].setValue(this.currentSeason.seasonId);
-    this.getNewOfferNo(this.currentSeason.seasonId || 0);
+    this.fbPlotOffer.controls['seasonId'].setValue(this.currentSeasonId);
+    this.getNewOfferNo(this.currentSeasonId || 0);
     this.addFlag = true;
     this.showDialog = true;
   }

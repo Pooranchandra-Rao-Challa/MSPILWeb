@@ -52,6 +52,7 @@ export class PlotassesmentComponent implements OnInit {
   activeIndex2?= 0;
   permissions: any;
   exportColumns: any;
+  currentSeasonId?: number;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -86,8 +87,9 @@ export class PlotassesmentComponent implements OnInit {
 
 
 
-  initPlotAssesment(plotAssessmentId: number = -1) {
-    this.plotAssesment = new PlotAssessmentDto();
+  addPlotAssesment(plotAssessmentId: number = -1) {
+    this.fbPlotAssesment.controls['seasonId'].setValue(this.currentSeasonId);
+    this.initPlotNumbers(this.currentSeasonId!, -1);
     this.submitLabel = "Add Assesment";
     this.addFlag = true;
     this.showDialog = true;
@@ -179,6 +181,7 @@ export class PlotassesmentComponent implements OnInit {
   initCurrentSeasons() {
     this.appMasterService.CurrentSeason(this.currentSeasonCode!).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
       this.initPlotAssesments(this.currentSeason.seasonId!);
     });
