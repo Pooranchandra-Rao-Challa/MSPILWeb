@@ -119,7 +119,10 @@ export class ScheduleGroupingComponent implements OnInit {
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.scheduleGroupingForm();
+
   }
+
+
 
   scheduleGroupingForm() {
     this.fbScheduleGrouping = this.formbuilder.group({
@@ -138,6 +141,7 @@ export class ScheduleGroupingComponent implements OnInit {
       plotSchedules: this.formbuilder.array([])
     });
   }
+
   plotScheduleForm(rowData: any) {
     return this.formbuilder.group({
       plotScheduleId: 0,
@@ -290,6 +294,7 @@ export class ScheduleGroupingComponent implements OnInit {
       event.target.value = 5;
     }
   }
+  
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }

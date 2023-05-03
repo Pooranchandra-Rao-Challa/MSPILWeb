@@ -8,11 +8,8 @@
             <ng-template pTemplate="right">
                 <button pButton pRipple label="Add Permit Quota" icon="pi pi-plus" class="p-button-primary p-mr-2"
                     (click)="getPermitQuota()"></button>
-
             </ng-template>
         </p-toolbar>
-
-
         <!-- popup form -->   
         <p-dialog header="Permit Quota" [(visible)]="showDialog" [modal]="true" showEffect="fade"
             [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
@@ -32,25 +29,22 @@
                                             [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" formControlName="seasonId"
                                             appendTo="body" [style]="{'width':'100%'}" ></p-dropdown>
                                         </div>
-
                                         <div class="field col-12 md:col-3">
                                             <label class="mb-2 block font-bold" for="stacked">From Schedule Group
                                                 No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
-                                                inputStyleClass="p-numeric-input" formControlName="fromGrpNo"
+                                                inputStyleClass="p-numeric-input" formControlName="fromSchGrpNo"
                                                 (onValueChange)="restrictToRange($event)"></p-inputNumber>
                                         </div>
-
                                         <div class="field col-12 md:col-3">
                                             <label class="mb-2 block font-bold" for="stacked">To Schedule Group No:<sup
                                                     class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
                                                 inputStyleClass="p-numeric-input"
-                                                (onValueChange)="restrictToRange($event)" formControlName="toGrpNo"></p-inputNumber>
+                                                (onValueChange)="restrictToRange($event)" formControlName="toSchGrpNo"></p-inputNumber>
                                         </div>
-
                                         <div class="field col-12 md:col-3">
-                                            <label>From Date:<sup class="p-error">*</sup></label>
+                                            <label>From Date:</label>
                                             <p-calendar placeholder="From Date" [readonlyInput]="true" [showIcon]="true"
                                                 appendTo="body" formControlName="fromDate" [style]="{'width':'100%'}">
                                             </p-calendar>
@@ -59,37 +53,33 @@
                                             <label>Quota:<sup class="p-error">*</sup></label>
                                             <input pInputText id="quota" type="number" formControlName="quota">
                                         </div>
-                                       
                                         <div class="field col-12 md:col-8">
                                           <label>Type:<sup class="p-error">*</sup></label>
                                           <div class="grid mt-1">
-
                                         <div class="col col-3">
-                                          <p-radioButton name="filterName" formControlName="filterName" value="Division" label="Division"
+                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Division" label="Division"
                                             (click)="fbPermitQuota.get('division')?.setValue('Division')"></p-radioButton>
                                         </div>
                                         <div class="col col-3">
-                                          <p-radioButton name="filterName" formControlName="filterName" value="Circle" label="Circle"
+                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Circle" label="Circle"
                                             (click)="fbPermitQuota.get('division')?.setValue('Circle')"></p-radioButton>
                                         </div>
                                         <div class="col col-3">
-                                          <p-radioButton name="filterName" formControlName="filterName" value="Section" label="Section"
+                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Section" label="Section"
                                             (click)="fbPermitQuota.get('division')?.setValue('Section')"></p-radioButton>
                                         </div>
                                         <div class="col col-3">
-                                          <p-radioButton name="filterName" formControlName="filterName" value="Village" label="Village"
+                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Village" label="Village"
                                             (click)="fbPermitQuota.get('division')?.setValue('Village'); fbPermitQuota.get('village')?.setValue('selected village')"></p-radioButton>
                                         </div>
                                       </div>
                                     </div>
                                           <div class="col-12 p-0">
                                             <div class="md:col-3 p-3 mb-3" style="float: right;">
-                                                <button pButton pRipple type="submit" label="Get Quota"
-                                                class="p-button-raised p-button-primary" (click)="initQuotas()" (click)="showTable = true"></button>
-                                              
+                                                <button pButton pRipple label="Add PermitQuota "
+                                                class="p-button-raised p-button-primary" (click)="initQuotas()" [disabled]="!fbPermitQuota.valid" (click)="showTable = true"></button>
                                             </div>
                                           </div>
-                                       
                                     </div>
                                 </p-fieldset>
                             </div>
@@ -97,34 +87,29 @@
                     </div>
                 </form>
                 <!-- table -->
-                
                 <p-table #dtpermitquota [value]="Quotas" dataKey="id" [rows]="10" [rowHover]="true"
                 [style.display]="showTable ? 'table' : 'none'"*ngIf="showTable"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
                 responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                       <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
                         (click)="clear(dtpermitquota)"></button>
                       <div>
-          
                         <span class="p-input-icon-left m-2">
                           <i class="pi pi-search"></i>
                           <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
                             pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
                             class="w-full" />
                         </span>
-          
-                        <button pButton label="Add Quota " 
+                        <button pButton label="{{submitLabel}}"
                           (click)="onSubmit()" class="p-button-outlined mb-2" ></button>
-          
+
                       </div>
                     </div>
                   </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
-                
                     <th *ngFor="let col of PermitQuotaHeaders" [pSortableColumn]="col.header">
                       {{col?.label}} <p-sortIcon field="code"></p-sortIcon>
                       <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -145,9 +130,7 @@
                     </td>
                   </tr>
                 </ng-template>
-              </p-table>
-               
-                  
+              </p-table>   
             </div>
         </p-dialog>
         <!-- popup table -->
@@ -167,12 +150,11 @@
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" #filters (input)="onGlobalFilter(dtpermitquota,$event)"
                                 placeholder="Search Keyword"
-                                pTooltip="Search By seasonName, groupNo,toDOP, fromDOP, Created By,Updated At,Updated By"
+                                pTooltip="Search By seasonName, groupNo,toDOP,fromDOP, Created By,Updated At,Updated By"
                                 class="w-full" />
-                         
                         </span>
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
-                            [(ngModel)]="currentSeason.seasonId" (onChange)=" initSeasonQuotas($event.value)"
+                            [(ngModel)]="currentSeason.seasonId" (onChange)="initSeasonQuotas($event.value)"
                             optionValue="seasonId">
                         </p-dropdown>
                     </div>
@@ -185,7 +167,6 @@
                         {{col?.label}} <p-sortIcon field="code">
                         </p-sortIcon>
                         <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
-
                     </th>
                 </tr>
             </ng-template>
@@ -202,8 +183,8 @@
             <span
               *ngIf="col?.field == 'toDate' || col?.field == 'fromDate'  || col?.field == 'createdAt'|| col?.field == 'updatedAt'">
               {{farmer[col.field] | date: 'dd-MM-yyyy'}}
-            </span>
-                    </td>
+            </span> 
+            </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="rowexpansion" let-farmer>
@@ -213,8 +194,8 @@
                       <p-table [value]="farmer.objPlotQuotas" [columns]="plotHeaders" dataKey="plotQuotaId"
                         [tableStyle]="{ width: 'min-content'}"
                         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
-                        <ng-template pTemplate="header">
-                <tr>
+                        <ng-template pTemplate="header"> 
+                          <tr>
                     <th></th>
                   <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
                     {{col?.label}}
@@ -223,12 +204,10 @@
               </ng-template>
               <ng-template pTemplate="body" let-permitQuota>
                 <tr>
-            
                 <td><button pButton pRipple icon="pi pi-pencil"
-                  class="p-element p-ripple p-button-text p-button p-component"></button>
+                  class="p-element p-ripple p-button-text p-button p-component" (click)="editPlotAgreement(permitQuota)"></button>
                  </td>
-                  <td *ngFor="let col of plotHeaders">
-                      
+                  <td *ngFor="let col of plotHeaders">  
                     <span
               *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{permitQuota[col.field]}}</span>
             <span
@@ -240,7 +219,7 @@
               </ng-template>
               <ng-template pTemplate="emptymessage">
                 <tr>
-                  <td class="md:text-center" colspan="50%">There Are No Schedule Groupings Found Yet.</td>
+                  <td class="md:text-center" colspan="50%">There Are No permitQuota Found Yet.</td>
                 </tr>
               </ng-template>
             </p-table>
