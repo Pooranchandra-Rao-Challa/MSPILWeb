@@ -18,7 +18,7 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { LazyLoadEvent } from 'primeng/api';
 import { ITableHeader } from 'src/app/_models/common';
-import { RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
+import { RG_ALPHA_NUMERIC, RG_SURVEY_NO } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-plotreports',
@@ -308,7 +308,7 @@ export class PlotreportsComponent implements OnInit {
 
       plantTypeId: [null, (Validators.required)],
       plotNumber: [null, (Validators.required)],
-      surveyNo: new FormControl(null, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      surveyNo: new FormControl(null, [Validators.required, Validators.pattern(RG_SURVEY_NO)]),
       reportedArea: [null, (Validators.required)],
       plantingDate: [null, (Validators.required)],
       plantSubTypeId: [null, (Validators.required)],

@@ -18,7 +18,7 @@
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssesment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
-          <p-tabPanel header="Plot Assesment" class="col-12">
+          <p-tabPanel header="Plot Assesment(Doc20)" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
@@ -76,6 +76,10 @@
                           <p class="disabled_text">{{plotInfo.farmerName }}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
+                          <label class="font-bold">Father Name: </label><br />
+                          <p class="disabled_text">{{plotInfo.fatherName }}</p>
+                        </div>
+                        <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Farmer Village: </label><br />
                           <p class="disabled_text">{{plotInfo.farmerVillageName}}</p>
                         </div>
@@ -99,10 +103,10 @@
                           <label class="font-bold">Crop Type: </label><br />
                           <p class="disabled_text">{{plotInfo.cropTypeName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <!-- <div class="field col-12 md:col-6 lg:col-6">
                           <label class="font-bold">Crop: </label><br />
                           <p class="disabled_text">{{plotInfo.crop}}</p>
-                        </div>
+                        </div> -->
                       </div>
                     </p-fieldset>
                     <p-fieldset legend="Plot Info" [toggleable]="true" class="col-6 mt-2" [transitionOptions]="'500ms'">

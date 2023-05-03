@@ -64,8 +64,8 @@ export class PlotassesmentComponent implements OnInit {
   farmerHeader: ITableHeader[] = [
     { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
-    { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
-    { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Village Name' }
+    { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' }
   ];
 
   plotHeader: ITableHeader[] = [

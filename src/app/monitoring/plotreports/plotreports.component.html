@@ -218,13 +218,13 @@
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label class="required">Survey No:</label>
-                  <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo" alphaNumeric
+                  <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
                   <span *ngIf="FormControls['surveyNo'].touched && FormControls['surveyNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['required']">
                       Please Enter Survey No.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['pattern']">Survey No
-                        Should Contains Alphabets And Numbers.</div>
+                        Accepts Only Characters With -/</div>
                   </span>
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">

@@ -57,7 +57,6 @@ export class PlotagreementComponent implements OnInit {
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
-    { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
   ];
 
   plotHeaders: ITableHeader[] = [
