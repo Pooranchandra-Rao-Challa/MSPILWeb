@@ -42,7 +42,7 @@
                                         </div>
 
                                         <div class="field col-12 md:col-3">
-                                            <label>Cutting Order Date:</label>
+                                            <label>Cutting Order Date:<sup class="p-error">*</sup></label>
                                             <p-calendar placeholder="Cutting Order Date" [readonlyInput]="true"
                                                 [showIcon]="true" appendTo="body" formControlName="cuttingOrderDate"
                                                 [style]="{'width':'100%'}"
@@ -59,7 +59,7 @@
                                             <label>From Schedule Group No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" id="fromSchGroupNo" type="number"
                                                 [maxlength]="2" formControlName="fromSchGroupNo" [min]="1" [max]="5"
-                                                placeholder="From Schedule Group No" [(ngModel)]="fromvalue"
+                                                placeholder="From Schedule Group No" [(ngModel)]="fromScheduleNo"
                                                 (onInput)="checkValue()"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromSchGroupNo'].touched && FormControls['fromSchGroupNo'].errors }">
                                             </p-inputNumber>
@@ -77,7 +77,7 @@
                                             <label>To Schedule Group No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" id="toSchGroupNo" type="number"
                                                 [maxlength]="2" formControlName="toSchGroupNo" [min]="1" [max]="5"
-                                                placeholder="To Schedule Group No" [(ngModel)]="tovalue"
+                                                placeholder="To Schedule Group No" [(ngModel)]="toScheduleNo"
                                                 (onInput)="checkValue()"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['toSchGroupNo'].touched && FormControls['toSchGroupNo'].errors }">
                                             </p-inputNumber>
@@ -193,14 +193,14 @@
                                         <div class="field col-12 md:col-2">
                                             <label>From DOP/DOR:</label>
                                             <p-calendar placeholder="From DOP" [readonlyInput]="true" [showIcon]="true"
-                                                appendTo="body" formControlName="fromPlantingDate"
+                                                appendTo="body" formControlName="fromDOP"
                                                 [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromPlantingDate'].touched && FormControls['fromPlantingDate'].errors }">
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDOP'].touched && FormControls['fromDOP'].errors }">
                                             </p-calendar>
                                             <span
-                                                *ngIf="FormControls['fromPlantingDate'].touched && FormControls['fromPlantingDate'].invalid">
+                                                *ngIf="FormControls['fromDOP'].touched && FormControls['fromDOP'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['fromPlantingDate'].errors?.['required']">
+                                                    *ngIf="FormControls['fromDOP'].errors?.['required']">
                                                     Select From DOP/DOR.</div>
                                             </span>
                                         </div>
@@ -208,14 +208,14 @@
                                         <div class="field col-12 md:col-2">
                                             <label>To DOP/DOR:</label>
                                             <p-calendar placeholder="To DOP" [readonlyInput]="true" [showIcon]="true"
-                                                appendTo="body" formControlName="toPlantingDate"
+                                                appendTo="body" formControlName="toDOP"
                                                 [style]="{'width':'100%'}"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['toPlantingDate'].touched && FormControls['toPlantingDate'].errors }">
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDOP'].touched && FormControls['toDOP'].errors }">
                                             </p-calendar>
                                             <span
-                                                *ngIf="FormControls['toPlantingDate'].touched && FormControls['toPlantingDate'].invalid">
+                                                *ngIf="FormControls['toDOP'].touched && FormControls['toDOP'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControls['toPlantingDate'].errors?.['required']">
+                                                    *ngIf="FormControls['toDOP'].errors?.['required']">
                                                     Select To DOP/DOR.</div>
                                             </span>
                                         </div>
@@ -254,8 +254,6 @@
                                     </div>
 
                                     <div class="p-fluid p-formgrid grid">
-
-
                                         <div class="field col-12 md:col-2">
                                             <label>Section:</label>
                                             <p-multiSelect [options]="filterSections" placeholder="Select Section "
@@ -394,7 +392,7 @@
 
                 <!-- popup table -->
                 <p-table #dtcuttingorders [value]="cuttingorders" dataKey="id" [rows]="10" [rowHover]="true"
-                    *ngIf="showTable" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100"
+                   styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100"
                     [paginator]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
                     <ng-template pTemplate="caption">
                         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -404,9 +402,8 @@
                                 <span class="p-input-icon-left m-2">
                                     <i class="pi pi-search"></i>
                                     <input pInputText type="text" #filter placeholder="Search Keyword"
-                                        (input)="onSearch(dtcuttingorders,$event)"
-                                        pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
-                                        class="w-full" />
+                                        (input)="onSearch(dtcuttingorders,$event)" class="w-full" />
+                                        <!-- pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon" -->
                                 </span>
                                 <button pButton label="Submit" (click)="onSubmit()"
                                 class="p-button-raised p-button-primary m-2"></button>
@@ -450,12 +447,11 @@
         </p-dialog>
 
         <!-- table -->
-        <p-table #dtseasoncuttingOrders [value]="seasoncuttingOrders" dataKey="id" [columns]="seasonCuttingOrder"
-            [rows]="10" [rowHover]="true" *ngIf="showTable"
-            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-            responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
-            (onRowExpand)="initPlotCuttingOrders($event)"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        <p-table #dtseasoncuttingOrders [value]="seasoncuttingOrders" dataKey="seasonCuttingOrderId" [columns]="seasonCuttingOrder"
+            [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+             [paginator]="true" [autoLayout]="true"  responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" 
+           [tableStyle]="{ width: 'max-content'}"  (onRowExpand)="initPlotCuttingOrders($event)"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">

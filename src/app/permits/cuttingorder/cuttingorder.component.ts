@@ -43,12 +43,11 @@ export class CuttingOrderComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('dtcuttingorders') dtcuttingorders!: ElementRef;
   loading: boolean = true;
-  showTable: boolean = true;
   showDialog: boolean = false;
   forapproval: boolean = false;
   submitLabel!: string;
-  fromvalue: any;
-  tovalue: any;
+  fromScheduleNo: any;
+  toScheduleNo: any;
   error: boolean = false;
 
   constructor(private formbuilder: FormBuilder,
@@ -245,7 +244,7 @@ export class CuttingOrderComponent implements OnInit {
   getcuttingoderForm() {
     this.fbCuttingOrder = this.formbuilder.group({
       seasonId: [null, (Validators.required)],
-      cuttingOrderDate: [null],
+      cuttingOrderDate: [null,(Validators.required)],
       fromSchGroupNo: [null, (Validators.required)],
       toSchGroupNo: [null, (Validators.required)],
       fromCCS: [null, (Validators.required)],
@@ -256,8 +255,8 @@ export class CuttingOrderComponent implements OnInit {
       toPol: [null],
       fromPurity: [null],
       toPurity: [null],
-      fromPlantingDate: [null],
-      toPlantingDate: [null],
+      fromDOP: [null],
+      toDOP: [null],
       farmerId: [null],
       plotId: [null],
       divisionId: [null],
@@ -266,31 +265,34 @@ export class CuttingOrderComponent implements OnInit {
       villageId: [null],
       plantTypeId: [null],
       varietyId: [null],
-      plotCuttingOrder: this.formbuilder.array([])
-    });
+      plotCuttingOrders: this.formbuilder.array([])
+    })
   }
   plotCuttingOrderForm(rowData: any) {
     return this.formbuilder.group({
-      plotScheduleId: 0,
+      plotCuttingOrderId: 0,
+      seasonCuttingOrderId: 0,
+      cuttingOrderNo: 0,
+      orderQuantity: 0,
+      plotYieldId: rowData.plotId,
       divisionId: rowData.divisionId,
       circleId: rowData.circleId,
       sectionId: rowData.sectionId,
       farmerId: rowData.farmerId,
       plantTypeId: rowData.plantTypeId,
       varietyId: rowData.varietyId,
-      plotYieldId: rowData.plotYieldId,
       villageId: rowData.villageId,
     })
-  }
+  };
   get CuttingOrderControls() {
-    return this.fbCuttingOrder.get('plotCuttingOrder') as FormArray;
+    return this.fbCuttingOrder.get('plotCuttingOrders') as FormArray;
   }
   addPlot(rowData: any) {
-    const formArray = this.fbCuttingOrder.get('plotCuttingOrder') as FormArray;
+    const formArray = this.fbCuttingOrder.get('plotCuttingOrders') as FormArray;
     formArray.push(this.plotCuttingOrderForm(rowData));
   }
   removePlot(index: any) {
-    const formArray = this.fbCuttingOrder.get('plotCuttingOrder') as FormArray;
+    const formArray = this.fbCuttingOrder.get('plotCuttingOrders') as FormArray;
     formArray.removeAt(index);
   }
   onRowSelect(event: any, CuttingOrder: any) {
@@ -330,11 +332,11 @@ export class CuttingOrderComponent implements OnInit {
     })
   }
   checkValue() {
-    if (this.fromvalue < this.tovalue) {
+    if (this.fromScheduleNo < this.toScheduleNo) {
       this.error = false;
       return;
     }
-    else if (this.tovalue == undefined) {
+    else if (this.toScheduleNo == undefined) {
       this.error = false;
       return;
     }
@@ -344,8 +346,8 @@ export class CuttingOrderComponent implements OnInit {
   }
   clear(table: Table) {
     table.clear();
-    this.filter.nativeElement.value = '';
     this.dtcuttingorders.nativeElement.value = '';
+    this.filter.nativeElement.value = '';
   }
   onSearch(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -357,14 +359,14 @@ export class CuttingOrderComponent implements OnInit {
   onSubmit() {
     console.log(this.fbCuttingOrder.value);
     if (this.fbCuttingOrder.valid) {
-      return
-      this.permitService.CreateScheduleGroup(this.fbCuttingOrder.value).subscribe((resp) => {
+      this.permitService.CreateCuttingOrder(this.fbCuttingOrder.value).subscribe((resp) => {
         if (resp) {
-          const seasonId = this.fbCuttingOrder.value.seasonId;
-          this.addCuttingOrder();
-          this.fbCuttingOrder.patchValue({ seasonId });
-          this.showDialog = false;
+          this.initSeasonCuttingOrders(this.currentSeason.seasonId!)
           this.alertMessage.displayAlertMessage(ALERT_CODES["SMPCO001"]);
+          this.addCuttingOrder();
+          const seasonId = this.fbCuttingOrder.value.seasonId;
+          this.fbCuttingOrder.reset()
+          this.fbCuttingOrder.patchValue({ seasonId });    
         }
       });
     }
