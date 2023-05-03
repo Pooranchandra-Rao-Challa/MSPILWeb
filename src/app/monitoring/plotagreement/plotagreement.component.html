@@ -27,7 +27,7 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
-                        <p-dropdown class="ml-2" placeholder="Select Season" [options]="seasons" optionLabel="name"
+                        <p-dropdown class="ml-2" placeholder="Select Season" [options]="seasons" optionLabel="code"
                           optionValue="seasonId" formControlName="seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
@@ -41,11 +41,8 @@
                       <div class="field col-12 md:col-4">
                         <label class="required">Plot No:</label>
                         <p-dropdown optionLabel="plotNumber" [options]="plotNumbers" optionValue="plotId"
-                          [filter]="true" filterBy="plotNumber" formControlName="plotId" placeholder="Select Plot"
-                          (onChange)="getPlotinfo($event.value)"
-                          [filter]="true"
-				                 filterBy="plotNumber" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                          appendTo="body"
+                          [filter]="true" filterBy="plotNumber,villageName" formControlName="plotId" placeholder="Select Plot"
+                          (onChange)="getPlotinfo($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                           <ng-template let-plotNumber pTemplate="selectedItem">
                             <div>{{ plotNumber.plotNumber }} - {{ plotNumber.villageName }}</div>
@@ -72,7 +69,7 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop:</label>
-                          <p class="disabled_text">{{plotInfo.crop}}</p>
+                          <p class="disabled_text">{{plotInfo.cropName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop Type:</label>
@@ -177,7 +174,7 @@
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label class="required">Agreement Area:</label>
+                        <label class="required">Agreement Area(Acre):</label>
                         <p-inputNumber placeholder="Enter Agreement Area" formControlName="agreementedArea"
                           mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedArea'].touched && FormControls['agreementedArea'].errors }">

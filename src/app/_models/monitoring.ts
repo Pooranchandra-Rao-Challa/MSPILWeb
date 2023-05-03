@@ -560,7 +560,7 @@ export class PlotsDto {
   plotTypeName?: string
   agreedTon?: number
   cropTypeName?: string
-  crop?: string
+  cropName?: string
   measuredArea?: number
   agreementedArea?: number
 }
@@ -797,7 +797,7 @@ export interface ISampleDetailsViewDto {
   plotId: number;
   noOfSample: number;
   seasonId: number;
-  seasonName: string;
+  seasonCode: string;
   docNo: number;
   docDate: Date;
   farmerId: number;

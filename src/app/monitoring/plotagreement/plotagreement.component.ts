@@ -191,6 +191,8 @@ export class PlotagreementComponent implements OnInit {
   }
 
   addPlotAgreement() {
+    this.fbPlotAgreement.controls['seasonId'].enable();
+    this.fbPlotAgreement.controls['plotId'].enable();
     this.fbPlotAgreement.controls['seasonId'].setValue(this.currentSeasonId);
     this.initPlotNumbers(this.currentSeasonId!, -1);
     this.submitLabel = "Add Agreement";
