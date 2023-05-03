@@ -791,6 +791,32 @@ export class SampleDetailsDto {
   updatedBy?: string
 }
 
+export interface ISampleDetailsViewDto {
+  sampleId: number;
+  sampleNo: number;
+  plotId: number;
+  noOfSample: number;
+  seasonId: number;
+  seasonName: string;
+  docNo: number;
+  docDate: Date;
+  farmerId: number;
+  farmerCode: string;
+  farmerName: string;
+  fieldBrix: number;
+  brix: number;
+  pol: number;
+  cCS: number;
+  purity: number;
+  canAddSample: boolean;
+  canEditSample: boolean;
+  canNotDoEditOrAdd: boolean;
+  createdAt: Date;
+  createdBy: string;
+  updatedAt: Date;
+  updatedBy: string;
+}
+
 export class PlotYieldDto {
   plotYieldId?: number;
   plotId?: number;

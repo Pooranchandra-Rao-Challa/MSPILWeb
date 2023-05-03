@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { FarmersViewDto, SampleslabsViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
-import { FarmerSectionViewDto, IPlotsofFarmerViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
+import { FarmerSectionViewDto, IPlotsofFarmerViewDto, ISampleDetailsViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { CommonService } from 'src/app/_services/common.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
@@ -32,7 +32,7 @@ export class SampleEntryComponent implements OnInit {
   plotNumbers: IPlotsofFarmerViewDto[] = [];
   FarmerSectionViewDto: any
   sample: SampleDetailsDto = {};
-  sampleEntries: SampleDetailsDto[] = [];
+  sampleEntries: ISampleDetailsViewDto[] = [];
   mediumDate: string = MEDIUM_DATE;
   selectedFarmer: FarmerSectionViewDto = {};
   addFlag: boolean = true;
@@ -58,10 +58,6 @@ export class SampleEntryComponent implements OnInit {
     { field: 'docDate', header: 'docDate', label: 'Doc Date' },
     { field: 'fieldBrix', header: 'fieldBrix', label: 'Field Brix' },
     { field: 'pol', header: 'pol', label: 'Pol' },
-    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
-    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
-    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
-    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
   currentSeasonId?: number;
 
@@ -116,7 +112,9 @@ export class SampleEntryComponent implements OnInit {
   initSampleEntries(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetSeasonSamples(seasonId, param1).subscribe((resp) => {
-      this.sampleEntries = resp as unknown as SampleDetailsDto[];
+      this.sampleEntries = resp as unknown as ISampleDetailsViewDto[];
+      console.log(this.sampleEntries);
+
     });
   }
 

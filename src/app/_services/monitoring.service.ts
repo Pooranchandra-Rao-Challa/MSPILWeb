@@ -1,7 +1,7 @@
 import {
   IFarmerPlotYieldViewDto,
   FarmerSelectInfoViewDto, GetFarmersInSeasonViewDto, IFarmerInPlotOfferDto, IPlotOfferInfoViewDto, IPlotReportViewDto, PlotAgreementDto, PlotAssessmentDto,
-  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto, PlotYieldDto, SampleDetailsDto, SampleDto, IProppingViewDto,
+  IPlotAssessmentViewDto, PlotInfoDto, PlotReportDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto, PlotYieldDto, ISampleDetailsViewDto, SampleDto, IProppingViewDto,
   IPlotYieldViewDto, ProppingDto,
 } from 'src/app/_models/monitoring';
 import { Injectable } from "@angular/core";
@@ -249,10 +249,10 @@ export class MonitoringService extends ApiHttpService {
     arr.push(seasonId);
     if (param1 != null) arr.push(param1);
     if (param1 == null) {
-      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, arr);
+      return this.getWithParams<ISampleDetailsViewDto[]>(GET_SAMPLES_ENTRY_URI, arr);
     }
     else {
-      return this.getWithParams<SampleDetailsDto[]>(GET_SAMPLES_ENTRY_URI, arr);
+      return this.getWithParams<ISampleDetailsViewDto[]>(GET_SAMPLES_ENTRY_URI, arr);
     }
   }
 
