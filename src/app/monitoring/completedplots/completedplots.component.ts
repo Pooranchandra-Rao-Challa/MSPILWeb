@@ -49,6 +49,7 @@ export class CompletedPlotsComponent implements OnInit {
   plotNumbers: IPlotsofFarmerViewDto[] = [];
   diffGreaterThanEqualsToOne: boolean = false;
   diffLessThanOne: boolean = false;
+  currentSeasonId?: number;
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
@@ -102,6 +103,7 @@ export class CompletedPlotsComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.AppMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.initCompletedPlots(this.currentSeason.seasonId!);
       this.initFarmerInSections(this.currentSeason.seasonId!);
     });
@@ -178,7 +180,8 @@ export class CompletedPlotsComponent implements OnInit {
   }
 
   addCompletedPlot() {
-    this.fbCompletedPlots.controls['seasonId'].setValue(this.currentSeason.seasonId);
+    this.fbCompletedPlots.controls['seasonId'].setValue(this.currentSeasonId);
+    this.getNewDocNo(this.currentSeasonId!);
     this.FormControls['isReopen'].clearValidators();
     this.FormControls['isReopen'].updateValueAndValidity();
     this.submitLabel = "Add Completed Plot";

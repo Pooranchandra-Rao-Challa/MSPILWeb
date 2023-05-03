@@ -560,7 +560,7 @@ export class PlotsDto {
   plotTypeName?: string
   agreedTon?: number
   cropTypeName?: string
-  crop?: string
+  cropName?: string
   measuredArea?: number
   agreementedArea?: number
 }
@@ -789,6 +789,32 @@ export class SampleDetailsDto {
   createdBy?: string
   updatedAt?: string
   updatedBy?: string
+}
+
+export interface ISampleDetailsViewDto {
+  sampleId: number;
+  sampleNo: number;
+  plotId: number;
+  noOfSample: number;
+  seasonId: number;
+  seasonCode: string;
+  docNo: number;
+  docDate: Date;
+  farmerId: number;
+  farmerCode: string;
+  farmerName: string;
+  fieldBrix: number;
+  brix: number;
+  pol: number;
+  cCS: number;
+  purity: number;
+  canAddSample: boolean;
+  canEditSample: boolean;
+  canNotDoEditOrAdd: boolean;
+  createdAt: Date;
+  createdBy: string;
+  updatedAt: Date;
+  updatedBy: string;
 }
 
 export class PlotYieldDto {

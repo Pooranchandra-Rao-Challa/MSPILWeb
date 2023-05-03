@@ -281,7 +281,7 @@
                         Please Select Gender.</div>
                     </span>
                   </div>
-                 
+
                   <div class="field col-12 md:col-3">
                     <label>PinCode:<sup class="p-error">*</sup></label>
                     <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
@@ -330,7 +330,7 @@
                     </span>
                   </div>
                 </div>
-                
+
               </p-fieldset>
               <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
@@ -564,7 +564,7 @@
                               *ngIf="formArrayControls(subHglIndex, 'name')?.touched && formArrayControls(subHglIndex, 'name')?.invalid">
                               <div class="ng-invalid ng-touched p-error"
                                 *ngIf="formArrayControls(subHglIndex, 'name')?.errors?.['required']">
-                                Please Select Vehicle Type.</div>
+                                Please Enter Name.</div>
                               <div class="ng-invalid ng-touched p-error"
                                 *ngIf="formArrayControls(subHglIndex, 'name')?.errors?.['minlength']">
                                 Name Min Characters Is 2.</div>

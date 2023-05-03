@@ -269,7 +269,7 @@
               <p-fieldset legend="Cultivable Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
-                    <label class="required">Expected Area:</label>
+                    <label class="required">Expected Area (Acre):</label>
                     <p-inputNumber #expectedArea placeholder="Enter Expected Area" formControlName="expectedArea"
                       mode="decimal" [maxlength]="10" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['expectedArea'].touched && FormControls['expectedArea'].errors }">

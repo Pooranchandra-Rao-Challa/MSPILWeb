@@ -38,6 +38,7 @@ export class LoanMasterComponent implements OnInit {
   billCategories: any;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+  loanQtyTypes: { name: string; value: string; }[];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -50,6 +51,13 @@ export class LoanMasterComponent implements OnInit {
     this.defaults = [
       { name: 'Yes', id: true },
       { name: 'No', id: false },
+    ];
+    this.loanQtyTypes = [
+      { name: 'N/A', value: 'N' },
+      { name: 'Fertilizer', value: 'F' },
+      { name: 'Weed', value: 'W' },
+      { name: 'Disease', value: 'D' },
+      { name: 'Pest', value: 'P' },
     ];
   }
 

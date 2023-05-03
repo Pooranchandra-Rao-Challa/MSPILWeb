@@ -18,7 +18,7 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { LazyLoadEvent } from 'primeng/api';
 import { ITableHeader } from 'src/app/_models/common';
-import { RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
+import { RG_ALPHA_NUMERIC, RG_SURVEY_NO } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-plotreports',
@@ -86,6 +86,7 @@ export class PlotreportsComponent implements OnInit {
     { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
     { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
   ];
+  currentSeasonId?: number;
 
   constructor(private formbuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -261,7 +262,7 @@ export class PlotreportsComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.initSeasons();
       this.initPlotReports(this.currentSeason.seasonId!);
     });
@@ -307,7 +308,7 @@ export class PlotreportsComponent implements OnInit {
 
       plantTypeId: [null, (Validators.required)],
       plotNumber: [null, (Validators.required)],
-      surveyNo: new FormControl(null, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC)]),
+      surveyNo: new FormControl(null, [Validators.required, Validators.pattern(RG_SURVEY_NO)]),
       reportedArea: [null, (Validators.required)],
       plantingDate: [null, (Validators.required)],
       plantSubTypeId: [null, (Validators.required)],
@@ -372,8 +373,8 @@ export class PlotreportsComponent implements OnInit {
   addPlotReport() {
     this.fbPlotReport.controls['seasonId'].enable();
     this.fbPlotReport.controls['plotOfferId'].enable();
-    this.fbPlotReport.controls['seasonId'].setValue(this.currentSeason.seasonId);
-    this.getPlotOffersInSeason(this.currentSeason.seasonId || 0, -1);
+    this.fbPlotReport.controls['seasonId'].setValue(this.currentSeasonId);
+    this.getPlotOffersInSeason(this.currentSeasonId || 0, -1);
     this.onValidations();
     this.showDialog = true;
   }

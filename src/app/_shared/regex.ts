@@ -11,6 +11,7 @@ export const RG_PINCODE = '^[1-9][0-9]{5}$';
 export const RG_AADHAAR = /^(?!0{12}|1{12}|2{12}|3{12}|4{12}|5{12}|6{12}|7{12}|8{12}|9{12})\d{12}$/;
 export const RG_SEASON_CODE = '^[0-9]{4}[-][0-9]{2}$';
 export const RG_SEASON_NAME = '^[0-9]{4}[-][0-9]{4}$';
+export const RG_SURVEY_NO = /^[-a-zA-Z0-9-/]+([-a-zA-Z0-9-/]+)*$/;
 
 
 

@@ -18,7 +18,7 @@
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="clearForm()">
       <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
-          <p-tabPanel header="Plot Agreement" class="col-12">
+          <p-tabPanel header="Plot Agreement(Doc30)" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
@@ -27,7 +27,7 @@
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
-                        <p-dropdown class="ml-2" placeholder="Select Season" [options]="seasons" optionLabel="name"
+                        <p-dropdown class="ml-2" placeholder="Select Season" [options]="seasons" optionLabel="code"
                           optionValue="seasonId" formControlName="seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
@@ -41,11 +41,8 @@
                       <div class="field col-12 md:col-4">
                         <label class="required">Plot No:</label>
                         <p-dropdown optionLabel="plotNumber" [options]="plotNumbers" optionValue="plotId"
-                          [filter]="true" filterBy="plotNumber" formControlName="plotId" placeholder="Select Plot"
-                          (onChange)="getPlotinfo($event.value)"
-                          [filter]="true"
-				                 filterBy="plotNumber" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                          appendTo="body"
+                          [filter]="true" filterBy="plotNumber,villageName" formControlName="plotId" placeholder="Select Plot"
+                          (onChange)="getPlotinfo($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                           <ng-template let-plotNumber pTemplate="selectedItem">
                             <div>{{ plotNumber.plotNumber }} - {{ plotNumber.villageName }}</div>
@@ -72,7 +69,7 @@
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop:</label>
-                          <p class="disabled_text">{{plotInfo.crop}}</p>
+                          <p class="disabled_text">{{plotInfo.cropName}}</p>
                         </div>
                         <div class="field col-12 md:col-6 lg:col-6">
                           <label>Crop Type:</label>
@@ -139,7 +136,7 @@
                           <p class="disabled_text">{{plotInfo.surveyNo}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
-                          <label>Aggreed Ton:</label>
+                          <label>Agreed Ton:</label>
                           <p class="disabled_text">{{plotInfo.agreedTon}}</p>
                         </div>
                         <div class="field col-12 md:col-3 lg:col-3">
@@ -173,12 +170,12 @@
                       </div>
                     </p-fieldset>
                   </div>
-                  <p-fieldset legend="Aggreement Info" [toggleable]="true" class="col-12 mt-2"
+                  <p-fieldset legend="Agreement Info" [toggleable]="true" class="col-12 mt-2"
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label class="required">Aggreement Area:</label>
-                        <p-inputNumber placeholder="Enter Aggreement Area" formControlName="agreementedArea"
+                        <label class="required">Agreement Area(Acre):</label>
+                        <p-inputNumber placeholder="Enter Agreement Area" formControlName="agreementedArea"
                           mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedArea'].touched && FormControls['agreementedArea'].errors }">
                         </p-inputNumber>
@@ -186,11 +183,11 @@
                           *ngIf="FormControls['agreementedArea'].touched && FormControls['agreementedArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['agreementedArea'].errors?.['required']">
-                            Please Select Aggreement Area.</div>
+                            Please Select Agreement Area.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
-                        <label class="required">Aggreement Date:</label>
+                        <label class="required">Agreement Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
                           [defaultDate]="plotInfo.plantingDate!" [minDate]="plotInfo.plantingDate!"
                           [maxDate]="todayDate" formControlName="agreementedDate"
@@ -305,9 +302,9 @@
                 <div class="col-12">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>Inter Croping:</label>
+                      <label>Inter Cropping:</label>
                       <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="crops"
-                        formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
+                        formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Cropping">
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
@@ -319,7 +316,7 @@
                       <p-inputSwitch formControlName="isTrashMulchingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
-                      <label>Gap Filing Done:</label><br>
+                      <label>Gap Filling Done:</label><br>
                       <p-inputSwitch formControlName="isGapsFillingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">

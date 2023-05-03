@@ -429,5 +429,47 @@ export interface PlotQuotaDto {
   quotaReleased?: number
 }
 
-
+export class SeasonCuttingOrderDto{
+  createdBy?: string;
+  createdAt?:  Date;
+  updatedBy?: string;
+  updatedAt?:  Date;
+  seasonCuttingOrderId?:  number;
+  seasonId?: number;
+  cuttingOrderNo?: number;
+  cuttingOrderDate?:  Date;
+  fromSchGroupNo?: number;
+  toSchGroupNo?: number;
+  fromDop?:  Date;
+  toDop?:  Date;
+  fromCcs?: number;
+  toCcs?: number;
+  fromBrix?: number;
+  toBrix?: number;
+  fromPol?: number;
+  toPol?: number;
+  fromPurity?: number;
+  toPurity?: number;
+  serverUpdatedStatus?: boolean;
+  plotCuttingOrders?: PlotCuttingOrderDto[];
+}
+export class PlotCuttingOrderDto{
+  createdBy?:  string;
+  createdAt?: Date;
+  updatedBy?:  string;
+  updatedAt?: Date;
+  plotCuttingOrderId?: number;
+  seasonCuttingOrderId?: number;
+  cuttingOrderNo?: number;
+  orderQuantity?: number;
+  plotYieldId?: number;
+  divisionId?: number;
+  circleId?: number;
+  sectionId?: number;
+  villageId?: number;
+  farmerId?: number;
+  plantTypeId?: number;
+  varietyId?: number;
+  serverUpdatedStatus?: boolean;
+}
 

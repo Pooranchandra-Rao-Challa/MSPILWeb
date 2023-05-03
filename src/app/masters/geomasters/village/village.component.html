@@ -436,7 +436,7 @@
         'inchargePhoneNo',
         'distance',
         'divertedDistance',
-        'noOfEbservices',
+        'noOfEBServices',
         'tptRate',
         'totalArea',
         'cultivableArea',
@@ -445,7 +445,7 @@
         'potentialArea',
         'notSuitableArea',
         'tptRate',
-        'targetTons',
+        'targetArea',
         'listingOrder',
         'updatedAt',
         'updatedAt',
@@ -527,9 +527,9 @@
             DivertedDistance<p-columnFilter type="text" field="divertedDistance" display="menu"></p-columnFilter>
             <p-sortIcon field="divertedDistance"></p-sortIcon>
           </th>
-          <th pSortableColumn="noOfEbservices">
-            No of EB Services<p-columnFilter type="text" field="noOfEbservices" display="menu"></p-columnFilter>
-            <p-sortIcon field="noOfEbservices"></p-sortIcon>
+          <th pSortableColumn="noOfEBServices">
+            No of EB Services<p-columnFilter type="text" field="noOfEBServices" display="menu"></p-columnFilter>
+            <p-sortIcon field="noOfEBServices"></p-sortIcon>
           </th>
           <th pSortableColumn="tptRate">
             Tpt Rate<p-columnFilter type="text" field="tptRate" display="menu">
@@ -562,10 +562,10 @@
             Not Suitable Area<p-columnFilter type="text" field="notSuitableArea" display="menu"></p-columnFilter>
             <p-sortIcon field="notSuitableArea"></p-sortIcon>
           </th>
-          <th pSortableColumn="targetTons">
-            Target Tons<p-columnFilter type="text" field="targetTons" display="menu">
+          <th pSortableColumn="targetArea">
+            Target Area<p-columnFilter type="text" field="targetArea" display="menu">
             </p-columnFilter>
-            <p-sortIcon field="targetTons"></p-sortIcon>
+            <p-sortIcon field="targetArea"></p-sortIcon>
           </th>
           <th pSortableColumn="listingOrder">
             Order<p-columnFilter type="text" field="listingOrder" display="menu"></p-columnFilter>
@@ -615,7 +615,7 @@
           <td>{{ village.inchargePhoneNo }}</td>
           <td>{{ village.distance }}</td>
           <td>{{ village.divertedDistance }}</td>
-          <td>{{ village.noOfEbservices }}</td>
+          <td>{{ village.noOfEBServices }}</td>
           <td>{{ village.tptRate }}</td>
           <td>{{ village.totalArea }}</td>
           <td>{{ village.cultivableArea }}</td>
@@ -623,7 +623,7 @@
           <td>{{ village.dryArea }}</td>
           <td>{{ village.potentialArea }}</td>
           <td>{{ village.notSuitableArea }}</td>
-          <td>{{ village.targetTons }}</td>
+          <td>{{ village.targetArea }}</td>
           <td>{{ village.listingOrder }}</td>
           <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="village.isActive" [binary]="true" [disabled]="true">

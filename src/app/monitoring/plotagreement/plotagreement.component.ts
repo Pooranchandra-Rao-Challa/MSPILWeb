@@ -57,7 +57,6 @@ export class PlotagreementComponent implements OnInit {
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'farmerVillageName', header: 'farmerVillageName', label: 'Farmer Village' },
-    { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
   ];
 
   plotHeaders: ITableHeader[] = [
@@ -74,6 +73,7 @@ export class PlotagreementComponent implements OnInit {
     { field: 'agreementedDate', header: 'agreementedDate', label: 'Agreemented Date' },
 
   ];
+  currentSeasonId?: number;
 
   clear(table: Table) {
     table.clear();
@@ -110,6 +110,7 @@ export class PlotagreementComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      this.currentSeasonId = this.currentSeason.seasonId;
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
       this.initPlotAgreements(this.currentSeason.seasonId!);
     });
@@ -190,10 +191,13 @@ export class PlotagreementComponent implements OnInit {
   }
 
   addPlotAgreement() {
+    this.fbPlotAgreement.controls['seasonId'].enable();
+    this.fbPlotAgreement.controls['plotId'].enable();
+    this.fbPlotAgreement.controls['seasonId'].setValue(this.currentSeasonId);
+    this.initPlotNumbers(this.currentSeasonId!, -1);
     this.submitLabel = "Add Agreement";
     this.addFlag = true;
     this.showDialog = true;
-    this.fbPlotAgreement.get('seasonId')?.patchValue(this.currentSeason.seasonId);
     this.getMaintenanceItemsForAgreement();
   }
 

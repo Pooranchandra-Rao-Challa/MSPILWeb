@@ -8,10 +8,10 @@
       <ng-template pTemplate="left">
         <h4>Sample Entry</h4>
       </ng-template>
-      <ng-template pTemplate="right">
+      <!-- <ng-template pTemplate="right">
         <button pButton pRipple label="Sample Entry" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addSampleEntry()"></button>
-      </ng-template>
+      </ng-template> -->
     </p-toolbar>
 
     <!-- table -->
@@ -32,6 +32,9 @@
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initSampleEntries($event.value)" optionValue="seasonId">
             </p-dropdown>
+            <p-dropdown class="ml-2" placeholder="Select Sample" optionLabel="name" [options]="samples"
+             optionValue="id" [(ngModel)]="selectedSample">
+          </p-dropdown>
           </div>
         </div>
       </ng-template>
@@ -46,15 +49,17 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-sample>
-        <tr>
+        <tr [ngStyle]="{'color': sample.canNotDoEditOrAdd ? 'red' : (sample.canAddSample ? 'green' : 'black') }">
           <td>
+            <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button p-component"
+            (click)="addSampleEntry()" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd"></button>
             <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="sampleCountWhileEdit(sample)"></button>
+              (click)="editSampleEntry(sample)"  *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
           </td>
           <td *ngFor="let col of headers">
             <span
-              *ngIf="col?.field != 'docDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{sample[col.field]}}</span>
-            <span *ngIf="col?.field == 'docDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              *ngIf="col?.field != 'docDate'">{{sample[col.field]}}</span>
+            <span *ngIf="col?.field == 'docDate'">
               {{sample[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
