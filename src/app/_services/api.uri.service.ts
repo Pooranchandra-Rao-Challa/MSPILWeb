@@ -250,6 +250,6 @@ export const CREATE_SCHEDULE_GROUP_URI = "Schedule/CreateScheduleGroup";
 export const GET_QUOTAS_URI = "Schedule/GetQuotas";
 export const CREATE_PERMIT_QUOTA = "Schedule/CreatepermitQuota";
 export const UPDATE_PERMIT_QUOTA_URI ="Schedule/UpdatePermitQuota";
-
+export const CREATE_CUTTING_ORDER_URI = "Schedule/CreateCuttingOrder";
 
 
