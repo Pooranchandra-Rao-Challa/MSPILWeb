@@ -60,14 +60,19 @@ export class SampleEntryComponent implements OnInit {
     { field: 'pol', header: 'pol', label: 'Pol' },
   ];
   currentSeasonId?: number;
+  samples: { id: number; name: string; }[];
+  selectedSample: number = 1;
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterservice: AppMasterService,
     private monitoringService: MonitoringService,
     private messageService: MessageService,
-    private alertMessage: AlertMessage,
-  ) {
+    private alertMessage: AlertMessage) {
+    this.samples = [
+      { id: 1, name: 'Current season sample' },
+      { id: 2, name: 'No sample data' }
+    ]
   }
 
   ngOnInit(): void {

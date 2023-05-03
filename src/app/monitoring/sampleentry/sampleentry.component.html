@@ -32,6 +32,9 @@
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initSampleEntries($event.value)" optionValue="seasonId">
             </p-dropdown>
+            <p-dropdown class="ml-2" placeholder="Select Sample" optionLabel="name" [options]="samples"
+             optionValue="id" [(ngModel)]="selectedSample">
+          </p-dropdown>
           </div>
         </div>
       </ng-template>
@@ -51,7 +54,7 @@
             <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button p-component"
             (click)="addSampleEntry()" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd"></button>
             <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="sampleCountWhileEdit(sample)"  *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
+              (click)="editSampleEntry(sample)"  *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
           </td>
           <td *ngFor="let col of headers">
             <span
