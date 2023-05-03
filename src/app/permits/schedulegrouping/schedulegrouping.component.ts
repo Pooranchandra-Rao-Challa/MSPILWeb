@@ -123,18 +123,18 @@ export class ScheduleGroupingComponent implements OnInit {
 
   scheduleGroupingForm() {
     this.fbScheduleGrouping = this.formbuilder.group({
-      seasonId: new FormControl(null, [Validators.required]),
-      groupNo: new FormControl(null, [Validators.required]),
+      seasonId: new FormControl( [Validators.required]),
+      groupNo: new FormControl( [Validators.required]),
       fromDOP: new FormControl('', [Validators.required]),
       toDOP: new FormControl('', [Validators.required]),
-      farmerId: new FormControl(null,),
-      plotId: new FormControl(null,),
-      divisionId: new FormControl(null),
-      circleId: new FormControl(null),
-      sectionId: new FormControl(null,),
-      villageId: new FormControl(null,),
-      plantTypeId: new FormControl(null,),
-      varietyId: new FormControl(null,),
+      farmerId: new FormControl(),
+      plotId: new FormControl(),
+      divisionId: new FormControl(),
+      circleId: new FormControl(),
+      sectionId: new FormControl(),
+      villageId: new FormControl(),
+      plantTypeId: new FormControl(),
+      varietyId: new FormControl(),
       plotSchedules: this.formbuilder.array([])
     });
   }
