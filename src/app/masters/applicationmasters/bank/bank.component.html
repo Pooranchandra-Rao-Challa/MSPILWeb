@@ -209,7 +209,7 @@
         <p-table #dt1 [value]="banks" dataKey="id" [rows]="10" [rowHover]="true" 
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [showCurrentPageReport]="true"
+            [showCurrentPageReport]="true" [alwaysShowPaginator]="false"
             [globalFilterFields]="['code','name','isActive','createdByUser','createdAt','updatedByUser','updatedAt']"
             [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" >
             <ng-template pTemplate="caption">
@@ -260,7 +260,7 @@
             <ng-template pTemplate="body" let-bank>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil" (click)="editBank(bank)"
-                           [disabled]="!permissions.CanUpdateBank" class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                           [disabled]="!permissions.CanUpdateBank" class="p-element p-ripple p-button-text p-button-primary p-component"></button></td>
                     <td>{{bank.code}}</td>
                     <td>{{bank.name}}</td>
                     <td style="text-align:center">
@@ -276,11 +276,11 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="10" class="md:text-center">No Bank Details Found.</td>
+                    <td colspan="10 m-5" class="md:text-center">No Bank Details Found.</td>
                 </tr>
             </ng-template>
                 <tr>
-                    <td colspan="10" class="md:text-center">Loading Bank Details. Please wait.</td>
+                    <td colspan="10 m-5" class="md:text-center">Loading Bank Details. Please wait.</td>
                 </tr>
         </p-table>
     </div>

@@ -380,7 +380,7 @@
     <!-- table -->
     <!-- [lazy]="true" -->
     <p-table #dtPlotAssessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true"
-      [lazy]="true" (onLazyLoad)="loadPlotassessmentLazy($event)"
+      [lazy]="true" (onLazyLoad)="loadPlotassessmentLazy($event)" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [autoLayout]="true" scrollHeight="350px"
       [virtualScroll]="true" [virtualRowHeight]="50" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
@@ -474,12 +474,12 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="5" class="md:text-center">No Plot Assesment Found.</td>
+      <td colspan="5" class="md:text-center m-5">No Plot Assesment Found.</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="loadingbody">
     <tr>
-      <td colspan="20" class="md:text-center">Loading Plot Assesment Data. Please wait.</td>
+      <td colspan="20" class="md:text-center m-5">Loading Plot Assesment Data. Please wait.</td>
     </tr>
   </ng-template>
   </p-table>

@@ -12,7 +12,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dtpropping dataKey="id" [value]="proppings" [rows]="10" [rowHover]="true"
+    <p-table #dtpropping dataKey="id" [value]="proppings" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
@@ -91,7 +91,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="11" class="md:text-center">No Propping Details Found.</td>
+          <td colspan="11" class="md:text-center m-5">No Propping Details Found.</td>
         </tr>
       </ng-template>
     </p-table>
