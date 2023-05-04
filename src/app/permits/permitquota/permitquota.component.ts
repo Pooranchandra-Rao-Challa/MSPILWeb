@@ -55,6 +55,9 @@ export class PermitQuotaComponent implements OnInit {
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
   objPlotQuotas: PlotQuotaViewDto[] = [];
   Quotas: GetQuotasViewDto[] = [];
+  fromSchGrpNo: any;
+  toSchGrpNo: any;
+  error: boolean = false;
 
 
   constructor(
@@ -103,7 +106,7 @@ export class PermitQuotaComponent implements OnInit {
       fromSchGrpNo: ['', Validators.required],
       fromDate: [''],
       quota: ['', Validators.required],
-      groupBy: ['',Validators.required],
+      groupBy: ['', Validators.required],
       plotQuotas: this.formbuilder.array([])
     });
   }
@@ -116,7 +119,7 @@ export class PermitQuotaComponent implements OnInit {
       circleId: [],
       sectionId: [],
       villageId: [],
-      quotaReleased: 5000,
+      quotaReleased: 200,
       serverUpdatedStatus: true
     });
   }
@@ -139,8 +142,8 @@ export class PermitQuotaComponent implements OnInit {
     this.showDialog = true;
     const seasonId = this.fbPermitQuota.value.seasonId;
     this.PermitQuotaform();
-      this.fbPermitQuota.patchValue({ seasonId });
-    
+    this.fbPermitQuota.patchValue({ seasonId });
+
 
   }
 
@@ -185,9 +188,39 @@ export class PermitQuotaComponent implements OnInit {
     });
   }
 
+  selectedGroupBy(){
+    const groupByValue = this.fbPermitQuota.get('groupBy')?.value;
+    const quotas = this.Quotas.map(s => ({
+      divisionId: groupByValue === 'Division' ? s.divisionId : null,
+      circleId: groupByValue === 'Circle' ? s.circleId : null,
+      sectionId: groupByValue === 'Section' ? s.sectionId : null,
+      villageId: groupByValue === 'Village' ? s.villageId : null,
+      quotaReleased: s.scheduledTons,
+      serverUpdatedStatus: true
+    }));
+ 
+  }
+
 
   editPlotAgreement(permitQuota: SeasonQuotaViewDto) {
-    this.fbPermitQuota.patchValue(permitQuota);
+
+    this.fbPermitQuota.patchValue({})
+
+    // populate form with existing data
+    // this.fbPermitQuota.patchValue({
+    //   seasonQuotaId: permitQuota.seasonQuotaId,
+    //   docNo: permitQuota.docNo,
+    //   docDate: permitQuota.docDate,
+    //   seasonId: permitQuota.seasonId,
+    //   toSchGrpNo: permitQuota.toSchGroupNo,
+    //   fromSchGrpNo: permitQuota.fromSchGroupNo,
+    //   fromDate: permitQuota.fromDate,
+    //   quota: permitQuota.quotaReleased,
+    //   groupBy: permitQuota.groupBy
+    // });
+
+
+
     this.addFlag = false;
     this.submitLabel = 'Update permitQuota';
     this.showDialog = true;
@@ -197,35 +230,51 @@ export class PermitQuotaComponent implements OnInit {
     else return this.permitService.UpdatePermitQuota(this.fbPermitQuota.value);
   }
   onSubmit() {
-    this.fbPermitQuota.value.quotaReleased = this.fbPermitQuota.value.quotaReleased;
-    this.fbPermitQuota.get('groupBy')?.setValue('D');
-    console.log(this.fbPermitQuota.value);
-    const quotaValues = this.fbPermitQuota.value;
-    let obj = {
-      "seasonQuotaId": 0,
-      "seasonId": this.fbPermitQuota.value.seasonId,
-      "docNo": 0,
-      "docDate": "2023-05-03T11:29:19.246Z",
-      "fromSchGroupNo": this.fbPermitQuota.value.fromSchGrpNo,
-      "toSchGroupNo": this.fbPermitQuota.value.toSchGrpNo,
-      "fromDate": this.fbPermitQuota.value.fromDate,
-      "toDate": this.fbPermitQuota.value.toDate,
-      "quotaReleased": this.fbPermitQuota.value.quotaReleased,
-      "groupBy": this.fbPermitQuota.value.groupBy,
-      "serverUpdatedStatus": true,
-      "plotQuotas": this.fbPermitQuota.value.plotQuotas
+
+    const groupByValue = this.fbPermitQuota.get('groupBy')?.value;
+    if (groupByValue === 'Division') {
+      this.fbPermitQuota.get('groupBy')?.setValue('D');
+    } else if (groupByValue === 'Section') {
+      this.fbPermitQuota.get('groupBy')?.setValue('S');
+    } else if (groupByValue === 'Circle') {
+      this.fbPermitQuota.get('groupBy')?.setValue('C');
+    } else if (groupByValue === 'Village') {
+      this.fbPermitQuota.get('groupBy')?.setValue('V');
+    
+    }
+    const quotas = this.Quotas.map(s => ({
+      divisionId: s.divisionId,
+      circleId: s.circleId, // set circleId to null
+      sectionId: s.sectionId, // set sectionId to null
+      villageId: s.villageId, // set villageId to null
+      quotaReleased: s.scheduledTons,
+      serverUpdatedStatus: true
+    }));
+
+    const obj = {
+      seasonId: this.fbPermitQuota.get('seasonId')?.value,
+      fromSchGroupNo: this.fbPermitQuota.get('fromSchGrpNo')?.value,
+      toSchGroupNo: this.fbPermitQuota.get('toSchGrpNo')?.value,
+      fromDate: this.fbPermitQuota.get('fromDate')?.value,
+      toDate: this.fbPermitQuota.get('toDate')?.value,
+      quotaReleased: this.fbPermitQuota.get('quota')?.value,
+      groupBy: this.fbPermitQuota.get('groupBy')?.value,
+      serverUpdatedStatus: true,
+      plotQuotas: quotas
     };
-    console.log(obj);
     this.permitService.CreatepermitQuota(obj).subscribe((resp) => {
       if (resp) {
+   
         this.showDialog = false;
       }
     });
+    
   }
 
   onSearch() {
     this.initSeasonQuotas(this.currentSeason.seasonId!);
   }
+  
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
@@ -235,12 +284,17 @@ export class PermitQuotaComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-  restrictToRange(event: any) {
-    const value = parseInt(event.target.value);
-    if (isNaN(value) || value < 1) {
-      event.target.value = 1;
-    } else if (value > 5) {
-      event.target.value = 5;
+  checkValue() {
+    if (this.fromSchGrpNo < this.toSchGrpNo) {
+      this.error = false;
+      return;
+    }
+    else if (this.toSchGrpNo == undefined) {
+      this.error = false;
+      return;
+    }
+    else {
+      this.error = true;
     }
   }
 

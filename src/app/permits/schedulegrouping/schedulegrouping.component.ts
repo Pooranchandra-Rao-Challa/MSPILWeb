@@ -72,7 +72,6 @@ export class ScheduleGroupingComponent implements OnInit {
   filterDivisions: DivisionsforUserDto[] = []
   scheduleGroup!: FormArray;
   selectedRows: any[] = [];
-
   farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
     { field: 'groupNo', header: 'groupNo', label: 'Group No' },
@@ -85,6 +84,7 @@ export class ScheduleGroupingComponent implements OnInit {
 
   ];
   plotHeaders: IHeader[] = [
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
     { field: 'circleName', header: 'circleName', label: 'Circle Name' },
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
@@ -96,6 +96,7 @@ export class ScheduleGroupingComponent implements OnInit {
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
   ];
   GroupingPlotHeaders: IGroupingHeader[] = [
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
@@ -114,16 +115,11 @@ export class ScheduleGroupingComponent implements OnInit {
     private permitService: permitService,
     private MonitoringService: MonitoringService,
     private alertMessage: AlertMessage
-
   ) { }
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.scheduleGroupingForm();
-
   }
-
-
-
   scheduleGroupingForm() {
     this.fbScheduleGrouping = this.formbuilder.group({
       seasonId: new FormControl( [Validators.required]),
@@ -141,7 +137,6 @@ export class ScheduleGroupingComponent implements OnInit {
       plotSchedules: this.formbuilder.array([])
     });
   }
-
   plotScheduleForm(rowData: any) {
     return this.formbuilder.group({
       plotScheduleId: 0,
@@ -211,6 +206,8 @@ export class ScheduleGroupingComponent implements OnInit {
     var data = source.data as ISeasonScheduleGroupViewDto;
     this.permitService.GetFarmerPlotsInSchedule(data.seasonId, data.seasonScheduleId).subscribe(resp => {
       data.objPlotSchedule = resp as unknown as IPlotScheduleViewDto[];
+      console.log(this.objPlotSchedule);
+      
     });
   }
 
@@ -393,7 +390,6 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterVarieties = this.varieties.filter(variety => Array.isArray(values) && values.indexOf(variety.planttypeId!) != -1);
     }
   }
-
   get FormControls() {
     return this.fbScheduleGrouping.controls
   }
