@@ -96,7 +96,7 @@
 
         <!-- table -->
 
-        <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="10" [rowHover]="true"
+        <p-table #dt1 dataKey="id" [value]="plantSubTypes" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true"
@@ -156,7 +156,7 @@
             <ng-template pTemplate="body" let-plantsubtype>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlantSubType(plantsubtype)"
-                          [disabled]="!permissions.CanUpdatePlantSubType"  class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                          [disabled]="!permissions.CanUpdatePlantSubType"  class="p-element p-ripple p-button-text p-button-primary p-component"></button></td>
                     <td>{{plantsubtype.plantTypeId}}</td>
                     <td>{{plantsubtype.code}}</td>
                     <td>{{plantsubtype.name}}</td>
@@ -174,11 +174,11 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td class="md:text-center" colspan="10" class="md:text-center">No Plant Sub Types Found.</td>
+                    <td class="md:text-center m-5" colspan="10" class="md:text-center">No Plant Sub Types Found.</td>
                 </tr>
             </ng-template> 
                 <tr>
-                    <td class="md:text-center" colspan="10" sclass="md:text-center">Loading Plant Sub Types. Please
+                    <td class="md:text-center m-5" colspan="10" sclass="md:text-center">Loading Plant Sub Types. Please
                         wait.</td>
                 </tr>
         </p-table>

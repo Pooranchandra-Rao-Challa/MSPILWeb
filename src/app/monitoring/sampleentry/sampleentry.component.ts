@@ -34,7 +34,6 @@ export class SampleEntryComponent implements OnInit {
   sample: SampleDetailsDto = {};
   sampleEntries: ISampleDetailsViewDto[] = [];
   mediumDate: string = MEDIUM_DATE;
-  selectedFarmer: FarmerSectionViewDto = {};
   addFlag: boolean = true;
   @ViewChild('filter') filter!: ElementRef;
   noOfSample: number = 0;
@@ -42,7 +41,6 @@ export class SampleEntryComponent implements OnInit {
   selectedPlot: any;
   sampleArea: any;
   expectedSampleCount: number = 0;
-  isSampleCountMatched: boolean = false;
   submitDisabled: boolean = false;
   sampleSlabs: SampleslabsViewDto[] = [];
   maxAreaThatUsedInRecods: number = 1.2;
@@ -71,7 +69,8 @@ export class SampleEntryComponent implements OnInit {
     private alertMessage: AlertMessage) {
     this.samples = [
       { id: 1, name: 'Current season sample' },
-      { id: 2, name: 'No sample data' }
+      { id: 2, name: 'No sample data' },
+      { id: 2, name: 'Possibility for exsisting samples' }
     ]
   }
 
@@ -98,6 +97,11 @@ export class SampleEntryComponent implements OnInit {
       ccs: [null, (Validators.required)],
       noOfSamplesEntered: [null, (Validators.required)],
       noOfSample: [null, (Validators.required)],
+
+      seasonCode: [''],
+      farmerCode: [''],
+      farmerName: [''],
+      plotNumber: ['']
     });
   }
 
@@ -107,7 +111,6 @@ export class SampleEntryComponent implements OnInit {
 
   initForm() {
     this.initSampleCaluclations();
-    this.getDocNo();
   }
 
   onSearch() {
@@ -128,31 +131,9 @@ export class SampleEntryComponent implements OnInit {
       this.currentSeason = resp as SeasonDto;
       this.currentSeasonId = this.currentSeason.seasonId;
       this.fbSampleEntry.controls['seasonId'].setValue(this.currentSeason.seasonId!);
-      this.initFarmerSections(this.currentSeason.seasonId!);
       this.initSampleEntries(this.currentSeason.seasonId!)
       this.getDocNo();
     });
-  }
-
-  initFarmerSections(season: number) {
-    this.monitoringService.GetFarmerSections(season).subscribe((resp) => {
-      this.farmers = resp as unknown as FarmerSectionViewDto[];
-      this.getDocNo();
-    })
-  }
-
-  initPlotsofFarmers(seasonId: any, farmerId: any) {
-    this.monitoringService.GetPlotsofFarmers(seasonId, farmerId).subscribe((resp) => {
-      this.plotNumbers = resp as unknown as IPlotsofFarmerViewDto[];
-      if (this.addFlag == false) this.onPlotNumber(this.sample.plotId!);
-    });
-  }
-
-  onSelectedFarmer(farmerId: number) {
-    if (this.currentSeason?.seasonId && farmerId) {
-      this.initPlotsofFarmers(this.currentSeason.seasonId, farmerId);
-    }
-    this.selectedFarmer = this.farmers.filter((farmer) => farmer.farmerId === farmerId)[0];
   }
 
   getDocNo() {
@@ -182,54 +163,6 @@ export class SampleEntryComponent implements OnInit {
     });
   }
 
-  initSampleslabs() {
-    this.appMasterservice.GetSampleSlabs().subscribe((resp) => {
-      this.sampleSlabs = resp as unknown as SampleslabsViewDto[];
-      this.sampleSlabs?.forEach((slab) => {
-        if (this.netArea >= slab.fromArea && this.netArea <= slab.toArea) {
-          this.fbSampleEntry.controls['noOfSample'].setValue(slab.noOfSample);
-          let noOfSample = this.fbSampleEntry.controls['noOfSample'].value;
-          let noOfSamplesEntered = this.fbSampleEntry.controls['noOfSamplesEntered'].value;
-          if (noOfSamplesEntered < noOfSample) {
-            this.isSampleCountMatched = false;
-            if (this.addFlag == false) this.editSampleEntry(this.sample);
-          }
-          else {
-            this.isSampleCountMatched = true;
-          }
-        }
-      });
-      if (!this.addFlag && this.isSampleCountMatched)
-        this.messageService.add({
-          key: 'samplesMsg',
-          severity: 'info',
-          summary: 'Info Message',
-          detail: 'Number of entered samples matches with number of expected samples',
-          life: 5000
-        });
-    });
-  }
-
-  onPlotNumber(plotId: number) {
-    let plot = this.plotNumbers.filter((value) => value.plotId == plotId)[0];
-    if (plot) {
-      this.netArea = plot && plot.netArea;
-      let enteredSamples = this.sampleEntries.filter((sample) => sample.plotId == plotId);
-      this.enteredSampleCount = enteredSamples && enteredSamples.length;
-      this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(this.enteredSampleCount);
-      this.initSampleslabs();
-    }
-    else {
-      this.messageService.add({
-        key: 'samplesMsg',
-        severity: 'info',
-        summary: 'Info Message',
-        detail: 'This Plot Is Not Exsits In Plot Yield',
-        life: 5000
-      });
-    }
-  }
-
   initSeasons() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp as any;
@@ -237,14 +170,10 @@ export class SampleEntryComponent implements OnInit {
     });
   }
 
-  addSampleEntry() {
-    this.isSampleCountMatched = false;
-    this.fbSampleEntry.controls['seasonId'].enable();
-    this.fbSampleEntry.controls['seasonId'].setValue(this.currentSeasonId);
-    this.initFarmerSections(this.currentSeasonId!);
+  addSampleEntry(sample: ISampleDetailsViewDto) {
+    this.patchValues(sample);
     this.submitLabel = 'Add Sample Entry';
     this.addFlag = true;
-    this.showDialog = true;
   }
 
   initFarmers() {
@@ -253,16 +182,19 @@ export class SampleEntryComponent implements OnInit {
     })
   }
 
-  sampleCountWhileEdit(sample: SampleDetailsDto) {
-    this.sample = sample;
-    this.addFlag = false;
-    this.initPlotsofFarmers(this.currentSeason.seasonId, sample.farmerId);
+  editSampleEntry(sample: ISampleDetailsViewDto) {
+    this.patchValues(sample);
+    this.submitLabel = 'Update Sample Entry';
   }
 
-  editSampleEntry(sample: SampleDetailsDto) {
-    this.fbSampleEntry.patchValue(sample)
-    this.submitLabel = 'Update Plot Transfer';
+  patchValues(sample: ISampleDetailsViewDto) {
+    this.fbSampleEntry.patchValue(sample);
+    this.fbSampleEntry.controls['noOfSample'].setValue(sample.sampleNo);
+    this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(sample.noOfSample);
     this.showDialog = true;
+    if (sample.noOfSample == 0) {
+      this.getDocNo();
+    }
   }
 
   saveSampleEntry(): Observable<HttpEvent<any>> {
@@ -276,6 +208,7 @@ export class SampleEntryComponent implements OnInit {
         if (resp) {
           this.fbSampleEntry.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAS001" : "SMOPAS002"]);
         }
       })
     }
@@ -292,8 +225,8 @@ export class SampleEntryComponent implements OnInit {
 
   clearForm() {
     this.fbSampleEntry.reset();
-    this.selectedFarmer = {};
   }
+
 }
 
 

@@ -10,7 +10,7 @@
       </ng-template>
     </p-toolbar>
 
-    <p-table #dt1 [value]="roles" dataKey="id" [rows]="10" [rowHover]="true"
+    <p-table #dt1 [value]="roles" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="['code','name','isActive','createdDate']" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]">
@@ -76,7 +76,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="text-center" colspan="8">No Roles Found.</td>
+          <td class="text-center m-5" colspan="8">No Roles Found.</td>
         </tr>
       </ng-template>
     </p-table>

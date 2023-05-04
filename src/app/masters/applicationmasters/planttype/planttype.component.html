@@ -102,7 +102,7 @@
 
         <!-- table -->
 
-        <p-table #dt1 [value]="plantTypes" dataKey="id" [rows]="10" [rowHover]="true"
+        <p-table #dt1 [value]="plantTypes" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true"
@@ -168,7 +168,7 @@
             <ng-template pTemplate="body" let-planttype>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlantType(planttype)"
-                         [disabled]="!permissions.CanUpdatePlantType"   class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                         [disabled]="!permissions.CanUpdatePlantType"   class="p-element p-ripple p-button-text p-button-primary p-component"></button></td>
                     <td>{{planttype.code}}</td>
                     <td>{{planttype.name}}</td>
                     <td>{{planttype.estimatedTon}}</td>
@@ -187,11 +187,11 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="11" class="md:text-center" >No Plant Type found.</td>
+                    <td colspan="11 m-5" class="md:text-center" >No Plant Type found.</td>
                 </tr>
             </ng-template>   
                 <tr>
-                    <td colspan="11" class="md:text-center" >Loading Plant Type. Please wait.</td>
+                    <td colspan="11 m-5" class="md:text-center" >Loading Plant Type. Please wait.</td>
                 </tr>
         </p-table>
     </div>
