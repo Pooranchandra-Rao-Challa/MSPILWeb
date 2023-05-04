@@ -227,19 +227,27 @@
                     </div>
                     <div class="field col-12 md:col-4  ">
                       <label class="required">Nominee:</label>
-                      <input pInputText type="text" placeholder="Enter Nominee" formControlName="nominee"
+                      <input pInputText #name type="text" placeholder="Enter Nominee" formControlName="nominee" alphaOnly [maxlength]="maxLength.name"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].errors }">
+                        <div class="text-right">
+                          <small>{{name.value.length}}/{{maxLength.name}}</small>
+                        </div>
                       <span
                         *ngIf="fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['nominee'].errors?.['required']">
                           Please Select Nominee.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="fcNomineeDetails.controls['nominee'].errors?.['minlength']">
+                            Nominee Min Length Is 2.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="fcNomineeDetails.controls['nominee'].errors?.['pattern']">Nominee
+                            Should Start Or End With Space.
+                          </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label class="required">Guarantor1:</label>
                       <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="code" [filter]="true"
-                        filterBy="aliasName,code,fatherName" formControlName="guarantor1" placeholder="Select Farmer"
+                        filterBy="farmerName,code" formControlName="guarantor1" placeholder="Select Farmer"
                         [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor2($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['guarantor1'].touched && fcNomineeDetails.controls['guarantor1'].errors }">
@@ -247,8 +255,8 @@
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
-                          <div>{{farmer.aliasName}}</div>
-                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.farmerName}}</div>
                           <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
@@ -262,15 +270,15 @@
                     <div class="field col-12 md:col-4 ">
                       <label>Guarantor2:</label>
                       <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="farmerId"
-                        [filter]="true" filterBy="aliasName,code,fatherName" formControlName="guarantor2"
+                        [filter]="true" filterBy="farmerName,code" formControlName="guarantor2"
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor3Farmers($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
-                          <div>{{farmer.aliasName}}</div>
-                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.farmerName}}</div>
                           <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
@@ -278,15 +286,15 @@
                     <div class="field col-12 md:col-4  ">
                       <label>Guarantor3:</label>
                       <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="farmerId"
-                        [filter]="true" filterBy="aliasName,code,fatherName" formControlName="guarantor3"
+                        [filter]="true" filterBy="farmerName,code" formControlName="guarantor3"
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="onGuarantor3($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
-                          <div>{{farmer.aliasName}}</div>
-                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.farmerName}}</div>
                           <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>

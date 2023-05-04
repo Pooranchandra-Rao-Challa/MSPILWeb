@@ -1,6 +1,6 @@
 import { LookupService } from 'src/app/_services/lookup.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { FarmersViewDto, LookupDetailViewDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
 import {
@@ -15,7 +15,8 @@ import { Observable } from 'rxjs';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { ITableHeader } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
+import { MIN_LENGTH_2, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-plotagreement',
@@ -51,6 +52,7 @@ export class PlotagreementComponent implements OnInit {
   activeIndex2?= 0;
   todayDate = new Date();
   permissions: any;
+  maxLength: MaxLength = new MaxLength();
 
   farmerHeaders: ITableHeader[] = [
     { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
@@ -259,7 +261,7 @@ export class PlotagreementComponent implements OnInit {
         nomineeDetailId: [null],
         plotAgreementId: [null],
         relationTypeId: ['', (Validators.required)],
-        nominee: ['', (Validators.required)],
+        nominee: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
         guarantor1: [null, (Validators.required)],
         guarantor2: [null],
         guarantor3: [null]

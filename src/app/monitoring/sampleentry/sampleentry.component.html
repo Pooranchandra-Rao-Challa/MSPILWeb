@@ -2,14 +2,39 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
 
+    <div class="grid">
+      <div class="col-8 lg:col-offset-2 md:col-12 ">
+        <div class="grid">
+        <div class="col-1">
+          <div class="bg-blue-300 shadow-1" style="width: 20px; height: 20px;"></div>
+        </div>
+        <div class="col-3 lg:col-3 md:col-5">Blue color text means allowed only but not entered.</div>
+        <div class="col-1">
+          <div class="bg-green-300 shadow-1" style="width: 20px; height: 20px;"></div>
+        </div>
+        <div class="col-3 lg:col-3 md:col-5">Green color text means allowed one or more samples but not entered</div>
+        <div class="col-1">
+          <div class="bg-red-300 shadow-1" style="width: 20px; height: 20px;"></div>
+        </div>
+        <div class="col-3 lg:col-3 md:col-5">Red color text means all samples entered</div>
+        </div>
+      </div>
+    </div>
+
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
         <h4>Sample Entry</h4>
       </ng-template>
       <!-- <ng-template pTemplate="right">
-        <button pButton pRipple label="Sample Entry" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addSampleEntry()"></button>
+        <div class="inline-block md:flex">
+          <div class="bg-blue-300 w-1rem h-1rem m-2 flex align-items-center justify-content-center"></div>
+          <span>Allowed only but not entered.</span>
+          <div class="bg-green-300 w-1rem h-1rem m-2 flex align-items-center justify-content-center"></div>
+          <span>Allowed one or more samples but not entered.</span>
+          <div class="bg-red-300 w-1rem h-1rem m-2 flex align-items-center justify-content-center"></div>
+          <span>All samples entered.</span>
+        </div>
       </ng-template> -->
     </p-toolbar>
 
@@ -75,10 +100,6 @@
         </tr>
       </ng-template>
     </p-table>
-
-    <p class="text-blue-600">Blue color text means allowed only but not entered.</p>
-    <p class="text-green-600">Green color text means allowed one or more samples but not entered</p>
-    <p class="text-red-600">Red color text means all samples entered</p>
 
     <p-dialog header="Sample Entry" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" (onHide)="clearForm()"
