@@ -52,7 +52,7 @@
         <tr [ngStyle]="{'color': sample.canNotDoEditOrAdd ? 'red' : (sample.canAddSample ? 'green' : 'black') }">
           <td>
             <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button p-component"
-            (click)="addSampleEntry()" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd"></button>
+            (click)="addSampleEntry(sample)" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd"></button>
             <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editSampleEntry(sample)"  *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
           </td>
@@ -86,15 +86,17 @@
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
                       <label class="required">Season:</label>
-                      <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
-                        optionValue="seasonId" formControlName="seasonId" appendTo="body"
-                        (onChange)="initFarmerSections($event.value)">
-                      </p-dropdown>
+                      <p class="disabled_text">
+                        {{ fbSampleEntry.controls['seasonCode'].value }}
+                      </p>
+                      <!-- <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
+                        optionValue="seasonId" formControlName="seasonId" appendTo="body">
+                      </p-dropdown> -->
                     </div>
                     <div class="field col-12 md:col-4">
                       <label class="required">Doc No:</label>
                       <p class="disabled_text">
-                        {{ this.fbSampleEntry.controls["docNo"].value }}
+                        {{ fbSampleEntry.controls["docNo"].value }}
                       </p>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -117,66 +119,25 @@
                   </div>
                 </p-fieldset>
 
-                <ng-container *ngIf="isSampleCountMatched">
-                  <div>
-                    <p class="disabled_text text-red-500 mx-3">
-                      Number of entered samples matches with number of expected samples
-                    </p>
-                  </div>
-                </ng-container>
-
                 <p-fieldset legend="Sample Details" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="p-fluid p-formgrid grid">
                     <div class="field col-12 md:col-4">
                       <label class="required">Farmer Code:</label>
-                      <p-dropdown optionLabel="farmerCode" [options]="farmers" optionValue="farmerId" [filter]="true"
-                        filterBy="farmerCode,farmerName" formControlName="farmerId" placeholder="Select Farmer"
-                        (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="30"
-                        appendTo="body"
-                        [ngClass]="{ 'is-invalid ng-dirty': fbSampleEntry.controls['farmerId'].touched && fbSampleEntry.controls['farmerId'].errors }">
-                        <ng-template let-farmer pTemplate="selectedItem">
-                          <div>{{ farmer.farmerCode }} - {{ farmer.farmerName }}</div>
-                        </ng-template>
-                        <ng-template let-farmer pTemplate="item">
-                          <div class="block align-items-center gap-2">
-                            <div>{{ farmer.farmerCode }}</div>
-                            <div>{{ farmer.farmerName }}</div>
-                            <div>{{farmer.villageName}}</div>
-                          </div>
-                        </ng-template>
-                      </p-dropdown>
-                      <span
-                        *ngIf="fbSampleEntry.controls['farmerId'].touched && fbSampleEntry.controls['farmerId'].invalid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="fbSampleEntry.controls['farmerId'].errors?.['required']">
-                          Please Select Farmer.</div>
-                      </span>
+                      <p class="disabled_text">
+                        {{ fbSampleEntry.controls['farmerCode'].value }}
+                      </p>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label>Farmer Name:</label>
                       <p class="disabled_text">
-                        {{ selectedFarmer.farmerName }}
+                        {{ fbSampleEntry.controls['farmerName'].value }}
                       </p>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label class="required">Plot No:</label>
-                      <p-dropdown placeholder="Plot No" (onChange)="onPlotNumber($event.value)" formControlName="plotId"
-                        optionValue="plotId" [options]="plotNumbers" optionLabel="plotNumber" [filter]="true" filterBy="plotNumber,villageName"
-                        [ngClass]="{ 'is-invalid ng-dirty': fbSampleEntry.controls['plotId'].touched && fbSampleEntry.controls['plotId'].errors }">
-                        <ng-template let-plot pTemplate="selectedItem">
-                          <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
-                        </ng-template>
-                        <ng-template let-plot pTemplate="item">
-                          <div>{{plot.plotNumber}}</div>
-                          <div>{{plot.villageName}}</div>
-                        </ng-template>
-                      </p-dropdown>
-                      <span
-                        *ngIf="fbSampleEntry.controls['plotId'].touched && fbSampleEntry.controls['plotId'].invalid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="fbSampleEntry.controls['plotId'].errors?.['required']">
-                          Please Select Plot Number.</div>
-                      </span>
+                      <p class="disabled_text">
+                        {{ fbSampleEntry.controls['plotNumber'].value }}
+                      </p>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label class="required">Field Brix:</label>
@@ -231,15 +192,15 @@
                       <p class="disabled_text">{{ appConstants.PolFactor }}</p>
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label class="required">No of Sample:</label>
+                      <label class="required">Sample No:</label>
                       <!-- <p class="disabled_text">{{ lastSampleSize }}</p> -->
-                      <p class="disabled_text">{{ this.fbSampleEntry.controls['noOfSample'].value }}</p>
+                      <p class="disabled_text">{{ fbSampleEntry.controls['noOfSample'].value }}</p>
 
                     </div>
                     <div class="field col-12 md:col-3">
-                      <label class="required">No of Entered sample:</label>
+                      <label class="required">No of Entered Sample:</label>
                       <!-- <p class="disabled_text">{{ enteredSampleCount }}</p> -->
-                      <p class="disabled_text">{{ this.fbSampleEntry.controls['noOfSamplesEntered'].value }}</p>
+                      <p class="disabled_text">{{ fbSampleEntry.controls['noOfSamplesEntered'].value }}</p>
                     </div>
                   </div>
                 </p-fieldset>
@@ -250,7 +211,7 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
-          <button pButton pRipple type="submit" (click)="onSubmit()" [disabled]="isSampleCountMatched"
+          <button pButton pRipple type="submit" (click)="onSubmit()"
             [label]="submitLabel" class="p-button-raised p-button-success"></button>
         </div>
       </ng-template>
