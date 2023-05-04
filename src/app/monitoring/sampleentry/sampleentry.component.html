@@ -15,7 +15,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #sampleEntry dataKey="id" [value]="sampleEntries" [columns]="headers" [rows]="10" [rowHover]="true"
+    <p-table #sampleEntry dataKey="id" [value]="sampleEntries" [columns]="headers" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10, 25, 50]" [tableStyle]="{ width: 'max-content' }">
@@ -49,11 +49,12 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-sample>
-        <tr [ngStyle]="{'color': sample.canNotDoEditOrAdd ? 'red' : (sample.canAddSample ? 'green' : 'black') }">
-          <td>
-            <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button p-component"
-            (click)="addSampleEntry()" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd"></button>
-            <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+        <!-- <tr [ngStyle]="{'backgrund': sample.canNotDoEditOrAdd ? 'red' : (sample.canAddSample ? '#bfe9bf' : 'black') }"> -->
+        <tr [ngClass]="sample.canNotDoEditOrAdd ? 'text-red-600' : (sample.canAddSample ? 'text-green-600' : 'text-blue-600')">
+          <td [ngClass]="sample.canNotDoEditOrAdd ? 'bg-red-300' : (sample.canAddSample ? 'bg-green-300' : 'bg-blue-300')">
+            <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
+            (click)="addSampleEntry()" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd" ></button>
+            <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
               (click)="editSampleEntry(sample)"  *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
           </td>
           <td *ngFor="let col of headers">
@@ -67,7 +68,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="12" class="md:text-center">No Sample Entry Found.</td>
+          <td colspan="12" class="md:text-center m-5">No Sample Entry Found.</td>
         </tr>
       </ng-template>
     </p-table>

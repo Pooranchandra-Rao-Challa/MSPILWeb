@@ -14,7 +14,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dt1 [value]="varieties" dataKey="id" [rows]="10" [rowHover]="true"
+    <p-table #dt1 [value]="varieties" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [showCurrentPageReport]="true"
@@ -86,7 +86,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-variety>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button-primary p-component"
               (click)="editVariety(variety)" [disabled]="!permissions.CanUpdateVariety"></button></td>
           <td>{{variety.varietyName}}</td>
           <td>{{variety.code}}</td>
@@ -107,7 +107,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="text-center" colspan="13">No Varieties Found.</td>
+          <td class="text-center m-5" colspan="13">No Varieties Found.</td>
         </tr>
       </ng-template>
     </p-table>

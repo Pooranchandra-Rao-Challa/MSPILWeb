@@ -91,7 +91,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dt1 [value]="mandals" dataKey="id" [rows]="10" [rowHover]="true"
+    <p-table #dt1 [value]="mandals" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [globalFilterFields]="['mandalId','mandalCode','mandalName','districtId','districtName',
@@ -162,11 +162,11 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="11">No Mandals Found.</td>
+          <td class="md:text-center m-5" colspan="11">No Mandals Found.</td>
         </tr>
       </ng-template>
         <tr>
-          <td class="md:text-center" colspan="11">Loading... Mandals Data. Please Wait.</td>
+          <td class="md:text-center m-5" colspan="11">Loading... Mandals Data. Please Wait.</td>
         </tr>
     </p-table>
   </div>

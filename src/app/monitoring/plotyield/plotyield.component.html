@@ -457,7 +457,7 @@
     </p-dialog>
 
     <!-- table -->
-    <p-table #dtPlotYields dataKey="farmerCode" [value]="plotYields" [columns]="farmerHeaders" [rows]="10"
+    <p-table #dtPlotYields dataKey="farmerCode" [value]="plotYields" [columns]="farmerHeaders" [rows]="10" [alwaysShowPaginator]="false"
       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm table-fixed" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="false" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'min-content'}" (onRowExpand)="onRowExpand($event)"
@@ -538,7 +538,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="15">There Are No Yields Found Yet.</td>
+          <td class="md:text-center m-5" colspan="15">There Are No Yields Found Yet.</td>
         </tr>
       </ng-template>
               </p-table>
@@ -549,7 +549,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="5">No Yields Found.</td>
+          <td class="md:text-center m-5" colspan="5">No Yields Found.</td>
         </tr>
       </ng-template>
   </p-table>

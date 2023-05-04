@@ -195,7 +195,7 @@
     </p-dialog>
 
     <!-- table -->
-    <p-table #dt1 dataKey="id" [value]="plotTransfers" [columns]="headers" [rows]="10" [rowHover]="true"
+    <p-table #dt1 dataKey="id" [value]="plotTransfers" [columns]="headers" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
@@ -240,7 +240,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="20" class="md:text-center">No Plot Transfers Found.</td>
+          <td colspan="20" class="md:text-center m-5">No Plot Transfers Found.</td>
         </tr>
       </ng-template>
     </p-table>
