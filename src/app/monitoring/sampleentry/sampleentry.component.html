@@ -14,8 +14,9 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #sampleEntry dataKey="id" [value]="sampleEntries" [columns]="headers" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
+    <p-table #sampleEntry dataKey="id" [value]="sampleEntries" [columns]="headers" [rows]="10" [rowHover]="true"
+      [alwaysShowPaginator]="false" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+      [paginator]="true" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10, 25, 50]" [tableStyle]="{ width: 'max-content' }">
       <ng-template pTemplate="caption">
@@ -31,9 +32,9 @@
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initSampleEntries($event.value)" optionValue="seasonId">
             </p-dropdown>
-            <p-dropdown class="ml-2" placeholder="Select Sample" optionLabel="name" [options]="samples"
-             optionValue="id" [(ngModel)]="selectedSample">
-          </p-dropdown>
+            <p-dropdown class="ml-2" placeholder="Select Sample" optionLabel="name" [options]="samples" optionValue="id"
+              [(ngModel)]="selectedSample">
+            </p-dropdown>
           </div>
         </div>
       </ng-template>
@@ -49,16 +50,19 @@
       </ng-template>
       <ng-template pTemplate="body" let-sample>
         <!-- <tr [ngStyle]="{'backgrund': sample.canNotDoEditOrAdd ? 'red' : (sample.canAddSample ? '#bfe9bf' : 'black') }"> -->
-        <tr [ngClass]="sample.canNotDoEditOrAdd ? 'text-red-600' : (sample.canAddSample ? 'text-green-600' : 'text-blue-600')">
-          <td [ngClass]="sample.canNotDoEditOrAdd ? 'bg-red-300' : (sample.canAddSample ? 'bg-green-300' : 'bg-blue-300')">
-            <button pButton pRipple icon="pi pi-plus" class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
-            (click)="addSampleEntry(sample)" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd" ></button>
-            <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
-              (click)="editSampleEntry(sample)"  *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
+        <tr
+          [ngClass]="sample.canNotDoEditOrAdd ? 'text-red-600' : (sample.canAddSample ? 'text-green-600' : 'text-blue-600')">
+          <td
+            [ngClass]="sample.canNotDoEditOrAdd ? 'bg-red-300' : (sample.canAddSample ? 'bg-green-300' : 'bg-blue-300')">
+            <button pButton pRipple icon="pi pi-plus"
+              class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
+              (click)="addSampleEntry(sample)" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd"></button>
+            <button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
+              (click)="editSampleEntry(sample)" *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
           </td>
           <td *ngFor="let col of headers">
-            <span
-              *ngIf="col?.field != 'docDate'">{{sample[col.field]}}</span>
+            <span *ngIf="col?.field != 'docDate'">{{sample[col.field]}}</span>
             <span *ngIf="col?.field == 'docDate'">
               {{sample[col.field] | date: 'dd-MM-yyyy'}}
             </span>
@@ -71,6 +75,10 @@
         </tr>
       </ng-template>
     </p-table>
+
+    <p class="text-blue-600">Blue color text means allowed only but not entered.</p>
+    <p class="text-green-600">Green color text means allowed one or more samples but not entered</p>
+    <p class="text-red-600">Red color text means all samples entered</p>
 
     <p-dialog header="Sample Entry" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" (onHide)="clearForm()"
@@ -211,8 +219,8 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
-          <button pButton pRipple type="submit" (click)="onSubmit()"
-            [label]="submitLabel" class="p-button-raised p-button-success"></button>
+          <button pButton pRipple type="submit" (click)="onSubmit()" [label]="submitLabel"
+            class="p-button-raised p-button-success"></button>
         </div>
       </ng-template>
     </p-dialog>

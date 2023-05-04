@@ -171,13 +171,9 @@ export class SampleEntryComponent implements OnInit {
   }
 
   addSampleEntry(sample: ISampleDetailsViewDto) {
-    this.fbSampleEntry.patchValue(sample);
+    this.patchValues(sample);
     this.submitLabel = 'Add Sample Entry';
     this.addFlag = true;
-    this.showDialog = true;
-    if (sample.noOfSample > 0) {
-      this.getDocNo();
-    }
   }
 
   initFarmers() {
@@ -187,8 +183,14 @@ export class SampleEntryComponent implements OnInit {
   }
 
   editSampleEntry(sample: ISampleDetailsViewDto) {
-    this.fbSampleEntry.patchValue(sample)
-    this.submitLabel = 'Update Plot Transfer';
+    this.patchValues(sample);
+    this.submitLabel = 'Update Sample Entry';
+  }
+
+  patchValues(sample: ISampleDetailsViewDto) {
+    this.fbSampleEntry.patchValue(sample);
+    this.fbSampleEntry.controls['noOfSample'].setValue(sample.sampleNo);
+    this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(sample.noOfSample);
     this.showDialog = true;
     if (sample.noOfSample == 0) {
       this.getDocNo();
