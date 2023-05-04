@@ -117,6 +117,7 @@
                 <label class="required">Season:</label>
                 <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
                   formControlName="seasonId" (onChange)="getPlotOffersInSeason($event.value,-1)"
+                  [disabled]="FormControls['plotReportId'].value"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                 </p-dropdown>
                 <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -129,7 +130,7 @@
                 <p-dropdown placeholder="Select Offered No" optionLabel="DisplayValue" [options]="seasonPlotOffers"
                   formControlName="plotOfferId" optionValue="id" [filter]="true"
                   filterBy="offerNo,farmerCode,farmerName,plotVillageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                  (onChange)="getOfferInfo($event.value)"
+                  (onChange)="getOfferInfo($event.value)" [disabled]="FormControls['plotReportId'].value"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotOfferId'].touched && FormControls['plotOfferId'].errors }">
                   <ng-template let-seasonPlotOffer pTemplate="item">
                     <div class="block align-items-center gap-2">

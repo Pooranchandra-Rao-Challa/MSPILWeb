@@ -371,8 +371,6 @@ export class PlotreportsComponent implements OnInit {
   }
 
   addPlotReport() {
-    this.fbPlotReport.controls['seasonId'].enable();
-    this.fbPlotReport.controls['plotOfferId'].enable();
     this.fbPlotReport.controls['seasonId'].setValue(this.currentSeasonId);
     this.getPlotOffersInSeason(this.currentSeasonId || 0, -1);
     this.onValidations();
@@ -388,7 +386,6 @@ export class PlotreportsComponent implements OnInit {
     this.plotOfferDto.plotDivisionName = plotReport.plotDivisionName;
     this.plotOfferDto.plotVillageName = plotReport.plotVillageName;
     this.fbPlotReport.controls['seasonId'].setValue(farmer.seasonId);
-    this.fbPlotReport.controls['seasonId'].disable();
     this.fbPlotReport.controls['farmerId'].setValue(farmer.farmerId);
     this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
     this.fbPlotReport.controls['plotOfferId'].setValue(plotReport.plotOfferId);
@@ -453,8 +450,6 @@ export class PlotreportsComponent implements OnInit {
 
   onSubmit() {
     if (this.fbPlotReport.valid) {
-      this.fbPlotReport.controls['seasonId'].enable();
-      this.fbPlotReport.controls['plotOfferId'].enable();
       if (!this.subPlot.get('plotReportAddlInfoId')?.value) {
         this.fbPlotReport.value.plotReportAddlInfoId = null;
       }
