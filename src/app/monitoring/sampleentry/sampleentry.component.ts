@@ -98,7 +98,6 @@ export class SampleEntryComponent implements OnInit {
       noOfSamplesEntered: [null, (Validators.required)],
       noOfSample: [null, (Validators.required)],
 
-
       seasonCode: [''],
       farmerCode: [''],
       farmerName: [''],
@@ -176,7 +175,9 @@ export class SampleEntryComponent implements OnInit {
     this.submitLabel = 'Add Sample Entry';
     this.addFlag = true;
     this.showDialog = true;
-    // this.getDocNo();
+    if (sample.noOfSample > 0) {
+      this.getDocNo();
+    }
   }
 
   initFarmers() {
@@ -189,6 +190,9 @@ export class SampleEntryComponent implements OnInit {
     this.fbSampleEntry.patchValue(sample)
     this.submitLabel = 'Update Plot Transfer';
     this.showDialog = true;
+    if (sample.noOfSample == 0) {
+      this.getDocNo();
+    }
   }
 
   saveSampleEntry(): Observable<HttpEvent<any>> {
@@ -202,6 +206,7 @@ export class SampleEntryComponent implements OnInit {
         if (resp) {
           this.fbSampleEntry.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAS001" : "SMOPAS002"]);
         }
       })
     }
@@ -219,6 +224,7 @@ export class SampleEntryComponent implements OnInit {
   clearForm() {
     this.fbSampleEntry.reset();
   }
+
 }
 
 
