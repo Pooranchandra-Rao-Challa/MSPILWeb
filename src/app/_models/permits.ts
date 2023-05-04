@@ -278,6 +278,8 @@ export class SeasonQuotaViewDto {
   updatedAt?: string
   updatedBy?: string
   objPlotQuotas?:PlotQuotaViewDto[];
+  plotQuotas: any
+  groupBy: any
 }
 export class PlotQuotaViewDto {
   PlotQuotaId?: number
@@ -379,6 +381,7 @@ export class PlotQuotaDto {
   filterName?: string
 }
 export class GetQuotasViewDto {
+  [x: string]: any
   sectionId?: number
   sectionName?: string
   circleId?: number
@@ -393,6 +396,7 @@ export class GetQuotasViewDto {
   scheduledTons?: number
   plotQuotaId?:number
   seasonQuotaId?:number
+  quotaReleased:any
 
 }
 

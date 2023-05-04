@@ -30,18 +30,41 @@
                                             appendTo="body" [style]="{'width':'100%'}" ></p-dropdown>
                                         </div>
                                         <div class="field col-12 md:col-3">
-                                            <label class="mb-2 block font-bold" for="stacked">From Schedule Group
-                                                No:<sup class="p-error">*</sup></label>
-                                            <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
-                                                inputStyleClass="p-numeric-input" formControlName="fromSchGrpNo"
-                                                (onValueChange)="restrictToRange($event)"></p-inputNumber>
-                                        </div>
+                                            <label class="mb-2 block font-bold" for="stacked">From Schedule Group No:<sup class="p-error">*</sup></label>
+                                          <p-inputNumber [showButtons]="true" id="fromSchGrpNo" type="number"
+                                              [maxlength]="2" formControlName="fromSchGrpNo" [min]="1" [max]="5"
+                                              placeholder="From Schedule Group No" [(ngModel)]="fromSchGrpNo"
+                                              (onInput)="checkValue()"
+                                              [ngClass]="{ 'is-invalid ng-dirty': FormControals['fromSchGrpNo'].touched && FormControals['fromSchGrpNo'].errors }">
+                                          </p-inputNumber>
+                                          <span
+                                              *ngIf="FormControals['fromSchGrpNo'].touched && FormControals['fromSchGrpNo'].invalid">
+                                              <div class="ng-invalid ng-touched p-error"
+                                                  *ngIf="FormControals['fromSchGrpNo'].errors?.['required']">
+                                                  Please Enter From Schedule Group No.</div>
+                                          </span>
+                                          <span class="ng-invalid  p-error" *ngIf="error">
+                                              From Schedule Group No is Lessthan To Schedule Group No.
+                                          </span>
+                                      </div>
                                         <div class="field col-12 md:col-3">
-                                            <label class="mb-2 block font-bold" for="stacked">To Schedule Group No:<sup
-                                                    class="p-error">*</sup></label>
+                                          <label>To Schedule Group No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
                                                 inputStyleClass="p-numeric-input"
-                                                (onValueChange)="restrictToRange($event)" formControlName="toSchGrpNo"></p-inputNumber>
+                                                (onValueChange)="checkValue()" formControlName="toSchGrpNo"
+                                                type="number"
+                                                [maxlength]="2"  [min]="1" [max]="5"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControals['toSchGrpNo'].touched && FormControals['toSchGrpNo'].errors }"
+                                                ></p-inputNumber>
+                                                <span
+                                                *ngIf="FormControals['toSchGrpNo'].touched && FormControals['toSchGrpNo'].invalid">
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControals['toSchGroupNo'].errors?.['required']">
+                                                    Please Enter To Schedule Group No.</div>
+                                            </span>
+                                            <span class="ng-invalid  p-error" *ngIf="error">
+                                                To Schedule Group No is greater than From Schedule Group No.
+                                            </span>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>From Date:</label>
