@@ -92,12 +92,13 @@ export class SampleEntryComponent implements OnInit {
       fieldBrix: [null, (Validators.required)],
       brix: [null, (Validators.required)],
       pol: [null, (Validators.required)],
-      plotYieldId: [],
+      plotYieldId: [null],
       purity: [null, (Validators.required)],
       ccs: [null, (Validators.required)],
       noOfSamplesEntered: [null, (Validators.required)],
       noOfSample: [null, (Validators.required)],
 
+      // read-only fields
       seasonCode: [''],
       farmerCode: [''],
       farmerName: [''],
@@ -121,8 +122,6 @@ export class SampleEntryComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetSeasonSamples(seasonId, param1).subscribe((resp) => {
       this.sampleEntries = resp as unknown as ISampleDetailsViewDto[];
-      console.log(this.sampleEntries);
-
     });
   }
 
@@ -184,6 +183,7 @@ export class SampleEntryComponent implements OnInit {
 
   editSampleEntry(sample: ISampleDetailsViewDto) {
     this.patchValues(sample);
+    this.addFlag = false;
     this.submitLabel = 'Update Sample Entry';
   }
 
