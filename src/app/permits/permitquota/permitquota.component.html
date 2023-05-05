@@ -30,18 +30,41 @@
                                             appendTo="body" [style]="{'width':'100%'}" ></p-dropdown>
                                         </div>
                                         <div class="field col-12 md:col-3">
-                                            <label class="mb-2 block font-bold" for="stacked">From Schedule Group
-                                                No:<sup class="p-error">*</sup></label>
-                                            <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
-                                                inputStyleClass="p-numeric-input" formControlName="fromSchGrpNo"
-                                                (onValueChange)="restrictToRange($event)"></p-inputNumber>
-                                        </div>
+                                            <label class="mb-2 block font-bold" for="stacked">From Schedule Group No:<sup class="p-error">*</sup></label>
+                                          <p-inputNumber [showButtons]="true" id="fromSchGroupNo" type="number"
+                                              [maxlength]="2" formControlName="fromSchGroupNo" [min]="1" [max]="5"
+                                              placeholder="From Schedule Group No" [(ngModel)]="fromSchGroupNo"
+                                              (onInput)="checkValue()"
+                                              [ngClass]="{ 'is-invalid ng-dirty': FormControals['fromSchGroupNo'].touched && FormControals['fromSchGroupNo'].errors }">
+                                          </p-inputNumber>
+                                          <span
+                                              *ngIf="FormControals['fromSchGroupNo'].touched && FormControals['fromSchGroupNo'].invalid">
+                                              <div class="ng-invalid ng-touched p-error"
+                                                  *ngIf="FormControals['fromSchGroupNo'].errors?.['required']">
+                                                  Please Enter From Schedule Group No.</div>
+                                          </span>
+                                          <span class="ng-invalid  p-error" *ngIf="error">
+                                              From Schedule Group No is Lessthan To Schedule Group No.
+                                          </span>
+                                      </div>
                                         <div class="field col-12 md:col-3">
-                                            <label class="mb-2 block font-bold" for="stacked">To Schedule Group No:<sup
-                                                    class="p-error">*</sup></label>
+                                          <label>To Schedule Group No:<sup class="p-error">*</sup></label>
                                             <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
                                                 inputStyleClass="p-numeric-input"
-                                                (onValueChange)="restrictToRange($event)" formControlName="toSchGrpNo"></p-inputNumber>
+                                                (onValueChange)="checkValue()" formControlName="toSchGroupNo"
+                                                type="number" [(ngModel)]="toSchGroupNo"
+                                                [maxlength]="2"  [min]="1" [max]="5"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControals['toSchGroupNo'].touched && FormControals['toSchGroupNo'].errors }"
+                                                ></p-inputNumber>
+                                                <span
+                                                *ngIf="FormControals['toSchGroupNo'].touched && FormControals['toSchGroupNo'].invalid">
+                                                <div class="ng-invalid ng-touched p-error"
+                                                    *ngIf="FormControals['toSchGroupNo'].errors?.['required']">
+                                                    Please Enter To Schedule Group No.</div>
+                                            </span>
+                                            <span class="ng-invalid  p-error" *ngIf="error">
+                                                To Schedule Group No is greater than From Schedule Group No.
+                                            </span>
                                         </div>
                                         <div class="field col-12 md:col-3">
                                             <label>From Date:</label>
@@ -51,25 +74,25 @@
                                         </div>
                                         <div class="field col-12 md:col-4">
                                             <label>Quota:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="quota" type="number" formControlName="quota">
+                                            <input pInputText id="quota" type="number" formControlName="quotaReleased">
                                         </div>
                                         <div class="field col-12 md:col-8">
                                           <label>Type:<sup class="p-error">*</sup></label>
                                           <div class="grid mt-1">
                                         <div class="col col-3">
-                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Division" label="Division"
+                                          <p-radioButton name="groupBy" formControlName="groupBy"   value="D" label="Division"
                                             (click)="fbPermitQuota.get('division')?.setValue('Division')"></p-radioButton>
                                         </div>
                                         <div class="col col-3">
-                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Circle" label="Circle"
+                                          <p-radioButton name="groupBy" formControlName="groupBy"  value="C" label="Circle"
                                             (click)="fbPermitQuota.get('division')?.setValue('Circle')"></p-radioButton>
                                         </div>
                                         <div class="col col-3">
-                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Section" label="Section"
+                                          <p-radioButton name="groupBy" formControlName="groupBy" value="S" label="Section"
                                             (click)="fbPermitQuota.get('division')?.setValue('Section')"></p-radioButton>
                                         </div>
                                         <div class="col col-3">
-                                          <p-radioButton name="groupBy" formControlName="groupBy" value="Village" label="Village"
+                                          <p-radioButton name="groupBy" formControlName="groupBy" value="V" label="Village"
                                             (click)="fbPermitQuota.get('division')?.setValue('Village'); fbPermitQuota.get('village')?.setValue('selected village')"></p-radioButton>
                                         </div>
                                       </div>
@@ -204,15 +227,16 @@
               </ng-template>
               <ng-template pTemplate="body" let-permitQuota>
                 <tr>
-                <td><button pButton pRipple icon="pi pi-pencil"
-                  class="p-element p-ripple p-button-text p-button p-component" (click)="editPlotAgreement(permitQuota)"></button>
-                 </td>
+                  <td><button pButton pRipple icon="pi pi-pencil"
+                    class="p-element p-ripple p-button-text p-button p-component" (click)="editPermitQuota(permitQuota)"></button>
+                   </td>
+                   
                   <td *ngFor="let col of plotHeaders">  
                     <span
               *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{permitQuota[col.field]}}</span>
             <span
               *ngIf="col?.field == 'toDOP' || col?.field == 'fromDOP'  || col?.field == 'createdAt'|| col?.field == 'updatedAt'">
-              {{farmer[col.field] | date: 'dd-MM-yyyy'}}
+              {{permitQuota[col.field] | date: 'dd-MM-yyyy'}}
             </span>
                  
                 </tr>

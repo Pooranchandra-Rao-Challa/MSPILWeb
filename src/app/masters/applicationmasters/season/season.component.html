@@ -14,7 +14,7 @@
       </ng-template>
     </p-toolbar>
     <!-- table -->
-    <p-table #dt1 [value]="seasons" dataKey="id" [rows]="10" [rowHover]="true"
+    <p-table #dt1 [value]="seasons" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
@@ -118,7 +118,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="50%">No Seasons Data Found.</td>
+          <td class="md:text-center m-5" colspan="50%">No Seasons Data Found.</td>
         </tr>
       </ng-template>
 

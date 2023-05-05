@@ -14,7 +14,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dt1 [value]="farmers" dataKey="id" [rows]="10" [rowHover]="true"
+    <p-table #dt1 [value]="farmers" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       [globalFilterFields]="['code','farmerName','aliasName','gender','fatherName','casteId','caste','address','circleId',
@@ -136,7 +136,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-farmer>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button-primary p-component"
               (click)="editFarmer(farmer)" [disabled]="!permissions.CanUpdateFarmer"></button></td>
           <td>{{farmer.code}}</td>
           <td>{{farmer.farmerName}}</td>
@@ -172,7 +172,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="14" class="md:text-center">No Farmers Found.</td>
+          <td colspan="14 m-5" class="md:text-center">No Farmers Found.</td>
         </tr>
       </ng-template>
     </p-table>

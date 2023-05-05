@@ -41,8 +41,9 @@
                       <div class="field col-12 md:col-4">
                         <label class="required">Plot No:</label>
                         <p-dropdown optionLabel="plotNumber" [options]="plotNumbers" optionValue="plotId"
-                          [filter]="true" filterBy="plotNumber,villageName" formControlName="plotId" placeholder="Select Plot"
-                          (onChange)="getPlotinfo($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
+                          [filter]="true" filterBy="plotNumber,villageName" formControlName="plotId"
+                          placeholder="Select Plot" (onChange)="getPlotinfo($event.value)" [virtualScroll]="true"
+                          [virtualScrollItemSize]="38" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                           <ng-template let-plotNumber pTemplate="selectedItem">
                             <div>{{ plotNumber.plotNumber }} - {{ plotNumber.villageName }}</div>
@@ -189,7 +190,7 @@
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label class="required">Agreement Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                          [defaultDate]="plotInfo.plantingDate!" [minDate]="plotInfo.plantingDate!"
+                          [defaultDate]="plotInfo.measuredDate!" [minDate]="plotInfo.measuredDate!"
                           [maxDate]="todayDate" formControlName="agreementedDate"
                           placeholder="Please Select Agreement Date" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedDate'].touched && FormControls['agreementedDate'].errors }">
@@ -198,7 +199,7 @@
                           *ngIf="FormControls['agreementedDate'].touched && FormControls['agreementedDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['agreementedDate'].errors?.['required']">
-                            Please Select Assessed Date.</div>
+                            Please Select Agreement Date.</div>
                         </span>
                       </div>
                     </div>
@@ -227,28 +228,39 @@
                     </div>
                     <div class="field col-12 md:col-4  ">
                       <label class="required">Nominee:</label>
-                      <input pInputText type="text" placeholder="Enter Nominee" formControlName="nominee"
+                      <input pInputText #name type="text" placeholder="Enter Nominee" formControlName="nominee"
+                        alphaOnly [maxlength]="maxLength.name"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].errors }">
+                      <div class="text-right">
+                        <small>{{name.value.length}}/{{maxLength.name}}</small>
+                      </div>
                       <span
                         *ngIf="fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['nominee'].errors?.['required']">
                           Please Select Nominee.</div>
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="fcNomineeDetails.controls['nominee'].errors?.['minlength']">
+                          Nominee Min Length Is 2.</div>
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="fcNomineeDetails.controls['nominee'].errors?.['pattern']">Nominee
+                          Should Start Or End With Space.
+                        </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label class="required">Guarantor1:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="code" [filter]="true"
-                        filterBy="aliasName,code,fatherName" formControlName="guarantor1" placeholder="Select Farmer"
-                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
+                      <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="farmerId"
+                        [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor1"
+                        placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor2($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['guarantor1'].touched && fcNomineeDetails.controls['guarantor1'].errors }">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
-                          <div>{{farmer.aliasName}}</div>
-                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.farmerName}}</div>
                           <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
@@ -262,15 +274,15 @@
                     <div class="field col-12 md:col-4 ">
                       <label>Guarantor2:</label>
                       <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="farmerId"
-                        [filter]="true" filterBy="aliasName,code,fatherName" formControlName="guarantor2"
+                        [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor2"
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor3Farmers($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
-                          <div>{{farmer.aliasName}}</div>
-                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.farmerName}}</div>
                           <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
@@ -278,15 +290,15 @@
                     <div class="field col-12 md:col-4  ">
                       <label>Guarantor3:</label>
                       <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="farmerId"
-                        [filter]="true" filterBy="aliasName,code,fatherName" formControlName="guarantor3"
+                        [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor3"
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="onGuarantor3($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>
                         </ng-template>
                         <ng-template let-farmer pTemplate="item">
-                          <div>{{farmer.aliasName}}</div>
-                          <div>{{farmer.code}} - {{farmer.fatherName}}</div>
+                          <div>{{farmer.code}}</div>
+                          <div>{{farmer.farmerName}}</div>
                           <div>{{farmer.villageName}}</div>
                         </ng-template>
                       </p-dropdown>
@@ -296,7 +308,7 @@
               </div>
             </div>
           </p-tabPanel>
-          <p-tabPanel header="Weedicide" class="line-height-3 m-0">
+          <p-tabPanel header="Weedicide/Pest" class="line-height-3 m-0">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
@@ -326,32 +338,48 @@
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>Bio Fertilizer Applied Area:</label>
-                      <input pInputText text="name" formControlName="bioFertilizersAppliedArea">
+                      <label>Bio Fertilizer Applied Area(Acre):</label>
+                      <p-inputNumber placeholder="Enter Bio Fertilizer Applied Area"
+                        formControlName="bioFertilizersAppliedArea" mode="decimal" locale="en-IN"
+                        [minFractionDigits]="2" [maxFractionDigits]="2">
+                      </p-inputNumber>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>Deep Ploughed Area:</label>
-                      <input pInputText text="name" formControlName="deepPloughedArea">
+                      <label>Deep Ploughed Area(Acre):</label>
+                      <p-inputNumber placeholder="Enter Deep Ploughed Area" formControlName="deepPloughedArea"
+                        mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                      </p-inputNumber>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>De Trashing Area:</label>
-                      <input pInputText text="name" formControlName="deTrashingArea">
+                      <label>De Trashing Area(Acre):</label>
+                      <p-inputNumber placeholder="Enter De Trashing Area" formControlName="deTrashingArea"
+                        mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                      </p-inputNumber>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>Earthing Up Area:</label>
-                      <input pInputText text="name" formControlName="earthingUpArea">
+                      <label>Earthing Up Area(Acre):</label>
+                      <p-inputNumber placeholder="Enter Earthing Up Area" formControlName="earthingUpArea"
+                        mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                      </p-inputNumber>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>Ratoon Managed Used Area:</label>
-                      <input pInputText text="name" formControlName="ratoonManagedUsedArea">
+                      <label>Ratoon Managed Used Area(Acre):</label>
+                      <p-inputNumber placeholder="Enter Ratoon Managed Used Area"
+                        formControlName="ratoonManagedUsedArea" mode="decimal" locale="en-IN" [minFractionDigits]="2"
+                        [maxFractionDigits]="2">
+                      </p-inputNumber>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>TrashShedder Area:</label>
-                      <input pInputText text="name" formControlName="trashShedderArea">
+                      <label>TrashShedder Area(Acre):</label>
+                      <p-inputNumber placeholder="Enter TrashShedder Area" formControlName="trashShedderArea"
+                        mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                      </p-inputNumber>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>LoadShedder Area:</label>
-                      <input pInputText text="name" formControlName="loadShedderArea">
+                      <label>LoadShedder Area(Acre):</label>
+                      <p-inputNumber placeholder="Enter LoadShedder Area" formControlName="loadShedderArea"
+                        mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
+                      </p-inputNumber>
                     </div>
                   </div>
                 </div>
@@ -496,11 +524,12 @@
     </p-dialog>
 
     <!-- table -->
-    <p-table #dtPlotAgreements [value]="plotAgreements" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [rowHover]="true"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+    <p-table #dtPlotAgreements [value]="plotAgreements" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10"
+      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [alwaysShowPaginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)">
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
+      (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -570,7 +599,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="13">There Are No Agreements Found Yet.</td>
+          <td class="md:text-center m-5" colspan="13">There Are No Agreements Found Yet.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -580,7 +609,7 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td class="md:text-center" colspan="6">No Agreements Found.</td>
+      <td class="md:text-center m-5" colspan="6">No Agreements Found.</td>
     </tr>
   </ng-template>
   </p-table>

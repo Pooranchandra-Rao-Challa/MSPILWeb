@@ -79,8 +79,9 @@ export class AlertMessage {
  * Plot Assessments : PAS
  * Plot Agreements : PAG
  * Plot Yields : PY
+ * Sample Entry : SE
  * Propping: P
- * 
+ *
  * -----------------------------------------------
  * Permits:
  * -------------------------------------------
@@ -108,9 +109,9 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMBMBP001': 'Bill Parameter Added Successfully',
   'SMBMBP002': 'Bill Parameter Updated Successfully',
 
-    // Village Param Rate Message
-    'SMBMVPR001': 'Village Param Rate Added Successfully',
-    'SMBMVPR002': 'Village Param Rate Updated Successfully',
+  // Village Param Rate Message
+  'SMBMVPR001': 'Village Param Rate Added Successfully',
+  'SMBMVPR002': 'Village Param Rate Updated Successfully',
 
   //Application Master =>
 
@@ -204,9 +205,9 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Lookup
   'SMAMLU001': 'Lookup Added Successfully',
   'SMAMLU002': 'Lookup Updated Successfully',
-//sample alert
+  //sample alert
 
-'SMMSE001': 'Alredy Takeen Sample You Dont Have Any Sample',
+  'SMMSE001': 'Alredy Takeen Sample You Dont Have Any Sample',
 
   // Monitoring Screens
 
@@ -230,13 +231,17 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMOPY001': 'Plot Yield Added Successfully',
   'SMOPY002': 'Plot Yield Updated Successfully',
 
+  // Sanmple Entry
+  'SMOSE001': 'Sample Entry Added Successfully',
+  'SMOSE002': 'Sample Entry Updated Successfully',
+
   // Propping
   'SMOP002': 'Propping Date Is Updated Successfully',
- 
-//  Permits
+
+  //  Permits
   // Estimated Ton
-   'SMPET001': 'Excess Ton Is Added Successfully',
-   'SMPET002': 'Estimated Ton Is Updated Successfully',
+  'SMPET001': 'Excess Ton Is Added Successfully',
+  'SMPET002': 'Estimated Ton Is Updated Successfully',
 
   //  scheduleGrouping
   'SMPSG001': 'Schedule Grouping Is Add Successfully',

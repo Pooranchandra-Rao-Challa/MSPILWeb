@@ -14,7 +14,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dtPlotReports [value]="plotReports" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10"
+    <p-table #dtPlotReports [value]="plotReports" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [alwaysShowPaginator]="false"
       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
@@ -90,7 +90,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="16">There Are No Plots For This Farmer Yet.</td>
+          <td class="md:text-center m-5" colspan="16">There Are No Plots For This Farmer Yet.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -101,7 +101,7 @@
 
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td class="md:text-center" colspan="5">No Plot Reports Found.</td>
+      <td class="md:text-center m-5" colspan="5">No Plot Reports Found.</td>
     </tr>
   </ng-template>
   </p-table>
@@ -117,6 +117,7 @@
                 <label class="required">Season:</label>
                 <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
                   formControlName="seasonId" (onChange)="getPlotOffersInSeason($event.value,-1)"
+                  [disabled]="FormControls['plotReportId'].value"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                 </p-dropdown>
                 <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -129,7 +130,7 @@
                 <p-dropdown placeholder="Select Offered No" optionLabel="DisplayValue" [options]="seasonPlotOffers"
                   formControlName="plotOfferId" optionValue="id" [filter]="true"
                   filterBy="offerNo,farmerCode,farmerName,plotVillageName" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                  (onChange)="getOfferInfo($event.value)"
+                  (onChange)="getOfferInfo($event.value)" [disabled]="FormControls['plotReportId'].value"
                   [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotOfferId'].touched && FormControls['plotOfferId'].errors }">
                   <ng-template let-seasonPlotOffer pTemplate="item">
                     <div class="block align-items-center gap-2">

@@ -81,10 +81,10 @@
       </ng-template>
     </p-toolbar>
     <!-- table -->
-    <p-table #dt1 [value]="districts" dataKey="id" [rows]="10"  [rowHover]="true"
+    <p-table #dt1 [value]="districts" dataKey="id" [rows]="10"  [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
+      [showCurrentPageReport]="true" 
       [globalFilterFields]="['districtId','districtName','districtCode','stateName','updatedAt','createdAt','updatedBy','createdBy' ]"
       [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}" [rowsPerPageOptions]="[10,25,50]"
      >
@@ -157,11 +157,11 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td class="md:text-center" colspan="10">No Districts Found.</td>
+          <td class="md:text-center m-5" colspan="10">No Districts Found.</td>
         </tr>
       </ng-template>
         <tr>
-          <td class="md:text-center" colspan="10">Loading Districts Data. Please Wait.</td>
+          <td class="md:text-center m-5" colspan="10">Loading Districts Data. Please Wait.</td>
         </tr>
     </p-table>
   </div>

@@ -14,7 +14,7 @@
       </p-toolbar>
   
       <!-- table -->
-      <p-table #dt1  dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+      <p-table #dt1  dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [alwaysShowPaginator]="false"
         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [showCurrentPageReport]="true"
@@ -60,7 +60,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="14">No weed found.</td>
+            <td colspan="14 ">No weed found.</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="loadingbody">

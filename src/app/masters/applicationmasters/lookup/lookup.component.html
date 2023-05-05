@@ -180,7 +180,7 @@
 
         <!-- table -->
 
-        <p-table #dt1 [value]="lookups" dataKey="id" [rows]="10" [rowHover]="true"
+        <p-table #dt1 [value]="lookups" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true"
@@ -235,7 +235,7 @@
             <ng-template pTemplate="body" let-lookup>
                 <tr>
                     <td><button pButton pRipple icon="pi pi-pencil" (click)=" editLookUp(lookup)"
-                          [disabled]="!permissions.CanUpdateLookUp"  class="p-element p-ripple p-button-text p-button p-component"></button></td>
+                          [disabled]="!permissions.CanUpdateLookUp"  class="p-element p-ripple p-button-text p-button-primary p-component"></button></td>
                     <td>{{lookup.code}}</td>
                     <td>{{lookup.name}}</td>
                     <td style="text-align:center">
@@ -251,11 +251,11 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td class="md:text-center" colspan="8">No Lookup Found.</td>
+                    <td class="md:text-center m-5" colspan="8">No Lookup Found.</td>
                 </tr>
             </ng-template>
                 <tr>
-                    <td class="md:text-center" colspan="8">Loading lLookup Data. Please Wait.</td>
+                    <td class="md:text-center m-5" colspan="8">Loading lLookup Data. Please Wait.</td>
                 </tr>
         </p-table>
     </div>
