@@ -1,4 +1,4 @@
-import { Component,ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Table } from "primeng/table";
 import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
@@ -16,6 +16,7 @@ import { CURRENT_SEASON } from "src/environments/environment";
   styles: [],
 })
 export class CuttingOrderComponent implements OnInit {
+  globalFilterFields:string[] =['farmerCode','farmerName', 'divisionName','circleName','varietyName', 'plantingDate','netArea'];
   seasons: SeasonViewDto[] = [];
   fbCuttingOrder!: FormGroup;
   currentSeason: SeasonDto = {};
@@ -41,7 +42,8 @@ export class CuttingOrderComponent implements OnInit {
   plotcuttingOrders: PlotCuttingOrderViewDto[] = [];
   cuttingorders: GetCuttingOrderViewDto[] = [];
   @ViewChild('filter') filter!: ElementRef;
-  @ViewChild('dtcuttingorders') dtcuttingorders!: ElementRef;
+  @ViewChild('dtseasoncuttingOrders') dtseasoncuttingOrders!: Table;
+  @ViewChild('dtcuttingorders') dtcuttingorders!: Table;
   loading: boolean = true;
   showDialog: boolean = false;
   forapproval: boolean = false;
@@ -49,7 +51,7 @@ export class CuttingOrderComponent implements OnInit {
   fromScheduleNo: any;
   toScheduleNo: any;
   error: boolean = false;
-
+ 
   constructor(private formbuilder: FormBuilder,
     private permitService: permitService,
     private appMasterService: AppMasterService,
@@ -131,45 +133,39 @@ export class CuttingOrderComponent implements OnInit {
     this.permitService.GetDivisionsforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.divisions = resp as unknown as DivisionsforUserDto[];
       this.filterDivisions = Object.assign([], this.divisions);
-      console.log('initDivisions', this.divisions)
     });
   }
   initCircles(seasonId: any) {
     this.permitService.GetCirclesforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.circles = resp as unknown as CircleforUserDto[];
       this.filterCircles = Object.assign([], this.circles);
-      console.log('initCircles', this.circles);
     });
   }
   initSections(seasonId: any) {
     this.permitService.GetSectionsforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.sections = resp as unknown as SectionforUserDto[];
       this.filterSections = Object.assign([], this.sections);
-      console.log('initSections', this.sections)
     });
   }
   initVillages(seasonId: any) {
     this.permitService.GetVillagesforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.villages = resp as unknown as VillageforUserDto[];
       this.filterVillages = Object.assign([], this.villages);
-      console.log('initVillages', this.villages);
     });
   }
   initFarmers(seasonId: any) {
     var villageId = this.fbCuttingOrder.value.villageId;
-    this.permitService.GetFarmersInPlotsForUser(seasonId, villageId, 'ScheduleGroups').subscribe((resp) => {
+    this.permitService.GetFarmersInPlotsForUser(seasonId, villageId, 'CuttingOrder').subscribe((resp) => {
       this.farmers = resp as unknown as FarmersInPlotsForUserDto[];
       this.filterFarmers = Object.assign([], this.farmers);
-      console.log('initFarmers', this.farmers);
     })
   }
   initPlots(seasonId: any) {
     var farmerId = this.fbCuttingOrder.value.farmerId
     var villageId = this.fbCuttingOrder.value.villageId
-    this.permitService.GetPlotsForUser(seasonId, farmerId, villageId, 'ScheduleGroups').subscribe((resp) => {
+    this.permitService.GetPlotsForUser(seasonId, farmerId, villageId, 'CuttingOrder').subscribe((resp) => {
       this.plots = resp as unknown as PlotsForUserDto[];
       this.filterPlots = Object.assign([], this.plots);
-      console.log('initPlots', this.plots);
     })
   }
   initPlantType(seasonId: any) {
@@ -179,7 +175,6 @@ export class CuttingOrderComponent implements OnInit {
     this.permitService.GetPlantTypeForUser(seasonId, farmerId, villageId, plotId).subscribe((resp) => {
       this.planttypes = resp as unknown as PlantTypeForUserDto[];
       this.filterPlantTypes = Object.assign([], this.planttypes);
-      console.log('initPlantType', this.planttypes);
     })
   }
   initVarieties(seasonId: any) {
@@ -189,7 +184,6 @@ export class CuttingOrderComponent implements OnInit {
     this.permitService.GetVarietiesForUser(seasonId, farmerId, villageId, plotId).subscribe((resp) => {
       this.varieties = resp as unknown as VarietiesForUserDto[];
       this.filterVarieties = Object.assign([], this.varieties);
-      console.log('initVarieties', this.varieties);
     })
   }
   SetAllDivisionChilds(values: number[]) {
@@ -201,12 +195,12 @@ export class CuttingOrderComponent implements OnInit {
     }
     else {
       // this.divisionIds =  values.join(','); 
-      this.filterDivisions = this.circles.filter(division => values.indexOf(division.divisionId!) != -1);
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
       this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
     }
   }
+
   SetAllCircleChilds(values: number[]) {
     if (values.length == 0) {
       this.filterSections = Object.assign([], this.sections);
@@ -244,7 +238,7 @@ export class CuttingOrderComponent implements OnInit {
   getcuttingoderForm() {
     this.fbCuttingOrder = this.formbuilder.group({
       seasonId: [null, (Validators.required)],
-      cuttingOrderDate: [null,(Validators.required)],
+      cuttingOrderDate: [null, (Validators.required)],
       fromSchGroupNo: [null, (Validators.required)],
       toSchGroupNo: [null, (Validators.required)],
       fromCCS: [null, (Validators.required)],
@@ -274,7 +268,7 @@ export class CuttingOrderComponent implements OnInit {
       seasonCuttingOrderId: 0,
       cuttingOrderNo: 0,
       orderQuantity: 0,
-      plotYieldId: rowData.plotId,
+      plotYieldId: rowData.plotYieldId,
       divisionId: rowData.divisionId,
       circleId: rowData.circleId,
       sectionId: rowData.sectionId,
@@ -313,22 +307,19 @@ export class CuttingOrderComponent implements OnInit {
     this.getcuttingoderForm();
   }
   initSeasonCuttingOrders(seasonId: number) {
-    this.permitService.GetSeasonCuttingOrder(seasonId).subscribe((resp) => {
+ this.permitService.GetSeasonCuttingOrder(seasonId).subscribe((resp) => {
       this.seasoncuttingOrders = resp as unknown as SeasonCuttingOrderViewDto[];
-      console.log(' initSeasonCuttingOrders', this.seasoncuttingOrders);
     });
   }
   initPlotCuttingOrders(source: any) {
     var data = source.data as SeasonCuttingOrderViewDto;
     this.permitService.GetPlotCuttingOrder(data.seasonId, data.seasonCuttingOrderId).subscribe(resp => {
       data.objPlotCuttingOrder = resp as unknown as PlotCuttingOrderViewDto[];
-      console.log(' objPlotCuttingOrder', data.objPlotCuttingOrder);
     });
   }
   initCuttingOrder() {
     this.permitService.GetCuttingOrder(this.fbCuttingOrder.value).subscribe((resp) => {
       this.cuttingorders = resp as unknown as GetCuttingOrderViewDto[];
-      console.log('initCuttingOrder', this.cuttingorders);
     })
   }
   checkValue() {
@@ -346,18 +337,18 @@ export class CuttingOrderComponent implements OnInit {
   }
   clear(table: Table) {
     table.clear();
-    this.dtcuttingorders.nativeElement.value = '';
     this.filter.nativeElement.value = '';
   }
+
   onSearch(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+ 
   addCuttingOrder() {
     this.initCuttingOrder();
     this.showDialog = true;
   }
   onSubmit() {
-    console.log(this.fbCuttingOrder.value);
     if (this.fbCuttingOrder.valid) {
       this.permitService.CreateCuttingOrder(this.fbCuttingOrder.value).subscribe((resp) => {
         if (resp) {
@@ -366,9 +357,9 @@ export class CuttingOrderComponent implements OnInit {
           this.addCuttingOrder();
           const seasonId = this.fbCuttingOrder.value.seasonId;
           this.fbCuttingOrder.reset()
-          this.fbCuttingOrder.patchValue({ seasonId });    
+          this.fbCuttingOrder.patchValue({ seasonId });
         }
       });
     }
-}
+  }
 }
