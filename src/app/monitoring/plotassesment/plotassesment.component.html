@@ -30,6 +30,7 @@
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
                           optionValue="seasonId" formControlName="seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
+                          [disabled]="FormControls['plotAssessmentId'].value"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
                         <span *ngIf="FormControls['seasonId'].touched && FormControls['seasonId'].invalid">
@@ -44,6 +45,7 @@
                           [options]="plotReports" optionValue="plotId" formControlName="plotId"
                           (onChange)="getPlotinfo($event.value)" [filter]="true" filterBy="plotNumber,villageName"
                           [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body"
+                          [disabled]="FormControls['plotAssessmentId'].value"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                           <ng-template let-plotReport pTemplate="selectedItem">
                             <div>{{ plotReport.plotNumber }} - {{ plotReport.villageName }}</div>
@@ -187,13 +189,14 @@
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label class="required">Assessment Date:</label>
-                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                          formControlName="assessedDate" placeholder="Please Select Assessment Date" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['assessedDate'].touched && FormControls['assessedDate'].errors }">
+                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" [defaultDate]="plantFrom" [minDate]="plantFrom"
+                         [maxDate]="plantTo"
+                          formControlName="measuredDate" placeholder="Please Select Assessment Date" appendTo="body"
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['measuredDate'].touched && FormControls['measuredDate'].errors }">
                         </p-calendar>
-                        <span *ngIf="FormControls['assessedDate'].touched && FormControls['assessedDate'].invalid">
+                        <span *ngIf="FormControls['measuredDate'].touched && FormControls['measuredDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['assessedDate'].errors?.['required']">
+                            *ngIf="FormControls['measuredDate'].errors?.['required']">
                             Please Select Assessment Date.</div>
                         </span>
                       </div>
@@ -221,20 +224,20 @@
                     <div class="field col-12 md:col-4 lg:col-3 ">
                       <label>Inter Croping:</label>
                       <p-dropdown optionLabel="name" [options]="cropstypes" optionValue="lookupDetailId" appendTo="body"
-                        formControlName="interCropId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
+                        formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Micronutrient Deficiency:</label><br>
-                      <p-inputSwitch formControlName="micronutrientdeficiency"></p-inputSwitch>
+                      <p-inputSwitch formControlName="hasMicroNutrientDeficiency"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Trash Mulching:</label><br>
-                      <p-inputSwitch formControlName="trashmulching"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isTrashMulchingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
                       <label>Gap Filing Done:</label><br>
-                      <p-inputSwitch formControlName="gapfillingdone"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isGapsFillingDone"></p-inputSwitch>
                     </div>
                   </div>
                 </div>
@@ -455,8 +458,8 @@
           <td *ngFor="let col of plotHeader">
 
             <span
-              *ngIf="col?.field != 'plantingDate' && col?.field != 'assessedDate'">{{plotAssessment[col.field]}}</span>
-            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'assessedDate'">
+              *ngIf="col?.field != 'plantingDate' && col?.field != 'measuredDate'">{{plotAssessment[col.field]}}</span>
+            <span *ngIf="col?.field == 'plantingDate' || col?.field == 'measuredDate'">
               {{plotAssessment[col.field] | date: 'dd-MM-yyyy'}}
             </span>
           </td>
