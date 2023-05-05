@@ -12,7 +12,7 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { CURRENT_SEASON } from 'src/environments/environment';
-import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import jsPDF from 'jspdf';
@@ -272,8 +272,8 @@ export class PlotassesmentComponent implements OnInit {
       plotAssessmentId: [pest.plotAssessmentId],
       pestName: [pest.pestName],
       remarks: [pest.remarks],
-      identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
-      controlDate: [pest.controlDate && new Date(pest.controlDate)]
+      identifiedDate: [pest.identifiedDate && FORMAT_DATE(new Date(pest.identifiedDate))],
+      controlDate: [pest.controlDate && FORMAT_DATE(new Date(pest.controlDate))]
     })
   }
 
@@ -304,8 +304,8 @@ export class PlotassesmentComponent implements OnInit {
       plotAssessmentId: [disease.plotAssessmentId],
       diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
-      identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
-      controlDate: [disease.controlDate && new Date(disease.controlDate)]
+      identifiedDate: [disease.identifiedDate && FORMAT_DATE(new Date(disease.identifiedDate))],
+      controlDate: [disease.controlDate && FORMAT_DATE(new Date(disease.controlDate))]
     })
   }
 

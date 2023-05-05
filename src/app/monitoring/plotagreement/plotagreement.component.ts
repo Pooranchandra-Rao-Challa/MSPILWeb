@@ -14,7 +14,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { MIN_LENGTH_2, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
@@ -244,7 +244,7 @@ export class PlotagreementComponent implements OnInit {
       plotId: [null, (Validators.required)],
       seasonId: [null, (Validators.required)],
       agreementedArea: [null, (Validators.required)],
-      agreementedDate: [null, (Validators.required)],
+      agreementDate: [null, (Validators.required)],
       interCropingId: [null],
       hasMicroNutrientDeficiency: [null],
       isTrashMulchingDone: [null],
@@ -260,7 +260,7 @@ export class PlotagreementComponent implements OnInit {
       nomineeInfo: this.formbuilder.group({
         nomineeDetailId: [null],
         plotAgreementId: [null],
-        relationTypeId: ['', (Validators.required)],
+        relationTypeId: [null, (Validators.required)],
         nominee: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
         guarantor1: [null, (Validators.required)],
         guarantor2: [null],
@@ -293,8 +293,8 @@ export class PlotagreementComponent implements OnInit {
       plotAgreementId: [pest.plotAgreementId],
       pestName: [pest.pestName],
       remarks: [pest.remarks],
-      identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
-      controlDate: [pest.controlDate && new Date(pest.controlDate)]
+      identifiedDate: [pest.identifiedDate && FORMAT_DATE(new Date(pest.identifiedDate))],
+      controlDate: [pest.controlDate && FORMAT_DATE(new Date(pest.controlDate))]
     })
   }
 
@@ -325,8 +325,8 @@ export class PlotagreementComponent implements OnInit {
       plotAgreementId: [disease.plotAgreementId],
       diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
-      identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
-      controlDate: [disease.controlDate && new Date(disease.controlDate)]
+      identifiedDate: [disease.identifiedDate && FORMAT_DATE(new Date(disease.identifiedDate))],
+      controlDate: [disease.controlDate && FORMAT_DATE(new Date(disease.controlDate))]
     })
   }
 
@@ -342,7 +342,7 @@ export class PlotagreementComponent implements OnInit {
     this.fbPlotAgreement.controls['plotId'].setValue(plotAgreement.plotId);
     this.fbPlotAgreement.controls['plotId'].disable();
     this.fbPlotAgreement.controls['agreementedArea'].setValue(plotAgreement.agreementedArea);
-    this.fbPlotAgreement.controls['agreementedDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
+    this.fbPlotAgreement.controls['agreementDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
     this.fcNomineeDetails.controls['nomineeDetailId'].setValue(plotAgreement.nomineeId);
     this.fcNomineeDetails.controls['plotAgreementId'].setValue(plotAgreement.plotAgreementId);
     this.fcNomineeDetails.controls['relationTypeId'].setValue(plotAgreement.relationTypeId);

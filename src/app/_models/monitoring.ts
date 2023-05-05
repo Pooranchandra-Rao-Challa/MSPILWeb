@@ -622,6 +622,7 @@ export class NomineeDetailsDto {
 
 export interface IAgreementedPlotsViewDto {
   plotId: number;
+  seasonId: number;
   offerNo: number;
   plotNumber: number;
   plotReportId: number;

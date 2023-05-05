@@ -191,14 +191,14 @@
                         <label class="required">Agreement Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
                           [defaultDate]="plotInfo.measuredDate!" [minDate]="plotInfo.measuredDate!"
-                          [maxDate]="todayDate" formControlName="agreementedDate"
+                          [maxDate]="todayDate" formControlName="agreementDate"
                           placeholder="Please Select Agreement Date" appendTo="body"
-                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementedDate'].touched && FormControls['agreementedDate'].errors }">
+                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementDate'].touched && FormControls['agreementDate'].errors }">
                         </p-calendar>
                         <span
-                          *ngIf="FormControls['agreementedDate'].touched && FormControls['agreementedDate'].invalid">
+                          *ngIf="FormControls['agreementDate'].touched && FormControls['agreementDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['agreementedDate'].errors?.['required']">
+                            *ngIf="FormControls['agreementDate'].errors?.['required']">
                             Please Select Agreement Date.</div>
                         </span>
                       </div>
@@ -250,7 +250,7 @@
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label class="required">Guarantor1:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="farmerId"
+                      <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="code"
                         [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor1"
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor2($event.value)"
@@ -273,7 +273,7 @@
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label>Guarantor2:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="farmerId"
+                      <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="code"
                         [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor2"
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor3Farmers($event.value)">
@@ -289,7 +289,7 @@
                     </div>
                     <div class="field col-12 md:col-4  ">
                       <label>Guarantor3:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="farmerId"
+                      <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="code"
                         [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor3"
                         placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="onGuarantor3($event.value)">
