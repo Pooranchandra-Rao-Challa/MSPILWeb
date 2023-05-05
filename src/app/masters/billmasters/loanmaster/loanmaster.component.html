@@ -184,7 +184,7 @@
                     </span>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                    <label>InterestRate:<sup class="p-error">*</sup></label>
+                    <label>Interest Rate:<sup class="p-error">*</sup></label>
                     <input pInputText id="interestRate" placeholder="Enter Interest Rate" numericOnly
                       formControlName="interestRate" [ngClass]="{
                         'is-invalid ng-dirty':
@@ -193,7 +193,7 @@
                         FormControls['interestRate'].touched && FormControls['interestRate'].invalid ">
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['interestRate'].errors?.['required']">
-                        Please Enter interest Rate.
+                        Please Enter Interest Rate.
                       </div>
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['interestRate'].errors?.['pattern']">
@@ -271,7 +271,7 @@
                         <th>Priority</th>
                         <th><label class="required">Intrest Rate</label></th>
                         <th><label class="required">Rate</label></th>
-                        <th><label class="required">RequestReq</label></th>
+                        <th><label class="required">Requisition Req</label></th>
                         <th><label class="required">Uomid</label></th>
                         <th>LoanQty Type</th>
                         <th>GL Code</th>
@@ -327,8 +327,8 @@
                           </p-inputNumber>
                         </td>
                         <td class="vertical-align-top">
-                          <p-inputNumber inputId="interestRate" formControlName="interestRate"
-                            placeholder="Enter Intrest Rate" [showButtons]="true" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'interestRate')?.touched &&
+                          <p-inputNumber inputId="interestRate" formControlName="Interest Rate"
+                            placeholder="Enter Interest Rate" [showButtons]="true" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'interestRate')?.touched &&
                           formArrayControls(loanTypelIndex, 'interestRate')?.errors }">
                           </p-inputNumber>
                           <span
@@ -351,7 +351,7 @@
                           </span>
                         </td>
                         <td class="vertical-align-top">
-                          <p-dropdown placeholder="Select RequestReq" optionLabel="name" optionValue="id"
+                          <p-dropdown placeholder="Select Requisition Req" optionLabel="name" optionValue="id"
                             [options]="defaults" formControlName="requestReq" appendTo="body" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'requestReq')?.touched &&
                           formArrayControls(loanTypelIndex, 'requestReq')?.errors }">
                           </p-dropdown>
@@ -359,7 +359,7 @@
                             *ngIf="formArrayControls(loanTypelIndex, 'requestReq')?.touched && formArrayControls(loanTypelIndex, 'requestReq')?.invalid">
                             <div class="ng-invalid ng-touched p-error"
                               *ngIf="formArrayControls(loanTypelIndex, 'requestReq')?.errors?.['required']">
-                              Please Select Request Req.</div>
+                              Please Select Requisition Req.</div>
                           </span>
                         </td>
                         <td class="vertical-align-top">
