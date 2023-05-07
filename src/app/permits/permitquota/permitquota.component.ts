@@ -34,7 +34,7 @@ export class PermitQuotaComponent implements OnInit {
   seasons!: any[];
   fbPermitQuota!: FormGroup;
   permitquotas: SeasonQuotaViewDto[] = [];
-  permitQuota: PermitQuotaDto [] = [];
+  permitQuota: PermitQuotaDto[] = [];
   currentSeason: SeasonDto = {};
   loading: boolean = true;
   addFlag: boolean = true;
@@ -45,7 +45,7 @@ export class PermitQuotaComponent implements OnInit {
   @ViewChild('filter2') filter2!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquotas!: Table;
   @ViewChild('dtplotquota') dtplotquota!: Table;
-  
+
   selectedCategory: any = null;
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
   objPlotQuotas: PlotQuotaViewDto[] = [];
@@ -108,19 +108,18 @@ export class PermitQuotaComponent implements OnInit {
     this.Quotas = [];
   }
 
-  plotQuotasForm(quota:any) {
+  plotQuotasForm(quota: any) {
     return this.formbuilder.group({
       plotQuotaId: quota.plotQuotaId || 0,
       seasonQuotaId: quota.seasonQuotaId || 0,
       divisionId: quota.divisionId || null,
       divisionName: quota.divisionName || null,
-      circleName:quota.circleName || null,
-      sectionName:quota.sectionName || null,
-      villageName:quota.villageName || null,
-      tons:quota.tons || null,
+      circleName: quota.circleName || null,
+      sectionName: quota.sectionName || null,
+      villageName: quota.villageName || null,
+      tons: quota.tons || null,
       circleId: quota.circleId || null,
-      // totalTons:[''],
-      sectionId:quota.sectionId || null,
+      sectionId: quota.sectionId || null,
       villageId: quota.villageId || null,
       quotaReleased: this.addFlag ? quota.scheduledTons : quota.quotaReleased || null,
       serverUpdatedStatus: true
@@ -129,12 +128,10 @@ export class PermitQuotaComponent implements OnInit {
   get scheduleControls() {
     return this.fbPermitQuota.get('plotQuotas') as FormArray;
   }
-
-  addSchedule(quota:any) {
+  addSchedule(quota: any) {
     const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
     formArray.push(this.plotQuotasForm(quota));
   }
-
   get FormControals() {
     return this.fbPermitQuota.controls
   }
@@ -162,24 +159,11 @@ export class PermitQuotaComponent implements OnInit {
     this.permitService.GetQuotas(this.fbPermitQuota.value).subscribe((resp) => {
       this.Quotas = resp as unknown as GetQuotasViewDto[];
       console.log('Quotas', this.Quotas);
-  
       const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
-      formArray.clear(); 
-  
+      formArray.clear();
       for (const quota of this.Quotas) {
         this.addSchedule(quota);
-        // formArray.push(this.formbuilder.group({
-        //   plotQuotaId: 0,
-        //   seasonQuotaId: 0,
-        //   divisionId: quota.divisionId || null,
-        //   circleId: quota.circleId || null,
-        //   sectionId: quota.sectionId || null,
-        //   villageId: quota.villageId || null,
-        //   quotaReleased: quota.scheduledTons,
-        //   serverUpdatedStatus: true
-        // }));
       }
-  
       console.log(this.fbPermitQuota.value);
     });
   }
@@ -204,57 +188,35 @@ export class PermitQuotaComponent implements OnInit {
     var data = source.data as SeasonQuotaViewDto;
     this.permitService.GetPlotQuotas(data.seasonId, data.seasonQuotaId).subscribe(resp => {
       data.objPlotQuotas = resp as unknown as PlotQuotaViewDto[];
-      if(!this.addFlag){
-        let plotQuotas: any = resp ? resp: [];
-      const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
-      formArray.clear(); 
-        if(plotQuotas.length){
+      if (!this.addFlag) {
+        let plotQuotas: any = resp ? resp : [];
+        const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
+        formArray.clear();
+        if (plotQuotas.length) {
           plotQuotas.map((quota: any) => {
             this.addSchedule(quota);
           })
         }
         console.log(this.fbPermitQuota.value);
-        
+
       }
     });
-  }                   
+  }
   editPermitQuota(permitQuota: SeasonQuotaViewDto) {
     console.log(permitQuota);
-    
-    // const permitQuotaFormValue = {
-    //   seasonId: permitQuota.seasonId,
-    //   toSchGroupNo: permitQuota.toSchGroupNo,
-    //   fromSchGroupNo: permitQuota.fromSchGroupNo,
-    //   fromDate: permitQuota.fromDate ? new Date(permitQuota.fromDate.toString() + '') : null,
-    //   quotaReleased: permitQuota.quotaReleased,
-    //   groupBy: permitQuota.type,
-    //   plotQuotas: permitQuota.plotQuotas ? permitQuota.plotQuotas.map((quota: any) => {
-    //     return {
-    //       plotQuotaId: quota.plotQuotaId,
-    //       seasonQuotaId: quota.seasonQuotaId,
-    //       divisionId: quota.divisionId ,
-    //       circleId: quota.circleId ,
-    //       sectionId: quota.sectionId || null,
-    //       villageId: quota.villageId || null,
-    //       quotaReleased: quota.quotaReleased,
-    //       serverUpdatedStatus: true
-    //     };
-    //   }) : []
-    // };
     this.addFlag = false;
     this.submitLabel = 'Update permit quota';
     let obj = {
-      data: {...permitQuota},
+      data: { ...permitQuota },
     }
     this.onRowExpand(obj)
     this.fbPermitQuota.patchValue(permitQuota);
     this.fbPermitQuota.patchValue({
       fromDate: new Date(permitQuota.fromDate?.toString() + ''),
     });
-    // this.fbPermitQuota.enable();
     this.showDialog = true;
   }
-  
+
   savePermitQuota(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.permitService.CreatepermitQuota(this.fbPermitQuota.value);
     else return this.permitService.UpdatePermitQuota(this.fbPermitQuota.value);
@@ -263,26 +225,16 @@ export class PermitQuotaComponent implements OnInit {
   onSubmit() {
     console.log(this.fbPermitQuota.value);
     const sum = this.fbPermitQuota.value.plotQuotas.reduce((acc: any, curr: any) => acc + curr.quotaReleased, 0);
-console.log(sum);
-if(sum.toFixed(2) != this.fbPermitQuota.value.quotaReleased.toFixed(2)){
-  this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: `Entered Quota (${sum.toFixed(2)}) is not equal to total quota (${this.fbPermitQuota.value.quotaReleased})` });
-return;
-}
-
-  
-    // this.permitService.CreatepermitQuota(obj).subscribe((resp) => {
-    //   if (resp) {
-    //     this.showDialog = false;
-    //   }
-    // });
-
-
+    console.log(sum);
+    if (sum.toFixed(2) != this.fbPermitQuota.value.quotaReleased.toFixed(2)) {
+      this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: `Entered Quota (${sum.toFixed(2)}) is not equal to total quota (${this.fbPermitQuota.value.quotaReleased})` });
+      return;
+    }
     this.savePermitQuota().subscribe(resp => {
       if (resp) {
         this.initCurrentSeason(CURRENT_SEASON());
-      this.PermitQuotaform();
+        this.PermitQuotaform();
         this.showDialog = false;
-        
       }
     })
   }
@@ -290,7 +242,7 @@ return;
   onSearch() {
     this.initSeasonQuotas(this.currentSeason.seasonId!);
   }
-  
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
