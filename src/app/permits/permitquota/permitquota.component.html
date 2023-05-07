@@ -12,7 +12,7 @@
         </p-toolbar>
         <!-- popup form -->   
         <p-dialog header="Permit Quota" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}">
+            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
             <!-- (onHide)="fbAllottedPlot.reset()" -->
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fbPermitQuota">
@@ -30,10 +30,10 @@
                                             appendTo="body" [style]="{'width':'100%'}" ></p-dropdown>
                                         </div>
                                         <div class="field col-12 md:col-3">
-                                            <label class="mb-2 block font-bold" for="stacked">From Schedule Group No:<sup class="p-error">*</sup></label>
+                                          <label>From Schedule Group No:<sup class="p-error">*</sup></label>
                                           <p-inputNumber [showButtons]="true" id="fromSchGroupNo" type="number"
                                               [maxlength]="2" formControlName="fromSchGroupNo" [min]="1" [max]="5"
-                                              placeholder="From Schedule Group No" [(ngModel)]="fromSchGroupNo"
+                                              placeholder="From Schedule Group No" [(ngModel)]="fromScheduleNo"
                                               (onInput)="checkValue()"
                                               [ngClass]="{ 'is-invalid ng-dirty': FormControals['fromSchGroupNo'].touched && FormControals['fromSchGroupNo'].errors }">
                                           </p-inputNumber>
@@ -49,32 +49,40 @@
                                       </div>
                                         <div class="field col-12 md:col-3">
                                           <label>To Schedule Group No:<sup class="p-error">*</sup></label>
-                                            <p-inputNumber [showButtons]="true" inputId="stacked" [min]="1" [max]="5"
-                                                inputStyleClass="p-numeric-input"
-                                                (onValueChange)="checkValue()" formControlName="toSchGroupNo"
-                                                type="number" [(ngModel)]="toSchGroupNo"
-                                                [maxlength]="2"  [min]="1" [max]="5"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControals['toSchGroupNo'].touched && FormControals['toSchGroupNo'].errors }"
-                                                ></p-inputNumber>
-                                                <span
-                                                *ngIf="FormControals['toSchGroupNo'].touched && FormControals['toSchGroupNo'].invalid">
-                                                <div class="ng-invalid ng-touched p-error"
-                                                    *ngIf="FormControals['toSchGroupNo'].errors?.['required']">
-                                                    Please Enter To Schedule Group No.</div>
-                                            </span>
-                                            <span class="ng-invalid  p-error" *ngIf="error">
-                                                To Schedule Group No is greater than From Schedule Group No.
-                                            </span>
-                                        </div>
+                                          <p-inputNumber [showButtons]="true" id="toSchGroupNo" type="number"
+                                              [maxlength]="2" formControlName="toSchGroupNo" [min]="1" [max]="5"
+                                              placeholder="To Schedule Group No" [(ngModel)]="toScheduleNo"
+                                              (onInput)="checkValue()"
+                                              [ngClass]="{ 'is-invalid ng-dirty': FormControals['toSchGroupNo'].touched && FormControals['toSchGroupNo'].errors }">
+                                          </p-inputNumber>
+                                          <span
+                                              *ngIf="FormControals['toSchGroupNo'].touched && FormControals['toSchGroupNo'].invalid">
+                                              <div class="ng-invalid ng-touched p-error"
+                                                  *ngIf="FormControals['toSchGroupNo'].errors?.['required']">
+                                                  Please Enter To Schedule Group No.</div>
+                                          </span>
+                                          <span class="ng-invalid  p-error" *ngIf="error">
+                                              To Schedule Group No is greater than From Schedule Group No.
+                                          </span>
+                                      </div>
+                                  
                                         <div class="field col-12 md:col-3">
                                             <label>From Date:</label>
                                             <p-calendar placeholder="From Date" [readonlyInput]="true" [showIcon]="true"
-                                                appendTo="body" formControlName="fromDate" [style]="{'width':'100%'}">
+                                                appendTo="body" formControlName="fromDate" [style]="{'width':'100%'}"
+                                                [ngClass]="{ 'is-invalid ng-dirty': FormControals['fromDate'].touched && FormControals['fromDate'].errors }">
                                             </p-calendar>
+                                            <span
+                                            *ngIf="FormControals['fromDate'].touched && FormControals['fromDate'].invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="FormControals['fromDate'].errors?.['required']">
+                                                Please Select Cutting Order Date.</div>
+                                        </span>
                                         </div>
                                         <div class="field col-12 md:col-4">
                                             <label>Quota:<sup class="p-error">*</sup></label>
-                                            <input pInputText id="quota" type="number" formControlName="quotaReleased">
+                                            <!-- <input pInputText id="quota" numericOnly  formControlName="quotaReleased"> -->
+                                            <p-inputNumber  inputId="quota"  formControlName="quotaReleased" [minFractionDigits]="2"></p-inputNumber>
                                         </div>
                                         <div class="field col-12 md:col-8">
                                           <label>Type:<sup class="p-error">*</sup></label>
@@ -100,7 +108,7 @@
                                           <div class="col-12 p-0">
                                             <div class="md:col-3 p-3 mb-3" style="float: right;">
                                                 <button pButton pRipple label="Add PermitQuota "
-                                                class="p-button-raised p-button-primary" (click)="initQuotas()" [disabled]="!fbPermitQuota.valid" (click)="showTable = true"></button>
+                                                class="p-button-raised p-button-primary" (click)="initQuotas()" *ngIf="addFlag" [disabled]="!fbPermitQuota.valid" ></button>
                                             </div>
                                           </div>
                                     </div>
@@ -108,20 +116,19 @@
                             </div>
                         </div>
                     </div>
-                </form>
-                <!-- table -->
-                <p-table #dtpermitquota [value]="Quotas" dataKey="id" [rows]="10" [rowHover]="true"
-                [style.display]="showTable ? 'table' : 'none'"*ngIf="showTable"
+                    <!-- table -->
+                <p-table #dtplotquota [value]="scheduleControls.controls"  dataKey="id" [rows]="10" [rowHover]="true"
+                 *ngIf="scheduleControls?.value?.length" formArrayName="plotQuotas"
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
                 responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                       <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                        (click)="clear(dtpermitquota)"></button>
+                        (click)="clear2(dtplotquota)"></button>
                       <div>
                         <span class="p-input-icon-left m-2">
                           <i class="pi pi-search"></i>
-                          <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
+                          <input pInputText type="text" #filter2 (input)="onGlobalFilter2(dtplotquota,$event)" placeholder="Search Keyword"
                             pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
                             class="w-full" />
                         </span>
@@ -139,21 +146,25 @@
                     </th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-Quotas let-rowIndex="rowIndex">
-                  <tr>
+                <ng-template pTemplate="body" let-Quotas let-plotQuotasIndex="rowIndex"  >
+                  <tr [formGroupName]="plotQuotasIndex">
                     <td *ngFor="let col of PermitQuotaHeaders">
                       <span *ngIf="col?.field != 'Quota'">{{ Quotas[col.field] }}</span>
                       <span *ngIf="col?.field == 'Quota'">
-                        <p-inputNumber inputId="quotaInput" [(ngModel)]="Quotas.scheduledTons"></p-inputNumber>
+
+                        <p-inputNumber  inputId="quotaInput"  formControlName="quotaReleased" [minFractionDigits]="2"></p-inputNumber>
                       </span>
-                      <span *ngIf="col?.field == 'DivisionId'">{{ Quotas.plotQuotas[rowIndex].divisionId }}</span>
-                      <span *ngIf="col?.field == 'CircleId'">{{ Quotas.plotQuotas[rowIndex].circleId }}</span>
-                      <span *ngIf="col?.field == 'SectionId'">{{ Quotas.plotQuotas[rowIndex].sectionId }}</span>
-                      <span *ngIf="col?.field == 'VillageId'">{{ Quotas.plotQuotas[rowIndex].villageId }}</span>
+                      <span *ngIf="col?.field == 'divisionName'">{{ Quotas.value.divisionName }}</span>
+                      <span *ngIf="col?.field == 'circleName'">{{ Quotas.value.circleName }}</span>
+                      <span *ngIf="col?.field == 'sectionName'">{{ Quotas.value.sectionName }}</span>
+                      <span *ngIf="col?.field == 'villageName'">{{ Quotas.value.villageName }}</span>
+                      <span *ngIf="col?.field == 'tons'">{{ Quotas.value.tons }}</span>
                     </td>
                   </tr>
                 </ng-template>
-              </p-table>   
+              </p-table>  
+                </form>
+                 
             </div>
         </p-dialog>
         <!-- popup table -->
@@ -186,6 +197,8 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 5rem"></th>
+                    <th style="width: 5rem"></th>
+
                     <th *ngFor="let col of farmerHeaders" [pSortableColumn]="col.header">
                         {{col?.label}} <p-sortIcon field="code">
                         </p-sortIcon>
@@ -200,6 +213,9 @@
               class="p-button-text p-button-rounded p-button-plain"
               [icon]="rowIndex === expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
+          <td><button pButton pRipple icon="pi pi-pencil"
+            class="p-element p-ripple p-button-text p-button p-component" (click)="editPermitQuota(farmer)"></button>
+           </td>
                     <td *ngFor="let col of farmerHeaders">
                         <span
               *ngIf="col?.field != 'toDate' && col?.field != 'fromDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{farmer[col.field]}}</span>
@@ -219,7 +235,7 @@
                         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                         <ng-template pTemplate="header"> 
                           <tr>
-                    <th></th>
+                    <!-- <th></th> -->
                   <th *ngFor="let col of plotHeaders" [pSortableColumn]="col.header">
                     {{col?.label}}
                   </th>
@@ -227,9 +243,9 @@
               </ng-template>
               <ng-template pTemplate="body" let-permitQuota>
                 <tr>
-                  <td><button pButton pRipple icon="pi pi-pencil"
+                  <!-- <td><button pButton pRipple icon="pi pi-pencil"
                     class="p-element p-ripple p-button-text p-button p-component" (click)="editPermitQuota(permitQuota)"></button>
-                   </td>
+                   </td> -->
                    
                   <td *ngFor="let col of plotHeaders">  
                     <span

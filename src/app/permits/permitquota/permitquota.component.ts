@@ -14,6 +14,7 @@ import { MonitoringService } from "src/app/_services/monitoring.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 import { permitService } from '../../_services/permit.service';
 import { PlotQuotaDto } from '../../_models/permits';
+import { MessageService } from "primeng/api";
 export interface IHeader {
   field: string;
   header: string;
@@ -41,20 +42,25 @@ export class PermitQuotaComponent implements OnInit {
   showDialog: boolean = false;
   submitLabel!: string;
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('filter2') filter2!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquotas!: Table;
+  @ViewChild('dtplotquota') dtplotquota!: Table;
+  
   selectedCategory: any = null;
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
   objPlotQuotas: PlotQuotaViewDto[] = [];
   Quotas: GetQuotasViewDto[] = [];
-  fromSchGroupNo: any;
-  toSchGroupNo: any;
+  fromScheduleNo: any;
+  toScheduleNo: any;
   error: boolean = false;
 
   constructor(
     private formbuilder: FormBuilder,
     private commonService: CommonService,
     private appMasterService: AppMasterService,
-    private permitService: permitService
+    private permitService: permitService,
+    private messageService: MessageService,
+
 
   ) { }
   farmerHeaders: IHeader[] = [
@@ -89,27 +95,34 @@ export class PermitQuotaComponent implements OnInit {
   PermitQuotaform() {
     this.fbPermitQuota = this.formbuilder.group({
       seasonQuotaId: [0],
-      docNo: [],
-      docDate: [],
+      // docNo: [],
+      // docDate: [],
       seasonId: ['', Validators.required],
       toSchGroupNo: ['', Validators.required],
       fromSchGroupNo: ['', Validators.required],
-      fromDate: [''],
+      fromDate: [null, (Validators.required)],
       quotaReleased: ['', Validators.required],
       groupBy: ['', Validators.required],
       plotQuotas: this.formbuilder.array([])
     });
+    this.Quotas = [];
   }
 
-  plotQuotasForm() {
+  plotQuotasForm(quota:any) {
     return this.formbuilder.group({
-      plotQuotaId: 0,
-      seasonQuotaId: 0,
-      divisionId: [],
-      circleId: [],
-      sectionId: [],
-      villageId: [],
-      quotaReleased: [],
+      plotQuotaId: quota.plotQuotaId || 0,
+      seasonQuotaId: quota.seasonQuotaId || 0,
+      divisionId: quota.divisionId || null,
+      divisionName: quota.divisionName || null,
+      circleName:quota.circleName || null,
+      sectionName:quota.sectionName || null,
+      villageName:quota.villageName || null,
+      tons:quota.tons || null,
+      circleId: quota.circleId || null,
+      // totalTons:[''],
+      sectionId:quota.sectionId || null,
+      villageId: quota.villageId || null,
+      quotaReleased: this.addFlag ? quota.scheduledTons : quota.quotaReleased || null,
       serverUpdatedStatus: true
     });
   }
@@ -117,9 +130,9 @@ export class PermitQuotaComponent implements OnInit {
     return this.fbPermitQuota.get('plotQuotas') as FormArray;
   }
 
-  addSchedule() {
+  addSchedule(quota:any) {
     const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
-    formArray.push(this.plotQuotasForm());
+    formArray.push(this.plotQuotasForm(quota));
   }
 
   get FormControals() {
@@ -151,19 +164,20 @@ export class PermitQuotaComponent implements OnInit {
       console.log('Quotas', this.Quotas);
   
       const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
-      formArray.clear();
+      formArray.clear(); 
   
       for (const quota of this.Quotas) {
-        formArray.push(this.formbuilder.group({
-          plotQuotaId: 0,
-          seasonQuotaId: 0,
-          divisionId: quota.divisionId || null,
-          circleId: quota.circleId || null,
-          sectionId: quota.sectionId || null,
-          villageId: quota.villageId || null,
-          quotaReleased: quota.scheduledTons,
-          serverUpdatedStatus: true
-        }));
+        this.addSchedule(quota);
+        // formArray.push(this.formbuilder.group({
+        //   plotQuotaId: 0,
+        //   seasonQuotaId: 0,
+        //   divisionId: quota.divisionId || null,
+        //   circleId: quota.circleId || null,
+        //   sectionId: quota.sectionId || null,
+        //   villageId: quota.villageId || null,
+        //   quotaReleased: quota.scheduledTons,
+        //   serverUpdatedStatus: true
+        // }));
       }
   
       console.log(this.fbPermitQuota.value);
@@ -190,71 +204,87 @@ export class PermitQuotaComponent implements OnInit {
     var data = source.data as SeasonQuotaViewDto;
     this.permitService.GetPlotQuotas(data.seasonId, data.seasonQuotaId).subscribe(resp => {
       data.objPlotQuotas = resp as unknown as PlotQuotaViewDto[];
+      if(!this.addFlag){
+        let plotQuotas: any = resp ? resp: [];
+      const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
+      formArray.clear(); 
+        if(plotQuotas.length){
+          plotQuotas.map((quota: any) => {
+            this.addSchedule(quota);
+          })
+        }
+        console.log(this.fbPermitQuota.value);
+        
+      }
     });
   }                   
   editPermitQuota(permitQuota: SeasonQuotaViewDto) {
-    const permitQuotaFormValue = {
-      seasonId: permitQuota.seasonId,
-      toSchGroupNo: permitQuota.toSchGroupNo,
-      fromSchGroupNo: permitQuota.fromSchGroupNo,
-      fromDate: permitQuota.fromDate ? new Date(permitQuota.fromDate.toString() + '') : null,
-      quotaReleased: permitQuota.quotaReleased,
-      groupBy: permitQuota.groupBy,
-      plotQuotas: permitQuota.plotQuotas ? permitQuota.plotQuotas.map((quota: any) => {
-        return {
-          plotQuotaId: quota.plotQuotaId,
-          seasonQuotaId: quota.seasonQuotaId,
-          divisionId: quota.divisionId ,
-          circleId: quota.circleId ,
-          sectionId: quota.sectionId || null,
-          villageId: quota.villageId || null,
-          quotaReleased: quota.quotaReleased,
-          serverUpdatedStatus: true
-        };
-      }) : []
-    };
-  
-    this.fbPermitQuota.patchValue(permitQuotaFormValue);
-    this.fbPermitQuota.enable();
-  
+    console.log(permitQuota);
+    
+    // const permitQuotaFormValue = {
+    //   seasonId: permitQuota.seasonId,
+    //   toSchGroupNo: permitQuota.toSchGroupNo,
+    //   fromSchGroupNo: permitQuota.fromSchGroupNo,
+    //   fromDate: permitQuota.fromDate ? new Date(permitQuota.fromDate.toString() + '') : null,
+    //   quotaReleased: permitQuota.quotaReleased,
+    //   groupBy: permitQuota.type,
+    //   plotQuotas: permitQuota.plotQuotas ? permitQuota.plotQuotas.map((quota: any) => {
+    //     return {
+    //       plotQuotaId: quota.plotQuotaId,
+    //       seasonQuotaId: quota.seasonQuotaId,
+    //       divisionId: quota.divisionId ,
+    //       circleId: quota.circleId ,
+    //       sectionId: quota.sectionId || null,
+    //       villageId: quota.villageId || null,
+    //       quotaReleased: quota.quotaReleased,
+    //       serverUpdatedStatus: true
+    //     };
+    //   }) : []
+    // };
     this.addFlag = false;
     this.submitLabel = 'Update permit quota';
+    let obj = {
+      data: {...permitQuota},
+    }
+    this.onRowExpand(obj)
+    this.fbPermitQuota.patchValue(permitQuota);
+    this.fbPermitQuota.patchValue({
+      fromDate: new Date(permitQuota.fromDate?.toString() + ''),
+    });
+    // this.fbPermitQuota.enable();
     this.showDialog = true;
   }
   
- 
-
   savePermitQuota(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.permitService.CreatepermitQuota(this.fbPermitQuota.value);
     else return this.permitService.UpdatePermitQuota(this.fbPermitQuota.value);
   }
 
   onSubmit() {
-    const obj = {
-      seasonId: this.fbPermitQuota.value.seasonId,
-      fromSchGroupNo: this.fbPermitQuota.value.fromSchGroupNo,
-      toSchGroupNo: this.fbPermitQuota.value.toSchGroupNo,
-      fromDate: this.fbPermitQuota.value.fromDate,
-      toDate: this.fbPermitQuota.value.toDate,
-      quotaReleased: this.fbPermitQuota.value.quotaReleased,
-      groupBy: this.fbPermitQuota.value.groupBy,
-      serverUpdatedStatus: this.fbPermitQuota.value.serverUpdatedStatus,
-      plotQuotas: this.fbPermitQuota.value.plotQuotas.map((quota: any) => {
-        return {
-          ...quota,
-          divisionId: quota.divisionId || null,
-          circleId: quota.circleId || null,
-          sectionId: quota.sectionId || null,
-          villageId: quota.villageId || null,
-        };
-      })
-    };
+    console.log(this.fbPermitQuota.value);
+    const sum = this.fbPermitQuota.value.plotQuotas.reduce((acc: any, curr: any) => acc + curr.quotaReleased, 0);
+console.log(sum);
+if(sum.toFixed(2) != this.fbPermitQuota.value.quotaReleased.toFixed(2)){
+  this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: `Entered Quota (${sum.toFixed(2)}) is not equal to total quota (${this.fbPermitQuota.value.quotaReleased})` });
+return;
+}
+
   
-    this.permitService.CreatepermitQuota(obj).subscribe((resp) => {
+    // this.permitService.CreatepermitQuota(obj).subscribe((resp) => {
+    //   if (resp) {
+    //     this.showDialog = false;
+    //   }
+    // });
+
+
+    this.savePermitQuota().subscribe(resp => {
       if (resp) {
+        this.initCurrentSeason(CURRENT_SEASON());
+      this.PermitQuotaform();
         this.showDialog = false;
+        
       }
-    });
+    })
   }
 
   onSearch() {
@@ -264,18 +294,23 @@ export class PermitQuotaComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
+  clear2(table: Table) {
+    table.clear();
+    this.filter.nativeElement.value = '';
+  }
+  onGlobalFilter2(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
   checkValue() {
-    if (this.fromSchGroupNo < this.toSchGroupNo) {
+    if (this.fromScheduleNo < this.toScheduleNo) {
       this.error = false;
       return;
     }
-    else if (this.toSchGroupNo == undefined) {
+    else if (this.toScheduleNo == undefined) {
       this.error = false;
       return;
     }

@@ -280,6 +280,7 @@ export class SeasonQuotaViewDto {
   objPlotQuotas?:PlotQuotaViewDto[];
   plotQuotas: any
   groupBy: any
+  type: any
 }
 export class PlotQuotaViewDto {
   plotQuotaId?: number
