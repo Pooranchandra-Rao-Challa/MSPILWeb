@@ -1,10 +1,10 @@
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { MaxLength } from './../../../_models/common';
+import { MaxLength } from 'src/app/_models/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { MAX_LENGTH_10, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MIN_LENGTH_2, RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
@@ -30,7 +30,7 @@ export class VehicleComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions:any;
-  
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
@@ -52,12 +52,12 @@ export class VehicleComponent implements OnInit {
     this.fbVehicleType = this.formbuilder.group({
       vehicleTypeId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       capacity: new FormControl(null, [Validators.required]),
       billingCapacity: new FormControl(null, [Validators.required]),
       bindingCane: new FormControl(null, [Validators.required]),
       badCane: new FormControl(null, [Validators.required]),
-      isActive: [true]
+      isActive: [null]
     });
   }
 
@@ -66,6 +66,7 @@ export class VehicleComponent implements OnInit {
   }
 
   addVehicle() {
+    this.fbVehicleType.controls['isActive'].setValue(true);
     this.submitLabel = "Add Vehicle";
     this.addFlag = true;
     this.showDialog = true;
