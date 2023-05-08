@@ -15,10 +15,9 @@
 
     <!-- table -->
     <p-table #dt1 [value]="villageParamRates" dataKey="id" [rows]="10" [rowHover]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true" [alwaysShowPaginator]="false"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5" [paginator]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+      [alwaysShowPaginator]="false" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5"
+      [paginator]="true" [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -31,7 +30,8 @@
                 class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-              [showClear]="true" (onChange)="getVillageParamRatesBySeason($event.value)" optionValue="seasonId">
+              [(ngModel)]="currentSeason.seasonId" [showClear]="true"
+              (onChange)="getVillageParamRatesBySeason($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
         </div>
@@ -92,7 +92,8 @@
       <ng-template pTemplate="body" let-vParamRate>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editVillageParamRate(vParamRate)" [disabled]="!permissions.CanUpdateVillageParamRate"></button></td>
+              (click)="editVillageParamRate(vParamRate)" [disabled]="!permissions.CanUpdateVillageParamRate"></button>
+          </td>
           <td>{{vParamRate.seasonCode}}</td>
           <td>{{vParamRate.divisionName}}</td>
           <td>{{vParamRate.circleName}}</td>
@@ -120,8 +121,8 @@
 
     <!-- dialog box -->
     <p-dialog header="Village Param Rate" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-    [breakpoints]="{'960px': '50%', '640px': '80%'}"  [style]="{width: '50%'}"
-      [contentStyle]="{'overflow': 'visible'}" (onHide)="fbVillageParamRate.reset()">
+      [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" [contentStyle]="{'overflow': 'visible'}"
+      (onHide)="fbVillageParamRate.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbVillageParamRate" (ngSubmit)="onSubmit()">
           <div class="grid">
@@ -129,8 +130,8 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label>Season Code:<sup class="p-error">*</sup></label>
-                  <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons"
-                    optionValue="seasonId" formControlName="seasonsId"
+                  <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
+                    formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
                   <span *ngIf="FormControls['seasonsId'].touched && FormControls['seasonsId'].invalid">
@@ -147,7 +148,7 @@
                     <ng-template let-village pTemplate="selectedItem">
                       <div>{{village.villageCode}}</div>
                     </ng-template>
-                    <ng-template let-village  pTemplate="item" >
+                    <ng-template let-village pTemplate="item">
                       <div class="block align-items-center gap-2">
                         <div>{{village.villageCode}}</div>
                         <div>{{village.villageName}}</div>
@@ -185,8 +186,8 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate:<sup class="p-error">*</sup></label>
-                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="decimal" locale="en-IN" [minFractionDigits]="2"
-                    [maxFractionDigits]="2"
+                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="decimal" locale="en-IN"
+                    [minFractionDigits]="2" [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   </p-inputNumber>
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
@@ -201,8 +202,8 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"  [disabled]="fbVillageParamRate.invalid"
-            (click)="onSubmit()"></button>
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
+            [disabled]="fbVillageParamRate.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

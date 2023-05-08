@@ -193,10 +193,12 @@
                           [defaultDate]="plotInfo.measuredDate!" [minDate]="plotInfo.measuredDate!"
                           [maxDate]="todayDate" formControlName="agreementDate"
                           placeholder="Please Select Agreement Date" appendTo="body"
+                          [disabled]="!FormControls['plotId'].value"
+                          [pTooltip]="!FormControls['plotId'].value ? 'Please Select Plot No First' : ''"
+                          tooltipPosition="top"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['agreementDate'].touched && FormControls['agreementDate'].errors }">
                         </p-calendar>
-                        <span
-                          *ngIf="FormControls['agreementDate'].touched && FormControls['agreementDate'].invalid">
+                        <span *ngIf="FormControls['agreementDate'].touched && FormControls['agreementDate'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['agreementDate'].errors?.['required']">
                             Please Select Agreement Date.</div>
@@ -250,9 +252,9 @@
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label class="required">Guarantor1:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="code"
-                        [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor1"
-                        placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
+                      <p-dropdown optionLabel="code" [options]="guarantor1Farmers" optionValue="code" [filter]="true"
+                        filterBy="farmerName,code,villageName" formControlName="guarantor1" placeholder="Select Farmer"
+                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor2($event.value)"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['guarantor1'].touched && fcNomineeDetails.controls['guarantor1'].errors }">
                         <ng-template let-farmer pTemplate="selectedItem">
@@ -273,9 +275,9 @@
                     </div>
                     <div class="field col-12 md:col-4 ">
                       <label>Guarantor2:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="code"
-                        [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor2"
-                        placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
+                      <p-dropdown optionLabel="code" [options]="guarantor2Farmers" optionValue="code" [filter]="true"
+                        filterBy="farmerName,code,villageName" formControlName="guarantor2" placeholder="Select Farmer"
+                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="getGuarantor3Farmers($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>
@@ -289,9 +291,9 @@
                     </div>
                     <div class="field col-12 md:col-4  ">
                       <label>Guarantor3:</label>
-                      <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="code"
-                        [filter]="true" filterBy="farmerName,code,villageName" formControlName="guarantor3"
-                        placeholder="Select Farmer" [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
+                      <p-dropdown optionLabel="code" [options]="guarantor3Farmers" optionValue="code" [filter]="true"
+                        filterBy="farmerName,code,villageName" formControlName="guarantor3" placeholder="Select Farmer"
+                        [virtualScroll]="true" [virtualScrollItemSize]="30" appendTo="body"
                         (onChange)="onGuarantor3($event.value)">
                         <ng-template let-farmer pTemplate="selectedItem">
                           <div>{{farmer.code}} - {{farmer.farmerName}}</div>

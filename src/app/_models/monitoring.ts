@@ -660,7 +660,7 @@ export interface IAgreementedPlotsViewDto {
   nomineeId: number;
   relationTypeId: number;
   relationType: string;
-  nominee: string;
+  nomineeName: string;
   guarantor1: string;
   guarantor2: string;
   guarantor3: string;
