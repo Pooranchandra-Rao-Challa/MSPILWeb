@@ -17,7 +17,6 @@
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
       <ng-template pTemplate="caption">
-        <form [formGroup]="fbPropping">
           <div class="flex justify-content-between flex-column sm:flex-row">
             <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
               (click)="clear(dtpropping)"></button>
@@ -40,7 +39,6 @@
               </span>
             </div>
           </div>
-        </form>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
