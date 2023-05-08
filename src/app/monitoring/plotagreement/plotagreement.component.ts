@@ -143,6 +143,7 @@ export class PlotagreementComponent implements OnInit {
   getPlotinfo(plotId: number) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+      this.plotInfo.measuredDate = this.plotInfo.measuredDate && new Date(this.plotInfo.measuredDate?.toString() + "");
       this.plotInfo.plantingDate = this.plotInfo.plantingDate && new Date(this.plotInfo.plantingDate?.toString() + "");
       this.FormControls['plotId'].setValue(this.plotInfo.plotId);
       if (this.plotInfo.farmerId) {
