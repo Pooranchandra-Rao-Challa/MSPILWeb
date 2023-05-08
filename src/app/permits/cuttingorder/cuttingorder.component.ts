@@ -44,14 +44,11 @@ export class CuttingOrderComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('dtseasoncuttingOrders') dtseasoncuttingOrders!: Table;
   @ViewChild('dtcuttingorders') dtcuttingorders!: Table;
-  loading: boolean = true;
   showDialog: boolean = false;
-  forapproval: boolean = false;
-  submitLabel!: string;
   fromScheduleNo: any;
   toScheduleNo: any;
   error: boolean = false;
- 
+
   constructor(private formbuilder: FormBuilder,
     private permitService: permitService,
     private appMasterService: AppMasterService,
@@ -85,6 +82,7 @@ export class CuttingOrderComponent implements OnInit {
     { field: 'circleName', header: 'circleName', label: 'Circle Name' },
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
+    // { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
@@ -92,7 +90,7 @@ export class CuttingOrderComponent implements OnInit {
     { field: 'cuttingOrderNo', header: 'cuttingOrderNo', label: 'Cutting Order No' },
     { field: 'orderQuantity', header: 'orderQuantity ', label: 'Order Quantity' },
   ];
-
+  
   CuttingOrder: ITableHeader[] = [
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
@@ -101,6 +99,7 @@ export class CuttingOrderComponent implements OnInit {
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
     { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
     { field: 'plantingDate', header: 'plantingDate ', label: 'Planting Date ' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
@@ -163,7 +162,7 @@ export class CuttingOrderComponent implements OnInit {
   initPlots(seasonId: any) {
     var farmerId = this.fbCuttingOrder.value.farmerId
     var villageId = this.fbCuttingOrder.value.villageId
-    this.permitService.GetPlotsForUser(seasonId, farmerId, villageId, 'CuttingOrder').subscribe((resp) => {
+    this.permitService.GetPlotsForUser(seasonId, farmerId, villageId,'CuttingOrder').subscribe((resp) => {
       this.plots = resp as unknown as PlotsForUserDto[];
       this.filterPlots = Object.assign([], this.plots);
     })
@@ -221,7 +220,6 @@ export class CuttingOrderComponent implements OnInit {
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
   }
-
   initdropdownsbinding() {
     this.initDivisions(this.currentSeason.seasonId!);
     this.initSections(this.currentSeason.seasonId!);
@@ -262,6 +260,7 @@ export class CuttingOrderComponent implements OnInit {
       plotCuttingOrders: this.formbuilder.array([])
     })
   }
+
   plotCuttingOrderForm(rowData: any) {
     return this.formbuilder.group({
       plotCuttingOrderId: 0,
@@ -273,11 +272,13 @@ export class CuttingOrderComponent implements OnInit {
       circleId: rowData.circleId,
       sectionId: rowData.sectionId,
       farmerId: rowData.farmerId,
+      plotId:rowData.plotId,
       plantTypeId: rowData.plantTypeId,
       varietyId: rowData.varietyId,
       villageId: rowData.villageId,
     })
   };
+
   get CuttingOrderControls() {
     return this.fbCuttingOrder.get('plotCuttingOrders') as FormArray;
   }
@@ -315,6 +316,7 @@ export class CuttingOrderComponent implements OnInit {
     var data = source.data as SeasonCuttingOrderViewDto;
     this.permitService.GetPlotCuttingOrder(data.seasonId, data.seasonCuttingOrderId).subscribe(resp => {
       data.objPlotCuttingOrder = resp as unknown as PlotCuttingOrderViewDto[];
+      console.log(data.objPlotCuttingOrder);  
     });
   }
   initCuttingOrder() {
@@ -335,6 +337,7 @@ export class CuttingOrderComponent implements OnInit {
       this.error = true;
     }
   }
+  
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
@@ -343,7 +346,6 @@ export class CuttingOrderComponent implements OnInit {
   onSearch(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
- 
   addCuttingOrder() {
     this.initCuttingOrder();
     this.showDialog = true;

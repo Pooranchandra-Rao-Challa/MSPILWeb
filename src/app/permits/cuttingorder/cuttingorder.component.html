@@ -6,10 +6,6 @@
             <ng-template pTemplate="left">
                 <h4>Cutting Order</h4>
             </ng-template>
-            <!-- <ng-template pTemplate="right">
-                <button pButton pRipple label="Add Cutting Order" icon="pi pi-plus" class="p-button-success p-mr-2"
-                    (click)="addCuttingOrder()"></button>
-            </ng-template> -->
             <ng-template pTemplate="right">
                 <button pButton pRipple label="Add Cutting Order" class="p-button-primary w-100" icon="pi pi-plus"
                     (click)="toggleTab()"></button>
@@ -205,7 +201,6 @@
                                                     Select From DOP/DOR.</div>
                                             </span>
                                         </div>
-
                                         <div class="field col-12 md:col-2">
                                             <label>To DOP/DOR:</label>
                                             <p-calendar placeholder="To DOP" [readonlyInput]="true" [showIcon]="true"
@@ -253,7 +248,6 @@
                                             </span>
                                         </div>
                                     </div>
-
                                     <div class="p-fluid p-formgrid grid">
                                         <div class="field col-12 md:col-2">
                                             <label>Section:</label>
@@ -288,23 +282,19 @@
                                         </div>
                                         <div class="field col-12 md:col-2">
                                             <label>Ryot No:</label>
-                                            <p-dropdown placeholder="Select To Ryot" [options]="farmers"
+                                            <p-multiSelect placeholder="Select To Ryot" [options]="farmers"
                                                 optionLabel="farmercode" optionValue="farmerId"
                                                 formControlName="farmerId" [filter]="true"
                                                 filterBy="plotNumber,villageName" [virtualScroll]="true"
                                                 [virtualScrollItemSize]="38" appendTo="body"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                                                 <ng-template let-farmer pTemplate="selectedItem">
-                                                    <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
-                                                </ng-template>
-                                                <ng-template let-farmer pTemplate="item">
                                                     <div class="block align-items-center gap-2">
-                                                        <div>{{farmer.farmercode}} </div>
-                                                        <div></div>{{farmer.farmerName}}
+                                                        <div>{{farmer.farmercode}} - {{farmer.farmerName}}</div>
+                                                        <div>{{farmer.villageName}}</div>
                                                     </div>
-                                                    <div>{{farmer.villageName}}</div>
                                                 </ng-template>
-                                            </p-dropdown>
+                                             </p-multiSelect>
                                             <span
                                                 *ngIf="FormControls['farmerId'].touched && FormControls['farmerId'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
@@ -314,21 +304,15 @@
                                         </div>
                                         <div class="field col-12 md:col-2">
                                             <label>Plot:</label>
-                                            <p-dropdown placeholder="Select To plot" [options]="plots"
+                                            <p-multiSelect placeholder="Select To plot" [options]="plots"
                                                 optionLabel="plotNumber" optionValue="plotId" formControlName="plotId"
                                                 [filter]="true" filterBy="plotNumber,villageName" [virtualScroll]="true"
                                                 [virtualScrollItemSize]="38" appendTo="body" [style]="{'width':'100%'}"
                                                 [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotId'].touched && FormControls['plotId'].errors }">
                                                 <ng-template let-plot pTemplate="selectedItem">
-                                                    <div>{{ plot.plotNumber }} - {{ plot.villageName }}</div>
+                                                    <div>{{plot.plotNumber}} - {{plot.villageName}} </div>
                                                 </ng-template>
-                                                <ng-template let-plot pTemplate="item">
-                                                    <div class="block align-items-center gap-2">
-                                                        <div>{{plot.plotNumber}}</div>
-                                                        <div>{{plot.villageName}} </div>
-                                                    </div>
-                                                </ng-template>
-                                            </p-dropdown>
+                                            </p-multiSelect>
                                             <span
                                                 *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
@@ -387,7 +371,6 @@
         <!-- popup form -->
         <p-dialog header="Cutting Order" [(visible)]="showDialog" [modal]="true" showEffect="fade"
             [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '85vw'}">
-            <!-- (onHide)="fbAllottedPlot.reset()" -->
             <div class="flex flex-column align-items-center justify-content-center">
 
                 <!-- popup table -->
@@ -421,9 +404,6 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-getOrder let-rowIndex="rowIndex">
                         <tr>
-                            <!-- <td><button pButton pRipple icon="pi pi-pencil"
-                                    class="p-element p-ripple p-button-text p-button p-component"></button>
-                            </td> -->
                             <td>
                                 <p-checkbox [binary]="true" (onChange)="onRowSelect($event,getOrder)"
                                     [(ngModel)]="getOrder.selected"> </p-checkbox>
@@ -484,7 +464,6 @@
             </ng-template>
             <ng-template pTemplate="body" let-plot let-rowIndex="rowIndex" let-expanded="expanded">
                 <tr>
-                    <!-- (click)="editAllottedPlot(allottedPlot)" *ngIf="!forapproval"-->
                     <td>
                         <button type="button" pButton pRipple [pRowToggler]="plot"
                         class="p-button-text p-button-rounded p-button-plain"
