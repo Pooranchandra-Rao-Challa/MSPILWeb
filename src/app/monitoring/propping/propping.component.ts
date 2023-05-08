@@ -78,8 +78,6 @@ export class ProppingComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetProppings(seasonId, stageId, param1).subscribe((resp) => {
       this.proppings = resp as unknown as IProppingViewDto[];
-      console.log(this.proppings);
-
     });
   }
 
@@ -88,8 +86,6 @@ export class ProppingComponent implements OnInit {
       this.proppingStages = resp as unknown as LookupDetailDto[];
       if (this.proppingStages.length > 0) {
         this.currentProppingStage = this.proppingStages[0];
-        console.log(this.currentProppingStage);
-
         this.initProppings(this.currentSeason.seasonId!, this.currentProppingStage.lookupDetailId!);
       }
     });
@@ -135,8 +131,6 @@ export class ProppingComponent implements OnInit {
   onSubmit() {
     if (this.fbPropping.valid) {
       this.fbPropping.value.proppingDate = FORMAT_DATE(this.fbPropping.value.proppingDate && new Date(this.fbPropping.value.proppingDate));
-      console.log(this.fbPropping.value);
-
       this.monitoringService.UpdatePropping(this.fbPropping.value).subscribe(resp => {
         if (resp) {
           this.initProppings(this.currentSeason.seasonId!, this.currentProppingStage.lookupDetailId);
