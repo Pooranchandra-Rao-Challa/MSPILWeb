@@ -11,7 +11,7 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { VillageDto, VillagesViewDto } from 'src/app/_models/geomodels';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { FarmerDto } from 'src/app/_models/applicationmaster';
-import { MAX_LENGTH_20, MIN_AADHAAR, MIN_ACCNO, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PANNO, RG_PHONE_NO, RG_ADDRESS } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MIN_AADHAAR, MIN_ACCNO, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PANNO, RG_PHONE_NO, RG_ADDRESS, RG_AADHAAR } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from 'src/app/_alerts/alertMessage';
@@ -83,15 +83,15 @@ export class FarmerComponent implements OnInit {
       phoneNo: new FormControl(null, [Validators.required, Validators.pattern(RG_PHONE_NO)]),
       email: ['', (Validators.pattern(RG_EMAIL))],
       panno: new FormControl(null, [Validators.pattern(RG_PANNO)]),
-      aadhaarNo: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_AADHAAR)]),
+      aadhaarNo: new FormControl(null, [Validators.required, Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
       oldRyot: new FormControl(null, [Validators.pattern(RG_ALPHA_NUMERIC)]),
       selfId: [null],
       jfno: new FormControl('', [Validators.pattern(RG_NUMERIC_ONLY)]),
       bankId: [null, (Validators.required)],
       branchId: [null, (Validators.required)],
       accountNo: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
-      totalArea: [null],
-      cultivatedArea: [null],
+      totalArea: [null, (Validators.required)],
+      cultivatedArea:[null, (Validators.required)],
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],

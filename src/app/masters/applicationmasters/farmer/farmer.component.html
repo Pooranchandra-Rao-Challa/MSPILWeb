@@ -16,7 +16,7 @@
     <!-- table -->
     <p-table #dt1 [value]="farmers" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Entries" [showCurrentPageReport]="true"
       [globalFilterFields]="['code','farmerName','aliasName','gender','fatherName','casteId','caste','address','circleId',
               'circleName','divisionId','divisionName','sectionId','sectionName','districtId','districtName','mandalId','mandalName',
               'villageId','villageName','pinCode','phoneNo','email','panNo','aadhaarNo','oldRyot','jfNo','bankId','bankName','branchId','branchName','ifsc',
@@ -227,7 +227,7 @@
                       </div>
                       <div class="field col-12 md:col-6">
                         <label htmlFor="aliasName" class="required">Alias Name:</label>
-                        <input pInputText id="aliasName" #aliasName type="text" placeholder="Enter Relation Name"
+                        <input pInputText id="aliasName" #aliasName type="text" placeholder="Enter Alias Name"
                           formControlName="aliasName" alphaOnly [maxlength]="maxLength.name"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['aliasName'].touched && FormControls['aliasName'].errors }">
                         <div class="text-right">
@@ -393,32 +393,30 @@
                     </div>
                     <div class="field col-12 md:col-3">
                       <label for="panno">PAN No:</label>
-                      <input pInputText id="panno" type="text" placeholder="Enter PAN No" formControlName="panno"
+                      <input pInputText id="panno" type="text" placeholder="Enter Pan No" formControlName="panno"
                         maxLength="10" style="text-transform:uppercase" alphaNumeric
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['panno'].touched && FormControls['panno'].invalid }">
                       <div *ngIf="FormControls['panno'].touched && FormControls['panno'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panno'].errors?.['pattern']">
-                          Invalid PAN No Format, eg: ABCDE1234X.</div>
+                          Invalid Pan No Format, eg: ABCDE1234X.</div>
                       </div>
                     </div>
                     <div class="field col-12 md:col-3">
                       <label class="required">Aadhaar No:</label>
-                      <input pInputText id="aadhaarNo" placeholder="Enter Aadhaar No" #aadhaarNo
+                      <input pInputText id="aadhaarNo" #aadhaarNo placeholder=" Enter Aadhaar No"
                         formControlName="aadhaarNo" maxlength="12" [maxlength]="maxLength.aadhaarNo" numericOnly
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].errors }">
                       <div class="text-right">
                         <small> {{aadhaarNo.value.length}}/{{maxLength.aadhaarNo}} </small>
                       </div>
                       <span *ngIf="FormControls['aadhaarNo'].touched && FormControls['aadhaarNo'].invalid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['aadhaarNo'].errors?.['required']">
-                          Please Enter AadhaarNo</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['required']">
+                          Please Enter Aadhaar No.</div>
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="FormControls['aadhaarNo'].errors?.['minlength']">
-                          AadhaarNo Number Min Length Is 12.</div>
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
-                          AadhaarNo Number Contains Only Characters And Integers.</div>
+                          Aadhaar No Min Length Is 12.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['aadhaarNo'].errors?.['pattern']">
+                          Please Enter Valid Aadhaar No.</div>
                       </span>
                     </div>
                     <div class="field col-8 md:col-3">
@@ -448,16 +446,26 @@
                 <p-fieldset legend="Land Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-                      <label>Total Area:</label>
+                      <label  class="required">Total Area:</label>
                       <p-inputNumber inputId="totalArea" placeholder="Enter total Area" formControlName="totalArea"
                         [minFractionDigits]="2">
                       </p-inputNumber>
+                      <span *ngIf="FormControls['totalArea'].touched && FormControls['totalArea'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['totalArea'].errors?.['required']">
+                          Please Enter Total Area
+                        </div>
+                      </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label>Cultivated Area:</label>
+                      <label  class="required">Cultivated Area:</label>
                       <p-inputNumber inputId="cultivatedArea" placeholder="Enter Cultivated Area"
                         formControlName="cultivatedArea" [minFractionDigits]="2">
                       </p-inputNumber>
+                      <span *ngIf="FormControls['cultivatedArea'].touched && FormControls['cultivatedArea'].invalid">
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].errors?.['required']">
+                          Please Enter Cultivated Area
+                        </div>
+                      </span>
                     </div>
                   </div>
                 </p-fieldset>
@@ -540,7 +548,7 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label>Other Code:</label>
-                      <input pInputText id="otherCode" #otherCode type="text" placeholder="Enter Sub GL Code"
+                      <input pInputText id="otherCode" #otherCode type="text" placeholder="Enter Other Code:"
                         formControlName="otherCode" alphaNumeric [maxlength]="20">
                       <div class="text-right">
                         <small> {{otherCode.value.length}}/20 </small>

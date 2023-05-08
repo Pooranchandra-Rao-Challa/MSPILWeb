@@ -2,40 +2,26 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
 
-    <div class="grid">
-      <div class="col-8 lg:col-offset-2 md:col-12 ">
-        <div class="grid">
-          <div class="col-1">
-            <div class="bg-blue-300 shadow-1" style="width: 20px; height: 20px;"></div>
+    <div class="grid ">
+      
+          
+          <div class="col-3 lg:col-3 md:col-5 lg:col-offset-1 flex ">
+            <div class="bg-blue-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
+            <span class="m-1" >Allowed only but not entered.</span>
           </div>
-          <div class="col-3 lg:col-3 md:col-5">Blue color text means allowed only but not entered.</div>
-          <div class="col-1">
-            <div class="bg-green-300 shadow-1" style="width: 20px; height: 20px;"></div>
+         
+          <div class="col-4 lg:col-4 md:col-5 flex">
+            <div class="bg-green-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
+            <span class="m-1" >Allowed one or more samples but not entered.</span>
           </div>
-          <div class="col-3 lg:col-3 md:col-5">Green color text means allowed one or more samples but not entered</div>
-          <div class="col-1">
-            <div class="bg-red-300 shadow-1" style="width: 20px; height: 20px;"></div>
+         
+          <div class="col-3 lg:col-3 md:col-5 flex">
+            <div class="bg-red-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
+            <span class="m-1" >All samples entered.</span>
           </div>
-          <div class="col-3 lg:col-3 md:col-5">Red color text means all samples entered</div>
-        </div>
-      </div>
+       
     </div>
 
-    <!-- Hints -->
-    <div class="inline-block md:flex md:justify-content-center">
-      <div class="flex">
-        <div class="bg-blue-300 w-1rem h-1rem m-2"></div>
-        <span class="m-1">Allowed only but not entered.</span>
-      </div>
-      <div class="flex">
-        <div class="bg-green-300 w-1rem h-1rem m-2"></div>
-        <span class="m-1">Allowed one or more samples but not entered.</span>
-      </div>
-      <div class="flex">
-        <div class="bg-red-300 w-1rem h-1rem m-2"></div>
-        <span class="m-1">All samples entered.</span>
-      </div>
-    </div>
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">

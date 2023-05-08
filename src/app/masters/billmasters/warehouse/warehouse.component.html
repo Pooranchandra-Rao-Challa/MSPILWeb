@@ -14,7 +14,7 @@
 
     <!-- table -->
     <p-table #dt1 [value]="warehouses" dataKey="id" [rows]="10" [rowHover]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries "
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Entries "
     [showCurrentPageReport]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5" [paginator]="true" [globalFilterFields]="[
     'code',
@@ -113,7 +113,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr >
-          <td colspan="50%" class="md:text-center p-5">No WareHouse Found.</td>
+          <td colspan="50%" class="md:text-center p-5">No Ware Houses Found.</td>
         </tr>
       </ng-template>
     </p-table>

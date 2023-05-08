@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -24,8 +24,8 @@ import { JWTService } from 'src/app/_services/jwt.service';
 export class WareHouseComponent implements OnInit {
   warehouses: WareHouseViewDto[] = [];
   warehouse: WareHouseDto = new WareHouseDto();
-  filter: any;
   showDialog: boolean = false;
+  @ViewChild('filter') filter!: ElementRef;
   fbwarehouse!: FormGroup;
   addFlag: boolean = true;
   submitLabel!: string;
@@ -75,12 +75,10 @@ export class WareHouseComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
   editWarehouse(warehouse: WareHouseViewDto) {
     this.warehouse.id = warehouse.id;
     this.warehouse.code = warehouse.code;
