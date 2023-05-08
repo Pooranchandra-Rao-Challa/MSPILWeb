@@ -18,7 +18,7 @@ import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 })
 export class BillMasterComponent implements OnInit {
   bills: BillViewDto[] = [];
-  globalFilterFields: string[] = ["billCategoryName", "billNo", "seasonName", "fromDate", "toDate", "runDate", "isFinal", "isActive", "createdAt", "createdBy",
+  globalFilterFields: string[] = ["billCategoryName", "billNo", "seasonCode", "fromDate", "toDate", "runDate", "isFinal", "isActive", "createdAt", "createdBy",
     "updatedAt", "updatedBy"];
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
