@@ -4,17 +4,15 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@ang
 import { Table } from 'primeng/table';
 import { Observable } from "rxjs";
 import { SeasonDto } from "src/app/_models/applicationmaster";
-import { IPlotOfferViewDto } from "src/app/_models/monitoring";
 import { GetQuotasViewDto, PermitQuotaDto, PlotQuotaViewDto, SeasonQuotaViewDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
-import { BillMasterService } from "src/app/_services/billmaster.service";
 import { CommonService } from "src/app/_services/common.service";
-import { LookupService } from "src/app/_services/lookup.service";
-import { MonitoringService } from "src/app/_services/monitoring.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 import { permitService } from '../../_services/permit.service';
-import { PlotQuotaDto } from '../../_models/permits';
+
 import { MessageService } from "primeng/api";
+import { FORMAT_DATE } from "src/app/_helpers/date.format.pipe";
+import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
 export interface IHeader {
   field: string;
   header: string;
@@ -45,7 +43,6 @@ export class PermitQuotaComponent implements OnInit {
   @ViewChild('filter2') filter2!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquotas!: Table;
   @ViewChild('dtplotquota') dtplotquota!: Table;
-
   selectedCategory: any = null;
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
   objPlotQuotas: PlotQuotaViewDto[] = [];
@@ -60,12 +57,12 @@ export class PermitQuotaComponent implements OnInit {
     private appMasterService: AppMasterService,
     private permitService: permitService,
     private messageService: MessageService,
-
-
+    private alertMessage: AlertMessage,
   ) { }
+
   farmerHeaders: IHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
-    { field: 'type', header: 'type', label: 'Type' },
+    { field: 'groupBy', header: 'groupBy', label: 'Type' },
     { field: 'docNo', header: 'docNo', label: 'Doc No' },
     { field: 'fromSchGroupNo', header: 'fromSchGroupNo', label: 'From Schedule Group No' },
     { field: 'toSchGroupNo', header: 'toSchGroupNo', label: 'To Schedule Group No' },
@@ -91,7 +88,6 @@ export class PermitQuotaComponent implements OnInit {
     { field: 'tons', header: 'tons', label: 'Estimated Ton' },
     { field: 'Quota', header: 'Quota', label: 'Quota' },
   ];
-
   PermitQuotaform() {
     this.fbPermitQuota = this.formbuilder.group({
       seasonQuotaId: [0],
@@ -100,14 +96,13 @@ export class PermitQuotaComponent implements OnInit {
       seasonId: ['', Validators.required],
       toSchGroupNo: ['', Validators.required],
       fromSchGroupNo: ['', Validators.required],
-      fromDate: [null, (Validators.required)],
+      fromDate: [FORMAT_DATE(new Date()), [Validators.required]],
       quotaReleased: ['', Validators.required],
       groupBy: ['', Validators.required],
       plotQuotas: this.formbuilder.array([])
     });
     this.Quotas = [];
   }
-
   plotQuotasForm(quota: any) {
     return this.formbuilder.group({
       plotQuotaId: quota.plotQuotaId || 0,
@@ -137,7 +132,7 @@ export class PermitQuotaComponent implements OnInit {
   }
 
   getPermitQuota() {
-    this.submitLabel = "Add PermitQuota";
+    this.submitLabel = "Add Permit Quota";
     this.addFlag = true;
     this.showDialog = true;
     const seasonId = this.fbPermitQuota.value.seasonId;
@@ -158,16 +153,15 @@ export class PermitQuotaComponent implements OnInit {
   initQuotas() {
     this.permitService.GetQuotas(this.fbPermitQuota.value).subscribe((resp) => {
       this.Quotas = resp as unknown as GetQuotasViewDto[];
-      console.log('Quotas', this.Quotas);
+      console.log('plotQuotas',this.Quotas);
       const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
+     
       formArray.clear();
       for (const quota of this.Quotas) {
         this.addSchedule(quota);
       }
-      console.log(this.fbPermitQuota.value);
     });
   }
-
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
@@ -176,18 +170,17 @@ export class PermitQuotaComponent implements OnInit {
 
     });
   }
-
   initSeasonQuotas(seasonId: number) {
     this.permitService.GetSeasonQuotas(seasonId).subscribe((resp) => {
       this.permitquotas = resp as unknown as SeasonQuotaViewDto[];
-      console.log('permitquotas', this.permitquotas);
-
     });
   }
   onRowExpand(source: any) {
     var data = source.data as SeasonQuotaViewDto;
     this.permitService.GetPlotQuotas(data.seasonId, data.seasonQuotaId).subscribe(resp => {
       data.objPlotQuotas = resp as unknown as PlotQuotaViewDto[];
+      console.log('expand',data.objPlotQuotas);
+      
       if (!this.addFlag) {
         let plotQuotas: any = resp ? resp : [];
         const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
@@ -197,15 +190,12 @@ export class PermitQuotaComponent implements OnInit {
             this.addSchedule(quota);
           })
         }
-        console.log(this.fbPermitQuota.value);
-
       }
     });
   }
   editPermitQuota(permitQuota: SeasonQuotaViewDto) {
-    console.log(permitQuota);
     this.addFlag = false;
-    this.submitLabel = 'Update permit quota';
+    this.submitLabel = 'Update Permit Quota';
     let obj = {
       data: { ...permitQuota },
     }
@@ -216,16 +206,14 @@ export class PermitQuotaComponent implements OnInit {
     });
     this.showDialog = true;
   }
-
   savePermitQuota(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.permitService.CreatepermitQuota(this.fbPermitQuota.value);
     else return this.permitService.UpdatePermitQuota(this.fbPermitQuota.value);
   }
-
   onSubmit() {
     console.log(this.fbPermitQuota.value);
+    
     const sum = this.fbPermitQuota.value.plotQuotas.reduce((acc: any, curr: any) => acc + curr.quotaReleased, 0);
-    console.log(sum);
     if (sum.toFixed(2) != this.fbPermitQuota.value.quotaReleased.toFixed(2)) {
       this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: `Entered Quota (${sum.toFixed(2)}) is not equal to total quota (${this.fbPermitQuota.value.quotaReleased})` });
       return;
@@ -234,11 +222,12 @@ export class PermitQuotaComponent implements OnInit {
       if (resp) {
         this.initCurrentSeason(CURRENT_SEASON());
         this.PermitQuotaform();
+        this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMPPQ001" : "SMPPQ002"]);
         this.showDialog = false;
+      
       }
     })
   }
-
   onSearch() {
     this.initSeasonQuotas(this.currentSeason.seasonId!);
   }
@@ -257,6 +246,8 @@ export class PermitQuotaComponent implements OnInit {
   onGlobalFilter2(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
+
   checkValue() {
     if (this.fromScheduleNo < this.toScheduleNo) {
       this.error = false;

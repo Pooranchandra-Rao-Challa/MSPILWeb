@@ -87,6 +87,7 @@ export class AlertMessage {
  * -------------------------------------------
  * Estimated Ton:ET
  * Cutting Order:CO
+ * Permit Quota :PQ
  * -------------------------------------
  * If the screens has more funcitonal items then
  * Like in settings use frist letter as code, if same
@@ -248,4 +249,8 @@ export const ALERT_CODES: { [key: string]: string } = {
 
   // Cutting Order
   'SMPCO001': 'Cutting Order Is Add Successfully',
+  //Permit Quota
+   'SMPPQ001': 'Permit Quota Is Add Successfully',
+   'SMPPQ002': 'Permit Quota Is Update Successfully',
+  
 }
