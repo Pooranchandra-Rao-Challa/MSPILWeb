@@ -846,6 +846,7 @@ export class PlotYieldDto {
 }
 export interface IProppingViewDto {
   plotId: number;
+  proppingStageId: number;
   plotNumber: string;
   farmerCode: string;
   farmerName: string;
