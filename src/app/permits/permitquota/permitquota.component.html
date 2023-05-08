@@ -85,23 +85,26 @@
                       <div class="grid mt-1">
                         <div class="col col-3">
                           <p-radioButton name="groupBy" formControlName="groupBy" value="D" label="Division"
-                            (click)="fbPermitQuota.get('division')?.setValue('Division')">
+                            (click)="fbPermitQuota.get('division')?.setValue('D')"
+                            [disabled]="editPermitQuotaData && editPermitQuotaData.groupBy !== 'D'">
                           </p-radioButton>
                         </div>
                         <div class="col col-3">
                           <p-radioButton name="groupBy" formControlName="groupBy" value="C" label="Circle"
-                            (click)="fbPermitQuota.get('division')?.setValue('Circle')" >
+                            (click)="fbPermitQuota.get('division')?.setValue('Circle')" 
+                            [disabled]="editPermitQuotaData && editPermitQuotaData.groupBy !== 'c'" >
                           </p-radioButton>
                         </div>
                         <div class="col col-3">
                           <p-radioButton name="groupBy" formControlName="groupBy" value="S" label="Section"
-                            (click)="fbPermitQuota.get('division')?.setValue('Section')">
+                            (click)="fbPermitQuota.get('division')?.setValue('Section')"
+                            [disabled]="editPermitQuotaData && editPermitQuotaData.groupBy !== 'S'">
                           </p-radioButton>
                         </div>
                         <div class="col col-3">
                           <p-radioButton name="groupBy" formControlName="groupBy" value="V" label="Village"
                             (click)="fbPermitQuota.get('division')?.setValue('Village'); fbPermitQuota.get('village')?.setValue('selected village')"
-                           ></p-radioButton>
+                            [disabled]="editPermitQuotaData && editPermitQuotaData.groupBy !== 'V'"></p-radioButton>
                         </div>
                       </div>
                     </div>
