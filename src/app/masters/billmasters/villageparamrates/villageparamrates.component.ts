@@ -83,6 +83,7 @@ export class VillageParamRatesComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
+      if(this.currentSeason) this.getVillageParamRatesBySeason(this.currentSeason.seasonId!);
     });
   }
 

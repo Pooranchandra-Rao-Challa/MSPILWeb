@@ -14,7 +14,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { MIN_LENGTH_2, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
@@ -40,6 +40,7 @@ export class PlotagreementComponent implements OnInit {
   currentSeason: SeasonDto = {};
   plotNumbers: PlotInfoDto[] = [];
   relationTypes: LookupDetailViewDto[] = [];
+  farmers: FarmersViewDto[] = [];
   guarantor1Farmers: FarmersViewDto[] = [];
   guarantor2Farmers: FarmersViewDto[] = [];
   guarantor3Farmers: FarmersViewDto[] = [];
@@ -129,7 +130,6 @@ export class PlotagreementComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAgreement(seasonId, param1).subscribe((resp) => {
       this.plotAgreements = resp as unknown as IFarmerInPlotOfferDto[];
-
     });
   }
 
@@ -140,13 +140,14 @@ export class PlotagreementComponent implements OnInit {
     });
   }
 
-  getPlotinfo(plotId: number) {
+  getPlotinfo(plotId: number, add = true) {
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+      this.plotInfo.measuredDate = this.plotInfo.measuredDate && new Date(this.plotInfo.measuredDate?.toString() + "");
       this.plotInfo.plantingDate = this.plotInfo.plantingDate && new Date(this.plotInfo.plantingDate?.toString() + "");
       this.FormControls['plotId'].setValue(this.plotInfo.plotId);
-      if (this.plotInfo.farmerId) {
-        this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != this.plotInfo.farmerId);
+      if (this.plotInfo.farmerCode && add) {
+        this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.code != this.plotInfo.farmerCode);
         this.fcNomineeDetails.controls['guarantor1'].setValue(null);
         this.fcNomineeDetails.controls['guarantor2'].setValue(null);
         this.fcNomineeDetails.controls['guarantor3'].setValue(null);
@@ -154,18 +155,18 @@ export class PlotagreementComponent implements OnInit {
     });
   }
 
-  getGuarantor2(farmerId: number) {
-    this.guarantor2Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
+  getGuarantor2(farmerCode: string) {
+    this.guarantor2Farmers = this.guarantor1Farmers?.filter(x => x.code != farmerCode);
   }
 
-  getGuarantor3Farmers(farmerId: number) {
-    this.guarantor3Farmers = this.guarantor2Farmers?.filter(x => x.farmerId != farmerId);
-    this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
+  getGuarantor3Farmers(farmerCode: string) {
+    this.guarantor3Farmers = this.guarantor2Farmers?.filter(x => x.code != farmerCode);
+    this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.code != farmerCode);
   }
 
-  onGuarantor3(farmerId: number) {
-    this.guarantor2Farmers = this.guarantor2Farmers?.filter(x => x.farmerId != farmerId);
-    this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.farmerId != farmerId);
+  onGuarantor3(farmerCode: string) {
+    this.guarantor2Farmers = this.guarantor2Farmers?.filter(x => x.code != farmerCode);
+    this.guarantor1Farmers = this.guarantor1Farmers?.filter(x => x.code != farmerCode);
   }
 
   initRelationTypes() {
@@ -176,7 +177,8 @@ export class PlotagreementComponent implements OnInit {
 
   initFarmers() {
     this.appMasterService.GetFarmers().subscribe((resp) => {
-      this.guarantor1Farmers = resp as unknown as FarmersViewDto[];
+      this.farmers = resp as unknown as FarmersViewDto[];
+      if(this.farmers) this.guarantor1Farmers = this.farmers;
     })
   }
 
@@ -244,7 +246,7 @@ export class PlotagreementComponent implements OnInit {
       plotId: [null, (Validators.required)],
       seasonId: [null, (Validators.required)],
       agreementedArea: [null, (Validators.required)],
-      agreementedDate: [null, (Validators.required)],
+      agreementDate: [null, (Validators.required)],
       interCropingId: [null],
       hasMicroNutrientDeficiency: [null],
       isTrashMulchingDone: [null],
@@ -260,7 +262,7 @@ export class PlotagreementComponent implements OnInit {
       nomineeInfo: this.formbuilder.group({
         nomineeDetailId: [null],
         plotAgreementId: [null],
-        relationTypeId: ['', (Validators.required)],
+        relationTypeId: [null, (Validators.required)],
         nominee: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
         guarantor1: [null, (Validators.required)],
         guarantor2: [null],
@@ -293,8 +295,8 @@ export class PlotagreementComponent implements OnInit {
       plotAgreementId: [pest.plotAgreementId],
       pestName: [pest.pestName],
       remarks: [pest.remarks],
-      identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
-      controlDate: [pest.controlDate && new Date(pest.controlDate)]
+      identifiedDate: [pest.identifiedDate && FORMAT_DATE(new Date(pest.identifiedDate))],
+      controlDate: [pest.controlDate && FORMAT_DATE(new Date(pest.controlDate))]
     })
   }
 
@@ -325,8 +327,8 @@ export class PlotagreementComponent implements OnInit {
       plotAgreementId: [disease.plotAgreementId],
       diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
-      identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
-      controlDate: [disease.controlDate && new Date(disease.controlDate)]
+      identifiedDate: [disease.identifiedDate && FORMAT_DATE(new Date(disease.identifiedDate))],
+      controlDate: [disease.controlDate && FORMAT_DATE(new Date(disease.controlDate))]
     })
   }
 
@@ -337,22 +339,24 @@ export class PlotagreementComponent implements OnInit {
 
   editPlotAgreement(plotAgreement: IAgreementedPlotsViewDto) {
     this.initPlotNumbers(this.currentSeason.seasonId!, plotAgreement.plotId);
+    this.getPlotinfo(plotAgreement.plotId, false);
+    this.getGuarantor2(plotAgreement.guarantor1);
+    this.getGuarantor3Farmers(plotAgreement.guarantor2);
+    this.onGuarantor3(plotAgreement.guarantor3);
     this.fbPlotAgreement.controls['seasonId'].setValue(this.currentSeason.seasonId!);
     this.fbPlotAgreement.controls['seasonId'].disable();
     this.fbPlotAgreement.controls['plotId'].setValue(plotAgreement.plotId);
     this.fbPlotAgreement.controls['plotId'].disable();
     this.fbPlotAgreement.controls['agreementedArea'].setValue(plotAgreement.agreementedArea);
-    this.fbPlotAgreement.controls['agreementedDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
+    this.fbPlotAgreement.controls['agreementDate'].setValue(plotAgreement.agreementedDate && new Date(plotAgreement.agreementedDate?.toString() + ""));
     this.fcNomineeDetails.controls['nomineeDetailId'].setValue(plotAgreement.nomineeId);
     this.fcNomineeDetails.controls['plotAgreementId'].setValue(plotAgreement.plotAgreementId);
     this.fcNomineeDetails.controls['relationTypeId'].setValue(plotAgreement.relationTypeId);
-    this.fcNomineeDetails.controls['nominee'].setValue(plotAgreement.nominee);
+    this.fcNomineeDetails.controls['nominee'].setValue(plotAgreement.nomineeName);
     this.fcNomineeDetails.controls['guarantor1'].setValue(plotAgreement.guarantor1);
     this.fcNomineeDetails.controls['guarantor2'].setValue(plotAgreement.guarantor2);
     this.fcNomineeDetails.controls['guarantor3'].setValue(plotAgreement.guarantor3);
-
     this.fbPlotAgreement.patchValue(plotAgreement);
-    this.getPlotinfo(plotAgreement.plotId);
     this.getMaintenanceItemsForAgreement(plotAgreement.plotAgreementId);
     this.addFlag = false;
     this.submitLabel = 'Update Plot Agreement';
@@ -399,5 +403,8 @@ export class PlotagreementComponent implements OnInit {
     this.activeIndex = this.activeIndex1 = this.activeIndex2 = 0;
     this.currentSeason = Object.assign({}, temp);
     this.fbPlotAgreement.get('seasonId')?.patchValue(this.currentSeason.seasonId);
+    this.guarantor1Farmers = this.farmers;
+    this.guarantor2Farmers = [];
+    this.guarantor3Farmers = [];
   }
 }

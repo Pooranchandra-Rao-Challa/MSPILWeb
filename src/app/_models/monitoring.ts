@@ -119,7 +119,7 @@ export class PlotAssessmentDto {
   plotAssessmentId?: number;
   plotId?: number;
   measuredArea?: number;
-  assessedDate?: Date;
+  measuredDate?: Date;
   isaDemoPlot?: boolean;
   weedStatusId?: number;
   interCropingId?: number;
@@ -230,7 +230,7 @@ export interface IPlotAssessmentViewDto {
   plotTypeId: number;
   plotType: string;
   assessedArea: number;
-  assessedDate: Date;
+  measuredDate: Date;
   isADemoPlot: boolean;
   weedStatusId: number;
   weedStatus: string;
@@ -563,6 +563,7 @@ export class PlotsDto {
   cropName?: string
   measuredArea?: number
   agreementedArea?: number
+  measuredDate?: Date;
 }
 
 export class FarmerSelectInfoViewDto {
@@ -621,6 +622,7 @@ export class NomineeDetailsDto {
 
 export interface IAgreementedPlotsViewDto {
   plotId: number;
+  seasonId: number;
   offerNo: number;
   plotNumber: number;
   plotReportId: number;
@@ -658,7 +660,7 @@ export interface IAgreementedPlotsViewDto {
   nomineeId: number;
   relationTypeId: number;
   relationType: string;
-  nominee: string;
+  nomineeName: string;
   guarantor1: string;
   guarantor2: string;
   guarantor3: string;

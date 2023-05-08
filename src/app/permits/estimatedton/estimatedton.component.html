@@ -160,9 +160,9 @@
             <!-- (onHide)="fbAllottedPlot.reset()" -->
             <div class="flex flex-column align-items-center justify-content-center">
                 <!-- table -->
-                <p-table #dt2 [value]="excessTons" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
+                <p-table #dt2 [value]="excessTons" dataKey="id" [rows]="10" [rowHover]="true" 
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
-                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"  [alwaysShowPaginator]="false" >
                     <ng-template pTemplate="header">
                         <tr>
                             <th></th>
@@ -214,18 +214,18 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td colspan="16" class="md:text-center">No Excess Ton Details Found.</td>
+                            <td colspan="16" class="md:text-center m-5">No Excess Ton Details Found.</td>
                         </tr>
                     </ng-template>
                     <tr>
-                        <td colspan="16" class="md:text-center">Loading Excess Ton Details. Please wait.</td>
+                        <td colspan="16" class="md:text-center m-5">Loading Excess Ton Details. Please wait.</td>
                     </tr>
                 </p-table>
             </div>
         </p-dialog>
 
         <!-- table -->
-        <p-table #dtesstimatedton [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true"
+        <p-table #dtesstimatedton [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
             [globalFilterFields]="globalFilterFields" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
@@ -300,11 +300,11 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="16" class="md:text-center">No Estimated Ton Details Found.</td>
+                    <td colspan="16" class="md:text-center m-5">No Estimated Ton Details Found.</td>
                 </tr>
             </ng-template>
             <tr>
-                <td colspan="16" class="md:text-center">Loading Estimated Ton Details. Please wait.</td>
+                <td colspan="16" class="md:text-center m-5">Loading Estimated Ton Details. Please wait.</td>
             </tr>
         </p-table>
     </div>

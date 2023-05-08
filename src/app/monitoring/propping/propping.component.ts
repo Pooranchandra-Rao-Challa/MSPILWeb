@@ -83,7 +83,7 @@ export class ProppingComponent implements OnInit {
   initProppingStages() {
     this.lookupService.ProppingStages().subscribe((resp) => {
       this.proppingStages = resp as unknown as LookupDetailDto[];
-      if (this.proppingStages) this.initProppings(this.currentSeason.seasonId!, this.proppingStages[0].lookupDetailId!);
+      if (this.proppingStages.length > 0) this.initProppings(this.currentSeason.seasonId!, this.proppingStages[0].lookupDetailId!);
     });
   }
 

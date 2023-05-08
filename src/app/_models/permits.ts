@@ -280,21 +280,23 @@ export class SeasonQuotaViewDto {
   objPlotQuotas?:PlotQuotaViewDto[];
   plotQuotas: any
   groupBy: any
+  type: any
 }
 export class PlotQuotaViewDto {
-  PlotQuotaId?: number
-  SeasonQuotaId?: number
-  QuotaReleased?: number
-  DivisionCode?: string
-  DivisionName?: string
-  CircleCode?: string
-  CircleName?: string
-  SectionCode?: string
-  SectionName?: string
-  VillageCode?: string
-  VillageName?: string
-  NetArea?: number
-  EstimatedTon?: number
+  plotQuotaId?: number
+  seasonQuotaId?: number
+  quotaReleased?: number
+  divisionCode?: string
+  divisionName?: string
+  circleCode?: string
+  circleName?: string
+  sectionCode?: string
+  sectionName?: string
+  villageCode?: string
+  villageName?: string
+  netArea?: number
+  estimatedTon?: number
+  
 }
 
 export class PlotCuttingOrderViewDto{
@@ -375,13 +377,12 @@ export class GetCuttingOrderViewDto{
 
 export class PlotQuotaDto {
   seasonId?: number
-  fromGrpNo?: number
-  toGrpNo?: number
-  quota?: number
-  filterName?: string
+  fromSchGroupNo?: number
+  toSchGroupNo?: number
+  quotaReleased?: number
+  groupBy?: string
 }
 export class GetQuotasViewDto {
-  [x: string]: any
   sectionId?: number
   sectionName?: string
   circleId?: number
@@ -396,7 +397,7 @@ export class GetQuotasViewDto {
   scheduledTons?: number
   plotQuotaId?:number
   seasonQuotaId?:number
-  quotaReleased:any
+  quotaReleased?:number
 
 }
 

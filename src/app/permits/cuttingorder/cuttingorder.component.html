@@ -1,5 +1,6 @@
 <div class="col-12">
     <div class="card">
+        <p-toast key="tst"></p-toast>
         <!-- toolbar -->
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
@@ -370,9 +371,8 @@
                                     <div class="col-12 p-0">
                                         <div class="md:col-3 p-3 mb-3" style="float: right;">
                                             <button pButton pRipple type="submit" label="Get Cutting Order"
-                                                [disabled]="fbCuttingOrder.invalid"
-                                                class="p-button-raised p-button-primary"
-                                                (click)="addCuttingOrder()"></button>
+                                                [disabled]="fbCuttingOrder.invalid" class="p-button-raised p-button-primary"
+                                                 (click)="addCuttingOrder()"></button>
                                         </div>
                                     </div>
 
@@ -391,8 +391,8 @@
             <div class="flex flex-column align-items-center justify-content-center">
 
                 <!-- popup table -->
-                <p-table #dtcuttingorders [value]="cuttingorders" dataKey="id" [rows]="10" [rowHover]="true"
-                   styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100"
+                <p-table #dtcuttingorders [value]="cuttingorders" dataKey="id" [rows]="10" [rowHover]="true"   [globalFilterFields]="globalFilterFields"
+                   styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [alwaysShowPaginator]="false"
                     [paginator]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
                     <ng-template pTemplate="caption">
                         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -402,8 +402,7 @@
                                 <span class="p-input-icon-left m-2">
                                     <i class="pi pi-search"></i>
                                     <input pInputText type="text" #filter placeholder="Search Keyword"
-                                        (input)="onSearch(dtcuttingorders,$event)" class="w-full" />
-                                        <!-- pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon" -->
+                                        class="w-full" />
                                 </span>
                                 <button pButton label="Submit" (click)="onSubmit()"
                                 class="p-button-raised p-button-primary m-2"></button>
@@ -439,7 +438,7 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td class="md:text-center" colspan="22">There Are No plots Found Yet.</td>
+                            <td class="md:text-center m-5" colspan="22">There Are No plots Found Yet.</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -460,10 +459,9 @@
                     <div>
                         <span class="p-input-icon-left m-2">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter placeholder="Search Keyword"
-                                (input)="onSearch(dtseasoncuttingOrders,$event)"
-                                pTooltip="Search By divisionName, circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
-                                class="w-full" />
+                            <input pInputText type="text" #filter 
+                            (input)="onSearch(dtseasoncuttingOrders,$event)" placeholder="Search Keyword"
+                                pTooltip="Search By cuttingOrderDate, fromCCS, toCCS" class="w-full">
                         </span>
                         <span class="p-input-icon-left mx-2">
                             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
@@ -543,11 +541,11 @@
     </ng-template>
     <ng-template pTemplate="emptymessage">
         <tr>
-            <td colspan="20" class="md:text-center">No Cutting Order Details Found.</td>
+            <td colspan="20" class="md:text-center m-5">No Cutting Order Details Found.</td>
         </tr>
     </ng-template>
     <tr>
-        <td colspan="20" class="md:text-center">Loading Cutting Order Details. Please wait.</td>
+        <td colspan="20" class="md:text-center m-5">Loading Cutting Order Details. Please wait.</td>
     </tr>
     </p-table>
 </div>

@@ -247,5 +247,5 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMPSG001': 'Schedule Grouping Is Add Successfully',
 
   // Cutting Order
-  'SMPCO001': 'Schedule Grouping Is Add Successfully',
+  'SMPCO001': 'Cutting Order Is Add Successfully',
 }

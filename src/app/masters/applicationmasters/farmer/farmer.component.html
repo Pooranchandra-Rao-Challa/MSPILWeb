@@ -105,9 +105,9 @@
             Cultivated Area<p-columnFilter type="text" field="cultivatedArea" display="menu"></p-columnFilter>
             <p-sortIcon field="cultivatedArea"></p-sortIcon>
           </th>
-      
-          
-         
+
+
+
           <th pSortableColumn="isRegistered">
             Is Registered <p-columnFilter type="text" field="isRegistered" display="menu"></p-columnFilter>
             <p-sortIcon field="isRegistered"></p-sortIcon>
@@ -226,7 +226,7 @@
                         </span>
                       </div>
                       <div class="field col-12 md:col-6">
-                        <label htmlFor="aliasName">Alias Name:</label>
+                        <label htmlFor="aliasName" class="required">Alias Name:</label>
                         <input pInputText id="aliasName" #aliasName type="text" placeholder="Enter Relation Name"
                           formControlName="aliasName" alphaOnly [maxlength]="maxLength.name"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['aliasName'].touched && FormControls['aliasName'].errors }">
@@ -234,6 +234,9 @@
                           <small> {{aliasName.value.length}}/{{maxLength.name}} </small>
                         </div>
                         <span *ngIf="FormControls['aliasName'].touched && FormControls['aliasName'].invalid">
+                          <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['aliasName'].errors?.['required']">
+                          Please Enter Alias Name.</div>
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['aliasName'].errors?.['minlength']">
                             Alias Name Min Characters Is 2.</div>

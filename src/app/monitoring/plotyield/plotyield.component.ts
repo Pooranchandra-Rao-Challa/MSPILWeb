@@ -4,7 +4,7 @@ import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailDto, SeasonDto, SeasonViewDto } from 'src/app/_models/applicationmaster';
 import { ITableHeader } from 'src/app/_models/common';
 import {
@@ -272,8 +272,8 @@ export class PlotyieldComponent implements OnInit {
       plotYieldId: [pest.plotYieldId],
       pestName: [pest.pestName],
       remarks: [pest.remarks],
-      identifiedDate: [pest.identifiedDate && new Date(pest.identifiedDate)],
-      controlDate: [pest.controlDate && new Date(pest.controlDate)]
+      identifiedDate: [pest.identifiedDate && FORMAT_DATE(new Date(pest.identifiedDate))],
+      controlDate: [pest.controlDate && FORMAT_DATE(new Date(pest.controlDate))]
     })
   }
 
@@ -311,8 +311,8 @@ export class PlotyieldComponent implements OnInit {
       plotYieldId: [disease.plotYieldId],
       diseaseName: [disease.diseaseName],
       remarks: [disease.remarks],
-      identifiedDate: [disease.identifiedDate && new Date(disease.identifiedDate)],
-      controlDate: [disease.controlDate && new Date(disease.controlDate)]
+      identifiedDate: [disease.identifiedDate && FORMAT_DATE(new Date(disease.identifiedDate))],
+      controlDate: [disease.controlDate && FORMAT_DATE(new Date(disease.controlDate))]
     })
   }
 
