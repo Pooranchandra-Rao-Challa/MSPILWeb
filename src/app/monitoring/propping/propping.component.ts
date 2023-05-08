@@ -26,6 +26,7 @@ export class ProppingComponent implements OnInit {
   @ViewChild('opPropping') opPropping!: OverlayPanel;
   fbPropping!: FormGroup;
   proppingStages: LookupDetailDto[] = [];
+  currentProppingStage: any = {};
   proppings: IProppingViewDto[] = [];
   propping: ProppingDto = {};
   permissions: any;
@@ -34,6 +35,7 @@ export class ProppingComponent implements OnInit {
     { field: 'plotNumber', header: 'plotNumber', label: 'Plot No' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
+    { field: 'proppingDate', header: 'proppingDate', label: 'Propping Date' },
     { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
     { field: 'circleName', header: 'circleName', label: 'Circle Name' },
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
@@ -42,7 +44,6 @@ export class ProppingComponent implements OnInit {
     { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
-    { field: 'proppingDate', header: 'proppingDate', label: 'Propping Date' },
   ];
 
   constructor(private appMasterService: AppMasterService,
@@ -83,7 +84,10 @@ export class ProppingComponent implements OnInit {
   initProppingStages() {
     this.lookupService.ProppingStages().subscribe((resp) => {
       this.proppingStages = resp as unknown as LookupDetailDto[];
-      if (this.proppingStages.length > 0) this.initProppings(this.currentSeason.seasonId!, this.proppingStages[0].lookupDetailId!);
+      if (this.proppingStages.length > 0) {
+        this.currentProppingStage = this.proppingStages[0];
+        this.initProppings(this.currentSeason.seasonId!, this.currentProppingStage.lookupDetailId!);
+      }
     });
   }
 
@@ -101,7 +105,7 @@ export class ProppingComponent implements OnInit {
   }
 
   onSelectionSeason(seasonId: number) {
-    this.initProppings(seasonId, this.fbPropping.controls['proppingStageId'].value);
+    this.initProppings(seasonId, this.currentProppingStage.lookupDetailId);
   }
 
   onProppingStage(proppingStageId: number) {
@@ -109,7 +113,7 @@ export class ProppingComponent implements OnInit {
   }
 
   onSearch() {
-    this.initProppings(this.currentSeason.seasonId!, this.fbPropping.controls['proppingStageId'].value);
+    this.initProppings(this.currentSeason.seasonId!, this.currentProppingStage.lookupDetailId);
   }
 
   clear(table: Table) {
@@ -129,7 +133,7 @@ export class ProppingComponent implements OnInit {
       this.fbPropping.value.proppingDate = FORMAT_DATE(this.fbPropping.value.proppingDate && new Date(this.fbPropping.value.proppingDate));
       this.monitoringService.UpdatePropping(this.fbPropping.value).subscribe(resp => {
         if (resp) {
-          this.initProppings(this.currentSeason.seasonId!, this.fbPropping.controls['proppingStageId'].value);
+          this.initProppings(this.currentSeason.seasonId!, this.currentProppingStage.lookupDetailId);
           this.alertMessage.displayAlertMessage(ALERT_CODES["SMOP002"]);
           this.fbPropping.reset();
         }

@@ -135,7 +135,7 @@
                 <div class="field col-12 md:col-6">
                   <label>Name:<sup class="p-error">*</sup></label>
                   <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
-                    alphaOnly [maxlength]="maxLength.name"
+                  alphaNumeric [maxlength]="maxLength.name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                   <div class="text-right">
                     <small>{{name.value.length}}/{{maxLength.name}}</small>

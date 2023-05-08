@@ -27,7 +27,7 @@
                           FormControls['stateId'].invalid
                         ">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['stateId'].errors?.['required']">
-                          Please Select District.
+                          Please Select State.
                         </div>
                       </span>
                     </div>
@@ -206,7 +206,7 @@
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label>PinCode:<sup class="p-error">*</sup></label>
+                      <label>Pin Code:</label>
                       <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
                         formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
@@ -216,15 +216,13 @@
                         </small>
                       </div>
                       <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
-                          Please Enter Pin Code.</div>
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['pattern']">
                           Pin Code Should Not Start With Zero And Contains 6 Digits.</div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="distance">Distance:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="2"
+                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="1" [maxlength]="10"
                         placeholder="Enter Distance"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
                       </p-inputNumber>
@@ -232,14 +230,13 @@
                               FormControls['distance'].invalid &&
                               FormControls['distance'].touched
                             " class="error-message p-error">
-                        Distance Required
+                        Please Enter Distance .
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
-                        [minFractionDigits]="2" placeholder="Enter Diverted Distance"
-                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['divertedDistance'].touched && FormControls['divertedDistance'].errors }">
+                        [minFractionDigits]="2" placeholder="Enter Diverted Distance" [maxlength]="10">
                       </p-inputNumber>
                       <div *ngIf="
                               FormControls['divertedDistance'].invalid &&
@@ -247,7 +244,7 @@
                             " class="error-message p-error">
                         Diverted Distance Required
                       </div>
-                    </div>
+                    </div>  
                     <div class="field col-12 md:col-4">
                       <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
@@ -264,7 +261,7 @@
                     </div>
 
                     <div class="field col-8 md:col-4">
-                      <label>Address:<sup class="p-error">*</sup></label>
+                      <label>Address:</label>
                       <textarea rows="5" cols="30" placeholder="Enter Address" #address pInputTextarea
                         formControlName="address" [maxlength]="maxLength.address" address
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
@@ -272,8 +269,6 @@
                         <small>{{address.value.length}}/{{maxLength.address}} </small>
                       </div>
                       <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
-                          Please Enter Address.</div>
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
                           Address Is Incorrect.</div>
                       </span>
@@ -290,7 +285,7 @@
                 <p-fieldset legend="Land Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-                      <label for="cultivableArea">Cultivatable Area(Acres):<sup class="p-error">*</sup></label>
+                      <label for="cultivable Area">Cultivable Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2"
                         placeholder="Enter Cultivable Area(Acres)">
                       </p-inputNumber>
@@ -298,7 +293,7 @@
                           FormControls['cultivableArea'].invalid &&
                           FormControls['cultivableArea'].touched
                         " class="error-message p-error">
-                        Cultivatable Area Is Required.
+                        Please enter Cultivable area
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -310,7 +305,8 @@
                           FormControls['irrigationArea'].invalid &&
                           FormControls['irrigationArea'].touched
                         " class="error-message p-error">
-                        Irrigation area is required
+                        Please enter  Irrigation area.
+                        
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -324,19 +320,21 @@
                           FormControls['potentialArea'].touched
                         " class="error-message p-error">
                         Suitable Area For Cane is required.
+                        Please enter  Suitable Area For Cane.
+                        
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="totalArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2"
-                        placeholder="Total Area">
+                        placeholder="Total Geographic Area">
                       </p-inputNumber>
 
                       <div *ngIf="
                           FormControls['totalArea'].invalid &&
                           FormControls['totalArea'].touched
                         " class="error-message p-error">
-                        Total Geographic Area iIs Required.
+                        Please enter  Total Geographic Area.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -348,7 +346,7 @@
                           FormControls['dryArea'].invalid &&
                           FormControls['dryArea'].touched
                         " class="error-message p-error">
-                        Dry Area Is Required
+                        Please enter  Dry Area .
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -360,14 +358,21 @@
                           FormControls['notSuitableArea'].invalid &&
                           FormControls['notSuitableArea'].touched
                         " class="error-message p-error">
-                        Not Suitable Area Required.
+                        Please enter Not Suitable Area.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label for="target">Target Area</label>
+                      <label for="target">Target Area <sup class="p-error">*</sup></label>
                       <p-inputNumber formControlName="targetArea" inputId="target" [minFractionDigits]="2"
                         placeholder="Enter Target Area">
                       </p-inputNumber>
+                      <div *ngIf="
+                          FormControls['targetArea'].invalid &&
+                          FormControls['targetArea'].touched
+                        " class="error-message p-error">
+                        Please enter  Target Area.
+                      </div>
+
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="noOfEbservices">No Of EB Services:<sup class="p-error">*</sup></label>
@@ -378,7 +383,7 @@
                           FormControls['noOfEbservices'].invalid &&
                           FormControls['noOfEbservices'].touched
                         " class="error-message p-error">
-                        No Of Eb Services Is Required.
+                        Please enter No Of Eb Services. 
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -390,7 +395,7 @@
                           FormControls['tptrate'].invalid &&
                           FormControls['tptrate'].touched
                         " class="error-message p-error">
-                        Tpt Rate Is Required.
+                        Please enterTpt Rate. 
                       </div>
                     </div>
                   </div>
@@ -524,7 +529,7 @@
             <p-sortIcon field="distance"></p-sortIcon>
           </th>
           <th pSortableColumn="divertedDistance">
-            DivertedDistance<p-columnFilter type="text" field="divertedDistance" display="menu"></p-columnFilter>
+            Diverted Distance<p-columnFilter type="text" field="divertedDistance" display="menu"></p-columnFilter>
             <p-sortIcon field="divertedDistance"></p-sortIcon>
           </th>
           <th pSortableColumn="noOfEBServices">
@@ -537,7 +542,7 @@
             <p-sortIcon field="tptRate"></p-sortIcon>
           </th>
           <th pSortableColumn="totalArea">
-            Total Area<p-columnFilter type="text" field="totalArea" display="menu">
+            Total geographic area<p-columnFilter type="text" field="totalArea" display="menu">
             </p-columnFilter>
             <p-sortIcon field="totalArea"></p-sortIcon>
           </th>
@@ -555,7 +560,7 @@
             <p-sortIcon field="dryArea"></p-sortIcon>
           </th>
           <th pSortableColumn="potentialArea">
-            Potential Area<p-columnFilter type="text" field="potentialArea" display="menu"></p-columnFilter>
+            Suitable area<p-columnFilter type="text" field="potentialArea" display="menu"></p-columnFilter>
             <p-sortIcon field="potentialArea"></p-sortIcon>
           </th>
           <th pSortableColumn="notSuitableArea">
