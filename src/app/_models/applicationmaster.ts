@@ -249,6 +249,8 @@ export class BankViewDto {
   createdAt?: Date;
   updatedBy?: string;
   createdBy?: string;
+  ifsc: any;
+  id:any
 }
 export class BranchDto {
   branchId?: number;

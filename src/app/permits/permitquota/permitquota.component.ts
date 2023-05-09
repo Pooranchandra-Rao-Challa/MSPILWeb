@@ -9,7 +9,6 @@ import { AppMasterService } from "src/app/_services/appmaster.service";
 import { CommonService } from "src/app/_services/common.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 import { permitService } from '../../_services/permit.service';
-
 import { MessageService } from "primeng/api";
 import { FORMAT_DATE } from "src/app/_helpers/date.format.pipe";
 import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
@@ -41,7 +40,7 @@ export class PermitQuotaComponent implements OnInit {
   submitLabel!: string;
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('filter2') filter2!: ElementRef;
-  @ViewChild('dtpermitquota') dtpermitquotas!: Table;
+  @ViewChild('dtpermitquota') dtpermitquota!: Table;
   @ViewChild('dtplotquota') dtplotquota!: Table;
   selectedCategory: any = null;
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
@@ -49,7 +48,7 @@ export class PermitQuotaComponent implements OnInit {
   Quotas: GetQuotasViewDto[] = [];
   fromScheduleNo: any;
   toScheduleNo: any;
-  editPermitQuotaData:any
+  editPermitQuotaData: any
   error: boolean = false;
 
   constructor(
@@ -131,7 +130,6 @@ export class PermitQuotaComponent implements OnInit {
   get FormControals() {
     return this.fbPermitQuota.controls
   }
-
   getPermitQuota() {
     this.submitLabel = "Add Permit Quota";
     this.addFlag = true;
@@ -140,7 +138,6 @@ export class PermitQuotaComponent implements OnInit {
     this.PermitQuotaform();
     this.fbPermitQuota.patchValue({ seasonId });
   }
-
   ngOnInit(): void {
     this.initCurrentSeason(CURRENT_SEASON());
     this.initSeasons();
@@ -154,9 +151,9 @@ export class PermitQuotaComponent implements OnInit {
   initQuotas() {
     this.permitService.GetQuotas(this.fbPermitQuota.value).subscribe((resp) => {
       this.Quotas = resp as unknown as GetQuotasViewDto[];
-      console.log('plotQuotas',this.Quotas);
+      console.log('plotQuotas', this.Quotas);
       const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
-     
+
       formArray.clear();
       for (const quota of this.Quotas) {
         this.addSchedule(quota);
@@ -180,8 +177,8 @@ export class PermitQuotaComponent implements OnInit {
     var data = source.data as SeasonQuotaViewDto;
     this.permitService.GetPlotQuotas(data.seasonId, data.seasonQuotaId).subscribe(resp => {
       data.objPlotQuotas = resp as unknown as PlotQuotaViewDto[];
-      console.log('expand',data.objPlotQuotas);
-      
+      console.log('expand', data.objPlotQuotas);
+
       if (!this.addFlag) {
         let plotQuotas: any = resp ? resp : [];
         const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
@@ -215,7 +212,7 @@ export class PermitQuotaComponent implements OnInit {
   }
   onSubmit() {
     console.log(this.fbPermitQuota.value);
-    
+
     const sum = this.fbPermitQuota.value.plotQuotas.reduce((acc: any, curr: any) => acc + curr.quotaReleased, 0);
     if (sum.toFixed(2) != this.fbPermitQuota.value.quotaReleased.toFixed(2)) {
       this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: `Entered Quota (${sum.toFixed(2)}) is not equal to total quota (${this.fbPermitQuota.value.quotaReleased})` });
@@ -225,9 +222,9 @@ export class PermitQuotaComponent implements OnInit {
       if (resp) {
         this.initCurrentSeason(CURRENT_SEASON());
         this.PermitQuotaform();
-        // this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMPPQ001" : "SMPPQ002"]);
+        this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMPPQ001" : "SMPPQ002"]);
         this.showDialog = false;
-      
+
       }
     })
   }
@@ -249,8 +246,6 @@ export class PermitQuotaComponent implements OnInit {
   onGlobalFilter2(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
-
   checkValue() {
     if (this.fromScheduleNo < this.toScheduleNo) {
       this.error = false;
@@ -264,5 +259,4 @@ export class PermitQuotaComponent implements OnInit {
       this.error = true;
     }
   }
-
 }

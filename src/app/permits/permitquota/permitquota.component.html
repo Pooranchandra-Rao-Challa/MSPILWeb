@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="field col-12 md:col-3">
-                      <label>From Date:</label>
+                      <label>From Date:<sup class="p-error">*</sup></label>
                       <p-calendar placeholder="From Date" [readonlyInput]="true" [showIcon]="true" appendTo="body"
                         formControlName="fromDate" [style]="{'width':'100%'}"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControals['fromDate'].touched && FormControals['fromDate'].errors }">
@@ -71,14 +71,20 @@
                       <span *ngIf="FormControals['fromDate'].touched && FormControals['fromDate'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="FormControals['fromDate'].errors?.['required']">
-                          Please Select Cutting Order Date.</div>
+                          Please Select From Date.</div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label>Quota:<sup class="p-error">*</sup></label>
                       <!-- <input pInputText id="quota" numericOnly  formControlName="quotaReleased"> -->
-                      <p-inputNumber inputId="quotaReleased" formControlName="quotaReleased" [minFractionDigits]="2">
+                      <p-inputNumber inputId="quotaReleased" formControlName="quotaReleased" [minFractionDigits]="2"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControals['quotaReleased'].touched && FormControals['quotaReleased'].errors }">
                       </p-inputNumber>
+                      <span *ngIf="FormControals['quotaReleased'].touched && FormControals['quotaReleased'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControals['quotaReleased'].errors?.['required']">
+                          Please Select Cutting Order Date.</div>
+                      </span>
                     </div>
                     <div class="field col-12 md:col-8">
                       <label>Type:<sup class="p-error">*</sup></label>
@@ -120,7 +126,7 @@
             </div>
           </div>
           <!-- table -->
-          <p-table #dtplotquota [value]="scheduleControls.controls" filterMatchMode="contains" dataKey="id" [rows]="10"
+          <p-table #dtplotquota [value]="scheduleControls.controls"  filterMatchMode="contains" dataKey="id" [rows]="10"
             [rowHover]="true" *ngIf="scheduleControls?.value?.length" formArrayName="plotQuotas"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
             responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
@@ -132,7 +138,7 @@
                 <div>
                   <span class="p-input-icon-left m-2">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" #filter2 (keyup.enter)="onGlobalFilter2(dtplotquota,$event)"
+                    <input pInputText type="text" #filter2 (input)="onGlobalFilter2(dtplotquota,$event)" 
                       placeholder="Search Keyword"
                       pTooltip="Search By divisionName, circleName, sectionName,villageName ,tons, quotaReleased"
                       class="w-full" />
