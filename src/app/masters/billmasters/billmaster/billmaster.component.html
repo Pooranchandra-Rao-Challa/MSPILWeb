@@ -41,9 +41,9 @@
             Billing Number <p-columnFilter type="text" field="billNo" display="menu"></p-columnFilter>
             <p-sortIcon field="billNo"></p-sortIcon>
           </th>
-          <th pSortableColumn="seasonName">
-            Season Code <p-columnFilter type="text" field="seasonName" display="menu"></p-columnFilter>
-            <p-sortIcon field="seasonName"></p-sortIcon>
+          <th pSortableColumn="seasonCode">
+            Season Code <p-columnFilter type="text" field="seasonCode" display="menu"></p-columnFilter>
+            <p-sortIcon field="seasonCode"></p-sortIcon>
           </th>
           <th pSortableColumn="fromDate">
             From Date <p-columnFilter type="text" field="fromDate" display="menu"></p-columnFilter>
@@ -87,7 +87,7 @@
         <tr>
           <td>{{bill.billCategoryName}}</td>
           <td>{{bill.billNo}}</td>
-          <td>{{bill.seasonName}}</td>
+          <td>{{bill.seasonCode}}</td>
           <td>{{bill.fromDate | date: mediumDate}}</td>
           <td>{{bill.toDate | date: mediumDate}}</td>
           <td>{{bill.runDate | date: mediumDate}}</td>

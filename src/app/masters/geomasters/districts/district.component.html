@@ -84,7 +84,7 @@
     <p-table #dt1 [value]="districts" dataKey="id" [rows]="10"  [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true" 
+      [showCurrentPageReport]="true"
       [globalFilterFields]="['districtId','districtName','districtCode','stateName','updatedAt','createdAt','updatedBy','createdBy' ]"
       [autoLayout]="true" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}" [rowsPerPageOptions]="[10,25,50]"
      >
@@ -119,9 +119,9 @@
             </p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="createAt">Created Date<p-columnFilter type="text" field="createAt" display="menu">
+          <th pSortableColumn="createdAt">Created Date<p-columnFilter type="text" field="createdAt" display="menu">
             </p-columnFilter>
-            <p-sortIcon field="createAt"></p-sortIcon>
+            <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
           <th pSortableColumn="createdBy"> Created By<p-columnFilter type="text" field="createdBy" display="menu">
             </p-columnFilter>

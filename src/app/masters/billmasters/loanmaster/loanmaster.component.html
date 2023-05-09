@@ -135,6 +135,19 @@
               <p-fieldset legend="LoanType" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
+                    <label>Category:<sup class="p-error">*</sup></label>
+                    <p-dropdown placeholder="Select Categories" optionLabel="name" [options]="billCategories"
+                      optionValue="lookupDetailId" formControlName="categoryId"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
+                    </p-dropdown>
+                    <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
+                      <div class="ng-invalid ng-touched p-error"
+                        *ngIf="FormControls['categoryId'].errors?.['required']">Please Select
+                        Category.
+                      </div>
+                    </span>
+                  </div>
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
                       alphaNumeric [readonly]="fbloantype.value.tptId" [maxlength]="20"
@@ -151,19 +164,6 @@
                         Code Max Length Is 20.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
                         Code Should Contains Only Alpha Numeric.</div>
-                    </span>
-                  </div>
-                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                    <label>Category:<sup class="p-error">*</sup></label>
-                    <p-dropdown placeholder="Select Categories" optionLabel="name" [options]="billCategories"
-                      optionValue="lookupDetailId" formControlName="categoryId"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
-                    </p-dropdown>
-                    <span *ngIf="FormControls['categoryId'].touched && FormControls['categoryId'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['categoryId'].errors?.['required']">Please Select
-                        Category.
-                      </div>
                     </span>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
@@ -185,10 +185,11 @@
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Interest Rate:<sup class="p-error">*</sup></label>
-                    <input pInputText id="interestRate" placeholder="Enter Interest Rate" numericOnly
-                      formControlName="interestRate" [ngClass]="{
-                        'is-invalid ng-dirty':
-                          FormControls['interestRate'].touched && FormControls['interestRate'].errors}" />
+                    <p-inputNumber id="interestRate" placeholder="Enter Interest Rate" formControlName="interestRate"
+                      mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" [showButtons]="true"
+                      [ngClass]="{ 'is-invalid ng-dirty':
+                          FormControls['interestRate'].touched && FormControls['interestRate'].errors}">
+                    </p-inputNumber>
                     <span *ngIf="
                         FormControls['interestRate'].touched && FormControls['interestRate'].invalid ">
                       <div class="ng-invalid ng-touched p-error"
@@ -203,8 +204,10 @@
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Priority:<sup class="p-error">*</sup></label>
-                    <input pInputText id="priority" type="number" placeholder="Enter Priority" formControlName="priority" numericOnly
-                      [ngClass]="{'is-invalid ng-dirty':FormControls['priority'].touched &&FormControls['priority'].errors}" />
+                    <p-inputNumber id="priority" type="number" placeholder="Enter Priority" formControlName="priority"
+                      [showButtons]="true"
+                      [ngClass]="{'is-invalid ng-dirty':FormControls['priority'].touched &&FormControls['priority'].errors}">
+                    </p-inputNumber>
                     <span *ngIf="
                         FormControls['priority'].touched &&FormControls['priority'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
@@ -257,8 +260,8 @@
               <div class="grid p-fluid">
                 <div class="field col-12 md:col-9"></div>
                 <div class="field col-12 md:col-3 ">
-                  <button pButton pRipple type="button" label="Add Loan SubType" class="p-button-raised p-button-primary"
-                    (click)="addLoanSubType()"></button>
+                  <button pButton pRipple type="button" label="Add Loan SubType"
+                    class="p-button-raised p-button-primary" (click)="addLoanSubType()"></button>
                 </div>
                 <div formArrayName="loanSubTypes" *ngIf="showloantype">
                   <p-table #dt2 [value]="faLoanSubType().controls" dataKey="id" [rowHover]="true" [autoLayout]="true"
@@ -269,7 +272,7 @@
                         <th><label class="required">Code</label></th>
                         <th><label class="required">Name</label></th>
                         <th>Priority</th>
-                        <th><label class="required">Intrest Rate</label></th>
+                        <th><label class="required">Interest Rate</label></th>
                         <th><label class="required">Rate</label></th>
                         <th><label class="required">Requisition Req</label></th>
                         <th><label class="required">Uomid</label></th>
@@ -290,7 +293,8 @@
                           </div>
                           <span
                             *ngIf="formArrayControls(loanTypelIndex, 'code')?.touched && formArrayControls(loanTypelIndex, 'code')?.invalid">
-                            <div class="ng-invalid ng-touched p-error" *ngIf="formArrayControls(loanTypelIndex, 'code')?.errors?.['required']">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="formArrayControls(loanTypelIndex, 'code')?.errors?.['required']">
                               Please Enter Code.
                             </div>
                             <div class="ng-invalid ng-touched p-error"
@@ -310,7 +314,8 @@
                           </div>
                           <span
                             *ngIf="formArrayControls(loanTypelIndex, 'name')?.touched && formArrayControls(loanTypelIndex, 'name')?.invalid">
-                            <div class="ng-invalid ng-touched p-error" *ngIf="formArrayControls(loanTypelIndex, 'name')?.errors?.['required']">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="formArrayControls(loanTypelIndex, 'name')?.errors?.['required']">
                               Please Enter Name.
                             </div>
                             <div class="ng-invalid ng-touched p-error"
@@ -327,7 +332,8 @@
                           </p-inputNumber>
                         </td>
                         <td class="vertical-align-top">
-                          <p-inputNumber inputId="interestRate" formControlName="Interest Rate"
+                          <p-inputNumber inputId="interestRate" formControlName="interestRate" mode="decimal"
+                            locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                             placeholder="Enter Interest Rate" [showButtons]="true" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'interestRate')?.touched &&
                           formArrayControls(loanTypelIndex, 'interestRate')?.errors }">
                           </p-inputNumber>
@@ -339,8 +345,9 @@
                           </span>
                         </td>
                         <td class="vertical-align-top">
-                          <p-inputNumber inputId="rate" formControlName="rate" placeholder="Enter Rate"
-                            [showButtons]="true" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'rate')?.touched &&
+                          <p-inputNumber inputId="rate" formControlName="rate" placeholder="Enter Rate" mode="decimal"
+                            locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" [showButtons]="true"
+                            [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'rate')?.touched &&
                           formArrayControls(loanTypelIndex, 'rate')?.errors }">
                           </p-inputNumber>
                           <span
@@ -375,7 +382,7 @@
                           </span>
                         </td>
                         <td class="vertical-align-top">
-                            <p-dropdown placeholder="Select LoanQty Type" optionLabel="name" optionValue="value"
+                          <p-dropdown placeholder="Select LoanQty Type" optionLabel="name" optionValue="value"
                             [options]="loanQtyTypes" formControlName="loanQtyType" appendTo="body">
                           </p-dropdown>
                         </td>

@@ -22,29 +22,27 @@ export class SampleslabsComponent implements OnInit {
   sampleslab: SampleSlabDto = new SampleSlabDto();
   loading: boolean = true;
   fbsampleslabs!: FormGroup;
-  filter: any;
+  @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
   addFlag: boolean = true;
   maxAreaThatUsedInRecods: number = 1.2;
-  lastSampleSize:number = 0;
-  permissions:any;
+  lastSampleSize: number = 0;
+  permissions: any;
 
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,
-    private commonService: CommonService,
     public jwtService: JWTService,
-    private alertMessage:AlertMessage
-  ) {
+    private alertMessage: AlertMessage
+  ) { }
 
-  }
-  InitSampleslab() {
+  addSampleslab() {
     this.sampleslab = new SampleSlabDto();
-    this.fbsampleslabs.reset();
+    this.fbsampleslabs.controls["isActive"].patchValue(true);
     this.fbsampleslabs.patchValue({ sampleSlabId: 0 })
     this.submitLabel = "Add Sample Slab";
-    this.maxAreaThatUsedInRecods = this.maxAreaThatUsedInRecods+0.0050000000000000000000+0.0050000000000000000000
+    this.maxAreaThatUsedInRecods = this.maxAreaThatUsedInRecods + 0.0050000000000000000000 + 0.0050000000000000000000
     this.fbsampleslabs.controls["fromArea"].patchValue(this.maxAreaThatUsedInRecods);
-    this.fbsampleslabs.controls["noOfSample"].patchValue(this.lastSampleSize+1);
+    this.fbsampleslabs.controls["noOfSample"].patchValue(this.lastSampleSize + 1);
     this.addFlag = true;
     this.dialog = true;
   }
@@ -56,17 +54,15 @@ export class SampleslabsComponent implements OnInit {
   ngOnInit() {
     this.permissions = this.jwtService.Permissions;
     this.initSampleslabs();
-
-
     this.fbsampleslabs = this.formbuilder.group({
-      sampleSlabId: [0],
-      toArea:new FormControl('', [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      sampleSlabId: [null],
+      toArea: new FormControl(null, [Validators.required]),
       fromArea: new FormControl({ value: this.maxAreaThatUsedInRecods, disabled: true }, [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
       noOfSample: new FormControl({ value: this.lastSampleSize, disabled: true }, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      isActive: [Validators.required],
-
+      isActive: [null, Validators.required],
     });
   }
+
   initSampleslabs() {
     this.appmasterservice.GetSampleSlabs().subscribe((resp) => {
       this.sampleslabs = resp as unknown as SampleslabsViewDto[]
@@ -78,8 +74,6 @@ export class SampleslabsComponent implements OnInit {
       this.loading = false;
     })
   }
-
-
 
   editProduct(sampleslabs: SampleslabsViewDto) {
     this.sampleslab.toArea = sampleslabs.toArea;
@@ -93,9 +87,6 @@ export class SampleslabsComponent implements OnInit {
     this.dialog = true;
   }
 
-  private UpdateForm() {
-
-  }
   onClose() {
     this.fbsampleslabs.reset();
   }
@@ -104,6 +95,7 @@ export class SampleslabsComponent implements OnInit {
     if (this.addFlag) return this.appmasterservice.CreateSampleSlab(this.fbsampleslabs.value)
     else return this.appmasterservice.UpdateSampleSlab(this.fbsampleslabs.value)
   }
+
   onSubmit() {
     console.log(this.fbsampleslabs.valid);
     if (this.fbsampleslabs.valid) {
@@ -121,14 +113,15 @@ export class SampleslabsComponent implements OnInit {
       this.fbsampleslabs.markAllAsTouched();
     }
   }
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-  valSwitch: boolean = true;
 
 }
 
