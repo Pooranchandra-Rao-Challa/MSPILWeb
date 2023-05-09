@@ -49,6 +49,7 @@ export class PermitQuotaComponent implements OnInit {
   Quotas: GetQuotasViewDto[] = [];
   fromScheduleNo: any;
   toScheduleNo: any;
+  editPermitQuotaData:any
   error: boolean = false;
 
   constructor(
@@ -194,8 +195,10 @@ export class PermitQuotaComponent implements OnInit {
     });
   }
   editPermitQuota(permitQuota: SeasonQuotaViewDto) {
+    console.log(permitQuota);
     this.addFlag = false;
     this.submitLabel = 'Update Permit Quota';
+    this.editPermitQuotaData = permitQuota;
     let obj = {
       data: { ...permitQuota },
     }
@@ -222,7 +225,7 @@ export class PermitQuotaComponent implements OnInit {
       if (resp) {
         this.initCurrentSeason(CURRENT_SEASON());
         this.PermitQuotaform();
-        this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMPPQ001" : "SMPPQ002"]);
+        // this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMPPQ001" : "SMPPQ002"]);
         this.showDialog = false;
       
       }

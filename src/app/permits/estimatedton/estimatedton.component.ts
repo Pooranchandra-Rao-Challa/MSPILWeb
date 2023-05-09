@@ -7,22 +7,11 @@ import { Table } from "primeng/table";
 import { Observable } from "rxjs";
 import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
+import { ITableHeader } from "src/app/_models/common";
 import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonViewDto, ExcessViewDto, FarmersInPlotsForUserDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
-
-export interface IHeader {
-  field: string;
-  header: string;
-  label: string;
-}
-
-export interface IFromHeader {
-  field: string;
-  header: string;
-  label: string;
-}
 
 @Component({
   selector: 'app-estimatedton',
@@ -82,7 +71,6 @@ export class EstimatedTonComponent implements OnInit {
       isActive: [null]
     });
   }
-
   getExcesstonForm() {
     this.fbexcesston = this.formbuilder.group({
       plotExcessTonId: [null],
@@ -91,7 +79,6 @@ export class EstimatedTonComponent implements OnInit {
       isActive: [null]
     })
   }
-
   get FormControls() {
     return this.fbEstimatedTon.controls
   }
@@ -103,7 +90,7 @@ export class EstimatedTonComponent implements OnInit {
   get FormControl() {
     return this.fbexcesston.controls
   }
-  excesstonage: IHeader[] = [
+  excesstonage: ITableHeader[]  = [
     { field: 'excessTonage', header: 'excessTonage', label: 'Excess Tonage' },
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
@@ -120,7 +107,7 @@ export class EstimatedTonComponent implements OnInit {
     { field: 'NoofWeighments', header: 'NoofWeighments', label: 'No of Weighments' },
   ];
 
-  header: IFromHeader[] = [
+  header: ITableHeader[] = [
     { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
     { field: 'farmerCode', header: 'farmerCode', label: 'Farmer Code' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer Name' },
@@ -273,7 +260,6 @@ export class EstimatedTonComponent implements OnInit {
     this.fbEstimatedTon.controls['plotYieldId'].setValue(EstimatedTon.plotYieldId);
     this.opEstimatedTon.toggle(event);
   }
-
   SubmitEstimatedTonnage() {
     this.permitService.UpdateExcessTonnage(this.fbEstimatedTon.value).subscribe((resp) => {
       if (resp) {
@@ -283,7 +269,6 @@ export class EstimatedTonComponent implements OnInit {
       }
     })
   }
-
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';

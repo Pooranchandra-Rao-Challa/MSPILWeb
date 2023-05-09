@@ -17,7 +17,7 @@ export class BillViewDto {
   billCategoryId?: number;
   billCategoryName?: string;
   seasonsId?: number;
-  seasonName?: string;
+  SeasonCode?: string;
   runDate?: Date;
   fromDate?: Date;
   toDate?: Date;
