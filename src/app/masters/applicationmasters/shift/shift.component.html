@@ -10,8 +10,8 @@
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
-                  <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
-                    <label htmlFor="code">Shift Code:<sup class="p-error">*</sup></label>
+                  <div class="field col-12  md:col-6">
+                    <label class="required">Shift Code:</label>
                     <input pInputText id="code" #code formControlName="code" type="text" placeholder="Enter Shift Code"
                       alphaNumeric
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"
@@ -31,7 +31,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Shift Name:<sup class="p-error">*</sup></label>
+                    <label class="required">Shift Name:</label>
                     <input pInputText id="address1" #name type="text" formControlName="name"
                       placeholder="Enter Shift Name" alphaOnly [maxlength]="maxLength.name"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }" />
@@ -49,7 +49,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>From Time:<sup class="p-error">*</sup></label>
+                    <label class="required">From Time:</label>
                     <p-calendar class="cursor-pointer" [timeOnly]="true" [showIcon]="true" icon="pi pi-clock"
                       placeholder="From Time" [showSeconds]="false" dataType="string" [readonlyInput]="true"
                       formControlName="strFromTime"
@@ -62,7 +62,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>To Time:<sup class="p-error">*</sup></label>
+                    <label class="required">To Time:</label>
                     <p-calendar [readonlyInput]="true" [timeOnly]="true" [showIcon]="true" icon="pi pi-clock"
                       placeholder="To Time" [showSeconds]="false" dataType="string" formControlName="strToTime"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['strToTime'].touched && FormControls['strToTime'].errors }">
@@ -73,11 +73,11 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label htmlFor="isNextDay">Is NextDay?:</label><br>
+                    <label htmlFor="isNextDay">Is NextDay:</label><br>
                     <p-inputSwitch formControlName="isNextDay"></p-inputSwitch>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label htmlFor="isActive">Is Active?:</label><br>
+                    <label htmlFor="isActive">Is Active:</label><br>
                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                   </div>
                 </div>
