@@ -207,6 +207,8 @@ export class ScheduleGroupingComponent implements OnInit {
     var data = source.data as ISeasonScheduleGroupViewDto;
     this.permitService.GetFarmerPlotsInSchedule(data.seasonId, data.seasonScheduleId).subscribe(resp => {
       data.objPlotSchedule = resp as unknown as IPlotScheduleViewDto[];
+      console.log('expand', data.objPlotSchedule);
+      
     });
   }
 
