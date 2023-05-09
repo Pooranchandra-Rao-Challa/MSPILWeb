@@ -1,8 +1,9 @@
 <div class="col-12">
   <div class="card">
     <p-toast key="tst"></p-toast>
+
     <p-dialog header="Sample Slab" [(visible)]="dialog" showEffect="fade"
-    [breakpoints]="{'960px': '40%', '640px': '80%'}" [style]="{width: '40%'}" [modal]="true">
+      [breakpoints]="{'960px': '40%', '640px': '80%'}" [style]="{width: '40%'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="fbsampleslabs" (ngSubmit)="onSubmit()">
@@ -13,41 +14,38 @@
                     <label htmlFor="fromArea">From Area:<sup class="p-error">*</sup></label>
                     <input pInputText id="fromArea" formControlName="fromArea" type="text" placeholder="Enter Form Area"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromArea'].touched && FormControls['fromArea'].errors }" />
-
                     <div
                       *ngIf="FormControls['fromArea'].invalid &&  FormControls['fromArea'].touched && FormControls['fromArea'].errors?.['required']"
                       class="error-message p-error">
                       Code is required
                     </div>
-
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['fromArea'].errors?.['pattern']">Code
                       Should Only Contain Numbers in Point Value .
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
                     <label htmlFor="toArea">To Area:<sup class="p-error">*</sup></label>
-                    <p-inputNumber #toArea  formControlName="toArea" type="text" placeholder="Enter To Area" mode="decimal" [minFractionDigits]="2" 
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['toArea'].touched && FormControls['toArea'].errors }" ></p-inputNumber>
+                    <p-inputNumber #toArea formControlName="toArea" type="text" placeholder="Enter To Area"
+                      mode="decimal" [minFractionDigits]="2"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['toArea'].touched && FormControls['toArea'].errors }">
+                    </p-inputNumber>
                     <div
                       *ngIf="FormControls['toArea'].invalid &&  FormControls['toArea'].touched && FormControls['toArea'].errors?.['required']"
                       class="error-message p-error">
                       Please Enter To Area
                     </div>
-                     
-                     
                   </div>
                   <div class="field col-12 md:col-6">
                     <label htmlFor="noOfSample">No of Sample:<sup class="p-error">*</sup></label>
-                    <p-inputNumber id="noOfSample" formControlName="noOfSample"  [minFractionDigits]="2" [min]="0" [max]="100"
-                      placeholder="No of Sample"
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfSample'].touched && FormControls['noOfSample'].errors }" ></p-inputNumber>
-
+                    <p-inputNumber id="noOfSample" formControlName="noOfSample" [minFractionDigits]="2" [min]="0"
+                      [max]="100" placeholder="No of Sample"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfSample'].touched && FormControls['noOfSample'].errors }">
+                    </p-inputNumber>
                     <div
                       *ngIf="FormControls['noOfSample'].invalid &&  FormControls['noOfSample'].touched && FormControls['noOfSample'].errors?.['required']"
                       class="error-message p-error">
                       Sample is required
                     </div>
-
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['noOfSample'].errors?.['pattern']">
                       Sample Should Only Contain Numbers .
                     </div>
@@ -55,7 +53,6 @@
                   <div class="field col-6">
                     <label>Is Active?:<sup class="p-error">*</sup></label><br>
                     &nbsp; <p-inputSwitch formControlName="isActive"></p-inputSwitch>
-
                     <div *ngIf="FormControls['isActive'].invalid &&  FormControls['isActive'].touched"
                       class="error-message p-error">
                       Please Active
@@ -74,22 +71,24 @@
         </div>
       </ng-template>
     </p-dialog>
+
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
         <h4>Sample Slabs</h4>
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Sample Slab" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitSampleslab();" *ngIf="permissions.CanCreateSampleSlab"></button>
+          (click)="addSampleslab();" *ngIf="permissions.CanCreateSampleSlab"></button>
       </ng-template>
     </p-toolbar>
-    <p-table #dt1 [value]="sampleslabs" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading" [alwaysShowPaginator]="false"
-      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
+
+    <p-table #dt1 [value]="sampleslabs" dataKey="id" [rows]="10" sortMode="multiple" [loading]="loading"
+      [alwaysShowPaginator]="false" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       [globalFilterFields]="['fromArea','toArea','noOfSample','isActive','createdAt','createdBy','updatedAt',
-           'updatedBy']" responsiveLayout="scroll"
-      [tableStyle]="{ width: 'max-content'}" [autoLayout]="true" [rowsPerPageOptions]="[10,25,50]">
+           'updatedBy']" responsiveLayout="scroll" [tableStyle]="{ width: 'max-content'}" [autoLayout]="true"
+      [rowsPerPageOptions]="[10,25,50]">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -107,29 +106,37 @@
           <!-- <th pSortableColumn="sampleSlabId">Sample Slab Id<p-columnFilter type="text" field="sampleSlabId"
               display="menu"></p-columnFilter><p-sortIcon field="sampleSlabId"></p-sortIcon>
           </th> -->
-          <th pSortableColumn="fromArea">From Area<p-columnFilter type="text" field="fromArea"
-              display="menu"></p-columnFilter><p-sortIcon field="fromArea"></p-sortIcon>
+          <th pSortableColumn="fromArea">From Area<p-columnFilter type="text" field="fromArea" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="fromArea"></p-sortIcon>
           </th>
-          <th pSortableColumn="toArea">To Area <p-columnFilter type="text" field="toArea"
-              display="menu"></p-columnFilter><p-sortIcon field="toArea"></p-sortIcon>
+          <th pSortableColumn="toArea">To Area <p-columnFilter type="text" field="toArea" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="toArea"></p-sortIcon>
           </th>
-          <th pSortableColumn="noOfSample"> No of Sample <p-columnFilter type="text" field="noOfSample"
-              display="menu"></p-columnFilter><p-sortIcon field="noOfSample"></p-sortIcon>
+          <th pSortableColumn="noOfSample"> No of Sample <p-columnFilter type="text" field="noOfSample" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="noOfSample"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive">Is Active<p-columnFilter type="text" field="isActive"
-              display="menu"></p-columnFilter><p-sortIcon field="isActive"></p-sortIcon>
+          <th pSortableColumn="isActive">Is Active<p-columnFilter type="text" field="isActive" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="isActive"></p-sortIcon>
           </th>
-          <th pSortableColumn="createdAt">Created Date <p-columnFilter type="text" field="createdAt"
-              display="menu"></p-columnFilter><p-sortIcon field="createdAt"></p-sortIcon>
+          <th pSortableColumn="createdAt">Created Date <p-columnFilter type="text" field="createdAt" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="createdBy">Created By <p-columnFilter type="text" field="createdBy"
-              display="menu"></p-columnFilter><p-sortIcon field="createdBy"></p-sortIcon>
+          <th pSortableColumn="createdBy">Created By <p-columnFilter type="text" field="createdBy" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="createdBy"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedAt">Updated Date <p-columnFilter type="text" field="updatedAt"
-              display="menu"></p-columnFilter><p-sortIcon field="updatedAt"></p-sortIcon>
+          <th pSortableColumn="updatedAt">Updated Date <p-columnFilter type="text" field="updatedAt" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="updatedAt"></p-sortIcon>
           </th>
-          <th pSortableColumn="updatedBy">Updated By <p-columnFilter type="text" field="updatedBy"
-              display="menu"></p-columnFilter><p-sortIcon field="updatedBy"></p-sortIcon>
+          <th pSortableColumn="updatedBy">Updated By <p-columnFilter type="text" field="updatedBy" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="updatedBy"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -150,10 +157,8 @@
           <td>{{SampleSlabs.createdBy}}</td>
           <td>{{SampleSlabs.updatedAt | date: 'dd-MMM-yyyy'}}</td>
           <td>{{SampleSlabs.updatedBy}}</td>
-
         </tr>
       </ng-template>
-
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="9" class="md:text-center m-5">No Sample Slabs found.</td>
@@ -166,5 +171,6 @@
         </tr>
       </ng-template>
     </p-table>
+
   </div>
 </div>
