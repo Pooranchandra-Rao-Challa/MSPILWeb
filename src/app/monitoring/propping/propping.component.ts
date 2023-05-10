@@ -57,20 +57,24 @@ export class ProppingComponent implements OnInit {
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
     this.initSeasons();
-    this.initCurrentSeason(CURRENT_SEASON());
     this.proppingForm();
-    this.initProppingStages();
   }
 
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
-      this.seasons = resp as unknown as SeasonViewDto[];
+      if(resp){
+        this.seasons = resp as unknown as SeasonViewDto[];
+        this.initCurrentSeason(CURRENT_SEASON());
+      }
     });
   }
 
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
-      this.currentSeason = resp as SeasonDto;
+      if(resp) {
+        this.currentSeason = resp as SeasonDto;
+        this.initProppingStages();
+      }
     });
   }
 

@@ -176,7 +176,7 @@ export class AppMenuComponent implements OnInit {
           },
           {
             label: 'Permits',
-            icon: 'pi pi-fw pi-eye',
+            icon: 'pi pi-fw pi-file-o rotate-90',
             permission: this.GroupPermission('Permits'),
             items: [
               { label: 'Schedule Grouping', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/schedulegrouping'], permission: true },
