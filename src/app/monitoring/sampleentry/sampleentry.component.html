@@ -2,26 +2,21 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
 
+    <!-- Hints -->
     <div class="grid ">
-      
-          
-          <div class="col-12 lg:col-3 md:col-4 sm:col-6 lg:col-offset-1 flex ">
-            <div class="bg-blue-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
-            <span class="m-1" >Allowed only but not entered.</span>
-          </div>
-         
-          <div class="col-12 lg:col-4 md:col-4 sm:col-6 flex">
-            <div class="bg-green-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
-            <span class="m-1" >Allowed one or more samples but not entered.</span>
-          </div>
-         
-          <div class="col-12 lg:col-3 md:col-4 sm:col-6 flex">
-            <div class="bg-red-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
-            <span class="m-1" >All samples entered.</span>
-          </div>
-       
+      <div class="col-12 lg:col-3 md:col-4 sm:col-6 lg:col-offset-1 flex ">
+        <div class="bg-blue-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
+        <span class="m-1">Allowed only but not entered.</span>
+      </div>
+      <div class="col-12 lg:col-4 md:col-4 sm:col-6 flex">
+        <div class="bg-green-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
+        <span class="m-1">Allowed one or more samples but not entered.</span>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 sm:col-6 flex">
+        <div class="bg-red-300 shadow-1 m-1" style="width: 20px; height: 20px;"></div>
+        <span class="m-1">All samples entered.</span>
+      </div>
     </div>
-
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -77,6 +72,9 @@
             <button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
               (click)="editSampleEntry(sample)" *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
+            <button pButton pRipple icon="pi pi-eye-slash"
+              class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
+              *ngIf="sample.canNotDoEditOrAdd" [disabled]="true"></button>
           </td>
           <td *ngFor="let col of headers">
             <span *ngIf="col?.field != 'docDate'">{{sample[col.field]}}</span>
@@ -93,6 +91,7 @@
       </ng-template>
     </p-table>
 
+    <!-- Dialog -->
     <p-dialog header="Sample Entry" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" (onHide)="clearForm()"
       (onShow)="initForm()">
@@ -237,5 +236,6 @@
         </div>
       </ng-template>
     </p-dialog>
+
   </div>
 </div>
