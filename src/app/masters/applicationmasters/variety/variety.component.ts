@@ -45,7 +45,6 @@ export class VarietyComponent implements OnInit {
     { field: 'createdBy', header: 'createdBy', label: 'Created By' },
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
-
   ];
 
   constructor(private formbuilder: FormBuilder,
