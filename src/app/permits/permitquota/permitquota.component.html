@@ -61,7 +61,6 @@
                         To Schedule Group No is greater than From Schedule Group No.
                       </span>
                     </div>
-
                     <div class="field col-12 md:col-3">
                       <label>From Date:<sup class="p-error">*</sup></label>
                       <p-calendar placeholder="From Date" [readonlyInput]="true" [showIcon]="true" appendTo="body"
@@ -126,8 +125,9 @@
             </div>
           </div>
           <!-- table -->
-          <p-table #dtplotquota [value]="scheduleControls.controls"  filterMatchMode="contains" dataKey="id" [rows]="10"
-            [rowHover]="true" *ngIf="scheduleControls?.value?.length" formArrayName="plotQuotas"
+          <p-table #dtplotquota [value]="QuotaControls.controls"  dataKey="id" [rows]="10"
+            [rowHover]="true" *ngIf="QuotaControls?.value?.length" formArrayName="plotQuotas"
+            [globalFilterFields]="globalFilterFields"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
             responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
             [filterFields]="['divisionName','circleName','sectionName','villageName']"
@@ -138,7 +138,7 @@
                 <div>
                   <span class="p-input-icon-left m-2">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" #filter2 (input)="onGlobalFilter2(dtplotquota,$event)" 
+                    <input pInputText type="text" #filters (input)="onSearch(dtplotquota,$event)" 
                       placeholder="Search Keyword"
                       pTooltip="Search By divisionName, circleName, sectionName,villageName ,tons, quotaReleased"
                       class="w-full" />
@@ -162,7 +162,6 @@
                 <td *ngFor="let col of PermitQuotaHeaders">
                   <span *ngIf="col?.field != 'Quota'">{{ Quotas[col.field] }}</span>
                   <span *ngIf="col?.field == 'Quota'">
-
                     <p-inputNumber inputId="quotaInput" formControlName="quotaReleased" [minFractionDigits]="2">
                     </p-inputNumber>
                   </span>
@@ -181,7 +180,7 @@
     <!-- popup table -->
     <p-table #dtpermitquota [value]="permitquotas" [columns]="farmerHeaders" dataKey="seasonQuotaId" [rows]="10"
       [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="['seasonName','groupBy','groupNo','docNo','toDOP','fromDOP','createdAt','createdBy','updatedAt','updatedBy']"
+      [globalFilterFields]="['seasonName','groupBy','type','groupNo','docNo','toDOP','fromDOP','createdAt','createdBy','updatedAt','updatedBy']"
       [autoLayout]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [showCurrentPageReport]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
       [tableStyle]="{ width: 'max-content'}" (onRowExpand)="onRowExpand($event)">
@@ -208,7 +207,6 @@
         <tr>
           <th style="width: 5rem"></th>
           <th style="width: 5rem"></th>
-
           <th *ngFor="let col of farmerHeaders" [pSortableColumn]="col.header">
             {{col?.label}} <p-sortIcon field="code">
             </p-sortIcon>
@@ -253,7 +251,6 @@
       </ng-template>
       <ng-template pTemplate="body" let-permitQuota>
         <tr>
-
           <td *ngFor="let col of plotHeaders">
             <span
               *ngIf="col?.field != 'toDOP' && col?.field != 'fromDOP' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{permitQuota[col.field]}}</span>

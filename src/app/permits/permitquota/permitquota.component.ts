@@ -38,8 +38,9 @@ export class PermitQuotaComponent implements OnInit {
   showTable: boolean = false;
   showDialog: boolean = false;
   submitLabel!: string;
+  globalFilterFields: string[] = ['divisionName', 'circleName', 'sectionName', 'villageName']
   @ViewChild('filter') filter!: ElementRef;
-  @ViewChild('filter2') filter2!: ElementRef;
+  @ViewChild('filters') filters!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquota!: Table;
   @ViewChild('dtplotquota') dtplotquota!: Table;
   selectedCategory: any = null;
@@ -120,10 +121,10 @@ export class PermitQuotaComponent implements OnInit {
       serverUpdatedStatus: true
     });
   }
-  get scheduleControls() {
+  get QuotaControls() {
     return this.fbPermitQuota.get('plotQuotas') as FormArray;
   }
-  addSchedule(quota: any) {
+  addQuota(quota: any) {
     const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
     formArray.push(this.plotQuotasForm(quota));
   }
@@ -156,7 +157,7 @@ export class PermitQuotaComponent implements OnInit {
 
       formArray.clear();
       for (const quota of this.Quotas) {
-        this.addSchedule(quota);
+        this.addQuota(quota);
       }
     });
   }
@@ -178,14 +179,13 @@ export class PermitQuotaComponent implements OnInit {
     this.permitService.GetPlotQuotas(data.seasonId, data.seasonQuotaId).subscribe(resp => {
       data.objPlotQuotas = resp as unknown as PlotQuotaViewDto[];
       console.log('expand', data.objPlotQuotas);
-
       if (!this.addFlag) {
         let plotQuotas: any = resp ? resp : [];
         const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
         formArray.clear();
         if (plotQuotas.length) {
           plotQuotas.map((quota: any) => {
-            this.addSchedule(quota);
+            this.addQuota(quota);
           })
         }
       }
@@ -210,6 +210,7 @@ export class PermitQuotaComponent implements OnInit {
     if (this.addFlag) return this.permitService.CreatepermitQuota(this.fbPermitQuota.value);
     else return this.permitService.UpdatePermitQuota(this.fbPermitQuota.value);
   }
+
   onSubmit() {
     console.log(this.fbPermitQuota.value);
 
@@ -228,9 +229,6 @@ export class PermitQuotaComponent implements OnInit {
       }
     })
   }
-  onSearch() {
-    this.initSeasonQuotas(this.currentSeason.seasonId!);
-  }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -241,9 +239,9 @@ export class PermitQuotaComponent implements OnInit {
   }
   clear2(table: Table) {
     table.clear();
-    this.filter.nativeElement.value = '';
+    this.filters.nativeElement.value = '';
   }
-  onGlobalFilter2(table: Table, event: Event) {
+  onSearch(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
   checkValue() {
