@@ -74,6 +74,7 @@ export class VillageComponent implements OnInit {
       this.initCircles(village.divisionId);
       this.initSections(village.circleId);
       this.initMandals(village.districtId);
+      this.initDivisions(village.mandalId);
       this.initDistricts(village.stateId);
 
       this.village.villageId = village.villageId;
@@ -133,9 +134,6 @@ export class VillageComponent implements OnInit {
     this.commonService.GetStates().subscribe((resp) => {
       this.states = resp as unknown as StateDto[];
     });
-    this.commonService.GetDivision().subscribe((resp) => {
-      this.divisions = resp as unknown as DivisionDto[];
-    });
 
     this.fbvillages = this.formbuilder.group({
       villageId: [null],
@@ -189,13 +187,29 @@ export class VillageComponent implements OnInit {
   }
 
   initMandals(district: any) {
+    this.divisions = [];
+    this.circles = [];
+    this.sections = [];
     this.commonService.GetMandalsForDistrict(district).subscribe((resp) => {
       this.mandals = resp as unknown as MandalDto[];
     });
   }
 
+  initDivisions(mandalId: any){
+    this.circles = [];
+    this.sections = [];
+    this.commonService.GetDivisionForMandal(mandalId).subscribe((resp) => {
+      this.divisions = resp as unknown as DivisionDto[];
+      console.log(this.divisions);
+
+    });
+  }
+
   initDistricts(stateId: any) {
     this.mandals = [];
+    this.divisions = [];
+    this.circles = [];
+    this.sections = [];
     this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {
       this.districts = resp as unknown as DistrictDto[];
     });

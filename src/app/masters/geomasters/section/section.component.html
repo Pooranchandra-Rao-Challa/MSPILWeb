@@ -125,7 +125,7 @@
                     </div>
                     <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
                       <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter listingOrder.</div>
+                        *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter Listing Order.</div>
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contains Numbers.
                       </div>
@@ -192,11 +192,11 @@
             </p-columnFilter>
             <p-sortIcon field="circleName"></p-sortIcon>
           </th>
-          <th pSortableColumn="sectionCode">Section Code<p-columnFilter type="text" field="sectionCode" display="menu">
+          <th pSortableColumn="sectionCode">Code<p-columnFilter type="text" field="sectionCode" display="menu">
             </p-columnFilter>
             <p-sortIcon field="sectionCode"></p-sortIcon>
           </th>
-          <th pSortableColumn="sectionName">Section Name <p-columnFilter type="text" field="sectionName" display="menu">
+          <th pSortableColumn="sectionName">Name <p-columnFilter type="text" field="sectionName" display="menu">
             </p-columnFilter>
             <p-sortIcon field="sectionName"></p-sortIcon>
           </th>
