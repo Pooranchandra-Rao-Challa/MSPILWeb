@@ -237,7 +237,7 @@ export class PermitQuotaComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-  clear2(table: Table) {
+  clear1(table: Table) {
     table.clear();
     this.filters.nativeElement.value = '';
   }
