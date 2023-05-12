@@ -14,19 +14,18 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dt1 [value]="billParameters" dataKey="id" [rows]="10" [rowHover]="true"
+    <p-table #dtBillParameters [value]="billParameters" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [alwaysShowPaginator]="false"
-      [showCurrentPageReport]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      [showCurrentPageReport]="true" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-            (click)="clear(dt1)"></button>
+            (click)="clear(dtBillParameters)"></button>
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dtBillParameters, $event)" placeholder="Search Keyword"
               class="w-full" />
           </span>
         </div>
@@ -34,75 +33,30 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="billCategoryName">
-            Bill Category <p-columnFilter type="text" field="billCategoryName" display="menu"></p-columnFilter>
-            <p-sortIcon field="billCategoryName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="type">
-            Type <p-columnFilter type="text" field="type" display="menu"></p-columnFilter>
-            <p-sortIcon field="type"></p-sortIcon>
-          </th>
-          <th pSortableColumn="code">
-            Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
-            <p-sortIcon field="code"></p-sortIcon>
-          </th>
-          <th pSortableColumn="name">
-            Name <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
-            <p-sortIcon field="name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="caluclationType">
-            Calc Type <p-columnFilter type="text" field="caluclationType" display="menu"></p-columnFilter>
-            <p-sortIcon field="caluclationType"></p-sortIcon>
-          </th>
-          <th pSortableColumn="formula">
-            Formula <p-columnFilter type="text" field="formula" display="menu"></p-columnFilter>
-            <p-sortIcon field="formula"></p-sortIcon>
-          </th>
-          <th pSortableColumn="priority">
-            Priority <p-columnFilter type="text" field="priority" display="menu"></p-columnFilter>
-            <p-sortIcon field="priority"></p-sortIcon>
-          </th>
-          <th class="text-center" pSortableColumn="isActive">
-            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">
-            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
-            <p-sortIcon field="createdAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdByUser">
-            Created By <p-columnFilter type="text" field="createdByUser" display="menu"></p-columnFilter>
-            <p-sortIcon field="createdByUser"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">
-            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedByUser">
-            Updated By <p-columnFilter type="text" field="updatedByUser" display="menu"></p-columnFilter>
-            <p-sortIcon field="updatedByUser"></p-sortIcon>
+          <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+            {{col?.label}}
+            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-billparam>
         <tr>
           <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editBillParam(billparam)" [disabled]="!permissions?.CanUpdateBillParameters"></button></td>
-          <td>{{billparam.billCategoryName}}</td>
-          <td>{{billparam.type}}</td>
-          <td>{{billparam.code}}</td>
-          <td>{{billparam.name}}</td>
-          <td>{{billparam.caluclationType}}</td>
-          <td>{{billparam.formula}}</td>
-          <td>{{billparam.priority}}</td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="billparam.isActive" [binary]="true" [disabled]="true">
-            </p-checkbox>
+              (click)="editBillParam(billparam)" [disabled]="!permissions?.CanUpdateBillParameters"></button>
           </td>
-          <td>{{billparam.createdAt | date: mediumDate}}</td>
-          <td>{{billparam.createdByUser}}</td>
-          <td>{{billparam.updatedAt | date: mediumDate}}</td>
-          <td>{{billparam.updatedByUser}}</td>
+          <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
+            <span
+              *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{billparam[col.field]}}</span>
+            <span *ngIf="col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              {{billparam[col.field] | date: mediumDate}}
+            </span>
+            <span *ngIf="col?.field == 'isActive'">
+              <p-checkbox name="active" value="active" [binary]="true" [(ngModel)]="billparam[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -112,7 +66,7 @@
       </ng-template>
     </p-table>
 
-    <!-- dialog box -->
+    <!-- Dialog box -->
     <p-dialog header="Bill Parameter" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbBillParameters.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
@@ -121,7 +75,7 @@
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
-                  <label>Bill Category:<sup class="p-error">*</sup></label>
+                  <label class="required">Bill Category:</label>
                   <p-dropdown placeholder="Select Bill Category" [options]="billCategories" optionLabel="name"
                     formControlName="categoryId" optionValue="lookupDetailId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['categoryId'].touched && FormControls['categoryId'].errors }">
@@ -132,7 +86,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Type:<sup class="p-error">*</sup></label>
+                  <label class="required">Type:</label>
                   <p-dropdown placeholder="Select Type" [options]="types" formControlName="type"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['type'].touched && FormControls['type'].errors }">
                   </p-dropdown>
@@ -142,7 +96,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Code:<sup class="p-error">*</sup></label>
+                  <label class="required">Code:</label>
                   <input pInputText id="code" #code type="text" placeholder="Enter Code" formControlName="code"
                     alphaNumeric [maxlength]="maxLength.code"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -159,7 +113,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Name:<sup class="p-error">*</sup></label>
+                  <label class="required">Name:</label>
                   <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                     alphaOnly [maxlength]="maxLength.name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -177,7 +131,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Calculation Type:<sup class="p-error">*</sup></label>
+                  <label class="required">Calculation Type:</label>
                   <p-dropdown placeholder="Select Calculation Type" [options]="calTypes"
                     formControlName="caluclationType"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['caluclationType'].touched && FormControls['caluclationType'].errors }">
@@ -189,7 +143,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Priority:<sup class="p-error">*</sup></label>
+                  <label class="required">Priority:</label>
                   <input pInputText id="priority" type="text" placeholder="Enter Priority" formControlName="priority"
                     #priority numericOnly [maxlength]="10"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['priority'].touched && FormControls['priority'].errors }">

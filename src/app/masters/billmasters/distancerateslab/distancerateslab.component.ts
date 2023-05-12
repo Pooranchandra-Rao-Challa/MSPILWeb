@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-distancerateslab',
@@ -25,12 +26,21 @@ export class DistanceRateSlabComponent implements OnInit {
   addFlag: boolean = true;
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
-  permissions:any;
-  
+  permissions: any;
+  headers: ITableHeader[] = [
+    { field: 'distance', header: 'distance', label: 'Distance(KM)' },
+    { field: 'rate', header: 'rate', label: 'Rate' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
+
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private alertMessage: AlertMessage,
-    private jwtService:JWTService) { }
+    private jwtService: JWTService) { }
 
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
@@ -49,7 +59,7 @@ export class DistanceRateSlabComponent implements OnInit {
       id: [null],
       distance: [null, (Validators.required)],
       rate: [null, (Validators.required)],
-      isActive: [true]
+      isActive: [null]
     });
   }
 
@@ -67,6 +77,7 @@ export class DistanceRateSlabComponent implements OnInit {
   }
 
   addDistanceRate() {
+    this.fbDistanceRate.controls['isActive'].setValue(true);
     this.submitLabel = "Add Distance Rate";
     this.addFlag = true;
     this.showDialog = true;

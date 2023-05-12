@@ -10,7 +10,7 @@ import { MAX_LENGTH_6, RG_ADDRESS, RG_ALPHA_ONLY, RG_PINCODE } from 'src/app/_sh
 import { DieselBunkDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_EMAIL, RG_PHONE_NO } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
@@ -32,11 +32,27 @@ export class DieselBunkComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+  headers: ITableHeader[] = [
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'address', header: 'address', label: 'Address' },
+    { field: 'pinCode', header: 'pinCode', label: 'Pin Code' },
+    { field: 'phoneNo', header: 'phoneNo', label: 'Mobile' },
+    { field: 'email', header: 'email', label: 'Email' },
+    { field: 'rate', header: 'rate', label: 'Rate' },
+    { field: 'glCode', header: 'glCode', label: 'GL Code' },
+    { field: 'subGLCode', header: 'subGLCode', label: 'Sub GL Code' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,
     private alertMessage: AlertMessage,
-    private jwtService:JWTService) { }
+    private jwtService: JWTService) { }
 
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
@@ -62,7 +78,7 @@ export class DieselBunkComponent implements OnInit {
       gLcode: [''],
       subGLcode: [''],
       rate: [null, (Validators.required)],
-      isActive: [true]
+      isActive: [null]
     });
   }
 
@@ -80,6 +96,7 @@ export class DieselBunkComponent implements OnInit {
   }
 
   addDieselBunk() {
+    this.fbDieselBunk.controls['isActive'].setValue(true);
     this.submitLabel = "Add Diesel Bunk";
     this.addFlag = true;
     this.showDialog = true;

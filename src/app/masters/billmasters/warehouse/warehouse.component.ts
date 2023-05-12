@@ -12,7 +12,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
 
@@ -32,6 +32,18 @@ export class WareHouseComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+  globalFilterFields: string[] = ['code', 'name', 'glcode', 'subGlcode', 'isActive', 'createdAt' , 'createdByUser', 'updatedAt', 'updatedByUser'];
+  headers: ITableHeader[] = [
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'glcode', header: 'glcode', label: 'GL Code' },
+    { field: 'subGlcode', header: 'subGlcode', label: 'Sub GL Code' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdByUser', header: 'createdByUser', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedByUser', header: 'updatedByUser', label: 'Updated By' },
+  ];
 
   constructor(
     private formbuilder: FormBuilder,
