@@ -38,7 +38,7 @@ export class PermitQuotaComponent implements OnInit {
   showTable: boolean = false;
   showDialog: boolean = false;
   submitLabel!: string;
-  globalFilterFields: string[] = ['divisionName', 'circleName', 'sectionName', 'villageName']
+  // globalFilterFields: string[] = ['divisionName', 'circleName', 'sectionName', 'villageName']
   @ViewChild('filter') filter!: ElementRef;
   @ViewChild('filter') filters!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquota!: Table;
@@ -241,7 +241,7 @@ export class PermitQuotaComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-  onSearch(table: Table, event: Event) {
+  onGlobalFilter1(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
   checkValue() {
