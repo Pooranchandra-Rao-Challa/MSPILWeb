@@ -40,7 +40,7 @@ export class PermitQuotaComponent implements OnInit {
   submitLabel!: string;
   globalFilterFields: string[] = ['divisionName', 'circleName', 'sectionName', 'villageName']
   @ViewChild('filter') filter!: ElementRef;
-  @ViewChild('filters') filters!: ElementRef;
+  @ViewChild('filter') filters!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquota!: Table;
   @ViewChild('dtplotquota') dtplotquota!: Table;
   selectedCategory: any = null;
@@ -237,9 +237,9 @@ export class PermitQuotaComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-  clear2(table: Table) {
+  clear1(table: Table) {
     table.clear();
-    this.filters.nativeElement.value = '';
+    this.filter.nativeElement.value = '';
   }
   onSearch(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
