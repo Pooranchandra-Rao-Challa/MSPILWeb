@@ -38,11 +38,8 @@ export class PermitQuotaComponent implements OnInit {
   showTable: boolean = false;
   showDialog: boolean = false;
   submitLabel!: string;
-  globalFilterFields: string[] = ['divisionName', 'circleName', 'sectionName', 'villageName']
   @ViewChild('filter') filter!: ElementRef;
-  @ViewChild('filter') filters!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquota!: Table;
-  @ViewChild('dtplotquota') dtplotquota!: Table;
   selectedCategory: any = null;
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
   objPlotQuotas: PlotQuotaViewDto[] = [];
@@ -233,17 +230,12 @@ export class PermitQuotaComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-  clear1(table: Table) {
-    table.clear();
-    this.filter.nativeElement.value = '';
-  }
-  onSearch(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
+ 
   checkValue() {
     if (this.fromScheduleNo < this.toScheduleNo) {
       this.error = false;

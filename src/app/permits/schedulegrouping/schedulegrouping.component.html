@@ -264,6 +264,7 @@
       <!-- popup table -->
       <p-table #dtplotScheduleGrouping [value]="schedule" dataKey="id" [rows]="10" [rowHover]="true" *ngIf="showTable"
         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
+        [globalFilterFields]="['divisionName','circleName','sectionName','villageName','farmerName','plantType','variety','estimatedTon']"
         responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
         <!-- (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" -->
         <ng-template pTemplate="caption">
@@ -274,7 +275,7 @@
 
               <span class="p-input-icon-left m-2">
                 <i class="pi pi-search"></i>
-                <input pInputText type="text" #filters  (input)="onGlobalFilter1(dtSchedulegrouping,$event)" placeholder="Search Keyword"
+                <input pInputText type="text" #filters  (input)="onGlobalFilter1(dtplotScheduleGrouping,$event)" placeholder="Search Keyword"
                   pTooltip="Search By divisionName,circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
                   class="w-full" />
 

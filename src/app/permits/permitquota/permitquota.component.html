@@ -126,34 +126,25 @@
           </div>
           <!-- table -->
           <p-table #dtplotquota [value]="QuotaControls.controls"  dataKey="id" [rows]="10"
+          [globalFilterFields]="['divisionName', 'circleName', 'sectionName', 'villageName','tons','quotaReleased']"
             [rowHover]="true" *ngIf="QuotaControls?.value?.length" formArrayName="plotQuotas"
-            [globalFilterFields]="globalFilterFields"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
             responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
-            [filterFields]="['divisionName','circleName','sectionName','villageName']"
             <ng-template pTemplate="caption">
-              <div class="flex justify-content-between flex-column sm:flex-row">
-                <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-                  (click)="clear1(dtplotquota)"></button>
-                <div>
-                  <span class="p-input-icon-left m-2">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" #filters (input)="onSearch(dtplotquota,$event)" 
-                      placeholder="Search Keyword"
-                      pTooltip="Search By divisionName, circleName, sectionName,villageName ,tons, quotaReleased"
-                      class="w-full" />
-                  </span>
-                  <button pButton label="{{submitLabel}}" (click)="onSubmit()"
+              <div class="flex justify-content-between">
+                <div></div> 
+                <div class="flex justify-content-end">
+                  <span class="p-input-icon-left m-2"  style="float: right;">
+                    <button pButton label="{{submitLabel}}" (click)="onSubmit()"
                     class="p-button-raised p-button-primary m-2"></button>
-
+                  </span>  
                 </div>
               </div>
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th *ngFor="let col of PermitQuotaHeaders" [pSortableColumn]="col.header">
-                  {{col?.label}} <p-sortIcon field="code"></p-sortIcon>
-                  <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+                <th *ngFor="let col of PermitQuotaHeaders">
+                  {{col?.label}} 
                 </th>
               </tr>
             </ng-template>

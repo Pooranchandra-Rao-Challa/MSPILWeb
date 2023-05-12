@@ -241,19 +241,19 @@
                   </div>
                   <div class="field col-12 md:col-3">
                     <label>Relationship Type:<sup class="p-error">*</sup></label>
-                    <p-dropdown placeholder="Select Relation Type" optionLabel="name" [options]="relationTypes"
+                    <p-dropdown placeholder="Select Relationship Type" optionLabel="name" [options]="relationTypes"
                       optionValue="lookupDetailId" formControlName="relationTypeId"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
                     </p-dropdown>
                     <span *ngIf="FormControls['relationTypeId'].touched && FormControls['relationTypeId'].invalid">
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['relationTypeId'].errors?.['required']">
-                        Please Select Relation.</div>
+                        Please Select Relationship Type.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-3">
                     <label>Relationship Name:<sup class="p-error">*</sup></label>
-                    <input pInputText id="relationName" #relationName type="text" placeholder="Enter Relation Name"
+                    <input pInputText id="relationName" #relationName type="text" placeholder="Enter Relationship Name"
                       formControlName="relationName" alphaOnly [maxlength]="maxLength.name"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }">
                     <div class="text-right">
@@ -284,7 +284,7 @@
 
                   <div class="field col-12 md:col-3">
                     <label>PinCode:<sup class="p-error">*</sup></label>
-                    <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
+                    <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter PinCode"
                       formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
                     <div class="text-right">
@@ -296,7 +296,7 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['minlength']">
                         Please Enter 6 Digits PinCode .</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
-                        Please Enter Pin Code.</div>
+                        Please Enter PinCode.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-3">
@@ -417,7 +417,7 @@
                   </div>
                   <div class="field col-12 md:col-3">
                     <label>GL Code:</label>
-                    <input pInputText id="glcode" type="text" placeholder=" Enter Sub GLCode" formControlName="glcode"
+                    <input pInputText id="glcode" type="text" placeholder=" Enter GL Code" formControlName="glcode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['glcode'].touched && FormControls['glcode'].errors }">
                     <span *ngIf="FormControls['glcode'].touched && FormControls['glcode'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['glcode'].errors?.['pattern']">
@@ -426,12 +426,12 @@
                   </div>
                   <div class="field col-12 md:col-3">
                     <label>SubGL Code:</label>
-                    <input pInputText id="subGlcode" type="text" placeholder=" Enter Sub GLCode"
+                    <input pInputText id="subGlcode" type="text" placeholder=" Enter SubGL Code"
                       formControlName="subGlcode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['subGlcode'].touched && FormControls['subGlcode'].errors }">
                     <span *ngIf="FormControls['subGlcode'].touched && FormControls['subGlcode'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['subGlcode'].errors?.['pattern']">
-                        Sub Glcode Contains Only Characters And Integers.</div>
+                        SubGL Code Contains Only Characters And Integers.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-3">
@@ -450,28 +450,35 @@
                 <div class="grid p-fluid">
                   <div class="field col-12 md:col-3">
                     <label>Bank:<sup class="p-error">*</sup></label>
-                    <p-dropdown placeholder="Select Bank" [filter]="true" filterBy="name" [virtualScroll]="true"
-                      [virtualScrollItemSize]="38" appendTo="body" optionLabel="name" [options]="banks"
-                      formControlName="bankId" optionValue="bankId" (onChange)="getBranchByBankId($event.value)">
-                    </p-dropdown>
+                    <p-dropdown placeholder="Select Bank" optionLabel="name" [filter]="true" filterBy="name"
+                    [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" [options]="banks"
+                    optionValue="bankId" formControlName="bankId" (onChange)="getBranchByBankId($event.value)"
+                    appendTo="body"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['bankId'].touched && FormControls['bankId'].errors }">
+                  </p-dropdown>
+                  <span *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['bankId'].errors?.['required']">
+                      Please Select Bank.</div>
+                  </span>
                   </div>
                   <div class="field col-12 md:col-3">
-                    <label>Branch:<sup class="p-error">*</sup></label>
-                    <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
-                      optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
-                    </p-dropdown>
-                    <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                      <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['branchId'].errors?.['required']">
-                          Please Select Bank First.</div>
-                      </div>
-                      <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
-                        <div class="ng-invalid ng-touched p-error"
-                          *ngIf="FormControls['branchId'].errors?.['required']">
-                          Please Select Branch.</div>
-                      </div>
-                    </span>
+                    <label class="required">Branch:</label>
+                      <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
+                        optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)"
+                        appendTo="body">
+                      </p-dropdown>
+                      <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
+                        <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['bankId'].errors?.['required']">
+                            Please Select Bank First.</div>
+                        </div>
+                        <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].valid">
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['branchId'].errors?.['required']">
+                            Please Select Branch.</div>
+                        </div>
+                      </span>
                   </div>
                   <div class="field col-12 md:col-3">
                     <label>IFSC:</label>
