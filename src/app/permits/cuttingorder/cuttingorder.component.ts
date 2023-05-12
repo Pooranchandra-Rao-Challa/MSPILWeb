@@ -16,6 +16,8 @@ import { CURRENT_SEASON } from "src/environments/environment";
   styles: [],
 })
 export class CuttingOrderComponent implements OnInit {
+  globalFilterFields: string[] =['farmerCode','farmerName','divisionName','circleName','sectionName','villageName','plantTypeName','plotNumber',
+  'varietyName', 'plantingDate','netArea','estimatedTon','ccs','brix','pol','purity','scheduleGroupNo', 'noOfSample'];
   seasons: SeasonViewDto[] = [];
   fbCuttingOrder!: FormGroup;
   currentSeason: SeasonDto = {};
@@ -138,6 +140,7 @@ export class CuttingOrderComponent implements OnInit {
     this.permitService.GetCirclesforUser(seasonId, 'CuttingOrders').subscribe((resp) => {
       this.circles = resp as unknown as CircleforUserDto[];
       this.filterCircles = Object.assign([], this.circles);
+    
     });
   }
   initSections(seasonId: any) {
@@ -187,7 +190,6 @@ export class CuttingOrderComponent implements OnInit {
   }
   SetAllDivisionChilds(values: number[]) {
     if (values.length == 0) {
-      this.filterDivisions = Object.assign([], this.divisions);
       this.filterCircles = Object.assign([], this.circles);
       this.filterSections = Object.assign([], this.sections);
       this.filterVillages = Object.assign([], this.villages);
@@ -195,8 +197,8 @@ export class CuttingOrderComponent implements OnInit {
     else {
       // this.divisionIds =  values.join(','); 
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
-      this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
-      this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
+      this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1);
+      this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1);
     }
   }
 
@@ -349,6 +351,7 @@ export class CuttingOrderComponent implements OnInit {
   onSearch(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   addCuttingOrder() {
     this.initCuttingOrder();
     this.showDialog = true;

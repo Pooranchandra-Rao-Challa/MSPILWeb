@@ -181,7 +181,6 @@ export class EstimatedTonComponent implements OnInit {
     }
     else {
       // this.divisionIds =  values.join(','); 
-      this.filterDivisions = this.circles.filter(division => values.indexOf(division.divisionId!) != -1);
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
       this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)

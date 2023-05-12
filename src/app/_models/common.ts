@@ -8,6 +8,9 @@ export class MaxLength {
   accountNo: number = 18;
   aadhaarNo:number =12;
   Seasonname:number=9;
+  ifscCode:number=11;
+  Code:number=20;
+  listingorder:number=2;
 }
 export class ApplicationConstantDto {
 

@@ -9,7 +9,7 @@ import { BankDto, BankViewDto, BranchDto, BranchViewDto } from 'src/app/_models/
 import { MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_11, MIN_LENGTH_2, MIN_LENGTH_6, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_11, MIN_LENGTH_2, MIN_LENGTH_6, RG_ADDRESS, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, RG_PINCODE } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-bank',
@@ -91,8 +91,8 @@ export class BankComponent implements OnInit {
       name: new FormControl(branchDetail.name, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       ifsc: new FormControl(branchDetail.ifsc, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_25),Validators.minLength(MIN_LENGTH_11)]),
       abbr: [""],
-      address: [branchDetail.address, (Validators.required)],
-      pinCode: new FormControl(branchDetail.pinCode, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.maxLength(MIN_LENGTH_6)]),
+      address: new FormControl(branchDetail.address,[Validators.required, Validators.pattern(RG_ADDRESS)]),
+      pinCode: new FormControl(branchDetail.pinCode, [Validators.required, Validators.pattern(RG_PINCODE),Validators.maxLength(MIN_LENGTH_6)]),
       phoneNo: [branchDetail.phoneNo],
       email: [branchDetail.email],
       isActive: [branchDetail.isActive],
