@@ -44,7 +44,9 @@ export class ScheduleGroupingComponent implements OnInit {
   showDialog: boolean = false;
   showDialog1: boolean = false
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('filters') filters!: ElementRef;
   @ViewChild('dtSchedulegrouping') dtSchedulegrouping!: Table;
+  @ViewChild('dtplotScheduleGrouping') dtplotScheduleGrouping!: Table;
   submitLabel!: string;
   permissions: any;
   dateTime = new Date();
@@ -293,6 +295,9 @@ export class ScheduleGroupingComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+  onGlobalFilter1(table: Table, event: Event) {
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
   SetAllDivisionChilds(values: number[]) {
     if (values.length == 0) {
       this.filterCircles = Object.assign([], this.circles);
@@ -420,5 +425,10 @@ export class ScheduleGroupingComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
+  clear1(table: Table) {
+    table.clear();
+    this.filters.nativeElement.value = '';
+  }
+
 
 }

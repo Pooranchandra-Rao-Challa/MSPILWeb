@@ -308,12 +308,13 @@
                                   *ngFor="let item of RateControls((billCategory.name?.toLowerCase())+'Rates').controls; let i = index"  
                                   class="season-rates-tab-items">  
                                   <div [formGroupName]="i" class="col-12" style="padding-left:unset">  
-                                    <div class="field col-12 md:col-3" style="display:inline-block;">  
+
+                                    <div class="field col-12 md:col-3 vertical-align-top" style="display:inline-block;">  
+                                      <div class="p-field">
                                       <label htmlFor="billPeram">Bill Parameter:<sup class="p-error">*</sup></label>  
                                       <p-dropdown [options]="billCategory.billParams" optionLabel="name" appendTo="body"  
                                         formControlName="billParameterId" optionValue="billParameterId"  
                                         placeholder="Please Select Bill Parameter"></p-dropdown>   
-
                                       <span  
                                         *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'billParameterId')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'billParameterId')?.invalid">  
                                         <div class="ng-invalid ng-touched p-error" *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'billParameterId')?.errors?.['required']">  
@@ -321,36 +322,37 @@
                                         </div>  
                                       </span>
                                     </div>
-                                    <div class="field col-12 md:col-3" style="display:inline-block;">  
+                                    </div>
+                                    <div class="field col-12 md:col-3 vertical-align-top" style="display:inline-block;" >  
                                       <div class="p-field">
                                       <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>  
                                       <p-inputNumber id="rate" formControlName="rate" mode="decimal" locale="en-IN"  
                                         [minFractionDigits]="2" [maxFractionDigits]="2" placeholder="Enter Rate">  
                                       </p-inputNumber>  
-                                      <span
-                                      *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
-                                      <div class="ng-invalid ng-touched p-error"
-                                        *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">
-                                        Please Enter Rate.</div>
-                                    </span>
+                                    <span  
+                                        *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">  
+                                        <div class="ng-invalid ng-touched p-error" *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">  
+                                          Please Enter Rate.
+                                        </div>  
+                                       </span>
                                   </div>
                                     </div>  
-                                    <div class="field col-12 md:col-3" style="display:inline-block;">  
+                                    <div class="field col-12 md:col-3 vertical-align-top" style="display:inline-block;">  
                                       <div class="p-field">
                                       <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>  
                                       <input pInputText id="priority" formControlName="priority" type="text" numericOnly  
                                         placeholder="Enter Priority" />  
                                       <input pInputText id="billCatetoryId" formControlName="billCatetoryId"  
                                         type="hidden" [value]="billCategory.lookupDetailId" />  
-                                        <span
-                                        *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
-                                        <div class="ng-invalid ng-touched p-error"
-                                          *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">
-                                          Please Enter Priority</div>
-                                      </span>
+                                      <span  
+                                      *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'priority')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'priority')?.invalid">  
+                                      <div class="ng-invalid ng-touched p-error" *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'priority')?.errors?.['required']">  
+                                        Please Enter Priority.
+                                      </div>  
+                                    </span>
                                     </div>
                                     </div> 
-                                    <div class="field col-12 md:col-3" style="display:inline-block;">  
+                                      <div class="field col-12 md:col-3 vertical-align-top" style="display:inline-block;">  
                                       <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"  
                                         (click)="ratesControls((billCategory.name?.toLowerCase())+'Rates').removeAt(i)"></i>  
                                     </div>  
