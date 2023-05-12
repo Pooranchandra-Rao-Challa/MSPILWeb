@@ -9,7 +9,7 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { VarietyViewDto, VarietyDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { LookupService } from 'src/app/_services/lookup.service';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
@@ -32,6 +32,20 @@ export class VarietyComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions:any;
+  headers: ITableHeader[] = [
+    { field: 'varietyName', header: 'varietyName', label: 'Variety Type' },
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'plantAge', header: 'plantAge', label: 'Plant Age' },
+    { field: 'ratoonAge', header: 'ratoonAge', label: 'Ratoon Age' },
+    { field: 'sugarContent', header: 'sugarContent', label: 'Sugar Content' },
+    { field: 'plantSuitability', header: 'plantSuitability', label: 'Plant Suitability' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   constructor(private formbuilder: FormBuilder,
     private lookupService: LookupService,
@@ -61,7 +75,7 @@ export class VarietyComponent implements OnInit {
   varietyForm() {
     this.fbVariety = this.formbuilder.group({
       varietyId: [null],
-      varietyTypeId: ['', (Validators.required)],
+      varietyTypeId: [null, (Validators.required)],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       plantAge: [null, (Validators.required)],

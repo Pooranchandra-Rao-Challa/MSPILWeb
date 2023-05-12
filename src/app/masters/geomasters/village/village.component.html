@@ -32,7 +32,7 @@
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label htmlFor="districtId">Districts:<sup class="p-error">*</sup></label>
+                      <label htmlFor="districtId">District:<sup class="p-error">*</sup></label>
                       <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
                         appendTo="body" [options]="districts" optionLabel="name" optionValue="districtId"
                         (onChange)="initMandals($event.value)" [autoDisplayFirst]="false" formControlName="districtId"
@@ -53,9 +53,9 @@
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label htmlFor="circle">Mandals:<sup class="p-error">*</sup></label>
+                      <label htmlFor="circle">Mandal:<sup class="p-error">*</sup></label>
                       <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                        appendTo="body" [options]="mandals" optionLabel="name" optionValue="mandalId"
+                        appendTo="body" [options]="mandals" optionLabel="name" optionValue="mandalId" (onChange)="initDivisions($event.value)"
                         [autoDisplayFirst]="false" formControlName="mandalId" placeholder="Select Mandal" [ngClass]="{
                           'is-invalid ng-dirty':
                             FormControls['mandalId'].touched &&
@@ -115,7 +115,7 @@
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label htmlFor="section">Sections:<sup class="p-error">*</sup></label>
+                      <label htmlFor="section">Section:<sup class="p-error">*</sup></label>
                       <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
                         appendTo="body" [options]="sections" optionLabel="name" optionValue="sectionId"
                         [autoDisplayFirst]="false" formControlName="sectionId" placeholder="Select Section" [ngClass]="{
@@ -244,7 +244,7 @@
                             " class="error-message p-error">
                         Diverted Distance Required
                       </div>
-                    </div>  
+                    </div>
                     <div class="field col-12 md:col-4">
                       <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
@@ -306,7 +306,7 @@
                           FormControls['irrigationArea'].touched
                         " class="error-message p-error">
                         Please enter  Irrigation area.
-                        
+
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -321,7 +321,7 @@
                         " class="error-message p-error">
                         Suitable Area For Cane is required.
                         Please enter  Suitable Area For Cane.
-                        
+
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -383,7 +383,7 @@
                           FormControls['noOfEbservices'].invalid &&
                           FormControls['noOfEbservices'].touched
                         " class="error-message p-error">
-                        Please enter No Of Eb Services. 
+                        Please enter No Of Eb Services.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -395,7 +395,7 @@
                           FormControls['tptrate'].invalid &&
                           FormControls['tptrate'].touched
                         " class="error-message p-error">
-                        Please enterTpt Rate. 
+                        Please enterTpt Rate.
                       </div>
                     </div>
                   </div>

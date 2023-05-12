@@ -192,16 +192,18 @@ export class HglComponent implements OnInit {
     });
   }
 
-  getBranchByBankId(Id: number) {
+  getBranchByBankId(Id: number, edit: boolean = false) {
     this.IFSC = '';
     this.appMasterService.GetBank(Id).subscribe((resp) => {
       if (resp) {
         this.bank = resp as unknown as BankDto;
         this.branches = this.bank.branches as unknown as BranchDto[];
       }
+      if (edit) {
+        this.getIFSCByBranch(this.fbHgl.value.branchId);
+      }
     });
   }
-
   getIFSCByBranch(Id: number) {
     let branch = this.branches.find((x) => x.branchId == Id);
     if (branch) this.IFSC = branch.ifsc;
@@ -212,8 +214,7 @@ export class HglComponent implements OnInit {
     this.hglform();
     this.initsubHgls(hgl.hglId);
     this.initRelationTypes();
-    this.getBranchByBankId(hgl.bankId || 0);
-    this.getIFSCByBranch(hgl.branchId || 0);
+    this.getBranchByBankId(hgl.bankId!, true);
     this.hgl.hglId = hgl.hglId
     this.hgl.code = hgl.code;
     this.hgl.name = hgl.name;

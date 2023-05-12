@@ -1,5 +1,5 @@
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { RG_PANNO, MIN_ACCNO } from './../../../_shared/regex';
+import { RG_PANNO, MIN_ACCNO } from 'src/app/_shared/regex';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
@@ -12,7 +12,7 @@ import { BankViewDto, TptDto, TptViewDto, VehicleTypeViewDto } from 'src/app/_mo
 import { BankDto, BranchDto, TptdetailViewDto } from 'src/app/_models/applicationmaster';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_VEHICLE, MIN_LENGTH_2, MAX_LENGTH_20 } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class TptComponent implements OnInit {
   tpts: TptViewDto[] = [];
   tpt: TptDto = new TptDto();
   tptDetails: TptdetailViewDto[] = [];
-  globalFilterFields: string[] = ['code', 'name', 'relationType', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
+  globalFilterFields: string[] = ['code', 'name', 'relationTypeName', 'relationName', 'gender', 'address', 'pinCode', 'phoneNo', 'email', 'panNo', 'tax', 'tds', 'guarantor1',
     'guarantor2', 'guarantor3', 'bankName', 'branchName', 'ifsc', 'accountNo', 'glCode', 'subGLCode', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   globalFilterFieldsTptDetails: string[] = ['vehicleNo', 'vehicleTypeId', 'insuranceNo', 'receivableAmt', 'receivedAmt', 'gateEntryFreeze', 'transporterFreeze'];
   @ViewChild('filter') filter!: ElementRef;
@@ -45,6 +45,35 @@ export class TptComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+  headers: ITableHeader[] = [
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'relationTypeName', header: 'relationTypeName', label: 'Relationship Type' },
+    { field: 'relationName', header: 'relationName', label: 'Relationship Name' },
+    { field: 'gender', header: 'gender', label: 'Gender' },
+    { field: 'address', header: 'address', label: 'Address' },
+    { field: 'pinCode', header: 'pinCode', label: 'PinCode' },
+    { field: 'phoneNo', header: 'phoneNo', label: 'Phone No' },
+    { field: 'email', header: 'email', label: 'Email' },
+    { field: 'panNo', header: 'panNo', label: 'Pan No' },
+    { field: 'tax', header: 'tax', label: 'Tax' },
+    { field: 'tds', header: 'tds', label: 'TDS' },
+    { field: 'guarantor1', header: 'guarantor1', label: 'Guarantor1' },
+    { field: 'guarantor2', header: 'guarantor2', label: 'Guarantor2' },
+    { field: 'guarantor3', header: 'guarantor3', label: 'Guarantor3' },
+    { field: 'bankName', header: 'bankName', label: 'Bank Name' },
+    { field: 'branchName', header: 'branchName', label: 'Branch Name' },
+    { field: 'ifsc', header: 'ifsc', label: 'IFSC' },
+    { field: 'accountNo', header: 'accountNo', label: 'Account No' },
+    { field: 'glCode', header: 'glCode', label: 'Gang Leader Code' },
+    { field: 'subGLCode', header: 'subGLCode', label: 'Sub Gang Leader Code' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private LookupService: LookupService,

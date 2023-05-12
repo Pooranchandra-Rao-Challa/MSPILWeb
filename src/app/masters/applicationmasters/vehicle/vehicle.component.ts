@@ -1,5 +1,5 @@
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
@@ -30,6 +30,19 @@ export class VehicleComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions:any;
+  headers: ITableHeader[] = [
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'capacity', header: 'capacity', label: 'Capacity' },
+    { field: 'billingCapacity', header: 'billingCapacity', label: 'Billing Capacity' },
+    { field: 'bindingCane', header: 'bindingCane', label: 'Binding %' },
+    { field: 'badCane', header: 'badCane', label: 'Bad Cane %' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,

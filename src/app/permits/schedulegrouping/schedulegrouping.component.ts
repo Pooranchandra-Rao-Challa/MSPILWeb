@@ -47,6 +47,7 @@ export class ScheduleGroupingComponent implements OnInit {
   showDialog: boolean = false;
   showDialog1: boolean = false
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('filters') filters!: ElementRef;
   @ViewChild('dtSchedulegrouping') dtSchedulegrouping!: Table;
   submitLabel!: string;
   permissions: any;
@@ -207,6 +208,8 @@ export class ScheduleGroupingComponent implements OnInit {
     var data = source.data as ISeasonScheduleGroupViewDto;
     this.permitService.GetFarmerPlotsInSchedule(data.seasonId, data.seasonScheduleId).subscribe(resp => {
       data.objPlotSchedule = resp as unknown as IPlotScheduleViewDto[];
+      console.log('expand', data.objPlotSchedule);
+      
     });
   }
 
@@ -279,7 +282,7 @@ export class ScheduleGroupingComponent implements OnInit {
   get isFormValid(): boolean {
     const fromDOP = this.fbScheduleGrouping.get('fromDOP')?.value;
     const toDOP = this.fbScheduleGrouping.get('toDOP')?.value;
-    return fromDOP !== null && toDOP !== null && !isNaN(Date.parse(fromDOP)) && !isNaN(Date.parse(toDOP));
+    return fromDOP !== null && toDOP !== null && !isNaN(Date.parse(fromDOP)) && !(Date.parse(toDOP));
   }
   restrictToRange(event: any) {
     const value = parseInt(event.target.value);
@@ -400,7 +403,6 @@ export class ScheduleGroupingComponent implements OnInit {
     this.showTable = true;
     this.showDialog = true;
   }
-
   onSubmit() {
     if (this.fbScheduleGrouping.valid) {
       this.permitService.CreateScheduleGroup(this.fbScheduleGrouping.value).subscribe((resp) => {
@@ -416,7 +418,7 @@ export class ScheduleGroupingComponent implements OnInit {
   }
   clear(table: Table) {
     table.clear();
-    this.filter.nativeElement.value = '';
+    this.filters.nativeElement.value = '';
   }
 
 }

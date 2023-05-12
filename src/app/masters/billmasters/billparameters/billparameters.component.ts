@@ -27,7 +27,7 @@ export class BillParametersComponent implements OnInit {
   showDialog: boolean = false;
   fbBillParameters!: FormGroup;
   addFlag: boolean = true;
-  globalFilterFields: string[] = ['id', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'isActive', 'createdAt', 'createdByUser',
+  globalFilterFields: string[] = ['billCategoryName', 'type', 'code', 'name', 'caluclationType', 'formula', 'priority', 'isActive', 'createdAt', 'createdByUser',
     'updatedAt', 'updatedByUser'];
   submitLabel!: string;
   billCategories: any;

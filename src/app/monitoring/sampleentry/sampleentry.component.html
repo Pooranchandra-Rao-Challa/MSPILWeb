@@ -58,6 +58,9 @@
             <button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
               (click)="editSampleEntry(sample)" *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
+            <button pButton pRipple icon="pi pi-eye-slash"
+              class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
+              *ngIf="sample.canNotDoEditOrAdd" [disabled]="true"></button>
           </td>
           <td *ngFor="let col of headers">
             <span *ngIf="col?.field != 'docDate'">{{sample[col.field]}}</span>
@@ -84,6 +87,7 @@
    
 </div>
 
+    <!-- Dialog -->
     <p-dialog header="Sample Entry" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '60vw' }" (onHide)="clearForm()"
       (onShow)="initForm()">
@@ -228,5 +232,6 @@
         </div>
       </ng-template>
     </p-dialog>
+
   </div>
 </div>

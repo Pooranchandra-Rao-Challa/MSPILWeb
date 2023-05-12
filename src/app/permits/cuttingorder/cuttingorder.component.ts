@@ -16,7 +16,6 @@ import { CURRENT_SEASON } from "src/environments/environment";
   styles: [],
 })
 export class CuttingOrderComponent implements OnInit {
-  globalFilterFields:string[] =['farmerCode','farmerName', 'divisionName','circleName','varietyName', 'plantingDate','netArea'];
   seasons: SeasonViewDto[] = [];
   fbCuttingOrder!: FormGroup;
   currentSeason: SeasonDto = {};
@@ -42,6 +41,7 @@ export class CuttingOrderComponent implements OnInit {
   plotcuttingOrders: PlotCuttingOrderViewDto[] = [];
   cuttingorders: GetCuttingOrderViewDto[] = [];
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('filters') filters!: ElementRef;
   @ViewChild('dtseasoncuttingOrders') dtseasoncuttingOrders!: Table;
   @ViewChild('dtcuttingorders') dtcuttingorders!: Table;
   showDialog: boolean = false;
@@ -82,7 +82,7 @@ export class CuttingOrderComponent implements OnInit {
     { field: 'circleName', header: 'circleName', label: 'Circle Name' },
     { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
-    // { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
     { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
     { field: 'varietyName', header: 'varietyName', label: 'Variety Name' },
     { field: 'netArea', header: 'netArea', label: 'Net Area' },
@@ -253,7 +253,7 @@ export class CuttingOrderComponent implements OnInit {
       plotId: [null],
       divisionId: [null],
       circleId: [null],
-      sectionId: [null],
+      sectionId: [null], 
       villageId: [null],
       plantTypeId: [null],
       varietyId: [null],
@@ -337,12 +337,15 @@ export class CuttingOrderComponent implements OnInit {
       this.error = true;
     }
   }
-  
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
+  clear1(table: Table) {
+    table.clear();
+    this.filters.nativeElement.value = '';
+  }
   onSearch(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }

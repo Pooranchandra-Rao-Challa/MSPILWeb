@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { JWTService } from 'src/app/_services/jwt.service';
 import { ShiftDto, ShiftsViewDto } from 'src/app/_models/applicationmaster';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
-import { MAX_LENGTH_20, MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
+import { MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
@@ -15,7 +15,6 @@ import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
   templateUrl: './shift.component.html',
 })
 export class ShiftsComponent implements OnInit {
-
   dialog: boolean = false;
   shifts: ShiftsViewDto[] = [];
   shift: ShiftDto = new ShiftDto();
@@ -27,19 +26,17 @@ export class ShiftsComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
   valSwitch: boolean = true;
   nextSwitch: boolean = true;
-  permissions:any;
-  
+  permissions: any;
+
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,
     public jwtService: JWTService,
     private alertMessage: AlertMessage
-  ) {
+  ) { }
 
-  }
-
-  InitShift() {
-    this.shift = new ShiftDto();
-    this.fbshifts.reset();
+  addShift() {
+    this.fbshifts.controls['isNextDay'].setValue(false);
+    this.fbshifts.controls['isActive'].setValue(true);
     this.submitLabel = "Add Shift";
     this.addFlag = true;
     this.dialog = true;
@@ -55,11 +52,11 @@ export class ShiftsComponent implements OnInit {
     this.fbshifts = this.formbuilder.group({
       shiftId: [null],
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20) ]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       strFromTime: new FormControl('', [Validators.required]),
       strToTime: new FormControl('', [Validators.required]),
-      isNextDay: [true],
-      isActive: [true],
+      isNextDay: [null],
+      isActive: [null],
     });
   }
 
@@ -82,10 +79,6 @@ export class ShiftsComponent implements OnInit {
     this.submitLabel = "Update Shift";
     this.addFlag = false;
     this.dialog = true;
-  }
-
-  onClose() {
-    this.fbshifts.reset();
   }
 
   saveShift(): Observable<HttpEvent<ShiftDto>> {
@@ -117,4 +110,9 @@ export class ShiftsComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
+
+  onClose() {
+    this.fbshifts.reset();
+  }
+
 }

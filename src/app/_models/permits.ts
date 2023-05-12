@@ -314,10 +314,13 @@ export class PlotCuttingOrderViewDto{
   sectionName?: string;
   villageCode?:string;
   villageName?: string;
+  plotNumber?:string;
   plantTypeName?: string;
   varietyName?: string;
   netArea?: number;
   estimatedTon?: number;
+  plotYieldId?:  number;
+  plotId?: number;
 }
 export class ScheduleGroupDto {
   createdBy?: string

@@ -10,6 +10,10 @@ export class AlertMessage {
     this.service.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: message, life: 5000 });
   }
 
+  displayErrorMessage(message: string) {
+    this.service.add({ key: 'tst', severity: 'error', summary: 'Error Message', detail: message, life: 5000 });
+  }
+
 }
 
 /**
@@ -143,12 +147,15 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Divisions
   'SMGMDIV001': 'Division Added Successfully',
   'SMGMDIV002': 'Division Updated Successfully',
+
   // Districts
   'SMGMDIS001': 'District Added Successfully',
   'SMGMDIS002': 'District Updated Successfully',
+
   // Mandals
   'SMGMM001': 'Mandal Added Successfully',
   'SMGMM002': 'Mandal Updated Successfully',
+
   //Villages Message
   'SMMGMVI001': 'Village Added Successfully',
   'SMMGMVI002': 'Village Updated Successfully',
@@ -161,21 +168,22 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMGMCI001': 'Circle Added Successfully',
   'SMGMCI002': 'Circle Updated Successfully',
 
-
-
-
   // Diesel Rate Message
   'SMBMDR001': 'Diesel Rate Added Successfully',
   'SMBMDR002': 'Diesel Rate Updated Successfully',
+
   // Distance Rate Message
   'SMBMDTR001': 'Distance Rate Added Successfully',
   'SMBMDTR002': 'Distance Rate Updated Successfully',
+
   // Diesel Bunk Message
   'SMBMDB001': 'Diesel Bunk Added Successfully',
   'SMBMDB002': 'Diesel Bunk Updated Successfully',
+
   // TPT Message
   'SMAMT001': 'TPT Added Successfully',
   'SMAMT002': 'TPT Updated Successfully',
+
   // Variety Message
   'SMAMVA001': 'Variety Added Successfully',
   'SMAMVA002': 'Variety Updated Successfully',
@@ -185,8 +193,9 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMAMVE002': 'Vehicle Updated Successfully',
 
   //Ware House
-  'SMBMWH001': 'Diesel Bunk Added Successfully',
-  'SMBMWH002': 'Diesel Bunk Updated Successfully',
+  'SMBMWH001': 'Ware House Added Successfully',
+  'SMBMWH002': 'Ware House Updated Successfully',
+  'SMBMWH003': 'Code Should Be Unique',
 
   //Loan Types
   'SMBMLM001': 'Loan Type  Added Successfully',
@@ -200,14 +209,16 @@ export const ALERT_CODES: { [key: string]: string } = {
   // planttype
   'SMAMPT001': 'Plant Type Added Successfully',
   'SMAMPT002': 'Plant Type Updated Successfully',
+
   // plantsubtype
   'SMAMPST001': 'Plant Sub Type Added Successfully',
   'SMAMPST002': 'Plant Sub Type Updated Successfully',
+
   // Lookup
   'SMAMLU001': 'Lookup Added Successfully',
   'SMAMLU002': 'Lookup Updated Successfully',
-  //sample alert
 
+  //sample alert
   'SMMSE001': 'Alredy Takeen Sample You Dont Have Any Sample',
 
   // Monitoring Screens
@@ -249,8 +260,9 @@ export const ALERT_CODES: { [key: string]: string } = {
 
   // Cutting Order
   'SMPCO001': 'Cutting Order Is Add Successfully',
+
   //Permit Quota
-   'SMPPQ001': 'Permit Quota Is Add Successfully',
-   'SMPPQ002': 'Permit Quota Is Update Successfully',
-  
+  'SMPPQ001': 'Permit Quota Is Add Successfully',
+  'SMPPQ002': 'Permit Quota Is Update Successfully',
+
 }

@@ -205,8 +205,6 @@
                     <small> {{phoneNo.value.length}}/{{maxLength.phoneNo}} </small>
                   </div>
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['required']">
-                      Please Enter Mobile No.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
                       First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                   </span>

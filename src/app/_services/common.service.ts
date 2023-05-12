@@ -18,15 +18,17 @@ export class CommonService extends ApiHttpService {
     return this.getWithId<SectionDto>(GET_SECTIONS_URI, circleId);
   }
 
-
   GetDistrictsForState(stateId?: number) {
     if (stateId != null) return this.getWithId<DistrictDto>(GET_DISTRICTS_URI, stateId);
     else return this.get<DistrictDto>(GET_DISTRICTS_URI);
   }
 
-
   GetMandalsForDistrict(districtId: number) {
     return this.getWithId<MandalDto>(GET_MANDALS_URI, districtId);
+  }
+
+  GetDivisionForMandal(mandalId: number) {
+    return this.getWithId<DivisionDto>(GET_DIVISION_URI, mandalId);
   }
 
   GetDivision() {
