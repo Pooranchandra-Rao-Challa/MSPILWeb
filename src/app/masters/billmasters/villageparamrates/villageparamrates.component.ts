@@ -14,6 +14,7 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { SeasonDto } from 'src/app/_models/applicationmaster';
 import { CURRENT_SEASON } from 'src/environments/environment';
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-villageparamrates',
@@ -36,6 +37,20 @@ export class VillageParamRatesComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   permissions: any;
   currentSeason: SeasonDto = {};
+  headers: ITableHeader[] = [
+    { field: 'seasonName', header: 'seasonName', label: 'Season Code' },
+    { field: 'divisionName', header: 'divisionName', label: 'Division' },
+    { field: 'circleName', header: 'circleName', label: 'Circle' },
+    { field: 'sectionName', header: 'sectionName', label: 'Section' },
+    { field: 'villageName', header: 'villageName', label: 'Village' },
+    { field: 'billParameterName', header: 'billParameterName', label: 'Bill Param Name' },
+    { field: 'rate', header: 'rate', label: 'Rate' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdByUser', header: 'createdByUser', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedByUser', header: 'updatedByUser', label: 'Updated By' },
+  ];
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,

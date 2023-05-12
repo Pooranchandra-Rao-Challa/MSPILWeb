@@ -14,7 +14,7 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dtvehicleTypes [value]="vehicleTypes" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
+    <p-table #dtVehicleTypes [value]="vehicleTypes" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
@@ -22,10 +22,10 @@
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-            (click)="clear(dtvehicleTypes)"></button>
+            (click)="clear(dtVehicleTypes)"></button>
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dtvehicleTypes, $event)" placeholder="Search Keyword"
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dtVehicleTypes, $event)" placeholder="Search Keyword"
               class="w-full" />
           </span>
         </div>
@@ -88,7 +88,7 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
                       Code Min Length Is 2 .</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['pattern']">
-                      Code Should Contains Only Alphabets And Integers.</div>
+                      Code Cannot Start Or End With Spaces.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -105,7 +105,7 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
                       Name Min Characters Is 2.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                      Name Should Contains Only Letters.</div>
+                      Name Cannot Start Or End With Spaces.</div>
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
@@ -133,7 +133,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Binding (%):</label>
-                  <p-inputNumber inputId="bindingCane" placeholder="Enter Binding" formControlName="bindingCane"
+                  <p-inputNumber inputId="bindingCane" placeholder="Enter Binding Cane" formControlName="bindingCane"
                     mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" [max]="100"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['bindingCane'].touched && FormControls['bindingCane'].errors }">
                   </p-inputNumber>
@@ -150,7 +150,7 @@
                   </p-inputNumber>
                   <span *ngIf="FormControls['badCane'].touched && FormControls['badCane'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['badCane'].errors?.['required']">
-                      Please Select Plant Suitability.</div>
+                      Please Select Bad Cane.</div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

@@ -12,7 +12,7 @@
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-6">
                     <label htmlFor="fromArea">From Area:<sup class="p-error">*</sup></label>
-                    <input pInputText id="fromArea" formControlName="fromArea" type="text" placeholder="Enter Form Area"
+                    <input pInputText id="fromArea" formControlName="fromArea" type="text" placeholder="Enter Form Area"  [readonly]="true"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromArea'].touched && FormControls['fromArea'].errors }" />
                     <div
                       *ngIf="FormControls['fromArea'].invalid &&  FormControls['fromArea'].touched && FormControls['fromArea'].errors?.['required']"
@@ -26,7 +26,7 @@
                   <div class="field col-12 md:col-6">
                     <label htmlFor="toArea">To Area:<sup class="p-error">*</sup></label>
                     <p-inputNumber #toArea formControlName="toArea" type="text" placeholder="Enter To Area"
-                      mode="decimal" [minFractionDigits]="2"
+                      mode="decimal" [minFractionDigits]="2" 
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['toArea'].touched && FormControls['toArea'].errors }">
                     </p-inputNumber>
                     <div
@@ -38,7 +38,7 @@
                   <div class="field col-12 md:col-6">
                     <label htmlFor="noOfSample">No of Sample:<sup class="p-error">*</sup></label>
                     <p-inputNumber id="noOfSample" formControlName="noOfSample" [minFractionDigits]="2" [min]="0"
-                      [max]="100" placeholder="No of Sample"
+                      [max]="100" placeholder="No of Sample"  [readonly]="true"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfSample'].touched && FormControls['noOfSample'].errors }">
                     </p-inputNumber>
                     <div
@@ -67,7 +67,7 @@
       <ng-template pTemplate="footer">
         <div class="col-6" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            (click)="onSubmit()"></button>
+          [disabled]="fbsampleslabs.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>
