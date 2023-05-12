@@ -189,3 +189,10 @@ div.season-rates-tab-items:not(:first-child) {
 overflow: hidden;
 
 }
+.sample_entry_note > li{
+  list-style-type: square;
+}
+.sample_entry_note > li::marker{
+  font-size: 30px;
+ 
+}
