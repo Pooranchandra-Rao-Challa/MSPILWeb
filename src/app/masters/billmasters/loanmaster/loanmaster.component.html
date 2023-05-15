@@ -210,14 +210,14 @@
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                     <ng-template pTemplate="header">
                       <tr>
-                        <th><label class="required">Code</label></th>
-                        <th><label class="required">Name</label></th>
-                        <th>Priority</th>
-                        <th><label class="required">Interest Rate</label></th>
-                        <th><label class="required">Rate</label></th>
-                        <th><label class="required">Requisition Req</label></th>
-                        <th><label class="required">Uomid</label></th>
-                        <th>LoanQty Type</th>
+                        <th class="required">Code <sup class="p-error">*</sup></th>
+                        <th class="required">Name <sup class="p-error">*</sup></th>
+                        <th>Priority </th>
+                        <th class="required">Interest Rate <sup class="p-error">*</sup></th>
+                        <th  class="required">Rate <sup class="p-error">*</sup></th>
+                        <th class="required">Requisition Req <sup class="p-error">*</sup></th>
+                        <th class="required">uomid <sup class="p-error">*</sup></th>
+                        <th>LoanQty Type <sup class="p-error">*</sup></th>
                         <th>GL Code</th>
                         <th>SubGL Code</th>
                         <th *ngIf="fbloantype.controls['loanSubTypes'].value.length > 1"></th>

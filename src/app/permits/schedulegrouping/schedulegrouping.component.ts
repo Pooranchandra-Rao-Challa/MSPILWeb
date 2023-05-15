@@ -307,6 +307,7 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlots = Object.assign([], this.plots);
       this.filterPlantTypes = Object.assign([], this.planttypes);
       this.filterVarieties = Object.assign([], this.varieties);
+ 
     }
     else {
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
@@ -317,6 +318,9 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.divisionId!) != -1)
       this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.divisionId!) != -1)
     }
+    this.fbScheduleGrouping.get('circleId')?.setValue([]);
+    this.fbScheduleGrouping.get('sectionId')?.setValue([]);
+    this.fbScheduleGrouping.get('villageId')?.setValue([]);
   }
   SetAllCircleChilds(values: number[]) {
     if (values.length == 0) {
@@ -326,6 +330,8 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlots = Object.assign([], this.plots);
       this.filterPlantTypes = Object.assign([], this.planttypes);
       this.filterVarieties = Object.assign([], this.varieties);
+
+      
     }
     else {
       this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
@@ -335,6 +341,8 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.circleId!) != -1)
       this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.circleId!) != -1)
     }
+          this.fbScheduleGrouping.get('sectionId')?.setValue([]);
+      this.fbScheduleGrouping.get('villageId')?.setValue([]);
   }
   SetAllSectionChilds(values: number[]) {
     if (values.length == 0) {
@@ -343,6 +351,7 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlots = Object.assign([], this.plots);
       this.filterPlantTypes = Object.assign([], this.planttypes);
       this.filterVarieties = Object.assign([], this.varieties);
+      
     }
     else {
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
@@ -351,6 +360,7 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterPlantTypes = this.planttypes.filter(planttype => values.indexOf(planttype.sectionId!) != -1)
       this.filterVarieties = this.varieties.filter(variety => values.indexOf(variety.sectionId!) != -1)
     }
+    this.fbScheduleGrouping.get('villageId')?.setValue([]);
   }
   SetAllVillageChilds(values: number[]) {
     if (values.length == 0) {
@@ -393,6 +403,7 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterVarieties = this.varieties.filter(variety => Array.isArray(values) && values.indexOf(variety.planttypeId!) != -1);
     }
   }
+  
 
   get FormControls() {
     return this.fbScheduleGrouping.controls
