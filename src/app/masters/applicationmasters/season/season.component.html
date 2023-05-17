@@ -125,12 +125,12 @@
     </p-table>
     <!-- dialog box -->
     <p-dialog header="Season With Billing Rate" [(visible)]="showDialog" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" [modal]="true">
+    [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" [modal]="true">
       <div class="flex flex-column align-items-center justify-content-center">
-        <div class="container">
-          <div class="grid p-fluid">
+        <div class="containers">
+          <div class="grid p-fuid">
             <form [formGroup]="fbseasons" (ngSubmit)="onSubmit()">
-              <p-fieldset legend="Season" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
+              <p-fieldset legend="Season" class="" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 md:col-4">
                     <label>Code:<sup class="p-error">*</sup></label>
@@ -280,10 +280,10 @@
               <!-- //formArray -->
              <p-fieldset legend="Category Wise Billing Rates" class="col-12" [toggleable]="true"  
                 [transitionOptions]="'500ms'">  
-                <div class="p-fluid">  
+                <div class="col-12">  
                   <p class="head_note">Note: Need To Add Below (Farmers, Harvester, Transporter & Seed) Billing Category  
                     Rates are Mandatory. </p>   
-                  <p-tabView styleClass="tabview-custom" (onChange)="handleBillCategoryChange($event)"  
+                  <p-tabView styleClass="tabview-custom" [scrollable]="true" (onChange)="handleBillCategoryChange($event)"  
                     [(activeIndex)]="activeIndex!">
                     <p-tabPanel *ngFor="let billCategory of billCategories; let i = index" [selected]="i == 0">  
                       <ng-template pTemplate="header">  
