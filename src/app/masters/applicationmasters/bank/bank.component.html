@@ -99,17 +99,20 @@
                                     <th>Code<sup class="p-error">*</sup></th>
                                     <th>Name<sup class="p-error">*</sup></th>
                                     <th>Ifsc<sup class="p-error">*</sup></th>
-                                    <th>Address<sup class="p-error">*</sup></th>
                                     <th>Pincode<sup class="p-error">*</sup></th>
+                                    <th>Address<sup class="p-error">*</sup></th>
                                     <th *ngIf="fbbank.controls['branches'].value.length > 1"></th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-branch let-branchDetailsIndex="rowIndex">
                                 <tr [formGroupName]="branchDetailsIndex">
-                                    <td>
+                                    <td class="vertical-align-top">
                                         <input pInputText class="form-control" formControlName="code"
-                                            placeholder="Enter Code"  alphaNumeric  [maxlength]="20"
+                                            placeholder="Enter Code"  alphaNumeric  [maxlength]="maxLength.Code" #Code 
                                             [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex, 'code')?.touched && formArrayControls(branchDetailsIndex, 'code')?.errors }">
+                                            <div class="text-right">
+                                                <small>{{Code.value.length}}/{{maxLength.Code}} </small>
+                                              </div>
                                         <span
                                             *ngIf="formArrayControls(branchDetailsIndex,'code')?.touched &&formArrayControls(branchDetailsIndex,'code')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
@@ -124,10 +127,14 @@
                                         </span>
                                     </td>
 
-                                    <td>
-                                        <input pInputText class="form-control" formControlName="name"  placeholder="Enter Name" alphaOnly [maxlength]="maxLength.name"
+                                    <td class="vertical-align-top">
+                                        <input pInputText class="form-control" formControlName="name"  placeholder="Enter Name" alphaOnly
+                                         [maxlength]="maxLength.name" #name 
                                          [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex,'name')?.touched &&
-                                        formArrayControls(branchDetailsIndex,'name')?.errors }">
+                                        formArrayControls(branchDetailsIndex,'name')?.errors }" >
+                                        <div class="text-right">
+                                            <small>{{name.value.length}}/{{maxLength.name}} </small>
+                                          </div>
                                         <span
                                             *ngIf="formArrayControls(branchDetailsIndex,'name')?.touched &&formArrayControls(branchDetailsIndex,'name')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
@@ -137,10 +144,13 @@
                                                     Name Min Characters Is 2.</div>
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="vertical-align-top">
                                         <input pInputText class="form-control" formControlName="ifsc"  placeholder="Enter Ifsc"   alphaNumeric  [maxlength]="11" [minlength]="11"
                                          [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex,'ifsc')?.touched &&
-                                        formArrayControls(branchDetailsIndex,'ifsc')?.errors }">
+                                        formArrayControls(branchDetailsIndex,'ifsc')?.errors }" #ifscCode [maxlength]="maxLength.ifscCode" >
+                                        <div class="text-right">
+                                            <small>{{ifscCode.value.length}}/{{maxLength.ifscCode}} </small>
+                                          </div>
                                         <span
                                             *ngIf="formArrayControls(branchDetailsIndex,'ifsc')?.touched &&formArrayControls(branchDetailsIndex,'ifsc')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
@@ -153,21 +163,13 @@
                                                     Ifsc Min Length Is 11.</div>
                                         </span>
                                     </td>
-                                    <td>
-                                        <input pInputText class="form-control" formControlName="address" placeholder="Enter Address" alphaNumeric [maxlength]="maxLength.address" 
-                                        [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex,'address')?.touched &&
-                                        formArrayControls(branchDetailsIndex,'address')?.errors }">
-                                        <span
-                                            *ngIf="formArrayControls(branchDetailsIndex,'address')?.touched &&formArrayControls(branchDetailsIndex,'address')?.invalid">
-                                            <div class="ng-invalid ng-touched p-error"
-                                                *ngIf="formArrayControls(branchDetailsIndex,'address')?.errors?.['required']">
-                                                Please Enter Address.</div>
-                                        </span>
-                                    </td>
-                                    <td>
+                                    <td class="vertical-align-top">
                                         <input pInputText class="form-control" formControlName="pinCode" placeholder="Enter PinCode" numericOnly [maxlength]="6" [minlength]="6"
                                          [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex,'pinCode')?.touched &&
-                                        formArrayControls(branchDetailsIndex,'pinCode')?.errors }">
+                                        formArrayControls(branchDetailsIndex,'pinCode')?.errors }" #pinCode [maxlength]="maxLength.pinCode">
+                                        <div class="text-right">
+                                            <small>{{pinCode.value.length}}/{{maxLength.pinCode}} </small>
+                                          </div>
                                         <span
                                             *ngIf="formArrayControls(branchDetailsIndex,'pinCode')?.touched &&formArrayControls(branchDetailsIndex,'pinCode')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
@@ -178,7 +180,24 @@
                                                 pincode Should Contains Numbers.</div>
                                             <div class="ng-invalid ng-touched p-error"
                                                 *ngIf="formArrayControls(branchDetailsIndex,'pinCode')?.errors?.['minlength']">
-                                                pincode Min Length Is 6 .</div>
+                                                pincode Min Length Is 6.</div>
+                                        </span>
+                                    </td>
+                                    <td class="vertical-align-top">
+                                        <textarea rows="1" cols="30" placeholder="Enter Address" #address pInputTextarea
+                                        formControlName="address" [maxlength]="maxLength.address" address
+                                        [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex,'address')?.touched &&
+                                        formArrayControls(branchDetailsIndex,'address')?.errors }"></textarea>
+                                        <div class="text-right">
+                                            <small>{{address.value.length}}/{{maxLength.address}} </small>
+                                          </div>
+                                        <span
+                                            *ngIf="formArrayControls(branchDetailsIndex,'address')?.touched &&formArrayControls(branchDetailsIndex,'address')?.invalid">
+                                            <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls(branchDetailsIndex,'address')?.errors?.['required']">
+                                                Please Enter Address.</div>
+                                            <div class="ng-invalid ng-touched p-error" *ngIf="formArrayControls(branchDetailsIndex, 'address')?.errors?.['pattern']">
+                                                    Field Cannot Start Or End With Spaces.</div>
                                         </span>
                                     </td>
                                     <td *ngIf="fbbank.controls['branches'].value.length > 1">

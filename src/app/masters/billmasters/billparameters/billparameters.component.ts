@@ -1,5 +1,4 @@
-import { AlertMessage, ALERT_CODES } from './../../../_alerts/alertMessage';
-import { MessageService } from 'primeng/api';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
@@ -11,7 +10,7 @@ import { HttpEvent } from '@angular/common/http';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
@@ -36,11 +35,26 @@ export class BillParametersComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+  headers: ITableHeader[] = [
+    { field: 'billCategoryName', header: 'billCategoryName', label: 'Billing Category' },
+    { field: 'type', header: 'type', label: 'Type' },
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'caluclationType', header: 'caluclationType', label: 'Calc Type' },
+    { field: 'formula', header: 'formula', label: 'Formula' },
+    { field: 'priority', header: 'priority', label: 'Priority' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdByUser', header: 'createdByUser', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedByUser', header: 'updatedByUser', label: 'Updated By' },
+  ];
+
   constructor(private formbuilder: FormBuilder,
     private billmasterService: BillMasterService,
     private lookupService: LookupService,
     private alertMessage: AlertMessage,
-    private jwtService:JWTService) {
+    private jwtService: JWTService) {
     this.calTypes = [
       { label: 'FIXED', value: 'Fixed' },
       { label: 'NETWEIGHT', value: 'NetWeight' },
@@ -80,7 +94,7 @@ export class BillParametersComponent implements OnInit {
   billmasterForm() {
     this.fbBillParameters = this.formbuilder.group({
       billParameterId: [null],
-      categoryId: ['', (Validators.required)],
+      categoryId: [null, (Validators.required)],
       type: ['', (Validators.required)],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_10)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),

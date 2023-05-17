@@ -148,7 +148,7 @@ div.season-rates-tab-items:not(:first-child) {
 .p-datatable-gridlines.p-datatable .p-datatable-wrapper  button.p-button.p-button-icon-only{
   height: auto !important;
   padding: 1px !important;
-  width:100% !important;
+  // width:100% !important;
 
 }
 
@@ -188,4 +188,17 @@ div.season-rates-tab-items:not(:first-child) {
 
 overflow: hidden;
 
+}
+.sample_entry_note > li{
+  list-style-type: square;
+}
+.sample_entry_note > li::marker{
+  font-size: 30px;
+ 
+}
+
+.scrolling_content{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 }

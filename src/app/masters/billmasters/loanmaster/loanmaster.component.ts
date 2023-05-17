@@ -1,6 +1,6 @@
 import { LookupDetailDto } from 'src/app/_models/applicationmaster';
 import { LookupService } from 'src/app/_services/lookup.service';
-import { RG_NUMERIC_ONLY, MIN_LENGTH_2, MAX_LENGTH_20 } from 'src/app/_shared/regex';
+import { MIN_LENGTH_2, MAX_LENGTH_20 } from 'src/app/_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
@@ -10,9 +10,10 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { LoanTypeViewDto, LoanTypeDto, LoanSubTypeViewDto, } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-loanmaster',
@@ -25,7 +26,7 @@ export class LoanMasterComponent implements OnInit {
   loanType: LoanTypeDto = new LoanTypeDto();
   loanSubTypes: LoanSubTypeViewDto[] = [];
   loadingLoanType: boolean = true;
-  globalFilterFields: string[] = ['categoryName','code', 'name', 'interestRate', 'priority', 'glCode', 'subGLcode', 'isActive', 'createdAt',
+  globalFilterFields: string[] = ['categoryName', 'code', 'name', 'interestRate', 'priority', 'glCode', 'subGLcode', 'isActive', 'createdAt',
     'createdBy', 'updatedAt', 'updatedBy',];
   @ViewChild('filter') filter!: ElementRef;
   fbloantype!: FormGroup;
@@ -36,13 +37,27 @@ export class LoanMasterComponent implements OnInit {
   uom: LookupDetailDto[] = [];
   defaults: { name: string; id: boolean }[];
   billCategories: any;
+  mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
   loanQtyTypes: { name: string; value: string; }[];
+  headers: ITableHeader[] = [
+    { field: 'categoryName', header: 'categoryName', label: 'Category' },
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'interestRate', header: 'interestRate', label: 'Interest Rate' },
+    { field: 'priority', header: 'priority', label: 'Priority' },
+    { field: 'glcode', header: 'glcode', label: 'GL Code' },
+    { field: 'subGlcode', header: 'subGlcode', label: 'Sub GL Code' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   constructor(
     private formbuilder: FormBuilder,
-    private appMasterService: AppMasterService,
     private LookupService: LookupService,
     private BillMasterService: BillMasterService,
     private alertMessage: AlertMessage,

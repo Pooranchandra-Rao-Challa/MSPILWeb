@@ -9,6 +9,7 @@ import { HttpEvent } from '@angular/common/http';
 import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { DateValidators } from 'src/app/_validators/dateRangeValidator';
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-dieselrates',
@@ -27,11 +28,21 @@ export class DieselRatesComponent implements OnInit {
   submitLabel!: string;
   mediumDate: string = MEDIUM_DATE;
   permissions: any;
+  headers: ITableHeader[] = [
+    { field: 'fromDate', header: 'fromDate', label: 'From Date' },
+    { field: 'toDate', header: 'toDate', label: 'To Date' },
+    { field: 'rate', header: 'rate', label: 'Rate' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdByUser', header: 'createdByUser', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedByUser', header: 'updatedByUser', label: 'Updated By' },
+  ];
 
   constructor(private formbuilder: FormBuilder,
     private billMasterService: BillMasterService,
     private alertMessage: AlertMessage,
-    private jwtService:JWTService) { }
+    private jwtService: JWTService) { }
 
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
@@ -48,10 +59,10 @@ export class DieselRatesComponent implements OnInit {
   dieselRateForm() {
     this.fbDieselRate = this.formbuilder.group({
       id: [null],
-      fromDate: ['', (Validators.required)],
-      toDate: ['', (Validators.required)],
+      fromDate: [null, (Validators.required)],
+      toDate: [null, (Validators.required)],
       rate: [null, (Validators.required)],
-      isActive: [true]
+      isActive: [null]
     }, {
       validators: Validators.compose([
         DateValidators.dateRangeValidator('fromDate', 'toDate', { 'fromDate': true }),
@@ -73,6 +84,7 @@ export class DieselRatesComponent implements OnInit {
   }
 
   addDieselRate() {
+    this.fbDieselRate.controls['isActive'].setValue(true);
     this.submitLabel = "Add Diesel Rate";
     this.addFlag = true;
     this.showDialog = true;

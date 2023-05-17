@@ -86,17 +86,20 @@
                                 <tr>
                                     <th>Code<sup class="p-error">*</sup> </th>
                                     <th>Name <sup class="p-error">*</sup></th>
-                                    <th>Remarks</th>
                                     <th>Listing Order<sup class="p-error">*</sup></th>
+                                    <th>Remarks</th>
                                     <th *ngIf="fblookup.controls['lookUpDetails'].value.length > 1"></th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-lookUp let-lookUpDetailsIndex="rowIndex">
                                 <tr [formGroupName]="lookUpDetailsIndex">
-                                    <td>
-                                        <input pInputText class="form-control" formControlName="code"
+                                    <td class="vertical-align-top">
+                                        <input pInputText class="form-control" formControlName="code" [maxlength]="maxLength.Code" #Code 
                                             placeholder="Enter Code" [maxlength]="20" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex, 'code')?.touched &&
                                 formArrayControls(lookUpDetailsIndex, 'code')?.errors }">
+                                <div class="text-right">
+                                    <small>{{Code.value.length}}/{{maxLength.Code}} </small>
+                                  </div>
                                         <span
                                             *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched && formArrayControls(lookUpDetailsIndex,'code')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
@@ -113,11 +116,14 @@
                                                 Code Should Contains Alphabets & Numbers.</div>
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="vertical-align-top">
                                         <input pInputText class="form-control" formControlName="name"
-                                            placeholder="Enter Name" [maxlength]="maxLength.name"
+                                            placeholder="Enter Name"  [maxlength]="maxLength.name" #name 
                                             [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'name')?.touched &&
                                     formArrayControls(lookUpDetailsIndex,'name')?.errors }">
+                                    <div class="text-right">
+                                        <small>{{name.value.length}}/{{maxLength.name}} </small>
+                                      </div>
                                         <span
                                             *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.touched &&formArrayControls(lookUpDetailsIndex,'name')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
@@ -131,20 +137,14 @@
                                                 Name Should Contains Alphabets & Numbers.</div> -->
                                         </span>
                                     </td>
-                                    <td>
-                                        <input pInputText class="form-control" formControlName="remarks"
-                                            placeholder="Enter Remarks" alphaNumeric [maxlength]="maxLength.name">
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'remarks')?.errors?.['minlength']">
-                                            Remarks Min Length Is 2.</div>
-                                        <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="formArrayControls(lookUpDetailsIndex,'remarks')?.errors?.['pattern']">
-                                            Remarks Should Contains Alphabets & Numbers.</div>
-                                    </td>
-                                    <td>
-                                        <p-inputNumber class="form-control" formControlName="listingorder"
-                                            placeholder="Enter Listing Order" [maxlength]="2" [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&
-                                    formArrayControls(lookUpDetailsIndex,'listingorder')?.errors }"></p-inputNumber>
+                                    <td class="vertical-align-top">
+                                        <input pInputText class="form-control" formControlName="listingorder"
+                                            placeholder="Enter Listing Order" #listingorder numericOnly [maxlength]="maxLength.listingorder"
+                                            [ngClass]="{'is-invalid ng-dirty': formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&
+                                    formArrayControls(lookUpDetailsIndex,'listingorder')?.errors }">
+                                    <div class="text-right">
+                                        <small>{{listingorder.value.length}}/{{maxLength.listingorder}} </small>
+                                      </div>
                                         <span
                                             *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.touched &&formArrayControls(lookUpDetailsIndex,'listingorder')?.invalid">
                                             <div class="ng-invalid ng-touched p-error"
@@ -154,6 +154,19 @@
                                                 *ngIf="formArrayControls(lookUpDetailsIndex,'listingorder')?.errors?.['maxlength']">
                                                 Listing Order Max Length Is 2.</div>
                                         </span>
+                                    </td>
+                                    <td class="vertical-align-top">
+                                        <input pInputText class="form-control" formControlName="remarks"
+                                            placeholder="Enter Remarks" alphaNumeric #remarks [maxlength]="maxLength.name">
+                                            <div class="text-right">
+                                                <small>{{remarks.value.length}}/{{maxLength.name}} </small>
+                                              </div>
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="formArrayControls(lookUpDetailsIndex,'remarks')?.errors?.['minlength']">
+                                            Remarks Min Length Is 2.</div>
+                                        <div class="ng-invalid ng-touched p-error"
+                                            *ngIf="formArrayControls(lookUpDetailsIndex,'remarks')?.errors?.['pattern']">
+                                            Remarks Should Contains Alphabets & Numbers.</div>
                                     </td>
                                     <td *ngIf="fblookup.controls['lookUpDetails'].value.length > 1">
                                         <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"

@@ -89,7 +89,7 @@
       <ng-template pTemplate="footer">
         <div class="col-5" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            (click)="onSubmit()"></button>
+          [disabled]="fbshifts.invalid"  (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

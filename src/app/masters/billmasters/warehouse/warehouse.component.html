@@ -14,26 +14,18 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dt1 [value]="warehouses" dataKey="id" [rows]="10" [rowHover]="true"
+    <p-table #dtWareHouses [value]="warehouses" dataKey="id" [rows]="10" [rowHover]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Entries " [showCurrentPageReport]="true"
       [alwaysShowPaginator]="false" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5"
-      [paginator]="true" [globalFilterFields]="[
-    'code',
-    'name',
-    'glcode',
-    'subGlcode',
-  'createdAt' ,
-   'createdByUser',
-  'updatedAt',
-   'updatedByUser',]" [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
-      [tableStyle]="{ width: 'max-content'}">
+      [paginator]="true" [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
+      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-            (click)="clear(dt1)"></button>
+            (click)="clear(dtWareHouses)"></button>
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dtWareHouses, $event)" placeholder="Search Keyword"
               class="w-full" />
           </span>
         </div>
@@ -41,78 +33,35 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-
-          <th pSortableColumn="code">
-            Code<p-columnFilter type="text" field="code" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="code"></p-sortIcon>
-          </th>
-          <th pSortableColumn="name">
-            Name<p-columnFilter type="text" field="name" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="glcode">
-            GL Code<p-columnFilter type="text" field="glcode" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="glcode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="subGlcode">
-            Sub GL Code<p-columnFilter type="text" field="subGlcode" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="subGlcode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isActive">
-            Is Active<p-columnFilter type="text" field="isActive" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="subGlcode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">
-            Created Date<p-columnFilter type="text" field="updatedAt" display="menu">
-            </p-columnFilter>
-
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">
-            Created By<p-columnFilter type="text" field="createdAt" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">
-            Updated Date<p-columnFilter type="text" field="updatedBy" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedByUser">
-            Updated By<p-columnFilter type="text" field="updatedByUser" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="createdBy"></p-sortIcon>
+          <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+            {{col?.label}}
+            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-warehouse>
         <tr>
-          <td>
-            <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editWarehouse(warehouse)" [disabled]="!permissions.CanUpdateWareHouse"></button>
           </td>
-          <td>{{ warehouse.code }}</td>
-          <td>{{ warehouse.name }}</td>
-          <td>{{ warehouse.glcode }}</td>
-          <td>{{ warehouse.subGlcode }}</td>
-          <td style="text-align: center">
-            <p-checkbox name="active" value="active" [(ngModel)]="warehouse.isActive" [binary]="true" [disabled]="true">
-            </p-checkbox>
+          <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
+            <span
+              *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{warehouse[col.field]}}</span>
+            <span *ngIf="col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              {{warehouse[col.field] | date: mediumDate}}
+            </span>
+            <span *ngIf="col?.field == 'isActive'">
+              <p-checkbox name="active" value="active" [binary]="true" [(ngModel)]="warehouse[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
           </td>
-          <td>{{ warehouse.createdAt | date : mediumDate }}</td>
-          <td>{{ warehouse.createdByUser }}</td>
-          <td>{{ warehouse.updatedAt | date : mediumDate }}</td>
-          <td>{{ warehouse.updatedByUser }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="50%" class="md:text-center p-5">No Ware Houses Found.</td>
+          <td colspan="50%" class="md:text-center m-5">No Ware Houses Found.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -128,8 +77,7 @@
                 <div class="field col-12 md:col-6">
                   <label class="required">Code:</label>
                   <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                    alphaNumeric [maxlength]="10"
-                    [attr.disabled]="this.fbwarehouse.value.id"
+                    alphaNumeric [maxlength]="10" [attr.disabled]="this.fbwarehouse.value.id"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                   <div class="text-right">
                     <small>{{code.value.length}}/10</small>

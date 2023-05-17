@@ -9,6 +9,7 @@ import { BillViewDto } from 'src/app/_models/billingmaster';
 import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { DateValidators } from 'src/app/_validators/dateRangeValidator';
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-billmaster',
@@ -29,6 +30,20 @@ export class BillMasterComponent implements OnInit {
   addFlag: boolean = true;
   billCategories: any;
   mediumDate: string = MEDIUM_DATE;
+  headers: ITableHeader[] = [
+    { field: 'billCategoryName', header: 'billCategoryName', label: 'Billing Category' },
+    { field: 'billNo', header: 'billNo', label: 'Billing Number' },
+    { field: 'seasonCode', header: 'seasonCode', label: 'Season Code' },
+    { field: 'fromDate', header: 'fromDate', label: 'From Date' },
+    { field: 'toDate', header: 'toDate', label: 'To Date' },
+    { field: 'runDate', header: 'runDate', label: 'Run Date' },
+    { field: 'isFinal', header: 'isFinal', label: 'Is Final' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,

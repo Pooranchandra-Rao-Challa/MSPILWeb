@@ -125,7 +125,6 @@ export class SeasonComponent implements OnInit {
       ])
     });
   }
-
   createItem(billCategory: LookupDetailDto): FormGroup {
     return this.formbuilder.group({
       seasonBillingRateId: [],
@@ -137,7 +136,6 @@ export class SeasonComponent implements OnInit {
       isActive: [true],
     });
   }
-
   createItemForEdit(billParam: SeasonBillingRateViewDto): FormGroup {
     return this.formbuilder.group({
       seasonBillingRateId: [billParam.billParameterId],
@@ -149,28 +147,22 @@ export class SeasonComponent implements OnInit {
       isActive: [billParam.isActive],
     });
   }
-
   RateControls(formgroupname: string): FormArray {
     return this.fbseasons.get(formgroupname) as FormArray;
   }
-
   addItem(formArrayName: string, billCategory: LookupDetailDto) {
     const formArray = this.fbseasons.get(formArrayName) as FormArray;
     formArray.push(this.createItem(billCategory));
   }
-
   ratesControls(formArrayName: string): FormArray {
     return this.fbseasons.get(formArrayName) as FormArray;
   }
-
   formArrayControls(formArrayName: string, i: number, formControlName: string) {
     return this.ratesControls(formArrayName).controls[i].get(formControlName);
   }
-
   get FormControls() {
     return this.fbseasons.controls;
   }
-
   editseason(season: SeasonViewDto) {
     this.activeIndex = 0;
     this.seasonForm();
@@ -204,7 +196,6 @@ export class SeasonComponent implements OnInit {
       });
     });
   }
-
   addSeason() {
     this.submitLabel = 'Add Season';
     this.addFlag = true;
@@ -226,7 +217,6 @@ export class SeasonComponent implements OnInit {
     //     life: 5000
     //   });
     // }
-
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

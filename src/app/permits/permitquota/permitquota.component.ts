@@ -38,11 +38,8 @@ export class PermitQuotaComponent implements OnInit {
   showTable: boolean = false;
   showDialog: boolean = false;
   submitLabel!: string;
-  globalFilterFields: string[] = ['divisionName', 'circleName', 'sectionName', 'villageName']
   @ViewChild('filter') filter!: ElementRef;
-  @ViewChild('filters') filters!: ElementRef;
   @ViewChild('dtpermitquota') dtpermitquota!: Table;
-  @ViewChild('dtplotquota') dtplotquota!: Table;
   selectedCategory: any = null;
   categories: any[] = [{ name: 'Division', key: 'D' }, { name: 'Circle', key: 'C' }, { name: 'Section', key: 'S' }, { name: 'Village', key: 'V' }];
   objPlotQuotas: PlotQuotaViewDto[] = [];
@@ -132,6 +129,7 @@ export class PermitQuotaComponent implements OnInit {
     return this.fbPermitQuota.controls
   }
   getPermitQuota() {
+    this.resetFormAndGrid()
     this.submitLabel = "Add Permit Quota";
     this.addFlag = true;
     this.showDialog = true;
@@ -149,12 +147,16 @@ export class PermitQuotaComponent implements OnInit {
       this.seasons = resp as any;
     });
   }
+  resetFormAndGrid() {
+    this.fbPermitQuota.reset();
+    this.Quotas = [];
+    this.PermitQuotaform();
+    this.permitquotas=[]
+  }  
   initQuotas() {
     this.permitService.GetQuotas(this.fbPermitQuota.value).subscribe((resp) => {
       this.Quotas = resp as unknown as GetQuotasViewDto[];
-      console.log('plotQuotas', this.Quotas);
       const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
-
       formArray.clear();
       for (const quota of this.Quotas) {
         this.addQuota(quota);
@@ -178,7 +180,6 @@ export class PermitQuotaComponent implements OnInit {
     var data = source.data as SeasonQuotaViewDto;
     this.permitService.GetPlotQuotas(data.seasonId, data.seasonQuotaId).subscribe(resp => {
       data.objPlotQuotas = resp as unknown as PlotQuotaViewDto[];
-      console.log('expand', data.objPlotQuotas);
       if (!this.addFlag) {
         let plotQuotas: any = resp ? resp : [];
         const formArray = this.fbPermitQuota.get('plotQuotas') as FormArray;
@@ -192,14 +193,13 @@ export class PermitQuotaComponent implements OnInit {
     });
   }
   editPermitQuota(permitQuota: SeasonQuotaViewDto) {
-    console.log(permitQuota);
     this.addFlag = false;
     this.submitLabel = 'Update Permit Quota';
     this.editPermitQuotaData = permitQuota;
     let obj = {
       data: { ...permitQuota },
     }
-    this.onRowExpand(obj)
+    this.onRowExpand(obj);
     this.fbPermitQuota.patchValue(permitQuota);
     this.fbPermitQuota.patchValue({
       fromDate: new Date(permitQuota.fromDate?.toString() + ''),
@@ -212,8 +212,6 @@ export class PermitQuotaComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.fbPermitQuota.value);
-
     const sum = this.fbPermitQuota.value.plotQuotas.reduce((acc: any, curr: any) => acc + curr.quotaReleased, 0);
     if (sum.toFixed(2) != this.fbPermitQuota.value.quotaReleased.toFixed(2)) {
       this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: `Entered Quota (${sum.toFixed(2)}) is not equal to total quota (${this.fbPermitQuota.value.quotaReleased})` });
@@ -225,6 +223,7 @@ export class PermitQuotaComponent implements OnInit {
         this.PermitQuotaform();
         this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMPPQ001" : "SMPPQ002"]);
         this.showDialog = false;
+        this.resetFormAndGrid();
 
       }
     })
@@ -233,17 +232,12 @@ export class PermitQuotaComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-  clear2(table: Table) {
-    table.clear();
-    this.filters.nativeElement.value = '';
-  }
-  onSearch(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
+ 
   checkValue() {
     if (this.fromScheduleNo < this.toScheduleNo) {
       this.error = false;
