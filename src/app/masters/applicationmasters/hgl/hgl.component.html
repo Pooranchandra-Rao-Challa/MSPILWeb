@@ -465,15 +465,15 @@
                     <label class="required">Branch:</label>
                       <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
                         optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)"
-                        appendTo="body">
+                        appendTo="body"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['branchId'].touched && FormControls['branchId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                        <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
+                        <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['bankId'].errors?.['required']">
+                            *ngIf="FormControls['branchId'].errors?.['required']">
                             Please Select Bank First.</div>
                         </div>
-                        <div *ngIf="FormControls['bankId'].touched && FormControls['bankId'].valid">
+                        <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['branchId'].errors?.['required']">
                             Please Select Branch.</div>

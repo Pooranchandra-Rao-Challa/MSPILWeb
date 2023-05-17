@@ -115,19 +115,19 @@
                     </div>
                     <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                       <label class="required">Relationship Type:</label>
-                      <p-dropdown placeholder="Select Relation Type" optionLabel="name" [options]="relationTypes"
+                      <p-dropdown placeholder="Select Relationship Type" optionLabel="name" [options]="relationTypes"
                         optionValue="lookupDetailId" formControlName="relationTypeId"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['relationTypeId'].touched && FormControls['relationTypeId'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="FormControls['relationTypeId'].errors?.['required']">
-                          Please Select Relation.</div>
+                          Please Select Relationship Type.</div>
                       </span>
                     </div>
                     <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                       <label class="required">Relationship Name:</label>
-                      <input pInputText id="relationName" #relationName type="text" placeholder="Enter Relation Name"
+                      <input pInputText id="relationName" #relationName type="text" placeholder="Enter Relationship Name"
                         formControlName="relationName" alphaOnly [maxlength]="maxLength.name"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }">
                       <div class="text-right">
@@ -157,7 +157,7 @@
                     </div>
                     <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                       <label class="required">Address:</label>
-                      <textarea pInputTextarea formControlName="address" placeholder="Address"
+                      <textarea pInputTextarea formControlName="address" placeholder="Enter Address"
                         style="height: 42px; resize: vertical;" address
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
                       <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
@@ -173,7 +173,7 @@
                       [maxlength]="maxLength.pinCode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
                     </p-inputNumber> -->
-                      <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
+                      <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter PinCode"
                         formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
                       <div class="text-right">
@@ -183,12 +183,12 @@
                       </div>
                       <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
-                          Please Enter Pin Code.</div>
+                          Please Enter PinCode.</div>
                       </span>
                     </div>
                     <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                       <label>Phone Number:</label>
-                      <input pInputText id="phoneNo" #phoneNo placeholder="Enter Mobile No" formControlName="phoneNo"
+                      <input pInputText id="phoneNo" #phoneNo placeholder="Enter Phone No" formControlName="phoneNo"
                         numericOnly [maxlength]="maxLength.phoneNo"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
                       <div class="text-right">
