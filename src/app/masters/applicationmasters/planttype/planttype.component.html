@@ -58,8 +58,8 @@
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label>Estimated Ton:<sup class="p-error">*</sup></label>
-                                    <p-inputNumber type="text" formControlName="estimatedTon" [minFractionDigits]="2" placeholder="Enter Estimated Ton"
-                                        [maxFractionDigits]="2" [ngClass]="{ 'is-invalid ng-dirty': FormControls['estimatedTon'].touched &&
+                                    <p-inputNumber formControlName="estimatedTon" [minFractionDigits]="2" placeholder="Enter Estimated Ton" mode="decimal"
+                                    locale="en-IN" [maxFractionDigits]="2" [ngClass]="{ 'is-invalid ng-dirty': FormControls['estimatedTon'].touched &&
                                     FormControls['estimatedTon'].errors }"></p-inputNumber>
                                     <span
                                         *ngIf="FormControls['estimatedTon'].touched && FormControls['estimatedTon'].invalid">
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="field col-12 md:col-6">
                                     <label> Loan Eligible:<sup class="p-error">*</sup></label>
-                                    <p-inputNumber type="text" formControlName="loanEligible" [minFractionDigits]="2"
+                                    <p-inputNumber type="text" formControlName="loanEligible" [minFractionDigits]="2" mode="decimal" locale="en-IN"
                                         [maxFractionDigits]="2" placeholder="Enter Loan Eligible"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['loanEligible'].touched && FormControls['loanEligible'].errors }">
                                     </p-inputNumber>
