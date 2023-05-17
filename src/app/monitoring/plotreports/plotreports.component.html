@@ -405,6 +405,12 @@
                     </span>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
+                    <label>Spacing:</label>
+                    <p-dropdown placeholder="Select Spacing Info" optionLabel="name" [options]="spacingInfo"
+                      optionValue="lookupDetailId" formControlName="spacingId" appendTo="body">
+                    </p-dropdown>
+                  </div>
+                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Setts Hot Water Treatment:</label><br>
                     <p-inputSwitch formControlName="isNeedHotWaterTreatment"> </p-inputSwitch>
                   </div>
@@ -416,12 +422,7 @@
                     <label>Trash Mulching:</label><br>
                     <p-inputSwitch formControlName="isTrashMulchingDone"> </p-inputSwitch>
                   </div>
-                  <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                    <label>Spacing:</label>
-                    <p-dropdown placeholder="Select Spacing Info" optionLabel="name" [options]="spacingInfo"
-                      optionValue="lookupDetailId" formControlName="spacingId" appendTo="body">
-                    </p-dropdown>
-                  </div>
+                  
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Previous Red Plot:</label><br>
                     <p-inputSwitch formControlName="isPreviouslyRedPlot"> </p-inputSwitch>
