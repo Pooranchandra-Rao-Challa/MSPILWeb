@@ -68,10 +68,10 @@
 
     <!-- dialog box -->
     <p-dialog header="LoanType" [(visible)]="showDialog" showEffect="fade"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60%'}" [modal]="true" (onHide)="onClose()">
+    [breakpoints]="{'960px': '60%', '640px': '80%'}" [style]="{width: '60%'}" [modal]="true" (onHide)="onClose()">
       <form [formGroup]="fbloantype" (ngSubmit)="onSubmit()">
         <div class="flex flex-column align-items-center justify-content-center">
-          <div class="container">
+          <div class="col-12">
             <div class="grid p-fluid">
               <p-fieldset legend="LoanType" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
@@ -191,23 +191,18 @@
                   </div>
                 </div>
               </p-fieldset>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="grid p-fluid">
-            <!-- //formArray -->
+               <!-- //formArray -->
             <p-fieldset legend="Loan SubType" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
               <div class="grid p-fluid">
-                <div class="field col-12 md:col-9"></div>
-                <div class="field col-12 md:col-3 ">
+                <div class="field col-12 md:col-6"></div>
+                <div class="field col-12 md:col-6 ">
                   <button pButton pRipple type="button" label="Add Loan SubType"
                     class="p-button-raised p-button-primary" (click)="addLoanSubType()"></button>
                 </div>
-                <div formArrayName="loanSubTypes" *ngIf="showloantype">
+                <div formArrayName="loanSubTypes" *ngIf="showloantype" class="w-100 scrolling_content">
                   <p-table #dt2 [value]="faLoanSubType().controls" dataKey="id" [rowHover]="true" [autoLayout]="true"
-                    responsiveLayout="scroll" [tableStyle]="{ width: '150%'}"
-                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+                    responsiveLayout="stack" [responsive]="true" [resizableColumns]="true" [tableStyle]="{ width: 'max-content'}"
+                    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100">
                     <ng-template pTemplate="header">
                       <tr>
                         <th class="required">Code <sup class="p-error">*</sup></th>
@@ -216,15 +211,15 @@
                         <th class="required">Interest Rate <sup class="p-error">*</sup></th>
                         <th  class="required">Rate <sup class="p-error">*</sup></th>
                         <th class="required">Requisition Req <sup class="p-error">*</sup></th>
-                        <th class="required">uomid <sup class="p-error">*</sup></th>
-                        <th>LoanQty Type <sup class="p-error">*</sup></th>
+                        <th class="required">Uomid <sup class="p-error">*</sup></th>
+                        <th>LoanQty Type</th>
                         <th>GL Code</th>
                         <th>SubGL Code</th>
                         <th *ngIf="fbloantype.controls['loanSubTypes'].value.length > 1"></th>
                       </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-loanType let-loanTypelIndex="rowIndex">
-                      <tr [formGroupName]="loanTypelIndex">
+                    <ng-template pTemplate="body" let-loanType let-loanTypelIndex="rowIndex" >
+                      <tr [formGroupName]="loanTypelIndex" >
                         <td class="vertical-align-top">
                           <input pInputText #code class="form-control" placeholder="Enter Code" formControlName="code"
                             alphaNumeric [maxlength]="20" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'code')?.touched &&
@@ -299,7 +294,7 @@
                           </span>
                         </td>
                         <td class="vertical-align-top">
-                          <p-dropdown placeholder="Select Requisition Req" optionLabel="name" optionValue="id"
+                          <p-dropdown placeholder="Select Requisition Req" optionLabel="name" optionValue="id" class="w-100"
                             [options]="defaults" formControlName="requestReq" appendTo="body" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'requestReq')?.touched &&
                           formArrayControls(loanTypelIndex, 'requestReq')?.errors }">
                           </p-dropdown>
@@ -311,7 +306,7 @@
                           </span>
                         </td>
                         <td class="vertical-align-top">
-                          <p-dropdown placeholder="Select UomId" [options]="uom" formControlName="uomid"
+                          <p-dropdown placeholder="Select UomId" [options]="uom" formControlName="uomid"  class="w-100"
                             optionLabel="name" optionValue="lookupDetailId" appendTo="body" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(loanTypelIndex, 'uomid')?.touched &&
                           formArrayControls(loanTypelIndex, 'uomid')?.errors }">
                           </p-dropdown>
@@ -323,7 +318,7 @@
                           </span>
                         </td>
                         <td class="vertical-align-top">
-                          <p-dropdown placeholder="Select LoanQty Type" optionLabel="name" optionValue="value"
+                          <p-dropdown placeholder="Select LoanQty Type" optionLabel="name" optionValue="value"  class="w-100"
                             [options]="loanQtyTypes" formControlName="loanQtyType" appendTo="body">
                           </p-dropdown>
                         </td>
@@ -380,6 +375,7 @@
                 </div>
               </div>
             </p-fieldset>
+            </div>
           </div>
         </div>
       </form>

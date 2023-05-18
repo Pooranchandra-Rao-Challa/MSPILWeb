@@ -13,13 +13,12 @@ export interface DistrictViewDto {
 
 export class DistrictDto {
   districtId?: number;
-  code?: string;
-  name?: string;
+  districtCode?: string;
+  districtName?: string;
   isActive?: boolean;
   stateId?: number;
   stateName?: string;
 }
-
 export interface DivisonsViewDto{
   divisionId: number,
   divisionCode: string,
@@ -45,7 +44,6 @@ export class DivisionDto{
   listingOrder?: number;
   isActive?: boolean;
 }
-
 
 export interface CirclesViewDto {
   circleId: number,
@@ -75,9 +73,7 @@ export class CircleDto{
   address?: string;
   listingOrder?: number;
   isActive?: boolean;
-
 }
-
 export interface MandalsViewDto {
   mandalId: number,
   mandalCode: string,
