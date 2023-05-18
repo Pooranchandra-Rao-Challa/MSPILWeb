@@ -52,8 +52,8 @@ export class PlanttypeComponent implements OnInit {
       plantTypeId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
-      estimatedTon: ['', (Validators.required)],
-      loanEligible: ['', (Validators.required)],
+      estimatedTon: [null, (Validators.required)],
+      loanEligible: [null, (Validators.required)],
       isActive: [null],
     });
   }
