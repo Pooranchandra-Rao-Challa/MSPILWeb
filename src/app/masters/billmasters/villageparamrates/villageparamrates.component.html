@@ -30,7 +30,7 @@
                 class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId" [showClear]="true"
+              [(ngModel)]="currentSeason.seasonId"
               (onChange)="getVillageParamRatesBySeason($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>

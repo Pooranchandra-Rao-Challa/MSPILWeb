@@ -2,9 +2,8 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
 
-    <p-dialog header="Village" [(visible)]="display" showEffect="fade"
-    [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}"  [modal]="true"
-      (onHide)="onClose()">
+    <p-dialog header="Village" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '50%', '640px': '80%'}"
+      [style]="{width: '50%'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()">
@@ -15,17 +14,12 @@
                     <div class="field col-12 md:col-4">
                       <label htmlFor="age1">State:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="states" optionLabel="stateName" optionValue="stateId"
-                        (onChange)="initDistricts($event.value)" [autoDisplayFirst]="false" formControlName="stateId"
-                        placeholder="Select State" [ngClass]="{
-                          'is-invalid ng-dirty':
-                            FormControls['stateId'].touched &&
-                            FormControls['stateId'].errors
-                        }">
+                       [autoDisplayFirst]="false" formControlName="stateId" (onChange)="initDistricts($event.value)"
+                        placeholder="Select State" [ngClass]="{'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors}">
                       </p-dropdown>
                       <span *ngIf="
                           FormControls['stateId'].touched &&
-                          FormControls['stateId'].invalid
-                        ">
+                          FormControls['stateId'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['stateId'].errors?.['required']">
                           Please Select State.
                         </div>
@@ -33,6 +27,10 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label htmlFor="districtId">District:<sup class="p-error">*</sup></label>
+                      <!-- <p-dropdown [options]="districts" optionLabel="districtName" optionValue="districtId"
+                       [autoDisplayFirst]="false" formControlName="districtId"
+                        placeholder="Select State" [ngClass]="{'is-invalid ng-dirty': FormControls['districtId'].touched && FormControls['districtId'].errors}">
+                      </p-dropdown> -->
                       <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
                         appendTo="body" [options]="districts" optionLabel="name" optionValue="districtId"
                         (onChange)="initMandals($event.value)" [autoDisplayFirst]="false" formControlName="districtId"
@@ -55,8 +53,9 @@
                     <div class="field col-12 md:col-4">
                       <label htmlFor="circle">Mandal:<sup class="p-error">*</sup></label>
                       <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                        appendTo="body" [options]="mandals" optionLabel="name" optionValue="mandalId" (onChange)="initDivisions($event.value)"
-                        [autoDisplayFirst]="false" formControlName="mandalId" placeholder="Select Mandal" [ngClass]="{
+                        appendTo="body" [options]="mandals" optionLabel="name" optionValue="mandalId"
+                        [autoDisplayFirst]="false" formControlName="mandalId"
+                        placeholder="Select Mandal" [ngClass]="{
                           'is-invalid ng-dirty':
                             FormControls['mandalId'].touched &&
                             FormControls['mandalId'].errors
@@ -68,7 +67,7 @@
                         ">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="FormControls['mandalId'].errors?.['required']">
-                          Please Select Mandals.
+                          Please Select Mandal.
                         </div>
                       </span>
                     </div>
@@ -222,27 +221,28 @@
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="distance">Distance:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="1" [maxlength]="10"
-                        placeholder="Enter Distance"
+                      <p-inputNumber inputId="distance" formControlName="distance" [minFractionDigits]="1"
+                        [maxlength]="10" placeholder="Enter Distance"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['distance'].touched && FormControls['distance'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                               FormControls['distance'].invalid &&
                               FormControls['distance'].touched
                             " class="error-message p-error">
-                        Please Enter Distance .
+                        Please Enter Distance.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="divertedDistance">Diverted Distance:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="divertedDistance" formControlName="divertedDistance"
-                        [minFractionDigits]="2" placeholder="Enter Diverted Distance" [maxlength]="10">
+                        [minFractionDigits]="2" placeholder="Enter Diverted Distance" [maxlength]="10"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['divertedDistance'].touched && FormControls['divertedDistance'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                               FormControls['divertedDistance'].invalid &&
                               FormControls['divertedDistance'].touched
                             " class="error-message p-error">
-                        Diverted Distance Required
+                        Please Enter Diverted Distance.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -256,7 +256,7 @@
                               FormControls['listingOrder'].invalid &&
                               FormControls['listingOrder'].touched
                             " class="error-message p-error">
-                        Listing Order Is Required
+                        Please Enter Listing Order.
                       </div>
                     </div>
 
@@ -287,25 +287,27 @@
                     <div class="field col-12 md:col-4">
                       <label for="cultivable Area">Cultivable Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2"
-                        placeholder="Enter Cultivable Area(Acres)">
+                        placeholder="Enter Cultivable Area(Acres)"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['cultivableArea'].touched && FormControls['cultivableArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['cultivableArea'].invalid &&
                           FormControls['cultivableArea'].touched
                         " class="error-message p-error">
-                        Please enter Cultivable area
+                        Please Enter Cultivable Area.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="irrigationArea">Irrigation Area(In Peek Summer):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="irrigationArea" formControlName="irrigationArea" [minFractionDigits]="2"
-                        placeholder="Enter Irrigation Area">
+                        placeholder="Enter Irrigation Area"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['irrigationArea'].touched && FormControls['irrigationArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['irrigationArea'].invalid &&
                           FormControls['irrigationArea'].touched
                         " class="error-message p-error">
-                        Please enter  Irrigation area.
+                        Please Enter Irrigation Area.
 
                       </div>
                     </div>
@@ -313,89 +315,94 @@
                       <label for="potentialArea">Suitable Area For Cane(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="potentialArea" formControlName="potentialArea" mode="decimal"
                         placeholder="Suitable Area" locale="en-US" placeholder="Enter Suitable Area"
-                        [minFractionDigits]="2">
+                        [minFractionDigits]="2"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['potentialArea'].touched && FormControls['potentialArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['potentialArea'].invalid &&
                           FormControls['potentialArea'].touched
                         " class="error-message p-error">
-                        Suitable Area For Cane is required.
-                        Please enter  Suitable Area For Cane.
+                        Please Enter Suitable Area For Cane.
 
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="totalArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2"
-                        placeholder="Total Geographic Area">
+                        placeholder="Total Geographic Area" [minFractionDigits]="2"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['totalArea'].touched && FormControls['totalArea'].errors }">
                       </p-inputNumber>
-
                       <div *ngIf="
                           FormControls['totalArea'].invalid &&
                           FormControls['totalArea'].touched
                         " class="error-message p-error">
-                        Please enter  Total Geographic Area.
+                        Please Enter Total Geographic Area.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="dryArea">Dry Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="dryArea" formControlName="dryArea" [minFractionDigits]="2"
-                        placeholder="Enter Dry Area">
+                        placeholder="Enter Dry Area"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['dryArea'].touched && FormControls['dryArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['dryArea'].invalid &&
                           FormControls['dryArea'].touched
                         " class="error-message p-error">
-                        Please enter  Dry Area .
+                        Please Enter Dry Area.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="notSuitableArea">Not Suitable Area:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="notSuitableArea" formControlName="notSuitableArea" mode="decimal"
-                        placeholder="Enter Not Suitable Area" locale="de-DE" [minFractionDigits]="2">
+                        placeholder="Enter Not Suitable Area" locale="de-DE" [minFractionDigits]="2"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['notSuitableArea'].touched && FormControls['notSuitableArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['notSuitableArea'].invalid &&
                           FormControls['notSuitableArea'].touched
                         " class="error-message p-error">
-                        Please enter Not Suitable Area.
+                        Please Enter Not Suitable Area.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="target">Target Area <sup class="p-error">*</sup></label>
                       <p-inputNumber formControlName="targetArea" inputId="target" [minFractionDigits]="2"
-                        placeholder="Enter Target Area">
+                        placeholder="Enter Target Area"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['targetArea'].touched && FormControls['targetArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['targetArea'].invalid &&
                           FormControls['targetArea'].touched
                         " class="error-message p-error">
-                        Please enter  Target Area.
+                        Please Enter Target Area.
                       </div>
 
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="noOfEbservices">No Of EB Services:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="2"
-                        placeholder="Enter No of EB Services">
+                        placeholder="Enter No of EB Services"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfEbservices'].touched && FormControls['noOfEbservices'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['noOfEbservices'].invalid &&
                           FormControls['noOfEbservices'].touched
                         " class="error-message p-error">
-                        Please enter No Of Eb Services.
+                        Please Enter No Of Eb Services.
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
                       <label for="tptrate">TPT Rate(₹):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="tptRate" formControlName="tptrate" [minFractionDigits]="2"
-                        placeholder="Enter TPT Rate">
+                        placeholder="Enter TPT Rate"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['tptrate'].touched && FormControls['tptrate'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
                           FormControls['tptrate'].invalid &&
                           FormControls['tptrate'].touched
                         " class="error-message p-error">
-                        Please enterTpt Rate.
+                        Please Enter Tpt Rate.
                       </div>
                     </div>
                   </div>

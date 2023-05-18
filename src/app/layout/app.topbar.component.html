@@ -73,14 +73,14 @@
             </td>
             <td style="text-align:center">
               <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                class="ui-button-info p-button-outlined" (click)="onConstantEditInit(config)"></button>
+                class="ui-button-info p-element p-ripple p-button-text p-button p-component" (click)="onConstantEditInit(config)"></button>
 
               <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                class="ui-button-success p-button-outlined" style="margin-right: .5em"
+                class="ui-button-success p-element p-ripple p-button-text p-button p-component" style="margin-right: .5em"
                 (click)="onConstantEditSave(config,ri)"></button>
 
               <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-                class="ui-button-danger p-button-outlined" (click)="onConstantEditCancel(config, ri)"></button>
+                class="ui-button-danger p-element p-ripple p-button-text p-button p-component" (click)="onConstantEditCancel(config, ri)"></button>
             </td>
           </tr>
         </ng-template>
@@ -154,14 +154,14 @@
 
                 <td style="text-align:center">
                   <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                    class="ui-button-info p-button-outlined" (click)="onLookupDetailEdit(lookupDetail)"></button>
+                    class="ui-button-info p-element p-ripple p-button-text p-button p-component" (click)="onLookupDetailEdit(lookupDetail)"></button>
 
                   <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                    class="ui-button-success p-button-outlined" style="margin-right: .5em"
+                    class="ui-button-success p-element p-ripple p-button-text p-button p-component" style="margin-right: .5em"
                     (click)="onRowLookupDetailSave(lookupDetail,ri)"></button>
 
                   <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-                    class="ui-button-danger p-button-outlined"
+                    class="ui-button-danger p-element p-ripple p-button-text p-button p-component"
                     (click)="onRowLookupDetailCancel(lookupDetail, ri)"></button>
                 </td>
               </tr>

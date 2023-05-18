@@ -57,6 +57,7 @@ export class VillageComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+  stateId:any;
   constructor(
     private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
@@ -74,8 +75,8 @@ export class VillageComponent implements OnInit {
       this.initCircles(village.divisionId);
       this.initSections(village.circleId);
       this.initMandals(village.districtId);
-      this.initDivisions(village.mandalId);
-      this.initDistricts(village.stateId);
+      this.initDivisions();
+     this.initDistricts(village.stateId);
 
       this.village.villageId = village.villageId;
       this.village.code = village.villageCode;
@@ -130,11 +131,10 @@ export class VillageComponent implements OnInit {
   ngOnInit() {
     this.permissions = this.jwtService.Permissions;
     this.initVillages();
+    this.initState();
+    this.initDivisions();
     this.sections = [] as SectionDto[];
-    this.commonService.GetStates().subscribe((resp) => {
-      this.states = resp as unknown as StateDto[];
-    });
-
+  
     this.fbvillages = this.formbuilder.group({
       villageId: [null],
       divisionId: [null, Validators.required],
@@ -145,7 +145,7 @@ export class VillageComponent implements OnInit {
       districtId: [null, Validators.required],
       stateId: [null, Validators.required],
       address: new FormControl('', [Validators.pattern(RG_ADDRESS)]),
-      pinCode: new FormControl(null,  [Validators.pattern(RG_PINCODE)]),
+      pinCode: new FormControl('',  [Validators.pattern(RG_PINCODE)]),
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       inchargeName: new FormControl('', [Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
@@ -164,7 +164,24 @@ export class VillageComponent implements OnInit {
       isActive: [null],
     });
   }
+ 
+  initState(){
+    this.commonService.GetStates().subscribe((resp) => {
+      this.states = resp as unknown as StateDto[];
+    });
 
+  }
+  initDistricts(stateId: any) {
+    this.mandals = [];
+    this.divisions = [];
+    this.circles = [];
+    this.sections = [];
+    this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {
+      this.districts = resp as unknown as DistrictDto[];
+      console.log( this.districts);
+      
+    });
+  }
   initVillages() {
     this.geoMasterService.GetVillage().subscribe((resp) => {
       this.villages = resp as unknown as VillagesViewDto[];
@@ -187,7 +204,6 @@ export class VillageComponent implements OnInit {
   }
 
   initMandals(district: any) {
-    this.divisions = [];
     this.circles = [];
     this.sections = [];
     this.commonService.GetMandalsForDistrict(district).subscribe((resp) => {
@@ -195,25 +211,15 @@ export class VillageComponent implements OnInit {
     });
   }
 
-  initDivisions(mandalId: any){
+  initDivisions(){
     this.circles = [];
     this.sections = [];
-    this.commonService.GetDivisionForMandal(mandalId).subscribe((resp) => {
+    this.commonService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisionDto[];
-      console.log(this.divisions);
-
+      console.log(this.divisions)
     });
   }
 
-  initDistricts(stateId: any) {
-    this.mandals = [];
-    this.divisions = [];
-    this.circles = [];
-    this.sections = [];
-    this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {
-      this.districts = resp as unknown as DistrictDto[];
-    });
-  }
 
   onClose() {
     this.fbvillages.reset();
@@ -262,3 +268,4 @@ export class VillageComponent implements OnInit {
     this.districts = [];
   }
 }
+

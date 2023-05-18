@@ -386,8 +386,9 @@
                             <div>
                                 <span class="p-input-icon-left m-2">
                                     <i class="pi pi-search"></i>
-                                    <input pInputText type="text" #filter placeholder="Search Keyword"
-                                    (input)="onSearch(dtcuttingorders,$event)" class="w-full" />
+                                    <input pInputText type="text" #filter (input)="onSearch(dtcuttingorders,$event)"
+                                     placeholder="Search Keyword"
+                                    class="w-full" />
                                 </span>
                                 <button pButton label="Submit" (click)="onSubmit()"
                                     class="p-button-raised p-button-primary m-2"></button>

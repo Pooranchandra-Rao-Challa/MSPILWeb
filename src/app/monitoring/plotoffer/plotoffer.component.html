@@ -28,7 +28,7 @@
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
+                pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotOffers($event.value)" optionValue="seasonId">
@@ -311,6 +311,10 @@
                       <div class="ng-invalid ng-touched p-error"
                         *ngIf="FormControls['expectedPlantingDate'].errors?.['required'] && !FormControls['offerDate'].errors?.['required']">
                         Please Select Expected Planting Date.</div>
+                    </span>
+                    <span>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="fbPlotOffer.hasError('offerDate')">
+                        To Date Always Greater Than Equals To From Date</div>
                     </span>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">

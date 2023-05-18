@@ -114,10 +114,10 @@ export class SeasonComponent implements OnInit {
       capacity: new FormControl(null, [Validators.required]),
       currentSeason: [''],
       isActive: [true],
-      farmerRates: this.formbuilder.array([]),
-      harvesterRates: this.formbuilder.array([]),
-      transporterRates: this.formbuilder.array([]),
-      seedRates: this.formbuilder.array([]),
+      farmerRates: this.formbuilder.array([], [Validators.required]),
+      harvesterRates: this.formbuilder.array([], [Validators.required]),
+      transporterRates: this.formbuilder.array([], [Validators.required]),
+      seedRates: this.formbuilder.array([], [Validators.required]),
     }, {
       validators: Validators.compose([
         DateValidators.dateRangeValidator('plantFrom', 'plantTo', { 'plantFrom': true }),

@@ -8,8 +8,8 @@
         <h4>Plot Assessments</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plot Assesment" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addPlotAssesment()" *ngIf="permissions?.CanCreatePlotAssessment"></button>
+        <button pButton pRipple label="New Plot Assessment" icon="pi pi-plus" class="p-button-primary p-mr-2"
+          (click)="addPlotAssessment()" *ngIf="permissions?.CanCreatePlotAssessment"></button>
       </ng-template>
     </p-toolbar>
 
@@ -18,7 +18,7 @@
     [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssesment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
-          <p-tabPanel header="Plot Assesment(Doc20)" class="col-12">
+          <p-tabPanel header="Plot Assessment(Doc20)" class="col-12">
             <div class="flex flex-column  justify-content-center">
               <div class="grid">
                 <div class="col-12">
@@ -172,7 +172,7 @@
                       </div>
                     </p-fieldset>
                   </div>
-                  <p-fieldset legend="Assesment Info" [toggleable]="true" class="col-6 mt-2"
+                  <p-fieldset legend="Assessment Info" [toggleable]="true" class="col-6 mt-2"
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
@@ -189,9 +189,9 @@
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label class="required">Assessment Date:</label>
-                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" [defaultDate]="plantFrom" [minDate]="plantFrom"
-                         [maxDate]="plantTo"
-                          formControlName="measuredDate" placeholder="Please Select Assessment Date" appendTo="body"
+                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" [defaultDate]="plantFrom"
+                          [minDate]="plantFrom" [maxDate]="plantTo" formControlName="measuredDate"
+                          placeholder="Please Select Assessment Date" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['measuredDate'].touched && FormControls['measuredDate'].errors }">
                         </p-calendar>
                         <span *ngIf="FormControls['measuredDate'].touched && FormControls['measuredDate'].invalid">
@@ -222,9 +222,9 @@
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-4 lg:col-3 ">
-                      <label>Inter Croping:</label>
+                      <label>Inter Cropping:</label>
                       <p-dropdown optionLabel="name" [options]="cropstypes" optionValue="lookupDetailId" appendTo="body"
-                        formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Croping">
+                        formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Cropping">
                       </p-dropdown>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
@@ -236,7 +236,7 @@
                       <p-inputSwitch formControlName="isTrashMulchingDone"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-6  lg:col-3 ">
-                      <label>Gap Filing Done:</label><br>
+                      <label>Gap Filling Done:</label><br>
                       <p-inputSwitch formControlName="isGapsFillingDone"></p-inputSwitch>
                     </div>
                   </div>
@@ -244,10 +244,10 @@
               </div>
             </div>
             <p-tabView orientation="left" [(activeIndex)]="activeIndex1!">
-              <p-tabPanel header="Weedicide">
+              <p-tabPanel header="Weedicide Used">
                 <div class="grid col-12">
                   <div formArrayName='weedicides' class="checkboxList grid">
-                    <ng-container *ngIf="this.fbPlotAssesment.controls['weedicides'] as formArray">
+                    <ng-container *ngIf="this.fbPlotAssessment.controls['weedicides'] as formArray">
                       <div *ngFor="let item of getFormArrayControl('weedicides').controls; let i = index" class="col-3">
                         <div [formGroupName]="i" style="padding-left:unset" class="capitalize form-control">
                           <p-inputSwitch [(ngModel)]="item.value.checked!" [ngModelOptions]="{standalone: true}">
@@ -312,7 +312,7 @@
               <p-tabPanel header="Fertilizers " class="col-12">
                 <div class="grid col-12">
                   <div formArrayName='fertilizers' class="checkboxList grid">
-                    <ng-container *ngIf="this.fbPlotAssesment.controls['fertilizers'] as formArray">
+                    <ng-container *ngIf="this.fbPlotAssessment.controls['fertilizers'] as formArray">
                       <div *ngFor="let item of getFormArrayControl('fertilizers').controls; let i = index"
                         class="col-3">
                         <div [formGroupName]="i" style="padding-left:unset">
@@ -374,7 +374,7 @@
         <div class="col-12">
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary"
-              [disabled]="fbPlotAssesment.invalid" (click)="onSubmit()"></button>
+              [disabled]="fbPlotAssessment.invalid" (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>
@@ -407,7 +407,7 @@
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full">
             </span>
             <p-dropdown class="m-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssesments($event.value)" optionValue="seasonId">
+              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssessments($event.value)" optionValue="seasonId">
             </p-dropdown>
           </div>
         </div>
@@ -477,12 +477,7 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="5" class="md:text-center m-5">No Plot Assesment Found.</td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="loadingbody">
-    <tr>
-      <td colspan="20" class="md:text-center m-5">Loading Plot Assesment Data. Please wait.</td>
+      <td colspan="5" class="md:text-center m-5">No Plot Assessments Found.</td>
     </tr>
   </ng-template>
   </p-table>

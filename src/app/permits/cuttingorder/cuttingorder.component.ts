@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder,FormGroup, Validators } from "@angular/forms";
 import { Table } from "primeng/table";
 import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
 import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
@@ -193,13 +193,18 @@ export class CuttingOrderComponent implements OnInit {
       this.filterCircles = Object.assign([], this.circles);
       this.filterSections = Object.assign([], this.sections);
       this.filterVillages = Object.assign([], this.villages);
+      
     }
     else {
       // this.divisionIds =  values.join(','); 
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
       this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1);
-      this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1);
+      this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1);  
     }
+     // Reset the circle selection
+     this.fbCuttingOrder.get('circleId')?.setValue([]);
+     this.fbCuttingOrder.get('sectionId')?.setValue([]);
+     this.fbCuttingOrder.get('villageId')?.setValue([]);
   }
 
   SetAllCircleChilds(values: number[]) {
@@ -212,6 +217,8 @@ export class CuttingOrderComponent implements OnInit {
       this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
     }
+    this.fbCuttingOrder.get('sectionId')?.setValue([]);
+      this.fbCuttingOrder.get('villageId')?.setValue([]);
   }
   SetAllSectionChilds(values: number[]) {
     if (values.length == 0) {
@@ -221,6 +228,7 @@ export class CuttingOrderComponent implements OnInit {
       // this.sectionIds =  values.join(',');
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
+    this.fbCuttingOrder.get('villageId')?.setValue([]);
   }
   initdropdownsbinding() {
     this.initDivisions(this.currentSeason.seasonId!);

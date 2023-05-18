@@ -269,10 +269,10 @@ export class PlotTransferDto {
 
 export interface IPlotTransferViewDto {
   plotTransferId: number;
+  plotId: number;
   seasonId: number;
   seasonName: string;
   seasonCode: string;
-  plotId: number;
   docNo: number;
   docDate: Date;
   plotTransferTypeId: number;
