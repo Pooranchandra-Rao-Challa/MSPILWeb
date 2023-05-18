@@ -328,17 +328,16 @@
                                         style="display:inline-block;">
                                         <div class="p-field">
                                           <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
-                                          <p-inputNumber id="rate" formControlName="rate" mode="decimal" locale="en-IN"
-                                            [minFractionDigits]="2" [maxFractionDigits]="2" placeholder="Enter Rate"
-                                            [ngClass]="{ 'is-invalid ng-dirty': formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors }">
-                                          </p-inputNumber>
+                                          <input pInputText id="rate" formControlName="rate" numericOnly placeholder="Enter Rate"  
+                                          [ngClass]="{ 'is-invalid ng-dirty': formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors }" />
                                           <span
-                                          *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
-                                          <div class="ng-invalid ng-touched p-error"
-                                            *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">
-                                            Please Enter Rate.
-                                          </div>
-                                        </span>
+                                            *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.invalid">
+                                           
+                                              <div class="ng-invalid ng-touched p-error"
+                                                *ngIf="formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors?.['required']">
+                                                Please Enter Rate.
+                                              </div>
+                                          </span> 
                                         </div>
                                       </div>
                                       <div class="field col-12 md:col-3 vertical-align-top"

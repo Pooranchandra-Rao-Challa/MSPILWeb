@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { plantTypeDto, plantTypeViewDto } from 'src/app/_models/applicationmaster';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, } from 'src/app/_shared/regex';
@@ -17,6 +17,8 @@ import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, } from 'sr
   templateUrl: './planttype.component.html',
 })
 export class PlanttypeComponent implements OnInit {
+  globalFilterFields: string[] =['code','name','estimatedTon','loanEligible','isActive',
+       'createdBy','updatedBy','createAt','updatedAt']
   showDialog: boolean = false;
   plantTypes: plantTypeViewDto[] = [];
   plantType: plantTypeDto = new plantTypeDto();
@@ -28,6 +30,18 @@ export class PlanttypeComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
   permissions: any;
   
+  headers: ITableHeader[] = [
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'estimatedTon', header: 'estimatedTon', label: 'Estimated Ton' },
+    { field: 'loanEligible', header: 'loanEligible', label: 'Loan Eligible' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
+
   constructor(private formbuilder: FormBuilder,
     public jwtService: JWTService,
     private appMasterService: AppMasterService,

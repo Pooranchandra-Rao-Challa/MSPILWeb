@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ADDRESS, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
@@ -19,6 +19,8 @@ import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 })
 export class DivisionsComponent implements OnInit {
+  globalFilterFields: string[] =['divisionId','divisionCode','divisionName','inchargeName','address','inchargePhoneNo',
+  'listingOrder','isActive','createdBy','updatedBy','createdAt','updatedAt']
   valSwitch: boolean = false;
   display: boolean = false;
   divisions: DivisonsViewDto[] = [];
@@ -28,12 +30,24 @@ export class DivisionsComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   submitLabel!: string;
   addFlag: boolean = true;
+  maxLength: MaxLength = new MaxLength();
   mediumDate: string = MEDIUM_DATE;
   permissions:any;
   
-  globalFilterFields: string[] =['divisionId','divisionCode','divisionName','inchargeName','address','inchargePhoneNo','inchargePhoneNo',
-  'listingOrder','isActive','createdByUser','updatedByUser','createdAt','updatedAt']
-  maxLength: MaxLength = new MaxLength();
+  headers: ITableHeader[] = [
+    { field: 'divisionCode', header: 'divisionCode', label: 'Code' },
+    { field: 'divisionName', header: 'divisionName', label: 'Name' },
+    { field: 'inchargeName', header: 'inchargeName', label: 'Incharge Name' },
+    { field: 'inchargePhoneNo', header: 'inchargePhoneNo', label: 'Incharge PhoneNo' },
+    { field: 'listingOrder', header: 'listingOrder', label: 'Listing Order' },
+    { field: 'address', header: 'address', label: 'Address' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
+
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,

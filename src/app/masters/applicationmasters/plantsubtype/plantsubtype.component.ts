@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { PlantSubTypeDto, PlantSubTypeViewDto, plantTypeDto } from 'src/app/_models/applicationmaster';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
@@ -20,6 +20,8 @@ import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src
   ]
 })
 export class PlantsubtypeComponent implements OnInit {
+  globalFilterFields: string[] = ['plantTypeId','code','name','isActive',
+  'createdBy','updatedBy','createAt','updatedAt']
   @ViewChild('filter') filter!: ElementRef;
   fbplantsubtype!: FormGroup;
   showDialog: boolean = false;
@@ -31,6 +33,18 @@ export class PlantsubtypeComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+
+  headers: ITableHeader[] = [
+    { field: 'plantTypeId', header: 'plantTypeId', label: 'Plant Type Id' },
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
