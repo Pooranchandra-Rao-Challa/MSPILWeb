@@ -243,6 +243,10 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMOPY001': 'Plot Yield Added Successfully',
   'SMOPY002': 'Plot Yield Updated Successfully',
 
+  // Plot Transfer
+  'SMOPT001': 'Plot Transfer Added Successfully',
+  'WMOPT001': 'Plot Transfer is irrevocable, please confirm that this update is correct before proceeding',
+
   // Sanmple Entry
   'SMOSE001': 'Sample Entry Added Successfully',
   'SMOSE002': 'Sample Entry Updated Successfully',
