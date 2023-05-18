@@ -123,6 +123,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   //Seasons Message
   'SMAMSE001': 'Season Added Successfully',
   'SMAMSE002': 'Season Updated Successfully',
+  'SMAMSE003' :' Season Code Should Be Unique',
 
   //Sample Slab Message
   'SMAMSS001': 'Sample Slab Added Successfully',
@@ -135,6 +136,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   // HGLs Message
   'SMAMHG001': 'HGL Added Successfully',
   'SMAMHG002': 'HGL Updated Successfully',
+  'SMAMHG003' :' HGL Code Should Be Unique',
   //Farmers
   'SMAMFA001': 'Farmer Added Successfully',
   'SMAMFA002': 'Farmer Updated Successfully',
@@ -268,5 +270,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   //Permit Quota
   'SMPPQ001': 'Permit Quota Is Add Successfully',
   'SMPPQ002': 'Permit Quota Is Update Successfully',
+ 
+ 
+
 
 }

@@ -12,9 +12,10 @@ import { VillageDto, VillagesViewDto } from 'src/app/_models/geomodels';
 import { LookupService } from 'src/app/_services/lookup.service';
 import { FarmerDto } from 'src/app/_models/applicationmaster';
 import { MAX_LENGTH_20, MIN_AADHAAR, MIN_ACCNO, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PANNO, RG_PHONE_NO, RG_ADDRESS, RG_AADHAAR } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from 'src/app/_alerts/alertMessage';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-farmer',
@@ -50,6 +51,36 @@ export class FarmerComponent implements OnInit {
   virtualfarmers: any
   totalRecords: number[] = [];
   slicedDatabase: any;
+  defaultImageUrl: string = 'https://d30y9cdsu7xlg0.cloudfront.net/png/138926-200.png';
+  imagePreview:any;
+  mediumDate: string = MEDIUM_DATE;
+
+  plotHeader: ITableHeader[] = [
+    { field: 'code', header:'code', label: 'Code' },
+    { field: 'farmerName', header:'farmerName', label: 'Name' },
+    { field: 'gender', header:'gender', label: 'Gender' },
+    { field: 'fatherName', header:'fatherName', label: 'Father Name' },
+    { field: 'address', header:'address', label: 'Address' },
+    { field: 'circleName', header: 'circleName', label: 'Circle Name' },
+    { field: 'divisionName',header:'divisionName', label: 'Division Name' },
+    { field: 'sectionName', header:'sectionName', label: 'Section Name' },
+    { field: 'districtName', header:'districtName', label: 'District Name' },
+    { field: 'mandalName', header:'mandalName', label: 'Mandal Name' },
+    { field: 'villageName', header: 'villageName', label: 'Village Name' },
+    { field: 'bankName', header: 'bankName  ', label: 'Bank Name' },
+    { field: 'branchName', header: 'branchName', label: 'Branch Name' },
+    { field: 'ifsc', header: 'ifsc  ', label: 'IFSC' },
+    { field: 'accountNo', header:'accountNo', label: 'Account No' },
+    { field: 'totalArea', header: 'totalArea', label: 'Total Area' },
+    { field: 'cultivatedArea', header: 'cultivatedArea  ', label: 'Cultivated Area' },
+    { field: 'isRegistered', header: 'isRegistered', label: 'Is Registered' },
+    { field: 'isActive', header: 'isActive  ', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy  ', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy  ', label: 'Updated By' },
+  ];
+  
 
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,
@@ -95,12 +126,37 @@ export class FarmerComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      imageUrl: ['c:/fakepath/file.jpg'],
+      imageUrl: [''],
       isRegistered: [null],
       isActive: [null],
     });
+    this.imagePreview = this.defaultImageUrl;
+ 
   }
 
+  onImageClick() {
+    const inputElement = document.createElement('input');
+    inputElement.type = 'file';
+    inputElement.onchange = (e) => this.onImageSelect(e);
+    inputElement.click();
+    }
+    
+    onImageSelect(event:any) {
+    if (event.target.files.length > 0) {
+    const file = event.target.files[0];
+    this.fbfarmer.patchValue({ 
+    imageUrl: file
+    });  
+    
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = () => {
+    this.imagePreview = reader.result; 
+    };
+    reader.readAsDataURL(file);
+    }
+    }
+  
   initcasteDetails() {
     this.lookupService.Castes().subscribe((resp) => {
       this.casteDetails = resp as unknown as LookupDetailDto[];
@@ -188,6 +244,7 @@ export class FarmerComponent implements OnInit {
     this.showDialog = true;
   }
 
+ 
   saveFarmer(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.appmasterservice.CreateFarmer(this.fbfarmer.value)
     else return this.appmasterservice.UpdateFarmer(this.fbfarmer.value)
@@ -195,7 +252,7 @@ export class FarmerComponent implements OnInit {
 
   onSubmit() {
     if (this.fbfarmer.valid) {
-      this.fbfarmer.setValue({ ...this.fbfarmer.value, casteId: parseInt(this.fbfarmer.value.casteId, 10) })
+      this.fbfarmer.setValue({ ...this.fbfarmer.value, casteId: parseInt(this.fbfarmer.value.casteId, 10)})
       this.saveFarmer().subscribe(resp => {
         if (resp) {
           this.initFarmers();
@@ -214,12 +271,9 @@ export class FarmerComponent implements OnInit {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
-  onUpload(event: any) {
-    for (const file of event.files) {
-      this.fbfarmer.patchValue({ imageUrl: file });
-    }
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-  }
+  onBasicUploadAuto(event:any) {
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Auto Mode' });
+}
 
   clear(table: Table) {
     table.clear();
