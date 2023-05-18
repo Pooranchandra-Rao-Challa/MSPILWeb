@@ -121,6 +121,8 @@ export class PlotagreementComponent implements OnInit {
 
   initPlotNumbers(season: number, plotId: number) {
     this.plotNumbers = [];
+    this.plotInfo = {};
+    this.fbPlotAgreement.controls['agreementDate'].setValue(null);
     this.monitoringService.GetPlotsInSeason(season, 'Agreement', plotId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as PlotInfoDto[];
     });
