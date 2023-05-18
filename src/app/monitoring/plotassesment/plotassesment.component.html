@@ -15,7 +15,7 @@
 
     <!-- dialog -->
     <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true" [transitionOptions]="'500ms'"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
+    [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssesment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Assesment(Doc20)" class="col-12">
