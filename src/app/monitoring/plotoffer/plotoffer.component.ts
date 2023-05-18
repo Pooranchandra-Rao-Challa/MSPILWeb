@@ -19,6 +19,7 @@ import { JWTService } from 'src/app/_services/jwt.service';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { ITableHeader } from 'src/app/_models/common';
 import { LazyLoadEvent } from 'primeng/api';
+import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 
 @Component({
   selector: 'app-plotoffer',
@@ -200,6 +201,10 @@ export class PlotofferComponent implements OnInit {
       expectedVarietyId: [null],
       reasonForNotPlantingId: [null],
       remarks: [''],
+    }, {
+      validators: Validators.compose([
+        DateValidators.dateRangeValidator('offerDate', 'expectedPlantingDate', { 'offerDate': true }),
+      ])
     });
   }
 

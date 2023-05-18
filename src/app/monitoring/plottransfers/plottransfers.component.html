@@ -16,6 +16,7 @@
     <p-dialog header="Plot Transfer" [(visible)]="showDialog" [modal]="true"  [transitionOptions]="'500ms'"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="clearForm()">
       <div class="flex flex-column  justify-content-center">
+        <!-- {{this.farmers | json}} -->
         <form [formGroup]="fbplotTransfer" (ngSubmit)="onSubmit()">
           <div class="grid">
             <div class="col-12">
@@ -187,7 +188,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12">
           <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}" (click)="onSubmit()"
+            <button pButton pRipple type="submit" label="{{submitLabel}}" (click)="onSubmit()" [disabled]="fbplotTransfer.invalid"
               class="p-button-raised p-button-success"></button>
           </div>
         </div>
@@ -217,7 +218,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <!-- <th></th> -->
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -227,9 +228,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotTransfer>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+          <!-- <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editPlotTransfer(plotTransfer)" [disabled]="!permissions?.CanUpdatePlotTransfer"></button>
-          </td>
+          </td> -->
           <td *ngFor="let col of headers">
             <span *ngIf="col?.field != 'docDate' && col?.field != 'createdAt' && col?.field != 'updatedAt'">{{plotTransfer[col.field]}}</span>
             <span *ngIf="col?.field == 'docDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">

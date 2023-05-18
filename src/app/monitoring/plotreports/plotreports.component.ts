@@ -137,7 +137,12 @@ export class PlotreportsComponent implements OnInit {
   }
 
   getPlotOffersInSeason(seasonId: number, plotId: number) {
+    this.plotOfferDto = {};
     this.fbPlotReport.controls["plantingDate"].setValue(null);
+    this.fbPlotReport.controls["farmerId"].setValue(null);
+    this.fbPlotReport.controls["varietyId"].setValue(null);
+    this.fbPlotReport.controls["plantTypeId"].setValue(null);
+    this.mainPlot.get('villageId')?.setValue(null);
     this.monitoringService.PlotOffersInSeason(seasonId, plotId).subscribe((resp) => {
       this.seasonPlotOffers = resp as any;
       this.seasonPlotOffers.forEach(s => {
@@ -154,6 +159,7 @@ export class PlotreportsComponent implements OnInit {
 
 
   getOfferInfo(plotOfferId: number) {
+    this.plotOfferDto = {};
     this.monitoringService.GetOfferInfo(plotOfferId).subscribe((resp) => {
       let plotOffer2 = resp as any;
       if (plotOffer2 && plotOffer2.length) {
@@ -330,6 +336,7 @@ export class PlotreportsComponent implements OnInit {
 
       plotReportsAdditionalInfo: this.formbuilder.group({
         plotReportAddlInfoId: [null],
+        plotReportId: [null],
         soilTypeId: [null],
         isNeedHotWaterTreatment: [null],
         isDustingApplied: [null],
@@ -402,6 +409,7 @@ export class PlotreportsComponent implements OnInit {
       this.onValidations();
     }
     this.subPlot.get('plotReportAddlInfoId')?.setValue(plotReport.plotReportAddlInfoId);
+    this.subPlot.get('plotReportId')?.setValue(plotReport.plotReportId);
     this.subPlot.get('soilTypeId')?.setValue(plotReport.soilTypeId);
     this.subPlot.get('isNeedHotWaterTreatment')?.setValue(plotReport.isNeedHotWaterTreatment);
     this.subPlot.get('isDustingApplied')?.setValue(plotReport.isDustingApplied);

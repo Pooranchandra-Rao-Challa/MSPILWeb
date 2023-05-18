@@ -13,6 +13,7 @@ import { IPlotsofFarmerViewDto, PlotsDto, PlotTransferDto, IPlotTransferViewDto,
 import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { ITableHeader } from 'src/app/_models/common';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 
 @Component({
   selector: 'app-plottransfers',
@@ -68,7 +69,8 @@ export class PlotTransfersComponent implements OnInit {
     private AppMasterService: AppMasterService,
     private monitoringService: MonitoringService,
     private LookupService: LookupService,
-    private jwtService: JWTService) { }
+    private jwtService: JWTService,
+    private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
@@ -156,6 +158,7 @@ export class PlotTransfersComponent implements OnInit {
   }
 
   getPlotsofFarmers(seasonId: number, fromFarmerId: number) {
+    this.plotNumbers = [];
     this.monitoringService.GetPlotsofFarmers(seasonId, fromFarmerId).subscribe((resp) => {
       this.plotNumbers = resp as unknown as IPlotsofFarmerViewDto[];
     });
@@ -187,8 +190,7 @@ export class PlotTransfersComponent implements OnInit {
       this.fbplotTransfer.controls['fromFarmerName'].setValue(selectedFarmer.farmerName);
       // this.filteredTofarmers = this.tofarmers.filter((tofarmer) => tofarmer.id !== selectedFarmer.id);
       this.filteredToFarmers = this.toFarmers.filter((tofarmer) => tofarmer.id != selectedFarmer.farmerId);
-
-      this.getPlotsofFarmers(this.currentSeason.seasonId!, this.fbplotTransfer.controls['fromFarmerId'].value);
+      this.getPlotsofFarmers(this.currentSeason.seasonId!, fromFarmerId);
     }
   }
 
@@ -216,6 +218,11 @@ export class PlotTransfersComponent implements OnInit {
   }
 
   editPlotTransfer(plotTransfer: IPlotTransferViewDto) {
+    this.addFlag = false;
+
+    this.onSelectedFarmer(plotTransfer.fromFarmerId);
+    this.onSelectedToFarmer(plotTransfer.toFarmerId);
+    // this.getPlotsofFarmers(this.currentSeason.seasonId!, plotTransfer.fromFarmerId);
     this.fbplotTransfer.patchValue({
       plotTransferId: plotTransfer.plotTransferId,
       seasonId: plotTransfer.seasonId,
@@ -234,8 +241,8 @@ export class PlotTransfersComponent implements OnInit {
     this.fbplotTransfer.patchValue({
       docDate: new Date(plotTransfer.docDate?.toString() + ''),
     });
+    this.fbplotTransfer.controls['plotId'].setValue(plotTransfer.plotId);
 
-    this.addFlag = false;
     this.submitLabel = 'Update Plot Transfer';
     this.showDialog = true;
   }
@@ -252,6 +259,7 @@ export class PlotTransfersComponent implements OnInit {
           this.initPlotsTransfers(this.currentSeason.seasonId!);
           this.fbplotTransfer.reset();
           this.showDialog = false;
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SMOPT001"]);
         }
       })
     }

@@ -19,6 +19,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as FileSaver from 'file-saver';
 import { ITableHeader } from 'src/app/_models/common';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-plotassesment',
@@ -35,12 +36,12 @@ export class PlotassesmentComponent implements OnInit {
   @ViewChild('dtPlotAssessments') dtPlotAssessments!: Table;
   loading: boolean = true;
   addFlag: boolean = true;
-  fbPlotAssesment!: FormGroup
+  fbPlotAssessment!: FormGroup
   seasons: SeasonViewDto[] = [];
   currentSeason: SeasonDto = {};
   cropstypes: LookupDetailDto[] = [];
   weedstatus: LookupDetailDto[] = [];
-  plotAssesment: PlotAssessmentDto = new PlotAssessmentDto();
+  plotAssessment: PlotAssessmentDto = new PlotAssessmentDto();
   plotAssessments: IFarmerInPlotOfferDto[] = [];
   plotReports: PlotInfoDto[] = [];
   currentSeasonCode?: string;
@@ -89,10 +90,10 @@ export class PlotassesmentComponent implements OnInit {
 
 
 
-  addPlotAssesment(plotAssessmentId: number = -1) {
-    this.fbPlotAssesment.controls['seasonId'].setValue(this.currentSeasonId);
+  addPlotAssessment(plotAssessmentId: number = -1) {
+    this.fbPlotAssessment.controls['seasonId'].setValue(this.currentSeasonId);
     this.initPlotNumbers(this.currentSeasonId!, -1);
-    this.submitLabel = "Add Assesment";
+    this.submitLabel = "Add Assessment";
     this.addFlag = true;
     this.showDialog = true;
     this.getMaintenanceItemsForAssessment();
@@ -106,22 +107,22 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   initMaintanenceItems() {
-    let weedicideArray = this.fbPlotAssesment.get("weedicides") as FormArray;
+    let weedicideArray = this.fbPlotAssessment.get("weedicides") as FormArray;
 
     this.maintanenceItems?.weedicides?.forEach(weedicide => {
       weedicideArray.push(this.createWeed(weedicide));
     })
-    let fertilizerArray = this.fbPlotAssesment.get("fertilizers") as FormArray;
+    let fertilizerArray = this.fbPlotAssessment.get("fertilizers") as FormArray;
 
     this.maintanenceItems?.fertilizers?.forEach(fertilizer => {
       fertilizerArray.push(this.createFertlizer(fertilizer))
     })
-    let pestArray = this.fbPlotAssesment.get("pests") as FormArray;
+    let pestArray = this.fbPlotAssessment.get("pests") as FormArray;
 
     this.maintanenceItems?.pests?.forEach(pest => {
       pestArray.push(this.createpests(pest))
     })
-    let diseaseArray = this.fbPlotAssesment.get("diseases") as FormArray;
+    let diseaseArray = this.fbPlotAssessment.get("diseases") as FormArray;
 
     this.maintanenceItems?.diseases?.forEach(disease => {
       diseaseArray.push(this.createDisease(disease))
@@ -130,15 +131,15 @@ export class PlotassesmentComponent implements OnInit {
 
   ClearForm() {
     var temp = Object.assign({}, this.currentSeason);
-    this.fbPlotAssesment.reset();
+    this.fbPlotAssessment.reset();
     this.plotInfo = {};
-    (this.fbPlotAssesment.get("weedicides") as FormArray).clear();
-    (this.fbPlotAssesment.get("fertilizers") as FormArray).clear();
-    (this.fbPlotAssesment.get("pests") as FormArray).clear();
-    (this.fbPlotAssesment.get("diseases") as FormArray).clear();
+    (this.fbPlotAssessment.get("weedicides") as FormArray).clear();
+    (this.fbPlotAssessment.get("fertilizers") as FormArray).clear();
+    (this.fbPlotAssessment.get("pests") as FormArray).clear();
+    (this.fbPlotAssessment.get("diseases") as FormArray).clear();
     this.activeIndex = this.activeIndex1 = this.activeIndex2 = 0;
     this.currentSeason = Object.assign({}, temp);
-    this.fbPlotAssesment.get('seasonId')?.patchValue(this.currentSeason.seasonId);
+    this.fbPlotAssessment.get('seasonId')?.patchValue(this.currentSeason.seasonId);
   }
 
   ngOnInit(): void {
@@ -149,7 +150,7 @@ export class PlotassesmentComponent implements OnInit {
     }));
     this.permissions = this.jwtService.Permissions;
     this.currentSeasonCode = CURRENT_SEASON()
-    this.plotAssesmentForm();
+    this.plotAssessmentForm();
     this.initCurrentSeasons();
     this.initSeasons();
     this.initCropType();
@@ -185,7 +186,7 @@ export class PlotassesmentComponent implements OnInit {
       this.currentSeason = resp as unknown as SeasonDto;
       this.currentSeasonId = this.currentSeason.seasonId;
       this.initPlotNumbers(this.currentSeason.seasonId!, -1);
-      this.initPlotAssesments(this.currentSeason.seasonId!);
+      this.initPlotAssessments(this.currentSeason.seasonId!);
     });
   }
 
@@ -196,6 +197,8 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   initPlotNumbers(season: number, plotId: number) {
+    this.plotInfo = {};
+    this.fbPlotAssessment.controls['measuredDate'].setValue(null);
     this.monitoringService.GetPlotsInSeason(season, 'Assessment', plotId).subscribe((resp) => {
       this.plotReports = resp as unknown as PlotInfoDto[];
       this.seasons?.forEach((value) => {
@@ -207,7 +210,7 @@ export class PlotassesmentComponent implements OnInit {
     });
   }
 
-  initPlotAssesments(seasonId: number) {
+  initPlotAssessments(seasonId: number) {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
@@ -223,11 +226,11 @@ export class PlotassesmentComponent implements OnInit {
 
   onSearch() {
     this.dtPlotAssessments.expandedRowKeys = {};
-    this.initPlotAssesments(this.currentSeason.seasonId!);
+    this.initPlotAssessments(this.currentSeason.seasonId!);
   }
 
-  plotAssesmentForm() {
-    this.fbPlotAssesment = this.formbuilder.group({
+  plotAssessmentForm() {
+    this.fbPlotAssessment = this.formbuilder.group({
       plotAssessmentId: [null],
       seasonId: [{ value: this.currentSeason.seasonId }, (Validators.required)],
       plotId: [null, (Validators.required)],
@@ -258,11 +261,11 @@ export class PlotassesmentComponent implements OnInit {
     });
   }
   get FormControls() {
-    return this.fbPlotAssesment.controls;
+    return this.fbPlotAssessment.controls;
   }
 
   getFormArrayControl(formGroupName: string): FormArray {
-    return this.fbPlotAssesment.controls[formGroupName] as FormArray
+    return this.fbPlotAssessment.controls[formGroupName] as FormArray
   }
 
   createpests(pest: MaintPestDto): FormGroup {
@@ -310,7 +313,7 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   savePlotAssessment(): Observable<HttpEvent<PlotAssessmentDto>> {
-    var postValues = this.fbPlotAssesment.value;
+    var postValues = this.fbPlotAssessment.value;
     postValues.weedicides = postValues.weedicides.filter((weed: any) => weed.checked == true)
     postValues.pests = postValues.pests.filter((pest: any) => pest.identifiedDate != undefined || pest.controlDate != undefined)
     postValues.fertilizers = postValues.fertilizers.filter((fertilizer: any) => fertilizer.checked == true)
@@ -319,42 +322,42 @@ export class PlotassesmentComponent implements OnInit {
     else return this.monitoringService.UpdatePlotAssessment(postValues)
   }
 
-  editPlotAssessment(plotAssesment: IPlotAssessmentViewDto) {
-    this.initPlotNumbers(plotAssesment.seasonId, plotAssesment?.plotId);
-    this.plotAssesment.plotAssessmentId = plotAssesment.plotAssessmentId;
-    this.plotAssesment.plotId = plotAssesment?.plotId;
-    this.plotAssesment.measuredArea = plotAssesment.assessedArea;
-    this.plotAssesment.measuredDate = plotAssesment.measuredDate && new Date(plotAssesment.measuredDate);
-    this.plotAssesment.isaDemoPlot = plotAssesment.isADemoPlot;
-    this.plotAssesment.weedStatusId = plotAssesment.weedStatusId;
-    this.plotAssesment.interCropingId = plotAssesment.interCropId;
-    this.plotAssesment.hasMicroNutrientDeficiency = plotAssesment.isTrashMulchingDone;
-    this.plotAssesment.isGapsFillingDone = plotAssesment.isGapsFillingDone;
-    this.fbPlotAssesment.patchValue(this.plotAssesment);
-    this.fbPlotAssesment.controls['seasonId'].setValue(plotAssesment.seasonId);
-    this.getPlotinfo(plotAssesment.plotId);
-    this.getMaintenanceItemsForAssessment(plotAssesment.plotAssessmentId);
+  editPlotAssessment(plotAssessment: IPlotAssessmentViewDto) {
+    this.initPlotNumbers(plotAssessment.seasonId, plotAssessment?.plotId);
+    this.plotAssessment.plotAssessmentId = plotAssessment.plotAssessmentId;
+    this.plotAssessment.plotId = plotAssessment?.plotId;
+    this.plotAssessment.measuredArea = plotAssessment.assessedArea;
+    this.plotAssessment.measuredDate = plotAssessment.measuredDate && new Date(plotAssessment.measuredDate);
+    this.plotAssessment.isaDemoPlot = plotAssessment.isADemoPlot;
+    this.plotAssessment.weedStatusId = plotAssessment.weedStatusId;
+    this.plotAssessment.interCropingId = plotAssessment.interCropId;
+    this.plotAssessment.hasMicroNutrientDeficiency = plotAssessment.isTrashMulchingDone;
+    this.plotAssessment.isGapsFillingDone = plotAssessment.isGapsFillingDone;
+    this.fbPlotAssessment.patchValue(this.plotAssessment);
+    this.fbPlotAssessment.controls['seasonId'].setValue(plotAssessment.seasonId);
+    this.getPlotinfo(plotAssessment.plotId);
+    this.getMaintenanceItemsForAssessment(plotAssessment.plotAssessmentId);
 
     this.addFlag = false;
-    this.submitLabel = 'Update Assesment';
+    this.submitLabel = 'Update Assessment';
     this.showDialog = true;
   }
 
   onSubmit() {
-    if (this.fbPlotAssesment.valid) {
+    if (this.fbPlotAssessment.valid) {
       this.savePlotAssessment().subscribe(resp => {
         if (resp) {
           this.dtPlotAssessments.expandedRowKeys = {};
           // this.savePlotAssessment();
-          this.initPlotAssesments(this.currentSeason.seasonId!);
-          this.fbPlotAssesment.reset();
+          this.initPlotAssessments(this.currentSeason.seasonId!);
+          this.fbPlotAssessment.reset();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAS001" : "SMOPAS002"]);
         }
       });
     }
     else {
-      this.fbPlotAssesment.markAllAsTouched();
+      this.fbPlotAssessment.markAllAsTouched();
     }
   }
 

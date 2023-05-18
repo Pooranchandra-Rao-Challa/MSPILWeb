@@ -1,3 +1,4 @@
+import { JWTService } from 'src/app/_services/jwt.service';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -24,12 +25,14 @@ interface LayoutState {
 })
 export class LayoutService {
 
+    constructor(private jwtService: JWTService){}
+
     config: AppConfig = {
         ripple: false,
         inputStyle: 'outlined',
         menuMode: 'static',
-        colorScheme: 'light',
-        theme: 'lara-light-indigo',
+        colorScheme: this.jwtService.ColorScheme ? this.jwtService.ColorScheme : 'light',
+        theme: this.jwtService.ThemeName ? this.jwtService.ThemeName : 'lara-light-indigo',
         scale: 14,
     };
 

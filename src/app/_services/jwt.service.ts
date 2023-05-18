@@ -87,4 +87,16 @@ export class JWTService {
     if(!jwt || jwt == "")  return false;
     return  jwt.IsFirstTimeLogin > 0;
   }
+
+  public get ThemeName(): string{
+
+    const jwt = this.DecodedJWT;
+    return jwt.ThemeName;
+  }
+
+  public get ColorScheme(): string{
+
+    const jwt = this.DecodedJWT;
+    return jwt.ColorScheme;
+  }
 }

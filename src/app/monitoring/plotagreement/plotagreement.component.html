@@ -240,7 +240,7 @@
                         *ngIf="fcNomineeDetails.controls['nominee'].touched && fcNomineeDetails.controls['nominee'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['nominee'].errors?.['required']">
-                          Please Select Nominee.</div>
+                          Please Enter Nominee.</div>
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['nominee'].errors?.['minlength']">
                           Nominee Min Length Is 2.</div>
@@ -388,7 +388,7 @@
               </div>
             </div>
             <p-tabView orientation="left" [(activeIndex)]="activeIndex1!">
-              <p-tabPanel header="Weedicide">
+              <p-tabPanel header="Weedicide Used">
                 <div class="grid col-12">
                   <div formArrayName='weedicides' class="checkboxList grid">
                     <ng-container *ngIf="this.fbPlotAgreement.controls['weedicides'] as formArray">

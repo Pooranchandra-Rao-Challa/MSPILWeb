@@ -312,6 +312,10 @@
                         *ngIf="FormControls['expectedPlantingDate'].errors?.['required'] && !FormControls['offerDate'].errors?.['required']">
                         Please Select Expected Planting Date.</div>
                     </span>
+                    <span>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="fbPlotOffer.hasError('offerDate')">
+                        To Date Always Greater Than Equals To From Date</div>
+                    </span>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label>Expected Variety Code:</label>
