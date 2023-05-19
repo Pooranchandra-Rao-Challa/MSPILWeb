@@ -14,7 +14,7 @@
 
         <!-- dialog -->
         <p-dialog header="Lookup" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width:'auto'}" (onHide)="onClose()">
+        [breakpoints]="{'960px': '50%', '640px': '90%'}" [style]="{width: '50%'}" (onHide)="onClose()">
             <div class="flex flex-column align-items-center justify-content-center">
                 <form [formGroup]="fblookup">
                     <div class="grid">
@@ -63,11 +63,11 @@
                                             Name Min Length Is 2.</div>
                                     </span>
                                 </div>
-                                <div class="field col-12 md:col-8">
+                                <div class="field col-12 md:col-6">
                                     <label>Is Active:</label><br>
                                     <p-inputSwitch formControlName="isActive"></p-inputSwitch>
                                 </div>
-                                <div class="field col-12 md:col-4 mt-2">
+                                <div class="field col-12 md:col-6 mt-2">
                                     <div class="button-container">
                                         <p-button type="button" label="Add Lookup Details" (click)="addLookupDetails()">
                                         </p-button>
@@ -78,7 +78,7 @@
                     </div>
 
                     <!-- lookupdetails -->
-                    <div class="col-12" formArrayName="lookUpDetails" *ngIf="ShowlookupDetails">
+                    <div class="col-12 scrolling_content" formArrayName="lookUpDetails" *ngIf="ShowlookupDetails">
                         <p-table #dt2 [value]=" falookupDetails().controls" dataKey="id" [rows]="10" [rowHover]="true"
                             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="false"
                             [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">>
