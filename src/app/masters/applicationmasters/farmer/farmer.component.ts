@@ -126,7 +126,7 @@ export class FarmerComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      imageUrl: [''],
+      // imageUrl: [''],
       isRegistered: [null],
       isActive: [null],
     });

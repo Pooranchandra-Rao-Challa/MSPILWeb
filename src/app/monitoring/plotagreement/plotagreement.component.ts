@@ -129,6 +129,7 @@ export class PlotagreementComponent implements OnInit {
   }
 
   initPlotAgreements(seasonId: number) {
+    this.dtPlotAgreements.expandedRowKeys = {};
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAgreement(seasonId, param1).subscribe((resp) => {
       this.plotAgreements = resp as unknown as IFarmerInPlotOfferDto[];

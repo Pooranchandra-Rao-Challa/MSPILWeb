@@ -28,7 +28,7 @@
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-                          optionValue="seasonId" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
+                          optionValue="seasonId" formControlName="seasonId"  [(ngModel)]="currentSeason.seasonId" 
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
@@ -473,7 +473,7 @@
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" [virtualScrollItemSize]="30">
+            [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotYields($event.value)"  optionValue="seasonId" [virtualScrollItemSize]="30">
             </p-dropdown>
           </div>
         </div>

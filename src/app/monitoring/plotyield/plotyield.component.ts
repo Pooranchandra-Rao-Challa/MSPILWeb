@@ -116,6 +116,7 @@ export class PlotyieldComponent implements OnInit {
     this.initPerishedArea();
     this.initweedstatus();
     this.initCropType();
+    
   }
 
   getMaintenanceItemsForYield(plotyieldId: number = -1) {
@@ -237,6 +238,7 @@ export class PlotyieldComponent implements OnInit {
   }
 
   initPlotYields(seasonId: number) {
+    this.dtPlotYields.expandedRowKeys = {};
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotYields(seasonId, param1).subscribe((resp) => {
       this.plotYields = resp as unknown as IFarmerPlotYieldViewDto[];

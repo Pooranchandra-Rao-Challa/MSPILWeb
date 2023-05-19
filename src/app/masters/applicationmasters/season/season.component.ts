@@ -304,11 +304,9 @@ export class SeasonComponent implements OnInit {
       this.fbseasons.controls['code'].markAllAsTouched();
     }
   }
-
   onClose() {
     this.fbseasons.reset();
   }
-
   ngOnDestroy() {
     this.seasons = [];
     this.billParams = [];
