@@ -16,7 +16,7 @@ import { RG_SEASON_CODE, RG_SEASON_NAME, } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 
 @Component({
@@ -44,6 +44,26 @@ export class SeasonComponent implements OnInit {
   activeIndex: number = 0;
   maxLength: MaxLength = new MaxLength();
   invalidSeasonCode: boolean = false;
+
+
+  plotHeader: ITableHeader[] = [
+    { field: 'code', header:'code', label: 'Code' },
+    { field: 'name', header:'name', label: 'Name' },
+    { field: 'plantFrom', header:'plantFrom', label: 'Plant From' },
+    { field: 'plantTo', header:'plantTo', label: 'Plant To' },
+    { field: 'crushFrom', header:'crushFrom', label: 'Crush From' },
+    { field: 'crushTo', header: 'crushTo', label: 'Variety' },
+    { field: 'burnCaneRate',header:'burnCaneRate', label: 'Burn Cane Rate' },
+    { field: 'caneRate', header:'caneRate', label: 'Cane Rate' },
+    { field: 'capacity', header:'capacity', label: 'Capacity' },
+    { field: 'isActive', header:'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy  ', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy  ', label: 'Updated By' },
+    
+
+  ];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -201,7 +221,6 @@ export class SeasonComponent implements OnInit {
     this.addFlag = true;
     this.seasonForm();
     this.showDialog = true;
-
     // if(!this.existCurrentSeasonRecord){
     //   this.submitLabel = 'Add Season';
     //   this.addFlag = true;
@@ -234,6 +253,22 @@ export class SeasonComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.fbseasons.valid) {
+      if (this.addFlag) {
+        var oldseasons = this.seasons.filter(x => x.code == this.fbseasons.value.code && x.seasonId != this.fbseasons.value.seasonId)
+        if (oldseasons.length > 0) {
+          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMSE003"]);
+        }
+        else this.save();
+      }
+      else this.save();
+    }
+    else {
+      this.fbseasons.markAllAsTouched();
+    }
+  }
+
+  save() {
     if (this.fbseasons.valid && !this.invalidSeasonCode) {
       this.fbseasons.value.plantFrom = FORMAT_DATE(this.fbseasons.value.plantFrom);
       this.fbseasons.value.plantTo = FORMAT_DATE(this.fbseasons.value.plantTo);

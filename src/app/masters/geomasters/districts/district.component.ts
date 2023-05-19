@@ -11,12 +11,14 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-district',
   templateUrl: './district.component.html',
 })
 export class DistrictComponent implements OnInit {
+  globalFilterFields: string[] = ['districtName', 'districtCode', 'stateName', 'updatedAt', 'createdAt', 'updatedBy', 'createdBy']
   valSwitch: boolean = true;
   display: boolean = false;
   districts: DistrictViewDto[] = [];
@@ -27,8 +29,18 @@ export class DistrictComponent implements OnInit {
   submitLabel!: string;
   addFlag: boolean = true;
   mediumDate: string = MEDIUM_DATE;
-  permissions:any;
+  permissions: any;
 
+  headers: ITableHeader[] = [
+    { field: 'districtCode', header: 'districtCode', label: 'Code' },
+    { field: 'districtName', header: 'districtName', label: 'Name' },
+    { field: 'stateName', header: 'stateName', label: 'State' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
@@ -56,7 +68,7 @@ export class DistrictComponent implements OnInit {
     })
     this.fbdistricts = this.formbuilder.group({
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       stateId: [null, (Validators.required)],
       districtId: [null],
       isActive: [null]
@@ -70,17 +82,12 @@ export class DistrictComponent implements OnInit {
   }
 
   editProduct(district: DistrictViewDto) {
-    // this.district.code = district.districtCode;
-    // this.district.name = district.districtName
-    // this.district.isActive = district.isActive;
-    // this.district.districtId = district.districtId
-    // this.district.stateId = district.stateId;
     this.fbdistricts.setValue({
-      code : district.districtCode,
-      name : district.districtName,
-      isActive : district.isActive,
-      districtId : district.districtId,
-      stateId : district.stateId.toString(),
+      code: district.districtCode,
+      name: district.districtName,
+      isActive: district.isActive,
+      districtId: district.districtId,
+      stateId: district.stateId.toString(),
     });
     this.submitLabel = "Update District";
     this.addFlag = false;

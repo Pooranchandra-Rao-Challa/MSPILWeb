@@ -10,10 +10,11 @@ import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { HglViewDto, SubHglViewDto, HglDto, } from 'src/app/_models/applicationmaster'
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { MIN_LENGTH_6 } from 'src/app/_shared/regex';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
+import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 
 @Component({
   selector: 'app-hgl',
@@ -70,6 +71,38 @@ export class HglComponent implements OnInit {
   IFSC?: any;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+  mediumDate: string = MEDIUM_DATE;
+
+  plotHeader: ITableHeader[] = [
+    { field: 'code', header:'code', label: 'Code' },
+    { field: 'name', header:'name', label: 'Name' },
+    { field: 'gender', header:'gender', label: 'Gender' },
+    { field: 'relationTypeName', header:'relationTypeName', label: 'Relationship Type' },
+    { field: 'relationName', header:'relationName', label: 'Relationship Name' },
+    { field: 'address', header: 'address', label: 'Address' },
+    { field: 'pinCode',header:'pinCode', label: 'PinCode' },
+    { field: 'phoneNo', header:'phoneNo', label: 'Phone No' },
+    { field: 'email', header:'email', label: 'Email' },
+    { field: 'panNo', header:'panNo', label: 'Pan No' },
+    { field: 'aadhaarNo', header: 'aadhaarNo', label: 'Aadhaar No' },
+    { field: 'tax', header: 'tax  ', label: 'Tax' },
+    { field: 'tds', header: 'tds', label: 'TDS' },
+    { field: 'guarantor1', header: 'guarantor1  ', label: 'Guarantor1' },
+    { field: 'guarantor2', header:'guarantor2', label: 'Guarantor2' },
+    { field: 'guarantor3', header: 'guarantor3', label: 'Guarantor3' },
+    { field: 'bankName', header: 'bankName  ', label: 'Bank Name' },
+    { field: 'branchName', header: 'branchName', label: 'Branch Name' },
+    { field: 'ifsc', header: 'ifsc  ', label: 'IFSC' },
+    { field: 'accountNo', header: 'accountNo', label: 'Account No' },
+    { field: 'glCode', header: 'glCode  ', label: 'Gang Leader Code' },
+    { field: 'subGLCode', header: 'subGLCode', label: 'Sub Gang Leader Code' },
+    { field: 'otherCode', header: 'otherCode  ', label: 'Other Code' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy  ', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy  ', label: 'Updated By' },
+  ];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -270,6 +303,23 @@ export class HglComponent implements OnInit {
   }
 
   onSubmit() {
+
+    if (this.fbHgl.valid) {
+      if (this.addFlag) {
+        var oldHgl = this.hgls.filter(x => x.code == this.fbHgl.value.code && x.hglId != this.fbHgl.value.hglId )
+        if (oldHgl.length > 0) {
+          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMHG003"]);
+        }
+        else this.save();
+      }
+      else this.save();
+    }
+    else {
+      this.fbHgl.markAllAsTouched();
+    }
+  }
+
+  save() {
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';
     if (this.fbHgl.valid) {
       this.saveHgl().subscribe((resp) => {
