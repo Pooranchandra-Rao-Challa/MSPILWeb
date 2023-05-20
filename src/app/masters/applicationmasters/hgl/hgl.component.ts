@@ -302,23 +302,39 @@ export class HglComponent implements OnInit {
     else return this.appMasterService.UpdateHgl(this.fbHgl.value);
   }
 
-  onSubmit() {
+  isUniqueCode() {
+    var oldWareHouse = this.hgls.filter(x => 
+      x.code == this.fbHgl.value.code && x.hglId != this.fbHgl.value.seasonId
+    )
+    return oldWareHouse.length > 0; 
+  }
+  
+  isUniqueName() {
+    var oldWareHouse = this.hgls.filter(x => 
+      x.name == this.fbHgl.value.name && x.hglId != this.fbHgl.value.seasonId
+    )
+    return oldWareHouse.length > 0; 
+  }
 
+
+  onSubmit() {
     if (this.fbHgl.valid) {
       if (this.addFlag) {
-        var oldHgl = this.hgls.filter(x => x.code == this.fbHgl.value.code && x.hglId != this.fbHgl.value.hglId )
-        if (oldHgl.length > 0) {
+        if (this.isUniqueCode()) {
           this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMHG003"]);
+        } else if (this.isUniqueName()) { 
+          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMHG004"]);
+        } else {
+          this.save(); 
         }
-        else this.save();
+      } else {
+        this.save(); 
       }
-      else this.save();
-    }
-    else {
+    } else {
       this.fbHgl.markAllAsTouched();
     }
   }
-
+ 
   save() {
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';
     if (this.fbHgl.valid) {
