@@ -252,18 +252,35 @@ export class SeasonComponent implements OnInit {
     else return this.appMasterService.UpdateSeason(this.fbseasons.value);
   }
 
+  isUniqueCode() {
+    var oldWareHouse = this.seasons.filter(x => 
+      x.code == this.fbseasons.value.code && x.seasonId != this.fbseasons.value.seasonId
+    )
+    return oldWareHouse.length > 0; 
+  }
+  
+  isUniqueName() {
+    var oldWareHouse = this.seasons.filter(x => 
+      x.name == this.fbseasons.value.name && x.seasonId != this.fbseasons.value.seasonId
+    )
+    return oldWareHouse.length > 0; 
+  }
+
+
   onSubmit() {
     if (this.fbseasons.valid) {
       if (this.addFlag) {
-        var oldseasons = this.seasons.filter(x => x.code == this.fbseasons.value.code && x.seasonId != this.fbseasons.value.seasonId)
-        if (oldseasons.length > 0) {
+        if (this.isUniqueCode()) {
           this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMSE003"]);
+        } else if (this.isUniqueName()) { 
+          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMSE004"]);
+        } else {
+          this.save(); 
         }
-        else this.save();
+      } else {
+        this.save(); 
       }
-      else this.save();
-    }
-    else {
+    } else {
       this.fbseasons.markAllAsTouched();
     }
   }
@@ -304,11 +321,9 @@ export class SeasonComponent implements OnInit {
       this.fbseasons.controls['code'].markAllAsTouched();
     }
   }
-
   onClose() {
     this.fbseasons.reset();
   }
-
   ngOnDestroy() {
     this.seasons = [];
     this.billParams = [];

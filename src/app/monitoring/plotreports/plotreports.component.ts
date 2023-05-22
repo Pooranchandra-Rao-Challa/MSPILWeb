@@ -275,6 +275,7 @@ export class PlotreportsComponent implements OnInit {
   }
 
   initPlotReports(seasonId: number) {
+    this.dtPlotReports.expandedRowKeys = {};
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotReports(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotReports = resp as unknown as IFarmerInPlotReportsViewDto[];
@@ -285,6 +286,7 @@ export class PlotreportsComponent implements OnInit {
     var data = source.data as IFarmerInPlotReportsViewDto;
     this.monitoringService.GetFarmerPlotsInReport(data.seasonId, data.farmerId).subscribe(resp => {
       data.objReportedPlots = resp as unknown as IPlotReportViewDto[];
+      console.log('plots' , data.objReportedPlots);
     });
   }
 
@@ -384,6 +386,7 @@ export class PlotreportsComponent implements OnInit {
     this.showDialog = true;
   }
 
+
   editPlotReport(plotReport: IPlotReportViewDto, farmer: IFarmerInPlotReportsViewDto) {
     this.addFlag = false;
     this.getPlotOffersInSeason(this.currentSeason.seasonId || 0, plotReport.plotId);
@@ -397,6 +400,10 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
     this.fbPlotReport.controls['plotOfferId'].setValue(plotReport.plotOfferId);
     this.getOfferInfo(plotReport.plotOfferId);
+
+    this.fbPlotReport.controls['plotNumber'].setValue(plotReport.plotNumber); 
+    this.fbPlotReport.controls['plotNumber'].disable();
+  
     this.fbPlotReport.controls['birnumber'].setValue(plotReport.birNumber);
     this.fbPlotReport.controls['profile'].setValue(plotReport.profile);
     this.fbPlotReport.controls['totalArea'].setValue(plotReport.totalArea);
@@ -570,11 +577,6 @@ export class PlotreportsComponent implements OnInit {
         this.totalRecords = this.plotReports.length;
         this.loading = false;
       });
-        // this.customerService.getCustomers({ lazyEvent: JSON.stringify(event) }).then((res) => {
-        //     this.customers = res.customers;
-        //     this.totalRecords = res.totalRecords;
-        //     this.loading = false;
-        // });
     }, 1000);
 }
 

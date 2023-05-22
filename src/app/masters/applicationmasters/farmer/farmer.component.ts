@@ -126,7 +126,7 @@ export class FarmerComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      imageUrl: [''],
+      // imageUrl: [''],
       isRegistered: [null],
       isActive: [null],
     });
@@ -249,8 +249,39 @@ export class FarmerComponent implements OnInit {
     if (this.addFlag) return this.appmasterservice.CreateFarmer(this.fbfarmer.value)
     else return this.appmasterservice.UpdateFarmer(this.fbfarmer.value)
   }
+  isUniqueCode() {
+    var oldWareHouse = this.farmers.filter(x => 
+      x.code == this.fbfarmer.value.code && x.farmerId != this.fbfarmer.value.farmerId
+    )
+    return oldWareHouse.length > 0; 
+  }
+  
+  isUniqueName() {
+    var oldWareHouse = this.farmers.filter(x => 
+      x.farmerName == this.fbfarmer.value.name && x.farmerId != this.fbfarmer.value.farmerId
+    )
+    return oldWareHouse.length > 0; 
+  }
+
 
   onSubmit() {
+    if (this.fbfarmer.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueCode()) {
+          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMFA003"]);
+        } else if (this.isUniqueName()) { 
+          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMFA004"]);
+        } else {
+          this.save(); 
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbfarmer.markAllAsTouched();
+    }
+  }
+  save() {
     if (this.fbfarmer.valid) {
       this.fbfarmer.setValue({ ...this.fbfarmer.value, casteId: parseInt(this.fbfarmer.value.casteId, 10)})
       this.saveFarmer().subscribe(resp => {

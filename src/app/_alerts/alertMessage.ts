@@ -123,7 +123,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   //Seasons Message
   'SMAMSE001': 'Season Added Successfully',
   'SMAMSE002': 'Season Updated Successfully',
-  'SMAMSE003' :' Season Code Should Be Unique',
+  'SMAMSE003' :'Season with same code already exists.',
+  'SMAMSE004' :' Season with same name already exists.',
 
   //Sample Slab Message
   'SMAMSS001': 'Sample Slab Added Successfully',
@@ -136,10 +137,14 @@ export const ALERT_CODES: { [key: string]: string } = {
   // HGLs Message
   'SMAMHG001': 'HGL Added Successfully',
   'SMAMHG002': 'HGL Updated Successfully',
-  'SMAMHG003' :' HGL Code Should Be Unique',
+  'SMAMHG003' :'HGL with same code already exists.',
+  'SMAMHG004' :' HGL with same name already exists.',
+
   //Farmers
   'SMAMFA001': 'Farmer Added Successfully',
   'SMAMFA002': 'Farmer Updated Successfully',
+  'SMAMFA003' :'Farmer with same code already exists.',
+  'SMAMFA004' :' Farmer with same name already exists.',
 
   //Geo Master =>
   //State

@@ -1,3 +1,4 @@
+
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Table } from 'primeng/table';
@@ -201,6 +202,7 @@ export class ScheduleGroupingComponent implements OnInit {
     this.initVarieties(this.currentSeason.seasonId!);
   }
   initScheduleGroups(seasonId: number) {
+    this.dtSchedulegrouping.expandedRowKeys = {};
     this.permitService.GetSeasonScheduleGroups(seasonId).subscribe((resp) => {
       this.scheduleGroupings = resp as unknown as ISeasonScheduleGroupViewDto[];
     });
