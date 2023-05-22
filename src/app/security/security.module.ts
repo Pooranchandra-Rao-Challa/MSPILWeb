@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PanelModule } from 'primeng/panel';
+import { SharedModule } from 'src/app/_shared/shared.module';
 import { SecurityRoutingModule } from './security-routing.module';
 
 import { RolesComponent } from './roles/roles.component';
@@ -43,7 +45,8 @@ import { AccordionModule } from 'primeng/accordion';
     SecurityRoutingModule,
     TabViewModule,
     CheckboxModule,
-
+    SharedModule,
+    PanelModule,
     FormsModule,
     ReactiveFormsModule,
     TableModule,

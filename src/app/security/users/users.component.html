@@ -159,142 +159,149 @@
               <p-tabPanel header="User Info" class="line-height-3 m-0 col-12 ">
                 <div class="grid">
                   <div class="col-12">
-                    <h6>User Info</h6>
-                    <div class="p-fluid p-formgrid grid">
-                      <div class="field col-12 md:col-6">
-                        <label>User Name:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="username" type="text" formControlName="userName"
-                          placeholder="Enter User Name"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['userName'].touched && userFormControls['userName'].errors }" />
-                        <span *ngIf="userFormControls['userName'].touched && userFormControls['userName'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['userName'].errors?.['required']">
-                            Please Enter User Name.</div>
-                        </span>
+                    <p-fieldset legend="User Info" [toggleable]="true" class="line-height-3 m-0 mb-5"
+                    [transitionOptions]="'500ms'">
+                      <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12 md:col-6">
+                          <label>User Name:<sup class="p-error">*</sup></label>&nbsp;
+                          <input pInputText id="username" type="text" formControlName="userName"
+                            placeholder="Enter User Name"
+                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['userName'].touched && userFormControls['userName'].errors }" />
+                          <span *ngIf="userFormControls['userName'].touched && userFormControls['userName'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['userName'].errors?.['required']">
+                              Please Enter User Name.</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label>Password:<sup class="p-error">*</sup></label>&nbsp;
+                          <input pInputText id="password" type="password" formControlName="password"
+                            placeholder="Enter Password"
+                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
+                          <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['password'].errors?.['required']">
+                              Please Enter Password.</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label>First Name:<sup class="p-error">*</sup></label>&nbsp;
+                          <input pInputText id="firstname" type="text" formControlName="firstName"
+                            placeholder="Enter First Name"
+                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['firstName'].touched && userFormControls['firstName'].errors }" />
+                          <span *ngIf="userFormControls['firstName'].touched && userFormControls['firstName'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['firstName'].errors?.['required']">
+                              Please Enter First Name.</div>
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['firstName'].errors?.['pattern']">
+                              First Name Should Contains Only Letters.</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label>Last Name:<sup class="p-error">*</sup></label>&nbsp;
+                          <input pInputText id="lastname" type="text" formControlName="lastName"
+                            placeholder="Enter Last Name"
+                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['lastName'].touched && userFormControls['lastName'].errors }" />
+                          <span *ngIf="userFormControls['lastName'].touched && userFormControls['lastName'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['lastName'].errors?.['required']">
+                              Please Enter Last Name.</div>
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['lastName'].errors?.['pattern']">
+                              Last Name Should Contains Only Letters.</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label>Email Id:<sup class="p-error">*</sup></label>&nbsp;
+                          <input pInputText id="emailid" type="text" formControlName="email" placeholder="Enter Email Id"
+                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['email'].touched && userFormControls['email'].errors }" />
+                          <span *ngIf="userFormControls['email'].touched && userFormControls['email'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['email'].errors?.['required']">
+                              Please Enter Email Id.</div>
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['email'].errors?.['pattern']">
+                              Email Contains Only Letters, Integers And Periods(.)</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
+                          <input pInputText id="mobileNumber" placeholder="Enter Mobile No" formControlName="mobileNumber"
+                            numericOnly [maxlength]="10"
+                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }">
+                          <span
+                            *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['mobileNumber'].errors?.['required']">
+                              Please Enter Mobile No.</div>
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['mobileNumber'].errors?.['pattern']">
+                              First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label>Role:<sup class="p-error">*</sup></label>&nbsp;
+                          <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId"
+                            placeholder="Enter Role" [autoDisplayFirst]="false"
+                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }">
+                          </p-dropdown>
+                          <span *ngIf="userFormControls['roleId'].touched && userFormControls['roleId'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['roleId'].errors?.['required']">
+                              Please Enter Role.</div>
+                          </span>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label htmlFor="ipaddress">IP Address:</label>
+                          <input pInputText id="ipaddress" type="text" formControlName="ipaddress"
+                            placeholder="Enter IP Address" />
+                        </div>
+                        <div class="field col-12 md:col-6">
+                          <label htmlFor="imeino">IMEI No:</label>
+                          <input pInputText id="imeino" type="text" formControlName="imeino"
+                            placeholder="Enter IMEI No" />
+                          <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['imeino'].errors?.['pattern']">
+                              IMEI No Should Contains Only Digits.</div>
+                          </span>
+                        </div>
                       </div>
-                      <div class="field col-12 md:col-6">
-                        <label>Password:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="password" type="password" formControlName="password"
-                          placeholder="Enter Password"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
-                        <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['password'].errors?.['required']">
-                            Please Enter Password.</div>
-                        </span>
+                    </p-fieldset><br/>
+
+                    <p-fieldset legend="User Rights" [toggleable]="true" class="line-height-3 m-0 pt-5 mt-3"
+                    [transitionOptions]="'500ms'">
+                      <div class="grid md:flex">
+                        <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
+                          <label class="col-12">IP Restriction:<sup class="p-error">*</sup></label>
+                          <p-inputSwitch [trueValue]="true" [falseValue]="false" placeholder="IP Ristriction"
+                            formControlName="iprestriction" class="col-12"></p-inputSwitch>
+                        </div>
+                        <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
+                          <label class="col-12">Is AdminGate:<sup class="p-error">*</sup></label>
+                          <p-inputSwitch formControlName="isAdminGate" class="col-12"></p-inputSwitch>
+                        </div>
+                        <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
+                          <label class="col-12">Is Gross:<sup class="p-error">*</sup></label>
+                          <p-inputSwitch formControlName="isGross" class="col-12"></p-inputSwitch>
+                        </div>
+                        <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
+                          <label class="col-12">Is Tare:<sup class="p-error">*</sup></label>
+                          <p-inputSwitch formControlName="isTare" class="col-12"></p-inputSwitch>
+                        </div>
+                        <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
+                          <label class="col-12">Is DumpYard:<sup class="p-error">*</sup></label>
+                          <p-inputSwitch formControlName="isDumpYard" class="col-12"></p-inputSwitch>
+                        </div>
+                        <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
+                          <label class="col-12">Is Active?:<sup class="p-error">*</sup></label>
+                          <p-inputSwitch formControlName="isActive" class="col-12"></p-inputSwitch>
+                        </div>
                       </div>
-                      <div class="field col-12 md:col-6">
-                        <label>First Name:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="firstname" type="text" formControlName="firstName"
-                          placeholder="Enter First Name"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['firstName'].touched && userFormControls['firstName'].errors }" />
-                        <span *ngIf="userFormControls['firstName'].touched && userFormControls['firstName'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['firstName'].errors?.['required']">
-                            Please Enter First Name.</div>
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['firstName'].errors?.['pattern']">
-                            First Name Should Contains Only Letters.</div>
-                        </span>
-                      </div>
-                      <div class="field col-12 md:col-6">
-                        <label>Last Name:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="lastname" type="text" formControlName="lastName"
-                          placeholder="Enter Last Name"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['lastName'].touched && userFormControls['lastName'].errors }" />
-                        <span *ngIf="userFormControls['lastName'].touched && userFormControls['lastName'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['lastName'].errors?.['required']">
-                            Please Enter Last Name.</div>
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['lastName'].errors?.['pattern']">
-                            Last Name Should Contains Only Letters.</div>
-                        </span>
-                      </div>
-                      <div class="field col-12 md:col-6">
-                        <label>Email Id:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="emailid" type="text" formControlName="email" placeholder="Enter Email Id"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['email'].touched && userFormControls['email'].errors }" />
-                        <span *ngIf="userFormControls['email'].touched && userFormControls['email'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['email'].errors?.['required']">
-                            Please Enter Email Id.</div>
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['email'].errors?.['pattern']">
-                            Email Contains Only Letters, Integers And Periods(.)</div>
-                        </span>
-                      </div>
-                      <div class="field col-12 md:col-6">
-                        <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
-                        <input pInputText id="mobileNumber" placeholder="Enter Mobile No" formControlName="mobileNumber"
-                          numericOnly [maxlength]="10"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }">
-                        <span
-                          *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['mobileNumber'].errors?.['required']">
-                            Please Enter Mobile No.</div>
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['mobileNumber'].errors?.['pattern']">
-                            First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
-                        </span>
-                      </div>
-                      <div class="field col-12 md:col-6">
-                        <label>Role:<sup class="p-error">*</sup></label>&nbsp;
-                        <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId"
-                          placeholder="Enter Role" [autoDisplayFirst]="false"
-                          [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }">
-                        </p-dropdown>
-                        <span *ngIf="userFormControls['roleId'].touched && userFormControls['roleId'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['roleId'].errors?.['required']">
-                            Please Enter Role.</div>
-                        </span>
-                      </div>
-                      <div class="field col-12 md:col-6">
-                        <label htmlFor="ipaddress">IP Address:</label>
-                        <input pInputText id="ipaddress" type="text" formControlName="ipaddress"
-                          placeholder="Enter IP Address" />
-                      </div>
-                      <div class="field col-12 md:col-6">
-                        <label htmlFor="imeino">IMEI No:</label>
-                        <input pInputText id="imeino" type="text" formControlName="imeino"
-                          placeholder="Enter IMEI No" />
-                        <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="userFormControls['imeino'].errors?.['pattern']">
-                            IMEI No Should Contains Only Digits.</div>
-                        </span>
-                      </div>
-                    </div>
-                    <h6>User Rights</h6>
-                    <div class="grid md:flex">
-                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                        <label class="col-12">IP Restriction:<sup class="p-error">*</sup></label>
-                        <p-inputSwitch [trueValue]="true" [falseValue]="false" placeholder="IP Ristriction"
-                          formControlName="iprestriction" class="col-12"></p-inputSwitch>
-                      </div>
-                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                        <label class="col-12">Is AdminGate:<sup class="p-error">*</sup></label>
-                        <p-inputSwitch formControlName="isAdminGate" class="col-12"></p-inputSwitch>
-                      </div>
-                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                        <label class="col-12">Is Gross:<sup class="p-error">*</sup></label>
-                        <p-inputSwitch formControlName="isGross" class="col-12"></p-inputSwitch>
-                      </div>
-                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                        <label class="col-12">Is Tare:<sup class="p-error">*</sup></label>
-                        <p-inputSwitch formControlName="isTare" class="col-12"></p-inputSwitch>
-                      </div>
-                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                        <label class="col-12">Is DumpYard:<sup class="p-error">*</sup></label>
-                        <p-inputSwitch formControlName="isDumpYard" class="col-12"></p-inputSwitch>
-                      </div>
-                      <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                        <label class="col-12">Is Active?:<sup class="p-error">*</sup></label>
-                        <p-inputSwitch formControlName="isActive" class="col-12"></p-inputSwitch>
-                      </div>
-                    </div>
+                    </p-fieldset>
+
+
                   </div>
                 </div>
               </p-tabPanel>
