@@ -383,11 +383,10 @@
     <!-- table -->
     <!-- [lazy]="true" -->
     <p-table #dtPlotAssessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true"
-      [lazy]="true" (onLazyLoad)="loadPlotassessmentLazy($event)" [alwaysShowPaginator]="false"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [autoLayout]="true" scrollHeight="350px"
-      [virtualScroll]="true" [virtualRowHeight]="50" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
+    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+    [alwaysShowPaginator]="false" [autoLayout]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
       (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
