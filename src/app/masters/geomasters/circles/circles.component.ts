@@ -122,7 +122,44 @@ export class CirclesComponent implements OnInit {
     else return this.geoMasterService.UpdateCircle(this.fbcircle.value);
   }
 
+isUniqueCircleCode() {
+    const existingCircleCodes = this.circles.filter(Circle => 
+      Circle.circleCode === this.fbcircle.value.code && 
+      Circle.circleId !== this.fbcircle.value.circleId
+    )
+    return existingCircleCodes.length > 0; 
+  }
+  
+  isUniqueCircleName() {
+    const existingCircleNames = this.circles.filter(circle =>
+      circle.circleName === this.fbcircle.value.name && 
+      circle.circleId !== this.fbcircle.value.circleId
+    )
+    return existingCircleNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbcircle.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueCircleCode()) {
+          this.AlertMessage.displayErrorMessage(
+            `Circle Code :"${this.fbcircle.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueCircleName()) {
+          this.AlertMessage.displayErrorMessage(
+            `Circle Name :"${this.fbcircle.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbcircle.markAllAsTouched(); 
+    }
+  }
+  save() {
     if (this.fbcircle.valid) {
       this.saveCircle().subscribe((resp) => {
         if (resp) {

@@ -252,39 +252,44 @@ export class SeasonComponent implements OnInit {
     else return this.appMasterService.UpdateSeason(this.fbseasons.value);
   }
 
-  isUniqueCode() {
-    var oldWareHouse = this.seasons.filter(x => 
-      x.code == this.fbseasons.value.code && x.seasonId != this.fbseasons.value.seasonId
+  isUniqueSeasonCode() {
+    const existingPlantTypeCodes = this.seasons.filter(season => 
+      season.code === this.fbseasons.value.code && 
+      season.seasonId !== this.fbseasons.value.seasonId
     )
-    return oldWareHouse.length > 0; 
+    return existingPlantTypeCodes.length > 0; 
   }
   
-  isUniqueName() {
-    var oldWareHouse = this.seasons.filter(x => 
-      x.name == this.fbseasons.value.name && x.seasonId != this.fbseasons.value.seasonId
+  isUniqueSeasonName() {
+    const existingPlantTypeNames = this.seasons.filter(season =>
+      season.name === this.fbseasons.value.name && 
+      season.seasonId !== this.fbseasons.value.plantTypeId
     )
-    return oldWareHouse.length > 0; 
+    return existingPlantTypeNames.length > 0;
   }
-
-
+  
   onSubmit() {
     if (this.fbseasons.valid) {
       if (this.addFlag) {
-        if (this.isUniqueCode()) {
-          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMSE003"]);
-        } else if (this.isUniqueName()) { 
-          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMSE004"]);
+        if (this.isUniqueSeasonCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Season Code :"${this.fbseasons.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueSeasonName()) {
+          this.alertMessage.displayErrorMessage(
+            `Season Name :"${this.fbseasons.value.name}" Already Exists.` 
+          );
         } else {
-          this.save(); 
+          this.save();
         }
       } else {
         this.save(); 
       }
     } else {
-      this.fbseasons.markAllAsTouched();
+      this.fbseasons.markAllAsTouched(); 
     }
   }
-
+  
   save() {
     if (this.fbseasons.valid && !this.invalidSeasonCode) {
       this.fbseasons.value.plantFrom = FORMAT_DATE(this.fbseasons.value.plantFrom);

@@ -101,7 +101,44 @@ export class PlantsubtypeComponent implements OnInit {
       return this.appMasterService.CreatePlantSubType(this.fbplantsubtype.value)
     else return this.appMasterService.UpdatePlantSubType(this.fbplantsubtype.value)
   }
+  isUniquePlantsubTypeCode() {
+    const existingPlantsubtypeCode = this.plantSubTypes.filter(plantType => 
+      plantType.code === this.fbplantsubtype.value.code && 
+      plantType.plantTypeId !== this.fbplantsubtype.value.plantTypeId
+    )
+    return existingPlantsubtypeCode.length > 0; 
+  }
+  
+  isUniquePlantsubTypeNames() {
+    const existingPlantsubtypeNames = this.plantSubTypes.filter(plantType =>
+      plantType.name === this.fbplantsubtype.value.name && 
+      plantType.plantTypeId !== this.fbplantsubtype.value.plantTypeId
+    )
+    return existingPlantsubtypeNames.length > 0;
+  }
   onSubmit() {
+    if (this.fbplantsubtype.valid) {
+      if (this.addFlag) {
+        if (this.isUniquePlantsubTypeCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Plant Sub Type Code :"${this.fbplantsubtype.value.code}" Already Exists.`
+          );
+        } else if (this.isUniquePlantsubTypeNames()) {
+          this.alertMessage.displayErrorMessage(
+            `Plant SubType Name :"${this.fbplantsubtype.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbplantsubtype.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fbplantsubtype.valid) {
       console.log(this.fbplantsubtype.value)
 

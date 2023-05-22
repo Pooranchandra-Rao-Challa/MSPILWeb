@@ -263,6 +263,7 @@ export class HglComponent implements OnInit {
     this.hgl.tds = hgl.tds;
     this.hgl.guarantor1 = hgl.guarantor1;
     this.hgl.guarantor2 = hgl.guarantor2;
+    
     this.hgl.guarantor3 = hgl.guarantor3;
     this.hgl.glcode = hgl.glCode;
     this.hgl.subGlcode = hgl.subGLCode;
@@ -279,7 +280,6 @@ export class HglComponent implements OnInit {
     this.showDialog = true;
     this.showSubHgl = true;
   }
-
   addHgl() {
     this.addSubHgl();
     this.submitLabel = 'Add Hgl';
@@ -287,54 +287,50 @@ export class HglComponent implements OnInit {
     this.hglform();
     this.showDialog = true;
   }
-
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
   saveHgl(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.appMasterService.CreateHgl(this.fbHgl.value);
     else return this.appMasterService.UpdateHgl(this.fbHgl.value);
   }
-
-  isUniqueCode() {
-    var oldWareHouse = this.hgls.filter(x => 
-      x.code == this.fbHgl.value.code && x.hglId != this.fbHgl.value.seasonId
+  isUniqueHglCode() {
+    var existingHglCodes = this.hgls.filter(hgl => 
+      hgl.code == this.fbHgl.value.code && hgl.hglId != this.fbHgl.value.seasonId
     )
-    return oldWareHouse.length > 0; 
+    return existingHglCodes.length > 0; 
   }
-  
-  isUniqueName() {
-    var oldWareHouse = this.hgls.filter(x => 
-      x.name == this.fbHgl.value.name && x.hglId != this.fbHgl.value.seasonId
+  isUniqueHglName() {
+    var existingHglCodes = this.hgls.filter(hgl => 
+      hgl.name == this.fbHgl.value.name && hgl.hglId != this.fbHgl.value.seasonId
     )
-    return oldWareHouse.length > 0; 
+    return existingHglCodes.length > 0; 
   }
-
-
   onSubmit() {
     if (this.fbHgl.valid) {
       if (this.addFlag) {
-        if (this.isUniqueCode()) {
-          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMHG003"]);
-        } else if (this.isUniqueName()) { 
-          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMHG004"]);
+        if (this.isUniqueHglCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Hgl Code :"${this.fbHgl.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueHglName()) {
+          this.alertMessage.displayErrorMessage(
+            `Hgl Name :"${this.fbHgl.value.name}" Already Exists.` 
+          );
         } else {
-          this.save(); 
+          this.save();
         }
       } else {
         this.save(); 
       }
     } else {
-      this.fbHgl.markAllAsTouched();
+      this.fbHgl.markAllAsTouched(); 
     }
-  }
- 
+  } 
   save() {
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';
     if (this.fbHgl.valid) {
@@ -350,7 +346,6 @@ export class HglComponent implements OnInit {
       this.fbHgl.markAllAsTouched();
     }
   }
-
   onClose() {
     this.hglform();
     this.faSubHgl().clear();

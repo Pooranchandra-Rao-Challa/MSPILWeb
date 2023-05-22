@@ -127,7 +127,44 @@ export class VarietyComponent implements OnInit {
     else return this.appMasterService.UpdateVariety(this.fbVariety.value)
   }
 
+  isUniqueVarietyCode() {
+    const existingVarietyCodes = this.varieties.filter(varietiy => 
+      varietiy.code === this.fbVariety.value.code && 
+      varietiy.varietyId !== this.fbVariety.value.varietyId
+    )
+    return existingVarietyCodes.length > 0; 
+  }
+  
+  isUniqueVarietyName() {
+    const existingVarietyNames = this.varieties.filter(varietiy =>
+      varietiy.name === this.fbVariety.value.name && 
+      varietiy.varietyId !== this.fbVariety.value.varietyId
+    )
+    return existingVarietyNames.length > 0;
+  }
   onSubmit() {
+    if (this.fbVariety.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueVarietyCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Variety Code :"${this.fbVariety.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueVarietyName()) {
+          this.alertMessage.displayErrorMessage(
+            `Variety Name :"${this.fbVariety.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbVariety.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     console.log(this.fbVariety.value);
 
     if (this.fbVariety.valid) {

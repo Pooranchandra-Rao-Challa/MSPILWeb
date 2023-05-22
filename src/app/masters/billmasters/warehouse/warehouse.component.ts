@@ -60,17 +60,15 @@ export class WareHouseComponent implements OnInit {
   loadwarehouses() {
     this.billmasterService.GetWareHouse().subscribe((resp) => {
       this.warehouses = resp as unknown as WareHouseViewDto[];
-      console.log(this.warehouses);
+      console.log('warehouses', this.warehouses);
     });
   }
-
   addwarehouse() {
     this.fbwarehouse.controls['isActive'].setValue(true);
     this.submitLabel = 'Add Ware House';
     this.addFlag = true;
     this.showDialog = true;
   }
-
   warehouseform() {
     this.fbwarehouse = this.formbuilder.group({
       id: [null],
@@ -85,16 +83,13 @@ export class WareHouseComponent implements OnInit {
   get FormControls() {
     return this.fbwarehouse.controls;
   }
-
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
   editWarehouse(warehouse: WareHouseViewDto) {
     this.warehouse.id = warehouse.id;
     this.warehouse.code = warehouse.code;
@@ -112,7 +107,6 @@ export class WareHouseComponent implements OnInit {
     if (this.addFlag) return this.billmasterService.CreateWareHouse(this.fbwarehouse.value);
     else return this.billmasterService.UpdateWareHouse(this.fbwarehouse.value);
   }
-
   onSubmit() {
     if (this.fbwarehouse.valid) {
       if (this.addFlag) {
@@ -128,7 +122,6 @@ export class WareHouseComponent implements OnInit {
       this.fbwarehouse.markAllAsTouched();
     }
   }
-
   save() {
     this.saveWarehouse().subscribe((resp) => {
       if (resp) {

@@ -271,15 +271,48 @@ export class TptComponent implements OnInit {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
-
-
   saveTpt(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.appMasterService.CreateTpt(this.fbTpt.value)
     else return this.appMasterService.UpdateTpt(this.fbTpt.value)
   }
 
+  isUniqueTptCode() {
+    var existingTptCode = this.tpts.filter(tpt =>
+      tpt.code == this.fbTpt.value.code && tpt.tptId != this.fbTpt.value.farmerId
+    )
+    return existingTptCode.length > 0;
+  }
+
+  isUniqueTptName() {
+    var existingTptNames = this.tpts.filter(tpt =>
+      tpt.name == this.fbTpt.value.name && tpt.tptId != this.fbTpt.value.farmerId
+    )
+    return existingTptNames.length > 0;
+  }
+
   onSubmit() {
+    if (this.fbTpt.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueTptCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Tpt Code :"${this.fbTpt.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueTptName()) {
+          this.alertMessage.displayErrorMessage(
+            `Tpt Name :"${this.fbTpt.value.name}" Already Exists.`
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save();
+      }
+    } else {
+      this.fbTpt.markAllAsTouched();
+    }
+  }
+
+  save() {
     this.fbTpt.value.pinCode = this.fbTpt.value.pinCode + "";
     if (this.fbTpt.valid) {
       this.saveTpt().subscribe(resp => {
