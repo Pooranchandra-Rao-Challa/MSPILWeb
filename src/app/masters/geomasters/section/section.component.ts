@@ -89,6 +89,7 @@ export class SectionComponent implements OnInit {
       divisionId: new FormControl(null, [Validators.required,]),
       inchargePhoneNo: new FormControl(null, [Validators.pattern(RG_PHONE_NO),]),
       inchargeName: new FormControl('', [Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      // targetArea:[null],
       isActive: [null, Validators.required],
     });
   }
