@@ -190,6 +190,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   // TPT Message
   'SMAMT001': 'TPT Added Successfully',
   'SMAMT002': 'TPT Updated Successfully',
+  'SMAMT003' :'TPT with same code already exists.',
+  'SMAMT004' :' TPT with same name already exists.',
 
   // Variety Message
   'SMAMVA001': 'Variety Added Successfully',
@@ -216,6 +218,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   // planttype
   'SMAMPT001': 'Plant Type Added Successfully',
   'SMAMPT002': 'Plant Type Updated Successfully',
+  'SMAMPT003' :'Plant Type with same code already exists.',
+  'SMAMPT004' :' Plant Type with same name already exists.',
 
   // plantsubtype
   'SMAMPST001': 'Plant Sub Type Added Successfully',

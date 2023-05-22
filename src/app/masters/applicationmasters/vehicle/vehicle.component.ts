@@ -114,7 +114,45 @@ export class VehicleComponent implements OnInit {
     else return this.appMasterService.UpdateVehicleType(this.fbVehicleType.value)
   }
 
+  isUniqueVehicleTypeCode() {
+    const existingVehicleTypeCodes = this.vehicleTypes.filter(vehicleType => 
+      vehicleType.code === this.fbVehicleType.value.code && 
+      vehicleType.vehicleTypeId !== this.fbVehicleType.value.vehicleTypeId
+    )
+    return existingVehicleTypeCodes.length > 0; 
+  }
+  
+  isUniqueVehicleTypeName() {
+    const existingVehicleTypeNames = this.vehicleTypes.filter(vehicleType =>
+      vehicleType.name === this.fbVehicleType.value.name && 
+      vehicleType.vehicleTypeId !== this.fbVehicleType.value.vehicleTypeId
+    )
+    return existingVehicleTypeNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbVehicleType.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueVehicleTypeCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Vehicle Type Code :"${this.fbVehicleType.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueVehicleTypeName()) {
+          this.alertMessage.displayErrorMessage(
+            `Vehicle Type Name :"${this.fbVehicleType.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbVehicleType.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     console.log(this.fbVehicleType.value);
 
     if (this.fbVehicleType.valid) {

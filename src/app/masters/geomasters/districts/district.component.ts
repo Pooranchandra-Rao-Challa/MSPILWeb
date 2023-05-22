@@ -103,7 +103,45 @@ export class DistrictComponent implements OnInit {
     else return this.geoMasterService.UpdateDistrict(this.fbdistricts.value)
   }
 
+  isUniqueDistrictCode() {
+    const existingDistrictCodes = this.districts.filter(plantType => 
+      plantType.districtCode === this.fbdistricts.value.code && 
+      plantType.districtId !== this.fbdistricts.value.districtId
+    )
+    return existingDistrictCodes.length > 0; 
+  }
+  
+  isUniqueDistrictName() {
+    const existingDistrictNames = this.districts.filter(plantType =>
+      plantType.districtName === this.fbdistricts.value.name && 
+      plantType.districtId !== this.fbdistricts.value.districtId
+    )
+    return existingDistrictNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbdistricts.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueDistrictCode()) {
+          this.alertMessage.displayErrorMessage(
+            `District Code :"${this.fbdistricts.value.code}" already exists.`
+          );
+        } else if (this.isUniqueDistrictName()) {
+          this.alertMessage.displayErrorMessage(
+            `District Name :"${this.fbdistricts.value.name}" already exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbdistricts.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fbdistricts.valid) {
       this.saveDistrict().subscribe(resp => {
         if (resp) {

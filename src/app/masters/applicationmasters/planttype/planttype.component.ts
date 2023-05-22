@@ -80,8 +80,45 @@ export class PlanttypeComponent implements OnInit {
       return this.appMasterService.CreatePlantType(this.fbplantType.getRawValue());
     else return this.appMasterService.UpdatePlantType(this.fbplantType.getRawValue())
   }
-
+  isUniquePlantTypeCode() {
+    const existingPlantTypeCodes = this.plantTypes.filter(plantType => 
+      plantType.code === this.fbplantType.value.code && 
+      plantType.plantTypeId !== this.fbplantType.value.plantTypeId
+    )
+    return existingPlantTypeCodes.length > 0; 
+  }
+  
+  isUniquePlantTypeName() {
+    const existingPlantTypeNames = this.plantTypes.filter(plantType =>
+      plantType.name === this.fbplantType.value.name && 
+      plantType.plantTypeId !== this.fbplantType.value.plantTypeId
+    )
+    return existingPlantTypeNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbplantType.valid) {
+      if (this.addFlag) {
+        if (this.isUniquePlantTypeCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Plant Type Code :"${this.fbplantType.value.code}" Already Exists.`
+          );
+        } else if (this.isUniquePlantTypeName()) {
+          this.alertMessage.displayErrorMessage(
+            `Plant Type Name :"${this.fbplantType.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbplantType.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fbplantType.valid) {
       console.log(this.fbplantType.value)
       this.savePlant().subscribe(resp => {
