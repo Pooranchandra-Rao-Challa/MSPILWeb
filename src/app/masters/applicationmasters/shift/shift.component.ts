@@ -86,7 +86,29 @@ export class ShiftsComponent implements OnInit {
     else return this.appmasterservice.UpdateShift(this.fbshifts.value)
   }
 
+  isUniqueShiftCode() {
+    const existingShiftCodes = this.shifts.filter(shift =>
+      shift.code === this.fbshifts.value.code &&
+      shift.shiftId !== this.fbshifts.value.shiftId
+    )
+    return existingShiftCodes.length > 0;
+  }
   onSubmit() {
+    if (this.fbshifts.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueShiftCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Shift Code :"${this.fbshifts.value.code}" Already Exists.`
+          );
+        } 
+      } else {
+        this.save();
+      }
+    } else {
+      this.fbshifts.markAllAsTouched();
+    }
+  }
+  save() {
     if (this.fbshifts.valid) {
       this.saveShift().subscribe(resp => {
         if (resp) {

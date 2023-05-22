@@ -21,7 +21,7 @@ import { CURRENT_SEASON } from "src/environments/environment";
 
 export class EstimatedTonComponent implements OnInit {
   globalFilterFields: string[] =['excessTonage','estimatedTon','farmerCode','farmerName','plotNumber','villageName','plantTypeName','plantingDate',
-'netArea','PermitTon','SuppliedTon','BalanceTon','NoofWeighments']
+'netArea','PermitTon','SuppliedTon','BalanceTon','NoofWeighments','varietyName']
   seasons: SeasonViewDto[] = [];
   currentSeason: SeasonDto = {};
   loading: boolean = true;
@@ -185,6 +185,10 @@ export class EstimatedTonComponent implements OnInit {
       this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1)
     }
+     // Reset the circle selection
+     this.fbEstimatedTon.get('circleId')?.setValue([]);
+     this.fbEstimatedTon.get('sectionId')?.setValue([]);
+     this.fbEstimatedTon.get('villageId')?.setValue([]);
   }
   SetAllCircleChilds(values: number[]) {
     if (values.length == 0) {
@@ -196,6 +200,8 @@ export class EstimatedTonComponent implements OnInit {
       this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
     }
+    this.fbEstimatedTon.get('sectionId')?.setValue([]);
+    this.fbEstimatedTon.get('villageId')?.setValue([]);
   }
   SetAllSectionChilds(values: number[]) {
     if (values.length == 0) {
@@ -205,6 +211,7 @@ export class EstimatedTonComponent implements OnInit {
       // this.sectionIds =  values.join(',');
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
+    this.fbEstimatedTon.get('villageId')?.setValue([]);
   }
   getExcessTonDetails() {  
       this.initDivisions(this.currentSeason.seasonId!);
@@ -242,10 +249,14 @@ export class EstimatedTonComponent implements OnInit {
     }
     else {
       this.fbexcesston.markAllAsTouched();
+
     }
   }
   toggleTab() {
     this.showForm = !this.showForm;
+    const seasonId = this.fbEstimatedTon.value.seasonId;
+    this.fbEstimatedTon.reset()
+    this.fbEstimatedTon.patchValue({ seasonId });  
   }
   getEstimatedTon() {
     this.initExcessTon() 

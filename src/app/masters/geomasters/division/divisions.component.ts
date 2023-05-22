@@ -114,8 +114,43 @@ export class DivisionsComponent implements OnInit {
     if (this.addFlag) return this.geoMasterService.CreateDivision(this.fbdivisions.value)
     else return this.geoMasterService.UpdateDivision(this.fbdivisions.value)
   }
-
+  isUniqueDivisionCode() {
+    const existingDistrictCodes = this.divisions.filter(division => 
+      division.divisionCode === this.fbdivisions.value.code && 
+      division.divisionId !== this.fbdivisions.value.districtId
+    )
+    return existingDistrictCodes.length > 0; 
+  }
+  isUniqueDivisionName() {
+    const existingDistrictNames = this.divisions.filter(division =>
+      division.divisionName === this.fbdivisions.value.name && 
+      division.divisionId !== this.fbdivisions.value.districtId
+    )
+    return existingDistrictNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbdivisions.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueDivisionCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Division Code :"${this.fbdivisions.value.code}" already exists.`
+          );
+        } else if (this.isUniqueDivisionName()) {
+          this.alertMessage.displayErrorMessage(
+            `Division Name :"${this.fbdivisions.value.name}" already exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbdivisions.markAllAsTouched(); 
+    }
+  }
+  save() {
     if (this.fbdivisions.valid) {
       this.saveDivision().subscribe(resp => {
         if (resp) {
@@ -130,16 +165,13 @@ export class DivisionsComponent implements OnInit {
       this.fbdivisions.markAllAsTouched();
     }
   }
-
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';
   }
-
   ngOnDestroy() {
     this.states = [];
     this.divisions = [];

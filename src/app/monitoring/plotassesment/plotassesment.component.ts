@@ -30,6 +30,8 @@ import { LOGIN_URI } from '../../_services/api.uri.service';
 })
 
 export class PlotassesmentComponent implements OnInit {
+  globalFilterFields: string[] = ["seasonCode", "farmerCode", "farmerName", "farmerVillageName", "plotNumber", "plantingDate", "cropTypeName",
+  "plantTypeName", "varietyName", "surveyNo","fieldName","plotTypeName","assessedArea","measuredDate","offerNo","offerNo","weedStatusName","interCropName"];
   plotinfo: any;
   showDialog: boolean = false;
   submitLabel!: string;
@@ -195,6 +197,8 @@ export class PlotassesmentComponent implements OnInit {
 
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+      console.log('plotInfo',  this.plotInfo);
+      
     });
   }
 

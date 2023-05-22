@@ -111,7 +111,44 @@ export class MandalComponent implements OnInit {
     else return this.geoMasterService.UpdateMandal(this.fbmandals.value)
   }
 
+  isUniqueMandalCode() {
+    const existingDistrictCodes = this.mandals.filter(division => 
+      division.mandalCode === this.fbmandals.value.code && 
+      division.mandalId !== this.fbmandals.value.mandalId
+    )
+    return existingDistrictCodes.length > 0; 
+  }
+  isUniqueMandalName() {
+    const existingDistrictNames = this.mandals.filter(division =>
+      division.mandalName === this.fbmandals.value.name && 
+      division.mandalId !== this.fbmandals.value.mandalId
+    )
+    return existingDistrictNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbmandals.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueMandalCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Mandal Code :"${this.fbmandals.value.code}" already exists.`
+          );
+        } else if (this.isUniqueMandalName()) {
+          this.alertMessage.displayErrorMessage(
+            `Mandal Name :"${this.fbmandals.value.name}" already exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbmandals.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fbmandals.valid) {
       this.saveMandal().subscribe(resp => {
         if (resp) {

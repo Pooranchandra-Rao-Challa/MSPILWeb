@@ -52,25 +52,25 @@ export class FarmerComponent implements OnInit {
   totalRecords: number[] = [];
   slicedDatabase: any;
   defaultImageUrl: string = 'https://d30y9cdsu7xlg0.cloudfront.net/png/138926-200.png';
-  imagePreview:any;
+  imagePreview: any;
   mediumDate: string = MEDIUM_DATE;
 
   plotHeader: ITableHeader[] = [
-    { field: 'code', header:'code', label: 'Code' },
-    { field: 'farmerName', header:'farmerName', label: 'Name' },
-    { field: 'gender', header:'gender', label: 'Gender' },
-    { field: 'fatherName', header:'fatherName', label: 'Father Name' },
-    { field: 'address', header:'address', label: 'Address' },
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'farmerName', header: 'farmerName', label: 'Name' },
+    { field: 'gender', header: 'gender', label: 'Gender' },
+    { field: 'fatherName', header: 'fatherName', label: 'Father Name' },
+    { field: 'address', header: 'address', label: 'Address' },
     { field: 'circleName', header: 'circleName', label: 'Circle Name' },
-    { field: 'divisionName',header:'divisionName', label: 'Division Name' },
-    { field: 'sectionName', header:'sectionName', label: 'Section Name' },
-    { field: 'districtName', header:'districtName', label: 'District Name' },
-    { field: 'mandalName', header:'mandalName', label: 'Mandal Name' },
+    { field: 'divisionName', header: 'divisionName', label: 'Division Name' },
+    { field: 'sectionName', header: 'sectionName', label: 'Section Name' },
+    { field: 'districtName', header: 'districtName', label: 'District Name' },
+    { field: 'mandalName', header: 'mandalName', label: 'Mandal Name' },
     { field: 'villageName', header: 'villageName', label: 'Village Name' },
     { field: 'bankName', header: 'bankName  ', label: 'Bank Name' },
     { field: 'branchName', header: 'branchName', label: 'Branch Name' },
     { field: 'ifsc', header: 'ifsc  ', label: 'IFSC' },
-    { field: 'accountNo', header:'accountNo', label: 'Account No' },
+    { field: 'accountNo', header: 'accountNo', label: 'Account No' },
     { field: 'totalArea', header: 'totalArea', label: 'Total Area' },
     { field: 'cultivatedArea', header: 'cultivatedArea  ', label: 'Cultivated Area' },
     { field: 'isRegistered', header: 'isRegistered', label: 'Is Registered' },
@@ -80,7 +80,7 @@ export class FarmerComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy  ', label: 'Updated By' },
   ];
-  
+
 
   constructor(private formbuilder: FormBuilder,
     private appmasterservice: AppMasterService,
@@ -122,7 +122,7 @@ export class FarmerComponent implements OnInit {
       branchId: [null, (Validators.required)],
       accountNo: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
       totalArea: [null, (Validators.required)],
-      cultivatedArea:[null, (Validators.required)],
+      cultivatedArea: [null, (Validators.required)],
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -131,7 +131,7 @@ export class FarmerComponent implements OnInit {
       isActive: [null],
     });
     this.imagePreview = this.defaultImageUrl;
- 
+
   }
 
   onImageClick() {
@@ -139,24 +139,24 @@ export class FarmerComponent implements OnInit {
     inputElement.type = 'file';
     inputElement.onchange = (e) => this.onImageSelect(e);
     inputElement.click();
-    }
-    
-    onImageSelect(event:any) {
+  }
+
+  onImageSelect(event: any) {
     if (event.target.files.length > 0) {
-    const file = event.target.files[0];
-    this.fbfarmer.patchValue({ 
-    imageUrl: file
-    });  
-    
-    // Show preview
-    const reader = new FileReader();
-    reader.onload = () => {
-    this.imagePreview = reader.result; 
-    };
-    reader.readAsDataURL(file);
+      const file = event.target.files[0];
+      this.fbfarmer.patchValue({
+        imageUrl: file
+      });
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
     }
-    }
-  
+  }
+
   initcasteDetails() {
     this.lookupService.Castes().subscribe((resp) => {
       this.casteDetails = resp as unknown as LookupDetailDto[];
@@ -244,46 +244,52 @@ export class FarmerComponent implements OnInit {
     this.showDialog = true;
   }
 
- 
+
   saveFarmer(): Observable<HttpEvent<any>> {
     if (this.addFlag) return this.appmasterservice.CreateFarmer(this.fbfarmer.value)
     else return this.appmasterservice.UpdateFarmer(this.fbfarmer.value)
   }
-  isUniqueCode() {
-    var oldWareHouse = this.farmers.filter(x => 
-      x.code == this.fbfarmer.value.code && x.farmerId != this.fbfarmer.value.farmerId
+
+  isUniqueFarmerCode() {
+    var existingFarmerCode = this.farmers.filter(farmer =>
+      farmer.code == this.fbfarmer.value.code && farmer.farmerId != this.fbfarmer.value.farmerId
     )
-    return oldWareHouse.length > 0; 
+    return existingFarmerCode.length > 0;
   }
-  
-  isUniqueName() {
-    var oldWareHouse = this.farmers.filter(x => 
-      x.farmerName == this.fbfarmer.value.name && x.farmerId != this.fbfarmer.value.farmerId
+
+  isUniqueFarmerName() {
+    var existingFarmerNames = this.farmers.filter(farmer =>
+      farmer.farmerName == this.fbfarmer.value.name && farmer.farmerId != this.fbfarmer.value.farmerId
     )
-    return oldWareHouse.length > 0; 
+    return existingFarmerNames.length > 0;
   }
 
 
   onSubmit() {
     if (this.fbfarmer.valid) {
       if (this.addFlag) {
-        if (this.isUniqueCode()) {
-          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMFA003"]);
-        } else if (this.isUniqueName()) { 
-          this.alertMessage.displayErrorMessage(ALERT_CODES["SMAMFA004"]);
+        if (this.isUniqueFarmerCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Farmer Code :"${this.fbfarmer.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueFarmerName()) {
+          this.alertMessage.displayErrorMessage(
+            `Farmer Name :"${this.fbfarmer.value.name}" Already Exists.` 
+          );
         } else {
-          this.save(); 
+          this.save();
         }
       } else {
         this.save(); 
       }
     } else {
-      this.fbfarmer.markAllAsTouched();
+      this.fbfarmer.markAllAsTouched(); 
     }
   }
+  
   save() {
     if (this.fbfarmer.valid) {
-      this.fbfarmer.setValue({ ...this.fbfarmer.value, casteId: parseInt(this.fbfarmer.value.casteId, 10)})
+      this.fbfarmer.setValue({ ...this.fbfarmer.value, casteId: parseInt(this.fbfarmer.value.casteId, 10) })
       this.saveFarmer().subscribe(resp => {
         if (resp) {
           this.initFarmers();
@@ -302,9 +308,9 @@ export class FarmerComponent implements OnInit {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
-  onBasicUploadAuto(event:any) {
+  onBasicUploadAuto(event: any) {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Auto Mode' });
-}
+  }
 
   clear(table: Table) {
     table.clear();
