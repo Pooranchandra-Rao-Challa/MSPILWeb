@@ -1,0 +1,238 @@
+<div class="col-12">
+    <div class="card">
+        <!-- toolbar -->
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <h4>Non Registered</h4>
+            </ng-template>
+            <ng-template pTemplate="right">
+
+            </ng-template>
+        </p-toolbar>
+
+        <!-- From Toolbar -->
+        <p-toolbar styleClass="p-mb-2" *ngIf="!showContent">
+            <ng-template pTemplate="left">
+                <div class="flex justify-content-between flex-column sm:flex-row grid">
+                    <from [formGroup]="fbNonRegistered">
+                        <div class="col-12">
+                            <div class="flex justify-content-between flex-column sm:flex-row grid">
+                                <div class="col-3 p-2">
+                                    <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code"
+                                        [options]="seasons" formControlName="seasonId"
+                                        [(ngModel)]="currentSeason.seasonId"
+                                        (onChange)="initAllottedPlots($event.value)" optionValue="seasonId"
+                                        [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <p-calendar placeholder="Permit Date" [readonlyInput]="true" [showIcon]="true"
+                                        formControlName="permitDate" [style]="{'width':'100%'}">
+
+                                    </p-calendar>
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="noOfPermits" type="number" placeholder="No Of Permits"
+                                        formControlName="noOfPermits" [style]="{'width':'100%'}">
+                                </div>
+                                <div class="col-3 p-2">
+                                    <label>Is Burnt:</label><br>
+                                    <p-inputSwitch formControlName="isBurnt"></p-inputSwitch>
+                                </div>
+                                <div class="col-3 p-2">
+                                    <input pInputText id="ryotno" type="text" placeholder="Ryot Name"
+                                        [style]="{'width':'100%'}" formControlName="ryotNo">
+                                    <!-- <p-dropdown placeholder="Select To Ryot" optionLabel="code" optionValue="ryotNo"
+                                        [style]="{'width':'100%'}" formControlName="ryotNo" appendTo="body">
+                                    </p-dropdown> -->
+                                </div>
+
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="farmerDivision" type="text" placeholder="Farmer Division"
+                                        [style]="{'width':'100%'}" formControlName="farmerDivision">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="farmerCircle" type="text" placeholder="Farmer Circle"
+                                        [style]="{'width':'100%'}" formControlName="farmerCircle">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="farmerSection" placeholder="Farmer Section" type="text"
+                                        [style]="{'width':'100%'}" formControlName="farmerSection">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="farmerVillage" placeholder="Farmer Village" type="text"
+                                        [style]="{'width':'100%'}" formControlName="farmerVillage">
+                                </div>
+
+                                <!-- <div class="col-3 p-2">
+                                    <p-dropdown placeholder="Plot" optionLabel="plot" optionValue="plot"
+                                        formControlName="plot" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div> -->
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotDivision" type="text" placeholder="Plot Division"
+                                        [style]="{'width':'100%'}" formControlName="plotDivision">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotCircle" type="text" placeholder="Plot Circle"
+                                        [style]="{'width':'100%'}" formControlName="plotCircle">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotSection" type="text" placeholder="Plot Section"
+                                        [style]="{'width':'100%'}" formControlName="plotSection">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                    <input pInputText id="plotVillage" placeholder="Plot Village" type="text"
+                                        [style]="{'width':'100%'}" formControlName="plotVillage">
+                                </div>
+                                <!-- <div class="col-3 p-2">
+                                    <p-dropdown placeholder="HGL" optionLabel="HGL" optionValue="HGL"
+                                        formControlName="HGL" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div> -->
+                                <!-- <div class="col-3 p-2">
+                                    <p-dropdown placeholder="sub HGL" optionLabel="subHGL" optionValue="subHGL"
+                                        formControlName="subHGL" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div> -->
+
+                                <div class="col-3 p-2">
+
+                                    <input pInputText placeholder="Labour Price" id="labourPrice" type="number"
+                                        [style]="{'width':'100%'}" formControlName="labourPrice">
+                                </div>
+                                <!-- <div class="col-3 p-2">
+                                    <p-dropdown placeholder="TPT" optionLabel="TPT" optionValue="TPT"
+                                        formControlName="TPT" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div> -->
+                                <!-- <div class="col-3 p-2">
+                                    <p-dropdown placeholder="Vehicle No" optionLabel="vehicleNo" optionValue="vehicleNo"
+                                        formControlName="vehicleNo" [style]="{'width':'100%'}">
+                                    </p-dropdown>
+                                </div> -->
+                                <div class="col-3 p-2">
+
+                                    <input placeholder="Vehicle Type" pInputText id="vehicleType" type="text"
+                                        [style]="{'width':'100%'}" formControlName="vehicleType">
+                                </div>
+                                <div class="col-3 p-2">
+
+                                </div>
+                                <div class="col-9 p-2"></div>
+                                <div class="col-3 p-2">
+                                    <button pButton pRipple label="Add Non Registered" icon="pi pi-plus" (click)="submitData()" target = "_blank"
+                                        class="p-button-success p-mr-2 w-100"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </from>
+                </div>
+            </ng-template>
+        </p-toolbar>
+
+
+        <p-toolbar styleClass="p-mb-2"  *ngIf="showContent">
+           
+            <div class="col-8 p-2"></div>
+            <div class="col-2 p-2">
+                <button pButton pRipple label="Download PDF" icon="pi pi-file-pdf" (click)="openPDF()" target = "_blank"
+                    class="p-button-danger p-mr-2 w-100"></button>
+            </div>
+            <div class="col-2 p-2">
+                <button pButton pRipple label="Print This" icon="pi pi-print" (click)="onPrint('content')" target = "_blank"
+                    class="p-button-success p-mr-2 w-100"></button>
+            </div>
+
+            <div class="layout-content w-100" id="content">
+                <p></p>
+                  <div class="card py-8 px-6 md:px-8 overflow-auto">
+                    <div class="col-12 align-items-start md:flex-row md:align-items-center md:justify-content-between border-bottom-1 surface-border pb-5 min-w-max">
+                      <div class="grid">
+                        <div class="col-6">
+                            <img src="assets/layout/images/logo-dark.png"   width="65%"   alt="logo">
+                            <!-- <div class="my-3 text-4xl font-bold text-900">YOUR COMPANY</div>
+                            <span class="mb-2">9137 3rd Lane California City</span>
+                            <span>CA 93504, U.S.A.</span> -->
+                          </div>
+                          <div class="col-6 md:mt-0">
+                            <div class="text-2xl font-semibold text-right md:text-right mb-3">Non Registered</div>
+                          
+                            <div class="text-right md:text-right mb-2"><span><b>Date: </b>19/05/2023</span></div>
+                              <!-- <div class="flex justify-content-between align-items-center mb-2">
+                                <span class="font-semibold mr-6">INVOICE #</span>
+                                <span>8523</span>
+                              </div>
+                              <div class="flex justify-content-between align-items-center">
+                                <span class="font-semibold mr-6">SeID</span>
+                                <span>C1613</span>
+                              </div> -->
+                           </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 mb-8 flex flex-column">
+                      <div class="mb-3 text-2xl font-medium">SEASON ID: {{ this.fbNonRegistered.value.seasonId }}</div>
+                      <span class="mb-2"> <b>Permit Date:</b>  {{ this.fbNonRegistered.value.permitDate }}  </span>
+                      <span><b>No of Permits:</b>  {{ this.fbNonRegistered.value.noOfPermits }}</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                      <table class="w-full" style="border:1px; table-layout: auto;">
+                        <tbody>
+                          <tr>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Ryot Name</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap">{{ this.fbNonRegistered.value.ryotNo }}</td>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Farmer Division</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap"> {{ this.fbNonRegistered.value.farmerDivision }}</td>
+                          </tr>
+                          <tr>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Farmer Circle</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap">{{ this.fbNonRegistered.value.farmerCircle }}</td>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Farmer Section</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap"> {{ this.fbNonRegistered.value.farmerSection }}</td>
+                          </tr>
+                          <tr>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Farmer Village</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap">{{ this.fbNonRegistered.value.farmerVillage }}</td>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Farmer Division</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap"> {{ this.fbNonRegistered.value.farmerDivision }}</td>
+                          </tr>
+                          <tr>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Plot Division</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap">{{ this.fbNonRegistered.value.plotDivision }}</td>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Plot Circle</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap"> {{ this.fbNonRegistered.value.plotCircle }}</td>
+                          </tr>
+                          <tr>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Plot Section</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap">{{ this.fbNonRegistered.value.plotSection }}</td>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Plot Village</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap"> {{ this.fbNonRegistered.value.plotVillage }}</td>
+                          </tr>
+                          <tr>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Labour Price</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap">{{ this.fbNonRegistered.value.labourPrice }}</td>
+                            <th class="text-left font-bold py-3 surface-border white-space-nowrap">Vehicle Type</th>
+                            <td class="text-left  py-3  surface-border white-space-nowrap"> {{ this.fbNonRegistered.value.vehicleType }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                   
+                  </div>
+                
+            </div>
+            
+        </p-toolbar>
+        
+
+    </div>
+</div>
