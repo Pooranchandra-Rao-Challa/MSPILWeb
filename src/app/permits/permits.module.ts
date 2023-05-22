@@ -4,6 +4,7 @@ import { SharedModule } from 'src/app/_shared/shared.module';
 import { CancelPermitComponent } from './cancelpermit/cancelpermit.component';
 import { CuttingOrderComponent } from './cuttingorder/cuttingorder.component';
 import { EstimatedTonComponent } from './estimatedton/estimatedton.component';
+import { FormComponent } from './formcomponent/form.component';
 import { NonRegisteredComponent } from './nonregistered/nonregistered.component';
 import { PermitApprovalComponent } from './permitapproval/permitapproval.component';
 import { PermitChartComponent } from './permitchart/permitchart.component';
@@ -27,7 +28,8 @@ import { SpecialPermitsComponent } from './specialpermits/specialpermits.compone
     CancelPermitComponent,
     PermitDateChangeComponent,
     EstimatedTonComponent,
-    PermitQuotaComponent
+    PermitQuotaComponent,
+    FormComponent
   ],
   imports: [
     SharedModule,
