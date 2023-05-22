@@ -190,6 +190,7 @@ export class AppMenuComponent implements OnInit {
               { label: 'Permit Date Change',icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitdatechange'], permission: true },
               { label: 'Estimated Ton',     icon: 'pi pi-fw pi-circle', routerLink: ['/permits/estimatedton'], permission: true },
               { label: 'Permit Quota',      icon: 'pi pi-fw pi-circle', routerLink: ['/permits/permitquota'], permission: true },
+              { label: 'Sample Print form', icon: 'pi pi-fw pi-circle', routerLink: ['/permits/formcomponent'], permission: true },
             ]
           }
         ]
