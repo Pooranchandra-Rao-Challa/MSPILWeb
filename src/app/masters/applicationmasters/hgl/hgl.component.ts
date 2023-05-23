@@ -300,13 +300,13 @@ export class HglComponent implements OnInit {
   }
   isUniqueHglCode() {
     var existingHglCodes = this.hgls.filter(hgl => 
-      hgl.code == this.fbHgl.value.code && hgl.hglId != this.fbHgl.value.seasonId
+      hgl.code == this.fbHgl.value.code && hgl.hglId != this.fbHgl.value.hglId
     )
     return existingHglCodes.length > 0; 
   }
   isUniqueHglName() {
     var existingHglCodes = this.hgls.filter(hgl => 
-      hgl.name == this.fbHgl.value.name && hgl.hglId != this.fbHgl.value.seasonId
+      hgl.name == this.fbHgl.value.name && hgl.hglId != this.fbHgl.value.hglId
     )
     return existingHglCodes.length > 0; 
   }

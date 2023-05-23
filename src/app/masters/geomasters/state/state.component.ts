@@ -92,8 +92,45 @@ export class StateComponent implements OnInit {
     if (this.addFlag) return this.geoMasterService.CreateState(this.fbstates.value)
     else return this.geoMasterService.UpdateState(this.fbstates.value)
   }
-
+  isUniqueStateCode() {
+    const existingStateCodes = this.states.filter(plantType => 
+      plantType.stateCode === this.fbstates.value.code && 
+      plantType.stateId !== this.fbstates.value.stateId
+    )
+    return existingStateCodes.length > 0; 
+  }
+  
+  isUniqueStateName() {
+    const existingStateNames = this.states.filter(plantType =>
+      plantType.stateName === this.fbstates.value.name && 
+      plantType.stateId !== this.fbstates.value.stateId
+    )
+    return existingStateNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbstates.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueStateCode()) {
+          this.alertMessage.displayErrorMessage(
+            `State Code :"${this.fbstates.value.code}" already exists.`
+          );
+        } else if (this.isUniqueStateName()) {
+          this.alertMessage.displayErrorMessage(
+            `State Name :"${this.fbstates.value.name}" already exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbstates.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fbstates.valid) {
       this.saveState().subscribe(resp => {
         if (resp) {

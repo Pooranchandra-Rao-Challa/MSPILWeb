@@ -12,11 +12,9 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ADDRESS, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_EMAIL, RG_NUMERIC_ONLY, RG_PHONE_NO } from 'src/app/_shared/regex';
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
-
 @Component({
   selector: 'app-division',
   templateUrl: './divisions.component.html',
-
 })
 export class DivisionsComponent implements OnInit {
   globalFilterFields: string[] =['divisionId','divisionCode','divisionName','inchargeName','address','inchargePhoneNo',
@@ -32,8 +30,7 @@ export class DivisionsComponent implements OnInit {
   addFlag: boolean = true;
   maxLength: MaxLength = new MaxLength();
   mediumDate: string = MEDIUM_DATE;
-  permissions:any;
-  
+  permissions:any; 
   headers: ITableHeader[] = [
     { field: 'divisionCode', header: 'divisionCode', label: 'Code' },
     { field: 'divisionName', header: 'divisionName', label: 'Name' },
@@ -47,13 +44,11 @@ export class DivisionsComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
-
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     private commonService: CommonService,
     public jwtService: JWTService,
     private alertMessage: AlertMessage) { }
-
   InitDivision() {
     this.division = new DivisionDto();
     this.fbdivisions.controls['isActive'].setValue(true);
@@ -61,11 +56,9 @@ export class DivisionsComponent implements OnInit {
     this.addFlag = true;
     this.display = true;
   }
-
   get FormControls() {
     return this.fbdivisions.controls;
   }
-
   ngOnInit() {
     this.permissions = this.jwtService.Permissions;
     this.initDivisions();
@@ -82,15 +75,12 @@ export class DivisionsComponent implements OnInit {
       address: new FormControl(null, [Validators.required,Validators.pattern(RG_ADDRESS)]),
       isActive: new FormControl(null),
     });
-
-
   }
   initDivisions() {
     this.geoMasterService.GetDivision().subscribe((resp) => {
       this.divisions = resp as unknown as DivisonsViewDto[]
     })
   }
-
   editProduct(division: DivisonsViewDto) {
     this.division.divisionId = division.divisionId;
     this.division.code = division.divisionCode;
@@ -105,11 +95,9 @@ export class DivisionsComponent implements OnInit {
     this.addFlag = false;
     this.display = true;
   }
-
   onClose() {
     this.fbdivisions.reset();
   }
-
   saveDivision(): Observable<HttpEvent<DivisionDto>> {
     if (this.addFlag) return this.geoMasterService.CreateDivision(this.fbdivisions.value)
     else return this.geoMasterService.UpdateDivision(this.fbdivisions.value)
@@ -117,18 +105,17 @@ export class DivisionsComponent implements OnInit {
   isUniqueDivisionCode() {
     const existingDistrictCodes = this.divisions.filter(division => 
       division.divisionCode === this.fbdivisions.value.code && 
-      division.divisionId !== this.fbdivisions.value.districtId
+      division.divisionId !== this.fbdivisions.value.divisionId
     )
     return existingDistrictCodes.length > 0; 
   }
   isUniqueDivisionName() {
     const existingDistrictNames = this.divisions.filter(division =>
       division.divisionName === this.fbdivisions.value.name && 
-      division.divisionId !== this.fbdivisions.value.districtId
+      division.divisionId !== this.fbdivisions.value.divisionId
     )
     return existingDistrictNames.length > 0;
   }
-  
   onSubmit() {
     if (this.fbdivisions.valid) {
       if (this.addFlag) {
@@ -176,7 +163,6 @@ export class DivisionsComponent implements OnInit {
     this.states = [];
     this.divisions = [];
   }
-
 }
 
 

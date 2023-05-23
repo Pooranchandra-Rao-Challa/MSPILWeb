@@ -23,6 +23,7 @@ export class BankComponent implements OnInit {
   showDialog: boolean = false;
   bank: BankDto = new BankDto()
   banks: BankViewDto[] = [];
+  // branches: BranchViewDto[] = [];  
   branches: BranchViewDto = new BranchViewDto();
   @ViewChild('filter') filter!: ElementRef;
   ShowbranchDetails: boolean = false;
@@ -142,7 +143,9 @@ export class BankComponent implements OnInit {
     )
     return existingBankNames.length > 0;
   }
+
   
+ 
   onSubmit() {
     if (this.fbbank.valid) {
       if (this.addFlag) {
@@ -160,11 +163,13 @@ export class BankComponent implements OnInit {
       } else {
         this.save(); 
       }
+     
     } else {
       this.fbbank.markAllAsTouched(); 
     }
   }
-  
+
+
   save() {
     if (this.fbbank.valid) {
       console.log(this.fbbank.value);

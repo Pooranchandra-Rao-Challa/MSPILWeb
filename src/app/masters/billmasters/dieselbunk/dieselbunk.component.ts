@@ -124,8 +124,40 @@ export class DieselBunkComponent implements OnInit {
     if (this.addFlag) return this.billmasterService.CreateDieselBunk(this.fbDieselBunk.value)
     else return this.billmasterService.UpdateDieselBunk(this.fbDieselBunk.value)
   }
-
+  isUniqueDieselBunkCode() {
+    var existingDieselBunkCodes = this.dieselBunks.filter(DieselBunk => 
+      DieselBunk.code == this.fbDieselBunk.value.code && DieselBunk.id != this.fbDieselBunk.value.id
+    )
+    return existingDieselBunkCodes.length > 0; 
+  }
+  isUniqueDieselBunkName() {
+    var existingDieselBunkCodes = this.dieselBunks.filter(DieselBunk => 
+      DieselBunk.name == this.fbDieselBunk.value.name && DieselBunk.id != this.fbDieselBunk.value.id
+    )
+    return existingDieselBunkCodes.length > 0; 
+  }
   onSubmit() {
+    if (this.fbDieselBunk.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueDieselBunkCode()) {
+          this.alertMessage.displayErrorMessage(
+            `DieselBunk Code :"${this.fbDieselBunk.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueDieselBunkName()) {
+          this.alertMessage.displayErrorMessage(
+            `DieselBunk Name :"${this.fbDieselBunk.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbDieselBunk.markAllAsTouched(); 
+    }
+  } 
+  save() {
     if (this.fbDieselBunk.valid) {
       this.saveBillParam().subscribe(resp => {
         if (resp) {
