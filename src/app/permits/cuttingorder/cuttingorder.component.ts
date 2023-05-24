@@ -50,6 +50,7 @@ export class CuttingOrderComponent implements OnInit {
   fromScheduleNo: any;
   toScheduleNo: any;
   error: boolean = false;
+  fieldColor: string = 'inherit';
 
   constructor(private formbuilder: FormBuilder,
     private permitService: permitService,
@@ -199,7 +200,6 @@ export class CuttingOrderComponent implements OnInit {
 
     }
     else {
-      // this.divisionIds =  values.join(','); 
       this.filterCircles = this.circles.filter(circle => values.indexOf(circle.divisionId!) != -1);
       this.filterSections = this.sections.filter(section => values.indexOf(section.divisionId!) != -1);
       this.filterVillages = this.villages.filter(village => values.indexOf(village.divisionId!) != -1);
@@ -216,7 +216,6 @@ export class CuttingOrderComponent implements OnInit {
       this.filterVillages = Object.assign([], this.villages);
     }
     else {
-      // this.circleIds =  values.join(',');
       this.filterSections = this.sections.filter(section => values.indexOf(section.circleId!) != -1)
       this.filterVillages = this.villages.filter(village => values.indexOf(village.circleId!) != -1)
     }
@@ -228,7 +227,6 @@ export class CuttingOrderComponent implements OnInit {
       this.filterVillages = Object.assign([], this.villages);
     }
     else {
-      // this.sectionIds =  values.join(',');
       this.filterVillages = this.villages.filter(village => values.indexOf(village.sectionId!) != -1)
     }
     this.fbCuttingOrder.get('villageId')?.setValue([]);
@@ -339,8 +337,9 @@ export class CuttingOrderComponent implements OnInit {
     })
   }
   checkValue() {
-    if (this.fromScheduleNo < this.toScheduleNo) {
+    if (this.fromScheduleNo <= this.toScheduleNo ) {
       this.error = false;
+      this.fieldColor = 'inherit';
       return;
     }
     else if (this.toScheduleNo == undefined) {
@@ -349,6 +348,7 @@ export class CuttingOrderComponent implements OnInit {
     }
     else {
       this.error = true;
+      this.fieldColor = 'red';
     }
   }
 
