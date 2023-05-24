@@ -99,7 +99,32 @@ export class DistanceRateSlabComponent implements OnInit {
     else return this.billMasterService.UpdateDistanceRate(this.fbDistanceRate.value)
   }
 
+  isUniqueDistanceRateCode() {
+    const existingDistrictCodes = this.distanceRates.filter(BillParameter => 
+      BillParameter.distance === this.fbDistanceRate.value.distance && 
+      BillParameter.id !== this.fbDistanceRate.value.id
+    )
+    return existingDistrictCodes.length > 0; 
+  }
+  
   onSubmit() {
+    if (this.fbDistanceRate.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueDistanceRateCode()) {
+          this.alertMessage.displayErrorMessage(
+            `DistanceRate Code :'${this.fbDistanceRate.value.distance}' already exists.`
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbDistanceRate.markAllAsTouched(); 
+    }
+  }
+  save() {
     if (this.fbDistanceRate.valid) {
       this.saveBillParam().subscribe(resp => {
         if (resp) {

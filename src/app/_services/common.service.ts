@@ -27,8 +27,8 @@ export class CommonService extends ApiHttpService {
     return this.getWithId<MandalDto>(GET_MANDALS_URI, districtId);
   }
 
-  GetDivisionForMandal(mandalId: number) {
-    return this.getWithId<DivisionDto>(GET_DIVISION_URI, mandalId);
+  GetDivisionForMandal(stateId: number) {
+    return this.getWithId<DivisionDto>(GET_DIVISION_URI, stateId);
   }
 
   GetDivision() {
