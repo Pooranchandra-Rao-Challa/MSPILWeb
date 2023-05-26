@@ -37,139 +37,41 @@
       <ng-template pTemplate="header">
         <tr>
           <th></th>
-          <th pSortableColumn="code">
-            Code<p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
-            <p-sortIcon field="code"></p-sortIcon>
-          </th>
-          <th pSortableColumn="farmerName">
-            Name<p-columnFilter type="text" field="farmerName" display="menu"></p-columnFilter>
-            <p-sortIcon field="farmerName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="gender">
-            Gender<p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
-            <p-sortIcon field="gender"></p-sortIcon>
-          </th>
-          <th pSortableColumn="fatherName">
-            Father Name<p-columnFilter type="text" field="fatherName" display="menu"></p-columnFilter>
-            <p-sortIcon field="fatherName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="address">
-            Address<p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
-            <p-sortIcon field="address"></p-sortIcon>
-          </th>
-          <th pSortableColumn="circleName">
-            Circle Name<p-columnFilter type="text" field="circleName" display="menu"></p-columnFilter>
-            <p-sortIcon field="circleName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="divisionName">
-            Division Name<p-columnFilter type="text" field="divisionName" display="menu"></p-columnFilter>
-            <p-sortIcon field="divisionName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="sectionName">
-            Section Name<p-columnFilter type="text" field="sectionName" display="menu"></p-columnFilter>
-            <p-sortIcon field="sectionName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="sectionName">
-            District Name<p-columnFilter type="text" field="sectionName" display="menu"></p-columnFilter>
-            <p-sortIcon field="sectionName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="mandalName">
-            Mandal Name<p-columnFilter type="text" field="mandalName" display="menu"></p-columnFilter>
-            <p-sortIcon field="mandalName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="villageName">
-            Village Name<p-columnFilter type="text" field="villageName" display="menu"></p-columnFilter>
-            <p-sortIcon field="villageName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="bankName">
-            Bank Name<p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
-            <p-sortIcon field="bankName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="branchName">
-            Branch Name<p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
-            <p-sortIcon field="branchName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="ifsc">
-            IFSC<p-columnFilter type="text" field="ifsc" display="menu"></p-columnFilter>
-            <p-sortIcon field="ifsc"></p-sortIcon>
-          </th>
-          <th pSortableColumn="accountNo">
-            Account No<p-columnFilter type="text" field="accountNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="accountNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="totalArea">
-            Total Area<p-columnFilter type="text" field="totalArea" display="menu"></p-columnFilter>
-            <p-sortIcon field="totalArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="cultivatedArea">
-            Cultivated Area<p-columnFilter type="text" field="cultivatedArea" display="menu"></p-columnFilter>
-            <p-sortIcon field="cultivatedArea"></p-sortIcon>
-          </th>
-
-
-
-          <th pSortableColumn="isRegistered">
-            Is Registered <p-columnFilter type="text" field="isRegistered" display="menu"></p-columnFilter>
-            <p-sortIcon field="isRegistered"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isActive">
-            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">
-            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
-            <p-sortIcon field="createdAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdBy">
-            Created By <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
-            <p-sortIcon field="createdBy"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">
-            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedBy">
-            Updated By <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter>
-            <p-sortIcon field="updatedBy"></p-sortIcon>
+          <th *ngFor="let col of plotHeader" [pSortableColumn]="col.field">
+            {{col.label}}
+            <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.field"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-farmer>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button-primary p-component"
-              (click)="editFarmer(farmer)" [disabled]="!permissions.CanUpdateFarmer"></button></td>
-          <td>{{farmer.code}}</td>
-          <td>{{farmer.farmerName}}</td>
-          <td>{{farmer.gender}}</td>
-          <td>{{farmer.fatherName}}</td>
-          <td>{{farmer.address}}</td>
-          <td>{{farmer.circleName}}</td>
-          <td>{{farmer.divisionName}}</td>
-          <td>{{farmer.sectionName}}</td>
-          <td>{{farmer.districtName}}</td>
-          <td>{{farmer.mandalName}}</td>
-          <td>{{farmer.villageName}}</td>
-          <td>{{farmer.bankName}}</td>
-          <td>{{farmer.branchName}}</td>
-          <td>{{farmer.ifsc}}</td>
-          <td>{{farmer.accountNo}}</td>
-          <td>{{farmer.totalArea}}</td>
-          <td>{{farmer.cultivatedArea}}</td>
           <td>
-            <p-checkbox name="active" value="active" [(ngModel)]="farmer.isRegistered" [binary]="true"
-              [disabled]="true">
-            </p-checkbox>
+            <button pButton pRipple icon="pi pi-pencil" (click)="editFarmer(farmer)"
+              [disabled]="!permissions.CanUpdateSeason"
+              class="p-element p-ripple p-button-text p-button p-component">
+            </button>
           </td>
-          <td>
-            <p-checkbox name="active" value="active" [(ngModel)]="farmer.isActive" [binary]="true" [disabled]="true">
-            </p-checkbox>
+          <td *ngFor="let col of plotHeader" [ngClass]="col.field == 'isActive' ? 'text-center' : ''">
+            <span *ngIf="col.field !== 'isActive' && col.field !== 'isRegistered'">
+              <ng-container *ngIf="col.field === 'crushTo' || col.field === 'createdAt' || col.field === 'updatedAt'; else otherFields">
+                {{ farmer[col.field] | date: mediumDate }}
+              </ng-container>
+              <ng-template #otherFields>
+                {{ farmer[col.field] }}
+              </ng-template>
+            </span>
+            <span *ngIf="col.field === 'isRegistered'">
+              <p-checkbox name="isRegistered" value="isRegistered" [binary]="true" [(ngModel)]="farmer.isRegistered" [disabled]="true"></p-checkbox>
+            </span>
+            <span *ngIf="col.field === 'isActive'">
+              <p-checkbox name="isActive" value="isActive" [binary]="true" [(ngModel)]="farmer.isActive" [disabled]="true"></p-checkbox>
+            </span>
           </td>
-          <td>{{farmer.createdAt | date: 'dd-MMM-yyyy'}}</td>
-          <td>{{farmer.createdBy}}</td>
-          <td>{{farmer.updatedAt | date: 'dd-MMM-yyyy'}}</td>
-          <td>{{farmer.updatedBy}}</td>
         </tr>
       </ng-template>
+
+      
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="14 m-5" class="md:text-center">No Farmers Found.</td>
@@ -284,8 +186,8 @@
                       <!-- For Farmer Profile PIC -->
 
                       <!-- <p-fileUpload mode="basic" name="demo[]" accept="image/*" [maxFileSize]="1000000" (onUpload)="onBasicUpload()"></p-fileUpload> -->
-                      <p-fileUpload #fileUpload accept="image/*" [customUpload]="true"
-                        (uploadHandler)="onUpload($event)"></p-fileUpload>
+                      <img [src]="imagePreview" alt="Farmer Image" (click)="showFileSelect()" style="max-width: 100%">
+                      <input type="file" #fileInput (change)="onImageSelect($event)" style="display: none;" *ngIf="showFileSelectButton">
                       <!-- <ng-template pTemplate="content">
                             <ul *ngIf="uploadedFiles.length">
                                 <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>

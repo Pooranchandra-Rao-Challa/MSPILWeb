@@ -19,7 +19,6 @@ export class UserViewDto {
   isActive?: boolean;
   createdAt?: string;
 }
-
 export class UserDto {
   userId?: string
   firstName?: string
@@ -41,7 +40,6 @@ export class UserDto {
   roles?: RoleDto[];
   userSections?: UserSectionDto[] = [];
 }
-
 export class UserSectionDto {
   userSectionId?: number;
   userId?: string;
@@ -64,7 +62,6 @@ export class RoleViewDto {
   updatedBy?: string
   updatedAt?: string
 }
-
 export class RoleDto {
   roleId?: string
   name?: string
@@ -72,7 +69,6 @@ export class RoleDto {
   isActive?: boolean
   permissions?: RolePermissionDto[]
 }
-
 export class RolePermissionDto {
   permissionId?: string
   label?: string
@@ -80,12 +76,10 @@ export class RolePermissionDto {
   displayName?: string
   assigned?: boolean = false;
 }
-
 export class SecureQuestionDto {
   questionId?: number
   question?: string
 }
-
 export class UserQuestionDto {
   userQuestionId?: number
   userId?: string

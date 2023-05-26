@@ -15,7 +15,7 @@
 
     <!-- dialog -->
     <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="clearForm()">
+    [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="clearForm()">
       <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Agreement(Doc30)" class="col-12">
@@ -25,7 +25,7 @@
                   <p-fieldset legend="Season" [toggleable]="true" class="line-height-3 m-0"
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
-                      <div class="field col-12 md:col-4 ">
+                      <div class="field col-12 md:col-6 lg:col-4">
                         <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select Season" [options]="seasons" optionLabel="code"
                           optionValue="seasonId" formControlName="seasonId"
@@ -38,7 +38,7 @@
                             Select Season.</div>
                         </span>
                       </div>
-                      <div class="field col-12 md:col-4">
+                      <div class="field col-12 md:col-6 lg:col-4">
                         <label class="required">Plot No:</label>
                         <p-dropdown optionLabel="plotNumber" [options]="plotNumbers" optionValue="plotId"
                           [filter]="true" filterBy="plotNumber,villageName" formControlName="plotId"
@@ -65,106 +65,106 @@
                   </p-fieldset>
 
                   <div class="grid">
-                    <p-fieldset legend="Farmer Info" [toggleable]="true" class="col-5 mt-2"
+                    <p-fieldset legend="Farmer Info" [toggleable]="true" class="col-12 md:col-5 mt-2 xs:col-12"
                       [transitionOptions]="'500ms'">
                       <div class="p-fluid p-formgrid grid">
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Crop:</label>
                           <p class="disabled_text">{{plotInfo.cropName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Crop Type:</label>
                           <p class="disabled_text">{{plotInfo.cropTypeName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Farmer Code:</label>
                           <p class="disabled_text">{{plotInfo.farmerCode}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Farmer Name:</label>
                           <p class="disabled_text">{{plotInfo.farmerName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Father Name:</label>
                           <p class="disabled_text">{{plotInfo.fatherName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Farmer Division:</label>
                           <p class="disabled_text">{{plotInfo.farmerDivisionName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Farmer Circle:</label>
                           <p class="disabled_text">{{plotInfo.farmerCircleName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Farmer Section:</label>
                           <p class="disabled_text">{{plotInfo.farmerSectionName}}</p>
                         </div>
-                        <div class="field col-12 md:col-6 lg:col-6">
+                        <div class="field col-12 md:col-12 lg:col-6">
                           <label>Farmer Village:</label>
                           <p class="disabled_text">{{plotInfo.farmerVillageName}}</p>
                         </div>
                       </div>
                     </p-fieldset>
-                    <p-fieldset legend="Plot Info" [toggleable]="true" class="col-7 mt-2" [transitionOptions]="'500ms'">
+                    <p-fieldset legend="Plot Info" [toggleable]="true" class="col-12 md:col-7 mt-2 xs:col-12" [transitionOptions]="'500ms'">
                       <div class="p-fluid p-formgrid grid">
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Plot Division:</label>
                           <p class="disabled_text">{{plotInfo.plotDivisionName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Plot Circle:</label>
                           <p class="disabled_text">{{plotInfo.plotCircleName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Plot Section:</label>
                           <p class="disabled_text">{{plotInfo.plotSectionName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Plot Village:</label>
                           <p class="disabled_text">{{plotInfo.plotVillageName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Plant Type:</label>
                           <p class="disabled_text">{{plotInfo.plantTypeName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Planting Date:</label>
                           <p class="disabled_text">{{plotInfo.plantingDate| date: mediumDate}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Survey No:</label>
                           <p class="disabled_text">{{plotInfo.surveyNo}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Agreed Ton:</label>
                           <p class="disabled_text">{{plotInfo.agreedTon}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Variety:</label>
                           <p class="disabled_text">{{plotInfo.varietyName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Field Name:</label>
                           <p class="disabled_text">{{plotInfo.fieldName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>BIR Number:</label>
                           <p class="disabled_text">{{plotInfo.birNumber}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>BIR Date:</label>
                           <p class="disabled_text">{{plotInfo.birDate | date: mediumDate}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Reported Area:</label>
                           <p class="disabled_text">{{plotInfo.reportedArea}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Measured Area:</label>
                           <p class="disabled_text">{{plotInfo.farmerVillageName}}</p>
                         </div>
-                        <div class="field col-12 md:col-3 lg:col-3">
+                        <div class="field col-12 md:col-6 lg:col-4">
                           <label>Plot Type:</label>
                           <p class="disabled_text">{{plotInfo.plotTypeName}}</p>
                         </div>
@@ -174,7 +174,7 @@
                   <p-fieldset legend="Agreement Info" [toggleable]="true" class="col-12 mt-2"
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
-                      <div class="field col-12 md:col-4 lg:col-3 ">
+                      <div class="field col-12 md:col-6 lg:col-3 ">
                         <label class="required">Agreement Area(Acre):</label>
                         <p-inputNumber placeholder="Enter Agreement Area" formControlName="agreementedArea"
                           mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
@@ -187,7 +187,7 @@
                             Please Select Agreement Area.</div>
                         </span>
                       </div>
-                      <div class="field col-12 md:col-4 lg:col-3">
+                      <div class="field col-12 md:col-6 lg:col-3">
                         <label class="required">Agreement Date:</label>
                         <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
                           [defaultDate]="plotInfo.measuredDate!" [minDate]="plotInfo.measuredDate!"
@@ -217,7 +217,7 @@
                   <div class="p-fluid p-formgrid grid" formGroupName="nomineeInfo">
                     <div class="field col-12 md:col-4 ">
                       <label class="required">RelationShip Type:</label>
-                      <p-dropdown placeholder="Enter RelationShip" optionLabel="name" [options]="relationTypes"
+                      <p-dropdown placeholder="Please Select RelationShip Type" optionLabel="name" [options]="relationTypes"
                         optionValue="lookupDetailId" appendTo="body" formControlName="relationTypeId"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['relationTypeId'].touched && fcNomineeDetails.controls['relationTypeId'].errors }">
                       </p-dropdown>
@@ -225,7 +225,7 @@
                         *ngIf="fcNomineeDetails.controls['relationTypeId'].touched && fcNomineeDetails.controls['relationTypeId'].invalid">
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['relationTypeId'].errors?.['required']">
-                          Please Select RelationShip.</div>
+                          Please Select RelationShip Type.</div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4  ">
@@ -315,17 +315,17 @@
               <div class="grid">
                 <div class="col-12">
                   <div class="p-fluid p-formgrid grid">
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>Inter Cropping:</label>
                       <p-dropdown optionLabel="name" optionValue="lookupDetailId" [options]="crops"
                         formControlName="interCropingId" [autoDisplayFirst]="false" placeholder="Select Inter Cropping">
                       </p-dropdown>
                     </div>
-                    <div class="field col-12 md:col-6  lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-3 ">
                       <label>Micronutrient Deficiency:</label><br>
                       <p-inputSwitch formControlName="hasMicroNutrientDeficiency"></p-inputSwitch>
                     </div>
-                    <div class="field col-12 md:col-6  lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-3 ">
                       <label>Trash Mulching:</label><br>
                       <p-inputSwitch formControlName="isTrashMulchingDone"></p-inputSwitch>
                     </div>
@@ -333,51 +333,51 @@
                       <label>Gap Filling Done:</label><br>
                       <p-inputSwitch formControlName="isGapsFillingDone"></p-inputSwitch>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>Weed Status:</label>
                       <p-dropdown optionLabel="name" [options]="weedStatus" optionValue="lookupDetailId"
                         formControlName="weedStatusId" [autoDisplayFirst]="false" placeholder="Select Weed Status">
                       </p-dropdown>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>Bio Fertilizer Applied Area(Acre):</label>
                       <p-inputNumber placeholder="Enter Bio Fertilizer Applied Area"
                         formControlName="bioFertilizersAppliedArea" mode="decimal" locale="en-IN"
                         [minFractionDigits]="2" [maxFractionDigits]="2">
                       </p-inputNumber>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>Deep Ploughed Area(Acre):</label>
                       <p-inputNumber placeholder="Enter Deep Ploughed Area" formControlName="deepPloughedArea"
                         mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
                       </p-inputNumber>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>De Trashing Area(Acre):</label>
                       <p-inputNumber placeholder="Enter De Trashing Area" formControlName="deTrashingArea"
                         mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
                       </p-inputNumber>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>Earthing Up Area(Acre):</label>
                       <p-inputNumber placeholder="Enter Earthing Up Area" formControlName="earthingUpArea"
                         mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
                       </p-inputNumber>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>Ratoon Managed Used Area(Acre):</label>
                       <p-inputNumber placeholder="Enter Ratoon Managed Used Area"
                         formControlName="ratoonManagedUsedArea" mode="decimal" locale="en-IN" [minFractionDigits]="2"
                         [maxFractionDigits]="2">
                       </p-inputNumber>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>TrashShedder Area(Acre):</label>
                       <p-inputNumber placeholder="Enter TrashShedder Area" formControlName="trashShedderArea"
                         mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">
                       </p-inputNumber>
                     </div>
-                    <div class="field col-12 md:col-4 lg:col-3 ">
+                    <div class="field col-12 md:col-6 lg:col-4 ">
                       <label>LoadShedder Area(Acre):</label>
                       <p-inputNumber placeholder="Enter LoadShedder Area" formControlName="loadShedderArea"
                         mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2">

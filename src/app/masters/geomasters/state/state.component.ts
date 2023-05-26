@@ -11,12 +11,14 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { ITableHeader } from 'src/app/_models/common';
 
 @Component({
   selector: 'app-state',
   templateUrl: './state.component.html',
 })
 export class StateComponent implements OnInit {
+  globalFilterFields: string[] = ['stateCode', 'stateName', 'isActive', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'];
   display: boolean = false;
   states: StatesViewDto[] = [];
   state: StateDto = new StateDto();
@@ -27,13 +29,22 @@ export class StateComponent implements OnInit {
   valSwitch: boolean = true;
   mediumDate: string = MEDIUM_DATE;
   permissions: any;
-  globalFilterFields: string[] = ['stateCode','stateName', 'isActive', 'createdAt', 'createdByUser','updatedAt', 'updatedByUser'];
+
+  headers: ITableHeader[] = [
+    { field: 'stateCode', header: 'stateCode', label: 'Code' },
+    { field: 'stateName', header: 'stateName', label: 'Name' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
   constructor(private formbuilder: FormBuilder,
     private geoMasterService: GeoMasterService,
     public jwtService: JWTService,
     private alertMessage: AlertMessage) { }
 
-  InitState( ) {
+  InitState() {
     this.state = new StateDto();
     this.fbstates.controls['isActive'].setValue(true);
     this.submitLabel = "Add State";
@@ -50,7 +61,7 @@ export class StateComponent implements OnInit {
     this.initStates();
     this.fbstates = this.formbuilder.group({
       code: new FormControl(null, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
-      name: new FormControl(null, [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
+      name: new FormControl(null, [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [null],
       stateId: new FormControl(null),
     });
@@ -81,8 +92,45 @@ export class StateComponent implements OnInit {
     if (this.addFlag) return this.geoMasterService.CreateState(this.fbstates.value)
     else return this.geoMasterService.UpdateState(this.fbstates.value)
   }
-
+  isUniqueStateCode() {
+    const existingStateCodes = this.states.filter(plantType => 
+      plantType.stateCode === this.fbstates.value.code && 
+      plantType.stateId !== this.fbstates.value.stateId
+    )
+    return existingStateCodes.length > 0; 
+  }
+  
+  isUniqueStateName() {
+    const existingStateNames = this.states.filter(plantType =>
+      plantType.stateName === this.fbstates.value.name && 
+      plantType.stateId !== this.fbstates.value.stateId
+    )
+    return existingStateNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbstates.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueStateCode()) {
+          this.alertMessage.displayErrorMessage(
+            `State Code :"${this.fbstates.value.code}" already exists.`
+          );
+        } else if (this.isUniqueStateName()) {
+          this.alertMessage.displayErrorMessage(
+            `State Name :"${this.fbstates.value.name}" already exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbstates.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fbstates.valid) {
       this.saveState().subscribe(resp => {
         if (resp) {

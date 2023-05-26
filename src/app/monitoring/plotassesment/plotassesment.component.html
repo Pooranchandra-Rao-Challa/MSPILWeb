@@ -15,7 +15,7 @@
 
     <!-- dialog -->
     <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true" [transitionOptions]="'500ms'"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}" (onHide)="ClearForm()">
+    [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssessment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Assessment(Doc20)" class="col-12">
@@ -383,11 +383,10 @@
     <!-- table -->
     <!-- [lazy]="true" -->
     <p-table #dtPlotAssessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true"
-      [lazy]="true" (onLazyLoad)="loadPlotassessmentLazy($event)" [alwaysShowPaginator]="false"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [autoLayout]="true" scrollHeight="350px"
-      [virtualScroll]="true" [virtualRowHeight]="50" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
+    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+    [alwaysShowPaginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
       (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">

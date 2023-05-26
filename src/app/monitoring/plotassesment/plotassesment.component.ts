@@ -20,6 +20,7 @@ import 'jspdf-autotable';
 import * as FileSaver from 'file-saver';
 import { ITableHeader } from 'src/app/_models/common';
 import { ThisReceiver } from '@angular/compiler';
+import { LOGIN_URI } from '../../_services/api.uri.service';
 
 @Component({
   selector: 'app-plotassesment',
@@ -29,6 +30,8 @@ import { ThisReceiver } from '@angular/compiler';
 })
 
 export class PlotassesmentComponent implements OnInit {
+  globalFilterFields: string[] = ["seasonCode", "farmerCode", "farmerName", "farmerVillageName", "plotNumber", "plantingDate", "cropTypeName",
+  "plantTypeName", "varietyName", "surveyNo","fieldName","plotTypeName","assessedArea","measuredDate","offerNo","offerNo","weedStatusName","interCropName"];
   plotinfo: any;
   showDialog: boolean = false;
   submitLabel!: string;
@@ -191,8 +194,11 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   getPlotinfo(plotId: number) {
+
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
+      console.log('plotInfo',  this.plotInfo);
+      
     });
   }
 
@@ -211,24 +217,24 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   initPlotAssessments(seasonId: number) {
+    this.dtPlotAssessments.expandedRowKeys = {};
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
+      console.log('plotAssessments',this.plotAssessments);
     });
   }
-
   onRowExpand(source: any) {
     var data = source.data as IFarmerInPlotOfferDto;
     this.monitoringService.GetFarmerPlotsInAssessment(data.seasonId, data.farmerId).subscribe(resp => {
       data.ObjMeasuredPlots = resp as unknown as IPlotAssessmentViewDto[];
+      console.log('plots',data.ObjMeasuredPlots);   
     });
   }
-
   onSearch() {
     this.dtPlotAssessments.expandedRowKeys = {};
     this.initPlotAssessments(this.currentSeason.seasonId!);
   }
-
   plotAssessmentForm() {
     this.fbPlotAssessment = this.formbuilder.group({
       plotAssessmentId: [null],
@@ -248,7 +254,6 @@ export class PlotassesmentComponent implements OnInit {
       diseases: this.formbuilder.array([]),
     })
   }
-
   initCropType() {
     this.lookupService.Crops().subscribe((resp) => {
       this.cropstypes = resp as unknown as LookupDetailDto[];
@@ -321,7 +326,6 @@ export class PlotassesmentComponent implements OnInit {
     if (this.addFlag) return this.monitoringService.CreatePlotAssessment(postValues)
     else return this.monitoringService.UpdatePlotAssessment(postValues)
   }
-
   editPlotAssessment(plotAssessment: IPlotAssessmentViewDto) {
     this.initPlotNumbers(plotAssessment.seasonId, plotAssessment?.plotId);
     this.plotAssessment.plotAssessmentId = plotAssessment.plotAssessmentId;

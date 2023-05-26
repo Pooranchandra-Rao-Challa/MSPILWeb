@@ -16,7 +16,7 @@ import { RG_SEASON_CODE, RG_SEASON_NAME, } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 
 @Component({
@@ -44,6 +44,26 @@ export class SeasonComponent implements OnInit {
   activeIndex: number = 0;
   maxLength: MaxLength = new MaxLength();
   invalidSeasonCode: boolean = false;
+
+
+  plotHeader: ITableHeader[] = [
+    { field: 'code', header:'code', label: 'Code' },
+    { field: 'name', header:'name', label: 'Name' },
+    { field: 'plantFrom', header:'plantFrom', label: 'Plant From' },
+    { field: 'plantTo', header:'plantTo', label: 'Plant To' },
+    { field: 'crushFrom', header:'crushFrom', label: 'Crush From' },
+    { field: 'crushTo', header: 'crushTo', label: 'Variety' },
+    { field: 'burnCaneRate',header:'burnCaneRate', label: 'Burn Cane Rate' },
+    { field: 'caneRate', header:'caneRate', label: 'Cane Rate' },
+    { field: 'capacity', header:'capacity', label: 'Capacity' },
+    { field: 'isActive', header:'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy  ', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy  ', label: 'Updated By' },
+    
+
+  ];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -114,10 +134,10 @@ export class SeasonComponent implements OnInit {
       capacity: new FormControl(null, [Validators.required]),
       currentSeason: [''],
       isActive: [true],
-      farmerRates: this.formbuilder.array([]),
-      harvesterRates: this.formbuilder.array([]),
-      transporterRates: this.formbuilder.array([]),
-      seedRates: this.formbuilder.array([]),
+      farmerRates: this.formbuilder.array([], [Validators.required]),
+      harvesterRates: this.formbuilder.array([], [Validators.required]),
+      transporterRates: this.formbuilder.array([], [Validators.required]),
+      seedRates: this.formbuilder.array([], [Validators.required]),
     }, {
       validators: Validators.compose([
         DateValidators.dateRangeValidator('plantFrom', 'plantTo', { 'plantFrom': true }),
@@ -201,7 +221,6 @@ export class SeasonComponent implements OnInit {
     this.addFlag = true;
     this.seasonForm();
     this.showDialog = true;
-
     // if(!this.existCurrentSeasonRecord){
     //   this.submitLabel = 'Add Season';
     //   this.addFlag = true;
@@ -233,7 +252,45 @@ export class SeasonComponent implements OnInit {
     else return this.appMasterService.UpdateSeason(this.fbseasons.value);
   }
 
+  isUniqueSeasonCode() {
+    const existingPlantTypeCodes = this.seasons.filter(season => 
+      season.code === this.fbseasons.value.code && 
+      season.seasonId !== this.fbseasons.value.seasonId
+    )
+    return existingPlantTypeCodes.length > 0; 
+  }
+  
+  isUniqueSeasonName() {
+    const existingPlantTypeNames = this.seasons.filter(season =>
+      season.name === this.fbseasons.value.name && 
+      season.seasonId !== this.fbseasons.value.plantTypeId
+    )
+    return existingPlantTypeNames.length > 0;
+  }
+  
   onSubmit() {
+    if (this.fbseasons.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueSeasonCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Season Code :"${this.fbseasons.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueSeasonName()) {
+          this.alertMessage.displayErrorMessage(
+            `Season Name :"${this.fbseasons.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbseasons.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fbseasons.valid && !this.invalidSeasonCode) {
       this.fbseasons.value.plantFrom = FORMAT_DATE(this.fbseasons.value.plantFrom);
       this.fbseasons.value.plantTo = FORMAT_DATE(this.fbseasons.value.plantTo);
@@ -269,11 +326,9 @@ export class SeasonComponent implements OnInit {
       this.fbseasons.controls['code'].markAllAsTouched();
     }
   }
-
   onClose() {
     this.fbseasons.reset();
   }
-
   ngOnDestroy() {
     this.seasons = [];
     this.billParams = [];

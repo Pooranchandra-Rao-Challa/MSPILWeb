@@ -145,8 +145,32 @@ export class BillParametersComponent implements OnInit {
     if (this.addFlag) return this.billmasterService.CreateBillParam(this.fbBillParameters.value);
     else return this.billmasterService.UpdateBillParam(this.fbBillParameters.value);
   }
-
+  isUniqueBillParameterCode() {
+    const existingDistrictCodes = this.billParameters.filter(BillParameter => 
+      BillParameter.code === this.fbBillParameters.value.code && 
+      BillParameter.billCategoryId !== this.fbBillParameters.value.billCategoryId
+    )
+    return existingDistrictCodes.length > 0; 
+  }
+  
   onSubmit() {
+    if (this.fbBillParameters.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueBillParameterCode()) {
+          this.alertMessage.displayErrorMessage(
+            `BillParameter Code :"${this.fbBillParameters.value.code}" already exists.`
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbBillParameters.markAllAsTouched(); 
+    }
+  }
+  save() {
     if (this.fbBillParameters.valid) {
       this.saveBillParam().subscribe(resp => {
         if (resp) {

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { BankDto, BankViewDto, BranchDto, BranchViewDto } from 'src/app/_models/applicationmaster';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_11, MIN_LENGTH_2, MIN_LENGTH_6, RG_ADDRESS, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_NUMERIC_ONLY, RG_PINCODE } from 'src/app/_shared/regex';
@@ -18,10 +18,12 @@ import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_11, MIN_LENGTH_2
   ]
 })
 export class BankComponent implements OnInit {
+  globalFilterFields: string[] = ['code','name','isActive','createdBy','createdAt','updatedBy','updatedAt']
   display: boolean = false;
   showDialog: boolean = false;
   bank: BankDto = new BankDto()
   banks: BankViewDto[] = [];
+  // branches: BranchViewDto[] = [];  
   branches: BranchViewDto = new BranchViewDto();
   @ViewChild('filter') filter!: ElementRef;
   ShowbranchDetails: boolean = false;
@@ -34,6 +36,16 @@ export class BankComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
   permissions: any;
   
+  headers: ITableHeader[] = [
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
+  
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
@@ -43,8 +55,7 @@ export class BankComponent implements OnInit {
     return this.fbbank.controls;
   }
 
-  onGlobalFilter(table: Table, event: Event) {
-    
+  onGlobalFilter(table: Table, event: Event) {   
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
@@ -117,7 +128,49 @@ export class BankComponent implements OnInit {
     if (this.addFlag) return this.appMasterService.CreateBank(this.fbbank.value)
     else return this.appMasterService.UpdateBank(this.fbbank.value)
   }
+  isUniqueBankCode() {
+    const existingBankCodes = this.banks.filter(bank => 
+      bank.code === this.fbbank.value.code && 
+      bank.bankId !== this.fbbank.value.bankId
+    )
+    return existingBankCodes.length > 0; 
+  }
+  
+  isUniqueBankName() {
+    const existingBankNames = this.banks.filter(bank =>
+      bank.name === this.fbbank.value.name && 
+      bank.bankId !== this.fbbank.value.bankId
+    )
+    return existingBankNames.length > 0;
+  }
+
+  
+ 
   onSubmit() {
+    if (this.fbbank.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueBankCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Bnak Code :"${this.fbbank.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueBankName()) {
+          this.alertMessage.displayErrorMessage(
+            `Bank Name :"${this.fbbank.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+     
+    } else {
+      this.fbbank.markAllAsTouched(); 
+    }
+  }
+
+
+  save() {
     if (this.fbbank.valid) {
       console.log(this.fbbank.value);
       this.saveBank().subscribe(resp => {

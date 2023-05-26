@@ -99,6 +99,7 @@ export class PlotofferComponent implements OnInit {
   }
 
   initPlotOffers(seasonId: number) {
+    this.dtPlotOffer.expandedRowKeys = {};
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotOffers(seasonId, this.forapproval, param1).subscribe((resp) => {
       this.plotOffers = resp as unknown as IFarmerInPlotOfferDto[];

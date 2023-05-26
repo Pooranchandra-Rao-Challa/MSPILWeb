@@ -96,9 +96,9 @@ export class JWTService {
     return jwt.ThemeName;
   }
 
-  public get ColorScheme(): string{
+  // public get ColorScheme(): string{
 
-    const jwt = this.DecodedJWT;
-    return jwt.ColorScheme;
-  }
+  //   const jwt = this.DecodedJWT;
+  //   return jwt.ColorScheme;
+  // }
 }

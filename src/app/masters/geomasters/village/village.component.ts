@@ -230,8 +230,45 @@ export class VillageComponent implements OnInit {
       return this.geoMasterService.CreateVillage(this.fbvillages.value);
     else return this.geoMasterService.UpdateVillage(this.fbvillages.value);
   }
+  isUniqueVillageCode() {
+    const existingVillageCodes = this.villages.filter(plantType =>
+      plantType.villageCode === this.fbvillages.value.code &&
+      plantType.villageId !== this.fbvillages.value.villageId
+    )
+    return existingVillageCodes.length > 0;
+  }
+
+  isUniqueVillageName() {
+    const existingVillageNames = this.villages.filter(plantType =>
+      plantType.villageName === this.fbvillages.value.name &&
+      plantType.villageId !== this.fbvillages.value.villageId
+    )
+    return existingVillageNames.length > 0;
+  }
 
   onSubmit() {
+    if (this.fbvillages.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueVillageCode()) {
+          this.alertMessage.displayErrorMessage(
+            `State Code :"${this.fbvillages.value.code}" already exists.`
+          );
+        } else if (this.isUniqueVillageName()) {
+          this.alertMessage.displayErrorMessage(
+            `State Name :"${this.fbvillages.value.name}" already exists.`
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save();
+      }
+    } else {
+      this.fbvillages.markAllAsTouched();
+    }
+  }
+
+  save() {
     this.fbvillages.value.pinCode = this.fbvillages.value.pinCode + '';
     this.fbvillages.value.inchargePhoneNo =
       this.fbvillages.value.inchargePhoneNo + '';

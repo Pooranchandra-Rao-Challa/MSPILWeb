@@ -395,9 +395,9 @@
                           class="p-button-raised p-button-primary" (click)="addTptDetail()"></button>
                       </div>
                     </div>
-                    <div formArrayName="tptdetails" *ngIf="showTptDetails">
+                    <div class="col-12 scrolling_content" formArrayName="tptdetails" *ngIf="showTptDetails">
                       <p-table #dt2 [value]="faTptDetails().controls" dataKey="id" [rowHover]="true" [autoLayout]="true"
-                        responsiveLayout="scroll" [style]="{width:'auto'}"
+                        responsiveLayout="stack" [style]="{width:'auto'}"
                         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                         <ng-template pTemplate="header">
                           <tr>
@@ -425,7 +425,7 @@
                               </span>
                             </td>
                             <td class="vertical-align-top">
-                              <p-dropdown placeholder="Select Vehicle" [options]="vehicleTypes"
+                              <p-dropdown placeholder="Select Vehicle" [options]="vehicleTypes" class="w-100"
                                 formControlName="vehicleTypeId" optionLabel="name" optionValue="vehicleTypeId"
                                 appendTo="body" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(tptDetailIndex, 'vehicleTypeId')?.touched &&
                             formArrayControls(tptDetailIndex, 'vehicleTypeId')?.errors }">
@@ -452,12 +452,12 @@
                               </p-inputNumber>
                             </td>
                             <td class="vertical-align-top">
-                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" [options]="defaults"
+                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" class="w-100" [options]="defaults"
                                 formControlName="gateEntryFreeze" appendTo="body">
                               </p-dropdown>
                             </td>
                             <td class="vertical-align-top">
-                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" [options]="defaults"
+                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" class="w-100" [options]="defaults"
                                 formControlName="transporterFreeze" appendTo="body">
                               </p-dropdown>
                             </td>

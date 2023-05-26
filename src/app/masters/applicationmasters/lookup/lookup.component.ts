@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } from 'src/app/_models/applicationmaster';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MAX_LENGTH_2, MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY} from 'src/app/_shared/regex';
@@ -19,6 +19,7 @@ import { MAX_LENGTH_2, MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_O
 
 })
 export class LookupComponent implements OnInit {
+  globalFilterFields: string[] = ['code','name','isActive','createdBy','updatedBy','createdAt','updatedAt']
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   lookups: LookupViewDto[] = [];
@@ -34,6 +35,17 @@ export class LookupComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+
+  headers: ITableHeader[] = [
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
+  
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
@@ -107,7 +119,45 @@ export class LookupComponent implements OnInit {
     this.ShowlookupDetails = false;
     this.falookupDetails().clear();
   }
+
+  isUniqueLookupCode() {
+    const existingLookupCodes = this.lookups.filter(lookup => 
+      lookup.code === this.fblookup.value.code && 
+      lookup.id !== this.fblookup.value.lookUpId
+    )
+    return existingLookupCodes.length > 0; 
+  }
+  
+  isUniqueLookupName() {
+    const existingLookupNames = this.lookups.filter(lookup =>
+      lookup.name === this.fblookup.value.name && 
+      lookup.id !== this.fblookup.value.lookUpId
+    )
+    return existingLookupNames.length > 0;
+  }
   onSubmit() {
+    if (this.fblookup.valid) {
+      if (this.addFlag) {
+        if (this.isUniqueLookupCode()) {
+          this.alertMessage.displayErrorMessage(
+            `Lookup Code :"${this.fblookup.value.code}" Already Exists.`
+          );
+        } else if (this.isUniqueLookupName()) {
+          this.alertMessage.displayErrorMessage(
+            `Lookup Name :"${this.fblookup.value.name}" Already Exists.` 
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fblookup.markAllAsTouched(); 
+    }
+  }
+  
+  save() {
     if (this.fblookup.valid) {
       this.savelookup().subscribe(resp => {
         if (resp) {

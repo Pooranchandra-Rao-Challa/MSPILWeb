@@ -15,7 +15,7 @@
 
     <!-- dialog -->
     <p-dialog header="Plot Yield" [(visible)]="showDialog" [modal]="true" (onHide)="ClearForm()"  [transitionOptions]="'500ms'"
-      [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '75vw'}">
+    [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" >
       <form [formGroup]="fbPlotYield" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left">
           <p-tabPanel header="Plot Yield" class="col-12">
@@ -28,7 +28,7 @@
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-                          optionValue="seasonId" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
+                          optionValue="seasonId" formControlName="seasonId"  [(ngModel)]="currentSeason.seasonId" 
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
@@ -64,7 +64,7 @@
                     </div>
                   </p-fieldset>
                   <div class="grid">
-                    <p-fieldset legend="Farmer Info" [toggleable]="true" class="col-5 mt-2"
+                    <p-fieldset legend="Farmer Info" [toggleable]="true" class="col-12 lg:col-5 xs:col-12 mt-2"
                       [transitionOptions]="'500ms'">
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-6">
@@ -101,7 +101,7 @@
                         </div>
                       </div>
                     </p-fieldset>
-                    <p-fieldset legend="Plot Info" [toggleable]="true" class="col-7 mt-2" [transitionOptions]="'500ms'">
+                    <p-fieldset legend="Plot Info" [toggleable]="true" class="col-12 lg:col-7 xs:col-12 mt-2" [transitionOptions]="'500ms'">
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Division:</label>
@@ -190,7 +190,7 @@
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
                         <label class="required">Inspection Date:</label>
-                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                        <p-calendar [readonlyInput]="true" [showIcon]="true" appendTo="body" mask="99/99/9999"
                           formControlName="inspectionDate" placeholder="Please Select Inspection Date"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['inspectionDate'].touched && FormControls['inspectionDate'].errors }">
                         </p-calendar>
@@ -448,7 +448,7 @@
       </form>
       <ng-template pTemplate="footer">
         <div class="col-12">
-          <div class="col-4" style="float:right">
+          <div class="col-6" style="float:right">
             <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-success"
               [disabled]="fbPlotYield.invalid" (click)="onSubmit()"></button>
           </div>
@@ -473,7 +473,7 @@
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId" optionValue="seasonId" [virtualScrollItemSize]="30">
+            [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotYields($event.value)"  optionValue="seasonId" [virtualScrollItemSize]="30">
             </p-dropdown>
           </div>
         </div>

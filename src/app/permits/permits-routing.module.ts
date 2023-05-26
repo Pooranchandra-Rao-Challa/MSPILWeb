@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CancelPermitComponent } from './cancelpermit/cancelpermit.component';
 import { CuttingOrderComponent } from './cuttingorder/cuttingorder.component';
 import { EstimatedTonComponent } from './estimatedton/estimatedton.component';
+import { FormComponent } from './formcomponent/form.component';
 import { NonRegisteredComponent } from './nonregistered/nonregistered.component';
 import { PermitApprovalComponent } from './permitapproval/permitapproval.component';
 import { PermitChartComponent } from './permitchart/permitchart.component';
@@ -30,6 +31,7 @@ import { SpecialPermitsComponent } from './specialpermits/specialpermits.compone
     { path: 'permitdatechange', component: PermitDateChangeComponent },
     { path: 'estimatedton', component: EstimatedTonComponent },
     { path: 'permitquota', component: PermitQuotaComponent },
+    { path: 'formcomponent', component: FormComponent },
     
   ])],
   exports: [RouterModule]

@@ -75,7 +75,6 @@ export class LoanMasterComponent implements OnInit {
       { name: 'Pest', value: 'P' },
     ];
   }
-
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
     this.initLoanTypes();
@@ -83,13 +82,11 @@ export class LoanMasterComponent implements OnInit {
     this.loanTypesForm();
     this.initLookupDetails();
   }
-
   initLoanTypes() {
     this.BillMasterService.GetLoanTypes().subscribe((resp) => {
       this.loanTypes = resp as unknown as LoanTypeViewDto[];
     });
   }
-
   initLoanSubtype(loanTypeId: any) {
     this.BillMasterService.GetLoanSubTypes(loanTypeId).subscribe((resp) => {
       this.loanSubTypes = resp as unknown as LoanSubTypeViewDto[];
@@ -99,7 +96,6 @@ export class LoanMasterComponent implements OnInit {
       });
     });
   }
-
   initUom() {
     this.LookupService.UOMs().subscribe((resp) => {
       this.uom = resp as unknown as LookupDetailDto[];
@@ -111,7 +107,6 @@ export class LoanMasterComponent implements OnInit {
       this.billCategories = resp;
     });
   }
-
   loanTypesForm() {
     this.fbloantype = this.formbuilder.group({
       loanTypeId: [null],
@@ -166,7 +161,6 @@ export class LoanMasterComponent implements OnInit {
       isActive: (loanSubTypes.isActive = true),
     });
   }
-
   editTpt(loanType: LoanTypeViewDto) {
     this.initLoanSubtype(loanType.loanTypeId);
     this.loanType.loanTypeId = loanType.loanTypeId;
@@ -185,7 +179,6 @@ export class LoanMasterComponent implements OnInit {
     this.showDialog = true;
     this.showloantype = true;
   }
-
   addLoanType() {
     this.fbloantype.controls['isActive'].setValue(true);
     this.submitLabel = 'Add Loan SubType';
@@ -208,8 +201,32 @@ export class LoanMasterComponent implements OnInit {
       return this.BillMasterService.CreateLoanType(this.fbloantype.value);
     else return this.BillMasterService.UpdateLoanType(this.fbloantype.value);
   }
-
+  isUniqueLoanTypeCode() {
+    const existingLoanTypeCodes = this.loanTypes.filter(loanType => 
+      loanType.code === this.fbloantype.value.code && 
+      loanType.loanTypeId !== this.fbloantype.value.loanTypeId
+    )
+    return existingLoanTypeCodes.length > 0; 
+  }
   onSubmit() {
+    if (this.fbloantype.valid) {
+      if (this.addFlag) {
+        
+        if (this.isUniqueLoanTypeCode()) {
+          this.alertMessage.displayErrorMessage(
+            `LoanType Code :"${this.fbloantype.value.code}" already exists.`
+          );
+        } else {
+          this.save();
+        }
+      } else {
+        this.save(); 
+      }
+    } else {
+      this.fbloantype.markAllAsTouched(); 
+    }
+  }
+  save() {
     if (this.fbloantype.valid) {
       this.saveLoantype().subscribe((resp) => {
         if (resp) {
@@ -222,13 +239,11 @@ export class LoanMasterComponent implements OnInit {
       this.fbloantype.markAllAsTouched();
     }
   }
-
   onClose() {
     this.fbloantype.reset();
     this.faLoanSubType().clear();
     this.showloantype = false;
   }
-
   ngOnDestroy() {
     this.loanTypes = [];
     this.loanSubTypes = [];

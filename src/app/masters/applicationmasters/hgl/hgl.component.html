@@ -30,7 +30,7 @@
           </span>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <!-- <ng-template pTemplate="header">
         <tr>
           <th></th>
           <th pSortableColumn="code">
@@ -185,6 +185,43 @@
           <td>{{hgl.createdBy}}</td>
           <td>{{hgl.updatedAt | date: 'dd-MMM-yyyy'}}</td>
           <td>{{hgl.updatedBy}}</td>
+        </tr>
+      </ng-template> -->
+
+        <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th *ngFor="let col of plotHeader" [pSortableColumn]="col.field">
+            {{col.label}}
+            <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-farmer>
+        <tr>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" (click)="editHgl(hgl)"
+              [disabled]="!permissions.CanUpdateSeason"
+              class="p-element p-ripple p-button-text p-button p-component">
+            </button>
+          </td>
+          <td *ngFor="let col of plotHeader" [ngClass]="col.field == 'isActive' ? 'text-center' : ''">
+            <span *ngIf="col.field !== 'isActive' && col.field !== 'tds'">
+              <ng-container *ngIf="col.field === 'crushTo' || col.field === 'createdAt' || col.field === 'updatedAt'; else otherFields">
+                {{ farmer[col.field] | date: mediumDate }}
+              </ng-container>
+              <ng-template #otherFields>
+                {{ farmer[col.field] }}
+              </ng-template>
+            </span>
+            <span *ngIf="col.field === 'tds'">
+              <p-checkbox name="tds" value="tds" [binary]="true" [(ngModel)]="farmer.isRegistered" [disabled]="true"></p-checkbox>
+            </span>
+            <span *ngIf="col.field === 'isActive'">
+              <p-checkbox name="isActive" value="isActive" [binary]="true" [(ngModel)]="farmer.isActive" [disabled]="true"></p-checkbox>
+            </span>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

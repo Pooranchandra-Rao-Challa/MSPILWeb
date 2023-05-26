@@ -14,8 +14,9 @@
                     <div class="field col-12 md:col-4">
                       <label htmlFor="age1">State:<sup class="p-error">*</sup></label>
                       <p-dropdown [options]="states" optionLabel="stateName" optionValue="stateId"
-                       [autoDisplayFirst]="false" formControlName="stateId" (onChange)="initDistricts($event.value)"
-                        placeholder="Select State" [ngClass]="{'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors}">
+                        [autoDisplayFirst]="false" formControlName="stateId" (onChange)="initDistricts($event.value)"
+                        placeholder="Select State"
+                        [ngClass]="{'is-invalid ng-dirty': FormControls['stateId'].touched && FormControls['stateId'].errors}">
                       </p-dropdown>
                       <span *ngIf="
                           FormControls['stateId'].touched &&
@@ -54,8 +55,7 @@
                       <label htmlFor="circle">Mandal:<sup class="p-error">*</sup></label>
                       <p-dropdown [filter]="true" filterBy="name" [virtualScroll]="true" [virtualScrollItemSize]="38"
                         appendTo="body" [options]="mandals" optionLabel="name" optionValue="mandalId"
-                        [autoDisplayFirst]="false" formControlName="mandalId"
-                        placeholder="Select Mandal" [ngClass]="{
+                        [autoDisplayFirst]="false" formControlName="mandalId" placeholder="Select Mandal" [ngClass]="{
                           'is-invalid ng-dirty':
                             FormControls['mandalId'].touched &&
                             FormControls['mandalId'].errors
@@ -287,7 +287,7 @@
                     <div class="field col-12 md:col-4">
                       <label for="cultivable Area">Cultivable Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="cultivableArea" formControlName="cultivableArea" [minFractionDigits]="2"
-                        placeholder="Enter Cultivable Area(Acres)"
+                        placeholder="Enter Cultivable Area"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['cultivableArea'].touched && FormControls['cultivableArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
@@ -314,8 +314,7 @@
                     <div class="field col-12 md:col-4">
                       <label for="potentialArea">Suitable Area For Cane(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="potentialArea" formControlName="potentialArea" mode="decimal"
-                        placeholder="Suitable Area" locale="en-US" placeholder="Enter Suitable Area"
-                        [minFractionDigits]="2"
+                        locale="en-US" placeholder="Enter Suitable Area For Cane" [minFractionDigits]="2"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['potentialArea'].touched && FormControls['potentialArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
@@ -323,7 +322,6 @@
                           FormControls['potentialArea'].touched
                         " class="error-message p-error">
                         Please Enter Suitable Area For Cane.
-
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
@@ -382,7 +380,7 @@
                     <div class="field col-12 md:col-4">
                       <label for="noOfEbservices">No Of EB Services:<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="noOfEbservices" formControlName="noOfEbservices" [minFractionDigits]="2"
-                        placeholder="Enter No of EB Services"
+                        placeholder="Enter No Of EB Services"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['noOfEbservices'].touched && FormControls['noOfEbservices'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
