@@ -40,28 +40,27 @@ export class LoginComponent {
     this.submitted = true;
     this.accountService.Authenticate(this.loginForm.value as LoginModel)
       .subscribe(
-      {
+        {
           next: (resp: LogInSuccessModel) => {
-            if(resp.isLoginSuccess && !resp.isFirstTimeLogin){
+            if (resp.isLoginSuccess && !resp.isFirstTimeLogin) {
               this.messageService.add({ severity: 'success', key: 'myToast', summary: 'Success!', detail: 'Signing in...!' });
               setTimeout(() => {
                 this.router.navigate(['dashboard']);
               }, 1000);
             }
-            else if(resp.isLoginSuccess && resp.isFirstTimeLogin) {
+            else if (resp.isLoginSuccess && resp.isFirstTimeLogin) {
               // redirect the call to take secure questions form user.
-            }else{
+            } else {
               this.submitted = false;
             }
           },
           error: (error) => {
-            console.log(error);
             if ([401].includes(error)) {
               this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Invalid Credentials!" });
-              console.log(error);
             } else if ([400].includes(error)) {
               this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "User Not found" });
             }
+            this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "UserName Or Password Is Incorrect" });
             this.submitted = false;
           },
           complete: () => {

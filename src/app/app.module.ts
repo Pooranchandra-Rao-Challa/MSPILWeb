@@ -25,7 +25,7 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { SugarAPIInterceptor } from 'src/app/_helpers/sugar.api.interceptor';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { permitService } from './_services/permit.service';
 
@@ -47,7 +47,7 @@ import { permitService } from './_services/permit.service';
     PhotoService, ProductService,
     // Application services,
     AccountService, JWTService, GeoMasterService, CommonService, BillMasterService,
-    AppMasterService, MessageService, MonitoringService,permitService
+    AppMasterService, MessageService, MonitoringService,permitService,ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
