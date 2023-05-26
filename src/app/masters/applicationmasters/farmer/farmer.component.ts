@@ -28,6 +28,7 @@ export class FarmerComponent implements OnInit {
   farmer: FarmerDto = new FarmerDto();
   fbfarmer!: FormGroup;
   @ViewChild('filter') filter!: ElementRef;
+  @ViewChild('fileInput') fileInput!: ElementRef;
   submitLabel!: string;
   banks: BankViewDto[] = [];
   bank: BankDto = new BankDto();
@@ -54,6 +55,7 @@ export class FarmerComponent implements OnInit {
   defaultImageUrl: string = 'https://d30y9cdsu7xlg0.cloudfront.net/png/138926-200.png';
   imagePreview: any;
   mediumDate: string = MEDIUM_DATE;
+  showFileSelectButton = false;
 
   plotHeader: ITableHeader[] = [
     { field: 'code', header: 'code', label: 'Code' },
@@ -126,7 +128,7 @@ export class FarmerComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      // imageUrl: [''],
+      imageUrl: [''],
       isRegistered: [null],
       isActive: [null],
     });
@@ -134,27 +136,30 @@ export class FarmerComponent implements OnInit {
 
   }
 
+  showFileSelect() {
+    this.showFileSelectButton = true;
+    setTimeout(() => this.fileInput.nativeElement.click());
+  }
+  onImageRemove() {
+    this.imagePreview = null;
+  }
+  
   onImageClick() {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
     inputElement.onchange = (e) => this.onImageSelect(e);
-    inputElement.click();
+    inputElement.click(); 
   }
-
+  
   onImageSelect(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.fbfarmer.patchValue({
-        imageUrl: file
-      });
-
-      // Show preview
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreview = reader.result;
+        this.imagePreview = reader.result as string;
       };
       reader.readAsDataURL(file);
-    }
+    } 
   }
 
   initcasteDetails() {
@@ -232,6 +237,7 @@ export class FarmerComponent implements OnInit {
   editFarmer(farmer: FarmersViewDto) {
     this.getBranchByBankId(farmer.bankId!, true);
     this.initVillages(farmer.villageId);
+    this.imagePreview = farmer.imageUrl;
     this.fbfarmer.controls['casteId'].setValue(farmer.casteId);
     this.fbfarmer.controls['name'].setValue(farmer.farmerName);
     this.fbfarmer.controls['panno'].setValue(farmer.panNo);
@@ -266,6 +272,9 @@ export class FarmerComponent implements OnInit {
 
 
   onSubmit() {
+    console.log(this.fbfarmer.value);
+   
+    
     if (this.fbfarmer.valid) {
       if (this.addFlag) {
         if (this.isUniqueFarmerCode()) {
@@ -289,6 +298,8 @@ export class FarmerComponent implements OnInit {
   
   save() {
     if (this.fbfarmer.valid) {
+      this.imagePreview = ['url'];
+      this.fbfarmer.patchValue({ imageUrl:['url'] });
       this.fbfarmer.setValue({ ...this.fbfarmer.value, casteId: parseInt(this.fbfarmer.value.casteId, 10) })
       this.saveFarmer().subscribe(resp => {
         if (resp) {
