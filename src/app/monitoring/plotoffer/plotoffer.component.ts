@@ -7,7 +7,7 @@ import { CommonService } from 'src/app/_services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { PlotOfferDto, IFarmerInPlotOfferDto, IFarmerPlotOffersViewDto } from 'src/app/_models/monitoring';
+import { PlotOfferDto, IFarmerInPlotOfferDto, IFarmerPlotOffersViewDto, FarmerSelectInfoViewDto } from 'src/app/_models/monitoring';
 import { FarmersViewDto, plantTypeViewDto, VarietyViewDto } from 'src/app/_models/applicationmaster';
 import { VillagesViewDto } from 'src/app/_models/geomodels';
 import { Observable } from 'rxjs';
@@ -43,7 +43,7 @@ export class PlotofferComponent implements OnInit {
   fbPlotOffer!: FormGroup;
   seasons!: any[];
   currentSeason: SeasonDto = {};
-  farmers: FarmersViewDto[] = [];
+  farmers: FarmerSelectInfoViewDto[] = [];
   villages: VillagesViewDto[] = [];
   plantTypes: plantTypeViewDto[] = [];
   varieties: VarietyViewDto[] = [];
@@ -72,6 +72,7 @@ export class PlotofferComponent implements OnInit {
   ];
   loading: boolean = false;
   currentSeasonId?: number;
+  farmerInfo: FarmersViewDto[] = [];
 
   constructor(private formbuilder: FormBuilder,
     private commonService: CommonService,
@@ -117,8 +118,8 @@ export class PlotofferComponent implements OnInit {
   }
 
   initFarmers() {
-    this.appMasterservice.GetFarmers().subscribe((resp) => {
-      this.farmers = resp as unknown as FarmersViewDto[];
+    this.monitoringService.GetRegisteredFarmers().subscribe((resp) => {
+      this.farmers = resp as unknown as FarmerSelectInfoViewDto[];
     });
   }
 
@@ -225,14 +226,15 @@ export class PlotofferComponent implements OnInit {
 
   onSelectedFarmer(farmerId: number) {
     this.IsNewFarmer(farmerId);
-    this.farmers.forEach((value) => {
-      if (value.farmerId == farmerId) {
-        this.fbPlotOffer.controls['ryotName'].setValue(value.farmerName);
-        this.fbPlotOffer.controls['fatherName'].setValue(value.fatherName);
-        this.fbPlotOffer.controls['farmerVillage'].setValue(value.villageName);
-        this.fbPlotOffer.controls['farmerDivision'].setValue(value.divisionName);
-        this.fbPlotOffer.controls['farmerCircle'].setValue(value.circleName);
-        this.fbPlotOffer.controls['farmerSection'].setValue(value.sectionName);
+    this.appMasterservice.GetFarmer(farmerId).subscribe((resp) => {
+      this.farmerInfo = resp as unknown as FarmersViewDto[];
+      if(resp){
+        this.fbPlotOffer.controls['ryotName'].setValue(this.farmerInfo[0].farmerName);
+        this.fbPlotOffer.controls['fatherName'].setValue(this.farmerInfo[0].fatherName);
+        this.fbPlotOffer.controls['farmerVillage'].setValue(this.farmerInfo[0].villageName);
+        this.fbPlotOffer.controls['farmerDivision'].setValue(this.farmerInfo[0].divisionName);
+        this.fbPlotOffer.controls['farmerCircle'].setValue(this.farmerInfo[0].circleName);
+        this.fbPlotOffer.controls['farmerSection'].setValue(this.farmerInfo[0].sectionName);
       }
     });
   }
