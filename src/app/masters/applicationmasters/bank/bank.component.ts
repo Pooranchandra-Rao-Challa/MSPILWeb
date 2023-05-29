@@ -73,7 +73,7 @@ export class BankComponent implements OnInit {
       bankId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      abbr: ['',[ Validators.minLength(MIN_LENGTH_2)]],
+      abbr: [null],
       isActive: [null],
       branches: this.formbuilder.array([]),
     });

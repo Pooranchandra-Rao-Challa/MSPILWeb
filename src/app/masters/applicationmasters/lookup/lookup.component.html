@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Lookup" icon="pi pi-plus" class="p-button-primary p-mr-2"
-                    (click)="addLookupDialog()" *ngIf="permissions.CanCreateLookUp"></button>
+                    (click)="addLookupDialog()" *ngIf="permissions?.CanCreateLookUp"></button>
             </ng-template>
         </p-toolbar>
 
@@ -212,7 +212,7 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th></th>
+                    <th *ngIf="permissions?.CanUpdateLookUp"></th>
                     <th *ngFor="let col of headers" [pSortableColumn]="col.header">
                         {{col?.label}}
                         <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -223,8 +223,7 @@
 
             <ng-template pTemplate="body" let-lookup>
                 <tr>
-                    <td><button pButton pRipple icon="pi pi-pencil" (click)=" editLookUp(lookup)"
-                            [disabled]="!permissions.CanUpdateLookUp"
+                    <td *ngIf="permissions?.CanUpdateLookUp"><button pButton pRipple icon="pi pi-pencil" (click)=" editLookUp(lookup)"   
                             class="p-element p-ripple p-button-text p-button-primary p-component"></button></td>
                     <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
                         <span

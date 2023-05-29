@@ -8,8 +8,8 @@
         <h4>Bills</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Bill" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addBill()" *ngIf="permissions.CanCreateBill"></button>
+        <button pButton pRipple label="New Bill" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addBill()"
+          *ngIf="permissions.CanCreateBill"></button>
       </ng-template>
     </p-toolbar>
 
@@ -17,9 +17,8 @@
     <p-table #dtBills [value]="bills" dataKey="id" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm pb-5" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [alwaysShowPaginator]="false"
-      [showCurrentPageReport]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+      [showCurrentPageReport]="true" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -42,14 +41,16 @@
       </ng-template>
       <ng-template pTemplate="body" let-bill>
         <tr>
-          <td *ngFor="let col of headers" [ngClass]="(col?.field == 'isActive' || col?.field == 'isFinal') ? 'text-center' : ''">
-            <span *ngIf="col?.field != 'fromDate' && col?.field != 'toDate' && col?.field != 'runDate' && col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isFinal' && col?.field != 'isActive'">{{bill[col.field]}}</span>
-            <span *ngIf="col?.field == 'fromDate' || col?.field == 'toDate' || col?.field == 'runDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
+          <td *ngFor="let col of headers"
+            [ngClass]="(col?.field == 'isActive' || col?.field == 'isFinal') ? 'text-center' : ''">
+            <span
+              *ngIf="col?.field != 'fromDate' && col?.field != 'toDate' && col?.field != 'runDate' && col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isFinal' && col?.field != 'isActive'">{{bill[col.field]}}</span>
+            <span
+              *ngIf="col?.field == 'fromDate' || col?.field == 'toDate' || col?.field == 'runDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
               {{bill[col.field] | date: mediumDate}}
             </span>
             <span *ngIf="col?.field == 'isFinal' || col?.field == 'isActive'">
-              <p-checkbox name="active" value="active" [binary]="true" [(ngModel)]="bill[col.field]"
-                [disabled]="true">
+              <p-checkbox name="active" value="active" [binary]="true" [(ngModel)]="bill[col.field]" [disabled]="true">
               </p-checkbox>
             </span>
           </td>
@@ -69,10 +70,9 @@
 
     <!-- Dialog box -->
     <p-dialog header="Bill" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-    [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}"
-       (onHide)="fbBillMaster.reset()">
+      [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" (onHide)="fbBillMaster.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbBillMaster" (ngSubmit)="onSubmit()" >
+        <form [formGroup]="fbBillMaster" (ngSubmit)="onSubmit()">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">From Date:</label>
-                  <p-calendar  placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                  <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
                     formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>
@@ -112,8 +112,10 @@
                 <div class="field col-12 md:col-6">
                   <label class="required">To Date:</label>
                   <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
-                    formControlName="toDate" [minDate]="fbBillMaster.value.fromDate" [disabled]="!FormControls['fromDate'].value"
-                    [pTooltip]="!FormControls['fromDate'].value ? 'Please Select From Date First' : ''" tooltipPosition="top"
+                    formControlName="toDate" [minDate]="fbBillMaster.value.fromDate"
+                    [disabled]="!FormControls['fromDate'].value"
+                    [pTooltip]="!FormControls['fromDate'].value ? 'Please Select From Date First' : ''"
+                    tooltipPosition="top"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['toDate'].touched && FormControls['toDate'].errors }">
                   </p-calendar>
                   <span *ngIf="FormControls['toDate'].touched && FormControls['toDate'].invalid">
@@ -139,8 +141,8 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary" [disabled]="fbBillMaster.invalid"
-            (click)="onSubmit()"></button>
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
+            [disabled]="fbBillMaster.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

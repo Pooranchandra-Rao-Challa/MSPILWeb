@@ -190,7 +190,7 @@
 
         <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateHGL"></th>
           <th *ngFor="let col of plotHeader" [pSortableColumn]="col.field">
             {{col.label}}
             <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
@@ -200,9 +200,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-farmer>
         <tr>
-          <td>
+          <td *ngIf="permissions.CanUpdateHGL">
             <button pButton pRipple icon="pi pi-pencil" (click)="editHgl(hgl)"
-              [disabled]="!permissions.CanUpdateSeason"
               class="p-element p-ripple p-button-text p-button p-component">
             </button>
           </td>

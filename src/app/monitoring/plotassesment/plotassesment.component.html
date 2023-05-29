@@ -15,7 +15,7 @@
 
     <!-- dialog -->
     <p-dialog header="Plot Assessment" [(visible)]="showDialog" [modal]="true" [transitionOptions]="'500ms'"
-    [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="ClearForm()">
+      [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="ClearForm()">
       <form [formGroup]="fbPlotAssessment">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Assessment(Doc20)" class="col-12">
@@ -383,10 +383,10 @@
     <!-- table -->
     <!-- [lazy]="true" -->
     <p-table #dtPlotAssessments dataKey="farmerCode" [value]="plotAssessments" [rows]="10" [rowHover]="true"
-    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-    [alwaysShowPaginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+      [alwaysShowPaginator]="false" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
       (onRowExpand)="onRowExpand($event)">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -406,7 +406,8 @@
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full">
             </span>
             <p-dropdown class="m-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssessments($event.value)" optionValue="seasonId">
+              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotAssessments($event.value)"
+              optionValue="seasonId">
             </p-dropdown>
           </div>
         </div>
@@ -442,7 +443,7 @@
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdatePlotAssessment"></th>
           <th *ngFor="let col of plotHeader">
             {{col?.label}}
           </th>
@@ -450,9 +451,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotAssessment>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAssessment(plotAssessment)"
-              class="p-element p-ripple p-button-text p-button p-component"
-              [disabled]="!permissions?.CanUpdatePlotAssessment"></button>
+          <td *ngIf="permissions?.CanUpdatePlotAssessment"><button pButton pRipple icon="pi pi-pencil"
+              (click)="editPlotAssessment(plotAssessment)"
+              class="p-element p-ripple p-button-text p-button p-component"></button>
           </td>
           <td *ngFor="let col of plotHeader">
 
