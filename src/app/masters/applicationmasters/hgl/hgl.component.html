@@ -413,13 +413,13 @@
                     </span>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label class="required">TAX:</label>
-                    <input pInputText id="tax" #aadhaarNo placeholder=" Enter tax " formControlName="tax" maxlength="9"
+                    <label class="required">Tax(%):</label>
+                    <input pInputText id="tax" #aadhaarNo placeholder=" Enter Tax " formControlName="tax" maxlength="9"
                       numericOnly
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['tax'].touched && FormControls['tax'].errors }">
                     <span *ngIf="FormControls['tax'].touched && FormControls['tax'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['tax'].errors?.['required']">
-                        Please Enter Tax Number.</div>
+                        Please Enter Tax.</div>
                     </span>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
@@ -505,16 +505,11 @@
                         appendTo="body"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['branchId'].touched && FormControls['branchId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                        <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['branchId'].errors?.['required']">
-                            Please Select Bank First.</div>
-                        </div>
-                        <div *ngIf="FormControls['branchId'].touched && FormControls['branchId'].valid">
-                          <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['branchId'].errors?.['required']">
-                            Please Select Branch.</div>
-                        </div>
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="FormControls['branchId'].errors?.['required'] && !FormControls['bankId'].errors?.['required']">
+                          Please Select Branch.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['bankId'].errors?.['required']">
+                          Please Select Bank First.</div>
                       </span>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">

@@ -172,7 +172,7 @@
                         <p-inputSwitch formControlName="isRegistered"></p-inputSwitch>
                       </div>
                       <div class="field col-12 md:col-6">
-                        <label class="required">Please Select Gender:</label><br>
+                        <label class="required">Gender:</label><br>
                         <p-radioButton formControlName="gender" value="M" label="Male"></p-radioButton>&nbsp;
                         <p-radioButton formControlName="gender" value="F" label="Female"></p-radioButton>
                         <span *ngIf="FormControls['gender'].touched && FormControls['gender'].invalid">
@@ -350,7 +350,7 @@
                     <div class="field col-12 md:col-4">
                       <label  class="required">Total Area:</label>
                       <p-inputNumber inputId="totalArea" placeholder="Enter total Area" formControlName="totalArea"
-                        [minFractionDigits]="2">
+                        [minFractionDigits]="2"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['totalArea'].touched && FormControls['totalArea'].errors }">
                       </p-inputNumber>
                       <span *ngIf="FormControls['totalArea'].touched && FormControls['totalArea'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['totalArea'].errors?.['required']">
@@ -361,7 +361,8 @@
                     <div class="field col-12 md:col-4">
                       <label  class="required">Cultivated Area:</label>
                       <p-inputNumber inputId="cultivatedArea" placeholder="Enter Cultivated Area"
-                        formControlName="cultivatedArea" [minFractionDigits]="2">
+                        formControlName="cultivatedArea" [minFractionDigits]="2"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['cultivatedArea'].touched && FormControls['cultivatedArea'].errors }">
                       </p-inputNumber>
                       <span *ngIf="FormControls['cultivatedArea'].touched && FormControls['cultivatedArea'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].errors?.['required']">
@@ -377,7 +378,8 @@
                       <label class="required">Bank:</label>
                       <p-dropdown placeholder="Select Bank" [filter]="true" filterBy="name" [virtualScroll]="true"
                         [virtualScrollItemSize]="38" optionLabel="name" [options]="banks" formControlName="bankId"
-                        optionValue="bankId" (onChange)="getBranchByBankId($event.value)">
+                        optionValue="bankId" (onChange)="getBranchByBankId($event.value)"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['bankId'].touched && FormControls['bankId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['bankId'].touched && FormControls['bankId'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['bankId'].errors?.['required']">
@@ -387,7 +389,8 @@
                     <div class="field col-12 md:col-4">
                       <label class="required">Branch:</label>
                       <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
-                        optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)">
+                        optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['branchId'].touched && FormControls['branchId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
                         <div class="ng-invalid ng-touched p-error"
@@ -398,7 +401,7 @@
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label class="required">IFSC:</label>
+                      <label>IFSC:</label>
                       <p class="disabled_text">{{ IFSC }}</p>
                     </div>
                     <div class="field col-12 md:col-4">

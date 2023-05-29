@@ -30,6 +30,7 @@ export class VehicleComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions:any;
+  
   headers: ITableHeader[] = [
     { field: 'code', header: 'code', label: 'Code' },
     { field: 'name', header: 'name', label: 'Name' },
@@ -66,10 +67,10 @@ export class VehicleComponent implements OnInit {
       vehicleTypeId: [null],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
-      capacity: new FormControl(null, [Validators.required]),
-      billingCapacity: new FormControl(null, [Validators.required]),
-      bindingCane: new FormControl(null, [Validators.required]),
-      badCane: new FormControl(null, [Validators.required]),
+      capacity:  [null, (Validators.required)],
+      billingCapacity:  [null, (Validators.required)],
+      bindingCane: [null, (Validators.required)],
+      badCane: [null, (Validators.required)],
       isActive: [null]
     });
   }

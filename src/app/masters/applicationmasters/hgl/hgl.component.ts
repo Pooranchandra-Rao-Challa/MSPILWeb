@@ -283,9 +283,14 @@ export class HglComponent implements OnInit {
   addHgl() {
     this.addSubHgl();
     this.submitLabel = 'Add Hgl';
+    this.clearBranch();
     this.addFlag = true;
     this.hglform();
     this.showDialog = true;
+  }
+  clearBranch(){
+    this.branches=[];
+    this.IFSC=[];
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

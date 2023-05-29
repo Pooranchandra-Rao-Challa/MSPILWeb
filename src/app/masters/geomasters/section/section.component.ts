@@ -42,8 +42,12 @@ export class SectionComponent implements OnInit {
   addSection() {
     this.fbsections.controls['isActive'].setValue(true);
     this.submitLabel = 'Add Section';
+    this.clearCircles();
     this.addFlag = true;
     this.display = true;
+  }
+  clearCircles(){
+    this.circles =[];
   }
   get FormControls() {
     return this.fbsections.controls;

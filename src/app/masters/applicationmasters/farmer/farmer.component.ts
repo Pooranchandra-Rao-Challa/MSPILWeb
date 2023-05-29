@@ -200,10 +200,13 @@ export class FarmerComponent implements OnInit {
       isActive: true
     });
     this.submitLabel = "Add Farmer";
+    this. clearBranch();
     this.addFlag = true;
     this.showDialog = true;
   }
-
+  clearBranch(){
+    this.branches=[];
+  }
   initBanks() {
     this.appmasterservice.GetBanks().subscribe((resp) => {
       this.banks = resp as unknown as BankViewDto[];

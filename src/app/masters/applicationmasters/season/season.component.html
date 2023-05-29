@@ -118,7 +118,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plant From:<sup class="p-error">*</sup></label>
-                    <p-calendar appendTo="body" placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select Plant From Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="plantFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantFrom'].touched && FormControls['plantFrom'].errors }">
                     </p-calendar>
@@ -129,7 +129,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Plant To:<sup class="p-error">*</sup></label>
-                    <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select Plant To Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="plantTo" [minDate]="fbseasons.value.plantFrom"
                       [disabled]="!FormControls['plantFrom'].value"
                       [pTooltip]="!FormControls['plantFrom'].value ? 'Please Select Plant From Date First' : ''"
@@ -150,7 +150,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Crush From:<sup class="p-error">*</sup></label>
-                    <p-calendar appendTo="body" placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select Crush From Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="crushFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushFrom'].touched && FormControls['crushFrom'].errors }">
                     </p-calendar>
@@ -161,7 +161,7 @@
                   </div>
                   <div class="field col-12 md:col-4">
                     <label>Crush To<sup class="p-error">*</sup></label>
-                    <p-calendar appendTo="body" placeholder="Select To Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar appendTo="body" placeholder="Select Crush To Date" [readonlyInput]="true" [showIcon]="true"
                       formControlName="crushTo" [minDate]="fbseasons.value.crushFrom"
                       [disabled]="!FormControls['crushFrom'].value"
                       [pTooltip]="!FormControls['crushFrom'].value ? 'Please Select Crush From Date First' : ''"

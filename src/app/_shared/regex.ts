@@ -12,7 +12,7 @@ export const RG_AADHAAR = /^(?!0{12}|1{12}|2{12}|3{12}|4{12}|5{12}|6{12}|7{12}|8
 export const RG_SEASON_CODE = '^[0-9]{4}[-][0-9]{2}$';
 export const RG_SEASON_NAME = '^[0-9]{4}[-][0-9]{4}$';
 export const RG_SURVEY_NO = /^[-a-zA-Z0-9-/]+([-a-zA-Z0-9-/]+)*$/;
-
+export const RG_IFSC = /^[A-Z]{4}0[A-Z0-9]{6}$/;
 
 
 

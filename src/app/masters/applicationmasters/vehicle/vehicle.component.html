@@ -163,8 +163,8 @@
         </form>
       </div>
       <ng-template pTemplate="footer">
-        <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" label="{{submitLabel}}" class="p-button-raised p-button-primary"
+        <div class="col-6" style="float:right">
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
             [disabled]="fbVehicleType.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
