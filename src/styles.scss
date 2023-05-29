@@ -145,7 +145,7 @@ div.season-rates-tab-items:not(:first-child) {
   table-layout: fixed !important;
 }
 
-.p-datatable-gridlines.p-datatable .p-datatable-wrapper  button.p-button.p-button-icon-only{
+.p-datatable-gridlines.p-datatable .p-datatable-wrapper  button.p-button.p-button-icon-only:not(.p-calendar button.p-button.p-button-icon-only){
   height: auto !important;
   padding: 1px !important;
   width:100% !important;
