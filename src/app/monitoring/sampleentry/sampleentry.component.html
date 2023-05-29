@@ -2,7 +2,7 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
 
-    
+
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -25,7 +25,7 @@
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
+                pTooltip="Search By Farmer Name, Farmer Code, Plot No, Doc No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initSampleEntries($event.value)" optionValue="seasonId">
@@ -78,13 +78,13 @@
     </p-table>
     <div class="grid mt-3">
       <ul class="sample_entry_note">
-        <li class="text-blue-300 " ><span>Allowed only but not entered.</span></li>
-        <li class="text-green-300">Allowed one or more samples but not entered.</li>
+        <li class="text-blue-300 " ><span>Allowed one sample.</span></li>
+        <li class="text-green-300">Allowed one or more samples.</li>
         <li class="text-red-300 " >All samples entered. </li>
       </ul>
-      
-     
-   
+
+
+
 </div>
 
     <!-- Dialog -->
@@ -228,7 +228,7 @@
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
           <button pButton pRipple type="submit" (click)="onSubmit()" [label]="submitLabel"
-            class="p-button-raised p-button-success"></button>
+            class="p-button-raised p-button-success" [disabled]="fbSampleEntry.invalid"></button>
         </div>
       </ng-template>
     </p-dialog>
