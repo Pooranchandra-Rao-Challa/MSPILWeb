@@ -144,6 +144,8 @@ export const GET_SAMPLESLABS_URI = "ApplicationMaster/GetSampleSlabs";
 export const CREATE_SAMPLESLAB_URI = "ApplicationMaster/CreateSampleSlab";
 export const UPDATE_SAMPLESLAB_URI = "ApplicationMaster/UpdateSampleSlab";
 export const GET_FARMERS_URI = "ApplicationMaster/GetFarmers";
+export const GET_FARMER_URI = "ApplicationMaster/GetFarmer";
+// export const GET_FARMER_INFO_URI = "ApplicationMaster/GetFarmerInfo";
 export const CREATE_FARMER_URI = "ApplicationMaster/CreateFarmer";
 export const UPDATE_FARMER_URI = "ApplicationMaster/UpdateFarmer";
 export const GET_HGL_URI = "ApplicationMaster/GetHgls";
@@ -252,4 +254,4 @@ export const CREATE_PERMIT_QUOTA = "Schedule/CreatepermitQuota";
 export const UPDATE_PERMIT_QUOTA_URI ="Schedule/UpdatePermitQuota";
 export const CREATE_CUTTING_ORDER_URI = "Schedule/CreateCuttingOrder";
 
-
+export const CHANGE_PASSWORD_URI = "Security/ChangePassword";

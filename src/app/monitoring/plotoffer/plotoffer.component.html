@@ -152,18 +152,18 @@
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Ryot No:</label>
-                    <p-dropdown optionLabel="code" [options]="farmers" optionValue="farmerId" [filter]="true"
-                      filterBy="code,farmerName,villageName" formControlName="farmerId" placeholder="Select Farmer"
+                    <p-dropdown optionLabel="code" [options]="farmers" optionValue="id" [filter]="true" [autoDisplayFirst]="true"
+                      filterBy="code,name,villageName" formControlName="farmerId" placeholder="Select Farmer"
                       (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38"
                       appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                       <ng-template let-farmer pTemplate="selectedItem">
-                        <div>{{farmer.code}}-{{farmer.farmerName}}</div>
+                        <div>{{farmer.code}}-{{farmer.name}}</div>
                       </ng-template>
                       <ng-template let-seasonPlotOffer let-farmer pTemplate="item">
                         <div class="block align-items-center gap-2">
                           <div>{{farmer.code}}</div>
-                          <div>{{farmer.farmerName}}</div>
+                          <div>{{farmer.name}}</div>
                           <div> {{farmer.villageName}}</div>
                         </div>
                       </ng-template>

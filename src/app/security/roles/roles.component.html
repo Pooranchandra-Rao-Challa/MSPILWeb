@@ -93,7 +93,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['code'].touched && roleFormControls['code'].errors }" />
                   <span *ngIf="roleFormControls['code'].touched && roleFormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['required']">
-                      Please Enter Code.</div>
+                      Please Enter Role Code.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['minlength']">
                       Code Min Length Is 2 .</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['maxlength']">
@@ -108,7 +108,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['name'].touched && roleFormControls['name'].errors }" />
                   <span *ngIf="roleFormControls['name'].touched && roleFormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['required']">
-                      Please Enter Name.</div>
+                      Please Enter Role Name.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['pattern']">
                       Name Should Contains Only Letters.</div>
                   </span>

@@ -10,9 +10,11 @@ import { Router } from '@angular/router';
 export class SuccessMessageComponent implements OnInit {
 
   constructor(private router: Router) { }
-  navigateToPrev(){
+
+  navigateToPrev() {
     this.router.navigate(['/forgotpassword/changepassword'])
   }
+
   ngOnInit(): void {
   }
 

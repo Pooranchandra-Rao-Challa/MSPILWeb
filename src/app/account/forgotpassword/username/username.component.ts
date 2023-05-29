@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,20 +8,15 @@ import { Router } from '@angular/router';
   ]
 })
 export class UserNameComponent implements OnInit {
-
   userName?: string;
+
   constructor(private router: Router) { }
 
-
-
-  navigateToNext(){
-    debugger
-    console.log(this.userName);
-
-    this.router.navigate(['/forgotpassword/securityquestion'],{ queryParams: { username: this.userName }})
+  ngOnInit(): void {
   }
 
-  ngOnInit(): void {
+  navigateToNext() {
+    this.router.navigate(['/forgotpassword/securityquestion'], { queryParams: { username: this.userName } })
   }
 
 }

@@ -12,52 +12,49 @@ import { MessageService } from 'primeng/api';
 })
 export class SecurityQuestionComponent implements OnInit {
   userQuestions: UserQuestionDto[] = []
-  userName?:string;
+  userName?: string;
+
   constructor(private router: Router,
-    private securityService:SecurityService,
+    private securityService: SecurityService,
     private messageService: MessageService,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute) { }
 
-
-  navigateToPrev(){
+  navigateToPrev() {
     this.router.navigate(['/forgotpassword/username']);
   }
-  navigateToNext(){
-    debugger
-    console.log(this.userQuestions);
+
+  navigateToNext() {
     let flag = true;
     this.userQuestions.forEach(question => {
-      if(flag)
-        flag = question.answer?.toLowerCase() ==  question.userAnswer?.toLowerCase()
+      if (flag)
+        flag = question.answer == question.userAnswer;
     });
-
-    if(flag)
-      this.router.navigate(['/forgotpassword/changepassword'],{ queryParams: { username: this.userName }})
-      else  this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Entered Answer is invalid" });
-
+    if (flag)
+      this.router.navigate(['/forgotpassword/changepassword'], { queryParams: { username: this.userName } })
+    else this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Entered Answer Is Incorrect" });
   }
+
   ngOnInit(): void {
     this.userName = this.activatedRoute.snapshot.queryParams['username'];
     this.securityService.UserSecurityQuestions(this.userName!).subscribe({
-      next: (resp) =>{
+      next: (resp) => {
         this.userQuestions = resp as unknown as UserQuestionDto[];
-        if(this.userQuestions.length < 1){
+        if (this.userQuestions.length < 1) {
           this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Invalid User Name!" });
-         
           this.navigateToPrev();
         }
       }
     })
   }
 
-  onDisabled(): boolean{
+  onDisabled(): boolean {
     var securityAnswerCount = 0;
     this.userQuestions.forEach(question => {
-      if(question.userAnswer){
+      if (question.userAnswer) {
         securityAnswerCount = securityAnswerCount + 1;
       }
     });
-    if(securityAnswerCount == 2){
+    if (securityAnswerCount == 2) {
       return false;
     }
     else return true;

@@ -94,3 +94,8 @@ export class ForgotUserPasswordDto {
   ConfirmPassword?:string;
   UserQuestions?: UserQuestionDto[]
 }
+
+export class ChangePasswordDto {
+  password?: string
+  newPassword?:string;
+}

@@ -19,6 +19,8 @@ export class JWTService {
   }
 
   public get JWTToken(): string{
+    console.log(TOKEN_KEY);
+
     return localStorage.getItem(TOKEN_KEY) ||"";
   }
 
@@ -71,7 +73,7 @@ export class JWTService {
   public get GetLoginId(): string{
 
     const jwt = this.DecodedJWT;
-    return jwt.Id;
+    return jwt.userId;
   }
 
   public get HasQuestions():boolean{

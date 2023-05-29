@@ -257,6 +257,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Plot Transfer
   'SMOPT001': 'Plot Transfer Added Successfully',
   'WMOPT001': 'Plot Transfer is irrevocable, please confirm that this update is correct before proceeding',
+  'EMOPT001': 'You have rejected',
 
   // Sanmple Entry
   'SMOSE001': 'Sample Entry Added Successfully',

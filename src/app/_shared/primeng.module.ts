@@ -29,6 +29,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @NgModule({
   exports: [
@@ -62,8 +63,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     PasswordModule,
     ProgressSpinnerModule,
     OverlayPanelModule,
+    ConfirmPopupModule
 
-   
   ]
 })
 export class PrimeNgModule { }
