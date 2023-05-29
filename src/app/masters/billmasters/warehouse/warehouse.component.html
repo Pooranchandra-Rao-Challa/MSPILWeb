@@ -25,14 +25,14 @@
             (click)="clear(dtWareHouses)"></button>
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dtWareHouses, $event)" placeholder="Search Keyword"
-              class="w-full" />
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dtWareHouses, $event)"
+              placeholder="Search Keyword" class="w-full" />
           </span>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateWareHouse"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -42,8 +42,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-warehouse>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editWarehouse(warehouse)" [disabled]="!permissions.CanUpdateWareHouse"></button>
+          <td *ngIf="permissions.CanUpdateWareHouse"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editWarehouse(warehouse)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span

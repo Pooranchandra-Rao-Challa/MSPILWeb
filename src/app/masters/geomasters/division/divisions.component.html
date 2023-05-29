@@ -137,7 +137,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Division" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitDivision()" *ngIf="permissions.CanCreateDivision"></button>
+          (click)="InitDivision()" *ngIf="permissions?.CanCreateDivision"></button>
       </ng-template>
     </p-toolbar>
 
@@ -160,7 +160,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdateDivision" ></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -170,8 +170,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-divisons>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(divisons)" [disabled]="!permissions.CanUpdateDivision"></button></td>
+          <td *ngIf="permissions?.CanUpdateDivision"><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editProduct(divisons)"></button></td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span
               *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{divisons[col.field]}}</span>

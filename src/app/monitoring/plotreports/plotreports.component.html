@@ -67,7 +67,7 @@
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdatePlotReport"></th>
           <th *ngFor="let col of plotHeaders">
             {{col?.label}}
           </th>
@@ -75,9 +75,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotReport>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editPlotReport(plotReport, farmer)" *ngIf="!forapproval"
-              [disabled]="!permissions?.CanUpdatePlotReport"></button>
+          <td *ngIf="permissions?.CanUpdatePlotReport"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editPlotReport(plotReport, farmer)"
+              *ngIf="!forapproval"></button>
             <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editApproval(plotReport, farmer)" *ngIf="forapproval"></button>
           </td>

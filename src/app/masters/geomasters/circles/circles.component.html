@@ -153,7 +153,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Circle" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addCircle()" *ngIf="permissions.CanCreateCircle"></button>
+          (click)="addCircle()" *ngIf="permissions?.CanCreateCircle"></button>
       </ng-template>
     </p-toolbar>
 
@@ -181,7 +181,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdateCircle"></th>
           <th pSortableColumn="divisionName">
             Division<p-columnFilter type="text" field="divisionName" display="menu"></p-columnFilter>
             <p-sortIcon field="divisionName"></p-sortIcon>
@@ -234,8 +234,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-circles>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(circles)" [disabled]="!permissions.CanUpdateCircle"></button></td>
+          <td *ngIf="permissions?.CanUpdateCircle"><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editProduct(circles)"></button></td>
           <td>{{ circles.divisionName }}</td>
           <td>{{ circles.circleCode }}</td>
           <td>{{ circles.circleName }}</td>

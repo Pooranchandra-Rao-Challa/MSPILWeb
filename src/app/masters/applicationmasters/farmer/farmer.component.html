@@ -36,7 +36,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateFarmer"></th>
           <th *ngFor="let col of plotHeader" [pSortableColumn]="col.field">
             {{col.label}}
             <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
@@ -46,9 +46,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-farmer>
         <tr>
-          <td>
+          <td *ngIf="permissions.CanUpdateFarmer">
             <button pButton pRipple icon="pi pi-pencil" (click)="editFarmer(farmer)"
-              [disabled]="!permissions.CanUpdateSeason"
               class="p-element p-ripple p-button-text p-button p-component">
             </button>
           </td>

@@ -14,8 +14,9 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dtPlotOffer [value]="plotOffers" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10" [alwaysShowPaginator]="false"
-      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
+    <p-table #dtPlotOffer [value]="plotOffers" [columns]="farmerHeaders" dataKey="farmerCode" [rows]="10"
+      [alwaysShowPaginator]="false" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
       responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
@@ -67,7 +68,7 @@
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdatePlotOffer"></th>
           <th *ngFor="let col of plotHeaders">
             {{col?.label}}
           </th>
@@ -75,9 +76,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotOffer>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editPlotOffer(plotOffer, farmer)" *ngIf="!forapproval"
-              [disabled]="!permissions?.CanUpdatePlotOffer"></button>
+          <td *ngIf="permissions?.CanUpdatePlotOffer"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editPlotOffer(plotOffer, farmer)"
+              *ngIf="!forapproval"></button>
             <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
               (click)="editApproval(plotOffer, farmer)" *ngIf="forapproval"></button>
           </td>
@@ -152,10 +153,10 @@
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Ryot No:</label>
-                    <p-dropdown optionLabel="code" [options]="farmers" optionValue="id" [filter]="true" [autoDisplayFirst]="true"
-                      filterBy="code,name,villageName" formControlName="farmerId" placeholder="Select Farmer"
-                      (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                      appendTo="body"
+                    <p-dropdown optionLabel="code" [options]="farmers" optionValue="id" [filter]="true"
+                      [autoDisplayFirst]="true" filterBy="code,name,villageName" formControlName="farmerId"
+                      placeholder="Select Farmer" (onChange)="onSelectedFarmer($event.value)" [virtualScroll]="true"
+                      [virtualScrollItemSize]="38" appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['farmerId'].touched && FormControls['farmerId'].errors }">
                       <ng-template let-farmer pTemplate="selectedItem">
                         <div>{{farmer.code}}-{{farmer.name}}</div>

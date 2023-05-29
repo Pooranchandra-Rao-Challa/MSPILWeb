@@ -14,8 +14,8 @@
     </p-toolbar>
 
     <!-- dialog -->
-    <p-dialog header="Plot Yield" [(visible)]="showDialog" [modal]="true" (onHide)="ClearForm()"  [transitionOptions]="'500ms'"
-    [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" >
+    <p-dialog header="Plot Yield" [(visible)]="showDialog" [modal]="true" (onHide)="ClearForm()"
+      [transitionOptions]="'500ms'" [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}">
       <form [formGroup]="fbPlotYield" (ngSubmit)="onSubmit()">
         <p-tabView orientation="left">
           <p-tabPanel header="Plot Yield" class="col-12">
@@ -28,7 +28,7 @@
                       <div class="field col-12 md:col-4 ">
                         <label class="required">Season:</label>
                         <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-                          optionValue="seasonId" formControlName="seasonId"  [(ngModel)]="currentSeason.seasonId" 
+                          optionValue="seasonId" formControlName="seasonId" [(ngModel)]="currentSeason.seasonId"
                           (onChange)="initPlotNumbers($event.value, -1)" appendTo="body"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonId'].touched && FormControls['seasonId'].errors }">
                         </p-dropdown>
@@ -101,7 +101,8 @@
                         </div>
                       </div>
                     </p-fieldset>
-                    <p-fieldset legend="Plot Info" [toggleable]="true" class="col-12 lg:col-7 xs:col-12 mt-2" [transitionOptions]="'500ms'">
+                    <p-fieldset legend="Plot Info" [toggleable]="true" class="col-12 lg:col-7 xs:col-12 mt-2"
+                      [transitionOptions]="'500ms'">
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-3 lg:col-3">
                           <label>Plot Division:</label>
@@ -457,8 +458,9 @@
     </p-dialog>
 
     <!-- table -->
-    <p-table #dtPlotYields dataKey="farmerCode" [value]="plotYields" [columns]="farmerHeaders" [rows]="10" [alwaysShowPaginator]="false"
-      [rowHover]="true" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm table-fixed" [paginator]="true"
+    <p-table #dtPlotYields dataKey="farmerCode" [value]="plotYields" [columns]="farmerHeaders" [rows]="10"
+      [alwaysShowPaginator]="false" [rowHover]="true"
+      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm table-fixed" [paginator]="true"
       [globalFilterFields]="globalFilterFields" [autoLayout]="false" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'min-content'}" (onRowExpand)="onRowExpand($event)"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
@@ -473,7 +475,8 @@
                 pTooltip="Search By Farmer Code, Farmer Name, Village Name, Offer No, Plot No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-            [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotYields($event.value)"  optionValue="seasonId" [virtualScrollItemSize]="30">
+              [(ngModel)]="currentSeason.seasonId" (onChange)="initPlotYields($event.value)" optionValue="seasonId"
+              [virtualScrollItemSize]="30">
             </p-dropdown>
           </div>
         </div>
@@ -503,15 +506,15 @@
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-farmer>
         <tr>
-          <td colspan="5" >
-            <div class="grid p-3" >
-              <div class="col-12" >
-              <p-table [value]="farmer.objNetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId"
-                [tableStyle]="{ width: 'min-content'}"
-                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
-                <ng-template pTemplate="header">
+          <td colspan="5">
+            <div class="grid p-3">
+              <div class="col-12">
+                <p-table [value]="farmer.objNetYieldPlots" [columns]="plotHeaders" dataKey="plotOfferId"
+                  [tableStyle]="{ width: 'min-content'}"
+                  styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+                  <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdatePlotYield"></th>
           <th *ngFor="let col of plotHeaders">
             {{col?.label}}
           </th>
@@ -519,8 +522,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotyield>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editPlotYield(plotyield)" [disabled]="!permissions?.CanUpdatePlotYield"></button>
+          <td *ngIf="permissions?.CanUpdatePlotYield"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editPlotYield(plotyield)"></button>
           </td>
           <td *ngFor="let col of plotHeaders">
             <span
@@ -541,18 +544,18 @@
           <td class="md:text-center m-5" colspan="15">There Are No Yields Found Yet.</td>
         </tr>
       </ng-template>
-              </p-table>
-            </div>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td class="md:text-center m-5" colspan="5">No Yields Found.</td>
-        </tr>
-      </ng-template>
-  </p-table>
+    </p-table>
+  </div>
+</div>
+</td>
+</tr>
+</ng-template>
+<ng-template pTemplate="emptymessage">
+  <tr>
+    <td class="md:text-center m-5" colspan="5">No Yields Found.</td>
+  </tr>
+</ng-template>
+</p-table>
 
 </div>
 </div>
