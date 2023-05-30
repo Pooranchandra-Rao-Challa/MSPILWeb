@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addHgl()"
-          (click)="addSubHgl()" *ngIf="permissions.CanCreateHGL"></button>
+          *ngIf="permissions.CanCreateHGL"></button>
       </ng-template>
     </p-toolbar>
 
@@ -30,164 +30,6 @@
           </span>
         </div>
       </ng-template>
-      <!-- <ng-template pTemplate="header">
-        <tr>
-          <th></th>
-          <th pSortableColumn="code">
-            Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
-            <p-sortIcon field="code"></p-sortIcon>
-          </th>
-          <th pSortableColumn="name">
-            Name <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
-            <p-sortIcon field="name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="gender">
-            Gender <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
-            <p-sortIcon field="gender"></p-sortIcon>
-          </th>
-          <th pSortableColumn="relationTypeName">
-            Relationship Type <p-columnFilter type="text" field="relationTypeName" display="menu"></p-columnFilter>
-            <p-sortIcon field="relationTypeName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="relationName">
-            Relationship Name <p-columnFilter type="text" field="relationName" display="menu"></p-columnFilter>
-            <p-sortIcon field="relationName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="address">
-            Address <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
-            <p-sortIcon field="address"></p-sortIcon>
-          </th>
-          <th pSortableColumn="pinCode">
-            PinCode <p-columnFilter type="text" field="pinCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="pinCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="phoneNo">
-            Phone No <p-columnFilter type="text" field="phoneNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="phoneNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="email">
-            Email <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
-            <p-sortIcon field="email"></p-sortIcon>
-          </th>
-          <th pSortableColumn="panNo">
-            Pan No <p-columnFilter type="text" field="panNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="panNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="aadhaarNo">
-            Aadhaar No <p-columnFilter type="text" field="aadhaarNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="aadhaarNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="tax">
-            Tax <p-columnFilter type="text" field="tax" display="menu"></p-columnFilter>
-            <p-sortIcon field="tax"></p-sortIcon>
-          </th>
-          <th pSortableColumn="tds" style="text-align:center">
-            TDS <p-columnFilter type="text" field="tds" display="menu"></p-columnFilter>
-            <p-sortIcon field="tds"></p-sortIcon>
-          </th>
-          <th pSortableColumn="guarantor1">
-            Guarantor1 <p-columnFilter type="text" field="guarantor1" display="menu"></p-columnFilter>
-            <p-sortIcon field="guarantor1"></p-sortIcon>
-          </th>
-          <th pSortableColumn="guarantor2">
-            Guarantor2 <p-columnFilter type="text" field="guarantor2" display="menu"></p-columnFilter>
-            <p-sortIcon field="guarantor2"></p-sortIcon>
-          </th>
-          <th pSortableColumn="guarantor3">
-            Guarantor3 <p-columnFilter type="text" field="guarantor3" display="menu"></p-columnFilter>
-            <p-sortIcon field="guarantor3"></p-sortIcon>
-          </th>
-          <th pSortableColumn="bankName">
-            Bank Name <p-columnFilter type="text" field="bankName" display="menu"></p-columnFilter>
-            <p-sortIcon field="bankName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="branchName">
-            Branch Name <p-columnFilter type="text" field="branchName" display="menu"></p-columnFilter>
-            <p-sortIcon field="branchName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="ifsc">
-            IFSC <p-columnFilter type="text" field="ifsc" display="menu"></p-columnFilter>
-            <p-sortIcon field="ifsc"></p-sortIcon>
-          </th>
-          <th pSortableColumn="accountNo">
-            Account No <p-columnFilter type="text" field="accountNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="accountNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="glCode">
-            Gang Leader Code<p-columnFilter type="text" field="glCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="glCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="subGLCode">
-            Sub Gang Leader Code<p-columnFilter type="text" field="subGLCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="subGLCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="otherCode">
-            Other Code <p-columnFilter type="text" field="otherCode" display="menu"></p-columnFilter>
-            <p-sortIcon field="otherCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isActive" style="text-align:center">
-            Is Active <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">
-            Created Date <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
-            <p-sortIcon field="createdAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdBy">
-            Created By <p-columnFilter type="text" field="createdBy" display="menu"></p-columnFilter>
-            <p-sortIcon field="createdBy"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">
-            Updated Date <p-columnFilter type="text" field="updatedAt" display="menu"></p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedBy">
-            Updated By <p-columnFilter type="text" field="updatedBy" display="menu"></p-columnFilter>
-            <p-sortIcon field="updatedBy"></p-sortIcon>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-hgl>
-        <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button-primary p-component"
-              (click)="editHgl(hgl)" [disabled]="!permissions.CanUpdateHGL"></button></td>
-          <td>{{hgl.code}}</td>
-          <td>{{hgl.name}}</td>
-          <td>{{hgl.gender}}</td>
-          <td>{{hgl.relationTypeName}}</td>
-          <td>{{hgl.relationName}}</td>
-          <td>{{hgl.address}}</td>
-          <td>{{hgl.pinCode}}</td>
-          <td>{{hgl.phoneNo}}</td>
-          <td>{{hgl.email}}</td>
-          <td>{{hgl.panNo}}</td>
-          <td>{{hgl.aadhaarNo}}</td>
-          <td>{{hgl.tax}}</td>
-          <td style="text-align:center">
-            <p-checkbox name="tds" value="tds" [(ngModel)]="hgl.tds" [binary]="true" [disabled]="true">
-            </p-checkbox>
-          </td>
-          <td>{{hgl.guarantor1}}</td>
-          <td>{{hgl.guarantor2}}</td>
-          <td>{{hgl.guarantor3}}</td>
-          <td>{{hgl.bankName}}</td>
-          <td>{{hgl.branchName}}</td>
-          <td>{{hgl.ifsc}}</td>
-          <td>{{hgl.accountNo}}</td>
-          <td>{{hgl.glCode}}</td>
-          <td>{{hgl.subGLCode}}</td>
-          <td>{{hgl.otherCode}}</td>
-          <td>
-            <p-checkbox name="active" value="active" [(ngModel)]="hgl.isActive" [binary]="true" [disabled]="true">
-            </p-checkbox>
-          </td>
-          <td>{{hgl.createdAt | date: 'dd-MMM-yyyy'}}</td>
-          <td>{{hgl.createdBy}}</td>
-          <td>{{hgl.updatedAt | date: 'dd-MMM-yyyy'}}</td>
-          <td>{{hgl.updatedBy}}</td>
-        </tr>
-      </ng-template> -->
-
         <ng-template pTemplate="header">
         <tr>
           <th *ngIf="permissions.CanUpdateHGL"></th>
@@ -198,7 +40,7 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-farmer>
+      <ng-template pTemplate="body" let-hgl>
         <tr>
           <td *ngIf="permissions.CanUpdateHGL">
             <button pButton pRipple icon="pi pi-pencil" (click)="editHgl(hgl)"
@@ -208,17 +50,17 @@
           <td *ngFor="let col of plotHeader" [ngClass]="col.field == 'isActive' ? 'text-center' : ''">
             <span *ngIf="col.field !== 'isActive' && col.field !== 'tds'">
               <ng-container *ngIf="col.field === 'crushTo' || col.field === 'createdAt' || col.field === 'updatedAt'; else otherFields">
-                {{ farmer[col.field] | date: mediumDate }}
+                {{ hgl[col.field] | date: mediumDate }}
               </ng-container>
               <ng-template #otherFields>
-                {{ farmer[col.field] }}
+                {{ hgl[col.field] }}
               </ng-template>
             </span>
             <span *ngIf="col.field === 'tds'">
-              <p-checkbox name="tds" value="tds" [binary]="true" [(ngModel)]="farmer.isRegistered" [disabled]="true"></p-checkbox>
+              <p-checkbox name="tds" value="tds" [binary]="true" [(ngModel)]="hgl.isRegistered" [disabled]="true"></p-checkbox>
             </span>
             <span *ngIf="col.field === 'isActive'">
-              <p-checkbox name="isActive" value="isActive" [binary]="true" [(ngModel)]="farmer.isActive" [disabled]="true"></p-checkbox>
+              <p-checkbox name="isActive" value="isActive" [binary]="true" [(ngModel)]="hgl.isActive" [disabled]="true"></p-checkbox>
             </span>
           </td>
         </tr>
