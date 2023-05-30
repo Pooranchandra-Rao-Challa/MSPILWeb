@@ -7,7 +7,7 @@
                 <h4>Cutting Order</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button pButton pRipple label="Add Cutting Order" class="p-button-primary w-100" icon="pi pi-plus"
+                <button pButton pRipple label="Search Cutting Order" class="p-button-primary w-100"
                     (click)="toggleTab()"></button>
                 <!-- (click)="getEstimatedTon()" -->
             </ng-template>
@@ -70,15 +70,15 @@
                                         <div class="field col-12 md:col-3">
                                             <label>To Schedule Group No:<sup class="p-error">*</sup></label>
                                             <div class="input-wrapper" [ngStyle]="{ 'border-color': fieldColor }">
-                                            <p-inputNumber [showButtons]="true" id="toSchGroupNo" type="number"
-                                                [maxlength]="2" formControlName="toSchGroupNo" [min]="1" [max]="5"
-                                                placeholder="To Schedule Group No" [(ngModel)]="toScheduleNo"
-                                                (onInput)="checkValue()" tooltipPosition="top"  
-                                                [disabled]="!FormControls['fromSchGroupNo'].value"
-                                                [pTooltip]="!FormControls['fromSchGroupNo'].value ? 'Please Select From Schedule Group No' : ''"
-                                                [ngClass]="{ 'is-invalid ng-dirty': FormControls['toSchGroupNo'].touched  &&  FormControls['toSchGroupNo'].errors }">
-                                            </p-inputNumber>
-                                        </div>
+                                                <p-inputNumber [showButtons]="true" id="toSchGroupNo" type="number"
+                                                    [maxlength]="2" formControlName="toSchGroupNo" [min]="1" [max]="5"
+                                                    placeholder="To Schedule Group No" [(ngModel)]="toScheduleNo"
+                                                    (onInput)="checkValue()" tooltipPosition="top"
+                                                    [disabled]="!FormControls['fromSchGroupNo'].value"
+                                                    [pTooltip]="!FormControls['fromSchGroupNo'].value ? 'Please Select From Schedule Group No' : ''"
+                                                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['toSchGroupNo'].touched  &&  FormControls['toSchGroupNo'].errors }">
+                                                </p-inputNumber>
+                                            </div>
                                             <span
                                                 *ngIf="FormControls['toSchGroupNo'].touched && FormControls['toSchGroupNo'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
@@ -374,8 +374,8 @@
         </p-toolbar>
         <!-- popup form -->
         <p-dialog header="Cutting Order" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '85vw'}">
-            <div class="flex flex-column align-items-center justify-content-center">
+            [breakpoints]="{'960px': '40%', '640px': '80%'}" [style]="{width: '80%'}">
+            <div class="col-12 justify-content-center scrolling_content">
 
                 <!-- popup table -->
                 <p-table #dtcuttingorders [value]="cuttingorders" dataKey="id" [rows]="10" [rowHover]="true"
@@ -393,13 +393,14 @@
                                         placeholder="Search Keyword" class="w-full" />
                                 </span>
                                 <button pButton label="Submit" (click)="onSubmit()"
+                                    *ngIf="permissions?.CanCreateCuttingOrder"
                                     class="p-button-raised p-button-primary m-2"></button>
                             </div>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
-                            <th></th>
+                            <th *ngIf="permissions?.CanCreateCuttingOrder"></th>
                             <th *ngFor="let col of CuttingOrder" [pSortableColumn]="col.header">
                                 {{col?.label}} <p-sortIcon field="code">
                                 </p-sortIcon>
@@ -409,7 +410,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-getOrder let-rowIndex="rowIndex">
                         <tr>
-                            <td>
+                            <td *ngIf="permissions?.CanCreateCuttingOrder">
                                 <p-checkbox [binary]="true" (onChange)="onRowSelect($event,getOrder)"
                                     [(ngModel)]="getOrder.selected"> </p-checkbox>
                             </td>
@@ -432,7 +433,7 @@
 
         <!-- table -->
         <p-table #dtseasoncuttingOrders [value]="seasoncuttingOrders" dataKey="seasonCuttingOrderId"
-            [columns]="seasonCuttingOrder" [rows]="10" [rowHover]="true" 
+            [columns]="seasonCuttingOrder" [rows]="10" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [alwaysShowPaginator]="false"
             [paginator]="true" [autoLayout]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"
             [tableStyle]="{ width: 'max-content'}" (onRowExpand)="initPlotCuttingOrders($event)"
@@ -521,8 +522,6 @@
             </ng-template>
         </p-table>
     </div>
-    </td>
-    </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
         <tr>
