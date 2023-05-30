@@ -42,7 +42,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdatePlotPropping"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -52,7 +52,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-propping>
         <tr>
-          <td>
+          <td *ngIf="permissions?.CanUpdatePlotPropping">
             <p-overlayPanel #opPropping (onHide)="fbPropping.reset()">
               <ng-template pTemplate="content">
                 <form [formGroup]="fbPropping">

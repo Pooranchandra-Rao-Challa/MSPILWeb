@@ -7,6 +7,7 @@ import { ITableHeader } from "src/app/_models/common";
 import { IPlotOfferViewDto } from "src/app/_models/monitoring";
 import { CircleforUserDto, DivisionsforUserDto, FarmersInPlotsForUserDto, GetCuttingOrderViewDto, PlantTypeForUserDto, PlotCuttingOrderViewDto, PlotsForUserDto, SeasonCuttingOrderViewDto, SectionforUserDto, VarietiesForUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
+import { JWTService } from "src/app/_services/jwt.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 
@@ -51,11 +52,13 @@ export class CuttingOrderComponent implements OnInit {
   toScheduleNo: any;
   error: boolean = false;
   fieldColor: string = 'inherit';
-
+  permissions: any;
+  
   constructor(private formbuilder: FormBuilder,
     private permitService: permitService,
     private appMasterService: AppMasterService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   seasonCuttingOrder: ITableHeader[] = [
     { field: 'seasonName', header: 'seasonName', label: 'Season' },
@@ -315,6 +318,7 @@ export class CuttingOrderComponent implements OnInit {
     return this.fbCuttingOrder.controls
   }
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initCurrentSeason(CURRENT_SEASON());
     this.getcuttingoderForm();
   }

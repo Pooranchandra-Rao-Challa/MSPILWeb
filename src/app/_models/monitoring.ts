@@ -234,7 +234,7 @@ export interface IPlotAssessmentViewDto {
   isADemoPlot: boolean;
   weedStatusId: number;
   weedStatus: string;
-  interCropId: number;
+  interCropingId: number;
   interCrop: string;
   hasMicroNutrientDeficiency: boolean;
   isTrashMulchingDone: boolean;
@@ -797,6 +797,7 @@ export interface ISampleDetailsViewDto {
   sampleId: number;
   sampleNo: number;
   plotId: number;
+  netArea: number;
   noOfSample: number;
   seasonId: number;
   seasonCode: string;

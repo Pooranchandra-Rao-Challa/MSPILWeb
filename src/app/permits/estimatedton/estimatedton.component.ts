@@ -10,6 +10,7 @@ import { SeasonDto, SeasonViewDto } from "src/app/_models/applicationmaster";
 import { ITableHeader } from "src/app/_models/common";
 import { CircleforUserDto, DivisionsforUserDto, EstimatedViewDto, ExcessTonViewDto, ExcessViewDto, FarmersInPlotsForUserDto, SectionforUserDto, VillageforUserDto } from "src/app/_models/permits";
 import { AppMasterService } from "src/app/_services/appmaster.service";
+import { JWTService } from "src/app/_services/jwt.service";
 import { permitService } from "src/app/_services/permit.service";
 import { CURRENT_SEASON } from "src/environments/environment";
 
@@ -49,11 +50,13 @@ export class EstimatedTonComponent implements OnInit {
   sectionIds?: string;
   villageIds?: string;
   circleId: any;
+  permissions: any;
 
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private permitService: permitService,
-    private alertMessage: AlertMessage) { }
+    private alertMessage: AlertMessage,
+    private jwtService:JWTService) { }
 
   getEstimatedForm() {
     this.fbEstimatedTon = this.formbuilder.group({
@@ -83,6 +86,7 @@ export class EstimatedTonComponent implements OnInit {
     return this.fbEstimatedTon.controls
   }
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initCurrentSeason(CURRENT_SEASON());
     this.getEstimatedForm();
     this.getExcesstonForm();

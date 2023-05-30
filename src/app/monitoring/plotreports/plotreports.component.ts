@@ -39,7 +39,7 @@ export class PlotreportsComponent implements OnInit {
   showApprovalDialog: boolean = false;
   approveOrDenyFlag?: boolean;
   fbPlotReport!: FormGroup;
-  submitLabel: string = 'Add Plot Report';
+  submitLabel!: string;
   villages: VillagesViewDto[] = [];
   plantTypes: plantTypeViewDto[] = [];
   varieties: VarietyViewDto[] = [];
@@ -383,6 +383,7 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['seasonId'].setValue(this.currentSeasonId);
     this.getPlotOffersInSeason(this.currentSeasonId || 0, -1);
     this.onValidations();
+    this.submitLabel = 'Add Plot Report';
     this.showDialog = true;
   }
 

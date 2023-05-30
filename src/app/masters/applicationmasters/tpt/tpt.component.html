@@ -80,8 +80,9 @@
                     <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                       <label class="required">Code:</label>
                       <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                        alphaNumeric [readonly]="fbTpt.value.tptId" [maxlength]="20"
+                        alphaNumeric [maxlength]="20"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                        <!-- [readonly]="fbTpt.value.tptId" -->
                       <div class="text-right">
                         <small>{{code.value.length}}/20</small>
                       </div>

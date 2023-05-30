@@ -77,8 +77,9 @@
                 <div class="field col-12 md:col-6">
                   <label class="required">Code:</label>
                   <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                    alphaNumeric [maxlength]="10" [attr.disabled]="this.fbwarehouse.value.id"
+                    alphaNumeric [maxlength]="10"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
+                    <!-- [attr.disabled]="this.fbwarehouse.value.id" -->
                   <div class="text-right">
                     <small>{{code.value.length}}/10</small>
                   </div>
