@@ -31,7 +31,7 @@ import { LOGIN_URI } from '../../_services/api.uri.service';
 
 export class PlotassesmentComponent implements OnInit {
   globalFilterFields: string[] = ["seasonCode", "farmerCode", "farmerName", "farmerVillageName", "plotNumber", "plantingDate", "cropTypeName",
-  "plantTypeName", "varietyName", "surveyNo","fieldName","plotTypeName","assessedArea","measuredDate","offerNo","offerNo","weedStatusName","interCropName"];
+    "plantTypeName", "varietyName", "surveyNo", "fieldName", "plotTypeName", "assessedArea", "measuredDate", "offerNo", "offerNo", "weedStatusName", "interCropName"];
   plotinfo: any;
   showDialog: boolean = false;
   submitLabel!: string;
@@ -75,23 +75,20 @@ export class PlotassesmentComponent implements OnInit {
   ];
 
   plotHeader: ITableHeader[] = [
-    { field: 'plotNumber', header:'plotNumber', label: 'Plot Number' },
-    { field: 'plantingDate', header:'plantingDate', label: 'Planting Date' },
-    { field: 'cropTypeName', header:'cropTypeName', label: 'Crop Type' },
-    { field: 'plantTypeName', header:'plantTypeName', label: 'Plant Type' },
-    { field: 'surveyNo', header:'surveyNo', label: 'Survey No' },
+    { field: 'plotNumber', header: 'plotNumber', label: 'Plot Number' },
+    { field: 'plantingDate', header: 'plantingDate', label: 'Planting Date' },
+    { field: 'cropTypeName', header: 'cropTypeName', label: 'Crop Type' },
+    { field: 'plantTypeName', header: 'plantTypeName', label: 'Plant Type' },
+    { field: 'surveyNo', header: 'surveyNo', label: 'Survey No' },
     { field: 'varietyName', header: 'varietyName', label: 'Variety' },
-    { field: 'fieldName',header:'fieldName', label: 'Field Name' },
-    { field: 'plotTypeName', header:'plotTypeName', label: 'Plot Type' },
-    { field: 'assessedArea', header:'assessedArea', label: 'Assessment Area' },
-    { field: 'measuredDate', header:'measuredDate', label: 'Assessment Date' },
+    { field: 'fieldName', header: 'fieldName', label: 'Field Name' },
+    { field: 'plotTypeName', header: 'plotTypeName', label: 'Plot Type' },
+    { field: 'assessedArea', header: 'assessedArea', label: 'Assessment Area' },
+    { field: 'measuredDate', header: 'measuredDate', label: 'Assessment Date' },
     { field: 'offerNo', header: 'offerNo', label: 'OfferNo' },
     { field: 'weedStatusName', header: 'weedStatusName  ', label: 'Weed Status' },
     { field: 'interCropName', header: 'interCropName', label: 'Inter Croping' },
-
   ];
-
-
 
   addPlotAssessment(plotAssessmentId: number = -1) {
     this.fbPlotAssessment.controls['seasonId'].setValue(this.currentSeasonId);
@@ -146,7 +143,6 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.exportColumns = this.farmerHeader.map((col) => ({
       title: col.header,
       dataKey: col.field,
@@ -158,24 +154,18 @@ export class PlotassesmentComponent implements OnInit {
     this.initSeasons();
     this.initCropType();
     this.initweedstatus();
-
   }
 
-
   loadPlotassessmentLazy(event: IPlotAssessmentViewDto) {
-
-
     setTimeout(() => {
-
-        let loadedCars = this.plotAssessments.slice(1000);
-
-        // Array.prototype.splice.apply(this.plotAssessments, [
-        //   ...[1000],
-        //   ...loadedCars
-        // ]);
-        this.plotAssessments = [...this.plotAssessments];
+      let loadedCars = this.plotAssessments.slice(1000);
+      // Array.prototype.splice.apply(this.plotAssessments, [
+      //   ...[1000],
+      //   ...loadedCars
+      // ]);
+      this.plotAssessments = [...this.plotAssessments];
     }, Math.random() * 1000 + 250);
-}
+  }
 
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
@@ -194,11 +184,8 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   getPlotinfo(plotId: number) {
-
     this.monitoringService.GetPlotsinfo(plotId).subscribe((resp) => {
       this.plotInfo = resp as unknown as PlotsDto;
-      console.log('plotInfo',  this.plotInfo);
-      
     });
   }
 
@@ -221,20 +208,20 @@ export class PlotassesmentComponent implements OnInit {
     let param1 = this.filter.nativeElement.value == "" ? null : this.filter.nativeElement.value;
     this.monitoringService.GetPlotAssessments(seasonId, param1).subscribe((resp) => {
       this.plotAssessments = resp as unknown as IFarmerInPlotOfferDto[];
-      console.log('plotAssessments',this.plotAssessments);
     });
   }
   onRowExpand(source: any) {
     var data = source.data as IFarmerInPlotOfferDto;
     this.monitoringService.GetFarmerPlotsInAssessment(data.seasonId, data.farmerId).subscribe(resp => {
       data.ObjMeasuredPlots = resp as unknown as IPlotAssessmentViewDto[];
-      console.log('plots',data.ObjMeasuredPlots);   
     });
   }
+
   onSearch() {
     this.dtPlotAssessments.expandedRowKeys = {};
     this.initPlotAssessments(this.currentSeason.seasonId!);
   }
+
   plotAssessmentForm() {
     this.fbPlotAssessment = this.formbuilder.group({
       plotAssessmentId: [null],
@@ -254,6 +241,7 @@ export class PlotassesmentComponent implements OnInit {
       diseases: this.formbuilder.array([]),
     })
   }
+
   initCropType() {
     this.lookupService.Crops().subscribe((resp) => {
       this.cropstypes = resp as unknown as LookupDetailDto[];
@@ -334,8 +322,9 @@ export class PlotassesmentComponent implements OnInit {
     this.plotAssessment.measuredDate = plotAssessment.measuredDate && new Date(plotAssessment.measuredDate);
     this.plotAssessment.isaDemoPlot = plotAssessment.isADemoPlot;
     this.plotAssessment.weedStatusId = plotAssessment.weedStatusId;
-    this.plotAssessment.interCropingId = plotAssessment.interCropId;
-    this.plotAssessment.hasMicroNutrientDeficiency = plotAssessment.isTrashMulchingDone;
+    this.plotAssessment.interCropingId = plotAssessment.interCropingId;
+    this.plotAssessment.isTrashMulchingDone = plotAssessment.isTrashMulchingDone;
+    this.plotAssessment.hasMicroNutrientDeficiency = plotAssessment.hasMicroNutrientDeficiency;
     this.plotAssessment.isGapsFillingDone = plotAssessment.isGapsFillingDone;
     this.fbPlotAssessment.patchValue(this.plotAssessment);
     this.fbPlotAssessment.controls['seasonId'].setValue(plotAssessment.seasonId);
