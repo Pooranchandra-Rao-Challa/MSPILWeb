@@ -242,7 +242,7 @@
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
                     <label>Code:<sup class="p-error">*</sup></label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
-                      alphaNumeric [readonly]="fbHgl.value.hglId" [maxlength]="20"
+                      alphaNumeric [maxlength]="20"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <div class="text-right">
                       <small>{{code.value.length}}/20</small>
