@@ -10,6 +10,9 @@ import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 import { ITableHeader } from 'src/app/_models/common';
+import { CURRENT_SEASON } from 'src/environments/environment';
+import { AppMasterService } from 'src/app/_services/appmaster.service';
+import { SeasonDto } from 'src/app/_models/applicationmaster';
 
 @Component({
   selector: 'app-billmaster',
@@ -30,6 +33,8 @@ export class BillMasterComponent implements OnInit {
   addFlag: boolean = true;
   billCategories: any;
   mediumDate: string = MEDIUM_DATE;
+  currentSeason: SeasonDto = {};
+
   headers: ITableHeader[] = [
     { field: 'billCategoryName', header: 'billCategoryName', label: 'Billing Category' },
     { field: 'billNo', header: 'billNo', label: 'Billing Number' },
@@ -49,13 +54,15 @@ export class BillMasterComponent implements OnInit {
     private commonService: CommonService,
     private billmasterService: BillMasterService,
     private lookupService: LookupService,
+    private appMasterservice: AppMasterService,
     private alertMessage: AlertMessage,
-    private jwtService:JWTService) { }
+    private jwtService: JWTService) { }
 
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
     this.initBills();
     this.initLookupDetails();
+    this.initCurrentSeason(CURRENT_SEASON());
     this.billmasterForm();
   }
 
@@ -72,6 +79,12 @@ export class BillMasterComponent implements OnInit {
   initBills() {
     this.billmasterService.GetBills().subscribe((resp) => {
       this.bills = resp as unknown as BillViewDto[];
+    });
+  }
+
+  initCurrentSeason(seasonCode: string) {
+    this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
+      this.currentSeason = resp as SeasonDto;
     });
   }
 
@@ -108,6 +121,7 @@ export class BillMasterComponent implements OnInit {
   addBill() {
     this.fbBillMaster.controls['isFinal'].setValue(true);
     this.fbBillMaster.controls['isActive'].setValue(true);
+    this.fbBillMaster.controls['seasonsId'].setValue(this.currentSeason.seasonId);
     this.submitLabel = "Add Bill";
     this.addFlag = true;
     this.showDialog = true;
