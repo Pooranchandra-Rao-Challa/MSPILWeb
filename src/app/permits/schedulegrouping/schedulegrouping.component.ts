@@ -11,6 +11,7 @@ import { CURRENT_SEASON } from "src/environments/environment";
 import { permitService } from '../../_services/permit.service';
 import { MonitoringService } from '../../_services/monitoring.service';
 import { AlertMessage, ALERT_CODES } from "src/app/_alerts/alertMessage";
+import { JWTService } from "src/app/_services/jwt.service";
 export interface IHeader {
   field: string;
   header: string;
@@ -114,11 +115,12 @@ export class ScheduleGroupingComponent implements OnInit {
     private commonService: CommonService,
     private appMasterService: AppMasterService,
     private permitService: permitService,
-    private MonitoringService: MonitoringService,
+    private jwtService: JWTService,
     private alertMessage: AlertMessage
 
   ) { }
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initCurrentSeason(CURRENT_SEASON());
     this.scheduleGroupingForm();
   }

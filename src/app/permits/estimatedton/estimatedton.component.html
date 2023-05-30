@@ -9,7 +9,8 @@
                 <h4>Estimated Ton</h4>
             </ng-template>
             <ng-template pTemplate="right">
-                <button  pButton pRipple label="Add Excess Ton" class="p-button-primary w-100" icon="pi pi-plus" (click)="toggleTab()"></button>
+                <button pButton pRipple label="Search Excess Ton" class="p-button-primary w-100"
+                    (click)="toggleTab()"></button>
                 <!-- (click)="getEstimatedTon()" -->
             </ng-template>
         </p-toolbar>
@@ -39,9 +40,9 @@
                                 <div class="col-2 p-2">
                                     <label>Division:</label>
                                     <p-multiSelect [options]="divisions" placeholder="Select Division"
-                                        optionValue="divisionId" appendTo="body" [filter]="true" 
-                                        optionLabel="divisionName" formControlName="divisionId" 
-                                        [style]="{'width':'100%'}" 
+                                        optionValue="divisionId" appendTo="body" [filter]="true"
+                                        optionLabel="divisionName" formControlName="divisionId"
+                                        [style]="{'width':'100%'}"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['divisionId'].touched && FormControls['divisionId'].errors }"
                                         (onChange)="SetAllDivisionChilds($event.value)">
                                     </p-multiSelect>
@@ -69,7 +70,7 @@
                                 <div class="col-2 p-2">
                                     <label>Section:</label>
                                     <p-multiSelect [options]="filterSections" placeholder="Select Section "
-                                        optionValue="sectionId" appendTo="body" [filter]="true"  filterBy="sectionName"
+                                        optionValue="sectionId" appendTo="body" [filter]="true" filterBy="sectionName"
                                         optionLabel="sectionName" formControlName="sectionId" [style]="{'width':'100%'}"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['sectionId'].touched && FormControls['sectionId'].errors }"
                                         (onChange)="SetAllSectionChilds($event.value)"></p-multiSelect>
@@ -85,7 +86,7 @@
                                     <p-multiSelect [options]="filterVillages" placeholder="Select Village"
                                         optionValue="villageId" appendTo="body" (onChange)="getExcessTonDetails()"
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }"
-                                        [filter]="true" optionLabel="villageName" formControlName="villageId" 
+                                        [filter]="true" optionLabel="villageName" formControlName="villageId"
                                         [style]="{'width':'100%'}"></p-multiSelect>
                                     <span
                                         *ngIf="FormControls['villageId'].touched && FormControls['villageId'].invalid">
@@ -156,16 +157,15 @@
 
         <!-- popup form -->
         <p-dialog header="Estimated Ton" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-            [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}" [transitionOptions]="'500ms'">
-            <!-- (onHide)="fbAllottedPlot.reset()" -->
-            <div class="flex flex-column align-items-center justify-content-center">
+            [breakpoints]="{'960px': '40%', '640px': '80%'}" [style]="{width: '80%'}">
+            <div class="col-12 justify-content-center scrolling_content">
                 <!-- table -->
-                <p-table #dt2 [value]="excessTons" dataKey="id" [rows]="10" [rowHover]="true" 
+                <p-table #dt2 [value]="excessTons" dataKey="id" [rows]="10" [rowHover]="true"
                     styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100" [paginator]="true"
-                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]"  [alwaysShowPaginator]="false" >
+                    responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [alwaysShowPaginator]="false">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th></th>
+                            <th *ngIf="permissions?.CanCreatePlotExcessTon"></th>
                             <th *ngFor="let col of header" [pSortableColumn]="col.header">
                                 {{col?.label}} <p-sortIcon field="code">
                                 </p-sortIcon>
@@ -176,7 +176,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-excesston>
                         <tr>
-                            <td>
+                            <td *ngIf="permissions?.CanCreatePlotExcessTon">
                                 <p-overlayPanel #opexcesston>
                                     <ng-template pTemplate="content">
                                         <form [formGroup]="fbexcesston">
@@ -201,7 +201,7 @@
                                         </form>
                                     </ng-template>
                                 </p-overlayPanel>
-                                <button pButton pRipple icon="pi pi-pencil" (click)="addExecesston($event,excesston)"
+                                <button pButton pRipple icon="pi pi-plus" (click)="addExecesston($event,excesston)"
                                     class="p-element p-ripple p-button-text p-button p-component"></button>
                             </td>
                             <td *ngFor="let col of header">
@@ -225,9 +225,10 @@
         </p-dialog>
 
         <!-- table -->
-        <p-table #dtesstimatedton [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
-            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
-            [globalFilterFields]="globalFilterFields" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+        <p-table #dtesstimatedton [value]="estimatedton" dataKey="id" [rows]="10" [rowHover]="true"
+            [alwaysShowPaginator]="false" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+            [paginator]="true" [autoLayout]="true" [globalFilterFields]="globalFilterFields" responsiveLayout="scroll"
+            [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
             <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" (click)="clear(dtesstimatedton)"
@@ -235,8 +236,9 @@
                     <div>
                         <span class="p-input-icon-left m-2">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" #filter (input)="onSearch(dtesstimatedton,$event)" placeholder="Search Keyword"
-                                pTooltip="Search By Farmer Code, Farmer Name, Village Name" class="w-full">
+                            <input pInputText type="text" #filter (input)="onSearch(dtesstimatedton,$event)"
+                                placeholder="Search Keyword" pTooltip="Search By Farmer Code, Farmer Name, Village Name"
+                                class="w-full">
                         </span>
                         <span class="p-input-icon-left mb-2">
                             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="name" [options]="seasons"
@@ -250,7 +252,7 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th></th>
+                    <th *ngIf="permissions?.CanUpdatePlotExcessTon"></th>
                     <th *ngFor="let col of excesstonage" [pSortableColumn]="col.header">
                         {{col?.label}} <p-sortIcon field="code">
                         </p-sortIcon>
@@ -261,7 +263,7 @@
             <ng-template pTemplate="body" let-EstimatedTon>
                 <!-- (click)="editAllottedPlot(EstimatedTon)" *ngIf="!forapproval"-->
                 <tr>
-                    <td>
+                    <td *ngIf="permissions?.CanUpdatePlotExcessTon">
                         <p-overlayPanel #opEstimatedTon>
                             <ng-template pTemplate="content">
                                 <form [formGroup]="fbEstimatedTon">

@@ -245,8 +245,6 @@
       </ng-template>
     </p-table>
   </div>
-  </td>
-  </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
@@ -290,7 +288,7 @@
               </span>
 
               <button pButton label="Submit" [disabled]="!(scheduleGroupNoInput.value && scheduleControls.value.length > 0)" 
-                (click)="onSubmit()"  class="p-button-raised p-button-primary"></button>
+                (click)="onSubmit()"  *ngIf="permissions?.CanCreateScheduleGroup" class="p-button-raised p-button-primary"></button>
 
 
             </div>
@@ -298,7 +296,7 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th></th>
+            <th  *ngIf="permissions?.CanCreateScheduleGroup"></th>
             <th *ngFor="let col of GroupingPlotHeaders" [pSortableColumn]="col.header">
               {{col?.label}} <p-sortIcon field="code">
               </p-sortIcon>
@@ -310,7 +308,7 @@
 
         <ng-template pTemplate="body" let-scheduleGrouping let-rowIndex="rowIndex">
           <tr>
-            <td>
+            <td  *ngIf="permissions?.CanCreateScheduleGroup">
               <p-checkbox [binary]="true" (onChange)="onRowSelect($event,scheduleGrouping)"
                 [(ngModel)]="scheduleGrouping.selected" inputId="{{scheduleGrouping.id}}"></p-checkbox>
             </td>

@@ -30,6 +30,7 @@ export class PlanttypeComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
   permissions: any;
   
+
   headers: ITableHeader[] = [
     { field: 'code', header: 'code', label: 'Code' },
     { field: 'name', header: 'name', label: 'Name' },
@@ -67,7 +68,7 @@ export class PlanttypeComponent implements OnInit {
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       estimatedTon: [null, (Validators.required)],
-      loanEligible: [null, (Validators.required)],
+      loanEligible: new FormControl(null,Validators.required),
       isActive: [null],
     });
   }
