@@ -103,7 +103,7 @@ export class AppTopBarComponent {
       { label: 'Lookup', icon: 'pi pi-external-link', command: (e) => { this.lookup_dialog = true; this.submitLabel = 'Update lookups'; } },
       {
         label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
-          console.log(this.jwtService.Logout());
+          this.jwtService.Logout();
         }
       },
 
