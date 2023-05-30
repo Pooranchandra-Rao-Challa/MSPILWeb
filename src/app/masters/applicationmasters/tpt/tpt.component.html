@@ -32,7 +32,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateTpt"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -42,11 +42,11 @@
       </ng-template>
       <ng-template pTemplate="body" let-tpt>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button-primary p-component" (click)="editTpt(tpt)"
-              [disabled]="!permissions.CanUpdateTpt"></button>
+          <td *ngIf="permissions.CanUpdateTpt"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button-primary p-component" (click)="editTpt(tpt)"></button>
           </td>
-          <td *ngFor="let col of headers" [ngClass]="(col?.field == 'isActive' || col?.field == 'tds') ? 'text-center' : ''">
+          <td *ngFor="let col of headers"
+            [ngClass]="(col?.field == 'isActive' || col?.field == 'tds') ? 'text-center' : ''">
             <span
               *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive' && col?.field != 'tds'">{{tpt[col.field]}}</span>
             <span *ngIf="col?.field == 'createdAt' || col?.field == 'updatedAt'">
@@ -127,8 +127,9 @@
                     </div>
                     <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                       <label class="required">Relationship Name:</label>
-                      <input pInputText id="relationName" #relationName type="text" placeholder="Enter Relationship Name"
-                        formControlName="relationName" alphaOnly [maxlength]="maxLength.name"
+                      <input pInputText id="relationName" #relationName type="text"
+                        placeholder="Enter Relationship Name" formControlName="relationName" alphaOnly
+                        [maxlength]="maxLength.name"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }">
                       <div class="text-right">
                         <small> {{relationName.value.length}}/{{maxLength.name}} </small>
@@ -338,7 +339,8 @@
                       <label class="required">Branch:</label>
                       <p-dropdown placeholder="Select Branch" optionLabel="name" [options]="branches"
                         optionValue="branchId" formControlName="branchId" (onChange)="getIFSCByBranch($event.value)"
-                        appendTo="body" [ngClass]="{ 'is-invalid ng-dirty': FormControls['branchId'].touched && FormControls['branchId'].errors }">
+                        appendTo="body"
+                        [ngClass]="{ 'is-invalid ng-dirty': FormControls['branchId'].touched && FormControls['branchId'].errors }">
                       </p-dropdown>
                       <span *ngIf="FormControls['branchId'].touched && FormControls['branchId'].invalid">
                         <div class="ng-invalid ng-touched p-error"
@@ -447,13 +449,13 @@
                               </p-inputNumber>
                             </td>
                             <td class="vertical-align-top">
-                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" class="w-100" [options]="defaults"
-                                formControlName="gateEntryFreeze" appendTo="body">
+                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" class="w-100"
+                                [options]="defaults" formControlName="gateEntryFreeze" appendTo="body">
                               </p-dropdown>
                             </td>
                             <td class="vertical-align-top">
-                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" class="w-100" [options]="defaults"
-                                formControlName="transporterFreeze" appendTo="body">
+                              <p-dropdown placeholder="Select" optionLabel="name" optionValue="id" class="w-100"
+                                [options]="defaults" formControlName="transporterFreeze" appendTo="body">
                               </p-dropdown>
                             </td>
                             <td *ngIf="fbTpt.controls['tptdetails'].value.length > 1" class="vertical-align-top">

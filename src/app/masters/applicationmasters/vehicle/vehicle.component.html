@@ -14,25 +14,25 @@
     </p-toolbar>
 
     <!-- table -->
-    <p-table #dtVehicleTypes [value]="vehicleTypes" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
-      styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      [globalFilterFields]="globalFilterFields" [autoLayout]="true" responsiveLayout="scroll"
-      [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
+    <p-table #dtVehicleTypes [value]="vehicleTypes" dataKey="id" [rows]="10" [rowHover]="true"
+      [alwaysShowPaginator]="false" styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+      [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true" [globalFilterFields]="globalFilterFields" [autoLayout]="true"
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
             (click)="clear(dtVehicleTypes)"></button>
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dtVehicleTypes, $event)" placeholder="Search Keyword"
-              class="w-full" />
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dtVehicleTypes, $event)"
+              placeholder="Search Keyword" class="w-full" />
           </span>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateVehicleType"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -42,8 +42,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-vehicle>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editVehicleType(vehicle)" [disabled]="!permissions.CanUpdateVehicleType"></button>
+          <td *ngIf="permissions.CanUpdateVehicleType"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editVehicleType(vehicle)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span
@@ -70,7 +70,7 @@
     <p-dialog header="Vehicle" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbVehicleType.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbVehicleType" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbVehicleType">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -165,10 +165,9 @@
       <ng-template pTemplate="footer">
         <div class="col-6" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            [disabled]="fbVehicleType.invalid" (click)="onSubmit()"></button>
+            (click)="onSubmit()" [disabled]="!fbVehicleType.valid"></button>
         </div>
       </ng-template>
     </p-dialog>
-
   </div>
 </div>

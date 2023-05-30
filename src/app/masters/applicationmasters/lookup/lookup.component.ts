@@ -9,7 +9,7 @@ import { LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } from 'src/app/_mo
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { MAX_LENGTH_2, MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY} from 'src/app/_shared/regex';
+import { MAX_LENGTH_2, MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 
 
 
@@ -19,7 +19,7 @@ import { MAX_LENGTH_2, MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_O
 
 })
 export class LookupComponent implements OnInit {
-  globalFilterFields: string[] = ['code','name','isActive','createdBy','updatedBy','createdAt','updatedAt']
+  globalFilterFields: string[] = ['code', 'name', 'isActive', 'createdBy', 'updatedBy', 'createdAt', 'updatedAt']
   @ViewChild('filter') filter!: ElementRef;
   showDialog: boolean = false;
   lookups: LookupViewDto[] = [];
@@ -45,7 +45,7 @@ export class LookupComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
-  
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
@@ -63,8 +63,9 @@ export class LookupComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
   addLookupDialog() {
-   this.addLookupDetails();
-   this.fblookup.controls['isActive'].setValue(true);
+    this.addLookupDetails();
+    this.fblookup.controls['name'].enable();
+    this.fblookup.controls['isActive'].setValue(true);
     this.submitLabel = "Add Lookup";
     this.addFlag = true;
     this.showDialog = true;
@@ -79,13 +80,13 @@ export class LookupComponent implements OnInit {
     this.addfields = []
     this.fblookup = this.formbuilder.group({
       lookUpId: [null],
-      code: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name: new FormControl('',[Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
+      code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
+      name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [null],
       lookUpDetails: this.formbuilder.array([]),
     });
   }
-  
+
   // add lookupdtls fields
   addLookupDetails() {
     this.ShowlookupDetails = true;
@@ -100,9 +101,9 @@ export class LookupComponent implements OnInit {
       lookupId: [lookupDetail.lookupId],
       lookupDetailId: [lookupDetail.lookupDetailId],
       code: new FormControl(lookupDetail.code, [Validators.required,]),
-      name:new FormControl(lookupDetail.name, [Validators.required,Validators.minLength(MIN_LENGTH_2)]),
-      remarks:new FormControl (lookupDetail.remarks,[Validators.pattern(RG_ALPHA_NUMERIC),Validators.minLength(MIN_LENGTH_2)]),
-      listingorder: new FormControl (lookupDetail.listingorder,[Validators.required,]),
+      name: new FormControl(lookupDetail.name, [Validators.required, Validators.minLength(MIN_LENGTH_2)]),
+      remarks: new FormControl(lookupDetail.remarks, [Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
+      listingorder: new FormControl(lookupDetail.listingorder, [Validators.required,]),
       isActive: [lookupDetail.isActive],
     })
   }
@@ -121,16 +122,16 @@ export class LookupComponent implements OnInit {
   }
 
   isUniqueLookupCode() {
-    const existingLookupCodes = this.lookups.filter(lookup => 
-      lookup.code === this.fblookup.value.code && 
+    const existingLookupCodes = this.lookups.filter(lookup =>
+      lookup.code === this.fblookup.value.code &&
       lookup.id !== this.fblookup.value.lookUpId
     )
-    return existingLookupCodes.length > 0; 
+    return existingLookupCodes.length > 0;
   }
-  
+
   isUniqueLookupName() {
     const existingLookupNames = this.lookups.filter(lookup =>
-      lookup.name === this.fblookup.value.name && 
+      lookup.name === this.fblookup.value.name &&
       lookup.id !== this.fblookup.value.lookUpId
     )
     return existingLookupNames.length > 0;
@@ -144,19 +145,19 @@ export class LookupComponent implements OnInit {
           );
         } else if (this.isUniqueLookupName()) {
           this.alertMessage.displayErrorMessage(
-            `Lookup Name :"${this.fblookup.value.name}" Already Exists.` 
+            `Lookup Name :"${this.fblookup.value.name}" Already Exists.`
           );
         } else {
           this.save();
         }
       } else {
-        this.save(); 
+        this.save();
       }
     } else {
-      this.fblookup.markAllAsTouched(); 
+      this.fblookup.markAllAsTouched();
     }
   }
-  
+
   save() {
     if (this.fblookup.valid) {
       this.savelookup().subscribe(resp => {
@@ -194,6 +195,7 @@ export class LookupComponent implements OnInit {
     this.lookup.lookupDetailId = lookup.lookupDetailId;
     this.lookup.code = lookup.code;
     this.lookup.name = lookup.name;
+    this.fblookup.controls['name'].disable();
     this.lookup.isActive = lookup.isActive;
     this.lookup.lookUpDetails = this.lookupDetails ? [] : this.lookupDetails;
     this.fblookup.patchValue(this.lookup);

@@ -399,11 +399,10 @@ export class PlotreportsComponent implements OnInit {
     this.fbPlotReport.controls['farmerId'].setValue(farmer.farmerId);
     this.fbPlotReport.controls['farmerName'].setValue(farmer.farmerName);
     this.fbPlotReport.controls['plotOfferId'].setValue(plotReport.plotOfferId);
-    this.getOfferInfo(plotReport.plotOfferId);
+    // this.getOfferInfo(plotReport.plotOfferId);
 
-    this.fbPlotReport.controls['plotNumber'].setValue(plotReport.plotNumber); 
-    this.fbPlotReport.controls['plotNumber'].disable();
-  
+    this.fbPlotReport.controls['plotNumber'].setValue(plotReport.plotNumber);
+
     this.fbPlotReport.controls['birnumber'].setValue(plotReport.birNumber);
     this.fbPlotReport.controls['profile'].setValue(plotReport.profile);
     this.fbPlotReport.controls['totalArea'].setValue(plotReport.totalArea);
@@ -432,6 +431,8 @@ export class PlotreportsComponent implements OnInit {
 
     this.mainPlot.get('plotOfferId')?.setValue(plotReport.plotOfferId);
     this.fbPlotReport.patchValue(plotReport);
+    this.fbPlotReport.controls['plantTypeId'].setValue(plotReport.plantTypeId);
+    this.fbPlotReport.controls['varietyId'].setValue(plotReport.varietyId);
     this.fbPlotReport.controls['birdate'].setValue(plotReport.birDate && new Date(plotReport.birDate?.toString() + ""));
     this.fbPlotReport.controls['plantingDate'].setValue(plotReport.plantingDate && new Date(plotReport.plantingDate?.toString() + ""));
 

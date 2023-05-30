@@ -14,6 +14,7 @@ import { LookupService } from 'src/app/_services/lookup.service';
 import { ICompletedPlotViewDto, CompletedPlotDto, FarmerSectionViewDto, IPlotsofFarmerViewDto } from 'src/app/_models/monitoring';
 import { CURRENT_SEASON, EDocumentNumberScreens } from 'src/environments/environment';
 import { ITableHeader } from 'src/app/_models/common';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'app-completedplots',
@@ -36,6 +37,7 @@ export class CompletedPlotsComponent implements OnInit {
   currentSeason: SeasonDto = {};
   mediumDate: string = MEDIUM_DATE;
   purpose: string = 'Is Over';
+  permissions: any
   headers: ITableHeader[] = [
     { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
     { field: 'farmerName', header: 'farmerName', label: 'Farmer' },
@@ -55,11 +57,13 @@ export class CompletedPlotsComponent implements OnInit {
     private billMasterService: BillMasterService,
     private commonService: CommonService,
     private AppMasterService: AppMasterService,
+    private jwtService: JWTService,
     private monitoringService: MonitoringService,
     private LookupService: LookupService,) {
   }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initDefaults();
     this.initCurrentSeason(CURRENT_SEASON());
     this.completedPlotsForm();

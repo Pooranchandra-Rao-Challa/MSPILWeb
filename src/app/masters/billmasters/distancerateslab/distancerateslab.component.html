@@ -56,7 +56,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateDistanceRate"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -66,8 +66,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-distanceRate>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editDistanceRate(distanceRate)" [disabled]="!permissions.CanUpdateDistanceRate"></button>
+          <td *ngIf="permissions.CanUpdateDistanceRate"><button pButton pRipple icon="pi pi-pencil"
+             class="p-element p-ripple p-button-text p-button p-component" (click)="editDistanceRate(distanceRate)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span

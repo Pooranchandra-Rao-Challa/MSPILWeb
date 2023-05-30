@@ -8,7 +8,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Completed Plot" icon="pi pi-plus" class="p-button-success p-mr-2"
-          (click)="addCompletedPlot()"></button>
+          (click)="addCompletedPlot()" *ngIf="permissions.CanCreateCompletedPlot"></button>
       </ng-template>
     </p-toolbar>
 
@@ -121,7 +121,8 @@
                     </div>
                     <div class="field col-12 md:col-2" *ngIf="addFlag">
                       <label>Is Over:</label><br>
-                      <p-inputSwitch formControlName="isOver" [disabled]="diffLessThanOne || diffGreaterThanEqualsToOne"></p-inputSwitch>
+                      <p-inputSwitch formControlName="isOver"
+                        [disabled]="diffLessThanOne || diffGreaterThanEqualsToOne"></p-inputSwitch>
                     </div>
                     <div class="field col-12 md:col-2" *ngIf="addFlag">
                       <label [class.required]="diffGreaterThanEqualsToOne">Is Left Over:</label><br>
@@ -170,7 +171,8 @@
     <p-table #dt1 dataKey="id" [value]="completedPlots" [columns]="headers" [rows]="10" [rowHover]="true"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true" [autoLayout]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}" paginatorAlwaysVisible="false">
+      responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}"
+      paginatorAlwaysVisible="false">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
@@ -209,7 +211,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateCompletedPlot"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -219,8 +221,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-completedPlot>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editCompletedPlot(completedPlot)" [disabled]="completedPlot.status != 'Closed'"></button>
+          <td *ngIf="permissions.CanUpdateCompletedPlot"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editCompletedPlot(completedPlot)"
+              [disabled]="completedPlot.status != 'Closed'"></button>
           </td>
           <td *ngFor="let col of headers">
             {{completedPlot[col.field]}} </td>

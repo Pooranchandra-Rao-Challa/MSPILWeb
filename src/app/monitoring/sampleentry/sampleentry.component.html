@@ -2,7 +2,7 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
 
-    
+
 
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
@@ -25,7 +25,7 @@
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filter (input)="onSearch()" placeholder="Search Keyword"
-                pTooltip="Search By Farmer Name, Village Name, Offer No" class="w-full" />
+                pTooltip="Search By Farmer Name, Farmer Code, Plot No, Doc No" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
               [(ngModel)]="currentSeason.seasonId" (onChange)="initSampleEntries($event.value)" optionValue="seasonId">
@@ -78,16 +78,16 @@
     </p-table>
     <div class="grid mt-3">
       <div class="col-12 flex  pt-0 pb-0">
-        <div class="color_codes bg-blue-300 m-2" style=""></div>
-        <div class="content m-1">Allowed only but not entered.</div>
+        <div class="color_codes bg-blue-300 m-2"></div>
+        <div class="content m-1">Can add one sample.</div>
       </div>
       <div class="col-12 flex  pt-0 pb-0">
-        <div class="color_codes bg-green-300 m-2" style=""></div>
-        <div class="content m-1">Allowed one or more samples but not entered.</div>
+        <div class="color_codes bg-green-300 m-2"></div>
+        <div class="content m-1">Can add one or more samples.</div>
       </div>
       <div class="col-12 flex  pt-0 pb-0">
-        <div class="color_codes bg-red-300 m-2" style=""></div>
-        <div class="content m-1">All samples entered.</div>
+        <div class="color_codes bg-red-300 m-2"></div>
+        <div class="content m-1">Can view entered samples.</div>
       </div>
     </div>
 
@@ -232,7 +232,7 @@
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
           <button pButton pRipple type="submit" (click)="onSubmit()" [label]="submitLabel"
-            class="p-button-raised p-button-success"></button>
+            class="p-button-raised p-button-success" [disabled]="fbSampleEntry.invalid"></button>
         </div>
       </ng-template>
     </p-dialog>

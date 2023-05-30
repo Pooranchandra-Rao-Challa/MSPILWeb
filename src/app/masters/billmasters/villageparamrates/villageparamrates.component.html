@@ -26,19 +26,19 @@
           <div>
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
-              <input pInputText type="text" #filter (input)="onGlobalFilter(dtVillageParamRates, $event)" placeholder="Search Keyword"
-                class="w-full" />
+              <input pInputText type="text" #filter (input)="onGlobalFilter(dtVillageParamRates, $event)"
+                placeholder="Search Keyword" class="w-full" />
             </span>
             <p-dropdown class="ml-2" placeholder="Select Season" optionLabel="code" [options]="seasons"
-              [(ngModel)]="currentSeason.seasonId"
-              (onChange)="getVillageParamRatesBySeason($event.value)" optionValue="seasonId">
+              [(ngModel)]="currentSeason.seasonId" (onChange)="getVillageParamRatesBySeason($event.value)"
+              optionValue="seasonId">
             </p-dropdown>
           </div>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateVillageParamRate"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -48,8 +48,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-vParamRate>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-            (click)="editVillageParamRate(vParamRate)" [disabled]="!permissions.CanUpdateVillageParamRate"></button>
+          <td *ngIf="permissions.CanUpdateVillageParamRate"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editVillageParamRate(vParamRate)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span
@@ -74,8 +75,7 @@
 
     <!-- dialog box -->
     <p-dialog header="Village Param Rate" [(visible)]="showDialog" [modal]="true" showEffect="fade"
-      [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" 
-      (onHide)="fbVillageParamRate.reset()">
+      [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" (onHide)="fbVillageParamRate.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
         <form [formGroup]="fbVillageParamRate" (ngSubmit)="onSubmit()">
           <div class="grid">

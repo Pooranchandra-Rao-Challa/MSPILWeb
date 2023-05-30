@@ -578,7 +578,7 @@
                 styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                 <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdatePlotAgreement"></th>
           <th *ngFor="let col of plotHeaders">
             {{col?.label}}
           </th>
@@ -586,7 +586,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotAgreement>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement)"
+          <td ><button pButton pRipple icon="pi pi-pencil" (click)="editPlotAgreement(plotAgreement)"
               class="p-element p-ripple p-button-text p-button p-component"
               [disabled]="!permissions.CanUpdatePlotAgreement"></button>
           </td>

@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Diesel Rate" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addDieselRate()" *ngIf="permissions.CanCreateDieselRate"></button>
+          (click)="addDieselRate()" *ngIf="permissions?.CanCreateDieselRate"></button>
       </ng-template>
     </p-toolbar>
 
@@ -32,7 +32,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdateDieselRate"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -42,9 +42,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-dieselRate>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component mr-2" (click)="editDieselRate(dieselRate)"
-              [disabled]="!permissions.CanUpdateDieselRate"></button>
+          <td *ngIf="permissions?.CanUpdateDieselRate"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component mr-2" (click)="editDieselRate(dieselRate)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span

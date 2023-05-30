@@ -89,7 +89,7 @@
       <ng-template pTemplate="footer">
         <div class="col-5" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-          [disabled]="fbshifts.invalid"  (click)="onSubmit()"></button>
+            [disabled]="fbshifts.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>
@@ -123,7 +123,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions.CanUpdateShift"></th>
           <!-- <th pSortableColumn="shiftId">Shift Id<p-columnFilter type="text" field="shiftId"
                         display="menu"></p-columnFilter><p-sortIcon field="shiftId"></p-sortIcon>
                     </th> -->
@@ -170,8 +170,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-shifts>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(shifts)" [disabled]="!permissions.CanUpdateShift"></button></td>
+          <td *ngIf="permissions.CanUpdateShift"><button pButton pRipple icon="pi pi-pencil"
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editProduct(shifts)"></button></td>
           <!-- <td>{{shifts.shiftId}}</td> -->
           <td>{{shifts.code}}</td>
           <td>{{shifts.name}}</td>

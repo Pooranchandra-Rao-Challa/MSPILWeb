@@ -80,7 +80,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New District" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="InitDistrict()" *ngIf="permissions.CanCreateDistrict"></button>
+          (click)="InitDistrict()" *ngIf="permissions?.CanCreateDistrict"></button>
       </ng-template>
     </p-toolbar>
     <!-- table -->
@@ -102,7 +102,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdateDistrict"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{col?.label}}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -112,8 +112,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-district>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(district)" [disabled]="!permissions.CanUpdateDistrict"></button></td>
+          <td *ngIf="permissions?.CanUpdateDistrict"><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editProduct(district)"></button></td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span
               *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{district[col.field]}}</span>

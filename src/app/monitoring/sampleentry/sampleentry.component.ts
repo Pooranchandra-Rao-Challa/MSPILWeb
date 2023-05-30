@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
-import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { FarmersViewDto, SampleslabsViewDto, SeasonDto } from 'src/app/_models/applicationmaster';
 import { FarmerSectionViewDto, IPlotsofFarmerViewDto, ISampleDetailsViewDto, SampleDetailsDto, SampleDto } from 'src/app/_models/monitoring';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
@@ -188,16 +188,18 @@ export class SampleEntryComponent implements OnInit {
   }
 
   patchValues(sample: ISampleDetailsViewDto) {
+    let tempSample = 0;
+    tempSample = Math.min(sample.sampleNo + 1, sample.noOfSample);
     this.fbSampleEntry.patchValue(sample);
-    this.fbSampleEntry.controls['noOfSample'].setValue(sample.sampleNo);
-    this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(sample.noOfSample);
+    this.fbSampleEntry.controls['noOfSample'].setValue(tempSample);
+    this.fbSampleEntry.controls['noOfSamplesEntered'].setValue(sample.sampleNo);
+    if(sample.docDate) this.fbSampleEntry.controls['docDate'].setValue(FORMAT_DATE(new Date(sample.docDate)));
+    if(!sample.canEditSample) this.getDocNo();
     this.showDialog = true;
-    if (sample.noOfSample == 0) {
-      this.getDocNo();
-    }
   }
 
   saveSampleEntry(): Observable<HttpEvent<any>> {
+    this.fbSampleEntry.value.docDate = FORMAT_DATE(this.fbSampleEntry.value.docDate);
     if (this.addFlag) return this.monitoringService.CreateSampleEntry(this.fbSampleEntry.value)
     else return this.monitoringService.UpdateSampleEntry(this.fbSampleEntry.value)
   }
@@ -209,6 +211,7 @@ export class SampleEntryComponent implements OnInit {
           this.fbSampleEntry.reset();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMOPAS001" : "SMOPAS002"]);
+          this.initSampleEntries(this.currentSeason.seasonId!);
         }
       })
     }

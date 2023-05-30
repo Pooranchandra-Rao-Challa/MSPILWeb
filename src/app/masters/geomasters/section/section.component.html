@@ -168,7 +168,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Section" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addSection()" *ngIf="permissions.CanCreateSection"></button>
+          (click)="addSection()" *ngIf="permissions?.CanCreateSection"></button>
       </ng-template>
     </p-toolbar>
 
@@ -191,7 +191,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th  *ngIf="permissions?.CanUpdateSection"></th>
           <th pSortableColumn="divisionName">Division<p-columnFilter type="text" field="divisionName" display="menu">
             </p-columnFilter>
             <p-sortIcon field="divisionName"></p-sortIcon>
@@ -251,8 +251,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-section>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editProduct(section)" [disabled]="!permissions.CanUpdateSection"></button></td>
+          <td *ngIf="permissions?.CanUpdateSection"><button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editProduct(section)"></button></td>
           <td>{{section.divisionName}}</td>
           <td>{{section.circleName}}</td>
           <td>{{section.sectionCode}}</td>
