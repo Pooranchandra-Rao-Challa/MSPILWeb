@@ -2,8 +2,6 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
 
-
-
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
@@ -38,7 +36,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanCreateSampleEntry || permissions?.CanUpdateSampleEntry"></th>
           <th *ngFor="let col of headers" [pSortableColumn]="col.header">
             {{ col?.label }}
             <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
@@ -50,14 +48,24 @@
         <!-- <tr [ngStyle]="{'backgrund': sample.canNotDoEditOrAdd ? 'red' : (sample.canAddSample ? '#bfe9bf' : 'black') }"> -->
         <tr
           [ngClass]="sample.canNotDoEditOrAdd ? 'text-red-600' : (sample.canAddSample ? 'text-green-600' : 'text-blue-600')">
-          <td
+          <td *ngIf="permissions?.CanCreateSampleEntry || permissions?.CanUpdateSampleEntry"
             [ngClass]="sample.canNotDoEditOrAdd ? 'bg-red-300' : (sample.canAddSample ? 'bg-green-300' : 'bg-blue-300')">
-            <button pButton pRipple icon="pi pi-plus"
-              class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
-              (click)="addSampleEntry(sample)" *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd"></button>
-            <button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
-              (click)="editSampleEntry(sample)" *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd"></button>
+            <div *ngIf="sample.canAddSample && !sample.canNotDoEditOrAdd">
+              <div [pTooltip]="!permissions?.CanCreateSampleEntry ? 'You Have No Permission To Add' : ''">
+                <button pButton pRipple icon="pi pi-plus"
+                  class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
+                  (click)="addSampleEntry(sample)" [disabled]="!permissions?.CanCreateSampleEntry">
+                </button>
+              </div>
+            </div>
+            <div *ngIf="sample.canEditSample && !sample.canNotDoEditOrAdd">
+              <div [pTooltip]="!permissions?.CanUpdateSampleEntry ? 'You Have No Permission To Edit' : ''">
+                <button pButton pRipple icon="pi pi-pencil"
+                  class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
+                  (click)="editSampleEntry(sample)" [disabled]="!permissions?.CanUpdateSampleEntry">
+                </button>
+              </div>
+            </div>
             <button pButton pRipple icon="pi pi-eye-slash"
               class="p-element p-ripple p-button-text p-button-secondary text-white p-component"
               *ngIf="sample.canNotDoEditOrAdd" [disabled]="true"></button>

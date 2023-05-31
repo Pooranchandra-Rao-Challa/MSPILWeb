@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { HttpEvent } from '@angular/common/http';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { ITableHeader } from 'src/app/_models/common';
+import { JWTService } from 'src/app/_services/jwt.service';
 
 @Component({
   selector: 'sampleentry',
@@ -47,6 +48,7 @@ export class SampleEntryComponent implements OnInit {
   lastSampleSize: number = 0;
   enteredSampleCount: number = 0;
   netArea: number = 0;
+  permissions: any;
 
   headers: ITableHeader[] = [
     { field: 'seasonCode', header: 'seasonCode', label: 'Season' },
@@ -65,8 +67,8 @@ export class SampleEntryComponent implements OnInit {
     private commonService: CommonService,
     private appMasterservice: AppMasterService,
     private monitoringService: MonitoringService,
-    private messageService: MessageService,
-    private alertMessage: AlertMessage) {
+    private alertMessage: AlertMessage,
+    private jwtService: JWTService,) {
     this.samples = [
       { id: 1, name: 'Current season sample' },
       { id: 2, name: 'No sample data' },
@@ -75,6 +77,7 @@ export class SampleEntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.permissions = this.jwtService.Permissions;
     this.initSeasons();
     this.sampleEntryForm();
     this.initCurrentSeason(CURRENT_SEASON());

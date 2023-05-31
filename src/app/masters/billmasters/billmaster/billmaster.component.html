@@ -100,7 +100,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">From Date:</label>
-                  <p-calendar placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
+                  <p-calendar appendTo="body" placeholder="Select From Date" [readonlyInput]="true" [showIcon]="true"
                     formControlName="fromDate"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['fromDate'].touched && FormControls['fromDate'].errors }">
                   </p-calendar>

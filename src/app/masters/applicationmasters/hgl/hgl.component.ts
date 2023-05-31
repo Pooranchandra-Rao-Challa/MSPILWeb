@@ -15,7 +15,6 @@ import { MIN_LENGTH_6 } from 'src/app/_shared/regex';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-
 @Component({
   selector: 'app-hgl',
   templateUrl: './hgl.component.html',
@@ -72,7 +71,6 @@ export class HglComponent implements OnInit {
   maxLength: MaxLength = new MaxLength();
   permissions: any;
   mediumDate: string = MEDIUM_DATE;
-
   plotHeader: ITableHeader[] = [
     { field: 'code', header:'code', label: 'Code' },
     { field: 'name', header:'name', label: 'Name' },
@@ -103,7 +101,6 @@ export class HglComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy  ', label: 'Updated By' },
   ];
-
   constructor(
     private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
@@ -115,7 +112,6 @@ export class HglComponent implements OnInit {
       { label: 'Female', value: 'F' },
     ];
   }
-
   hglform() {
     this.fbHgl = this.formbuilder.group({
       hglId: [null],
@@ -144,8 +140,8 @@ export class HglComponent implements OnInit {
       isActive: [true],
       subHgls: this.formbuilder.array([]),
     });
+    this.addSubHgl();
   }
-
   ngOnInit(): void {
     this.permissions = this.jwtService.Permissions;
     this.inithgls();
@@ -154,13 +150,11 @@ export class HglComponent implements OnInit {
     this.initVehicles();
     this.hglform();
   }
-
   inithgls() {
     this.appMasterService.GetHgls().subscribe((resp) => {
       this.hgls = resp as unknown as HglViewDto[];
     });
   }
-
   initsubHgls(hglId: any) {
     this.appMasterService.GetSubHgl(hglId).subscribe((resp) => {
       this.subHgls = resp as unknown as SubHglViewDto[];
@@ -175,43 +169,50 @@ export class HglComponent implements OnInit {
       }
     });
   }
-
   initRelationTypes() {
     this.LookupService.RelationTypes().subscribe((resp) => {
       this.relationTypes = resp;
     });
   }
-
   initBanks() {
     this.appMasterService.GetBanks().subscribe((resp) => {
       this.banks = resp as unknown as BankViewDto[];
     });
   }
-
   initVehicles() {
     this.appMasterService.GetVehicleTypes().subscribe((resp) => {
       this.vehicleTypes = resp as unknown as VehicleTypeViewDto[];
     });
   }
-
   get FormControls() {
     return this.fbHgl.controls;
   }
-
   formArrayControls(i: number, formControlName: string) {
     return this.faSubHgl().controls[i].get(formControlName);
   }
-
   /* Form Array For hgl Details */
   faSubHgl(): FormArray {
     return this.fbHgl.get('subHgls') as FormArray;
   }
 
+  isUniqueSubHGLCode(code: string, subHglId: number) {
+    var existingCodes = this.subHgls.filter(
+      (subHgl) =>
+        subHgl.code === code && subHgl.subHglId !== subHglId
+    );
+    return existingCodes.length > 0;
+  }
   addSubHgl() {
     this.showSubHgl = true;
+    // var lastIndex = this.faSubHgl().length - 1;
+    // var subHglGroup = this.faSubHgl().controls[lastIndex] as FormGroup;
+    // if (this.isUniqueSubHGLCode(subHglGroup.value.code, 0)) {
+    //   this.alertMessage.displayErrorMessage(
+    //     `Sub HGL Code :"${subHglGroup.value.code}" Already Exists.`
+    //   );
     this.faSubHgl().push(this.generateRow());
   }
-
+  
   generateRow(subHgls: SubHglViewDto = new SubHglViewDto()): FormGroup {
     if (!this.addFlag) subHgls.hglId = this.hgl.hglId;
     return this.formbuilder.group({
@@ -224,7 +225,6 @@ export class HglComponent implements OnInit {
       isActive: subHgls.isActive,
     });
   }
-
   getBranchByBankId(Id: number, edit: boolean = false) {
     this.IFSC = '';
     this.appMasterService.GetBank(Id).subscribe((resp) => {
@@ -242,7 +242,6 @@ export class HglComponent implements OnInit {
     if (branch) this.IFSC = branch.ifsc;
     else this.IFSC = '';
   }
-
   editHgl(hgl: HglViewDto) {
     this.hglform();
     this.initsubHgls(hgl.hglId);
@@ -281,16 +280,11 @@ export class HglComponent implements OnInit {
     this.showSubHgl = true;
   }
   addHgl() {
-    this.addSubHgl();
+    
     this.submitLabel = 'Add Hgl';
-    this.clearBranch();
     this.addFlag = true;
     this.hglform();
     this.showDialog = true;
-  }
-  clearBranch(){
-    this.branches=[];
-    this.IFSC=[];
   }
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -303,40 +297,54 @@ export class HglComponent implements OnInit {
     if (this.addFlag) return this.appMasterService.CreateHgl(this.fbHgl.value);
     else return this.appMasterService.UpdateHgl(this.fbHgl.value);
   }
+
   isUniqueHglCode() {
-    var existingHglCodes = this.hgls.filter(hgl => 
-      hgl.code == this.fbHgl.value.code && hgl.hglId != this.fbHgl.value.hglId
+    var existingTptCode = this.hgls.filter(tpt =>
+      tpt.code == this.fbHgl.value.code && tpt.hglId != this.fbHgl.value.hglId
     )
-    return existingHglCodes.length > 0; 
+    return existingTptCode.length > 0;
   }
+
   isUniqueHglName() {
-    var existingHglCodes = this.hgls.filter(hgl => 
-      hgl.name == this.fbHgl.value.name && hgl.hglId != this.fbHgl.value.hglId
+    var existingTptNames = this.hgls.filter(tpt =>
+      tpt.name == this.fbHgl.value.name && tpt.hglId != this.fbHgl.value.hglId
     )
-    return existingHglCodes.length > 0; 
+    return existingTptNames.length > 0;
   }
+ 
   onSubmit() {
     if (this.fbHgl.valid) {
+      for (let i = 0; i < this.faSubHgl().length; i++) {
+    var subHglGroup = this.faSubHgl().controls[i] as FormGroup;
+    if (this.isUniqueSubHGLCode(subHglGroup.value.code, subHglGroup.value.subHglId)) {
+      this.alertMessage.displayErrorMessage(
+        `Sub HGL Code :"${subHglGroup.value.code}" Already Exists.`
+      );
+      return;
+    }
+  }
       if (this.addFlag) {
         if (this.isUniqueHglCode()) {
           this.alertMessage.displayErrorMessage(
-            `Hgl Code :"${this.fbHgl.value.code}" Already Exists.`
+            `Tpt Code :"${this.fbHgl.value.code}" Already Exists.`
           );
         } else if (this.isUniqueHglName()) {
           this.alertMessage.displayErrorMessage(
-            `Hgl Name :"${this.fbHgl.value.name}" Already Exists.` 
+            `Tpt Name :"${this.fbHgl.value.name}" Already Exists.`
           );
         } else {
           this.save();
         }
       } else {
-        this.save(); 
+        this.save();
       }
     } else {
-      this.fbHgl.markAllAsTouched(); 
+      this.fbHgl.markAllAsTouched();
     }
-  } 
+  }
+
   save() {
+   
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';
     if (this.fbHgl.valid) {
       this.saveHgl().subscribe((resp) => {
@@ -349,14 +357,13 @@ export class HglComponent implements OnInit {
       });
     } else {
       this.fbHgl.markAllAsTouched();
-    }
-  }
+    }}
+  
   onClose() {
     this.hglform();
     this.faSubHgl().clear();
     this.showSubHgl = false;
   }
-
   ngOnDestroy() {
     this.hgls = [];
     this.subHgls = [];
