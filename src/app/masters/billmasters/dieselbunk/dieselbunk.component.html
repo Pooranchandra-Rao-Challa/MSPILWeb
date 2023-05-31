@@ -79,9 +79,8 @@
                   <input pInputText id="code" #code type="text" placeholder="Enter Code" formControlName="code"
                     alphaNumeric [maxlength]="6"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                  <div class="text-right">
-                    <small>{{code.value.length}}/6</small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%"> 
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please Enter Code.</div>
@@ -91,14 +90,18 @@
                       Code Should Contains Only Alphabets And Integers.</div>
                   </span>
                 </div>
+                <div class="align-right w-40" style="width:30%; text-align:right;">
+                  <small>{{code.value.length}}/6</small>
+                </div>
+              </div>
+                </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Name:</label>
                   <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                     alphaOnly [maxlength]="maxLength.name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                  <div class="text-right">
-                    <small>{{name.value.length}}/{{maxLength.name}}</small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%"> 
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
@@ -107,30 +110,38 @@
                     </div>
                   </span>
                 </div>
+                <div  class="align-right w-40" style="width:30%; text-align:right;">
+                  <small>{{name.value.length}}/{{maxLength.name}}</small>
+                </div>
+              </div>
+                </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Address:</label>
                   <textarea pInputTextarea id="address" type="text" placeholder="Enter Address"
                     formControlName="address" #address [maxlength]="maxLength.address" address
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }">
                   </textarea>
-                  <div class="text-right">
-                    <small> {{address.value.length}}/{{maxLength.address}} </small>
-                  </div>
+                  <div class="flex">
+                    <div class="align-left w-60" style="width:70%"> 
                   <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                       Please Enter Address.</div>
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['pattern']">
                       Field Cannot Start Or End With Spaces.</div>
                   </span>
+                    </div>
+                    <div class="align-right w-40" style="width:30%; text-align:right;">
+                      <small> {{address.value.length}}/{{maxLength.address}} </small>
+                    </div>
+                  </div>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Pin Code:</label>
                   <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter Pin Code"
                     formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
-                  <div class="text-right">
-                    <small> {{pinCode.value.length}}/{{maxLength.pinCode}} </small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%">
                   <span *ngIf="FormControls['pinCode'].touched && FormControls['pinCode'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['pinCode'].errors?.['required']">
                       Please Enter Pin Code.</div>
@@ -140,18 +151,27 @@
                       Pin Code Should Not Start With Zero And Contains 6 Digits.</div>
                   </span>
                 </div>
+                <div class="align-right w-40" style="width:30%; text-align:right;">
+                  <small> {{pinCode.value.length}}/{{maxLength.pinCode}} </small>
+                </div>
+              </div>
+                </div>
                 <div class="field col-12 md:col-6">
                   <label>Mobile No:</label>
                   <input pInputText id="phoneNo" #phoneNo placeholder="Enter Mobile No" formControlName="phoneNo"
                     numericOnly [maxlength]="maxLength.phoneNo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['phoneNo'].touched && FormControls['phoneNo'].errors }">
-                  <div class="text-right">
-                    <small> {{phoneNo.value.length}}/{{maxLength.phoneNo}} </small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%">
                   <span *ngIf="FormControls['phoneNo'].touched && FormControls['phoneNo'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['phoneNo'].errors?.['pattern']">
                       First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                   </span>
+                </div>
+                <div class="align-right w-40" style="width:30%; text-align:right;">
+                  <small> {{phoneNo.value.length}}/{{maxLength.phoneNo}} </small>
+                </div>
+              </div>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Email:</label>
