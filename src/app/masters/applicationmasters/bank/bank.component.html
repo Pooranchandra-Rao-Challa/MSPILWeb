@@ -55,6 +55,12 @@
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                                     <div class="flex">
                                         <div class="align-left w-60" style="width:70%">
+                                            <span
+                                                *ngIf="FormControls['name'].touched && FormControls['name'].errors?.['notUniqueName']">
+                                                <div class="ng-invalid ng-touched p-error">
+                                                    Branch name must be unique.
+                                                </div>
+                                            </span>
                                             <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
                                                     *ngIf="FormControls['name'].errors?.['required']">
@@ -123,6 +129,12 @@
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
                                                 <span
+                                                    *ngIf="formArrayControls(branchDetailsIndex,'code')?.errors?.['notUniqueCode']">
+                                                    <div class="ng-invalid ng-touched p-error">
+                                                        Branch code must be unique.
+                                                    </div>
+                                                </span>
+                                                <span
                                                     *ngIf="formArrayControls(branchDetailsIndex,'code')?.touched &&formArrayControls(branchDetailsIndex,'code')?.invalid">
                                                     <div class="ng-invalid ng-touched p-error"
                                                         *ngIf="formArrayControls(branchDetailsIndex,'code')?.errors?.['required']">
@@ -148,6 +160,12 @@
                                         formArrayControls(branchDetailsIndex,'name')?.errors }">
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
+                                                <span
+                                                    *ngIf="formArrayControls(branchDetailsIndex,'name')?.errors?.['notUniqueName']">
+                                                    <div class="ng-invalid ng-touched p-error">
+                                                        Branch Name must be unique.
+                                                    </div>
+                                                </span>
                                                 <span
                                                     *ngIf="formArrayControls(branchDetailsIndex,'name')?.touched &&formArrayControls(branchDetailsIndex,'name')?.invalid">
                                                     <div class="ng-invalid ng-touched p-error"
