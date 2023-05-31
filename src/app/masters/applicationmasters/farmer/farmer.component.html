@@ -351,8 +351,8 @@
                 <p-fieldset legend="Land Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-                      <label  class="required">Total Area:</label>
-                      <p-inputNumber inputId="totalArea" placeholder="Enter total Area" formControlName="totalArea"
+                      <label  class="required">Total Area(Acre):</label>
+                      <p-inputNumber inputId="totalArea" placeholder="Enter Total Area" formControlName="totalArea"
                         [minFractionDigits]="2"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['totalArea'].touched && FormControls['totalArea'].errors }">
                       </p-inputNumber>
                       <span *ngIf="FormControls['totalArea'].touched && FormControls['totalArea'].invalid">
@@ -362,7 +362,7 @@
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label  class="required">Cultivated Area:</label>
+                      <label  class="required">Cultivated Area(Acre):</label>
                       <p-inputNumber inputId="cultivatedArea" placeholder="Enter Cultivated Area"
                         formControlName="cultivatedArea" [minFractionDigits]="2"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['cultivatedArea'].touched && FormControls['cultivatedArea'].errors }">

@@ -100,9 +100,8 @@
                   <input pInputText id="code" #code type="text" placeholder="Enter Code" formControlName="code"
                     alphaNumeric [maxlength]="maxLength.code"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
-                  <div class="text-right">
-                    <small>{{code.value.length}}/{{maxLength.code}}</small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%"> 
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please Enter Code.</div>
@@ -112,14 +111,18 @@
                       Code Should Contains Only Alphabets And Integers.</div>
                   </span>
                 </div>
+                <div class="align-right w-40" style="width:30%; text-align:right;">
+                  <small>{{code.value.length}}/{{maxLength.code}}</small>
+                </div>
+                </div>
+                </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Name:</label>
                   <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                     alphaOnly [maxlength]="maxLength.name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                  <div class="text-right">
-                    <small>{{name.value.length}}/{{maxLength.name}}</small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%"> 
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
@@ -129,6 +132,11 @@
                       Should Contains Only Characters.
                     </div>
                   </span>
+                </div>
+                <div class="align-right w-40" style="width:30%; text-align:right;">
+                  <small>{{name.value.length}}/{{maxLength.name}}</small>
+                </div>
+              </div>
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Calculation Type:</label>
@@ -147,9 +155,8 @@
                   <input pInputText id="priority" type="text" placeholder="Enter Priority" formControlName="priority"
                     #priority numericOnly [maxlength]="10"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['priority'].touched && FormControls['priority'].errors }">
-                  <div class="text-right">
-                    <small>{{priority.value.length}}/{{10}}</small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%"> 
                   <span *ngIf="FormControls['priority'].touched && FormControls['priority'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['priority'].errors?.['required']">
                       Please Enter Priority.</div>
@@ -157,15 +164,19 @@
                       Priority Should Contains Only Integers.</div>
                   </span>
                 </div>
+                <div class="align-right w-40" style="width:30%; text-align:right;">
+                  <small>{{priority.value.length}}/{{10}}</small>
+                </div>
+              </div>
+                </div>
                 <div class="field col-12 md:col-6">
                   <label>Formula:</label>
                   <textarea pInputTextarea #formula id="formula" type="text" placeholder="Enter Formula"
                     formControlName="formula" alphaNumeric [maxlength]="maxLength.address"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['formula'].touched && FormControls['formula'].errors }">
                     </textarea>
-                  <div class="text-right">
-                    <small>{{formula.value.length}}/{{maxLength.address}}</small>
-                  </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%"> 
                   <span *ngIf="FormControls['formula'].touched && FormControls['formula'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['formula'].errors?.['minlength']">
                       Formula Min Characters Is 2.</div>
@@ -174,6 +185,11 @@
                       Should Contains Only Characters.
                     </div>
                   </span>
+                </div>
+                  <div class="align-right w-40" style="width:30%; text-align:right;">
+                    <small>{{formula.value.length}}/{{maxLength.address}}</small>
+                  </div>
+              </div>
                 </div>
                 <div class="col-12 md:col-6">
                   <label>Is Active:</label><br>
