@@ -120,9 +120,9 @@
                                         <div class="text-right">
                                             <small>{{Code.value.length}}/{{maxLength.Code}} </small>
                                         </div>
-                                        <span *ngIf="formArrayControls(branchDetailsIndex,'code')?.errors?.['notUniqueCode']">
+                                        <span *ngIf="formArrayControls(branchDetailsIndex,'code')?.touched && formArrayControls(branchDetailsIndex,'code')?.errors?.['notUniqueCode']">
                                             <div class="ng-invalid ng-touched p-error">
-                                              Branch code must be unique.
+                                              Code Must Be Unique.
                                             </div>
                                           </span>
                                         <span
@@ -147,9 +147,9 @@
                                         <div class="text-right">
                                             <small>{{name.value.length}}/{{maxLength.name}} </small>
                                         </div>
-                                        <span *ngIf="formArrayControls(branchDetailsIndex,'name')?.errors?.['notUniqueName']">
+                                        <span *ngIf="formArrayControls(branchDetailsIndex,'name')?.touched && formArrayControls(branchDetailsIndex,'name')?.errors?.['notUniqueName']">
                                             <div class="ng-invalid ng-touched p-error">
-                                              Branch Name must be unique.
+                                                Name Must Be Unique.
                                             </div>
                                           </span>
                                         <span
