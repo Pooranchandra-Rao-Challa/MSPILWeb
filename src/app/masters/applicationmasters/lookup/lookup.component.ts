@@ -102,7 +102,7 @@ export class LookupComponent implements OnInit {
       lookupDetailId: [lookupDetail.lookupDetailId],
       code: new FormControl(lookupDetail.code, [Validators.required,]),
       name: new FormControl(lookupDetail.name, [Validators.required, Validators.minLength(MIN_LENGTH_2)]),
-      remarks: new FormControl(lookupDetail.remarks, [Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
+      remarks: new FormControl(lookupDetail.remarks, [Validators.pattern(RG_ALPHA_NUMERIC)]),
       listingorder: new FormControl(lookupDetail.listingorder, [Validators.required,]),
       isActive: [lookupDetail.isActive],
     })
