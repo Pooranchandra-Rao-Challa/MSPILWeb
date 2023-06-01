@@ -83,7 +83,7 @@
               <div class="p-fluid p-formgrid grid">
                 <div class="field col-12 md:col-6">
                   <label class="required">Season Code:</label>
-                  <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" optionValue="seasonId"
+                  <p-dropdown placeholder="Select Season" optionLabel="code" [options]="seasons" appendTo="body" optionValue="seasonId"
                     formControlName="seasonsId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['seasonsId'].touched && FormControls['seasonsId'].errors }">
                   </p-dropdown>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Village:</label>
-                  <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
+                  <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" appendTo="body" [filter]="true"
                     filterBy="villageName,villageCode" formControlName="villageId" placeholder="Select Village"
                     (onChange)="onSelectedVillage($event.value)"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['villageId'].touched && FormControls['villageId'].errors }">
@@ -127,7 +127,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Bill Param:</label>
-                  <p-dropdown placeholder="Select Bill Param" optionLabel="code" [options]="billParameters"
+                  <p-dropdown placeholder="Select Bill Param" optionLabel="code" appendTo="body" [options]="billParameters"
                     optionValue="id" formControlName="billParameterId"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['billParameterId'].touched && FormControls['billParameterId'].errors }">
                   </p-dropdown>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Rate:</label>
-                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="decimal" locale="en-IN"
+                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" appendTo="body"mode="decimal" locale="en-IN"
                     [minFractionDigits]="2" [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   </p-inputNumber>
