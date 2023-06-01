@@ -112,6 +112,7 @@ export class BankComponent implements OnInit {
       isActive: [null],
       branches: this.formbuilder.array([], this.uniqueBranchValidator()),
     });
+    
   }
   uniqueBranchValidator(): Validators {
     return (formArray: FormArray): ValidationErrors | null => {
@@ -122,7 +123,7 @@ export class BankComponent implements OnInit {
       const duplicateNames = branches.filter((branch, i, arr) =>
         arr.findIndex(t => t.name === branch.name) !== i
       );
-  
+      
       if (duplicateCodes.length || duplicateNames.length) {
         formArray.controls.forEach(control => {
           if (duplicateCodes.some(branch => branch.code === control.get('code')?.value)) {

@@ -52,7 +52,7 @@ export class SeasonComponent implements OnInit {
     { field: 'plantFrom', header:'plantFrom', label: 'Plant From' },
     { field: 'plantTo', header:'plantTo', label: 'Plant To' },
     { field: 'crushFrom', header:'crushFrom', label: 'Crush From' },
-    { field: 'crushTo', header: 'crushTo', label: 'Variety' },
+    { field: 'crushTo', header: 'crushTo', label: 'Crush To' },
     { field: 'burnCaneRate',header:'burnCaneRate', label: 'Burn Cane Rate' },
     { field: 'caneRate', header:'caneRate', label: 'Cane Rate' },
     { field: 'capacity', header:'capacity', label: 'Capacity' },

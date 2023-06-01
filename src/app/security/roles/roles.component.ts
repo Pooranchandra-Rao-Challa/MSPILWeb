@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
+import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { AlertMessage } from '../../_alerts/alertMessage';
 
 @Component({
   selector: 'app-roles',
@@ -23,17 +25,19 @@ export class RolesComponent implements OnInit {
   dialog: boolean = false;
   roleForm!: FormGroup;
   submitLabel!: string;
-  globalFilters: string[] = ["Code", "Name", "IsActive", "CreatedDate", "CreatedBy", "UpdatedDate", "UpdatedBy"];
+  addFlag: boolean = true;
+  globalFilters: string[] = ["Code", "Name", "IsActive", "createdAt", "CreatedBy", "UpdatedDate", "UpdatedBy"];
   mediumDate: string = MEDIUM_DATE;
 
-  constructor(private formbuilder: FormBuilder, private securityService: SecurityService) { }
+  constructor(private formbuilder: FormBuilder, private securityService: SecurityService,
+    private alertMessage:AlertMessage) { }
 
   ngOnInit(): void {
     this.roleForm = this.formbuilder.group({
       roleId: [''],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      isActive: [true, (Validators.requiredTrue)],
+      isActive:[true],
       permissions: []
     });
     this.intiRoles();
@@ -52,6 +56,8 @@ export class RolesComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
+
+
   showDialog() {
     this.roleForm.reset();
     this.dialog = true;
@@ -61,6 +67,8 @@ export class RolesComponent implements OnInit {
       this.roles = resp as unknown as RoleViewDto[];
     });
   }
+
+  
   initPermissoins() {
     this.securityService.GetPermissions().subscribe(resp => {
       this.permissions = resp as unknown as RolePermissionDto[];
@@ -74,6 +82,7 @@ export class RolesComponent implements OnInit {
     this.showDialog();
     this.screens = [];
     if (role.roleId != null) {
+      this.addFlag = false;
       this.submitLabel = "Update Role";
       this.securityService.GetRoleWithPermissions(role.roleId).subscribe(resp => {
         this.role.roleId = role.roleId
@@ -86,6 +95,7 @@ export class RolesComponent implements OnInit {
       })
     } else {
       this.submitLabel = "Add Role";
+      this.addFlag = false;
       this.role = {};
       this.role.roleId = "";
       this.role.code = "";
@@ -118,6 +128,7 @@ export class RolesComponent implements OnInit {
           this.roleForm.reset();
           this.dialog = false;
           this.intiRoles();
+          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMR001" : "SMR002"]);
         }
       })
     }

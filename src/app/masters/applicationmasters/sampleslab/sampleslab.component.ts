@@ -56,12 +56,15 @@ export class SampleslabsComponent implements OnInit {
     this.initSampleslabs();
     this.fbsampleslabs = this.formbuilder.group({
       sampleSlabId: [null],
-      toArea: new FormControl(null, [Validators.required]),
+      toArea: new FormControl('', [Validators.required]),
       fromArea: new FormControl({ value: this.maxAreaThatUsedInRecods, disabled: false }, [Validators.required, Validators.pattern(/^[-+]?[0-9]+\.[0-9]+$/)]),
       noOfSample: new FormControl({ value: this.lastSampleSize, disabled: false }, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [null, Validators.required],
     });
-  }
+    this.fbsampleslabs.valueChanges.subscribe(() => {
+      this.fbsampleslabs.controls['toArea'].setValidators(Validators.min(this.fbsampleslabs.value.fromArea));
+    }
+     )}
 
   initSampleslabs() {
     this.appmasterservice.GetSampleSlabs().subscribe((resp) => {
