@@ -117,32 +117,91 @@ export class BankComponent implements OnInit {
   uniqueBranchValidator(): Validators {
     return (formArray: FormArray): ValidationErrors | null => {
       const branches: BranchViewDto[] = formArray.value;
-      const duplicateCodes = branches.filter((branch, i, arr) =>
-        arr.findIndex(t => t.code === branch.code) !== i
-      );
-      const duplicateNames = branches.filter((branch, i, arr) =>
-        arr.findIndex(t => t.name === branch.name) !== i
-      );
-      
-      if (duplicateCodes.length || duplicateNames.length) {
-        formArray.controls.forEach(control => {
-          if (duplicateCodes.some(branch => branch.code === control.get('code')?.value)) {
-            control.get('code')?.setErrors({ notUniqueCode: true });
-          } else {
-            control.get('code')?.setErrors(null);
-          }
-  
-          if (duplicateNames.some(branch => branch.name === control.get('name')?.value)) {
-            control.get('name')?.setErrors({ notUniqueName: true });
-          } else {
-            control.get('name')?.setErrors(null);
-          }
-        });
-  
-        return { branchesNotUnique: true };
+
+      const duplicateControls: AbstractControl<any, any>[] = [];
+      const uniqueControls: AbstractControl<any, any>[] = [];
+
+      const duplicateCodeControls: AbstractControl<any, any>[] = [];
+      const uniqueCodeControls: AbstractControl<any, any>[] = [];
+
+      // if( formArray.controls.length == 0)
+      // {
+      //   return null;
+      // }
+
+      formArray.controls.forEach(control => {
+      const count = formArray.controls.filter(
+        x => x.get("name")!.value
+          === control.get("name")!.value
+      ).length;
+
+
+
+      if (count > 1) {
+        if(control.get("name")!.value !=null && control.get("name")!.value !="")
+        {
+        duplicateControls.push(control);
+        }
+      } else {
+        uniqueControls.push(control);
       }
-  
-      return null;
+    });
+
+
+    formArray.controls.forEach(control => {
+      const count1 = formArray.controls.filter(
+        x => x.get("code")!.value
+          === control.get("code")!.value
+      ).length;
+
+
+      
+      if (count1 > 1) {
+        if(control.get("code")!.value !=null && control.get("code")!.value !="")
+        {
+        duplicateCodeControls.push(control);
+        }
+      } else {
+        uniqueCodeControls.push(control);
+      }
+    });
+
+
+    duplicateControls.forEach(duplicateControl => {
+      duplicateControl.get("name")!.setErrors(
+        Object.assign({}, duplicateControl.get("name")!.errors, {
+          notUnique: true
+        })
+      );
+    });
+
+    uniqueControls.forEach((control: any) => {
+      let errors = control.get("name").errors;
+      if (errors) {
+        delete errors.notUnique;
+        errors = Object.keys(control.get("name").errors).length ? control.get("name").errors : null;
+      }
+      control.get("name").setErrors(errors);
+    });
+
+    duplicateCodeControls.forEach(duplicateControl => {
+      duplicateControl.get("code")!.setErrors(
+        Object.assign({}, duplicateControl.get("code")!.errors, {
+          notUnique: true
+        })
+      );
+    });
+
+    uniqueCodeControls.forEach((control: any) => {
+      let errors = control.get("code").errors;
+      if (errors) {
+        delete errors.notUnique;
+        errors = Object.keys(control.get("code").errors).length ? control.get("code").errors : null;
+      }
+      control.get("code").setErrors(errors);
+    });
+    return null;
+
     };
   }
   addBranches() {
@@ -176,7 +235,6 @@ export class BankComponent implements OnInit {
       isActive: [branchDetail.isActive],
     })
   }
-
   formArrayControls(i: number, formControlName: string) {
     return this.fabranchDetails().controls[i].get(formControlName);
   }

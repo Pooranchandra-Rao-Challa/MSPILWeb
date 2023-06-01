@@ -129,7 +129,7 @@
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
                                                 <span
-                                                    *ngIf="formArrayControls(branchDetailsIndex,'code')?.errors?.['notUniqueCode']">
+                                                    *ngIf="formArrayControls(branchDetailsIndex,'code')?.errors?.['notUnique']">
                                                     <div class="ng-invalid ng-touched p-error">
                                                         Branch code must be unique.
                                                     </div>
@@ -161,7 +161,7 @@
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
                                                 <span
-                                                    *ngIf="formArrayControls(branchDetailsIndex,'name')?.errors?.['notUniqueName']">
+                                                    *ngIf="formArrayControls(branchDetailsIndex,'name')?.errors?.['notUnique']">
                                                     <div class="ng-invalid ng-touched p-error">
                                                         Branch Name must be unique.
                                                     </div>
