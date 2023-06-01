@@ -1,3 +1,4 @@
+import { ThemeDto } from './../_models/security';
 import { Subject, map } from 'rxjs';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -29,6 +30,7 @@ export class LoginComponent {
   submitted = false;
   errorMsg: String = "";
   isError: boolean = false;
+  themeDto: ThemeDto = {};
   ngOnInit() {
     this.loginForm = new FormGroup({
       'UserName': new FormControl('', Validators.required),
