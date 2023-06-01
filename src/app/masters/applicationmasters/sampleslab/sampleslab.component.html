@@ -26,15 +26,20 @@
                   </div>
                   <div class="field col-12 md:col-6">
                     <label htmlFor="toArea">To Area:<sup class="p-error">*</sup></label>
-                    <p-inputNumber #toArea formControlName="toArea" type="text" placeholder="Enter To Area"
+                    <p-inputNumber  formControlName="toArea" type="text" placeholder="Enter To Area"
                       mode="decimal" [minFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['toArea'].touched && FormControls['toArea'].errors }">
                     </p-inputNumber>
-                    <div
+                    <span *ngIf="FormControls['toArea'].touched && FormControls['toArea'].invalid">
+                      <div
                       *ngIf="FormControls['toArea'].invalid &&  FormControls['toArea'].touched && FormControls['toArea'].errors?.['required']"
                       class="error-message p-error">
                       Please Enter To Area
                     </div>
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['toArea'].errors?.['min']">
+                        To Area Should be Always Grater From Area.
+                      </div>
+                    </span>
                   </div>
                   <div class="field col-12 md:col-6">
                     <label htmlFor="noOfSample">No of Sample:<sup class="p-error">*</sup></label>

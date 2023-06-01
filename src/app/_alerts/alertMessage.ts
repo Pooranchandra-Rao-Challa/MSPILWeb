@@ -281,6 +281,10 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SMPPQ001': 'Permit Quota Is Add Successfully',
   'SMPPQ002': 'Permit Quota Is Update Successfully',
 
+  //Rolls
+  'SMR001': 'Roles Add Successfully',
+  'SMR002': 'Roles Update Successfully',
+
   // Config theme
   'SSECT001': 'Theme Is Updated Successfully',
 

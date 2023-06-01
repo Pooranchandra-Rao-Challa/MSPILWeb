@@ -16,9 +16,8 @@
                       alphaNumeric
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }"
                       [maxlength]="20" />
-                    <div class="text-right">
-                      <small>{{code.value.length}}/20</small>
-                    </div>
+                      <div class="flex">
+                        <div class="align-left w-60" style="width:70%">
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                         Please Enter Code.</div>
@@ -30,15 +29,18 @@
                         Code Should Contains Only Alpha Numeric.</div>
                     </span>
                   </div>
+                  <div class="align-right w-40" style="width:30%; text-align:right;">
+                    <small>{{code.value.length}}/20</small>
+                  </div>
+                </div>
+                  </div>
                   <div class="field col-12 md:col-6">
                     <label class="required">Shift Name:</label>
                     <input pInputText id="address1" #name type="text" formControlName="name"
                       placeholder="Enter Shift Name" alphaOnly [maxlength]="maxLength.name"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }" />
-
-                    <div class="text-right">
-                      <small>{{name.value.length}}/{{maxLength.name}}</small>
-                    </div>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%">
                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                         Please Enter Name.</div>
@@ -47,6 +49,11 @@
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
                         Name Should Contains Only Alphabets.</div>
                     </span>
+                      </div>
+                      <div class="align-right w-40" style="width:30%; text-align:right;">
+                        <small>{{name.value.length}}/{{maxLength.name}}</small>
+                      </div>
+                    </div>
                   </div>
                   <div class="field col-12 md:col-6">
                     <label class="required">From Time:</label>
