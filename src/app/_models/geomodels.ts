@@ -105,6 +105,7 @@ export interface ISectionsViewDto {
   divisionName: string,
   inchargeName: string,
   inchargePhoneNo: string,
+  targetArea:number;
   address: string,
   listingOrder: number,
   isActive: boolean,
