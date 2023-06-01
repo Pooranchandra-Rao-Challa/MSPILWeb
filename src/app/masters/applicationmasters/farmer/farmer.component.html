@@ -371,6 +371,9 @@
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].errors?.['required']">
                           Please Enter Cultivated Area
                         </div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].errors?.['max']">
+                          Cultivated Area should be less than or equal to Total Area.
+                        </div>
                       </span>
                     </div>
                   </div>

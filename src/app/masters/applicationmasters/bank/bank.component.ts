@@ -1,6 +1,6 @@
 import { HttpEvent } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
@@ -18,7 +18,7 @@ import { MAX_LENGTH_20, MAX_LENGTH_25, MAX_LENGTH_6, MIN_LENGTH_11, MIN_LENGTH_2
   ]
 })
 export class BankComponent implements OnInit {
-  globalFilterFields: string[] = ['code','name','isActive','createdBy','createdAt','updatedBy','updatedAt']
+  globalFilterFields: string[] = ['code', 'name', 'isActive', 'createdBy', 'createdAt', 'updatedBy', 'updatedAt']
   display: boolean = false;
   showDialog: boolean = false;
   bank: BankDto = new BankDto()
@@ -35,7 +35,7 @@ export class BankComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
-  
+
   headers: ITableHeader[] = [
     { field: 'code', header: 'code', label: 'Code' },
     { field: 'name', header: 'name', label: 'Name' },
@@ -45,17 +45,52 @@ export class BankComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
-  
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
-    private jwtService:JWTService) { }
+    private jwtService: JWTService) { }
 
   get FormControls() {
     return this.fbbank.controls;
   }
 
-  onGlobalFilter(table: Table, event: Event) {   
+  public uniqueValidator(fromArray: FormArray) {
+    const duplicateControls: AbstractControl<any, any>[] = [];
+    const uniqueControls: AbstractControl<any, any>[] = [];
+    fromArray.controls.forEach(control => {
+      const count = fromArray.controls.filter(
+        x => x.get("name")!.value.toLowerCase().replace(/\s/g, '')
+          === control.get("name")!.value.toLowerCase().replace(/\s/g, '')
+      ).length;
+      if (count > 1) {
+        duplicateControls.push(control);
+      } else {
+        uniqueControls.push(control);
+      }
+    });
+
+    duplicateControls.forEach(duplicateControl => {
+      duplicateControl.get("name")!.setErrors(
+        Object.assign({}, duplicateControl.get("name")!.errors, {
+          notUnique: true
+        })
+      );
+    });
+
+    uniqueControls.forEach((control: any) => {
+      let errors = control.get("name").errors;
+      if (errors) {
+        delete errors.notUnique;
+        errors = Object.keys(control.get("name").errors).length ? control.get("name").errors : null;
+      }
+      control.get("name").setErrors(errors);
+    });
+    return null;
+  }
+
+
+  onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
@@ -75,8 +110,40 @@ export class BankComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       abbr: [null],
       isActive: [null],
-      branches: this.formbuilder.array([]),
+      branches: this.formbuilder.array([], this.uniqueBranchValidator()),
     });
+    
+  }
+  uniqueBranchValidator(): Validators {
+    return (formArray: FormArray): ValidationErrors | null => {
+      const branches: BranchViewDto[] = formArray.value;
+      const duplicateCodes = branches.filter((branch, i, arr) =>
+        arr.findIndex(t => t.code === branch.code) !== i
+      );
+      const duplicateNames = branches.filter((branch, i, arr) =>
+        arr.findIndex(t => t.name === branch.name) !== i
+      );
+      
+      if (duplicateCodes.length || duplicateNames.length) {
+        formArray.controls.forEach(control => {
+          if (duplicateCodes.some(branch => branch.code === control.get('code')?.value)) {
+            control.get('code')?.setErrors({ notUniqueCode: true });
+          } else {
+            control.get('code')?.setErrors(null);
+          }
+  
+          if (duplicateNames.some(branch => branch.name === control.get('name')?.value)) {
+            control.get('name')?.setErrors({ notUniqueName: true });
+          } else {
+            control.get('name')?.setErrors(null);
+          }
+        });
+  
+        return { branchesNotUnique: true };
+      }
+  
+      return null;
+    };
   }
   addBranches() {
     this.ShowbranchDetails = true;
@@ -99,11 +166,11 @@ export class BankComponent implements OnInit {
       bankId: [branchDetail.bankId],
       branchId: [branchDetail.branchId],
       code: new FormControl(branchDetail.code, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
-      name: new FormControl(branchDetail.name, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2)]),
+      name: new FormControl(branchDetail.name, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2) ]),
       ifsc: new FormControl(branchDetail.ifsc, [Validators.required, Validators.pattern(RG_IFSC)]),
       abbr: [""],
-      address: new FormControl(branchDetail.address,[Validators.required, Validators.pattern(RG_ADDRESS)]),
-      pinCode: new FormControl(branchDetail.pinCode, [Validators.required, Validators.pattern(RG_PINCODE),Validators.maxLength(MIN_LENGTH_6)]),
+      address: new FormControl(branchDetail.address, [Validators.required, Validators.pattern(RG_ADDRESS)]),
+      pinCode: new FormControl(branchDetail.pinCode, [Validators.required, Validators.pattern(RG_PINCODE), Validators.maxLength(MIN_LENGTH_6),]),
       phoneNo: [branchDetail.phoneNo],
       email: [branchDetail.email],
       isActive: [branchDetail.isActive],
@@ -129,16 +196,16 @@ export class BankComponent implements OnInit {
     else return this.appMasterService.UpdateBank(this.fbbank.value)
   }
   isUniqueBankCode() {
-    const existingBankCodes = this.banks.filter(bank => 
-      bank.code === this.fbbank.value.code && 
-       bank.bankId !== this.fbbank.value.bankId
+    const existingBankCodes = this.banks.filter(bank =>
+      bank.code === this.fbbank.value.code &&
+      bank.bankId !== this.fbbank.value.bankId
     )
-    return existingBankCodes.length > 0; 
+    return existingBankCodes.length > 0;
   }
-  
+
   isUniqueBankName() {
     const existingBankNames = this.banks.filter(bank =>
-      bank.name === this.fbbank.value.name && 
+      bank.name === this.fbbank.value.name &&
       bank.bankId !== this.fbbank.value.bankId
     )
     return existingBankNames.length > 0;
@@ -153,17 +220,17 @@ export class BankComponent implements OnInit {
           );
         } else if (this.isUniqueBankName()) {
           this.alertMessage.displayErrorMessage(
-            `Bank Name :"${this.fbbank.value.name}" Already Exists.` 
+            `Bank Name :"${this.fbbank.value.name}" Already Exists.`
           );
         } else {
           this.save();
         }
       } else {
-        this.save(); 
+        this.save();
       }
-     
+
     } else {
-      this.fbbank.markAllAsTouched(); 
+      this.fbbank.markAllAsTouched();
     }
   }
 

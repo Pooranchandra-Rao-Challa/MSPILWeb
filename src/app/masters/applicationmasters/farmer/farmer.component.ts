@@ -124,7 +124,7 @@ export class FarmerComponent implements OnInit {
       branchId: [null, (Validators.required)],
       accountNo: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
       totalArea: [null, (Validators.required)],
-      cultivatedArea: [null, (Validators.required)],
+      cultivatedArea: [null, (Validators.required)]  ,
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -133,9 +133,13 @@ export class FarmerComponent implements OnInit {
       isActive: [null],
     });
     this.imagePreview = this.defaultImageUrl;
+    this.fbfarmer.valueChanges.subscribe(() => {
+      this.fbfarmer.controls['cultivatedArea'].setValidators(Validators.max(this.fbfarmer.value.totalArea));
+    });  
+  
 
   }
-
+ 
   showFileSelect() {
     this.showFileSelectButton = true;
     setTimeout(() => this.fileInput.nativeElement.click());
@@ -347,5 +351,3 @@ export class FarmerComponent implements OnInit {
   }
 
 }
-
-

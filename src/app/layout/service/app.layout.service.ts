@@ -25,7 +25,8 @@ interface LayoutState {
 })
 export class LayoutService {
 
-  constructor(private jwtService: JWTService) { }
+  constructor(private jwtService: JWTService) {
+   }
 
   config: AppConfig = {
     ripple: false,

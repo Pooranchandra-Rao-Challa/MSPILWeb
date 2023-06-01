@@ -1,9 +1,11 @@
-import { RoleDto, RoleViewDto, UserDto, UserViewDto, RolePermissionDto, SecureQuestionDto, UserQuestionDto, ForgotUserPasswordDto, ChangePasswordDto } from './../_models/security';
+import {
+  RoleDto, RoleViewDto, UserDto, UserViewDto, RolePermissionDto, SecureQuestionDto, UserQuestionDto, ForgotUserPasswordDto, ChangePasswordDto, ThemeDto
+} from 'src/app/_models/security';
 import { Injectable } from "@angular/core";
 import { ApiHttpService } from "./api.http.service";
 import {
   CHANGE_PASSWORD_URI, CREATE_ROLE_URI, CREATE_USER_URI, FORGOT_PASSWORD, GET_ALL_SECTIONS_URI, GET_PERMISSIONS_URI, GET_ROLES_URI, GET_ROLE_PERMISSIONS_URI,
-  GET_USERS_URI, GET_USER_SECTIONS_URI, SECURE_QUESTIONS, UPDATE_ROLE_URI, UPDATE_USER_URI, USER_SECURITY_QUESTIONS,
+  GET_USERS_URI, GET_USER_SECTIONS_URI, SECURE_QUESTIONS, UPDATE_ROLE_URI, UPDATE_THEME_URI, UPDATE_USER_URI, USER_SECURITY_QUESTIONS,
 } from "./api.uri.service";
 
 @Injectable({ providedIn: 'root' })
@@ -62,4 +64,9 @@ export class SecurityService extends ApiHttpService {
   public ChangePassword(changePasswordDto: ChangePasswordDto) {
     return this.post<ChangePasswordDto>(CHANGE_PASSWORD_URI, changePasswordDto, { responseType: 'text' });
   }
+
+  public UpdateTheme(themeDto: ThemeDto) {
+    return this.post<ThemeDto>(UPDATE_THEME_URI, themeDto);
+  }
+
 }

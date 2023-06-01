@@ -144,7 +144,7 @@ export class PlotassesmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.exportColumns = this.farmerHeader.map((col) => ({
-      title: col.header,
+      title: col.label,
       dataKey: col.field,
     }));
     this.permissions = this.jwtService.Permissions;
@@ -370,8 +370,9 @@ export class PlotassesmentComponent implements OnInit {
     doc.save('plot_Assessments.pdf');
   }
   exportExcel() {
+    debugger
     import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.plotAssessments);
+      const worksheet = xlsx.utils.json_to_sheet(this.exportColumns);
       const workbook = {
         Sheets: { data: worksheet },
         SheetNames: ['data']
