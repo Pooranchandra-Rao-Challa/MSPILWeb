@@ -208,8 +208,8 @@ overflow: hidden;
   height:12px;
 }
 
-// .p-tooltip .p-tooltip-text {
-//   border:2px solid var( --primary-color); 
-//   background-color: rgb(255, 255, 255) !important;
-//   color:var( --menu-bg2) !important;
-// }
+.p-tooltip .p-tooltip-text {
+  border:2px solid var( --primary-color); 
+  background-color: rgb(255, 255, 255) !important;
+  color:var( --menu-bg2) !important;
+}
