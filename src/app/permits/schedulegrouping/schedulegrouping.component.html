@@ -7,7 +7,7 @@
         <h4>Schedule Grouping</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="Add Schedule Grouping" class="p-button-primary w-100" icon="pi pi-plus"
+        <button pButton pRipple label="Add Schedule Grouping" class="p-button-primary w-100" icon="pi pi-plus" 
           (click)="toggleTab()"></button>
         <!-- (click)="getScheduleGrouping()" -->
       </ng-template>
@@ -172,7 +172,7 @@
             <span class="p-input-icon-left mb-2">
               <i class="pi pi-search"></i>
               <input pInputText type="text" #filter (input)="onGlobalFilter(dtSchedulegrouping, $event)"
-                placeholder="Search Keyword"
+                placeholder="Search Keyword" tooltipPosition="top" 
                 pTooltip="Search By seasonName, groupNo,toDOP, fromDOP, Created By,Updated At,Updated By"
                 class="w-full" />
             </span>
@@ -273,8 +273,8 @@
 
               <span class="p-input-icon-left m-2">
                 <i class="pi pi-search"></i>
-                <input pInputText type="text" #filters  (input)="onGlobalFilter1(dtplotScheduleGrouping,$event)" placeholder="Search Keyword"
-                  pTooltip="Search By divisionName,circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"
+                <input pInputText type="text" #filters (input)="onGlobalFilter1(dtplotScheduleGrouping,$event)" placeholder="Search Keyword"
+                  pTooltip="Search By divisionName,circleName, sectionName,villageName ,farmerName, plantType, variety,estimatedTon"  
                   class="w-full" />
 
               </span>

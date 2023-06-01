@@ -99,3 +99,7 @@ export class ChangePasswordDto {
   password?: string
   newPassword?:string;
 }
+
+export class ThemeDto {
+  theme?: string;
+}

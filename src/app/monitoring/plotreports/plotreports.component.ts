@@ -385,6 +385,7 @@ export class PlotreportsComponent implements OnInit {
     this.onValidations();
     this.submitLabel = 'Add Plot Report';
     this.showDialog = true;
+    this.addFlag = true;
   }
 
 
@@ -403,7 +404,6 @@ export class PlotreportsComponent implements OnInit {
     // this.getOfferInfo(plotReport.plotOfferId);
 
     this.fbPlotReport.controls['plotNumber'].setValue(plotReport.plotNumber);
-
     this.fbPlotReport.controls['birnumber'].setValue(plotReport.birNumber);
     this.fbPlotReport.controls['profile'].setValue(plotReport.profile);
     this.fbPlotReport.controls['totalArea'].setValue(plotReport.totalArea);
@@ -431,6 +431,7 @@ export class PlotreportsComponent implements OnInit {
     this.subPlot.get('isGreenManures')?.setValue(plotReport.isGreenManures);
 
     this.mainPlot.get('plotOfferId')?.setValue(plotReport.plotOfferId);
+    this.mainPlot.get('villageId')?.setValue(plotReport.plotVillageId);
     this.fbPlotReport.patchValue(plotReport);
     this.fbPlotReport.controls['plantTypeId'].setValue(plotReport.plantTypeId);
     this.fbPlotReport.controls['varietyId'].setValue(plotReport.varietyId);

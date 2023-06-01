@@ -255,3 +255,4 @@ export const UPDATE_PERMIT_QUOTA_URI ="Schedule/UpdatePermitQuota";
 export const CREATE_CUTTING_ORDER_URI = "Schedule/CreateCuttingOrder";
 
 export const CHANGE_PASSWORD_URI = "Security/ChangePassword";
+export const UPDATE_THEME_URI = "Security/UpdateTheme";

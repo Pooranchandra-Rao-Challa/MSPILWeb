@@ -47,8 +47,8 @@ export class LoanMasterComponent implements OnInit {
     { field: 'name', header: 'name', label: 'Name' },
     { field: 'interestRate', header: 'interestRate', label: 'Interest Rate' },
     { field: 'priority', header: 'priority', label: 'Priority' },
-    { field: 'glcode', header: 'glcode', label: 'GL Code' },
-    { field: 'subGlcode', header: 'subGlcode', label: 'Sub GL Code' },
+    { field: 'glCode', header: 'glCode', label: 'GL Code' },
+    { field: 'subGLcode', header: 'subGLcode', label: 'Sub GL Code' },
     { field: 'isActive', header: 'isActive', label: 'Is Active' },
     { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
     { field: 'createdBy', header: 'createdBy', label: 'Created By' },
@@ -85,6 +85,8 @@ export class LoanMasterComponent implements OnInit {
   initLoanTypes() {
     this.BillMasterService.GetLoanTypes().subscribe((resp) => {
       this.loanTypes = resp as unknown as LoanTypeViewDto[];
+      console.log('loanTypes',this.loanTypes);
+      
     });
   }
   initLoanSubtype(loanTypeId: any) {

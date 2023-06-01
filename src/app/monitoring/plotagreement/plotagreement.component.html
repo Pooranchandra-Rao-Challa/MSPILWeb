@@ -217,7 +217,7 @@
                   <div class="p-fluid p-formgrid grid" formGroupName="nomineeInfo">
                     <div class="field col-12 md:col-4 ">
                       <label class="required">RelationShip Type:</label>
-                      <p-dropdown placeholder="Please Select RelationShip Type" optionLabel="name" [options]="relationTypes"
+                      <p-dropdown placeholder="Select RelationShip Type" optionLabel="name" [options]="relationTypes"
                         optionValue="lookupDetailId" appendTo="body" formControlName="relationTypeId"
                         [ngClass]="{ 'is-invalid ng-dirty': fcNomineeDetails.controls['relationTypeId'].touched && fcNomineeDetails.controls['relationTypeId'].errors }">
                       </p-dropdown>
@@ -246,7 +246,7 @@
                           Nominee Min Length Is 2.</div>
                         <div class="ng-invalid ng-touched p-error"
                           *ngIf="fcNomineeDetails.controls['nominee'].errors?.['pattern']">Nominee
-                          Should Start Or End With Space.
+                          Shouldn't Start Or End With Space.
                         </div>
                       </span>
                     </div>
