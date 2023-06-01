@@ -25,8 +25,8 @@
             (click)="clear(dtDieselRates)"></button>
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dtDieselRates, $event)" placeholder="Search Keyword"
-              class="w-full" />
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dtDieselRates, $event)"
+              placeholder="Search Keyword" class="w-full" />
           </span>
         </div>
       </ng-template>
@@ -43,12 +43,14 @@
       <ng-template pTemplate="body" let-dieselRate>
         <tr>
           <td *ngIf="permissions?.CanUpdateDieselRate"><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component mr-2" (click)="editDieselRate(dieselRate)"></button>
+              class="p-element p-ripple p-button-text p-button p-component mr-2"
+              (click)="editDieselRate(dieselRate)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span
-              *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{dieselRate[col.field]}}</span>
-            <span *ngIf="col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              *ngIf="col?.field != 'fromDate' && col?.field != 'toDate' && col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{dieselRate[col.field]}}</span>
+            <span
+              *ngIf="col?.field != 'fromDate' || col?.field != 'toDate' || col?.field == 'createdAt' || col?.field == 'updatedAt'">
               {{dieselRate[col.field] | date: mediumDate}}
             </span>
             <span *ngIf="col?.field == 'isActive'">

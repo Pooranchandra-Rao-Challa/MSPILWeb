@@ -47,9 +47,9 @@ export class VillageParamRatesComponent implements OnInit {
     { field: 'rate', header: 'rate', label: 'Rate' },
     { field: 'isActive', header: 'isActive', label: 'Is Active' },
     { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
-    { field: 'createdByUser', header: 'createdByUser', label: 'Created By' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
-    { field: 'updatedByUser', header: 'updatedByUser', label: 'Updated By' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
 
   constructor(private formbuilder: FormBuilder,
