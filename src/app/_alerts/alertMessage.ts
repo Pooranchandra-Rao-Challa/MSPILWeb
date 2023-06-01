@@ -284,8 +284,8 @@ export const ALERT_CODES: { [key: string]: string } = {
   //Rolls
   'SMR001': 'Roles Add Successfully',
   'SMR002': 'Roles Update Successfully',
- 
- 
 
+  // Config theme
+  'SSECT001': 'Theme Is Updated Successfully',
 
 }

@@ -1,8 +1,9 @@
+import { ThemeDto } from './../../_models/security';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { AlertMessage } from 'src/app/_alerts/alertMessage';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { SecureQuestionDto, UserQuestionDto } from 'src/app/_models/security';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { SecurityService } from 'src/app/_services/security.service';
@@ -41,7 +42,7 @@ export class ChangepasswordComponent implements OnInit {
   submitted: boolean = true;
   qstnSubmitLabel: String = "Add";
   fbChangePassword!: FormGroup;
-  themeConfig: string = 'lara-light-indigo';
+  themeDto: ThemeDto = {};
   userQuestions: UserQuestionDto[] = [];
 
   constructor(
@@ -51,7 +52,10 @@ export class ChangepasswordComponent implements OnInit {
     public layoutService: LayoutService,
     private jwtService: JWTService,
     private alertMessage: AlertMessage
-  ) { }
+  ) {
+    debugger
+    this.themeDto.theme = 'lara-light-indigo';
+   }
 
   getUserQuestionsAndAnswers() {
     this.securityService.UserSecurityQuestions(this.jwtService.GivenName).subscribe({
@@ -204,6 +208,14 @@ export class ChangepasswordComponent implements OnInit {
       }
     }
     return index;
+  }
+
+  saveTheme(){
+    this.securityService.UpdateTheme(this.themeDto).subscribe((resp) => {
+      if (resp) {
+        this.alertMessage.displayAlertMessage(ALERT_CODES["SSECT001"]);
+      }
+    });
   }
 
 }
