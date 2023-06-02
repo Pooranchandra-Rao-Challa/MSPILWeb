@@ -190,7 +190,7 @@
 
                       <!-- <p-fileUpload mode="basic" name="demo[]" accept="image/*" [maxFileSize]="1000000" (onUpload)="onBasicUpload()"></p-fileUpload> -->
                       <img [src]="imagePreview" alt="Farmer Image" (click)="showFileSelect()" style="max-width: 100%">
-                      <input type="file" #fileInput (change)="onImageSelect($event)" style="display: none;" *ngIf="showFileSelectButton">
+                      <input type="file" #fileInput (change)="onImageSelect($event)"formControlName="imageUrl"  style="display: none;" *ngIf="showFileSelectButton">
                       <!-- <ng-template pTemplate="content">
                             <ul *ngIf="uploadedFiles.length">
                                 <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
