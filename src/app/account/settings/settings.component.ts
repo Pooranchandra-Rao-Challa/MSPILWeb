@@ -155,13 +155,13 @@ export class SettingsComponent implements OnInit {
       if (this.security.id) {
         if (this.findIndexById(this.security.id) >= 0) {
           this.securityDto[this.findIndexById(this.security.id)] = this.security;
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SSESQ002"]);
         }
         else {
           // this.security.id = this.createId();
           // this.security.image = 'security-placeholder.svg';
           this.securityDto.push(this.security);
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SSESQ001"]);
         }
       }
       this.securityDto = [...this.securityDto];

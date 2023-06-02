@@ -30,9 +30,17 @@ export class AlertMessage {
  * ---------------------------------------------------------------------------
  * Modules;
  * ---------------------------------------------------------------------------
+ * Settings : SE
  * Security : S
  * Masters : M
  * Monitoring: MO
+ * ---------------------------------------------------------------------------
+ * Settings
+ *
+ * Change Password : CP
+ * Security Questions : SQ
+ * Config Theme : CT
+ *
  * ---------------------------------------------------------------------------
  * Masters; Geo Masters : GM, Bill Masters : BM, Application Masters : AM
  * ---------------------------------------------------------------------------
@@ -287,5 +295,9 @@ export const ALERT_CODES: { [key: string]: string } = {
 
   // Config theme
   'SSECT001': 'Theme Is Updated Successfully',
+
+  // Security Questions
+  'SSESQ001' : 'Security Question Is Added Successfully',
+  'SSESQ002' : 'Security Question Is Updated Successfully',
 
 }
