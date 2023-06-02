@@ -10,12 +10,9 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../_alerts/alertMessage';
-<<<<<<< HEAD
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MaxLength } from 'src/app/_models/common';
-=======
-import { MaxLength } from 'src/app/_models/common';
->>>>>>> a77c10bdacc5b40c15d8ddbc2910c042ff4722d1
+
 
 @Component({
   selector: 'app-roles',
