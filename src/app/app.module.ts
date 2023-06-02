@@ -28,6 +28,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { permitService } from './_services/permit.service';
+import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { permitService } from './_services/permit.service';
     PhotoService, ProductService,
     // Application services,
     AccountService, JWTService, GeoMasterService, CommonService, BillMasterService,
-    AppMasterService, MessageService, MonitoringService,permitService,ConfirmationService
+    AppMasterService, MessageService, MonitoringService,permitService,ConfirmationService, ThemeNotifier
   ],
   bootstrap: [AppComponent]
 })

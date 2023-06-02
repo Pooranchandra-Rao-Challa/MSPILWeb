@@ -1,3 +1,4 @@
+import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import jwt_decode from 'jwt-decode';
@@ -11,7 +12,8 @@ export class JWTService {
    *
    */
   constructor(
-    private router: Router) {
+    private router: Router,
+    private themeNotifier: ThemeNotifier) {
   }
   private get DecodedJWT(): any {
     if (this.JWTToken != "")
@@ -27,6 +29,7 @@ export class JWTService {
   }
 
   public Logout() {
+    this.themeNotifier.notifyChangeTheme('lara-light-indigo');
     localStorage.removeItem("respModel");
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESHTOKEN_KEY);
@@ -89,8 +92,4 @@ export class JWTService {
     return jwt.ThemeName;
   }
 
-  public get ColorScheme(): string{
-    const jwt = this.DecodedJWT;
-    return jwt.ColorScheme;
-  }
 }
