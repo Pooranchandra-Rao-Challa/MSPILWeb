@@ -5,7 +5,7 @@ import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
-import { FormGroup, FormBuilder, FormControl, FormArray, Validators, } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, FormArray, Validators, ValidationErrors, AbstractControl, } from '@angular/forms';
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
@@ -138,7 +138,7 @@ export class HglComponent implements OnInit {
       accountNo: new FormControl(null, [Validators.required, Validators.pattern(RG_NUMERIC_ONLY), Validators.minLength(MIN_ACCNO)]),
       aadhaarNo: new FormControl(null, [Validators.required, Validators.pattern(RG_AADHAAR), Validators.minLength(MIN_AADHAAR)]),
       isActive: [true],
-      subHgls: this.formbuilder.array([]),
+      subHgls: this.formbuilder.array([],this.uniqueSubHglValidator()),
     });
     this.addSubHgl();
   }
@@ -204,12 +204,6 @@ export class HglComponent implements OnInit {
   }
   addSubHgl() {
     this.showSubHgl = true;
-    // var lastIndex = this.faSubHgl().length - 1;
-    // var subHglGroup = this.faSubHgl().controls[lastIndex] as FormGroup;
-    // if (this.isUniqueSubHGLCode(subHglGroup.value.code, 0)) {
-    //   this.alertMessage.displayErrorMessage(
-    //     `Sub HGL Code :"${subHglGroup.value.code}" Already Exists.`
-    //   );
     this.faSubHgl().push(this.generateRow());
   }
   
@@ -236,6 +230,78 @@ export class HglComponent implements OnInit {
         this.getIFSCByBranch(this.fbHgl.value.branchId);
       }
     });
+  }
+
+  uniqueSubHglValidator(): Validators {
+    return (formArray: FormArray): ValidationErrors | null => {
+      const SubHgl: SubHglViewDto[] = formArray.value;
+      const duplicateControls: AbstractControl<any, any>[] = [];
+      const uniqueControls: AbstractControl<any, any>[] = [];
+      const duplicateCodeControls: AbstractControl<any, any>[] = [];
+      const uniqueCodeControls: AbstractControl<any, any>[] = [];
+      formArray.controls.forEach(control => {
+      const count = formArray.controls.filter(
+        x => x.get("name")!.value
+          === control.get("name")!.value
+      ).length;
+      if (count > 1) {
+        if(control.get("name")!.value !=null && control.get("name")!.value !="")
+        {
+        duplicateControls.push(control);
+        }
+      } else {
+        uniqueControls.push(control);
+      }
+    });
+    formArray.controls.forEach(control => {
+      const count1 = formArray.controls.filter(
+        x => x.get("code")!.value
+          === control.get("code")!.value
+      ).length;
+      if (count1 > 1) {
+        if(control.get("code")!.value !=null && control.get("code")!.value !="")
+        {
+        duplicateCodeControls.push(control);
+        }
+      } else {
+        uniqueCodeControls.push(control);
+      }
+    });
+    duplicateControls.forEach(duplicateControl => {
+      duplicateControl.get("name")!.setErrors(
+        Object.assign({}, duplicateControl.get("name")!.errors, {
+          notUnique: true
+        })
+      );
+    });
+    uniqueControls.forEach((control: any) => {
+      let errors = control.get("name").errors;
+      if (errors) {
+        delete errors.notUnique;
+        errors = Object.keys(control.get("name").errors).length ? control.get("name").errors : null;
+      }
+      control.get("name").setErrors(errors);
+    });
+
+    duplicateCodeControls.forEach(duplicateControl => {
+      duplicateControl.get("code")!.setErrors(
+        Object.assign({}, duplicateControl.get("code")!.errors, {
+          notUnique: true
+        })
+      );
+    });
+
+    uniqueCodeControls.forEach((control: any) => {
+      let errors = control.get("code").errors;
+      if (errors) {
+        delete errors.notUnique;
+        errors = Object.keys(control.get("code").errors).length ? control.get("code").errors : null;
+      }
+      control.get("code").setErrors(errors);
+    });
+    return null;
+
+    };
   }
   getIFSCByBranch(Id: number) {
     let branch = this.branches.find((x) => x.branchId == Id);

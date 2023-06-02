@@ -56,6 +56,7 @@ export class FarmerComponent implements OnInit {
   imagePreview: any;
   mediumDate: string = MEDIUM_DATE;
   showFileSelectButton = false;
+  
 
   plotHeader: ITableHeader[] = [
     { field: 'code', header: 'code', label: 'Code' },
@@ -128,7 +129,7 @@ export class FarmerComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       otherCode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
-      imageUrl: [''],
+      // imageUrl: [''],
       isRegistered: [null],
       isActive: [null],
     });
@@ -280,8 +281,6 @@ export class FarmerComponent implements OnInit {
 
   onSubmit() {
     console.log(this.fbfarmer.value);
-   
-    
     if (this.fbfarmer.valid) {
       if (this.addFlag) {
         if (this.isUniqueFarmerCode()) {
@@ -302,6 +301,7 @@ export class FarmerComponent implements OnInit {
       this.fbfarmer.markAllAsTouched(); 
     }
   }
+ 
   
   save() {
     if (this.fbfarmer.valid) {

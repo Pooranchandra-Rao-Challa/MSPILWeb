@@ -140,23 +140,24 @@
                   <div class="field col-12 md:col-6">
                     <label>Listing Order:<sup class="p-error">*</sup></label>
                     <input pInputText inputId="listingOrder" #listingOrder placeholder="Enter Listing Order"
-                      formControlName="listingOrder" numericOnly [maxlength]="6"
+                      formControlName="listingOrder" numericOnly [maxlength]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
                     <div class="flex">
                       <div class="align-left w-60" style="width:70%">
                         <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
                           <div class="ng-invalid ng-touched p-error"
-                            *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter Listing Order.</div>
+                            *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter listing Order.</div>
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contains Numbers.
                           </div>
                         </span>
                       </div>
                       <div class="align-right w-40" style="width:30%; text-align:right;">
-                        <small>{{listingOrder.value.length}}/6</small>
+                        <small>{{listingOrder.value.length}}/2</small>
                       </div>
                     </div>
-                  </div>
+                    </div>
+                 
                   <div class="field col-12 md:col-6">
                     <label>Target Area:</label>
                     <input pInputText inputId="targetArea" #targetArea placeholder="Enter Target Area"
