@@ -119,9 +119,8 @@
                   <div class="field col-12 md:col-6">
                     <label>Listing Order:<sup class="p-error">*</sup></label>
                     <input pInputText inputId="listingOrder" #listingOrder placeholder="Enter Listing Order"
-                      formControlName="listingOrder" numericOnly [maxlength]="6"
+                      formControlName="listingOrder" numericOnly [maxlength]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
-
                     <div class="flex">
                       <div class="align-left w-60" style="width:70%">
                         <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
@@ -132,11 +131,11 @@
                           </div>
                         </span>
                       </div>
+                    </div>
                       <div class="align-right w-40" style="width:30%; text-align:right;">
-                        <small>{{listingOrder.value.length}}/6</small>
+                        <small>{{listingOrder.value.length}}/2</small>
                       </div>
                     </div>
-                  </div>
                   <div class="field col-12 md:col-6">
                     <label>Address:<sup class="p-error">*</sup></label>
                     <textarea rows="5" cols="30" #address placeholder="Enter Address" pInputTextarea

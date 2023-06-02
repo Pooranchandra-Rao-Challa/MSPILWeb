@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
     this.primengConfig.ripple = true;
     this.themeNotifier.updateTheme().subscribe(themeName => {
       this.initTheme(themeName);

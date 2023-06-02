@@ -8,8 +8,8 @@
         <h4>HGLs</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addHgl()"
-          *ngIf="permissions.CanCreateHGL"></button>
+        <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2"
+          (click)="addHgl()" *ngIf="permissions.CanCreateHgl"></button>
       </ng-template>
     </p-toolbar>
 
@@ -463,6 +463,11 @@
                           formArrayControls(subHglIndex, 'code')?.errors }">
                             <div class="flex">
                               <div class="align-left w-60" style="width:70%">
+                                <span *ngIf="formArrayControls(subHglIndex,'code')?.errors?.['notUnique']">
+                                  <div class="ng-invalid ng-touched p-error">
+                                    Sub Hgl Code Must Be Unique.
+                                  </div>
+                                </span>
                                 <span
                                   *ngIf="formArrayControls(subHglIndex, 'code')?.touched && formArrayControls(subHglIndex, 'code')?.invalid">
                                   <div class="ng-invalid ng-touched p-error"
@@ -490,6 +495,11 @@
                           formArrayControls(subHglIndex, 'name')?.errors }">
                             <div class="flex">
                               <div class="align-left w-60" style="width:70%">
+                                <span *ngIf="formArrayControls(subHglIndex,'name')?.errors?.['notUnique']">
+                                  <div class="ng-invalid ng-touched p-error">
+                                    Sub Hgl Name must be unique.
+                                  </div>
+                                </span>
                                 <span
                                   *ngIf="formArrayControls(subHglIndex, 'name')?.touched && formArrayControls(subHglIndex, 'name')?.invalid">
                                   <div class="ng-invalid ng-touched p-error"
