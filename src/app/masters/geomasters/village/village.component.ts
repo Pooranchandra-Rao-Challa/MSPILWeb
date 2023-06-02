@@ -173,7 +173,6 @@ export class VillageComponent implements OnInit {
   }
   initDistricts(stateId: any) {
     this.mandals = [];
-    this.divisions = [];
     this.circles = [];
     this.sections = [];
     this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {

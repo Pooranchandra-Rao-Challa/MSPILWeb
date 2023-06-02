@@ -111,9 +111,9 @@ export class BankComponent implements OnInit {
       abbr: [null],
       isActive: [null],
       branches: this.formbuilder.array([], this.uniqueBranchValidator()),
-    });
-    
+    });   
   }
+
   uniqueBranchValidator(): Validators {
     return (formArray: FormArray): ValidationErrors | null => {
       const branches: BranchViewDto[] = formArray.value;
@@ -204,6 +204,7 @@ export class BankComponent implements OnInit {
 
     };
   }
+  
   addBranches() {
     this.ShowbranchDetails = true;
     this.fabranch = this.fbbank.get("branches") as FormArray
