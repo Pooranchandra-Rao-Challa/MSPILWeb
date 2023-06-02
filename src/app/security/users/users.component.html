@@ -1,12 +1,13 @@
 <div class="col-12">
   <div class="card">
+    <p-toast key="tst"></p-toast>
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
         <h4>Users</h4>
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New User" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="showUser({})"></button>
+          (click)="showUser({})" *ngIf="permissions?.CanCreateUser"></button>
       </ng-template>
     </p-toolbar>
 
@@ -25,9 +26,10 @@
           </span>
         </div>
       </ng-template>
+
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permissions?.CanUpdateUser"></th>
           <th pSortableColumn="userId">User Id <p-columnFilter type="text" field="userId" display="menu">
             </p-columnFilter>
             <p-sortIcon field="userId"></p-sortIcon>
@@ -48,7 +50,7 @@
             </p-columnFilter>
             <p-sortIcon field="email"></p-sortIcon>
           </th>
-          <th pSortableColumn="MobileNo">Mobile Number <p-columnFilter type="text" field="MobileNo" display="menu">
+          <th pSortableColumn="mobileNumber">Mobile Number <p-columnFilter type="text" field="mobileNumber" display="menu">
             </p-columnFilter>
             <p-sortIcon field="mobileNumber"></p-sortIcon>
           </th>
@@ -104,7 +106,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil"
+          <td *ngIf="permissions?.CanUpdateUser"><button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component mr-2" (click)="showUser(user)"></button></td>
           <td>{{user.userId}}</td>
           <td>{{user.userName}}</td>
@@ -261,8 +263,10 @@
                         <div class="field col-12 md:col-6">
                           <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
                           <input pInputText id="mobileNumber" placeholder="Enter Mobile No" formControlName="mobileNumber"
-                            numericOnly [maxlength]="10"
+                            numericOnly [maxlength]="10" #mobileNumber
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }">
+                            <div class="flex">
+                              <div class="align-left w-60" style="width:70%">
                           <span
                             *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
                             <div class="ng-invalid ng-touched p-error"
@@ -273,32 +277,61 @@
                               First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
                           </span>
                         </div>
+                        <div class="align-right w-40" style="width:30%; text-align:right;">
+                          <small>{{mobileNumber.value.length}}/10</small>
+                        </div>
+                      </div>
+                        </div>
                         <div class="field col-12 md:col-6">
                           <label>Role:<sup class="p-error">*</sup></label>&nbsp;
                           <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId"
-                            placeholder="Enter Role" [autoDisplayFirst]="false"
+                            placeholder="Select Role" [autoDisplayFirst]="false"
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }">
                           </p-dropdown>
                           <span *ngIf="userFormControls['roleId'].touched && userFormControls['roleId'].invalid">
                             <div class="ng-invalid ng-touched p-error"
                               *ngIf="userFormControls['roleId'].errors?.['required']">
-                              Please Enter Role.</div>
+                              Please Select Role.</div>
                           </span>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label htmlFor="ipaddress">IP Address:</label>
                           <input pInputText id="ipaddress" type="text" formControlName="ipaddress"
                             placeholder="Enter IP Address" />
+                            <div class="flex">
+                              <div class="align-left w-60" style="width:70%">
+                          <span
+                            *ngIf="userFormControls['ipaddress'].touched && userFormControls['ipaddress'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="userFormControls['ipaddress'].errors?.['pattern']">
+                              First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
+                          </span>
+                        </div>
+                        <div class="align-right w-40" style="width:30%; text-align:right;">
+                          <small>{{mobileNumber.value.length}}/10</small>
+                        </div>
+                        </div>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label htmlFor="imeino">IMEI No:</label>
-                          <input pInputText id="imeino" type="text" formControlName="imeino"
-                            placeholder="Enter IMEI No" />
+                          <input pInputText id="imeino" #imeino numericOnly type="text" formControlName="imeino"
+                            placeholder="Enter IMEI No" minlength="15" maxlength="15" />
+                            <div class="flex">
+                              <div class="align-left w-60" style="width:70%">
                           <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
                             <div class="ng-invalid ng-touched p-error"
                               *ngIf="userFormControls['imeino'].errors?.['pattern']">
                               IMEI No Should Contains Only Digits.</div>
+                              <div class="ng-invalid ng-touched p-error" *ngIf="userFormControls['imeino'].errors?.['minlength']">
+                                IMEI No Min Length Is 15.</div>
+                                <div class="ng-invalid ng-touched p-error" *ngIf="userFormControls['imeino'].errors?.['maxlength']">
+                                  IMEI No Max Length Is 15.</div>
                           </span>
+                        </div>
+                        <div class="align-right w-40" style="width:30%; text-align:right;">
+                          <small>{{imeino.value.length}}/15</small>
+                        </div>
+                      </div>
                         </div>
                       </div>
                     </p-fieldset><br/>
@@ -357,7 +390,7 @@
       <ng-template pTemplate="footer">
         <div class="col-6" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            (click)="onSubmit()"></button>
+            (click)="onSubmit()" [disabled]="userForm.invalid"></button>
         </div>
       </ng-template>
     </p-dialog>
