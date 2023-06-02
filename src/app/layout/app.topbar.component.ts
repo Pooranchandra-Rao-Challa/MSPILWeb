@@ -98,7 +98,7 @@ export class AppTopBarComponent {
     this.initAppConstants();
     this.initLookups();
     this.items = [
-      { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['changepassword'] },
+      { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['settings'] },
       { label: 'App Config', icon: 'pi pi-external-link', command: (e) => { this.initAppConstants(); this.app_config_dialog = true; this.submitLabel = 'Update Application Constants'; } },
       { label: 'Lookup', icon: 'pi pi-external-link', command: (e) => { this.lookup_dialog = true; this.submitLabel = 'Update lookups'; } },
       {

@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: '', component: AppLayoutComponent,
     children: [
-      { path: 'changepassword', component: SettingsComponent },
+      { path: 'settings', component: SettingsComponent },
       { path: 'dashboard', loadChildren: () => import('src/app/dashboard/dashboard.module').then(m => m.DashboardModule) },
       { path: 'security', loadChildren: () => import('src/app/security/security.module').then(m => m.SecurityModule) },
       { path: 'geomasters', loadChildren: () => import('src/app/masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) },
