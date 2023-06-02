@@ -53,37 +53,7 @@ export class BankComponent implements OnInit {
   get FormControls() {
     return this.fbbank.controls;
   }
-  public uniqueValidator(fromArray: FormArray) {
-    const duplicateControls: AbstractControl<any, any>[] = [];
-    const uniqueControls: AbstractControl<any, any>[] = [];
-    fromArray.controls.forEach(control => {
-      const count = fromArray.controls.filter(
-        x => x.get("name")!.value.toLowerCase().replace(/\s/g, '')
-          === control.get("name")!.value.toLowerCase().replace(/\s/g, '')
-      ).length;
-      if (count > 1) {
-        duplicateControls.push(control);
-      } else {
-        uniqueControls.push(control);
-      }
-    });
-    duplicateControls.forEach(duplicateControl => {
-      duplicateControl.get("name")!.setErrors(
-        Object.assign({}, duplicateControl.get("name")!.errors, {
-          notUnique: true
-        })
-      );
-    });
-    uniqueControls.forEach((control: any) => {
-      let errors = control.get("name").errors;
-      if (errors) {
-        delete errors.notUnique;
-        errors = Object.keys(control.get("name").errors).length ? control.get("name").errors : null;
-      }
-      control.get("name").setErrors(errors);
-    });
-    return null;
-  }
+ 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }

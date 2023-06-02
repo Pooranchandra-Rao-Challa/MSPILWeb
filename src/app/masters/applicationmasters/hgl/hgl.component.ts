@@ -125,7 +125,7 @@ export class HglComponent implements OnInit {
       phoneNo: [null, Validators.pattern(RG_PHONE_NO)],
       tax: [null, Validators.required],
       email: ['', (Validators.pattern(RG_EMAIL))],
-      panNo: new FormControl(null, [Validators.pattern(RG_PANNO)]),
+      panNo: ['', Validators.pattern(RG_PANNO)],
       tds: [false],
       guarantor1: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       guarantor2: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
@@ -410,7 +410,7 @@ export class HglComponent implements OnInit {
   }
 
   save() {
-   
+    this.fbHgl.value.panNo = this.fbHgl.value.panNo.toUpperCase();
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';
     if (this.fbHgl.valid) {
       this.saveHgl().subscribe((resp) => {

@@ -9,10 +9,9 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addHgl()" *ngIf="permissions.CanCreateHgl"></button>
+          (click)="addHgl()" *ngIf="permissions.CanCreateHGL"></button>
       </ng-template>
     </p-toolbar>
-
     <!-- table -->
     <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
@@ -257,17 +256,16 @@
                     </span>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label for="panNo">PAN No:</label>
-                    <input pInputText id="panNo" type="text" placeholder="Enter Pan No " formControlName="panNo"
-                      maxLength="10" style="text-transform:uppercase" alphaNumeric
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].invalid }">
-                    <div *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
-                      <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
-                          Invalid Pan Number, Eg: ABCDE01234X</div>
-                      </span>
-                    </div>
+                    <label>PAN No:</label>
+                    <input pInputText id="panNo" type="text" placeholder="Enter Pan No" formControlName="panNo"
+                      style="text-transform:uppercase" 
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
+                    <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
+                        Invalid Pan Number, Eg: XXXXX0000X</div>
+                    </span>
                   </div>
+                  
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
                     <label class="required">Aadhaar No:</label>
                     <input pInputText id="aadhaarNo" #aadhaarNo placeholder=" Enter Aadhaar No"
