@@ -1,4 +1,5 @@
-import { ThemeDto } from './../../_models/security';
+import { ThemeNotifier, THEMES } from 'src/app/_helpers/theme.notifier.service';
+import { ThemeDto } from 'src/app/_models/security';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -25,13 +26,13 @@ export class ChangePasswordDto {
 }
 
 @Component({
-  selector: 'app-changepassword',
-  templateUrl: './changepassword.component.html',
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
   styles: [
   ]
 })
-export class ChangepasswordComponent implements OnInit {
-  setting_items!: ThemeDropdownItems[];
+export class SettingsComponent implements OnInit {
+  themeItems!: ThemeDropdownItems[];
   getSecureQuestions: SecureQuestionDto[] = []
   allSecureQuestions: SecureQuestionDto[] = []
   selectedQuestion!: SecurQuestion;
@@ -51,10 +52,10 @@ export class ChangepasswordComponent implements OnInit {
     private securityService: SecurityService,
     public layoutService: LayoutService,
     private jwtService: JWTService,
-    private alertMessage: AlertMessage
+    private alertMessage: AlertMessage,
+    private themeNotifier: ThemeNotifier
   ) {
-    debugger
-    this.themeDto.theme = 'lara-light-indigo';
+    this.themeDto.theme = this.jwtService.ThemeName ? this.jwtService.ThemeName : 'lara-light-indigo';
    }
 
   getUserQuestionsAndAnswers() {
@@ -88,16 +89,7 @@ export class ChangepasswordComponent implements OnInit {
   ngOnInit(): void {
     this.getUserQuestionsAndAnswers();
     this.initGetSecureQuestions();
-    this.setting_items = [
-      { Label: 'Green (Default)', icon: 'pi pi-external-link', Name: 'lara-light-indigo' },
-      { Label: 'Dark Green', icon: 'pi pi-external-link', Name: 'lara-dark-indigo' },
-      { Label: 'Light Blue', icon: 'pi pi-external-link', Name: 'lara-light-blue' },
-      { Label: 'Dark Blue', icon: 'pi pi-external-link', Name: 'lara-dark-blue' },
-      { Label: 'Light Purple', icon: 'pi pi-external-link', Name: 'lara-light-purple' },
-      { Label: 'Dark Purple', icon: 'pi pi-external-link', Name: 'lara-dark-purple' },
-      { Label: 'Light Teal', icon: 'pi pi-external-link', Name: 'lara-light-teal' },
-      { Label: 'Dark Teal', icon: 'pi pi-external-link', Name: 'lara-dark-teal' },
-    ];
+    this.themeItems = THEMES;
     this.changePasswordForm();
   }
 
@@ -128,29 +120,8 @@ export class ChangepasswordComponent implements OnInit {
     this.changeTheme(dropvalue);
   }
 
-  changeTheme(theme: string) {
-    const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
-    const newHref = themeLink.getAttribute('href')!.replace(this.layoutService.config.theme, theme);
-    this.layoutService.config.colorScheme
-    this.replaceThemeLink(newHref, () => {
-      this.layoutService.config.theme = theme;
-      // this.layoutService.config.colorScheme = colorScheme;
-      this.layoutService.onConfigUpdate();
-    });
-  }
-
-  replaceThemeLink(href: string, onComplete: Function) {
-    const id = 'theme-css';
-    const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
-    const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
-    cloneLinkElement.setAttribute('href', href);
-    cloneLinkElement.setAttribute('id', id + '-clone');
-    themeLink.parentNode!.insertBefore(cloneLinkElement, themeLink.nextSibling);
-    cloneLinkElement.addEventListener('load', () => {
-      themeLink.remove();
-      cloneLinkElement.setAttribute('id', id);
-      onComplete();
-    });
+  changeTheme(themeName: string) {
+    this.themeNotifier.notifyChangeTheme(themeName);
   }
 
   editSecurityQuestion(security: SecurityDto) {
