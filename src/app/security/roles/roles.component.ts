@@ -10,7 +10,9 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from '../../_alerts/alertMessage';
+import { JWTService } from 'src/app/_services/jwt.service';
 import { MaxLength } from 'src/app/_models/common';
+
 
 @Component({
   selector: 'app-roles',
@@ -29,12 +31,15 @@ export class RolesComponent implements OnInit {
   addFlag: boolean = true;
   globalFilters: string[] = ["Code", "Name", "IsActive", "createdAt", "CreatedBy", "UpdatedDate", "UpdatedBy"];
   mediumDate: string = MEDIUM_DATE;
+  permission:any
   maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder, private securityService: SecurityService,
-    private alertMessage:AlertMessage) { }
+    private alertMessage:AlertMessage,
+    private jwtService:JWTService) { }
 
   ngOnInit(): void {
+    this.permission = this.jwtService.Permissions;
     this.roleForm = this.formbuilder.group({
       roleId: [''],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),

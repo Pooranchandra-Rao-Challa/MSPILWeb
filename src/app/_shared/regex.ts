@@ -13,7 +13,7 @@ export const RG_SEASON_CODE = '^[0-9]{4}[-][0-9]{2}$';
 export const RG_SEASON_NAME = '^[0-9]{4}[-][0-9]{4}$';
 export const RG_SURVEY_NO = /^[-a-zA-Z0-9-/]+([-a-zA-Z0-9-/]+)*$/;
 export const RG_IFSC = /^[A-Z]{4}0[A-Z0-9]{6}$/;
-
+export const IP_ADDRESS_NO = /(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
 
 
 
@@ -36,4 +36,4 @@ export const MAX_LENGTH_50 = 50;
 export const MAX_LENGTH_25 = 25;
 export const MAX_LENGTH_2 = 2;
 export const MAX_LENGTH_3 = 3;
-
+export const MAX_LENGTH_15 =15;

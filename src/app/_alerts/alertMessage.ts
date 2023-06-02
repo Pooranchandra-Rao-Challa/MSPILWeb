@@ -107,6 +107,10 @@ export class AlertMessage {
 
 export const ALERT_CODES: { [key: string]: string } = {
 
+  //users
+  'SUSR001': 'Users Added Successfully',
+  'SUSR002': 'Users Updated Successfully',
+
   // Bill Message
   'SMBMB001': 'Bill Added Successfully',
 
