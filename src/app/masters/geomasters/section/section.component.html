@@ -157,15 +157,15 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="field col-12 md:col-6">
-                    <label>Target Area</label>
+                  <div class="field col-12 md:col-6">
+                    <label>Target Area:</label>
                     <input pInputText inputId="targetArea" #targetArea placeholder="Enter Target Area"
                       formControlName="targetArea" numericOnly [maxlength]="10"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['targetArea'].touched && FormControls['targetArea'].errors }">
                     <div class="text-right">
                       <small>{{targetArea.value.length}}/10</small>
                     </div>
-                  </div> -->
+                  </div>
                   <div class="field col-12 md:col-6">
                     <label htmlFor="isActive">Is Active:</label><br><br>
                     &nbsp; <p-inputSwitch formControlName="isActive" class="form-control">
@@ -251,10 +251,10 @@
             </p-columnFilter>
             <p-sortIcon field="address"></p-sortIcon>
           </th>
-          <!-- <th pSortableColumn="targetArea">Target Area<p-columnFilter type="text" field="targetArea" display="menu">
+          <th pSortableColumn="targetArea">Target Area<p-columnFilter type="text" field="targetArea" display="menu">
           </p-columnFilter>
           <p-sortIcon field="targetArea"></p-sortIcon>
-        </th> -->
+        </th>
           <th class="text-center" pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive"
               display="menu"></p-columnFilter>
             <p-sortIcon field="isActive"></p-sortIcon>
@@ -289,7 +289,7 @@
           <td>{{section.inchargePhoneNo}}</td>
           <td>{{section.listingOrder}}</td>
           <td>{{section.address}}</td>
-          <!-- <td>{{section.targetArea}}</td> -->
+          <td>{{section.targetArea}}</td>
           <td class="text-center">
             <p-checkbox name="active" value="active" [(ngModel)]="section.isActive" [binary]="true" [disabled]="true">
             </p-checkbox>

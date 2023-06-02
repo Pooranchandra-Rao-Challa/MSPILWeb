@@ -7,7 +7,7 @@ import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { UserDto, RoleDto, UserSectionDto } from 'src/app/_models/security';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
-import { RG_ALPHA_ONLY, RG_EMAIL, RG_PHONE_NO, RG_NUMERIC_ONLY } from 'src/app/_shared/regex';
+import { RG_ALPHA_ONLY, RG_EMAIL, RG_PHONE_NO, RG_NUMERIC_ONLY, MIN_LENGTH_2, MAX_LENGTH_50 } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-users',
@@ -35,11 +35,11 @@ export class UsersComponent implements OnInit {
     this.userForm = this.formbuilder.group({
       userId: ['',],
       isAdmin: [false],
-      userName: ['', (Validators.required)],
+      userName:  new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_2),Validators.maxLength(MAX_LENGTH_50)]),
       password: ['', (Validators.required)],
-      firstName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      lastName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      email: new FormControl('', [Validators.pattern(RG_EMAIL)]),
+      firstName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2),Validators.maxLength(MAX_LENGTH_50)]),
+      lastName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2),Validators.maxLength(MAX_LENGTH_50)]),
+      email: new FormControl('', [Validators.required,Validators.pattern(RG_EMAIL)]),
       mobileNumber: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
       roleId: ['', (Validators.required)],
       ipaddress: [''],

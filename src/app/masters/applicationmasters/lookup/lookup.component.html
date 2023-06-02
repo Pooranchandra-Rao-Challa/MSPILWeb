@@ -51,7 +51,8 @@
                                 <div class="field col-12 md:col-6">
                                     <label>Name:<sup class="p-error">*</sup></label>
                                     <input pInputText id="name" type="text" formControlName="name"
-                                        placeholder="Enter Name" #name alphaOnly [maxlength]="maxLength.name"
+                                        placeholder="Enter Name"  [readonly]="FormControls['lookUpId'].value!== null"
+                                        #name alphaOnly [maxlength]="maxLength.name"  
                                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                                     <div class="flex">
                                         <div class="align-left w-60" style="width:70%">

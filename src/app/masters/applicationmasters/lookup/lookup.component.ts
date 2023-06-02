@@ -46,6 +46,7 @@ export class LookupComponent implements OnInit {
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
 
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
@@ -64,7 +65,7 @@ export class LookupComponent implements OnInit {
   }
   addLookupDialog() {
     this.addLookupDetails();
-    this.fblookup.controls['name'].enable();
+     this.fblookup.controls['name'].enable();
     this.fblookup.controls['isActive'].setValue(true);
     this.submitLabel = "Add Lookup";
     this.addFlag = true;
@@ -190,12 +191,14 @@ export class LookupComponent implements OnInit {
     });
   }
   editLookUp(lookup: LookupViewDto) {
+    debugger
     this.initlookupDetails(lookup.id);
     this.lookup.lookUpId = lookup.id;
     this.lookup.lookupDetailId = lookup.lookupDetailId;
     this.lookup.code = lookup.code;
     this.lookup.name = lookup.name;
-    this.fblookup.controls['name'].disable();
+    // this.fblookup.controls['name'].setValue(lookup.name);
+    // this.fblookup.controls['name'].disable();
     this.lookup.isActive = lookup.isActive;
     this.lookup.lookUpDetails = this.lookupDetails ? [] : this.lookupDetails;
     this.fblookup.patchValue(this.lookup);
