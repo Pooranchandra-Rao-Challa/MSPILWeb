@@ -182,7 +182,7 @@
                                         </div>
                                     </td>
                                     <td class="vertical-align-top">
-                                        <input pInputText class="form-control" formControlName="ifsc"
+                                        <input pInputText class="form-control" formControlName="ifsc"  style="text-transform:uppercase"
                                             placeholder="Enter Ifsc" alphaNumeric [maxlength]="11" [minlength]="11"
                                             [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex,'ifsc')?.touched &&
                                         formArrayControls(branchDetailsIndex,'ifsc')?.errors }" #ifscCode
@@ -196,7 +196,7 @@
                                                         Please Enter Ifsc.</div>
                                                     <div class="ng-invalid ng-touched p-error"
                                                         *ngIf="formArrayControls(branchDetailsIndex,'ifsc')?.errors?.['pattern']">
-                                                        Invalid Ifsc Eg:ABCD01234XX.</div>
+                                                        Invalid Ifsc Eg:XXXX0000000.</div> 
                                                     <div class="ng-invalid ng-touched p-error"
                                                         *ngIf="formArrayControls(branchDetailsIndex,'ifsc')?.errors?.['minlength']">
                                                         Ifsc Min Length Is 11.</div>
