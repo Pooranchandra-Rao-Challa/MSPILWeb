@@ -88,7 +88,7 @@ export class VillageComponent implements OnInit {
     { field: 'dryArea', header: 'dryArea', label: 'Dry Area' },
     { field: 'potentialArea', header: 'potentialArea', label: 'Suitable area' },
     { field: 'notSuitableArea', header: 'notSuitableArea', label: 'Not Suitable Area' },
-    { field: 'targetArea ', header: 'targetArea ', label: 'Target Area' },
+    { field: 'targetArea', header: 'targetArea', label: 'Target Area' },
     { field: 'listingOrder', header: 'listingOrder', label: 'Order' },
     { field: 'isActive', header: 'isActive', label: 'Is Active' },
     { field: 'createdAt', header: 'createdAt', label: 'Created Date' },

@@ -43,7 +43,7 @@
       <ng-template pTemplate="body" let-loanType>
         <tr>
           <td *ngIf="permissions.CanUpdateLoanType"><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component" (click)="editTpt(loanType)"></button>
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editLoanType(loanType)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span

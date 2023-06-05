@@ -39,7 +39,7 @@
                   </div>
                   <div class="field col-12 md:col-6">
                     <label>Code:<sup class="p-error">*</sup></label>
-                    <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
+                    <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code" autocomplete="off"
                       alphaNumeric [readonly]="fbsections.value.tptId" [maxlength]="20"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <div class="flex">
@@ -219,87 +219,31 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th *ngIf="permissions?.CanUpdateSection"></th>
-          <th pSortableColumn="divisionName">Division<p-columnFilter type="text" field="divisionName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="divisionName"></p-sortIcon>
+          <th></th>
+          <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+            {{col?.label}}
+            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
-          <th pSortableColumn="circleName">Circle<p-columnFilter type="text" field="circleName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="circleName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="sectionCode">Code<p-columnFilter type="text" field="sectionCode" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="sectionCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="sectionName">Name <p-columnFilter type="text" field="sectionName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="sectionName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="inchargeName">Incharge Name <p-columnFilter type="text" field="inchargeName"
-              display="menu"></p-columnFilter>
-            <p-sortIcon field="inchargeName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="inchargePhoneNo">Incharge Phone No <p-columnFilter type="text" field="inchargePhoneNo"
-              display="menu"></p-columnFilter>
-            <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="listingOrder">Order <p-columnFilter type="text" field="listingOrder" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="listingOrder"></p-sortIcon>
-          </th>
-          <th pSortableColumn="address">Address <p-columnFilter type="text" field="address" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="address"></p-sortIcon>
-          </th>
-          <th pSortableColumn="targetArea">Target Area<p-columnFilter type="text" field="targetArea" display="menu">
-          </p-columnFilter>
-          <p-sortIcon field="targetArea"></p-sortIcon>
-        </th>
-          <th class="text-center" pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive"
-              display="menu"></p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">Created Date<p-columnFilter type="date" field="createdAt" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="createdAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdBy">Created By<p-columnFilter type="text" field="createdBy" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="createdBy"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">Updated Date<p-columnFilter type="date" field="updatedAt" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedBy">Updated By<p-columnFilter type="text" field="updatedBy" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="updatedBy"></p-sortIcon>
-          </th>
+        </tr>
       </ng-template>
       <ng-template pTemplate="body" let-section>
         <tr>
           <td *ngIf="permissions?.CanUpdateSection"><button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component" (click)="editProduct(section)"></button>
           </td>
-          <td>{{section.divisionName}}</td>
-          <td>{{section.circleName}}</td>
-          <td>{{section.sectionCode}}</td>
-          <td>{{section.sectionName}}</td>
-          <td>{{section.inchargeName}}</td>
-          <td>{{section.inchargePhoneNo}}</td>
-          <td>{{section.listingOrder}}</td>
-          <td>{{section.address}}</td>
-          <td>{{section.targetArea}}</td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="section.isActive" [binary]="true" [disabled]="true">
-            </p-checkbox>
+          <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
+            <span
+              *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{section[col.field]}}</span>
+            <span *ngIf="col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              {{section[col.field] | date: mediumDate}}
+            </span>
+            <span *ngIf="col?.field == 'isActive'">
+              <p-checkbox name="active" value="active" [binary]="true" [(ngModel)]="section[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
           </td>
-          <td>{{section.createdAt | date: mediumDate }}</td>
-          <td>{{section.createdBy}}</td>
-          <td>{{section.updatedAt | date: mediumDate }}</td>
-          <td>{{section.updatedBy}}</td>
-        </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>

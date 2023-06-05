@@ -163,7 +163,7 @@ export class LoanMasterComponent implements OnInit {
       isActive: (loanSubTypes.isActive = true),
     });
   }
-  editTpt(loanType: LoanTypeViewDto) {
+  editLoanType(loanType: LoanTypeViewDto) {
     this.initLoanSubtype(loanType.loanTypeId);
     this.loanType.loanTypeId = loanType.loanTypeId;
     this.loanType.code = loanType.code;
