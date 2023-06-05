@@ -79,7 +79,7 @@
       <div class="flex flex-column align-items-center justify-content-center">
         <div class="containers">
           <div class="grid p-fluid">
-            <form [formGroup]="fbseasons" (ngSubmit)="onSubmit()">
+            <form [formGroup]="fbseasons" (ngSubmit)="onSubmit()" autocomplete="off">
               <p-fieldset legend="Season" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 md:col-4">

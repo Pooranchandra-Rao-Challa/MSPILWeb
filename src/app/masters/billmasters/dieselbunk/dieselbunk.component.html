@@ -70,7 +70,7 @@
     <p-dialog header="Diesel Bunk" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbDieselBunk.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbDieselBunk" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbDieselBunk" (ngSubmit)="onSubmit()" autocomplete="off">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -198,14 +198,14 @@
                   </div>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label class="required">Rate(₹):</label>
-                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="currency" currency="INR"
-                    locale="en-IN"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
-                  </p-inputNumber>
+                  <label>Rate:<sup class="p-error">*</sup></label>
+                  <input pInputText id="rate" type="text" #code placeholder="Enter rate" formControlName="rate"
+                         (input)="filterInput($event)" [maxlength]="10"
+                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">                  
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
-                      Please Enter Rate.</div>
+                      Please Enter Rate.
+                    </div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">

@@ -87,7 +87,7 @@
     <p-dialog header="Role" [(visible)]="dialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '70%', '640px': '80%'}" [style]="{width: '70%'}">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" autocomplete="off">
           <div class="grid">
             <div class="col-12 roles-container">
               <div class="p-fluid p-formgrid grid">

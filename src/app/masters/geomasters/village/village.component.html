@@ -6,7 +6,7 @@
       [style]="{width: '50%'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="container">
               <div class="grid p-fluid">
                 <p-fieldset legend="Geographic Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">

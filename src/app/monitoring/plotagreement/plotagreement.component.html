@@ -16,7 +16,7 @@
     <!-- dialog -->
     <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
     [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="clearForm()">
-      <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
+      <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()"autocomplete="off">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Agreement(Doc30)" class="col-12">
             <div class="flex flex-column  justify-content-center">

@@ -514,7 +514,7 @@
     (onHide)="fbPlotReport.reset()">
     <ng-template pTemplate="content">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbPlotReport" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbPlotReport" (ngSubmit)="onSubmit()" autocomplete="off">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">

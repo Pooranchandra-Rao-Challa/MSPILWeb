@@ -84,7 +84,7 @@
       (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbfarmer" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbfarmer" (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="container">
               <div class="grid p-fluid">
                 <p-fieldset legend="Farmer Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">

@@ -279,7 +279,7 @@
 
               </span>
               <span class="p-input-icon-left m-2" [formGroup]="fbScheduleGrouping">
-                 <p-inputNumber [showButtons]="true"  #scheduleGroupNoInput formControlName="groupNo"
+                 <p-inputNumber [showButtons]="true"  #scheduleGroupNoInput formControlName="groupNo" autocomplete="off"
                   inputId="stacked" [min]="1" [max]="5"
                  inputStyleClass="p-numeric-input"placeholder="Schedule Group No" class="w-full"
                  (onValueChange)="restrictToRange($event)" [ngClass]="{ 'is-invalid ng-dirty': FormControls['groupNo'].touched && FormControls['groupNo'].errors }">
