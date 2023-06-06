@@ -4,9 +4,10 @@ import {
 import { Injectable } from "@angular/core";
 import { ApiHttpService } from "./api.http.service";
 import {
-  CHANGE_PASSWORD_URI, CREATE_ROLE_URI, CREATE_USER_URI, FORGOT_PASSWORD, GET_ALL_SECTIONS_URI, GET_PERMISSIONS_URI, GET_ROLES_URI, GET_ROLE_PERMISSIONS_URI,
+  CHANGE_PASSWORD_URI, CREATE_ROLE_URI, CREATE_SECURITY_QUESTIONS_URI, CREATE_USER_URI, FORGOT_PASSWORD, GET_ALL_SECTIONS_URI, GET_PERMISSIONS_URI, GET_ROLES_URI, GET_ROLE_PERMISSIONS_URI,
   GET_USERS_URI, GET_USER_SECTIONS_URI, SECURE_QUESTIONS, UPDATE_ROLE_URI, UPDATE_THEME_URI, UPDATE_USER_URI, USER_SECURITY_QUESTIONS,
 } from "./api.uri.service";
+import { SecurityDto } from '../account/securityquestions/securityque.component';
 
 @Injectable({ providedIn: 'root' })
 export class SecurityService extends ApiHttpService {
@@ -67,6 +68,10 @@ export class SecurityService extends ApiHttpService {
 
   public UpdateTheme(themeDto: ThemeDto) {
     return this.post<ThemeDto>(UPDATE_THEME_URI, themeDto);
+  }
+
+  public CreateSecurityQuestions(securityQuestions: UserQuestionDto[]) {
+    return this.post<UserQuestionDto[]>(CREATE_SECURITY_QUESTIONS_URI, securityQuestions);
   }
 
 }
