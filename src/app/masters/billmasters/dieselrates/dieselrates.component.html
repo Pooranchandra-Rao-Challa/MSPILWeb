@@ -110,7 +110,7 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Rate:<sup class="p-error">*</sup></label>
+                  <label>Rate(₹):<sup class="p-error">*</sup></label>
                   <input pInputText id="rate" type="text" #code placeholder="Enter rate" formControlName="rate"
                          (input)="filterInput($event)" [maxlength]="10"
                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">                  

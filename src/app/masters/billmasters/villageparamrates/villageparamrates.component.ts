@@ -113,7 +113,6 @@ export class VillageParamRatesComponent implements OnInit {
       isActive: [null]
     });
   }
-
   get FormControls() {
     return this.fbVillageParamRate.controls;
   }
@@ -139,6 +138,7 @@ export class VillageParamRatesComponent implements OnInit {
     this.submitLabel = "Add Village Param Rate";
     this.addFlag = true;
     this.showDialog = true;
+    this.initVillageParamRates()
   }
 
   editVillageParamRate(vParamRate: VillageParamRateViewDto) {
@@ -174,7 +174,6 @@ export class VillageParamRatesComponent implements OnInit {
       this.fbVillageParamRate.markAllAsTouched();
     }
   }
-
   onSelectedVillage(villageId: number) {
     this.villages.forEach((value) => {
       if (value.villageId == villageId) {

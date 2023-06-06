@@ -111,6 +111,12 @@
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
                                                 <span
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['notUnique']">
+                                                <div class="ng-invalid ng-touched p-error">
+                                                    lookUp Details Code Must Be Unique.
+                                                </div>
+                                            </span>
+                                                <span
                                                     *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.touched && formArrayControls(lookUpDetailsIndex,'code')?.invalid">
                                                     <div class="ng-invalid ng-touched p-error"
                                                         *ngIf="formArrayControls(lookUpDetailsIndex,'code')?.errors?.['required']">
@@ -138,6 +144,12 @@
 
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
+                                                <span
+                                                *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.errors?.['notUnique']">
+                                                <div class="ng-invalid ng-touched p-error">
+                                                    lookUp Details Name Must Be Unique.
+                                                </div>
+                                            </span>
                                                 <span
                                                     *ngIf="formArrayControls(lookUpDetailsIndex,'name')?.touched &&formArrayControls(lookUpDetailsIndex,'name')?.invalid">
                                                     <div class="ng-invalid ng-touched p-error"

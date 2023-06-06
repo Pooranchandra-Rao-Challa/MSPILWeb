@@ -77,7 +77,7 @@ export class DieselBunkComponent implements OnInit {
       email: new FormControl('', [Validators.pattern(RG_EMAIL)]),
       gLcode: [''],
       subGLcode: [''],
-      rate: [null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]],
+      rate: [null, [Validators.required,Validators.pattern(/^\d+(\.\d{1,3})?$/)]],
       isActive: [null]
     });
   }
@@ -89,13 +89,7 @@ export class DieselBunkComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-  filterInput(event: any) {
-    const initialValue = event.target.value;
-    const filteredValue = initialValue.replace(/[^0-9.]/g, '').replace(/(\.\d{0,2}).*/g, '$1');
-    if (initialValue !== filteredValue) {
-      event.target.value = filteredValue;
-    }
-  }  
+
 
   clear(table: Table) {
     table.clear();

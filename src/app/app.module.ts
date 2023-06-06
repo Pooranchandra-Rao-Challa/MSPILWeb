@@ -29,6 +29,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { permitService } from './_services/permit.service';
 import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
+import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
+    { provide: 'FormArrayValidationForDuplication', useValue: FormArrayValidationForDuplication },
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
     CountryService, CustomerService, EventService, IconService, NodeService,
     PhotoService, ProductService,

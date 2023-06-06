@@ -167,7 +167,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['crushFrom'].touched && FormControls['crushFrom'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['crushFrom'].errors?.['required']">
-                        Please Crush From Date.</div>
+                        Please Select Crush From Date.</div>
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
@@ -181,7 +181,7 @@
                     </p-calendar>
                     <span *ngIf="FormControls['crushTo'].touched && FormControls['crushTo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['crushTo'].errors?.['required']">
-                        Please Select To Date.</div>
+                        Please Select Crush To Date.</div>
                     </span>
                     <span>
                       <div class="ng-invalid ng-touched p-error" *ngIf="fbseasons.hasError('crushFrom')">
@@ -189,7 +189,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label htmlFor="burnCaneRate"> Burn Cane Rate (₹):<sup class="p-error">*</sup></label>
+                    <label htmlFor="burnCaneRate"> Burn Cane Rate(₹):<sup class="p-error">*</sup></label>
                     <p-inputNumber id="burnCaneRate" formControlName="burnCaneRate" mode="decimal" locale="en-IN"
                       [minFractionDigits]="2" [maxFractionDigits]="2" placeholder="Enter Burn Cane Rate"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['burnCaneRate'].touched && FormControls['burnCaneRate'].errors }">
@@ -204,7 +204,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label htmlFor="caneRate">Cane Rate (₹):<sup class="p-error">*</sup></label>
+                    <label htmlFor="caneRate">Cane Rate(₹):<sup class="p-error">*</sup></label>
                     <p-inputNumber id="caneRate" formControlName="caneRate" placeholder="Enter Cane Rate" mode="decimal"
                       locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['caneRate'].touched && FormControls['caneRate'].errors }">
@@ -272,7 +272,7 @@
                                           <label htmlFor="billPeram">Bill Parameter:<sup class="p-error">*</sup></label>
                                           <p-dropdown [options]="billCategory.billParams" optionLabel="name"
                                             appendTo="body" formControlName="billParameterId"
-                                            optionValue="billParameterId" placeholder="Please Select Bill Parameter"
+                                            optionValue="billParameterId" placeholder="Select Bill Parameter"
                                             [ngClass]="{ 'is-invalid ng-dirty': formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'billParameterId')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'billParameterId')?.errors }">
                                           </p-dropdown>
                                           <span
@@ -287,7 +287,7 @@
                                       <div class="field col-12 md:col-3 vertical-align-top "
                                         style="display:inline-block;">
                                         <div class="p-field">
-                                          <label htmlFor="rate">Rate:<sup class="p-error">*</sup></label>
+                                          <label htmlFor="rate">Rate(₹):<sup class="p-error">*</sup></label>
                                           <input pInputText id="rate" formControlName="rate" numericOnly
                                             placeholder="Enter Rate"
                                             [ngClass]="{ 'is-invalid ng-dirty': formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors }" />
