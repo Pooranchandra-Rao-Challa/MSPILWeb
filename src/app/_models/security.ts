@@ -86,7 +86,8 @@ export class UserQuestionDto {
   questionId?: number
   question?: string
   answer?: string
-  userAnswer?: string;
+  userAnswer?: string
+  userName?: string;
 }
 export class ForgotUserPasswordDto {
   UserName?: string

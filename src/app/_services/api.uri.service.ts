@@ -256,3 +256,5 @@ export const CREATE_CUTTING_ORDER_URI = "Schedule/CreateCuttingOrder";
 
 export const CHANGE_PASSWORD_URI = "Security/ChangePassword";
 export const UPDATE_THEME_URI = "Security/UpdateTheme";
+export const CREATE_SECURITY_QUESTIONS_URI = "Security/CreateUserQuestion";
+export const UPDATE_SECURITY_QUESTIONS_URI = "Security/UpdateUserQuestion";

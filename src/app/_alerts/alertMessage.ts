@@ -301,7 +301,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   'SSECT001': 'Theme Is Updated Successfully',
 
   // Security Questions
-  'SSESQ001' : 'Security Question Is Added Successfully',
-  'SSESQ002' : 'Security Question Is Updated Successfully',
+  'SSESQ001' : 'Security Questions Is Added Successfully',
+  'SSESQ002' : 'Security Questions Is Updated Successfully',
 
 }

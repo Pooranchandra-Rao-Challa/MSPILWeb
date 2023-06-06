@@ -35,16 +35,17 @@ export class SettingsComponent implements OnInit {
   themeItems!: ThemeDropdownItems[];
   getSecureQuestions: SecureQuestionDto[] = []
   allSecureQuestions: SecureQuestionDto[] = []
-  selectedQuestion!: SecurQuestion;
-  securityDto: SecurityDto[] = [];
+  // selectedQuestion!: SecurQuestion;
+  // userQuestions: UserQuestionDto[] = [];
   // changePassword: ChangePasswordDto = {}
-  security!: SecurityDto;
+  security!: UserQuestionDto;
   showDialog: boolean = false;
   submitted: boolean = true;
   qstnSubmitLabel: String = "Add";
   fbChangePassword!: FormGroup;
   themeDto: ThemeDto = {};
   userQuestions: UserQuestionDto[] = [];
+  addFlag!: boolean;
 
   constructor(
     private messageService: MessageService,
@@ -56,27 +57,36 @@ export class SettingsComponent implements OnInit {
     private themeNotifier: ThemeNotifier
   ) {
     this.themeDto.theme = this.jwtService.ThemeName ? this.jwtService.ThemeName : 'lara-light-indigo';
-   }
+  }
+
+  ngOnInit(): void {
+    this.initGetSecureQuestions();
+    this.getUserQuestionsAndAnswers();
+    this.themeItems = THEMES;
+    this.changePasswordForm();
+  }
 
   getUserQuestionsAndAnswers() {
     this.securityService.UserSecurityQuestions(this.jwtService.GivenName).subscribe({
       next: (resp) => {
         this.userQuestions = resp as unknown as UserQuestionDto[];
-        this.userQuestions = this.userQuestions.map((value) => ({
-          id: value.userId,
-          SecurityQuestions: value.question,
-          Answer: value.answer
-        })) as any;
-        this.securityDto = this.userQuestions as any;
+        this.filterSecurityQuestion(this.userQuestions);
       }
     });
   }
 
-  openNew() {
+  filterSecurityQuestion(userQuestions: UserQuestionDto[]) {
+    this.userQuestions.forEach(userQuestion => {
+      this.getSecureQuestions = this.getSecureQuestions.filter(x => x.question != userQuestion.question) as UserQuestionDto[];
+    });
+  }
+
+  addSecurityQuestion() {
     this.security = {};
     this.submitted = false;
     this.qstnSubmitLabel = "Add";
     this.showDialog = true;
+    this.addFlag = true;
   }
 
   initGetSecureQuestions() {
@@ -84,13 +94,6 @@ export class SettingsComponent implements OnInit {
       this.getSecureQuestions = resp as unknown as SecureQuestionDto[];
       this.allSecureQuestions = [...this.getSecureQuestions];
     });
-  }
-
-  ngOnInit(): void {
-    this.getUserQuestionsAndAnswers();
-    this.initGetSecureQuestions();
-    this.themeItems = THEMES;
-    this.changePasswordForm();
   }
 
   changePasswordForm() {
@@ -124,16 +127,17 @@ export class SettingsComponent implements OnInit {
     this.themeNotifier.notifyChangeTheme(themeName);
   }
 
-  editSecurityQuestion(security: SecurityDto) {
-    this.getSecureQuestions = [...this.allSecureQuestions]
+  editSecurityQuestion(security: UserQuestionDto) {
+    this.onFilterSelection(security);
     this.security = { ...security };
     this.qstnSubmitLabel = "Update";
     this.showDialog = true;
+    this.addFlag = false;
   }
 
   deleteSecurityQuestion(question: String) {
-    this.securityDto.splice(this.securityDto.findIndex(item => item.SecurityQuestions === question), 1);
-    this.securityDto = [...this.securityDto];
+    this.userQuestions.splice(this.userQuestions.findIndex(item => item.question === question), 1);
+    this.userQuestions = [...this.userQuestions];
   }
 
   hideDialog() {
@@ -141,39 +145,42 @@ export class SettingsComponent implements OnInit {
     this.submitted = false;
   }
 
-  onChange(event: any) {
-    // let myIndex = this.securityquestions.findIndex(fruit => fruit.name === event.value);
-    // this.securityquestions.splice(myIndex, 1);
-    this.security.id = this.getSecureQuestions[this.getSecureQuestions.findIndex(item => item.question === event.value)].questionId;
-    this.getSecureQuestions.splice(this.getSecureQuestions.findIndex(item => item.question === event.value), 1);
+  saveSecurityQuestions() {
+    this.submitted = true;
+    if (this.security.userQuestionId) {
+      if (this.findIndexById(this.security.userQuestionId) >= 0) {
+        this.userQuestions[this.findIndexById(this.security.userQuestionId)] = this.security;
+      }
+    }
+    else {
+      this.userQuestions.push(this.security);
+    }
+    this.onFilterSelection(this.security);
+    this.userQuestions = [...this.userQuestions];
+    this.showDialog = false;
+    this.security = {};
   }
 
-  saveSecurityQuestions() {
-    // this.deleteMsg(event);
-    this.submitted = true;
-    if (this.security.Answer?.trim()) {
-      if (this.security.id) {
-        if (this.findIndexById(this.security.id) >= 0) {
-          this.securityDto[this.findIndexById(this.security.id)] = this.security;
-          this.alertMessage.displayAlertMessage(ALERT_CODES["SSESQ002"]);
+  onFilterSelection(security: UserQuestionDto) {
+    if (!this.addFlag) {
+      let tempData = this.getSecureQuestions.filter(x => x.question == security.question) as UserQuestionDto[];
+      if (tempData.length == 0) {
+        let params = {
+          questionId: security.questionId,
+          question: security.question
         }
-        else {
-          // this.security.id = this.createId();
-          // this.security.image = 'security-placeholder.svg';
-          this.securityDto.push(this.security);
-          this.alertMessage.displayAlertMessage(ALERT_CODES["SSESQ001"]);
-        }
+        this.getSecureQuestions.push(params);
       }
-      this.securityDto = [...this.securityDto];
-      this.showDialog = false;
-      this.security = {};
+    }
+    else {
+      this.getSecureQuestions.splice(this.getSecureQuestions.findIndex(item => item.question === this.security.question), 1);
     }
   }
 
   findIndexById(id: number): number {
     let index = -1;
-    for (let i = 0; i < this.securityDto.length; i++) {
-      if (this.securityDto[i].id === id) {
+    for (let i = 0; i < this.userQuestions.length; i++) {
+      if (this.userQuestions[i].userQuestionId === id) {
         index = i;
         break;
       }
@@ -181,10 +188,19 @@ export class SettingsComponent implements OnInit {
     return index;
   }
 
-  saveTheme(){
+  saveTheme() {
     this.securityService.UpdateTheme(this.themeDto).subscribe((resp) => {
       if (resp) {
         this.alertMessage.displayAlertMessage(ALERT_CODES["SSECT001"]);
+      }
+    });
+  }
+
+  onSubmit() {
+    this.securityService.CreateSecurityQuestions(this.userQuestions).subscribe((resp) => {
+      if (resp) {
+        this.getUserQuestionsAndAnswers();
+        this.alertMessage.displayAlertMessage(ALERT_CODES["SSESQ002"]);
       }
     });
   }

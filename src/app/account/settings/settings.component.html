@@ -67,12 +67,12 @@
             </ng-template>
             <ng-template pTemplate="right">
               <button pButton pRipple label="Add New Question" icon="pi pi-plus" class="p-button-success p-mr-2"
-                (click)="openNew()"></button>
+                (click)="addSecurityQuestion()"></button>
             </ng-template>
           </p-toolbar>
 
           <!-- table -->
-          <p-table #dt [value]="securityDto" dataKey="id" [rowHover]="true"
+          <p-table #dt [value]="userQuestions" dataKey="id" [rowHover]="true"
             styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [autoLayout]="true"
             responsiveLayout="scroll" [tableStyle]="{ width: 'autoLayout'}">
             <ng-template pTemplate="header">
@@ -84,17 +84,18 @@
                 </th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-permitApproval>
+            <ng-template pTemplate="body" let-securityQuestion>
               <tr>
                 <td><button pButton pRipple icon="pi pi-pencil"
                     class="p-element p-ripple p-button-text p-button p-component m-2"
-                    (click)="editSecurityQuestion(permitApproval)"></button>
+                    (click)="editSecurityQuestion(securityQuestion)"></button>
                   <button pButton pRipple icon="pi pi-trash"
-                    (click)="deleteSecurityQuestion(permitApproval.SecurityQuestions)"
-                    class="p-element p-ripple p-button-text p-button p-component m-2"></button>
+                    class="p-element p-ripple p-button-text p-button p-component m-2"
+                    (click)="deleteSecurityQuestion(securityQuestion.question)"
+                    *ngIf="userQuestions.length>2"></button>
                 </td>
-                <td>{{permitApproval.SecurityQuestions}}</td>
-                <td>{{permitApproval.Answer}}</td>
+                <td>{{securityQuestion.question}}</td>
+                <td>{{securityQuestion.answer}}</td>
               </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
@@ -111,20 +112,20 @@
               <!-- <from [formGroup]="fbSecureQue"> -->
               <div class="p-field mb-3 ">
                 <label class="required" for="SecurityQuestions">Question</label>
-                <p-dropdown name="SecurityQuestions" [options]="getSecureQuestions" (onChange)="onChange($event)"
-                  [(ngModel)]="security.SecurityQuestions" appendTo="body" optionValue="question"
-                  placeholder="Select Question" optionLabel="question" [showClear]="true" #drop="ngModel" class="pt-5">
+                <p-dropdown name="SecurityQuestions" placeholder="Select Question" [options]="getSecureQuestions"
+                  optionValue="question" optionLabel="question"
+                  [(ngModel)]="security.question" appendTo="body" #drop="ngModel" class="pt-5">
                 </p-dropdown>
-                <span *ngIf="!security.SecurityQuestions && (drop.dirty || drop.touched)">
+                <span *ngIf="!security.question && (drop.dirty || drop.touched)">
                   <div class="ng-invalid ng-touched p-error">
                     Please Select Question.</div>
                 </span>
               </div>
               <div class="p-field mb-3">
                 <label class="required" for="Answer">Answer</label>
-                <input type="text" pInputText name="Answer" placeholder="Enter Answer" [(ngModel)]="security.Answer"
+                <input type="text" pInputText name="Answer" placeholder="Enter Answer" [(ngModel)]="security.answer"
                   required #answer="ngModel" />
-                <span *ngIf="!security.Answer && (answer.dirty || answer.touched)">
+                <span *ngIf="!security.answer && (answer.dirty || answer.touched)">
                   <div class="ng-invalid ng-touched p-error">
                     Please Enter Answer.</div>
                 </span>
@@ -135,12 +136,12 @@
               <div class="col-4" style="float:right">
                 <button pButton pRipple type="submit" class="p-button-raised p-button-success"
                   (click)="saveSecurityQuestions()"
-                  [disabled]="!security.Answer || !security.SecurityQuestions">{{qstnSubmitLabel}}</button>
+                  [disabled]="!security.answer || !security.question">{{qstnSubmitLabel}}</button>
               </div>
             </ng-template>
           </p-dialog>
-          <button pButton pRipple label="Update Questions" [disabled]="securityDto.length<2"
-            class="p-button-success p-mr-2 m-5 sQuestion"></button>
+          <button pButton pRipple label="Update Questions" [disabled]="userQuestions.length<2"
+            class="p-button-success p-mr-2 m-5 sQuestion" (click)="onSubmit()"></button>
         </div>
       </p-tabPanel>
 
