@@ -91,6 +91,7 @@
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="tpt_form" autocomplete="off">
+            
             <p-tabView orientation="left" class="users-container tpt_form">
               <p-tabPanel header="User Info" class="line-height-3 m-0 col-12 ">
                 <div class="grid">
@@ -101,7 +102,7 @@
                         <div class="field col-12 md:col-6">
                           <label>User Name:<sup class="p-error">*</sup></label>&nbsp;
                           <input pInputText id="username" type="text" formControlName="userName"
-                            placeholder="Enter User Name" #username alphaOnly
+                            placeholder="Enter User Name" #username alphaNumeric
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['userName'].touched && userFormControls['userName'].errors }" />
                           <div class="flex">
                             <div class="align-left w-60" style="width:70%">
@@ -124,6 +125,7 @@
                           </div>
                         </div>
                         <div class="field col-12 md:col-6">
+                          <span *ngIf="!this.user.userId">
                           <label>Password:<sup class="p-error">*</sup></label>&nbsp;
                           <input pInputText id="password" type="password" formControlName="password"
                             placeholder="Enter Password"
@@ -132,7 +134,9 @@
                             <div class="ng-invalid ng-touched p-error"
                               *ngIf="userFormControls['password'].errors?.['required']">
                               Please Enter Password.</div>
+
                           </span>
+                        </span>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>First Name:<sup class="p-error">*</sup></label>&nbsp;
@@ -287,28 +291,28 @@
                       [transitionOptions]="'500ms'">
                       <div class="grid md:flex">
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">IP Restriction:<sup class="p-error">*</sup></label>
+                          <label class="col-12">IP Restriction:</label>
                           <p-inputSwitch [trueValue]="true" [falseValue]="false" placeholder="IP Ristriction"
                             formControlName="iprestriction" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is AdminGate:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is AdminGate:</label>
                           <p-inputSwitch formControlName="isAdminGate" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is Gross:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is Gross:</label>
                           <p-inputSwitch formControlName="isGross" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is Tare:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is Tare:</label>
                           <p-inputSwitch formControlName="isTare" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is DumpYard:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is DumpYard:</label>
                           <p-inputSwitch formControlName="isDumpYard" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is Active:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is Active:</label>
                           <p-inputSwitch formControlName="isActive" class="col-12"></p-inputSwitch>
                         </div>
                       </div>
@@ -336,7 +340,7 @@
       <ng-template pTemplate="footer">
         <div class="col-6" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            (click)="onSubmit()" [disabled]="userForm.invalid"></button>
+            (click)="onSubmit()" [disabled]="userForm.invalid" ></button>
         </div>
       </ng-template>
     </p-dialog>

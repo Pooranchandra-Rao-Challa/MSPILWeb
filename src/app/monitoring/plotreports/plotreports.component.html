@@ -233,7 +233,7 @@
                   </span>
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                  <label class="required">Reported Area (Acre):</label>
+                  <label class="required">Reported Area(Acres):</label>
                   <p-inputNumber placeholder="Enter Reported Area" formControlName="reportedArea" mode="decimal"
                     locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" (onBlur)="onCalculation()"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['reportedArea'].touched && FormControls['reportedArea'].errors }">
@@ -281,7 +281,7 @@
                   </span>
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                  <label>Agreed (Ton):</label>
+                  <label>Agreed(Ton):</label>
                   <p class="disabled_text" style="font-weight: 800;">{{FormControls['agreed'].value}}</p>
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
@@ -391,7 +391,7 @@
             </p-fieldset>
           </p-fieldset>
           <p class="disabled_text" style="color: #e73816;">Note: If you want to pass Plot Additional Info you have to
-            select Enable For Adding Plot Additional Information.</p>
+            select Enable For Adding Plot Additional Information Switch.</p>
           <!-- <p-fieldset legend="Plot Additional Info" class="col-12" [transitionOptions]="'500ms'"
             *ngIf="!this.fbPlotReport.controls['enabledValidation'].value">
           </p-fieldset> -->

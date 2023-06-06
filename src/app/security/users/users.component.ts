@@ -64,9 +64,9 @@ export class UsersComponent implements OnInit {
       isAdmin: [false],
       userName: new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_50)]),
       password: ['', (Validators.required)],
-      firstName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_50)]),
-      lastName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_50)]),
-      email: new FormControl('', [Validators.required, Validators.pattern(RG_EMAIL)]),
+      firstName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.maxLength(MAX_LENGTH_50)]),
+      lastName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),  Validators.maxLength(MAX_LENGTH_50)]),
+      email: new FormControl('', [Validators.required,Validators.pattern(RG_EMAIL)]),
       mobileNumber: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
       roleId: ['', (Validators.required)],
       ipaddress: ['', (Validators.pattern(IP_ADDRESS_NO))],
@@ -110,7 +110,8 @@ export class UsersComponent implements OnInit {
           this.user.roleId = this.user.roles[0].roleId;
         this.user.password = "";
         this.userForm.setValue(this.user);
-        this.userForm.get("password")?.disable();
+          this.userForm.get("password")?.disable();
+          this.userForm.get("password")?.clearValidators();
       })
     } else {
       this.submitLabel = "Add User";
@@ -152,6 +153,7 @@ export class UsersComponent implements OnInit {
     else return this.securityService.UpdateUser(this.userForm.value)
   }
   onSubmit() {
+
     if (this.userForm.valid) {
       console.log(this.userForm.value);
 
