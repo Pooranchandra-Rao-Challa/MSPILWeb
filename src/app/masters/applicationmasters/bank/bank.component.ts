@@ -4,6 +4,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { FormArrayValidationForDuplication, } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { BankDto, BankViewDto, BranchDto, BranchViewDto } from 'src/app/_models/applicationmaster';
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
@@ -74,80 +75,10 @@ export class BankComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       abbr: [null],
       isActive: [null],
-      branches: this.formbuilder.array([], this.uniqueBranchValidator()),
+      branches: this.formbuilder.array([],FormArrayValidationForDuplication()),
     });   
   }
-  uniqueBranchValidator(): Validators {
-    return (formArray: FormArray): ValidationErrors | null => {
-      const branches: BranchViewDto[] = formArray.value;
-      const duplicateControls: AbstractControl<any, any>[] = [];
-      const uniqueControls: AbstractControl<any, any>[] = [];
-      const duplicateCodeControls: AbstractControl<any, any>[] = [];
-      const uniqueCodeControls: AbstractControl<any, any>[] = [];
-      formArray.controls.forEach(control => {
-      const count = formArray.controls.filter(
-        x => x.get("name")!.value
-          === control.get("name")!.value
-      ).length;
-      if (count > 1) {
-        if(control.get("name")!.value !=null && control.get("name")!.value !="")
-        {
-        duplicateControls.push(control);
-        }
-      } else {
-        uniqueControls.push(control);
-      }
-    });
-    formArray.controls.forEach(control => {
-      const count1 = formArray.controls.filter(
-        x => x.get("code")!.value
-          === control.get("code")!.value
-      ).length;
-      if (count1 > 1) {
-        if(control.get("code")!.value !=null && control.get("code")!.value !="")
-        {
-        duplicateCodeControls.push(control);
-        }
-      } else {
-        uniqueCodeControls.push(control);
-      }
-    });
-    duplicateControls.forEach(duplicateControl => {
-      duplicateControl.get("name")!.setErrors(
-        Object.assign({}, duplicateControl.get("name")!.errors, {
-          notUnique: true
-        })
-      );
-    });
-    uniqueControls.forEach((control: any) => {
-      let errors = control.get("name").errors;
-      if (errors) {
-        delete errors.notUnique;
-        errors = Object.keys(control.get("name").errors).length ? control.get("name").errors : null;
-      }
-      control.get("name").setErrors(errors);
-    });
 
-    duplicateCodeControls.forEach(duplicateControl => {
-      duplicateControl.get("code")!.setErrors(
-        Object.assign({}, duplicateControl.get("code")!.errors, {
-          notUnique: true
-        })
-      );
-    });
-
-    uniqueCodeControls.forEach((control: any) => {
-      let errors = control.get("code").errors;
-      if (errors) {
-        delete errors.notUnique;
-        errors = Object.keys(control.get("code").errors).length ? control.get("code").errors : null;
-      }
-      control.get("code").setErrors(errors);
-    });
-    return null;
-
-    };
-  }
   addBranches() {
     this.ShowbranchDetails = true;
     this.fabranch = this.fbbank.get("branches") as FormArray
@@ -204,7 +135,6 @@ export class BankComponent implements OnInit {
     )
     return existingBankCodes.length > 0;
   }
-
   isUniqueBankName() {
     const existingBankNames = this.banks.filter(bank =>
       bank.name === this.fbbank.value.name &&

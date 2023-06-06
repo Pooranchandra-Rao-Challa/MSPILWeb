@@ -351,33 +351,40 @@
                 <p-fieldset legend="Land Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
-                      <label  class="required">Total Area:</label>
-                      <p-inputNumber inputId="totalArea" placeholder="Enter total Area" formControlName="totalArea"
+                      <label  class="required">Total Area(Acres):</label>
+                      <p-inputNumber inputId="totalArea" placeholder="Enter Total Area" formControlName="totalArea"
                         [minFractionDigits]="2"  [ngClass]="{ 'is-invalid ng-dirty': FormControls['totalArea'].touched && FormControls['totalArea'].errors }">
                       </p-inputNumber>
                       <span *ngIf="FormControls['totalArea'].touched && FormControls['totalArea'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['totalArea'].errors?.['required']">
-                          Please Enter Total Area
+                          Please Enter Total Area Area
                         </div>
                       </span>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label  class="required">Cultivated Area:</label>
+                      <label class="required">Cultivated Area(Acres):</label>
                       <p-inputNumber inputId="cultivatedArea" placeholder="Enter Cultivated Area"
                         formControlName="cultivatedArea" [minFractionDigits]="2"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['cultivatedArea'].touched && FormControls['cultivatedArea'].errors }">
                       </p-inputNumber>
-                      <span *ngIf="FormControls['cultivatedArea'].touched && FormControls['cultivatedArea'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].errors?.['required']">
+                      <span>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].hasError('required')">
                           Please Enter Cultivated Area
                         </div>
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].errors?.['max']">
-                          Cultivated Area should be less than or equal to Total Area.
+                      </span>
+                      <span *ngIf="FormControls['cultivatedArea'].touched && !FormControls['cultivatedArea'].pristine">
+                      
+                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['cultivatedArea'].hasError('max')">
+                          Cultivated Area Should Be Less Than or Equal To Total Area.
                         </div>
                       </span>
                     </div>
                   </div>
+                  
+               
+
                 </p-fieldset>
+                
                 <p-fieldset legend="Bank Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                   <div class="grid p-fluid">
                     <div class="field col-12 md:col-4">
