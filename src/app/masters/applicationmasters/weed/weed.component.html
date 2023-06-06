@@ -74,7 +74,7 @@
       <p-dialog header="Weed" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
             [style]="{width: '40vw'}">
             <div class="flex flex-column align-items-center justify-content-center">
-                <form [formGroup]="fbweed" (ngSubmit)="onSubmit()">
+                <form [formGroup]="fbweed" (ngSubmit)="onSubmit()" autocomplete="off">
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">

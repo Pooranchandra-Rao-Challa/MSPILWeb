@@ -70,7 +70,7 @@
     <p-dialog header="Vehicle" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbVehicleType.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbVehicleType">
+        <form [formGroup]="fbVehicleType"autocomplete="off">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">

@@ -18,16 +18,11 @@ import { SharedModule } from 'src/app/_shared/shared.module';
 		MandalComponent,
 		SectionComponent,
 		StateComponent,
-		VillageComponent
-
-	],
+		VillageComponent],
 	imports: [
 		CommonModule,
 		GeoMastersRoutingModule,
-		SharedModule
-	],
-	providers: [
-
-	  ]
+		SharedModule],
+	providers: []
 })
 export class GeoMastersModule { }

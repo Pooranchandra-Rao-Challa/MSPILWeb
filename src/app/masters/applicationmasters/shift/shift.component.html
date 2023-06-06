@@ -6,7 +6,7 @@
       [modal]="true" [style]="{width: '40%'}" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbshifts"(ngSubmit)="onSubmit()">
+          <form [formGroup]="fbshifts"(ngSubmit)="onSubmit()"autocomplete="off">
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">

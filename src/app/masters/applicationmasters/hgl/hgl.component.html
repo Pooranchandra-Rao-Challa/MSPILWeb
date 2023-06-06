@@ -80,7 +80,7 @@
       <div class="flex flex-column align-items-center justify-content-center">
         <div class="container">
           <div class="grid p-fluid">
-            <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
+            <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()" autocomplete="off">
               <p-fieldset legend="HGL Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
@@ -530,10 +530,10 @@
                             </span>
                           </td>
                           <td class="vertical-align-top">
-                            <p-inputNumber inputId="noOfPersons" placeholder="Enter No Of Persons"
-                              formControlName="noOfPersons" [showButtons]="true" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
+                            <input pInputText id="rate" inputId="noOfPersons" placeholder="Enter No Of Persons"
+                              formControlName="noOfPersons" (input)="filterInput($event)" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
                               formArrayControls(subHglIndex, 'noOfPersons')?.errors }">
-                            </p-inputNumber>
+                           
                             <span
                               *ngIf="formArrayControls(subHglIndex, 'noOfPersons')?.touched && formArrayControls(subHglIndex, 'noOfPersons')?.invalid">
                               <div class="ng-invalid ng-touched p-error"
@@ -541,6 +541,7 @@
                                 Enter No Of Persons.</div>
                             </span>
                           </td>
+
                           <td *ngIf="fbHgl.controls['subHgls'].value.length > 1">
                             <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
                               *ngIf="!this.faSubHgl().controls[subHglIndex].get('subHglId')?.value"

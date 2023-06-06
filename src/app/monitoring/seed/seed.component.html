@@ -70,7 +70,7 @@
     <p-dialog header="Seed" [(visible)]="showDialog" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
       [style]="{width: '60vw'}" (onHide)="onClose()">
       <div class="flex flex-column  justify-content-center">
-        <form [formGroup]="fbSeed" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbSeed" (ngSubmit)="onSubmit()" autocomplete="off">
           <p-fieldset legend="Seed Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
             <div class="p-fluid p-formgrid grid">
               <div class="field col-12 md:col-4">

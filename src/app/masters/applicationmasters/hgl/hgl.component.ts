@@ -206,6 +206,14 @@ export class HglComponent implements OnInit {
     this.showSubHgl = true;
     this.faSubHgl().push(this.generateRow());
   }
+
+  filterInput(event: any) {
+    const initialValue = event.target.value;
+    const filteredValue = initialValue.replace(/[^0-9.]/g, '').replace(/(\.\d{0,2}).*/g, '$1');
+    if (initialValue !== filteredValue) {
+      event.target.value = filteredValue;
+    }
+  }  
   
   generateRow(subHgls: SubHglViewDto = new SubHglViewDto()): FormGroup {
     if (!this.addFlag) subHgls.hglId = this.hgl.hglId;
@@ -215,7 +223,7 @@ export class HglComponent implements OnInit {
       code: new FormControl(subHgls.code, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl(subHgls.name, [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       vehicleTypeId: [subHgls.vehicleTypeId, Validators.required],
-      noOfPersons: [subHgls.noOfPersons, Validators.required],
+      noOfPersons: [subHgls.noOfPersons, Validators.required,Validators.pattern(/^\d+(\.\d{1,3})?$/)],
       isActive: subHgls.isActive,
     });
   }

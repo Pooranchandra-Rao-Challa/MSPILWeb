@@ -72,7 +72,7 @@
     <p-dialog header="Bill" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" (onHide)="fbBillMaster.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbBillMaster" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbBillMaster" (ngSubmit)="onSubmit()" autocomplete="off">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
