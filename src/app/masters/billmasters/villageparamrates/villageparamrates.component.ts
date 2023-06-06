@@ -138,6 +138,7 @@ export class VillageParamRatesComponent implements OnInit {
     this.submitLabel = "Add Village Param Rate";
     this.addFlag = true;
     this.showDialog = true;
+    this.initVillageParamRates()
   }
 
   editVillageParamRate(vParamRate: VillageParamRateViewDto) {
