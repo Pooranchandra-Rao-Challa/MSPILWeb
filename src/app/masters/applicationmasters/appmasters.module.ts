@@ -18,6 +18,7 @@ import { HglComponent } from './hgl/hgl.component'
 import { ShiftsComponent } from './shift/shift.component';
 import { SampleslabsComponent } from './sampleslab/sampleslab.component';
 
+
 @NgModule({
   declarations: [
     SeasonComponent,
@@ -37,6 +38,7 @@ import { SampleslabsComponent } from './sampleslab/sampleslab.component';
     HglComponent,
     ShiftsComponent,
     SampleslabsComponent,
+
   ],
   imports: [
     SharedModule,

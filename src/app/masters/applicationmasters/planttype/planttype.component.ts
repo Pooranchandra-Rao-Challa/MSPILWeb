@@ -10,7 +10,7 @@ import { plantTypeDto, plantTypeViewDto } from 'src/app/_models/applicationmaste
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
-import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, } from 'src/app/_shared/regex';
+import { MAX_LENGTH_6, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY, RG_DECIMAL, } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-planttype',
@@ -68,7 +68,7 @@ export class PlanttypeComponent implements OnInit {
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),Validators.minLength(MIN_LENGTH_2)]),
       estimatedTon: [null, (Validators.required)],
-      loanEligible: new FormControl(null,Validators.required),
+      loanEligible:[null, [Validators.required, Validators.pattern(RG_DECIMAL)]],
       isActive: [null],
     });
   }

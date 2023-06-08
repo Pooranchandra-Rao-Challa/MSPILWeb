@@ -531,7 +531,7 @@
                           </td>
                           <td class="vertical-align-top">
                             <input pInputText id="rate" inputId="noOfPersons" placeholder="Enter No Of Persons"
-                              formControlName="noOfPersons" (input)="filterInput($event)" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
+                              formControlName="noOfPersons" numericOnly [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
                               formArrayControls(subHglIndex, 'noOfPersons')?.errors }">
                            
                             <span

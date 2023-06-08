@@ -31,10 +31,11 @@ import { permitService } from './_services/permit.service';
 import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
 import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
 
+
 @NgModule({
   declarations: [
-    AppComponent, NotfoundComponent
-  ],
+    AppComponent, NotfoundComponent,
+  ], 
   imports: [
     AppRoutingModule,
     AppLayoutModule,

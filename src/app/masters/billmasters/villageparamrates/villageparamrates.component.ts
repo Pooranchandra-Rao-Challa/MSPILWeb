@@ -15,6 +15,7 @@ import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { SeasonDto } from 'src/app/_models/applicationmaster';
 import { CURRENT_SEASON } from 'src/environments/environment';
 import { ITableHeader } from 'src/app/_models/common';
+import { RG_DECIMAL } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-villageparamrates',
@@ -109,7 +110,7 @@ export class VillageParamRatesComponent implements OnInit {
       villageName: ['', (Validators.required)],
       villageId: [null, (Validators.required)],
       billParameterId: [null, (Validators.required)],
-      rate: [null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]],
+      rate: [null, [Validators.required, Validators.pattern(RG_DECIMAL)]],
       isActive: [null]
     });
   }
@@ -120,13 +121,7 @@ export class VillageParamRatesComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-  filterInput(event: any) {
-    const initialValue = event.target.value;
-    const filteredValue = initialValue.replace(/[^0-9.]/g, '').replace(/(\.\d{0,2}).*/g, '$1');
-    if (initialValue !== filteredValue) {
-      event.target.value = filteredValue;
-    }
-  }  
+ 
   clear(table: Table) {
     table.clear();
     this.filter.nativeElement.value = '';

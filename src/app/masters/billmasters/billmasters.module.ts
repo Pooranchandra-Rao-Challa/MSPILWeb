@@ -12,6 +12,7 @@ import { DieselBunkComponent } from './dieselbunk/dieselbunk.component';
 import { WareHouseComponent } from './warehouse/warehouse.component';
 import { DatePipe } from '@angular/common';
 
+
 @NgModule({
   declarations: [
     BillMasterComponent,

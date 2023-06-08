@@ -1,6 +1,6 @@
 import { BankDto, BranchDto } from 'src/app/_models/applicationmaster';
 import { LookupService } from 'src/app/_services/lookup.service';
-import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, RG_AADHAAR, RG_ADDRESS, } from 'src/app/_shared/regex';
+import { RG_PHONE_NO, RG_NUMERIC_ONLY, RG_EMAIL, MIN_LENGTH_2, MAX_LENGTH_20, RG_PANNO, MIN_ACCNO, MIN_AADHAAR, RG_AADHAAR, RG_ADDRESS, RG_DECIMAL, } from 'src/app/_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BankViewDto, VehicleTypeViewDto, } from 'src/app/_models/applicationmaster';
@@ -195,27 +195,10 @@ export class HglComponent implements OnInit {
   faSubHgl(): FormArray {
     return this.fbHgl.get('subHgls') as FormArray;
   }
-
-  isUniqueSubHGLCode(code: string, subHglId: number) {
-    var existingCodes = this.subHgls.filter(
-      (subHgl) =>
-        subHgl.code === code && subHgl.subHglId !== subHglId
-    );
-    return existingCodes.length > 0;
-  }
   addSubHgl() {
     this.showSubHgl = true;
     this.faSubHgl().push(this.generateRow());
   }
-
-  filterInput(event: any) {
-    const initialValue = event.target.value;
-    const filteredValue = initialValue.replace(/[^0-9.]/g, '').replace(/(\.\d{0,2}).*/g, '$1');
-    if (initialValue !== filteredValue) {
-      event.target.value = filteredValue;
-    }
-  }  
-  
   generateRow(subHgls: SubHglViewDto = new SubHglViewDto()): FormGroup {
     if (!this.addFlag) subHgls.hglId = this.hgl.hglId;
     return this.formbuilder.group({
@@ -224,7 +207,7 @@ export class HglComponent implements OnInit {
       code: new FormControl(subHgls.code, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl(subHgls.name, [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       vehicleTypeId: [subHgls.vehicleTypeId, Validators.required],
-      noOfPersons: [subHgls.noOfPersons, Validators.required,Validators.pattern(/^\d+(\.\d{1,3})?$/)],
+      noOfPersons: [subHgls.noOfPersons, Validators.required,Validators.pattern(RG_DECIMAL)],
       isActive: subHgls.isActive,
     });
   }
@@ -240,8 +223,6 @@ export class HglComponent implements OnInit {
       }
     });
   }
-
- 
   getIFSCByBranch(Id: number) {
     let branch = this.branches.find((x) => x.branchId == Id);
     if (branch) this.IFSC = branch.ifsc;
@@ -319,15 +300,6 @@ export class HglComponent implements OnInit {
  
   onSubmit() {
     if (this.fbHgl.valid) {
-      for (let i = 0; i < this.faSubHgl().length; i++) {
-    var subHglGroup = this.faSubHgl().controls[i] as FormGroup;
-    if (this.isUniqueSubHGLCode(subHglGroup.value.code, subHglGroup.value.subHglId)) {
-      this.alertMessage.displayErrorMessage(
-        `Sub HGL Code :"${subHglGroup.value.code}" Already Exists.`
-      );
-      return;
-    }
-  }
       if (this.addFlag) {
         if (this.isUniqueHglCode()) {
           this.alertMessage.displayErrorMessage(

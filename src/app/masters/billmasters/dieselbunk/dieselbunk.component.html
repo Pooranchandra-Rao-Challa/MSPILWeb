@@ -198,16 +198,16 @@
                   </div>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label>Rate:<sup class="p-error">*</sup></label>
-                  <input pInputText id="rate" type="text" #code placeholder="Enter rate" formControlName="rate"  
-                          appDecimalInput [maxlength]="10"
-                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">      
+                  <label>Rate(₹):<sup class="p-error">*</sup></label>
+                  <input pInputText id="rate" type="text" #code placeholder="Enter rate" formControlName="rate"
+                  appNumericInput [maxlength]="10"
+                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">                  
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
                       Please Enter Rate.
                     </div>
                   </span>
-                </div> 
+                </div>
                 <div class="col-12 md:col-6">
                   <label>Is Active:</label><br>
                   <p-inputSwitch formControlName="isActive"></p-inputSwitch>

@@ -9,6 +9,7 @@ import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { ITableHeader } from 'src/app/_models/common';
+import { RG_DECIMAL } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-distancerateslab',
@@ -58,7 +59,7 @@ export class DistanceRateSlabComponent implements OnInit {
     this.fbDistanceRate = this.formbuilder.group({
       id: [null],
       distance: [null, (Validators.required)],
-      rate: [null, (Validators.required)],
+      rate: [null, [Validators.required, Validators.pattern(RG_DECIMAL)]],
       isActive: [null]
     });
   }

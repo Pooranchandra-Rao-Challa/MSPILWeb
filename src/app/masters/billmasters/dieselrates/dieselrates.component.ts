@@ -10,6 +10,7 @@ import { FORMAT_DATE, MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { DateValidators } from 'src/app/_validators/dateRangeValidator';
 import { ITableHeader } from 'src/app/_models/common';
+import { RG_DECIMAL } from 'src/app/_shared/regex';
 
 @Component({
   selector: 'app-dieselrates',
@@ -61,7 +62,7 @@ export class DieselRatesComponent implements OnInit {
       id: [null],
       fromDate: [null, (Validators.required)],
       toDate: [null, (Validators.required)],
-      rate: [null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]],
+      rate: [null, [Validators.required, Validators.pattern(RG_DECIMAL)]],
       isActive: [null]
     }, {
       validators: Validators.compose([
@@ -77,13 +78,13 @@ export class DieselRatesComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-  filterInput(event: any) {
-    const initialValue = event.target.value;
-    const filteredValue = initialValue.replace(/[^0-9.]/g, '').replace(/(\.\d{0,2}).*/g, '$1');
-    if (initialValue !== filteredValue) {
-      event.target.value = filteredValue;
-    }
-  }  
+  // filterInput(event: any) {
+  //   const initialValue = event.target.value;
+  //   const filteredValue = initialValue.replace(/[^0-9.]/g, '').replace(/(\.\d{0,2}).*/g, '$1');
+  //   if (initialValue !== filteredValue) {
+  //     event.target.value = filteredValue;
+  //   }
+  // }  
 
   clear(table: Table) {
     table.clear();
