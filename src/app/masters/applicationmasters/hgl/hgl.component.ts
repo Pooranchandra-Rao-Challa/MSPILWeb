@@ -113,6 +113,7 @@ export class HglComponent implements OnInit {
       { label: 'Female', value: 'F' },
     ];
   }
+  // Initialize hgl form
   hglform() {
     this.fbHgl = this.formbuilder.group({
       hglId: [null],
@@ -151,11 +152,13 @@ export class HglComponent implements OnInit {
     this.initVehicles();
     this.hglform();
   }
+  // Fetch hgls data
   inithgls() {
     this.appMasterService.GetHgls().subscribe((resp) => {
       this.hgls = resp as unknown as HglViewDto[];
     });
   }
+  // Fetch subHgls data based on hglId
   initsubHgls(hglId: any) {
     this.appMasterService.GetSubHgl(hglId).subscribe((resp) => {
       this.subHgls = resp as unknown as SubHglViewDto[];
@@ -170,16 +173,19 @@ export class HglComponent implements OnInit {
       }
     });
   }
+  // Fetch relation types data
   initRelationTypes() {
     this.LookupService.RelationTypes().subscribe((resp) => {
       this.relationTypes = resp;
     });
   }
+  // Fetch banks data
   initBanks() {
     this.appMasterService.GetBanks().subscribe((resp) => {
       this.banks = resp as unknown as BankViewDto[];
     });
   }
+  // Fetch vehicle types data
   initVehicles() {
     this.appMasterService.GetVehicleTypes().subscribe((resp) => {
       this.vehicleTypes = resp as unknown as VehicleTypeViewDto[];
@@ -188,6 +194,7 @@ export class HglComponent implements OnInit {
   get FormControls() {
     return this.fbHgl.controls;
   }
+  // Get form array controls for the specified index and form control name
   formArrayControls(i: number, formControlName: string) {
     return this.faSubHgl().controls[i].get(formControlName);
   }
@@ -199,6 +206,7 @@ export class HglComponent implements OnInit {
     this.showSubHgl = true;
     this.faSubHgl().push(this.generateRow());
   }
+  // Generate a form group row for subHgl with default values
   generateRow(subHgls: SubHglViewDto = new SubHglViewDto()): FormGroup {
     if (!this.addFlag) subHgls.hglId = this.hgl.hglId;
     return this.formbuilder.group({
@@ -319,7 +327,6 @@ export class HglComponent implements OnInit {
       this.fbHgl.markAllAsTouched();
     }
   }
-
   save() {
     this.fbHgl.value.panNo = this.fbHgl.value.panNo.toUpperCase();
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';

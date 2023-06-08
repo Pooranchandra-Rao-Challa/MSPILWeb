@@ -158,32 +158,40 @@ export class ScheduleGroupingComponent implements OnInit {
   get scheduleControls() {
     return this.fbScheduleGrouping.get('plotSchedules') as FormArray;
   }
-  addSchedule(rowData: any) {
+ // Add a new plot schedule entry to the 'plotSchedules' FormArray using the provided rowData
+addSchedule(rowData: any) {
+  const formArray = this.fbScheduleGrouping.get('plotSchedules') as FormArray;
+  formArray.push(this.plotScheduleForm(rowData));
+}
 
-    const formArray = this.fbScheduleGrouping.get('plotSchedules') as FormArray;
-    formArray.push(this.plotScheduleForm(rowData));
-  }
-  removeSchedule(index: any) {
-    const formArray = this.fbScheduleGrouping.get('plotSchedules') as FormArray;
-    formArray.removeAt(index);
-  }
-  onRowSelect(event: any, scheduleGrouping: any) {
+// Remove a plot schedule entry at the specified index from the 'plotSchedules' FormArray
+removeSchedule(index: any) {
+  const formArray = this.fbScheduleGrouping.get('plotSchedules') as FormArray;
+  formArray.removeAt(index);
+}
 
-    console.log(scheduleGrouping);
-    if (event.checked) {
-      this.addSchedule(scheduleGrouping);
-    } else {
-      let index = this.scheduleControls.value.findIndex((s: any) => s.farmerId == scheduleGrouping.farmerId && s.plotYieldId == scheduleGrouping.plotId)
-      this.removeSchedule(index);
-    }
-    console.log(this.scheduleControls.value);
+// Adds or removes a plot schedule entry to/from the 'plotSchedules' FormArray based on the row selection state
+onRowSelect(event: any, scheduleGrouping: any) {
+  // If the row is checked, add a plot schedule entry using the provided data
+  if (event.checked) {
+    this.addSchedule(scheduleGrouping);
+  } else {
+    // If the row is unchecked, find the corresponding plot schedule entry in the FormArray and remove it using its index
+    let index = this.scheduleControls.value.findIndex(
+      (s: any) => s.farmerId == scheduleGrouping.farmerId && s.plotYieldId == scheduleGrouping.plotId
+    );
+    this.removeSchedule(index);
   }
+  
+  console.log(this.scheduleControls.value);
+}
 
   initSeasons() {
     this.commonService.GetSeasons().subscribe((resp) => {
       this.seasons = resp as any;
     });
   }
+  // Initializes schedule groups for the provided season ID
   initCurrentSeason(seasonCode: string) {
     this.appMasterService.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as unknown as SeasonDto;
@@ -274,12 +282,14 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterVarieties = Object.assign([], this.varieties);
     })
   }
+  // Initializes the schedule grouping by fetching data from the API
   initScheduleGrouping() {
     this.permitService.GetScheduleGroupPlots(this.fbScheduleGrouping.value).subscribe((resp) => {
       this.schedule = resp as unknown as ScheduleGroupPlotsViewDto[];
       console.log('schedule', this.schedule);
     })
   }
+
   toggleTab() {
     this.showForm = !this.showForm;
   }
@@ -288,6 +298,7 @@ export class ScheduleGroupingComponent implements OnInit {
     const toDOP = this.fbScheduleGrouping.get('toDOP')?.value;
     return fromDOP !== null && toDOP !== null && !isNaN(Date.parse(fromDOP)) && !isNaN(Date.parse(toDOP));
   }
+  // Restricts the input value to a specified range (1 to 5)
   restrictToRange(event:any) {
     const value = parseInt(event.target.value);
     if (isNaN(value) || value < 1) {
@@ -407,8 +418,6 @@ export class ScheduleGroupingComponent implements OnInit {
       this.filterVarieties = this.varieties.filter(variety => Array.isArray(values) && values.indexOf(variety.planttypeId!) != -1);
     }
   }
-  
-
   get FormControls() {
     return this.fbScheduleGrouping.controls
   }
@@ -421,7 +430,6 @@ export class ScheduleGroupingComponent implements OnInit {
     this.showTable = true;
     this.showDialog = true;
   }
-
   onSubmit() {
     console.log(this.fbScheduleGrouping.value);
     if (this.fbScheduleGrouping.valid) {
