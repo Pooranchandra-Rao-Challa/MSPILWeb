@@ -455,7 +455,7 @@
                         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                         <ng-template pTemplate="header">
                           <tr>
-                            <th>Vehicle No</th>
+                            <th>Vehicle No<sup class="p-error">*</sup></th>
                             <th>Vehicle Type <sup class="p-error">*</sup></th>
                             <th>Insurance No</th>
                             <th>Receivable Amount</th>
@@ -473,6 +473,9 @@
                             formArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
                               <span
                                 *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.touched && formArrayControls(tptDetailIndex, 'vehicleNo')?.invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.errors?.['required']">
+                                  Please Enter Vehicle No.</div>
                                 <div class="ng-invalid ng-touched p-error"
                                   *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.errors?.['pattern']">
                                   Invalid Vehicle Number, Eg: XY00-XY-0000 / XY00 XY 0000.</div>

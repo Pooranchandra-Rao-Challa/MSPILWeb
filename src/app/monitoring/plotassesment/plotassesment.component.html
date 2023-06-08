@@ -176,7 +176,7 @@
                     [transitionOptions]="'500ms'">
                     <div class="p-fluid p-formgrid grid">
                       <div class="field col-12 md:col-4 lg:col-3 ">
-                        <label class="required">Assessment Area(Acre):</label>
+                        <label class="required">Assessment Area(Acres):</label>
                         <p-inputNumber formControlName="measuredArea" placeholder="Enter Assessment Area" mode="decimal"
                           [maxlength]="10" [minFractionDigits]="2" [maxFractionDigits]="2"
                           [ngClass]="{ 'is-invalid ng-dirty': FormControls['measuredArea'].touched && FormControls['measuredArea'].errors }">
@@ -184,7 +184,7 @@
                         <span *ngIf="FormControls['measuredArea'].touched && FormControls['measuredArea'].invalid">
                           <div class="ng-invalid ng-touched p-error"
                             *ngIf="FormControls['measuredArea'].errors?.['required']">
-                            Please Select Assessment Area.</div>
+                            Please Enter Assessment Area.</div>
                         </span>
                       </div>
                       <div class="field col-12 md:col-4 lg:col-3">
