@@ -101,7 +101,7 @@
                         <div class="field col-12 md:col-6">
                           <label>User Name:<sup class="p-error">*</sup></label>&nbsp;
                           <input pInputText id="username" type="text" formControlName="userName"
-                            placeholder="Enter User Name" #username alphaNumeric
+                            placeholder="Enter User Name" #username alphaNumeric autocomplete="off"
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['userName'].touched && userFormControls['userName'].errors }" />
                           <div class="flex">
                             <div class="align-left w-60" style="width:70%">
@@ -126,7 +126,7 @@
                         <div class="field col-12 md:col-6">
                           <span *ngIf="!this.user.userId">
                             <label>Password:<sup class="p-error">*</sup></label>&nbsp;
-                            <input pInputText id="password" type="password" formControlName="password"
+                            <input pInputText id="password" type="password" formControlName="password" autocomplete="new-password"
                               placeholder="Enter Password"
                               [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
                             <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
