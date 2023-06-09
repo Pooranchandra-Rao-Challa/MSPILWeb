@@ -65,8 +65,8 @@ export class UsersComponent implements OnInit {
       userName: new FormControl('', [Validators.required, Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_50)]),
       password: ['', (Validators.required)],
       firstName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.maxLength(MAX_LENGTH_50)]),
-      lastName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY),  Validators.maxLength(MAX_LENGTH_50)]),
-      email: new FormControl('', [Validators.required,Validators.pattern(RG_EMAIL)]),
+      lastName: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.maxLength(MAX_LENGTH_50)]),
+      email: new FormControl('', [Validators.required, Validators.pattern(RG_EMAIL)]),
       mobileNumber: new FormControl('', [Validators.required, Validators.pattern(RG_PHONE_NO)]),
       roleId: ['', (Validators.required)],
       ipaddress: ['', (Validators.pattern(IP_ADDRESS_NO))],
@@ -110,19 +110,20 @@ export class UsersComponent implements OnInit {
           this.user.roleId = this.user.roles[0].roleId;
         this.user.password = "";
         this.userForm.setValue(this.user);
-          this.userForm.get("password")?.disable();
-          this.userForm.get("password")?.clearValidators();
+        this.userForm.get("password")?.disable();
+        this.userForm.get("password")?.clearValidators();
       })
     } else {
       this.submitLabel = "Add User";
       this.user = {};
-      this.user.IsGross = false;
+      this.user.isGross = false;
       this.user.isActive = false;
       this.user.isAdminGate = false;
       this.user.iprestriction = false;
       this.user.isDumpYard = false;
       this.user.isTare = false;
       this.user.isAdmin = false;
+      this.userForm.patchValue(this.user);
       this.userForm.get("password")?.enable();
       this.securityService.GetAllSections().subscribe(resp => {
         this.user.userSections = resp as unknown as UserSectionDto[];
@@ -163,7 +164,7 @@ export class UsersComponent implements OnInit {
           this.userForm.reset();
           this.filter.nativeElement.value = '';
           this.initUsers();
-          this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SUSR001" : "SUSR002"]);
+          this.alertMessage.displayAlertMessage(ALERT_CODES[!this.user.userId ? "SUSR001" : "SUSR002"]);
         } else {
 
         }

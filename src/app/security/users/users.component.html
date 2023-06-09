@@ -90,9 +90,8 @@
       [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" (onHide)="userForm.reset()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="tpt_form" autocomplete="off">
-            
-            <p-tabView orientation="left" class="users-container tpt_form">
+          <form [formGroup]="userForm" autocomplete="off">
+            <p-tabView orientation="left">
               <p-tabPanel header="User Info" class="line-height-3 m-0 col-12 ">
                 <div class="grid">
                   <div class="col-12">
@@ -126,17 +125,17 @@
                         </div>
                         <div class="field col-12 md:col-6">
                           <span *ngIf="!this.user.userId">
-                          <label>Password:<sup class="p-error">*</sup></label>&nbsp;
-                          <input pInputText id="password" type="password" formControlName="password"
-                            placeholder="Enter Password"
-                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
-                          <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['password'].errors?.['required']">
-                              Please Enter Password.</div>
+                            <label>Password:<sup class="p-error">*</sup></label>&nbsp;
+                            <input pInputText id="password" type="password" formControlName="password"
+                              placeholder="Enter Password"
+                              [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
+                            <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
+                              <div class="ng-invalid ng-touched p-error"
+                                *ngIf="userFormControls['password'].errors?.['required']">
+                                Please Enter Password.</div>
 
+                            </span>
                           </span>
-                        </span>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>First Name:<sup class="p-error">*</sup></label>&nbsp;
@@ -232,8 +231,8 @@
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>Role:<sup class="p-error">*</sup></label>&nbsp;
-                          <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId"
-                            optionValue="roleId" placeholder="Select Role" [autoDisplayFirst]="false"
+                          <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId"
+                            placeholder="Select Role" [autoDisplayFirst]="false"
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }">
                           </p-dropdown>
                           <span *ngIf="userFormControls['roleId'].touched && userFormControls['roleId'].invalid">
@@ -244,14 +243,15 @@
                         </div>
                         <div class="field col-12 md:col-6">
                           <label htmlFor="ipaddress">IP Address:</label>
-                          <input pInputText id="ipaddress" type="text"  #ipAddress  formControlName="ipaddress"
+                          <input pInputText id="ipaddress" type="text" #ipAddress formControlName="ipaddress"
                             placeholder="Enter IP Address" maxlength="15" />
                           <div class="flex">
                             <div class="align-left w-60" style="width:70%">
                               <span
                                 *ngIf="userFormControls['ipaddress'].touched && userFormControls['ipaddress'].invalid">
                                 <div class="ng-invalid ng-touched p-error"
-                                  *ngIf="userFormControls['ipaddress'].errors?.['pattern']"> Invalid IP Address Eg:00.00.00.00 or 000.000.000.000
+                                  *ngIf="userFormControls['ipaddress'].errors?.['pattern']"> Invalid IP Address
+                                  Eg:00.00.00.00 or 000.000.000.000
                                 </div>
                               </span>
                             </div>
@@ -262,14 +262,14 @@
                         </div>
                         <div class="field col-12 md:col-6">
                           <label htmlFor="imeino">IMEI No:</label>
-                          <input pInputText id="imeino" #imeino numericOnly type="text" formControlName="imeino"
-                            placeholder="Enter IMEI No" minlength="15" maxlength="15" />
+                          <input pInputText id="imeino" #imeino alphaNumeric type="text" formControlName="imeino"
+                            placeholder="Enter IMEI No" minlength="16" maxlength="16" />
                           <div class="flex">
                             <div class="align-left w-60" style="width:70%">
                               <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
                                 <div class="ng-invalid ng-touched p-error"
                                   *ngIf="userFormControls['imeino'].errors?.['pattern']">
-                                  IMEI No Should Contains Only Digits.</div>
+                                  IMEI No Should Contains Alphabets And Digits. </div>
                                 <div class="ng-invalid ng-touched p-error"
                                   *ngIf="userFormControls['imeino'].errors?.['minlength']">
                                   IMEI No Min Length Is 15.</div>
@@ -279,7 +279,7 @@
                               </span>
                             </div>
                             <div class="align-right w-40" style="width:30%; text-align:right;">
-                              <small>{{imeino.value.length}}/15</small>
+                              <small>{{imeino.value.length}}/16</small>
                             </div>
                           </div>
                         </div>
@@ -340,7 +340,7 @@
       <ng-template pTemplate="footer">
         <div class="col-6" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            (click)="onSubmit()" [disabled]="userForm.invalid" ></button>
+            (click)="onSubmit()" [disabled]="userForm.invalid"></button>
         </div>
       </ng-template>
     </p-dialog>

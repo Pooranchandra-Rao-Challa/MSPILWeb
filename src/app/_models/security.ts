@@ -31,7 +31,7 @@ export class UserDto {
   ipaddress?: string
   iprestriction?: boolean
   isAdminGate?: boolean
-  IsGross?: boolean
+  isGross?: boolean
   isTare?: boolean
   isDumpYard?: boolean
   isActive?: boolean

@@ -221,7 +221,7 @@
                   <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Plot Village:</label>
                     <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
-                      filterBy="villageName,villageCode" formControlName="plotVillageId" placeholder="Select Village"
+                      filterBy="villageName,villageCode" formControlName="plotVillageId" placeholder="Select Plot Village"
                       (onChange)="onSelectedVillage($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38"
                       appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotVillageId'].touched && FormControls['plotVillageId'].errors }">

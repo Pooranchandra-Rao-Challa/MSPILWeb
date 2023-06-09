@@ -221,18 +221,6 @@
                   </span>
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                  <label class="required">Survey No:</label>
-                  <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
-                  <span *ngIf="FormControls['surveyNo'].touched && FormControls['surveyNo'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['required']">
-                      Please Enter Survey No.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['pattern']">
-                      Survey No
-                      Accepts Only Characters With -/</div>
-                  </span>
-                </div>
-                <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label class="required">Reported Area(Acres):</label>
                   <p-inputNumber placeholder="Enter Reported Area" formControlName="reportedArea" mode="decimal"
                     locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" (onBlur)="onCalculation()"
@@ -242,6 +230,22 @@
                     <div class="ng-invalid ng-touched p-error"
                       *ngIf="FormControls['reportedArea'].errors?.['required']">
                       Please Enter Reported Area.</div>
+                  </span>
+                </div>
+                <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
+                  <label>Agreed(Ton):</label>
+                  <p class="disabled_text" style="font-weight: 800;">{{FormControls['agreed'].value}}</p>
+                </div>
+                <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
+                  <label class="required">Survey No:</label>
+                  <input pInputText id="surveyNo" placeholder="Enter Survey No" formControlName="surveyNo"
+                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['surveyNo'].touched && FormControls['surveyNo'].errors }">
+                  <span *ngIf="FormControls['surveyNo'].touched && FormControls['surveyNo'].invalid">
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['required']">
+                      Please Enter Survey No.</div>
+                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['surveyNo'].errors?.['pattern']">
+                      Survey No
+                      Accepts Only Characters With -/</div>
                   </span>
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
@@ -279,10 +283,6 @@
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['varietyId'].errors?.['required']">
                       Please Select Variety.</div>
                   </span>
-                </div>
-                <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                  <label>Agreed(Ton):</label>
-                  <p class="disabled_text" style="font-weight: 800;">{{FormControls['agreed'].value}}</p>
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label>BIR Number:</label>
@@ -369,8 +369,8 @@
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label>Distance From Plot(KM):</label>
-                  <p-inputNumber placeholder="Enter Plot Distance" formControlName="distanceFromPlot" mode="decimal"
-                    locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
+                  <p-inputNumber placeholder="Enter Distance From Plot" formControlName="distanceFromPlot"
+                    mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['distanceFromPlot'].touched && FormControls['distanceFromPlot'].errors }">
                   </p-inputNumber>
                 </div>
@@ -390,8 +390,8 @@
               </div>
             </p-fieldset>
           </p-fieldset>
-          <p class="disabled_text" style="color: #e73816;">Note: If you want to pass Plot Additional Info you have to
-            select Enable For Adding Plot Additional Information Switch.</p>
+          <p class="head_note">Note: If You Want To Pass Plot Additional Info You Have To
+            Select Enable For Adding Plot Additional Information Switch.</p>
           <!-- <p-fieldset legend="Plot Additional Info" class="col-12" [transitionOptions]="'500ms'"
             *ngIf="!this.fbPlotReport.controls['enabledValidation'].value">
           </p-fieldset> -->
