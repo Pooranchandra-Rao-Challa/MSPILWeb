@@ -62,11 +62,12 @@ export class VillageParamRatesComponent implements OnInit {
     private alertMessage: AlertMessage) { }
 
   ngOnInit(): void {
-    this.permissions = this.jwtService.Permissions;
-    this.initVillageParamRates();
+    this.permissions = this.jwtService.Permissions
     this.initDefaults();
     this.initCurrentSeason(CURRENT_SEASON());
+    this.initSeasons();
     this.villageParamRateForm();
+    this.initVillageParamRates();
   }
 
   initVillageParamRates() {
@@ -74,7 +75,11 @@ export class VillageParamRatesComponent implements OnInit {
       this.villageParamRates = resp as unknown as VillageParamRateViewDto[];
     });
   }
-
+  initSeasons() {
+    this.commonService.GetSeasons().subscribe((resp) => {
+      this.seasons = resp as any;
+    });
+  }
   getVillageParamRatesBySeason(seasonId: number) {
     var seasonId = seasonId ? seasonId : 0;
     this.billMasterService.GetVillageParamRatesBySeasonId(seasonId).subscribe((resp) => {
@@ -99,7 +104,8 @@ export class VillageParamRatesComponent implements OnInit {
   initCurrentSeason(seasonCode: string) {
     this.appMasterservice.CurrentSeason(seasonCode).subscribe((resp) => {
       this.currentSeason = resp as SeasonDto;
-      if(this.currentSeason) this.getVillageParamRatesBySeason(this.currentSeason.seasonId!);
+      if(this.currentSeason) 
+      this.getVillageParamRatesBySeason(this.currentSeason.seasonId!);
     });
   }
 
@@ -133,7 +139,6 @@ export class VillageParamRatesComponent implements OnInit {
     this.submitLabel = "Add Village Param Rate";
     this.addFlag = true;
     this.showDialog = true;
-    this.initVillageParamRates()
   }
 
   editVillageParamRate(vParamRate: VillageParamRateViewDto) {
@@ -159,6 +164,7 @@ export class VillageParamRatesComponent implements OnInit {
       this.saveBillParam().subscribe(resp => {
         if (resp) {
           this.initVillageParamRates();
+          this.getVillageParamRatesBySeason(this.currentSeason.seasonId!);
           this.fbVillageParamRate.reset();
           this.showDialog = false;
           this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMBMVPR001" : "SMBMVPR002"]);

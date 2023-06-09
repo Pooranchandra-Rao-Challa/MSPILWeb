@@ -4,6 +4,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   selector: '[appNumericInput]'
 })
 export class NumericInputDirective {
+  // This class is responsible for filtering input values, allowing only numbers and up to two decimal places.
   constructor(private el: ElementRef) {}
 
   @HostListener('input', ['$event'])
