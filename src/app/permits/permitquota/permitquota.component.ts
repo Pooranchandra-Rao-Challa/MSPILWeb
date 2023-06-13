@@ -151,6 +151,7 @@ export class PermitQuotaComponent implements OnInit {
     this.fbPermitQuota.reset();
     this.Quotas = [];
     this.PermitQuotaform();
+    this.initCurrentSeason(CURRENT_SEASON());
     this.permitquotas=[]
   }  
   initQuotas() {
