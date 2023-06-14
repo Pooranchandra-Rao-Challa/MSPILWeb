@@ -222,7 +222,7 @@ export class PermitQuotaComponent implements OnInit {
       return;
     }
     this.savePermitQuota().subscribe(resp => {
-      if (resp) {
+      if (resp) {                                                                                                                                    
         this.initCurrentSeason(CURRENT_SEASON());
         this.PermitQuotaform();
         this.alertMessage.displayAlertMessage(ALERT_CODES[this.addFlag ? "SMPPQ001" : "SMPPQ002"]);
