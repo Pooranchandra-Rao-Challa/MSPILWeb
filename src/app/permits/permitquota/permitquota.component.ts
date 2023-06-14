@@ -48,6 +48,7 @@ export class PermitQuotaComponent implements OnInit {
   toScheduleNo: any;
   editPermitQuotaData: any
   error: boolean = false;
+  isEditing: boolean = false;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -129,6 +130,7 @@ export class PermitQuotaComponent implements OnInit {
     return this.fbPermitQuota.controls
   }
   getPermitQuota() {
+    this.isEditing = false;
     this.resetFormAndGrid()
     this.submitLabel = "Add Permit Quota";
     this.addFlag = true;
@@ -194,6 +196,7 @@ export class PermitQuotaComponent implements OnInit {
     });
   }
   editPermitQuota(permitQuota: SeasonQuotaViewDto) {
+    this.isEditing = true;
     this.addFlag = false;
     this.submitLabel = 'Update Permit Quota';
     this.editPermitQuotaData = permitQuota;
