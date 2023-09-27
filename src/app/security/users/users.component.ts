@@ -16,14 +16,14 @@ import { RG_ALPHA_ONLY, RG_EMAIL, RG_PHONE_NO, RG_NUMERIC_ONLY } from 'src/app/_
 })
 export class UsersComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
-  users: UserViewDto[] =[];
+  users: UserViewDto[] = [];
   selectedUser: UserViewDto = {};
   user: UserDto = {};
   roles: RoleDto[] = [];
   dialog: boolean = false;
   submitLabel!: string;
   globalFilters: string[] = ["UserId", "UserName", "FirstName", "LastName", "EmailId", "MobileNo", "Role", "IMEINo", "IPAddress", "IPRestriction",
-  "IsAdminGate", "IsGross", "IsTare", "IsDumpYard", "IsActive", "CreatedDate", "UpdatedDate"];
+    "IsAdminGate", "IsGross", "IsTare", "IsDumpYard", "IsActive", "CreatedDate", "UpdatedDate"];
   userForm!: FormGroup;
   mediumDate: string = MEDIUM_DATE;
 
@@ -57,12 +57,18 @@ export class UsersComponent implements OnInit {
   }
 
   initUsers() {
-    this.securityService.GetUsers().subscribe(resp => {
-      this.users = resp as unknown as UserViewDto[];
-      this.users.sort((a,b)=> (a.userName||"").localeCompare(b.userName||""))
-      console.log(this.users);
-
-    })
+    this.securityService.GetUsers().subscribe(
+      {
+        next: (resp) => {
+          this.users = resp as unknown as UserViewDto[];
+          this.users.sort((a, b) => (a.userName || "").localeCompare(b.userName || ""))
+          console.log(this.users);
+        },
+        error: (error) =>{
+          this.users = [];
+        }
+      }
+    )
   }
 
   allottedSections() {
@@ -95,7 +101,7 @@ export class UsersComponent implements OnInit {
       this.user.isAdmin = false;
       this.userForm.get("password")?.enable();
       this.securityService.GetAllSections().subscribe(resp => {
-       this.user.userSections = resp as unknown as UserSectionDto[];
+        this.user.userSections = resp as unknown as UserSectionDto[];
       })
     }
   }

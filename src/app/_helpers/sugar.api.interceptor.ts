@@ -67,6 +67,8 @@ export class SugarAPIInterceptor implements HttpInterceptor {
         // if ([200].includes(response.status)) {
         //   this.messageService.add({ severity: 'success', key: 'myToast', summary: 'Success!', detail: 'Signing in...!' });
         // }
+        console.log(response);
+
         return resp;
       }),
 
