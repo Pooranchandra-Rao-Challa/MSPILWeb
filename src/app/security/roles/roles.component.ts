@@ -13,7 +13,6 @@ import { AlertMessage } from '../../_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MaxLength } from 'src/app/_models/common';
 
-
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -29,14 +28,13 @@ export class RolesComponent implements OnInit {
   roleForm!: FormGroup;
   submitLabel!: string;
   addFlag: boolean = true;
-  globalFilters: string[] = ["Code", "Name", "IsActive", "createdAt", "CreatedBy", "UpdatedDate", "UpdatedBy"];
   mediumDate: string = MEDIUM_DATE;
-  permission:any
+  permission: any
   maxLength: MaxLength = new MaxLength();
 
   constructor(private formbuilder: FormBuilder, private securityService: SecurityService,
-    private alertMessage:AlertMessage,
-    private jwtService:JWTService) { }
+    private alertMessage: AlertMessage,
+    private jwtService: JWTService) { }
 
   ngOnInit(): void {
     this.permission = this.jwtService.Permissions;
@@ -44,7 +42,7 @@ export class RolesComponent implements OnInit {
       roleId: [''],
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_6)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY)]),
-      isActive:[true],
+      isActive: [true],
       permissions: []
     });
     this.intiRoles();
@@ -63,8 +61,6 @@ export class RolesComponent implements OnInit {
     this.filter.nativeElement.value = '';
   }
 
-
-
   showDialog() {
     this.roleForm.reset();
     this.dialog = true;
@@ -75,7 +71,6 @@ export class RolesComponent implements OnInit {
     });
   }
 
-  
   initPermissoins() {
     this.securityService.GetPermissions().subscribe(resp => {
       this.permissions = resp as unknown as RolePermissionDto[];
@@ -85,6 +80,7 @@ export class RolesComponent implements OnInit {
       this.screensInPermissions();
     });
   }
+
   initRole(role: RoleViewDto) {
     this.showDialog();
     this.screens = [];
@@ -109,7 +105,6 @@ export class RolesComponent implements OnInit {
       this.role.isActive = false;
       this.role.name = "";
       this.initPermissoins();
-
     }
   }
 
@@ -117,17 +112,17 @@ export class RolesComponent implements OnInit {
     this.screens = getDistinct(this.role?.permissions || [], "screenName") as string[];
     this.screens.sort((a, b) => (a || "").localeCompare(b || ""))
   }
+
   getPermissions(screen: string) {
     return this.role?.permissions?.filter(fn => fn.screenName == screen)
   }
+
   saveRole(): Observable<HttpEvent<RoleDto>> {
     if (!this.role.roleId) return this.securityService.CreateRole(this.roleForm.value)
     else return this.securityService.UpdateRole(this.roleForm.value)
   }
 
   onSubmit() {
-
-
     if (this.roleForm.valid) {
       console.log(this.roleForm.value);
       this.saveRole().subscribe(resp => {
