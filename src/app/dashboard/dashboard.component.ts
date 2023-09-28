@@ -2,8 +2,6 @@ import { GeoMasterService } from 'src/app/_services/geomaster.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { Product } from '../demo/api/product';
-import { ProductService } from '../demo/service/product.service';
 import { LayoutService } from '../layout/service/app.layout.service';
 
 @Component({
