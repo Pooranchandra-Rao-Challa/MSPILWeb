@@ -449,10 +449,10 @@
                           class="p-button-raised p-button-primary" (click)="addTptDetail()"></button>
                       </div>
                     </div>
-                    <div class="col-12 scrolling_content" formArrayName="tptdetails" *ngIf="showTptDetails">
-                      <p-table #dt2 [value]="faTptDetails().controls" dataKey="id" [rowHover]="true" [autoLayout]="true"
-                        responsiveLayout="stack" [style]="{width:'auto'}"
-                        styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
+                    <div class="col-12 scrolling_content"  styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" formArrayName="tptdetails" *ngIf="showTptDetails">
+                      <p-table #dt2 [value]="faTptDetails().controls" dataKey="id" [rowHover]="true" [autoLayout]="true" responsiveLayout="scroll"
+                      [tableStyle]="{ width: 'max-content'}"
+                        >
                         <ng-template pTemplate="header">
                           <tr>
                             <th>Vehicle No<sup class="p-error">*</sup></th>
