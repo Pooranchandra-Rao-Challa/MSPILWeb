@@ -44,25 +44,21 @@ export class SeasonComponent implements OnInit {
   activeIndex: number = 0;
   maxLength: MaxLength = new MaxLength();
   invalidSeasonCode: boolean = false;
-
-
   plotHeader: ITableHeader[] = [
-    { field: 'code', header:'code', label: 'Code' },
-    { field: 'name', header:'name', label: 'Name' },
-    { field: 'plantFrom', header:'plantFrom', label: 'Plant From' },
-    { field: 'plantTo', header:'plantTo', label: 'Plant To' },
-    { field: 'crushFrom', header:'crushFrom', label: 'Crush From' },
+    { field: 'code', header: 'code', label: 'Code' },
+    { field: 'name', header: 'name', label: 'Name' },
+    { field: 'plantFrom', header: 'plantFrom', label: 'Plant From' },
+    { field: 'plantTo', header: 'plantTo', label: 'Plant To' },
+    { field: 'crushFrom', header: 'crushFrom', label: 'Crush From' },
     { field: 'crushTo', header: 'crushTo', label: 'Crush To' },
-    { field: 'burnCaneRate',header:'burnCaneRate', label: 'Burn Cane Rate' },
-    { field: 'caneRate', header:'caneRate', label: 'Cane Rate' },
-    { field: 'capacity', header:'capacity', label: 'Capacity' },
-    { field: 'isActive', header:'isActive', label: 'Is Active' },
+    { field: 'burnCaneRate', header: 'burnCaneRate', label: 'Burn Cane Rate' },
+    { field: 'caneRate', header: 'caneRate', label: 'Cane Rate' },
+    { field: 'capacity', header: 'capacity', label: 'Capacity' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
     { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
     { field: 'createdBy', header: 'createdBy  ', label: 'Created By' },
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy  ', label: 'Updated By' },
-    
-
   ];
 
   constructor(
@@ -85,14 +81,14 @@ export class SeasonComponent implements OnInit {
   initSeasons() {
     this.appMasterService.Getseason().subscribe((resp) => {
       this.seasons = resp as unknown as SeasonViewDto[];
-      this.seasons.forEach(
-        season => {
-          season.plantFrom = new Date(season.plantFrom)
-          season.plantTo = new Date(season.plantTo)
-          season.crushFrom = new Date(season.crushFrom)
-          season.crushTo = new Date(season.crushTo)
-        }
-      );
+      // this.seasons.forEach(
+      //   season => {
+      //     season.plantFrom = new Date(season.plantFrom)
+      //     season.plantTo = new Date(season.plantTo)
+      //     season.crushFrom = new Date(season.crushFrom)
+      //     season.crushTo = new Date(season.crushTo)
+      //   }
+      // );
       this.existCurrentSeasonRecord =
         this.seasons.filter((sesaon) => sesaon.code == this.cSeasonCode).length == 1
     });
@@ -145,6 +141,7 @@ export class SeasonComponent implements OnInit {
       ])
     });
   }
+
   createItem(billCategory: LookupDetailDto): FormGroup {
     return this.formbuilder.group({
       seasonBillingRateId: [],
@@ -156,6 +153,7 @@ export class SeasonComponent implements OnInit {
       isActive: [true],
     });
   }
+
   createItemForEdit(billParam: SeasonBillingRateViewDto): FormGroup {
     return this.formbuilder.group({
       seasonBillingRateId: [billParam.billParameterId],
@@ -167,22 +165,28 @@ export class SeasonComponent implements OnInit {
       isActive: [billParam.isActive],
     });
   }
+
   RateControls(formgroupname: string): FormArray {
     return this.fbseasons.get(formgroupname) as FormArray;
   }
+
   addItem(formArrayName: string, billCategory: LookupDetailDto) {
     const formArray = this.fbseasons.get(formArrayName) as FormArray;
     formArray.push(this.createItem(billCategory));
   }
+
   ratesControls(formArrayName: string): FormArray {
     return this.fbseasons.get(formArrayName) as FormArray;
   }
+
   formArrayControls(formArrayName: string, i: number, formControlName: string) {
     return this.ratesControls(formArrayName).controls[i].get(formControlName);
   }
+
   get FormControls() {
     return this.fbseasons.controls;
   }
+
   editseason(season: SeasonViewDto) {
     this.activeIndex = 0;
     this.seasonForm();
@@ -216,6 +220,7 @@ export class SeasonComponent implements OnInit {
       });
     });
   }
+
   addSeason() {
     this.submitLabel = 'Add Season';
     this.addFlag = true;
@@ -237,6 +242,7 @@ export class SeasonComponent implements OnInit {
     //   });
     // }
   }
+
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
@@ -253,21 +259,21 @@ export class SeasonComponent implements OnInit {
   }
 
   isUniqueSeasonCode() {
-    const existingPlantTypeCodes = this.seasons.filter(season => 
-      season.code === this.fbseasons.value.code && 
+    const existingPlantTypeCodes = this.seasons.filter(season =>
+      season.code === this.fbseasons.value.code &&
       season.seasonId !== this.fbseasons.value.seasonId
     )
-    return existingPlantTypeCodes.length > 0; 
+    return existingPlantTypeCodes.length > 0;
   }
-  
+
   isUniqueSeasonName() {
     const existingPlantTypeNames = this.seasons.filter(season =>
-      season.name === this.fbseasons.value.name && 
+      season.name === this.fbseasons.value.name &&
       season.seasonId !== this.fbseasons.value.plantTypeId
     )
     return existingPlantTypeNames.length > 0;
   }
-  
+
   onSubmit() {
     if (this.fbseasons.valid) {
       if (this.addFlag) {
@@ -277,19 +283,19 @@ export class SeasonComponent implements OnInit {
           );
         } else if (this.isUniqueSeasonName()) {
           this.alertMessage.displayErrorMessage(
-            `Season Name :"${this.fbseasons.value.name}" Already Exists.` 
+            `Season Name :"${this.fbseasons.value.name}" Already Exists.`
           );
         } else {
           this.save();
         }
       } else {
-        this.save(); 
+        this.save();
       }
     } else {
-      this.fbseasons.markAllAsTouched(); 
+      this.fbseasons.markAllAsTouched();
     }
   }
-  
+
   save() {
     if (this.fbseasons.valid && !this.invalidSeasonCode) {
       this.fbseasons.value.plantFrom = FORMAT_DATE(this.fbseasons.value.plantFrom);
@@ -326,12 +332,15 @@ export class SeasonComponent implements OnInit {
       this.fbseasons.controls['code'].markAllAsTouched();
     }
   }
+
   onClose() {
     this.fbseasons.reset();
   }
+
   ngOnDestroy() {
     this.seasons = [];
     this.billParams = [];
     this.billCategories = [];
   }
+
 }
