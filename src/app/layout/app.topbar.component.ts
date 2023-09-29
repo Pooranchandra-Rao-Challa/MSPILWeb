@@ -98,56 +98,18 @@ export class AppTopBarComponent {
     this.initAppConstants();
     this.initLookups();
     this.items = [
-      { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['changepassword'] },
+      { label: 'Settings', icon: 'pi pi-external-link', routerLink: ['settings'] },
       { label: 'App Config', icon: 'pi pi-external-link', command: (e) => { this.initAppConstants(); this.app_config_dialog = true; this.submitLabel = 'Update Application Constants'; } },
       { label: 'Lookup', icon: 'pi pi-external-link', command: (e) => { this.lookup_dialog = true; this.submitLabel = 'Update lookups'; } },
       {
-        label: 'Logout', icon: 'pi pi-sign-out', command: (e) => {
+        label: 'Logout', icon: 'pi pi-sign-out', command: (e) => { 
           this.jwtService.Logout();
         }
       },
 
     ];
-    this.setting_items = [
-      { label: 'Green (Default)', icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-indigo', 'light'), },
-      { label: 'Dark Green',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-indigo', 'dark'), },
-      { label: 'Light Blue',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-blue', 'light'), },
-      { label: 'Dark Blue',       icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-blue', 'dark'), },
-      { label: 'Light Purple',    icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-purple', 'light'), },
-      { label: 'Dark Purple',     icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-purple', 'dark'), },
-      { label: 'Light Teal',      icon: 'pi pi-external-link', command: () => this.changeTheme('lara-light-teal', 'light'), },
-      { label: 'Dark Teal',       icon: 'pi pi-external-link', command: () => this.changeTheme('lara-dark-teal', 'dark'), },
-    ];
+    
   }
-
-  changeTheme(theme: string, colorScheme: string) {
-    const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
-    const newHref = themeLink.getAttribute('href')!.replace(this.layoutService.config.theme, theme);
-    this.layoutService.config.colorScheme
-    this.replaceThemeLink(newHref, () => {
-        this.layoutService.config.theme = theme;
-        this.layoutService.config.colorScheme = colorScheme;
-        this.layoutService.onConfigUpdate();
-    });
-  }
-
-  replaceThemeLink(href: string, onComplete: Function) {
-      const id = 'theme-css';
-      const themeLink = <HTMLLinkElement>document.getElementById('theme-css');
-      const cloneLinkElement = <HTMLLinkElement>themeLink.cloneNode(true);
-
-      cloneLinkElement.setAttribute('href', href);
-      cloneLinkElement.setAttribute('id', id + '-clone');
-
-      themeLink.parentNode!.insertBefore(cloneLinkElement, themeLink.nextSibling);
-
-      cloneLinkElement.addEventListener('load', () => {
-          themeLink.remove();
-          cloneLinkElement.setAttribute('id', id);
-          onComplete();
-      });
-  }
-
 
   getLookupDetailsByLookupId(lookupId:number) {
     this.appMasterservice.GetLookupDetailsforMenu(lookupId).subscribe((resp)=>{
@@ -160,8 +122,6 @@ export class AppTopBarComponent {
       this.lookups = resp as unknown as LookupViewDto[];
     });
   }
-
-
 
   initAppConstants() {
     this.commomService.GetApplicationConstant().subscribe((resp) => {

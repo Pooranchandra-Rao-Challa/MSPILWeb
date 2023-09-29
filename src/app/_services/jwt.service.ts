@@ -1,3 +1,4 @@
+import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import jwt_decode from 'jwt-decode';
@@ -5,13 +6,16 @@ import { ResponseModel } from "../_models/account/account.model";
 
 const TOKEN_KEY = 'auth-token';
 const REFRESHTOKEN_KEY = 'auth-refreshtoken';
+const THEME_KEY = 'theme-name'
 @Injectable()
 export class JWTService {
   /**
    *
    */
+  themeName: string = "lara-light-indigo";
   constructor(
-    private router: Router) {
+    private router: Router,
+    private themeNotifier: ThemeNotifier) {
   }
   private get DecodedJWT(): any {
     if (this.JWTToken != "")
@@ -27,6 +31,7 @@ export class JWTService {
   }
 
   public Logout() {
+    this.themeNotifier.notifyChangeTheme('lara-light-indigo');
     localStorage.removeItem("respModel");
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESHTOKEN_KEY);
@@ -37,6 +42,10 @@ export class JWTService {
   public SaveToken(tokens: ResponseModel) {
     localStorage.removeItem(TOKEN_KEY)
     localStorage.setItem(TOKEN_KEY, tokens.accessToken || "")
+    if(this.DecodedJWT.ThemeName)
+      localStorage.setItem(THEME_KEY, this.DecodedJWT.ThemeName || "")
+    else
+      localStorage.setItem(THEME_KEY, this.themeName)
     this.saveRefreshToken(tokens);
   }
 
@@ -85,12 +94,13 @@ export class JWTService {
   }
 
   public get ThemeName(): string {
-    const jwt = this.DecodedJWT;
-    return jwt.ThemeName;
+    console.log(this.themeName);
+    console.log(this.DecodedJWT.ThemeName);
+    return localStorage.getItem(THEME_KEY) || "";
   }
-
-  public get ColorScheme(): string{
-    const jwt = this.DecodedJWT;
-    return jwt.ColorScheme;
+  public set ThemeName(themeName: string){
+    console.log(themeName);
+    localStorage.setItem(THEME_KEY, themeName || "")
+    this.themeName = themeName;
   }
 }

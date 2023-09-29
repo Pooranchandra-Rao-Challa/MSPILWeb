@@ -30,9 +30,17 @@ export class AlertMessage {
  * ---------------------------------------------------------------------------
  * Modules;
  * ---------------------------------------------------------------------------
+ * Settings : SE
  * Security : S
  * Masters : M
  * Monitoring: MO
+ * ---------------------------------------------------------------------------
+ * Settings
+ *
+ * Change Password : CP
+ * Security Questions : SQ
+ * Config Theme : CT
+ *
  * ---------------------------------------------------------------------------
  * Masters; Geo Masters : GM, Bill Masters : BM, Application Masters : AM
  * ---------------------------------------------------------------------------
@@ -106,6 +114,10 @@ export class AlertMessage {
  */
 
 export const ALERT_CODES: { [key: string]: string } = {
+
+  //users
+  'SUSR001': 'Users Added Successfully',
+  'SUSR002': 'Users Updated Successfully',
 
   // Bill Message
   'SMBMB001': 'Bill Added Successfully',
@@ -287,5 +299,9 @@ export const ALERT_CODES: { [key: string]: string } = {
 
   // Config theme
   'SSECT001': 'Theme Is Updated Successfully',
+
+  // Security Questions
+  'SSESQ001' : 'Security Questions Is Added Successfully',
+  'SSESQ002' : 'Security Questions Is Updated Successfully',
 
 }

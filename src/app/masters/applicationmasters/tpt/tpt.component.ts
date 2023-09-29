@@ -210,7 +210,7 @@ export class TptComponent implements OnInit {
     return this.formbuilder.group({
       id: tptDetail.tptdetailId,
       tptId: tptDetail.tptId,
-      vehicleNo: new FormControl(tptDetail.vehicleNo == null ? '' : tptDetail.vehicleNo, [Validators.pattern(RG_VEHICLE)]),
+      vehicleNo: new FormControl(tptDetail.vehicleNo == null ? '' : tptDetail.vehicleNo, [Validators.required,Validators.pattern(RG_VEHICLE)]),
       vehicleTypeId: [tptDetail.vehicleTypeId, (Validators.required)],
       insuranceNo: [tptDetail.insuranceNo, (Validators.pattern(RG_ALPHA_NUMERIC))],
       receivableAmt: [tptDetail.receivableAmt],

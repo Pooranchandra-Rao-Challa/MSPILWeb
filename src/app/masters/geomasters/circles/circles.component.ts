@@ -29,8 +29,10 @@ import {
   RG_NUMERIC_ONLY,
   RG_PHONE_NO,
 } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+
+
 
 @Component({
   selector: 'app-circle',
@@ -57,6 +59,21 @@ export class CirclesComponent implements OnInit {
     public jwtService: JWTService,
     private AlertMessage: AlertMessage,
   ) { }
+
+  headers: ITableHeader[] = [
+    { field: 'divisionName', header: 'divisionName', label: 'Division' },
+    { field: 'circleName', header: 'circleName', label: 'Circle' },
+    { field: 'circleCode', header: 'circleCode', label: 'Code' },
+    { field: 'inchargeName', header: 'inchargeName', label: 'Incharge Name' },
+    { field: 'inchargePhoneNo', header: 'inchargePhoneNo', label: 'InchargePhone No' },
+    { field: 'listingOrder', header: 'listingOrder', label: 'Order' },
+    { field: 'address', header: 'address', label: 'Address' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   addCircle() {
     this.fbcircle.controls['isActive'].setValue(true);
@@ -122,22 +139,22 @@ export class CirclesComponent implements OnInit {
     else return this.geoMasterService.UpdateCircle(this.fbcircle.value);
   }
 
-isUniqueCircleCode() {
-    const existingCircleCodes = this.circles.filter(Circle => 
-      Circle.circleCode === this.fbcircle.value.code && 
+  isUniqueCircleCode() {
+    const existingCircleCodes = this.circles.filter(Circle =>
+      Circle.circleCode === this.fbcircle.value.code &&
       Circle.circleId !== this.fbcircle.value.circleId
     )
-    return existingCircleCodes.length > 0; 
+    return existingCircleCodes.length > 0;
   }
-  
+
   isUniqueCircleName() {
     const existingCircleNames = this.circles.filter(circle =>
-      circle.circleName === this.fbcircle.value.name && 
+      circle.circleName === this.fbcircle.value.name &&
       circle.circleId !== this.fbcircle.value.circleId
     )
     return existingCircleNames.length > 0;
   }
-  
+
   onSubmit() {
     if (this.fbcircle.valid) {
       if (this.addFlag) {
@@ -147,16 +164,16 @@ isUniqueCircleCode() {
           );
         } else if (this.isUniqueCircleName()) {
           this.AlertMessage.displayErrorMessage(
-            `Circle Name :"${this.fbcircle.value.name}" Already Exists.` 
+            `Circle Name :"${this.fbcircle.value.name}" Already Exists.`
           );
         } else {
           this.save();
         }
       } else {
-        this.save(); 
+        this.save();
       }
     } else {
-      this.fbcircle.markAllAsTouched(); 
+      this.fbcircle.markAllAsTouched();
     }
   }
   save() {

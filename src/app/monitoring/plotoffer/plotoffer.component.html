@@ -8,7 +8,7 @@
         <h4>Plot Offers</h4>
       </ng-template>
       <ng-template pTemplate="right" *ngIf="!forapproval">
-        <button pButton pRipple label="New Plot Offer" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Plot Offer" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addPlotOffer()" *ngIf="permissions?.CanCreatePlotOffer"></button>
       </ng-template>
     </p-toolbar>
@@ -221,7 +221,7 @@
                   <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Plot Village:</label>
                     <p-dropdown optionLabel="villageName" [options]="villages" optionValue="villageId" [filter]="true"
-                      filterBy="villageName,villageCode" formControlName="plotVillageId" placeholder="Select Village"
+                      filterBy="villageName,villageCode" formControlName="plotVillageId" placeholder="Select Plot Village"
                       (onChange)="onSelectedVillage($event.value)" [virtualScroll]="true" [virtualScrollItemSize]="38"
                       appendTo="body"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plotVillageId'].touched && FormControls['plotVillageId'].errors }">
@@ -275,15 +275,19 @@
                       mode="decimal" [maxlength]="10" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['expectedArea'].touched && FormControls['expectedArea'].errors }">
                     </p-inputNumber>
-                    <div class="text-right">
-                      <small>{{ expectedArea?.value?.toString()?.length ? expectedArea?.value?.toString()?.length : 0
-                        }}/9</small>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%">
+                        <span *ngIf="FormControls['expectedArea'].touched && FormControls['expectedArea'].invalid">
+                          <div class="ng-invalid ng-touched p-error"
+                            *ngIf="FormControls['expectedArea'].errors?.['required']">
+                            Please Enter Expected Area.</div>
+                        </span>
+                      </div>
+                      <div class="align-right w-40" style="width:30%; text-align:right;">
+                        <small>{{ expectedArea?.value?.toString()?.length ? expectedArea?.value?.toString()?.length :
+                          0}}/9</small>
+                      </div>
                     </div>
-                    <span *ngIf="FormControls['expectedArea'].touched && FormControls['expectedArea'].invalid">
-                      <div class="ng-invalid ng-touched p-error"
-                        *ngIf="FormControls['expectedArea'].errors?.['required']">
-                        Please Enter Expected Area.</div>
-                    </span>
                   </div>
                   <div class="field col-12  lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Plant Type:</label>
@@ -342,7 +346,7 @@
     </div>
     <ng-template pTemplate="footer">
       <div class="col-6" style="float:right">
-        <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-success"
+        <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
           [disabled]="fbPlotOffer.invalid" (click)="onSubmit()"></button>
       </div>
     </ng-template>
@@ -399,9 +403,9 @@
     </ng-template>
     <ng-template pTemplate="footer">
       <div class="col-12" style="float:right">
-        <button pButton pRipple type="submit" label="Approval" class="p-button-raised p-button-success"
+        <button pButton pRipple type="submit" label="Approval" class="p-button-raised p-button-primary"
           (click)="onApprovalSubmit('approve')" [disabled]="!permissions?.CanApproveOrDeny"></button>
-        <button pButton pRipple type="submit" label="Denied" class="p-button-raised p-button-success"
+        <button pButton pRipple type="submit" label="Denied" class="p-button-raised p-button-primary"
           (click)="onApprovalSubmit('denied')" [disabled]="!permissions?.CanApproveOrDeny"></button>
       </div>
     </ng-template>

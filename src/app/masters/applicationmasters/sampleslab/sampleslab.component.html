@@ -6,7 +6,7 @@
       [breakpoints]="{'960px': '40%', '640px': '80%'}" [style]="{width: '40%'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbsampleslabs" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbsampleslabs" (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">

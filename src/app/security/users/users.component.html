@@ -1,146 +1,82 @@
 <div class="col-12">
   <div class="card">
+    <p-toast key="tst"></p-toast>
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">
         <h4>Users</h4>
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New User" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="showUser({})"></button>
+          (click)="showUser({})" *ngIf="permissions?.CanCreateUser"></button>
       </ng-template>
     </p-toolbar>
 
-    <p-table #dt1 [value]="users" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
+    <p-table #dtUsers [value]="users" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
-      [globalFilterFields]="['userId','userName','firstName','email']" [autoLayout]="true" responsiveLayout="scroll"
+      [globalFilterFields]="globalFilters" [autoLayout]="true" responsiveLayout="scroll"
       [rowsPerPageOptions]="[10,25,50]" [tableStyle]="{ width: 'max-content'}">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-column sm:flex-row">
           <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
-            (click)="clear(dt1)"></button>
+            (click)="clear(dtUsers)"></button>
           <span class="p-input-icon-left mb-2">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword"
+            <input pInputText type="text" #filter (input)="onGlobalFilter(dtUsers, $event)" placeholder="Search Keyword"
               class="w-full" />
           </span>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
-          <th pSortableColumn="userId">User Id <p-columnFilter type="text" field="userId" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="userId"></p-sortIcon>
+          <th *ngIf="permissions?.CanUpdateUser"></th>
+          <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+            {{col?.label}}
+            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
-          <th pSortableColumn="userName">User Name <p-columnFilter type="text" field="userName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="userName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="firstName">First Name <p-columnFilter type="text" field="firstName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="firstName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="lastName">Last Name <p-columnFilter type="text" field="lastName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="fastName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="email">Email Id <p-columnFilter type="text" field="email" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="email"></p-sortIcon>
-          </th>
-          <th pSortableColumn="MobileNo">Mobile Number <p-columnFilter type="text" field="MobileNo" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="mobileNumber"></p-sortIcon>
-          </th>
-          <th pSortableColumn="roleName">Role <p-columnFilter type="text" field="roleName" display="menu"></p-columnFilter>
-            <p-sortIcon field="roleName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="imeiNo">IMEI No <p-columnFilter type="text" field="imeiNo" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="imeiNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="ipAddress">IP Address <p-columnFilter type="text" field="ipAddress" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="ipAddress"></p-sortIcon>
-          </th>
-          <th pSortableColumn="ipRestriction">IP Restriction <p-columnFilter type="text" field="ipRestriction"
-              display="menu"></p-columnFilter>
-            <p-sortIcon field="ipRestriction">
-            </p-sortIcon>
-          </th>
-          <th pSortableColumn="isAdminGate">Is AdminGate <p-columnFilter type="text" field="isAdminGate" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="isAdminGate">
-            </p-sortIcon>
-          </th>
-
-          <th pSortableColumn="isGross">Is Gross <p-columnFilter type="text" field="isGross" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="isGross"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isTare">Is Tare <p-columnFilter type="text" field="isTare" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="isTare"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isDumpYard">Is Dump Yard <p-columnFilter type="text" field="isDumpYard" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="isDumpYard"></p-sortIcon>
-          </th>
-          <th pSortableColumn="isActive">Is Active <p-columnFilter type="text" field="isActive" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="isActive"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">Created Date <p-columnFilter type="text" field="createdAt" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="createdAt">
-            </p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">Updated Date <p-columnFilter type="text" field="updatedAt" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr>
-          <td><button pButton pRipple icon="pi pi-pencil"
+          <td *ngIf="permissions?.CanUpdateUser"><button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component mr-2" (click)="showUser(user)"></button></td>
-          <td>{{user.userId}}</td>
-          <td>{{user.userName}}</td>
-          <td>{{user.firstName}}</td>
-          <td>{{user.lastName}}</td>
-          <td>{{user.email}}</td>
-          <td>{{user.mobileNumber}}</td>
-          <td>{{user.roleName}}</td>
-          <td>{{user.imeino}}</td>
-          <td>{{user.ipAddress}}</td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="user.ipRestriction" [binary]="true" [disabled]="true">
-            </p-checkbox>
+          <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
+            <span
+              *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'  && col?.field != 'isDumpYard'
+                  && col?.field != 'isTare'  && col?.field != 'isGross'  && col?.field != 'isAdminGate'  && col?.field != 'ipRestriction'">{{user[col.field]}}</span>
+            <span *ngIf="col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              {{user[col.field] | date: mediumDate}}
+            </span>
+            <span *ngIf="col?.field == 'isActive'">
+              <p-checkbox name="isActive" value="isActive" [binary]="true" [(ngModel)]="user[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
+            <span *ngIf="col?.field == 'isTare'">
+              <p-checkbox name="isTare" value="isTare" [binary]="true" [(ngModel)]="user[col.field]" [disabled]="true">
+              </p-checkbox>
+            </span>
+            <span *ngIf="col?.field == 'isDumpYard'">
+              <p-checkbox name="isDumpYard" value="isDumpYard" [binary]="true" [(ngModel)]="user[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
+            <span *ngIf="col?.field == 'isGross'">
+              <p-checkbox name="isGross" value="isGross" [binary]="true" [(ngModel)]="user[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
+            <span *ngIf="col?.field == 'isAdminGate'">
+              <p-checkbox name="isAdminGate" value="isAdminGate" [binary]="true" [(ngModel)]="user[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
+            <span *ngIf="col?.field == 'ipRestriction'">
+              <p-checkbox name="ipRestriction" value="ipRestriction" [binary]="true" [(ngModel)]="user[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
           </td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="user.isAdminGate" [binary]="true" [disabled]="true">
-            </p-checkbox>
-          </td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="user.isGross" [binary]="true" [disabled]="true">
-            </p-checkbox>
-          </td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="user.isTare" [binary]="true" [disabled]="true">
-            </p-checkbox>
-          </td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="user.isDumpYard" [binary]="true" [disabled]="true">
-            </p-checkbox>
-          </td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="user.isActive" [binary]="true" [disabled]="true">
-            </p-checkbox>
-          </td>
-          <td>{{user.createdAt | date: mediumDate}}</td>
-          <td>{{user.updatedAt | date: mediumDate}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -150,71 +86,117 @@
       </ng-template>
     </p-table>
 
-    <p-dialog header="User" [(visible)]="dialog" [modal]="true" showEffect="fade" 
-    [breakpoints]="{'960px': '50%', '640px': '80%'}"  [style]="{width: '50%'}" (onHide)="userForm.reset()">
+    <p-dialog header="User" [(visible)]="dialog" [modal]="true" showEffect="fade"
+      [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" (onHide)="userForm.reset()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="tpt_form">
-            <p-tabView orientation="left" class="users-container tpt_form">
+          <form [formGroup]="userForm" autocomplete="off">
+            <p-tabView orientation="left">
               <p-tabPanel header="User Info" class="line-height-3 m-0 col-12 ">
                 <div class="grid">
                   <div class="col-12">
                     <p-fieldset legend="User Info" [toggleable]="true" class="line-height-3 m-0 mb-5"
-                    [transitionOptions]="'500ms'">
+                      [transitionOptions]="'500ms'">
                       <div class="p-fluid p-formgrid grid">
                         <div class="field col-12 md:col-6">
                           <label>User Name:<sup class="p-error">*</sup></label>&nbsp;
                           <input pInputText id="username" type="text" formControlName="userName"
-                            placeholder="Enter User Name"
+                            placeholder="Enter User Name" #username alphaNumeric autocomplete="off"
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['userName'].touched && userFormControls['userName'].errors }" />
-                          <span *ngIf="userFormControls['userName'].touched && userFormControls['userName'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['userName'].errors?.['required']">
-                              Please Enter User Name.</div>
-                          </span>
+                          <div class="flex">
+                            <div class="align-left w-60" style="width:70%">
+                              <span
+                                *ngIf="userFormControls['userName'].touched && userFormControls['userName'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['userName'].errors?.['required']">
+                                  Please Enter User Name.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['userName'].errors?.['minlength']">
+                                  User Name Min Length Is 2.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['userName'].errors?.['maxlength']">
+                                  User Name Max Length Is 50.</div>
+                              </span>
+                            </div>
+                            <div class="align-right w-40" style="width:30%; text-align:right;">
+                              <small>{{username.value.length}}/50</small>
+                            </div>
+                          </div>
                         </div>
                         <div class="field col-12 md:col-6">
-                          <label>Password:<sup class="p-error">*</sup></label>&nbsp;
-                          <input pInputText id="password" type="password" formControlName="password"
-                            placeholder="Enter Password"
-                            [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
-                          <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['password'].errors?.['required']">
-                              Please Enter Password.</div>
+                          <span *ngIf="!this.user.userId">
+                            <label>Password:<sup class="p-error">*</sup></label>&nbsp;
+                            <input pInputText id="password" type="password" formControlName="password" autocomplete="new-password"
+                              placeholder="Enter Password"
+                              [ngClass]="{ 'is-invalid ng-dirty': userFormControls['password'].touched && userFormControls['password'].errors }" />
+                            <span *ngIf="userFormControls['password'].touched && userFormControls['password'].invalid">
+                              <div class="ng-invalid ng-touched p-error"
+                                *ngIf="userFormControls['password'].errors?.['required']">
+                                Please Enter Password.</div>
+
+                            </span>
                           </span>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>First Name:<sup class="p-error">*</sup></label>&nbsp;
                           <input pInputText id="firstname" type="text" formControlName="firstName"
-                            placeholder="Enter First Name"
+                            placeholder="Enter First Name" #firstName alphaOnly
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['firstName'].touched && userFormControls['firstName'].errors }" />
-                          <span *ngIf="userFormControls['firstName'].touched && userFormControls['firstName'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['firstName'].errors?.['required']">
-                              Please Enter First Name.</div>
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['firstName'].errors?.['pattern']">
-                              First Name Should Contains Only Letters.</div>
-                          </span>
+                          <div class="flex">
+                            <div class="align-left w-60" style="width:70%">
+                              <span
+                                *ngIf="userFormControls['firstName'].touched && userFormControls['firstName'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['firstName'].errors?.['required']">
+                                  Please Enter First Name.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['firstName'].errors?.['minlength']">
+                                  First Name Min Length Is 2.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['firstName'].errors?.['maxlength']">
+                                  First Name Max Length Is 50.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['firstName'].errors?.['pattern']">
+                                  First Name Should Contains Only Letters.</div>
+                              </span>
+                            </div>
+                            <div class="align-right w-40" style="width:30%; text-align:right;">
+                              <small>{{firstName.value.length}}/50</small>
+                            </div>
+                          </div>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>Last Name:<sup class="p-error">*</sup></label>&nbsp;
                           <input pInputText id="lastname" type="text" formControlName="lastName"
-                            placeholder="Enter Last Name"
+                            placeholder="Enter Last Name" #lastName alphaOnly
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['lastName'].touched && userFormControls['lastName'].errors }" />
-                          <span *ngIf="userFormControls['lastName'].touched && userFormControls['lastName'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['lastName'].errors?.['required']">
-                              Please Enter Last Name.</div>
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['lastName'].errors?.['pattern']">
-                              Last Name Should Contains Only Letters.</div>
-                          </span>
+                          <div class="flex">
+                            <div class="align-left w-60" style="width:70%">
+                              <span
+                                *ngIf="userFormControls['lastName'].touched && userFormControls['lastName'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['lastName'].errors?.['required']">
+                                  Please Enter Last Name.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['lastName'].errors?.['pattern']">
+                                  Last Name Should Contains Only Letters.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['lastName'].errors?.['minlength']">
+                                  Last Name Min Length Is 2.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['lastName'].errors?.['maxlength']">
+                                  Last Name Max Length Is 50.</div>
+                              </span>
+                            </div>
+                            <div class="align-right w-40" style="width:30%; text-align:right;">
+                              <small>{{lastName.value.length}}/50</small>
+                            </div>
+                          </div>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>Email Id:<sup class="p-error">*</sup></label>&nbsp;
-                          <input pInputText id="emailid" type="text" formControlName="email" placeholder="Enter Email Id"
+                          <input pInputText id="emailid" type="text" formControlName="email"
+                            placeholder="Enter Email Id"
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['email'].touched && userFormControls['email'].errors }" />
                           <span *ngIf="userFormControls['email'].touched && userFormControls['email'].invalid">
                             <div class="ng-invalid ng-touched p-error"
@@ -227,76 +209,110 @@
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>Mobile Number:<sup class="p-error">*</sup></label>&nbsp;
-                          <input pInputText id="mobileNumber" placeholder="Enter Mobile No" formControlName="mobileNumber"
-                            numericOnly [maxlength]="10"
+                          <input pInputText id="mobileNumber" placeholder="Enter Mobile No"
+                            formControlName="mobileNumber" numericOnly [maxlength]="10" #mobileNumber
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].errors }">
-                          <span
-                            *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['mobileNumber'].errors?.['required']">
-                              Please Enter Mobile No.</div>
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['mobileNumber'].errors?.['pattern']">
-                              First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
-                          </span>
+                          <div class="flex">
+                            <div class="align-left w-60" style="width:70%">
+                              <span
+                                *ngIf="userFormControls['mobileNumber'].touched && userFormControls['mobileNumber'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['mobileNumber'].errors?.['required']">
+                                  Please Enter Mobile No.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['mobileNumber'].errors?.['pattern']">
+                                  First Digit Should Be Greater Than 4 And Must Contains 10 Digits.</div>
+                              </span>
+                            </div>
+                            <div class="align-right w-40" style="width:30%; text-align:right;">
+                              <small>{{mobileNumber.value.length}}/10</small>
+                            </div>
+                          </div>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label>Role:<sup class="p-error">*</sup></label>&nbsp;
                           <p-dropdown [options]="roles" optionLabel="name" formControlName="roleId" optionValue="roleId"
-                            placeholder="Enter Role" [autoDisplayFirst]="false"
+                            placeholder="Select Role" [autoDisplayFirst]="false"
                             [ngClass]="{ 'is-invalid ng-dirty': userFormControls['roleId'].touched && userFormControls['roleId'].errors }">
                           </p-dropdown>
                           <span *ngIf="userFormControls['roleId'].touched && userFormControls['roleId'].invalid">
                             <div class="ng-invalid ng-touched p-error"
                               *ngIf="userFormControls['roleId'].errors?.['required']">
-                              Please Enter Role.</div>
+                              Please Select Role.</div>
                           </span>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label htmlFor="ipaddress">IP Address:</label>
-                          <input pInputText id="ipaddress" type="text" formControlName="ipaddress"
-                            placeholder="Enter IP Address" />
+                          <input pInputText id="ipaddress" type="text" #ipAddress formControlName="ipaddress"
+                            placeholder="Enter IP Address" maxlength="15" />
+                          <div class="flex">
+                            <div class="align-left w-60" style="width:70%">
+                              <span
+                                *ngIf="userFormControls['ipaddress'].touched && userFormControls['ipaddress'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['ipaddress'].errors?.['pattern']"> Invalid IP Address
+                                  Eg:00.00.00.00 or 000.000.000.000
+                                </div>
+                              </span>
+                            </div>
+                            <div class="align-right w-40" style="width:30%; text-align:right;">
+                              <small>{{ipAddress.value.length}}/15</small>
+                            </div>
+                          </div>
                         </div>
                         <div class="field col-12 md:col-6">
                           <label htmlFor="imeino">IMEI No:</label>
-                          <input pInputText id="imeino" type="text" formControlName="imeino"
-                            placeholder="Enter IMEI No" />
-                          <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
-                            <div class="ng-invalid ng-touched p-error"
-                              *ngIf="userFormControls['imeino'].errors?.['pattern']">
-                              IMEI No Should Contains Only Digits.</div>
-                          </span>
+                          <input pInputText id="imeino" #imeino alphaNumeric type="text" formControlName="imeino"
+                            placeholder="Enter IMEI No" minlength="16" maxlength="16" />
+                          <div class="flex">
+                            <div class="align-left w-60" style="width:70%">
+                              <span *ngIf="userFormControls['imeino'].touched && userFormControls['imeino'].invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['imeino'].errors?.['pattern']">
+                                  IMEI No Should Contains Alphabets And Digits. </div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['imeino'].errors?.['minlength']">
+                                  IMEI No Min Length Is 15.</div>
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="userFormControls['imeino'].errors?.['maxlength']">
+                                  IMEI No Max Length Is 15.</div>
+                              </span>
+                            </div>
+                            <div class="align-right w-40" style="width:30%; text-align:right;">
+                              <small>{{imeino.value.length}}/16</small>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </p-fieldset><br/>
-                    
+                    </p-fieldset><br />
+
 
                     <p-fieldset legend="User Rights" [toggleable]="true" class="line-height-3 m-0 pt-5 mt-3"
-                    [transitionOptions]="'500ms'">
+                      [transitionOptions]="'500ms'">
                       <div class="grid md:flex">
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">IP Restriction:<sup class="p-error">*</sup></label>
+                          <label class="col-12">IP Restriction:</label>
                           <p-inputSwitch [trueValue]="true" [falseValue]="false" placeholder="IP Ristriction"
                             formControlName="iprestriction" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is AdminGate:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is AdminGate:</label>
                           <p-inputSwitch formControlName="isAdminGate" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is Gross:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is Gross:</label>
                           <p-inputSwitch formControlName="isGross" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is Tare:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is Tare:</label>
                           <p-inputSwitch formControlName="isTare" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is DumpYard:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is DumpYard:</label>
                           <p-inputSwitch formControlName="isDumpYard" class="col-12"></p-inputSwitch>
                         </div>
                         <div class="field col-12 md:col-6 sm:col-6 xl:col-3">
-                          <label class="col-12">Is Active:<sup class="p-error">*</sup></label>
+                          <label class="col-12">Is Active:</label>
                           <p-inputSwitch formControlName="isActive" class="col-12"></p-inputSwitch>
                         </div>
                       </div>
@@ -324,7 +340,7 @@
       <ng-template pTemplate="footer">
         <div class="col-6" style="float:right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
-            (click)="onSubmit()"></button>
+            (click)="onSubmit()" [disabled]="userForm.invalid"></button>
         </div>
       </ng-template>
     </p-dialog>

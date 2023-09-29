@@ -4,15 +4,13 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs/internal/Observable';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { LookupDetailViewDto, LookUpHeaderDto, LookupViewDto } from 'src/app/_models/applicationmaster';
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MAX_LENGTH_2, MAX_LENGTH_20, MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
-
-
-
 @Component({
   selector: 'app-lookup',
   templateUrl: './lookup.component.html',
@@ -46,6 +44,7 @@ export class LookupComponent implements OnInit {
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
 
+
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
@@ -64,7 +63,7 @@ export class LookupComponent implements OnInit {
   }
   addLookupDialog() {
     this.addLookupDetails();
-    this.fblookup.controls['name'].enable();
+     this.fblookup.controls['name'].enable();
     this.fblookup.controls['isActive'].setValue(true);
     this.submitLabel = "Add Lookup";
     this.addFlag = true;
@@ -83,7 +82,7 @@ export class LookupComponent implements OnInit {
       code: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       isActive: [null],
-      lookUpDetails: this.formbuilder.array([]),
+      lookUpDetails: this.formbuilder.array([],FormArrayValidationForDuplication()),
     });
   }
 
@@ -110,7 +109,7 @@ export class LookupComponent implements OnInit {
   formArrayControls(i: number, formControlName: string) {
     return this.falookupDetails().controls[i].get(formControlName);
   }
-  //  post lookup 
+  //  post lookup
   savelookup(): Observable<HttpEvent<LookUpHeaderDto>> {
     if (this.addFlag) return this.appMasterService.Createlookup(this.fblookup.value)
     else return this.appMasterService.Updatelookup(this.fblookup.value)
@@ -195,7 +194,8 @@ export class LookupComponent implements OnInit {
     this.lookup.lookupDetailId = lookup.lookupDetailId;
     this.lookup.code = lookup.code;
     this.lookup.name = lookup.name;
-    this.fblookup.controls['name'].disable();
+    // this.fblookup.controls['name'].setValue(lookup.name);
+    // this.fblookup.controls['name'].disable();
     this.lookup.isActive = lookup.isActive;
     this.lookup.lookUpDetails = this.lookupDetails ? [] : this.lookupDetails;
     this.fblookup.patchValue(this.lookup);

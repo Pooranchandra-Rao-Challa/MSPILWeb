@@ -6,7 +6,7 @@
       [modal]="true" [style]="{width: '40%'}" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbshifts" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbshifts"(ngSubmit)="onSubmit()"autocomplete="off">
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
@@ -20,7 +20,7 @@
                         <div class="align-left w-60" style="width:70%">
                     <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
-                        Please Enter Code.</div>
+                        Please Enter Shift Code.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['minlength']">
                         Code Min Length Is 2 .</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['maxlength']">
@@ -43,7 +43,7 @@
                       <div class="align-left w-60" style="width:70%">
                     <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                        Please Enter Name.</div>
+                        Please Enter Shift Name.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['minlength']">
                         Name Min Characters Is 2.</div>
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
@@ -95,7 +95,7 @@
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="col-5" style="float:right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
+          <button pButton pRipple type="text" label="{{submitLabel}}" class="p-button-raised p-button-primary"
             [disabled]="fbshifts.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>

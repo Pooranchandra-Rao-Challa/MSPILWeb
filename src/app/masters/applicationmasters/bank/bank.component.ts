@@ -4,6 +4,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { FormArrayValidationForDuplication, } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import { BankDto, BankViewDto, BranchDto, BranchViewDto } from 'src/app/_models/applicationmaster';
 import { ITableHeader, MaxLength } from 'src/app/_models/common';
@@ -45,7 +46,6 @@ export class BankComponent implements OnInit {
     { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
     { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
   ];
-
   constructor(private formbuilder: FormBuilder,
     private appMasterService: AppMasterService,
     private alertMessage: AlertMessage,
@@ -54,42 +54,7 @@ export class BankComponent implements OnInit {
   get FormControls() {
     return this.fbbank.controls;
   }
-
-  public uniqueValidator(fromArray: FormArray) {
-    const duplicateControls: AbstractControl<any, any>[] = [];
-    const uniqueControls: AbstractControl<any, any>[] = [];
-    fromArray.controls.forEach(control => {
-      const count = fromArray.controls.filter(
-        x => x.get("name")!.value.toLowerCase().replace(/\s/g, '')
-          === control.get("name")!.value.toLowerCase().replace(/\s/g, '')
-      ).length;
-      if (count > 1) {
-        duplicateControls.push(control);
-      } else {
-        uniqueControls.push(control);
-      }
-    });
-
-    duplicateControls.forEach(duplicateControl => {
-      duplicateControl.get("name")!.setErrors(
-        Object.assign({}, duplicateControl.get("name")!.errors, {
-          notUnique: true
-        })
-      );
-    });
-
-    uniqueControls.forEach((control: any) => {
-      let errors = control.get("name").errors;
-      if (errors) {
-        delete errors.notUnique;
-        errors = Object.keys(control.get("name").errors).length ? control.get("name").errors : null;
-      }
-      control.get("name").setErrors(errors);
-    });
-    return null;
-  }
-
-
+ 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
@@ -110,41 +75,10 @@ export class BankComponent implements OnInit {
       name: new FormControl('', [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       abbr: [null],
       isActive: [null],
-      branches: this.formbuilder.array([], this.uniqueBranchValidator()),
-    });
-    
+      branches: this.formbuilder.array([],FormArrayValidationForDuplication()),
+    });   
   }
-  uniqueBranchValidator(): Validators {
-    return (formArray: FormArray): ValidationErrors | null => {
-      const branches: BranchViewDto[] = formArray.value;
-      const duplicateCodes = branches.filter((branch, i, arr) =>
-        arr.findIndex(t => t.code === branch.code) !== i
-      );
-      const duplicateNames = branches.filter((branch, i, arr) =>
-        arr.findIndex(t => t.name === branch.name) !== i
-      );
-      
-      if (duplicateCodes.length || duplicateNames.length) {
-        formArray.controls.forEach(control => {
-          if (duplicateCodes.some(branch => branch.code === control.get('code')?.value)) {
-            control.get('code')?.setErrors({ notUniqueCode: true });
-          } else {
-            control.get('code')?.setErrors(null);
-          }
-  
-          if (duplicateNames.some(branch => branch.name === control.get('name')?.value)) {
-            control.get('name')?.setErrors({ notUniqueName: true });
-          } else {
-            control.get('name')?.setErrors(null);
-          }
-        });
-  
-        return { branchesNotUnique: true };
-      }
-  
-      return null;
-    };
-  }
+
   addBranches() {
     this.ShowbranchDetails = true;
     this.fabranch = this.fbbank.get("branches") as FormArray
@@ -176,7 +110,6 @@ export class BankComponent implements OnInit {
       isActive: [branchDetail.isActive],
     })
   }
-
   formArrayControls(i: number, formControlName: string) {
     return this.fabranchDetails().controls[i].get(formControlName);
   }
@@ -202,7 +135,6 @@ export class BankComponent implements OnInit {
     )
     return existingBankCodes.length > 0;
   }
-
   isUniqueBankName() {
     const existingBankNames = this.banks.filter(bank =>
       bank.name === this.fbbank.value.name &&
@@ -233,8 +165,6 @@ export class BankComponent implements OnInit {
       this.fbbank.markAllAsTouched();
     }
   }
-
-
   save() {
     if (this.fbbank.valid) {
       console.log(this.fbbank.value);

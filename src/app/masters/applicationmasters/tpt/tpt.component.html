@@ -71,7 +71,7 @@
       [breakpoints]="{'960px': '50%', '640px': '80%'}" [style]="{width: '50%'}" (onHide)="onClose()"
       [maximizable]="true">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbTpt" (ngSubmit)="onSubmit()" class="tpt_form">
+        <form [formGroup]="fbTpt" (ngSubmit)="onSubmit()" class="tpt_form" autocomplete="off">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -260,7 +260,7 @@
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
                       <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
                         <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
-                          Invalid Pan Number, Eg: ABCDE01234X</div>
+                          Invalid Pan Number,Eg: XXXXX0000X</div>
                       </span>
                     </div>
                     <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
@@ -455,7 +455,7 @@
                         styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm">
                         <ng-template pTemplate="header">
                           <tr>
-                            <th>Vehicle No</th>
+                            <th>Vehicle No<sup class="p-error">*</sup></th>
                             <th>Vehicle Type <sup class="p-error">*</sup></th>
                             <th>Insurance No</th>
                             <th>Receivable Amount</th>
@@ -473,6 +473,9 @@
                             formArrayControls(tptDetailIndex, 'vehicleNo')?.errors }">
                               <span
                                 *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.touched && formArrayControls(tptDetailIndex, 'vehicleNo')?.invalid">
+                                <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.errors?.['required']">
+                                  Please Enter Vehicle No.</div>
                                 <div class="ng-invalid ng-touched p-error"
                                   *ngIf="formArrayControls(tptDetailIndex, 'vehicleNo')?.errors?.['pattern']">
                                   Invalid Vehicle Number, Eg: XY00-XY-0000 / XY00 XY 0000.</div>

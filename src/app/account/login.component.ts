@@ -1,15 +1,13 @@
-import { ThemeDto } from './../_models/security';
-import { Subject, map } from 'rxjs';
+import { ThemeDto } from 'src/app/_models/security';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LayoutService } from '../layout/service/app.layout.service';
-import { LoginModel } from '../_models/account/account.model';
-import { AccountService, LogInSuccessModel } from '../_services/account.service';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { LoginModel } from 'src/app/_models/account/account.model';
+import { AccountService, LogInSuccessModel } from 'src/app/_services/account.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-// import { MessageService } from 'primeng/api/messageservice';
-
-// import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { JWTService } from 'src/app/_services/jwt.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-login',
@@ -48,6 +46,7 @@ export class LoginComponent {
               this.messageService.add({ severity: 'success', key: 'myToast', summary: 'Success!', detail: 'Signing in...!' });
               setTimeout(() => {
                 this.router.navigate(['dashboard']);
+                this.appComponent.initTheme(this.jWTService.ThemeName);
               }, 1000);
             }
             else if (resp.isLoginSuccess && resp.isFirstTimeLogin) {
@@ -74,5 +73,7 @@ export class LoginComponent {
   constructor(public layoutService: LayoutService,
     private router: Router,
     private messageService: MessageService,
-    private accountService: AccountService) { }
+    private accountService: AccountService,
+    private jWTService: JWTService,
+    private appComponent: AppComponent) { }
 }

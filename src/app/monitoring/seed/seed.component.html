@@ -7,7 +7,7 @@
         <h4>Seeds</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Seed" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addSeed()"
+        <button pButton pRipple label="New Seed" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addSeed()"
           *ngIf="permissions?.CanCreateSeed"></button>
       </ng-template>
     </p-toolbar>
@@ -70,7 +70,7 @@
     <p-dialog header="Seed" [(visible)]="showDialog" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
       [style]="{width: '60vw'}" (onHide)="onClose()">
       <div class="flex flex-column  justify-content-center">
-        <form [formGroup]="fbSeed" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbSeed" (ngSubmit)="onSubmit()" autocomplete="off">
           <p-fieldset legend="Seed Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
             <div class="p-fluid p-formgrid grid">
               <div class="field col-12 md:col-4">
@@ -256,7 +256,7 @@
         <div class="col-12">
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" label="{{submitLabel}}"
-              class="p-button-raised p-button-success"></button>
+              class="p-button-raised p-button-primary"></button>
           </div>
         </div>
       </ng-template>

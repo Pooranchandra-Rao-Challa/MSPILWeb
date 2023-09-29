@@ -31,7 +31,7 @@ export class UserDto {
   ipaddress?: string
   iprestriction?: boolean
   isAdminGate?: boolean
-  IsGross?: boolean
+  isGross?: boolean
   isTare?: boolean
   isDumpYard?: boolean
   isActive?: boolean
@@ -86,7 +86,8 @@ export class UserQuestionDto {
   questionId?: number
   question?: string
   answer?: string
-  userAnswer?: string;
+  userAnswer?: string
+  userName?: string;
 }
 export class ForgotUserPasswordDto {
   UserName?: string

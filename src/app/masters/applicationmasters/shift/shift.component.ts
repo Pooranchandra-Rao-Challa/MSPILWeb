@@ -100,7 +100,9 @@ export class ShiftsComponent implements OnInit {
           this.alertMessage.displayErrorMessage(
             `Shift Code :"${this.fbshifts.value.code}" Already Exists.`
           );
-        } 
+        } else {
+          this.save();
+        }
       } else {
         this.save();
       }
@@ -108,6 +110,7 @@ export class ShiftsComponent implements OnInit {
       this.fbshifts.markAllAsTouched();
     }
   }
+  
   save() {
     if (this.fbshifts.valid) {
       this.saveShift().subscribe(resp => {

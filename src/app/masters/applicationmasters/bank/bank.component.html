@@ -16,7 +16,7 @@
         <p-dialog header="Bank" [(visible)]="showDialog" [breakpoints]="{'960px': '50%', '640px': '90%'}"
             [style]="{width: '50%'}" (onHide)="onClose()" [modal]="true">
             <div class="flex flex-column align-items-center justify-content-center">
-                <form [formGroup]="fbbank">
+                <form [formGroup]="fbbank" autocomplete="off">
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">
@@ -129,7 +129,7 @@
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
                                                 <span
-                                                    *ngIf="formArrayControls(branchDetailsIndex,'code')?.errors?.['notUniqueCode']">
+                                                    *ngIf="formArrayControls(branchDetailsIndex,'code')?.errors?.['notUnique']">
                                                     <div class="ng-invalid ng-touched p-error">
                                                         Branch code must be unique.
                                                     </div>
@@ -161,7 +161,7 @@
                                         <div class="flex">
                                             <div class="align-left w-60" style="width:70%">
                                                 <span
-                                                    *ngIf="formArrayControls(branchDetailsIndex,'name')?.errors?.['notUniqueName']">
+                                                    *ngIf="formArrayControls(branchDetailsIndex,'name')?.errors?.['notUnique']">
                                                     <div class="ng-invalid ng-touched p-error">
                                                         Branch Name must be unique.
                                                     </div>
@@ -182,7 +182,7 @@
                                         </div>
                                     </td>
                                     <td class="vertical-align-top">
-                                        <input pInputText class="form-control" formControlName="ifsc"
+                                        <input pInputText class="form-control" formControlName="ifsc"  style="text-transform:uppercase"
                                             placeholder="Enter Ifsc" alphaNumeric [maxlength]="11" [minlength]="11"
                                             [ngClass]="{'is-invalid ng-dirty': formArrayControls(branchDetailsIndex,'ifsc')?.touched &&
                                         formArrayControls(branchDetailsIndex,'ifsc')?.errors }" #ifscCode
@@ -196,7 +196,7 @@
                                                         Please Enter Ifsc.</div>
                                                     <div class="ng-invalid ng-touched p-error"
                                                         *ngIf="formArrayControls(branchDetailsIndex,'ifsc')?.errors?.['pattern']">
-                                                        Invalid Ifsc Eg:ABCD01234XX.</div>
+                                                        Invalid Ifsc Eg:XXXX0000000.</div> 
                                                     <div class="ng-invalid ng-touched p-error"
                                                         *ngIf="formArrayControls(branchDetailsIndex,'ifsc')?.errors?.['minlength']">
                                                         Ifsc Min Length Is 11.</div>

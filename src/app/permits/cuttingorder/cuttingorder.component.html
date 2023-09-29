@@ -15,7 +15,7 @@
 
         <p-toolbar styleClass="p-mb-2" *ngIf="showForm">
             <ng-template pTemplate="left">
-                <form [formGroup]="fbCuttingOrder">
+                <form [formGroup]="fbCuttingOrder"autocomplete="off">
                     <!-- (ngSubmit)="onSubmit()" -->
                     <div class="grid">
                         <div class="col-12">
@@ -321,7 +321,7 @@
                                                 *ngIf="FormControls['plotId'].touched && FormControls['plotId'].invalid">
                                                 <div class="ng-invalid ng-touched p-error"
                                                     *ngIf="FormControls['plotId'].errors?.['required']">
-                                                    Select plot.</div>
+                                                    Select Plot.</div>
                                             </span>
                                         </div>
                                         <div class="field col-12 md:col-2">
@@ -424,7 +424,7 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td class="md:text-center m-5" colspan="22">There Are No plots Found Yet.</td>
+                            <td class="md:text-center m-5" colspan="22">There Are No Plots Found Yet.</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -517,7 +517,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td class="md:text-center m-5" colspan="21">There Are No plot Cutting Orders Found Yet.</td>
+                    <td class="md:text-center m-5" colspan="21">There Are No Plot Cutting Orders Found Yet.</td>
                 </tr>
             </ng-template>
         </p-table>

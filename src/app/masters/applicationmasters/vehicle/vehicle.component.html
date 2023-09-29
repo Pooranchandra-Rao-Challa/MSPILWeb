@@ -70,7 +70,7 @@
     <p-dialog header="Vehicle" [(visible)]="showDialog" [modal]="true" showEffect="fade"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbVehicleType.reset()">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbVehicleType">
+        <form [formGroup]="fbVehicleType"autocomplete="off">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -150,17 +150,20 @@
                       Please Enter Binding Cane.</div>
                   </span>
                 </div>
+                
                 <div class="field col-12 md:col-6">
-                  <label class="required">Bad Cane (%):</label>
-                  <p-inputNumber inputId="badCane" placeholder="Enter Bad Cane" formControlName="badCane" mode="decimal"
-                    [minFractionDigits]="2" [maxFractionDigits]="2" [min]="0" [max]="100"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['badCane'].touched && FormControls['badCane'].errors }">
-                  </p-inputNumber>
+                  <label>Bad Cane:<sup class="p-error">*</sup></label>
+                  <input pInputText id="badCane" type="text" placeholder="Enter Bad Cane" formControlName="badCane"
+                  appNumericInput [maxlength]="10"
+                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['badCane'].touched && FormControls['badCane'].errors }">                  
                   <span *ngIf="FormControls['badCane'].touched && FormControls['badCane'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['badCane'].errors?.['required']">
-                      Please Select Bad Cane.</div>
+                      Please Enter Bad Cane..
+                    </div>
                   </span>
                 </div>
+
+
                 <div class="col-12 md:col-6">
                   <label>Is Active:</label><br>
                   <p-inputSwitch formControlName="isActive"></p-inputSwitch>

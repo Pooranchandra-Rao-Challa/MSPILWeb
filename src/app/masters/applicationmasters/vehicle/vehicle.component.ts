@@ -4,7 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VehicleTypeViewDto } from 'src/app/_models/applicationmaster';
 import { Table } from 'primeng/table';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { MIN_LENGTH_2, RG_ALPHA_NUMERIC } from 'src/app/_shared/regex';
+import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_DECIMAL } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
@@ -70,7 +70,7 @@ export class VehicleComponent implements OnInit {
       capacity:  [null, (Validators.required)],
       billingCapacity:  [null, (Validators.required)],
       bindingCane: [null, (Validators.required)],
-      badCane: [null, (Validators.required)],
+      badCane: [null, [Validators.required, Validators.pattern(RG_DECIMAL)]],
       isActive: [null]
     });
   }

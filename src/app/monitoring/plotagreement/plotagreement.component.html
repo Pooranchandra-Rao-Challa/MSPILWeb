@@ -8,7 +8,7 @@
         <h4>Plot Agreements</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addPlotAgreement()" *ngIf="permissions.CanCreatePlotAgreement"></button>
       </ng-template>
     </p-toolbar>
@@ -16,7 +16,7 @@
     <!-- dialog -->
     <p-dialog header="Plot Agreement" [(visible)]="showDialog" [modal]="true"
     [breakpoints]="{'960px': '60%', '640px': '90%'}" [style]="{width: '60%'}" (onHide)="clearForm()">
-      <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()">
+      <form [formGroup]="fbPlotAgreement" (ngSubmit)="onSubmit()"autocomplete="off">
         <p-tabView orientation="left" [(activeIndex)]="activeIndex!">
           <p-tabPanel header="Plot Agreement(Doc30)" class="col-12">
             <div class="flex flex-column  justify-content-center">
@@ -518,7 +518,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12">
           <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-success"
+            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary"
               [disabled]="fbPlotAgreement.invalid" (click)="onSubmit()"></button>
           </div>
         </div>

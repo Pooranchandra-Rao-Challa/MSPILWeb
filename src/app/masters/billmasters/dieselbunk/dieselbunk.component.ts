@@ -6,7 +6,7 @@ import { DieselBunkViewDto } from 'src/app/_models/billingmaster';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
-import { MAX_LENGTH_6, RG_ADDRESS, RG_ALPHA_ONLY, RG_PINCODE } from 'src/app/_shared/regex';
+import { MAX_LENGTH_6, RG_ADDRESS, RG_ALPHA_ONLY, RG_DECIMAL, RG_PINCODE } from 'src/app/_shared/regex';
 import { DieselBunkDto } from 'src/app/_models/billingmaster';
 import { BillMasterService } from 'src/app/_services/billmaster.service';
 import { MIN_LENGTH_2, RG_ALPHA_NUMERIC, RG_EMAIL, RG_PHONE_NO } from 'src/app/_shared/regex';
@@ -77,7 +77,7 @@ export class DieselBunkComponent implements OnInit {
       email: new FormControl('', [Validators.pattern(RG_EMAIL)]),
       gLcode: [''],
       subGLcode: [''],
-      rate: [null, (Validators.required)],
+      rate: [null, [Validators.required, Validators.pattern(RG_DECIMAL)]],
       isActive: [null]
     });
   }
@@ -89,6 +89,7 @@ export class DieselBunkComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
 
   clear(table: Table) {
     table.clear();

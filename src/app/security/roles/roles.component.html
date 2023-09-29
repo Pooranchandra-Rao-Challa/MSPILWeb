@@ -7,7 +7,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New Role" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="initRole({})"></button>
+          (click)="initRole({})" *ngIf="permission?.CanCreateRole"></button>
       </ng-template>
     </p-toolbar>
 
@@ -29,7 +29,7 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th></th>
+          <th *ngIf="permission?.CanUpdateRole"></th>
           <th pSortableColumn="code">Code <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
             <p-sortIcon field="code"></p-sortIcon>
           </th>
@@ -41,10 +41,10 @@
             <p-sortIcon field="isActive"></p-sortIcon>
           </th>
           <th pSortableColumn="createdAt">
-            Created Date  
-            <p-columnFilter type="date" field="createdAt" display="menu" >   
-            </p-columnFilter>       
-            <p-sortIcon field="createdAt"></p-sortIcon>        
+            Created Date
+            <p-columnFilter type="date" field="createdAt" display="menu">
+            </p-columnFilter>
+            <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
           <th pSortableColumn="createdBy">Created By<p-columnFilter type="text" field="createdBy" display="menu">
             </p-columnFilter>
@@ -64,7 +64,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-role>
         <tr>
-          <td style="text-align: center;"><button pButton pRipple icon="pi pi-pencil"
+          <td *ngIf="permission?.CanUpdateRole" style="text-align: center;"><button pButton pRipple icon="pi pi-pencil" 
               class="p-element p-ripple p-button-text p-button p-component" (click)="initRole(role)"></button></td>
           <td>{{role.code}}</td>
           <td>{{role.name}}</td>
@@ -85,47 +85,80 @@
       </ng-template>
     </p-table>
     <p-dialog header="Role" [(visible)]="dialog" [modal]="true" showEffect="fade"
-    [breakpoints]="{'960px': '70%', '640px': '80%'}"  [style]="{width: '70%'}">
+      [breakpoints]="{'960px': '70%', '640px': '80%'}" [style]="{width: '70%'}">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" autocomplete="off">
           <div class="grid">
             <div class="col-12 roles-container">
               <div class="p-fluid p-formgrid grid">
-                <div class="field col-12 md:col-4">
-                  <label>Code:<sup class="p-error">*</sup></label>&nbsp;
-                  <input pInputText id="code" type="text" formControlName="code" placeholder="Enter Code"
-                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['code'].touched && roleFormControls['code'].errors }" />
-                  <span *ngIf="roleFormControls['code'].touched && roleFormControls['code'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['required']">
-                      Please Enter  Code.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['minlength']">
-                      Code Min Length Is 2 .</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['maxlength']">
-                      Code Max Length Is 6.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['pattern']">
-                      Code Should Contains Only Characters.</div>
-                  </span>
+                <div class="field col-12 md:col-6">
+                  <label>Code:<sup class="p-error">*</sup></label>
+                  <input pInputText id="code" #code type="text" formControlName="code" placeholder="Enter Code"
+                    [maxlength]="6" alphaNumeric
+                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['code'].touched && roleFormControls['code'].errors }">
+                  <div class="flex">
+                    <div class="align-left w-60" style="width:70%">
+                      <span *ngIf="roleFormControls['code'].touched && roleFormControls['code'].invalid">
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="roleFormControls['code'].errors?.['required']">
+                          Please Enter Code.</div>
+                        <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['code'].errors?.['pattern']">
+                          Code Should
+                          Contains
+                          Alphabets & Numbers.</div>
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="roleFormControls['code'].errors?.['minlength']">
+                          Code Min Length Is 2.</div>
+                        <div class="ng-invalid ng-touched p-error"
+                          *ngIf="roleFormControls['code'].errors?.['maxlength']">
+                          Code Max Length Is 6.</div>
+                      </span>
+                    </div>
+                    <div class="align-right w-40" style="width:30%; text-align:right;">
+                      <small>{{code.value.length}}/6</small>
+                    </div>
+                  </div>
                 </div>
-                <div class="field col-12 md:col-4">
-                  <label>Name:<sup class="p-error">*</sup></label>&nbsp;
-                  <input pInputText id="name" type="text" formControlName="name" placeholder="Enter Name"
-                    [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['name'].touched && roleFormControls['name'].errors }" />
-                  <span *ngIf="roleFormControls['name'].touched && roleFormControls['name'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['required']">
-                      Please Enter  Name.</div>
-                    <div class="ng-invalid ng-touched p-error" *ngIf="roleFormControls['name'].errors?.['pattern']">
-                      Name Should Contains Only Letters.</div>
-                  </span>
-                </div>
+                <div class="field col-12 md:col-6">
+                  <label>Name:<sup class="p-error">*</sup></label>
+                  <input pInputText id="name" type="text" formControlName="name"
+                      placeholder="Enter Name" #name alphaOnly [maxlength]="maxLength.name"
+                      [ngClass]="{ 'is-invalid ng-dirty': roleFormControls['name'].touched && roleFormControls['name'].errors }">
+                  <div class="flex">
+                      <div class="align-left w-60" style="width:70%">
+                          <span
+                              *ngIf="roleFormControls['name'].touched && roleFormControls['name'].errors?.['notUniqueName']">
+                              <div class="ng-invalid ng-touched p-error">
+                                  Branch name must be unique.
+                              </div>
+                          </span>
+                          <span *ngIf="roleFormControls['name'].touched && roleFormControls['name'].invalid">
+                              <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="roleFormControls['name'].errors?.['required']">
+                                  Please Enter Name.</div>
+                              <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="roleFormControls['name'].errors?.['pattern']">
+                                  Name Should Contains Alphabets.</div>
+                              <div class="ng-invalid ng-touched p-error"
+                                  *ngIf="roleFormControls['name'].errors?.['minlength']">
+                                  Name Min Characters Is 2.</div>
+                          </span>
+                      </div>
+                      <div class="align-right w-40" style="width:30%; text-align:right;">
+                          <small>{{name.value.length}}/{{maxLength.name}}</small>
+                      </div>
+                  </div>
+              </div>
                 <div class="field col-12 md:col-4">
                   <label>Is Active:</label><br>
-                  &nbsp;<p-inputSwitch formControlName="isActive" >
+                  &nbsp;<p-inputSwitch formControlName="isActive">
                   </p-inputSwitch>
                 </div>
                 <div class="field col-12">
                   <label>Permissions:<sup class="p-error">*</sup></label><br>
                   <div class="grid col-12">
-                    <p-accordion *ngFor="let screen of screens" class="col-12 xl:col-3 md:col-6 sm:col-6 accordion_roles" [multiple]="false">
+                    <p-accordion *ngFor="let screen of screens"
+                      class="col-12 xl:col-3 md:col-6 sm:col-6 accordion_roles" [multiple]="false">
                       <p-accordionTab [header]="screen" [selected]="false" [cache]="false">
                         <div class="col-12 role-accordian-view" *ngFor="let permission of getPermissions(screen)">
                           <p-inputSwitch [(ngModel)]="permission.assigned" [ngModelOptions]="{standalone: true}">
@@ -143,8 +176,8 @@
       </div>
       <ng-template pTemplate="footer">
         <div class="col-4" style="float:right">
-          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"  [disabled]="roleForm.invalid"
-            (click)="onSubmit()"></button>
+          <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
+            [disabled]="roleForm.invalid" (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

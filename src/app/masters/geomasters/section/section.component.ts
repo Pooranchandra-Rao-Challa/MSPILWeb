@@ -9,7 +9,7 @@ import { CommonService } from 'src/app/_services/common.service';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
 import {MAX_LENGTH_20,MIN_LENGTH_2,RG_ADDRESS,RG_ALPHA_NUMERIC,RG_ALPHA_ONLY, RG_PHONE_NO,} from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from 'src/app/_alerts/alertMessage';
 @Component({
@@ -31,6 +31,23 @@ export class SectionComponent implements OnInit {
   mediumDate: string = MEDIUM_DATE;
   maxLength: MaxLength = new MaxLength();
   permissions: any;
+
+  headers: ITableHeader[] = [
+    { field: 'divisionName', header: 'divisionName', label: 'Division' },
+    { field: 'circleName', header: 'circleName', label: 'Circle' },
+    { field: 'sectionCode', header: 'sectionCode', label: 'Code' },
+    { field: 'sectionName', header: 'sectionName', label: 'Section' },
+    { field: 'inchargeName', header: 'inchargeName', label: 'Incharge Name' },
+    { field: 'inchargePhoneNo', header: 'inchargePhoneNo', label: 'Mandal' },
+    { field: 'listingOrder', header: 'listingOrder', label: 'Order'},
+    { field: 'address', header: 'address', label: 'Address'},
+    { field: 'targetArea', header: 'targetArea', label: 'Target Area' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -71,7 +88,7 @@ export class SectionComponent implements OnInit {
       divisionId: new FormControl(null, [Validators.required,]),
       inchargePhoneNo: new FormControl(null, [Validators.pattern(RG_PHONE_NO),]),
       inchargeName: new FormControl('', [Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
-      // targetArea:[null],
+      targetArea:[null],
       isActive: [null, Validators.required],
     });
   }

@@ -73,7 +73,7 @@
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" (onHide)="fbDieselRate.reset()"
       [contentStyle]="{'overflow': 'visible'}">
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbDieselRate" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbDieselRate" (ngSubmit)="onSubmit()" autocomplete="off">
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -110,14 +110,14 @@
                   </span>
                 </div>
                 <div class="field col-12 md:col-6">
-                  <label class="required">Rate:</label>
-                  <p-inputNumber placeholder="Enter Rate" formControlName="rate" mode="decimal" locale="en-IN"
-                    [minFractionDigits]="2" [maxFractionDigits]="2"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
-                  </p-inputNumber>
+                  <label>Rate(₹):<sup class="p-error">*</sup></label>
+                  <input pInputText id="rate" type="text" #code placeholder="Enter rate" formControlName="rate"
+                  appNumericInput [maxlength]="10"
+                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">                  
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
-                      Please Enter Rate.</div>
+                      Please Enter Rate.
+                    </div>
                   </span>
                 </div>
                 <div class="col-12 md:col-6">
@@ -129,10 +129,12 @@
           </div>
         </form>
       </div>
+      
       <ng-template pTemplate="footer">
         <div class="col-12" style="float:right">
-          <button pButton pRipple type="button" [label]="submitLabel" class="p-button-raised p-button-primary"
-            [disabled]="fbDieselRate.invalid" (click)="onSubmit()"></button>
+          <button pButton pRipple type="button" label="{{submitLabel}}"  class="p-button-raised p-button-primary"
+            [disabled]="fbDieselRate.invalid"
+             (click)="onSubmit()"></button>
         </div>
       </ng-template>
     </p-dialog>

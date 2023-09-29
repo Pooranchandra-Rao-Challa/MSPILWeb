@@ -9,7 +9,7 @@
       </ng-template>
       <ng-template pTemplate="right">
         <button pButton pRipple label="New LoanType" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addLoanType()" *ngIf="permissions.CanCreateLoanType"></button>
+          (click)="addLoanType()"></button>
       </ng-template>
     </p-toolbar>
 
@@ -43,7 +43,7 @@
       <ng-template pTemplate="body" let-loanType>
         <tr>
           <td *ngIf="permissions.CanUpdateLoanType"><button pButton pRipple icon="pi pi-pencil"
-              class="p-element p-ripple p-button-text p-button p-component" (click)="editTpt(loanType)"></button>
+              class="p-element p-ripple p-button-text p-button p-component" (click)="editLoanType(loanType)"></button>
           </td>
           <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
             <span
@@ -69,7 +69,7 @@
     <!-- dialog box -->
     <p-dialog header="LoanType" [(visible)]="showDialog" showEffect="fade"
       [breakpoints]="{'960px': '60%', '640px': '80%'}" [style]="{width: '60%'}" [modal]="true" (onHide)="onClose()">
-      <form [formGroup]="fbloantype" (ngSubmit)="onSubmit()">
+      <form [formGroup]="fbloantype" (ngSubmit)="onSubmit()"autocomplete="off">
         <div class="flex flex-column align-items-center justify-content-center">
           <div class="col-12">
             <div class="grid p-fluid">
@@ -137,7 +137,7 @@
                     </div>
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
-                    <label class="required">Interest Rate:</label>
+                    <label class="required">Interest Rate(%):</label>
                     <p-inputNumber id="interestRate" placeholder="Enter Interest Rate" formControlName="interestRate"
                       mode="decimal" locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2" [showButtons]="true"
                       [ngClass]="{ 'is-invalid ng-dirty':
@@ -218,16 +218,16 @@
                       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm w-100">
                       <ng-template pTemplate="header">
                         <tr>
-                          <th class="required">Code <sup class="p-error">*</sup></th>
-                          <th class="required">Name <sup class="p-error">*</sup></th>
-                          <th>Priority </th>
-                          <th class="required">Interest Rate <sup class="p-error">*</sup></th>
-                          <th class="required">Rate <sup class="p-error">*</sup></th>
-                          <th class="required">Requisition Req <sup class="p-error">*</sup></th>
-                          <th class="required">Uomid <sup class="p-error">*</sup></th>
-                          <th>LoanQty Type</th>
-                          <th>GL Code</th>
-                          <th>SubGL Code</th>
+                          <th class="required">Code:<sup class="p-error">*</sup></th>
+                          <th class="required">Name: <sup class="p-error">*</sup></th>
+                          <th>Priority: </th>
+                          <th class="required">Interest Rate(%):<sup class="p-error">*</sup></th>
+                          <th class="required">Rate(₹):<sup class="p-error">*</sup></th>
+                          <th class="required">Requisition Req: <sup class="p-error">*</sup></th>
+                          <th class="required">Uomid:<sup class="p-error">*</sup></th>
+                          <th>LoanQty Type:</th>
+                          <th>GL Code:</th>
+                          <th>SubGL Code:</th>
                           <th *ngIf="fbloantype.controls['loanSubTypes'].value.length > 1"></th>
                         </tr>
                       </ng-template>
@@ -239,6 +239,11 @@
                           formArrayControls(loanTypelIndex, 'code')?.errors }" />
                             <div class="flex">
                               <div class="align-left w-60" style="width:70%">
+                                <span *ngIf="formArrayControls(loanTypelIndex,'code')?.errors?.['notUnique']">
+                                  <div class="ng-invalid ng-touched p-error">
+                                    Loan Type Code Must Be Unique.
+                                  </div>
+                                </span>
                                 <span
                                   *ngIf="formArrayControls(loanTypelIndex, 'code')?.touched && formArrayControls(loanTypelIndex, 'code')?.invalid">
                                   <div class="ng-invalid ng-touched p-error"
@@ -264,6 +269,11 @@
                           formArrayControls(loanTypelIndex, 'name')?.errors }" />
                             <div class="flex">
                               <div class="align-left w-60" style="width:70%">
+                                <span *ngIf="formArrayControls(loanTypelIndex,'name')?.errors?.['notUnique']">
+                                  <div class="ng-invalid ng-touched p-error">
+                                    Loan Type Name Must Be Unique.
+                                  </div>
+                                </span>
                                 <span
                                   *ngIf="formArrayControls(loanTypelIndex, 'name')?.touched && formArrayControls(loanTypelIndex, 'name')?.invalid">
                                   <div class="ng-invalid ng-touched p-error"

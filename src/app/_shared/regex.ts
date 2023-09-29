@@ -4,7 +4,7 @@ export const RG_NUMERIC_ONLY = '[0-9]*';
 export const RG_ALPHA_NUMERIC = /^[-a-zA-Z0-9-]+(\s+[-a-zA-Z0-9-]+)*$/;
 export const RG_PHONE_NO = '^[5-9][0-9]{9}$';
 export const RG_VEHICLE = '^[a-zA-Z]{2}[0-9]{2}[- ]{1}[a-zA-Z]{2}[- ]{1}[0-9]{4}$';
-export const RG_EMAIL = /^(?!\.)(?!.*\.$)(?!.*\.\.)[a-zA-Z0-9.]{1,}@[a-zA-Z.]{2,9}[.]{1}[a-zA-Z]{2,3}$/;
+export const RG_EMAIL = /^(?!\.)(?!.*\.$)(?!.*\.\.)[a-zA-Z0-9.]{1,}@[a-zA-Z.]{2,15}[.]{1}[a-zA-Z]{2,3}$/;
 export const RG_ADDRESS = /^[-a-zA-Z0-9-/.;:,_()]+([\s][-a-zA-Z0-9-/.;:,_()]+)*$/;
 export const RG_PANNO = '^[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}$';
 export const RG_PINCODE = '^[1-9][0-9]{5}$';
@@ -13,7 +13,8 @@ export const RG_SEASON_CODE = '^[0-9]{4}[-][0-9]{2}$';
 export const RG_SEASON_NAME = '^[0-9]{4}[-][0-9]{4}$';
 export const RG_SURVEY_NO = /^[-a-zA-Z0-9-/]+([-a-zA-Z0-9-/]+)*$/;
 export const RG_IFSC = /^[A-Z]{4}0[A-Z0-9]{6}$/;
-
+export const IP_ADDRESS_NO =/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+export const RG_DECIMAL=/^\d+(\.\d{1,3})?$/;
 
 
 
@@ -36,4 +37,4 @@ export const MAX_LENGTH_50 = 50;
 export const MAX_LENGTH_25 = 25;
 export const MAX_LENGTH_2 = 2;
 export const MAX_LENGTH_3 = 3;
-
+export const MAX_LENGTH_15 =15;

@@ -28,11 +28,14 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { permitService } from './_services/permit.service';
+import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
+import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
+
 
 @NgModule({
   declarations: [
-    AppComponent, NotfoundComponent
-  ],
+    AppComponent, NotfoundComponent,
+  ], 
   imports: [
     AppRoutingModule,
     AppLayoutModule,
@@ -42,13 +45,15 @@ import { permitService } from './_services/permit.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
+    { provide: 'FormArrayValidationForDuplication', useValue: FormArrayValidationForDuplication },
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
     CountryService, CustomerService, EventService, IconService, NodeService,
     PhotoService, ProductService,
     // Application services,
     AccountService, JWTService, GeoMasterService, CommonService, BillMasterService,
-    AppMasterService, MessageService, MonitoringService,permitService,ConfirmationService
+    AppMasterService, MessageService, MonitoringService,permitService,ConfirmationService, ThemeNotifier
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+ 

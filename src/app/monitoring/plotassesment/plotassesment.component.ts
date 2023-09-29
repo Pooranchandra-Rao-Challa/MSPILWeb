@@ -370,7 +370,6 @@ export class PlotassesmentComponent implements OnInit {
     doc.save('plot_Assessments.pdf');
   }
   exportExcel() {
-    debugger
     import('xlsx').then((xlsx) => {
       const worksheet = xlsx.utils.json_to_sheet(this.exportColumns);
       const workbook = {

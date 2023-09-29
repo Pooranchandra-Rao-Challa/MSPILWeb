@@ -8,11 +8,10 @@
         <h4>HGLs</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addHgl()"
-          *ngIf="permissions.CanCreateHGL"></button>
+        <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2"
+          (click)="addHgl()" *ngIf="permissions.CanCreateHGL"></button>
       </ng-template>
     </p-toolbar>
-
     <!-- table -->
     <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
@@ -81,7 +80,7 @@
       <div class="flex flex-column align-items-center justify-content-center">
         <div class="container">
           <div class="grid p-fluid">
-            <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()">
+            <form [formGroup]="fbHgl" (ngSubmit)="onSubmit()" autocomplete="off">
               <p-fieldset legend="HGL Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
@@ -257,17 +256,16 @@
                     </span>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label for="panNo">PAN No:</label>
-                    <input pInputText id="panNo" type="text" placeholder="Enter Pan No " formControlName="panNo"
-                      maxLength="10" style="text-transform:uppercase" alphaNumeric
-                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].invalid }">
-                    <div *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
-                      <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
-                        <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
-                          Invalid Pan Number, Eg: ABCDE01234X</div>
-                      </span>
-                    </div>
+                    <label>PAN No:</label>
+                    <input pInputText id="panNo" type="text" placeholder="Enter Pan No" formControlName="panNo"
+                      style="text-transform:uppercase" 
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
+                    <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
+                        Invalid Pan Number, Eg: XXXXX0000X</div>
+                    </span>
                   </div>
+                  
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
                     <label class="required">Aadhaar No:</label>
                     <input pInputText id="aadhaarNo" #aadhaarNo placeholder=" Enter Aadhaar No"
@@ -463,6 +461,11 @@
                           formArrayControls(subHglIndex, 'code')?.errors }">
                             <div class="flex">
                               <div class="align-left w-60" style="width:70%">
+                                <span *ngIf="formArrayControls(subHglIndex,'code')?.errors?.['notUnique']">
+                                  <div class="ng-invalid ng-touched p-error">
+                                    Sub Hgl Code Must Be Unique.
+                                  </div>
+                                </span>
                                 <span
                                   *ngIf="formArrayControls(subHglIndex, 'code')?.touched && formArrayControls(subHglIndex, 'code')?.invalid">
                                   <div class="ng-invalid ng-touched p-error"
@@ -490,6 +493,11 @@
                           formArrayControls(subHglIndex, 'name')?.errors }">
                             <div class="flex">
                               <div class="align-left w-60" style="width:70%">
+                                <span *ngIf="formArrayControls(subHglIndex,'name')?.errors?.['notUnique']">
+                                  <div class="ng-invalid ng-touched p-error">
+                                    Sub Hgl Name must be unique.
+                                  </div>
+                                </span>
                                 <span
                                   *ngIf="formArrayControls(subHglIndex, 'name')?.touched && formArrayControls(subHglIndex, 'name')?.invalid">
                                   <div class="ng-invalid ng-touched p-error"
@@ -522,10 +530,10 @@
                             </span>
                           </td>
                           <td class="vertical-align-top">
-                            <p-inputNumber inputId="noOfPersons" placeholder="Enter No Of Persons"
-                              formControlName="noOfPersons" [showButtons]="true" [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
+                            <input pInputText id="rate" inputId="noOfPersons" placeholder="Enter No Of Persons"
+                              formControlName="noOfPersons" numericOnly [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
                               formArrayControls(subHglIndex, 'noOfPersons')?.errors }">
-                            </p-inputNumber>
+                           
                             <span
                               *ngIf="formArrayControls(subHglIndex, 'noOfPersons')?.touched && formArrayControls(subHglIndex, 'noOfPersons')?.invalid">
                               <div class="ng-invalid ng-touched p-error"
@@ -533,6 +541,7 @@
                                 Enter No Of Persons.</div>
                             </span>
                           </td>
+
                           <td *ngIf="fbHgl.controls['subHgls'].value.length > 1">
                             <i class="pi pi-fw pi-times-circle text-3xl cursor-pointer"
                               *ngIf="!this.faSubHgl().controls[subHglIndex].get('subHglId')?.value"

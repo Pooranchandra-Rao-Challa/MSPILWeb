@@ -4,7 +4,7 @@ import { MIN_LENGTH_2, MAX_LENGTH_20 } from 'src/app/_shared/regex';
 import { AppMasterService } from 'src/app/_services/appmaster.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray, } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray, ValidationErrors, AbstractControl, } from '@angular/forms';
 import { RG_ALPHA_NUMERIC, RG_ALPHA_ONLY } from 'src/app/_shared/regex';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { MEDIUM_DATE } from 'src/app/_helpers/date.format.pipe';
+import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
 
 @Component({
   selector: 'app-loanmaster',
@@ -120,7 +121,7 @@ export class LoanMasterComponent implements OnInit {
       glcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       subGlcode: ['', Validators.pattern(RG_ALPHA_NUMERIC)],
       isActive: [null],
-      loanSubTypes: this.formbuilder.array([]),
+      loanSubTypes: this.formbuilder.array([],FormArrayValidationForDuplication()),
     });
   }
 
@@ -163,7 +164,7 @@ export class LoanMasterComponent implements OnInit {
       isActive: (loanSubTypes.isActive = true),
     });
   }
-  editTpt(loanType: LoanTypeViewDto) {
+  editLoanType(loanType: LoanTypeViewDto) {
     this.initLoanSubtype(loanType.loanTypeId);
     this.loanType.loanTypeId = loanType.loanTypeId;
     this.loanType.code = loanType.code;
@@ -188,7 +189,6 @@ export class LoanMasterComponent implements OnInit {
     this.addLoanSubType();
     this.showDialog = true;
   }
-
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }

@@ -6,7 +6,7 @@
       [style]="{width: '50%'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
-          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()">
+          <form [formGroup]="fbvillages" (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="container">
               <div class="grid p-fluid">
                 <p-fieldset legend="Geographic Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
@@ -274,17 +274,25 @@
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label for="listingOrder">Listing Order:<sup class="p-error">*</sup></label>
-                      <p-inputNumber inputId="locale-indian" formControlName="listingOrder" mode="decimal"
-                        locale="en-IN" [useGrouping]="false" [size]="6" [maxlength]="6"
-                        placeholder="Enter Listing Order"
+                      <label>Listing Order:<sup class="p-error">*</sup></label>
+                      <input pInputText inputId="listingOrder" #listingOrder placeholder="Enter Listing Order"
+                        formControlName="listingOrder" numericOnly [maxlength]="2"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
-                      </p-inputNumber>
-                      <div *ngIf="
-                              FormControls['listingOrder'].invalid &&
-                              FormControls['listingOrder'].touched
-                            " class="error-message p-error">
-                        Please Enter Listing Order.
+                      <div class="flex">
+                        <div class="align-left w-60" style="width:70%">
+                          <span *ngIf="FormControls['listingOrder'].touched && FormControls['listingOrder'].invalid">
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="FormControls['listingOrder'].errors?.['required']">Please Enter listing Order.
+                            </div>
+                            <div class="ng-invalid ng-touched p-error"
+                              *ngIf="FormControls['listingOrder'].errors?.['pattern']">Order Should Only Contains
+                              Numbers.
+                            </div>
+                          </span>
+                        </div>
+                        <div class="align-right w-40" style="width:30%; text-align:right;">
+                          <small>{{listingOrder.value.length}}/2</small>
+                        </div>
                       </div>
                     </div>
 
@@ -360,7 +368,7 @@
                     <div class="field col-12 md:col-4">
                       <label for="totalArea">Total Geographic Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="totalArea" formControlName="totalArea" [minFractionDigits]="2"
-                        placeholder="Total Geographic Area" [minFractionDigits]="2"
+                        placeholder="Enter Total Geographic Area" [minFractionDigits]="2"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['totalArea'].touched && FormControls['totalArea'].errors }">
                       </p-inputNumber>
                       <div *ngIf="
@@ -384,7 +392,7 @@
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label for="notSuitableArea">Not Suitable Area:<sup class="p-error">*</sup></label>
+                      <label for="notSuitableArea">Not Suitable Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber inputId="notSuitableArea" formControlName="notSuitableArea" mode="decimal"
                         placeholder="Enter Not Suitable Area" locale="de-DE" [minFractionDigits]="2"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['notSuitableArea'].touched && FormControls['notSuitableArea'].errors }">
@@ -397,7 +405,7 @@
                       </div>
                     </div>
                     <div class="field col-12 md:col-4">
-                      <label for="target">Target Area <sup class="p-error">*</sup></label>
+                      <label for="target">Target Area(Acres):<sup class="p-error">*</sup></label>
                       <p-inputNumber formControlName="targetArea" inputId="target" [minFractionDigits]="2"
                         placeholder="Enter Target Area"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['targetArea'].touched && FormControls['targetArea'].errors }">
@@ -509,133 +517,11 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th *ngIf="permissions?.CanUpdateVillage"></th>
-          <th pSortableColumn="divisionName">
-            Division<p-columnFilter type="text" field="divisionName" display="menu"></p-columnFilter>
-            <p-sortIcon field="divisionName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="circleName">
-            Circle<p-columnFilter type="text" field="circleName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="circleName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="sectionName">
-            Section<p-columnFilter type="text" field="sectionName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="sectionName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="districtName">
-            District<p-columnFilter type="text" field="districtName" display="menu"></p-columnFilter>
-            <p-sortIcon field="districtName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="mandalName">
-            Mandal<p-columnFilter type="text" field="mandalName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="mandalName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="address">
-            Address<p-columnFilter type="text" field="address" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="address"></p-sortIcon>
-          </th>
-          <th pSortableColumn="pinCode">
-            Pincode<p-columnFilter type="text" field="pinCode" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="pinCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="villageCode">
-            Code<p-columnFilter type="text" field="villageCode" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="villageCode"></p-sortIcon>
-          </th>
-          <th pSortableColumn="villageName">
-            Name<p-columnFilter type="text" field="villageName" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="villageName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="inchargeName">
-            Incharge Name<p-columnFilter type="text" field="inchargeName" display="menu"></p-columnFilter>
-            <p-sortIcon field="inchargeName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="inchargePhoneNo">
-            InchargePhone No<p-columnFilter type="text" field="inchargePhoneNo" display="menu"></p-columnFilter>
-            <p-sortIcon field="inchargePhoneNo"></p-sortIcon>
-          </th>
-          <th pSortableColumn="distance">
-            Distance<p-columnFilter type="text" field="distance" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="distance"></p-sortIcon>
-          </th>
-          <th pSortableColumn="divertedDistance">
-            Diverted Distance<p-columnFilter type="text" field="divertedDistance" display="menu"></p-columnFilter>
-            <p-sortIcon field="divertedDistance"></p-sortIcon>
-          </th>
-          <th pSortableColumn="noOfEBServices">
-            No of EB Services<p-columnFilter type="text" field="noOfEBServices" display="menu"></p-columnFilter>
-            <p-sortIcon field="noOfEBServices"></p-sortIcon>
-          </th>
-          <th pSortableColumn="tptRate">
-            Tpt Rate<p-columnFilter type="text" field="tptRate" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="tptRate"></p-sortIcon>
-          </th>
-          <th pSortableColumn="totalArea">
-            Total geographic area<p-columnFilter type="text" field="totalArea" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="totalArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="cultivableArea">
-            Cultivable Area<p-columnFilter type="text" field="cultivableArea" display="menu"></p-columnFilter>
-            <p-sortIcon field="cultivableArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="irrigationArea">
-            Irrigation Area<p-columnFilter type="text" field="irrigationArea" display="menu"></p-columnFilter>
-            <p-sortIcon field="irrigationArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="dryArea">
-            Dry Area<p-columnFilter type="text" field="dryArea" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="dryArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="potentialArea">
-            Suitable area<p-columnFilter type="text" field="potentialArea" display="menu"></p-columnFilter>
-            <p-sortIcon field="potentialArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="notSuitableArea">
-            Not Suitable Area<p-columnFilter type="text" field="notSuitableArea" display="menu"></p-columnFilter>
-            <p-sortIcon field="notSuitableArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="targetArea">
-            Target Area<p-columnFilter type="text" field="targetArea" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="targetArea"></p-sortIcon>
-          </th>
-          <th pSortableColumn="listingOrder">
-            Order<p-columnFilter type="text" field="listingOrder" display="menu"></p-columnFilter>
-            <p-sortIcon field="listingOrder"></p-sortIcon>
-          </th>
-          <th class="text-center" pSortableColumn="isActive">
-            Is Active<p-sortIcon field="isActive"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedAt">
-            Created Date<p-columnFilter type="text" field="updatedAt" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="updatedAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">
-            Created By<p-columnFilter type="text" field="updatedAt" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="createdAt"></p-sortIcon>
-          </th>
-          <th pSortableColumn="updatedBy">
-            Updated Date<p-columnFilter type="text" field="updatedBy" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="updatedBy"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdBy">
-            Updated By<p-columnFilter type="text" field="createdBy" display="menu">
-            </p-columnFilter>
-            <p-sortIcon field="createdBy"></p-sortIcon>
+          <th></th>
+          <th *ngFor="let col of headers" [pSortableColumn]="col.header">
+            {{col?.label}}
+            <p-columnFilter type="text" [field]="col.header" display="menu"></p-columnFilter>
+            <p-sortIcon [field]="col.header"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -645,37 +531,18 @@
             <button pButton pRipple icon="pi pi-pencil" class="p-element p-ripple p-button-text p-button p-component"
               (click)="InitVillage(village)"></button>
           </td>
-          <td>{{ village.divisionName }}</td>
-          <td>{{ village.circleName }}</td>
-          <td>{{ village.sectionName }}</td>
-          <td>{{ village.districtName }}</td>
-          <td>{{ village.mandalName }}</td>
-          <td>{{ village.address }}</td>
-          <td>{{ village.pinCode }}</td>
-          <td>{{ village.villageCode }}</td>
-          <td>{{ village.villageName }}</td>
-          <td>{{ village.inchargeName }}</td>
-          <td>{{ village.inchargePhoneNo }}</td>
-          <td>{{ village.distance }}</td>
-          <td>{{ village.divertedDistance }}</td>
-          <td>{{ village.noOfEBServices }}</td>
-          <td>{{ village.tptRate }}</td>
-          <td>{{ village.totalArea }}</td>
-          <td>{{ village.cultivableArea }}</td>
-          <td>{{ village.irrigationArea }}</td>
-          <td>{{ village.dryArea }}</td>
-          <td>{{ village.potentialArea }}</td>
-          <td>{{ village.notSuitableArea }}</td>
-          <td>{{ village.targetArea }}</td>
-          <td>{{ village.listingOrder }}</td>
-          <td class="text-center">
-            <p-checkbox name="active" value="active" [(ngModel)]="village.isActive" [binary]="true" [disabled]="true">
-            </p-checkbox>
+          <td *ngFor="let col of headers" [ngClass]="col?.field == 'isActive' ? 'text-center' : ''">
+            <span
+              *ngIf="col?.field != 'createdAt' && col?.field != 'updatedAt' && col?.field != 'isActive'">{{village[col.field]}}</span>
+            <span *ngIf="col?.field == 'createdAt' || col?.field == 'updatedAt'">
+              {{village[col.field] | date: mediumDate}}
+            </span>
+            <span *ngIf="col?.field == 'isActive'">
+              <p-checkbox name="active" value="active" [binary]="true" [(ngModel)]="village[col.field]"
+                [disabled]="true">
+              </p-checkbox>
+            </span>
           </td>
-          <td>{{ village.createdAt | date : mediumDate }}</td>
-          <td>{{ village.createdBy }}</td>
-          <td>{{ village.updatedAt | date : mediumDate }}</td>
-          <td>{{ village.updatedBy }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

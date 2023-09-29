@@ -31,7 +31,7 @@ import {
   RG_PHONE_NO,
   RG_PINCODE,
 } from 'src/app/_shared/regex';
-import { MaxLength } from 'src/app/_models/common';
+import { ITableHeader, MaxLength } from 'src/app/_models/common';
 import { ALERT_CODES } from 'src/app/_alerts/alertMessage';
 import { AlertMessage } from 'src/app/_alerts/alertMessage';
 @Component({
@@ -65,6 +65,37 @@ export class VillageComponent implements OnInit {
     public jwtService: JWTService,
     private alertMessage: AlertMessage
   ) { }
+
+  headers: ITableHeader[] = [
+    { field: 'divisionName', header: 'divisionName', label: 'Division' },
+    { field: 'circleName', header: 'circleName', label: 'Circle' },
+    { field: 'sectionName', header: 'sectionName', label: 'Section' },
+    { field: 'districtName', header: 'districtName', label: 'District' },
+    { field: 'mandalName', header: 'mandalName', label: 'Mandal' },
+    { field: 'address', header: 'address', label: 'Address' },
+    { field: 'pinCode', header: 'pinCode', label: 'Pincode' },
+    { field: 'villageCode', header: 'villageCode', label: 'Code' },
+    { field: 'villageName', header: 'villageName', label: 'Name' },
+    { field: 'inchargeName', header: 'inchargeName', label: 'Incharge Name' },
+    { field: 'inchargePhoneNo', header: 'inchargePhoneNo', label: 'InchargePhone No' },
+    { field: 'distance', header: 'distance', label: 'Distance' },
+    { field: 'divertedDistance', header: 'divertedDistance', label: 'Diverted Distance' },
+    { field: 'noOfEBServices', header: 'noOfEBServices', label: 'No of EB Services' },
+    { field: 'tptRate', header: 'tptRate', label: 'Tpt Rate' },
+    { field: 'totalArea', header: 'totalArea', label: 'Total geographic area' },
+    { field: 'cultivableArea', header: 'cultivableArea', label: 'Cultivable Area' },
+    { field: 'irrigationArea', header: 'irrigationArea', label: 'Irrigation Area' },
+    { field: 'dryArea', header: 'dryArea', label: 'Dry Area' },
+    { field: 'potentialArea', header: 'potentialArea', label: 'Suitable area' },
+    { field: 'notSuitableArea', header: 'notSuitableArea', label: 'Not Suitable Area' },
+    { field: 'targetArea', header: 'targetArea', label: 'Target Area' },
+    { field: 'listingOrder', header: 'listingOrder', label: 'Order' },
+    { field: 'isActive', header: 'isActive', label: 'Is Active' },
+    { field: 'createdAt', header: 'createdAt', label: 'Created Date' },
+    { field: 'createdBy', header: 'createdBy', label: 'Created By' },
+    { field: 'updatedAt', header: 'updatedAt', label: 'Updated Date' },
+    { field: 'updatedBy', header: 'updatedBy', label: 'Updated By' },
+  ];
 
   InitVillage(village: VillagesViewDto) {
     this.fbvillages.controls['isActive'].setValue(true);
@@ -173,7 +204,6 @@ export class VillageComponent implements OnInit {
   }
   initDistricts(stateId: any) {
     this.mandals = [];
-    this.divisions = [];
     this.circles = [];
     this.sections = [];
     this.commonService.GetDistrictsForState(stateId).subscribe((resp) => {

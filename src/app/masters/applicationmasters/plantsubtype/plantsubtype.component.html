@@ -8,7 +8,7 @@
             </ng-template>
             <ng-template pTemplate="right">
                 <button pButton pRipple label="New Plant Sub Type" icon="pi pi-plus" class="p-button-primary p-mr-2"
-                    (click)=" initPlantsub()" *ngIf="permissions.CanCreatePlantSubType"></button>
+                    (click)=" initPlantsub()"*ngIf="permissions.CanCreatePlantSubType" ></button>
             </ng-template>
         </p-toolbar>
 
@@ -16,7 +16,7 @@
         <p-dialog header="Plant Sub Type" [(visible)]="showDialog" [modal]="true"
             [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '45vw'}" (onHide)="onClose()">
             <div class="flex flex-column  justify-content-center">
-                <form [formGroup]="fbplantsubtype">
+                <form [formGroup]="fbplantsubtype" autocomplete="off">
                     <div class="grid">
                         <div class="col-12">
                             <div class="p-fluid p-formgrid grid">

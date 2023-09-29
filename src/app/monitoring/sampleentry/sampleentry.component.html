@@ -105,7 +105,7 @@
       (onShow)="initForm()">
       <!-- (onHide)="fbAllottedPlot.reset()" -->
       <div class="flex flex-column align-items-center justify-content-center">
-        <form [formGroup]="fbSampleEntry" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbSampleEntry" (ngSubmit)="onSubmit()" autocomplete="off">
           <!-- (ngSubmit)="onSubmit()" -->
           <div class="grid">
             <div class="col-12">
@@ -240,7 +240,7 @@
       <ng-template pTemplate="footer">
         <div class="col-4" style="float: right">
           <button pButton pRipple type="submit" (click)="onSubmit()" [label]="submitLabel"
-            class="p-button-raised p-button-success" [disabled]="fbSampleEntry.invalid"></button>
+            class="p-button-raised p-button-primary" [disabled]="fbSampleEntry.invalid"></button>
         </div>
       </ng-template>
     </p-dialog>

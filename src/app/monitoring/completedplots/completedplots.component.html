@@ -7,7 +7,7 @@
         <h4>Completed Plots</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Completed Plot" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Completed Plot" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addCompletedPlot()" *ngIf="permissions.CanCreateCompletedPlot"></button>
       </ng-template>
     </p-toolbar>
@@ -16,7 +16,7 @@
     <p-dialog header="Completed Plot" [(visible)]="showDialog" [modal]="true"
       [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '60vw'}" (onHide)="clearForm()">
       <div class="flex flex-column  justify-content-center">
-        <form [formGroup]="fbCompletedPlots" (ngSubmit)="onSubmit()">
+        <form [formGroup]="fbCompletedPlots" (ngSubmit)="onSubmit()" >
           <div class="grid">
             <div class="col-12">
               <div class="p-fluid p-formgrid grid">
@@ -161,7 +161,7 @@
         <div class="col-12">
           <div class="col-4" style="float:right">
             <button pButton pRipple type="submit" label="{{submitLabel}}" (click)="onSubmit()"
-              class="p-button-raised p-button-success"></button>
+              class="p-button-raised p-button-primary"></button>
           </div>
         </div>
       </ng-template>

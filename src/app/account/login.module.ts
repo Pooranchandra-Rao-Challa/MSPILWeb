@@ -9,7 +9,7 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RippleModule } from 'primeng/ripple';
-import { ChangepasswordComponent } from 'src/app/account/changepassword/changepassword.component';
+import { SettingsComponent } from 'src/app/account/settings/settings.component';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { SecurityQueComponent } from 'src/app/account/securityquestions/securityque.component';
 
@@ -28,7 +28,7 @@ import { SecurityQueComponent } from 'src/app/account/securityquestions/security
     RippleModule,
     SharedModule,
   ],
-  declarations: [LoginComponent, ChangepasswordComponent, SecurityQueComponent],
+  declarations: [LoginComponent, SettingsComponent, SecurityQueComponent],
   bootstrap: [LoginComponent]
 })
 export class LoginModule { }
