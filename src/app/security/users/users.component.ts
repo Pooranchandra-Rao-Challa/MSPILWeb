@@ -85,12 +85,18 @@ export class UsersComponent implements OnInit {
 
 
   initUsers() {
-    this.securityService.GetUsers().subscribe(resp => {
-      this.users = resp as unknown as UserViewDto[];
-      this.users.sort((a, b) => (a.userName || "").localeCompare(b.userName || ""))
-      console.log(this.users);
-
-    })
+    this.securityService.GetUsers().subscribe(
+      {
+        next: (resp) => {
+          this.users = resp as unknown as UserViewDto[];
+          this.users.sort((a, b) => (a.userName || "").localeCompare(b.userName || ""))
+          console.log(this.users);
+        },
+        error: (error) =>{
+          this.users = [];
+        }
+      }
+    )
   }
 
   allottedSections() {

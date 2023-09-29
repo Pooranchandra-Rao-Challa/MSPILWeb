@@ -25,11 +25,11 @@ $gutter: 1rem; //for primeflex grid system
 }
 
 .p-dialog .p-dialog-header {
-  background-color: var(--surface-ground);
+  background-color: var(--surface-ground) !important;
 }
 
 .p-dialog .p-dialog-footer {
-  background-color: var(--surface-ground);
+  background-color: var(--surface-ground) !important;
   padding: 0px;
   // height: calc(100vh - 100px);
   display: block;
@@ -110,7 +110,7 @@ div.season-rates-tab-items:not(:first-child) {
 }
 .p-inputtextarea{
   resize: vertical;
-} 
+}
 :host ::ng-deep .ui-tree {
   border: 1px solid #adabab;
   border-radius: 0px 5px 5px 0px;
@@ -194,7 +194,7 @@ overflow: hidden;
 }
 .sample_entry_note > li::marker{
   font-size: 30px;
- 
+
 }
 
 .scrolling_content{
@@ -203,13 +203,13 @@ overflow: hidden;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 }
 .color_codes {
-  width:12px; 
-  background-color:red; 
+  width:12px;
+  background-color:red;
   height:12px;
 }
 
 .p-tooltip .p-tooltip-text {
-  border:2px solid var( --primary-color); 
+  border:2px solid var( --primary-color);
   background-color: rgb(255, 255, 255) !important;
   color:var( --menu-bg2) !important;
 }

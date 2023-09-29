@@ -70,6 +70,8 @@ export class SettingsComponent implements OnInit {
     this.securityService.UserSecurityQuestions(this.jwtService.GivenName).subscribe({
       next: (resp) => {
         this.userQuestions = resp as unknown as UserQuestionDto[];
+        console.log( this.userQuestions);
+
         this.filterSecurityQuestion(this.userQuestions);
       }
     });
@@ -192,6 +194,9 @@ export class SettingsComponent implements OnInit {
     this.securityService.UpdateTheme(this.themeDto).subscribe((resp) => {
       if (resp) {
         this.alertMessage.displayAlertMessage(ALERT_CODES["SSECT001"]);
+        console.log(this.themeDto.theme);
+        this.jwtService.ThemeName = this.themeDto.theme || '';
+        this.changeTheme(this.jwtService.ThemeName);
       }
     });
   }

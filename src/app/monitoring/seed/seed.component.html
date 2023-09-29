@@ -7,7 +7,7 @@
         <h4>Seeds</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Seed" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addSeed()"
+        <button pButton pRipple label="New Seed" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addSeed()"
           *ngIf="permissions?.CanCreateSeed"></button>
       </ng-template>
     </p-toolbar>
@@ -256,7 +256,7 @@
         <div class="col-12 m-0 p-0">
           <div class="col-4 m-0 p-0 mt-3" style="float:right">
             <button pButton pRipple type="submit" label="{{submitLabel}}"
-              class="p-button-raised p-button-success"></button>
+              class="p-button-raised p-button-primary"></button>
           </div>
         </div>
       </ng-template>

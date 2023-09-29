@@ -297,11 +297,12 @@ export class PlotofferComponent implements OnInit {
     this.submitLabel = 'Update Plot Offer';
     this.showDialog = true;
   }
-
-  editApproval(plotOffer: IFarmerPlotOffersViewDto, farmer: IFarmerInPlotOfferDto) {
+  approvalDeny:number = 1
+  editApproval(plotOffer: IFarmerPlotOffersViewDto, farmer: IFarmerInPlotOfferDto,action :number = 1) {
     this.editPlotOffer(plotOffer, farmer);
     this.showDialog = false;
     this.showApprovalDialog = true;
+    this.approvalDeny = action;
   }
 
   saveAllottedPlot(): Observable<HttpEvent<any>> {
