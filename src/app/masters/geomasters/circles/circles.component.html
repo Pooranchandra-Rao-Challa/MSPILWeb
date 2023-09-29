@@ -11,7 +11,7 @@
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-6">
-                    <label>Division:<sup class="p-error">*</sup></label>
+                    <label class="required">Division:</label>
                     <p-dropdown [options]="divisions" [filter]="true" filterBy="divisionName" [virtualScroll]="true"
                       [virtualScrollItemSize]="38" appendTo="body" optionLabel="divisionName"
                       formControlName="divisionId" optionValue="divisionId" placeholder="Select Division" [ngClass]="{
@@ -31,7 +31,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Name:<sup class="p-error">*</sup></label>
+                    <label class="required">Name:</label>
                     <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                       alphaOnly [maxlength]="maxLength.name"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -52,7 +52,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Code:<sup class="p-error">*</sup></label>
+                    <label class="required">Code:</label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
                       alphaNumeric [readonly]="fbcircle.value.tptId" [maxlength]="20"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -117,7 +117,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Listing Order:<sup class="p-error">*</sup></label>
+                    <label class="required">Listing Order:</label>
                     <input pInputText inputId="listingOrder" #listingOrder placeholder="Enter Listing Order"
                       formControlName="listingOrder" numericOnly [maxlength]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
@@ -131,13 +131,13 @@
                           </div>
                         </span>
                       </div>
-                    </div>
                       <div class="align-right w-40" style="width:30%; text-align:right;">
                         <small>{{listingOrder.value.length}}/2</small>
                       </div>
                     </div>
+                  </div>
                   <div class="field col-12 md:col-6">
-                    <label>Address:<sup class="p-error">*</sup></label>
+                    <label class="required">Address:</label>
                     <textarea rows="5" cols="30" #address placeholder="Enter Address" pInputTextarea
                       formControlName="address" [maxlength]="maxLength.address"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
@@ -169,7 +169,7 @@
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
-        <div class="col-4" style="float: right">
+        <div class="col-4 m-0 p-0 mt-3" style="float: right">
           <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
             [disabled]="fbcircle.invalid" (click)="onSubmit()"></button>
         </div>

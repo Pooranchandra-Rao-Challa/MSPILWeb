@@ -6,15 +6,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppLayoutModule } from './layout/app.layout.module';
-import { NotfoundComponent } from './demo/components/notfound/notfound.component';
-import { ProductService } from './demo/service/product.service';
-import { CountryService } from './demo/service/country.service';
-import { CustomerService } from './demo/service/customer.service';
-import { EventService } from './demo/service/event.service';
-import { IconService } from './demo/service/icon.service';
+// import { NotfoundComponent } from './demo/components/notfound/notfound.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NodeService } from './demo/service/node.service';
-import { PhotoService } from './demo/service/photo.service';
+// import { NodeService } from './demo/service/node.service';
+// import { PhotoService } from './demo/service/photo.service';
 
 // application servicex
 import { AccountService } from 'src/app/_services/account.service';
@@ -30,6 +26,7 @@ import { MonitoringService } from 'src/app/_services/monitoring.service';
 import { permitService } from './_services/permit.service';
 import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
 import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
+import { NotfoundComponent } from './account/notfound/notfound.component';
 
 
 @NgModule({
@@ -47,8 +44,7 @@ import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchVa
     { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },
     { provide: 'FormArrayValidationForDuplication', useValue: FormArrayValidationForDuplication },
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
-    CountryService, CustomerService, EventService, IconService, NodeService,
-    PhotoService, ProductService,
+   
     // Application services,
     AccountService, JWTService, GeoMasterService, CommonService, BillMasterService,
     AppMasterService, MessageService, MonitoringService,permitService,ConfirmationService, ThemeNotifier

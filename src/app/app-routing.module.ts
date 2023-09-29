@@ -1,9 +1,8 @@
 import { SettingsComponent } from 'src/app/account/settings/settings.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { NotfoundComponent } from 'src/app/demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "src/app/layout/app.layout.component";
+import { NotfoundComponent } from './account/notfound/notfound.component';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('src/app/account/login.module').then(m => m.LoginModule) },
@@ -31,21 +30,7 @@ const routes: Routes = [
 
 
   // Demo UI Routing  menu
-
-  {
-    path: '', component: AppLayoutComponent,
-    children: [
-      { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
-      { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
-      { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
-      { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
-      { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
-      { path: 'geomasters', loadChildren: () => import('./masters/geomasters/geomasters.module').then(m => m.GeoMastersModule) }
-
-    ]
-  },
-  { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
-  { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
+  
   { path: 'notfound', component: NotfoundComponent },
   { path: '**', redirectTo: '/notfound' },
 ];

@@ -215,7 +215,7 @@ export class HglComponent implements OnInit {
       code: new FormControl(subHgls.code, [Validators.required, Validators.pattern(RG_ALPHA_NUMERIC), Validators.minLength(MIN_LENGTH_2), Validators.maxLength(MAX_LENGTH_20)]),
       name: new FormControl(subHgls.name, [Validators.required, Validators.pattern(RG_ALPHA_ONLY), Validators.minLength(MIN_LENGTH_2)]),
       vehicleTypeId: [subHgls.vehicleTypeId, Validators.required],
-      noOfPersons: [subHgls.noOfPersons, Validators.required,Validators.pattern(RG_DECIMAL)],
+      noOfPersons: new FormControl(subHgls.noOfPersons, [Validators.required, Validators.pattern(RG_DECIMAL)]),
       isActive: subHgls.isActive,
     });
   }
@@ -256,7 +256,7 @@ export class HglComponent implements OnInit {
     this.hgl.tds = hgl.tds;
     this.hgl.guarantor1 = hgl.guarantor1;
     this.hgl.guarantor2 = hgl.guarantor2;
-    
+
     this.hgl.guarantor3 = hgl.guarantor3;
     this.hgl.glcode = hgl.glCode;
     this.hgl.subGlcode = hgl.subGLCode;
@@ -274,7 +274,7 @@ export class HglComponent implements OnInit {
     this.showSubHgl = true;
   }
   addHgl() {
-    
+
     this.submitLabel = 'Add Hgl';
     this.addFlag = true;
     this.hglform();
@@ -305,7 +305,7 @@ export class HglComponent implements OnInit {
     )
     return existingTptNames.length > 0;
   }
- 
+
   onSubmit() {
     if (this.fbHgl.valid) {
       if (this.addFlag) {
@@ -342,7 +342,7 @@ export class HglComponent implements OnInit {
     } else {
       this.fbHgl.markAllAsTouched();
     }}
-  
+
   onClose() {
     this.hglform();
     this.faSubHgl().clear();

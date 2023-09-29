@@ -13,6 +13,7 @@
           *ngIf="permissions.CanCreateSeason"></button>
       </ng-template>
     </p-toolbar>
+
     <!-- table -->
     <p-table #dt1 [value]="seasons" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
@@ -73,6 +74,7 @@
       </ng-template>
 
     </p-table>
+
     <!-- dialog box -->
     <p-dialog header="Season With Billing Rate" [(visible)]="showDialog" showEffect="fade"
       [breakpoints]="{'960px': '70%', '640px': '70%'}" [style]="{width: '60%'}" [modal]="true">
@@ -83,7 +85,7 @@
               <p-fieldset legend="Season" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 md:col-4">
-                    <label>Code:<sup class="p-error">*</sup></label>
+                    <label class="required">Code:</label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
                       numericOnly [readonly]="fbseasons.value.tptId" [maxlength]="7" (input)="onValidateSeasonCode()"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -109,26 +111,26 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Name:<sup class="p-error">*</sup></label>
+                    <label class="required">Name:</label>
                     <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                       numericOnly [maxlength]="9"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
-                      <div class="flex">
-                        <div class="align-left w-60" style="width:70%">
-                    <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
-                        Please Enter Name.</div>
-                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
-                        Name Pattern Should Be Like 2022-2023.</div>
-                    </span>
-                  </div>
-                    <div class="align-right w-40" style="width:30%; text-align:right;">
-                      <small>{{name.value.length}}/9</small>
+                    <div class="flex">
+                      <div class="align-left w-60" style="width:70%">
+                        <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
+                            Please Enter Name.</div>
+                          <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['pattern']">
+                            Name Pattern Should Be Like 2022-2023.</div>
+                        </span>
+                      </div>
+                      <div class="align-right w-40" style="width:30%; text-align:right;">
+                        <small>{{name.value.length}}/9</small>
+                      </div>
                     </div>
-                </div>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Plant From:<sup class="p-error">*</sup></label>
+                    <label class="required">Plant From:</label>
                     <p-calendar appendTo="body" placeholder="Select Plant From Date" [readonlyInput]="true"
                       [showIcon]="true" formControlName="plantFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantFrom'].touched && FormControls['plantFrom'].errors }">
@@ -139,7 +141,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Plant To:<sup class="p-error">*</sup></label>
+                    <label class="required">Plant To:</label>
                     <p-calendar appendTo="body" placeholder="Select Plant To Date" [readonlyInput]="true"
                       [showIcon]="true" formControlName="plantTo" [minDate]="fbseasons.value.plantFrom"
                       [disabled]="!FormControls['plantFrom'].value"
@@ -160,7 +162,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Crush From:<sup class="p-error">*</sup></label>
+                    <label class="required">Crush From:</label>
                     <p-calendar appendTo="body" placeholder="Select Crush From Date" [readonlyInput]="true"
                       [showIcon]="true" formControlName="crushFrom"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['crushFrom'].touched && FormControls['crushFrom'].errors }">
@@ -171,7 +173,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label>Crush To<sup class="p-error">*</sup></label>
+                    <label class="required">Crush To</label>
                     <p-calendar appendTo="body" placeholder="Select Crush To Date" [readonlyInput]="true"
                       [showIcon]="true" formControlName="crushTo" [minDate]="fbseasons.value.crushFrom"
                       [disabled]="!FormControls['crushFrom'].value"
@@ -189,7 +191,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label htmlFor="burnCaneRate"> Burn Cane Rate(₹):<sup class="p-error">*</sup></label>
+                    <label htmlFor="burnCaneRate" class="required"> Burn Cane Rate(₹):</label>
                     <p-inputNumber id="burnCaneRate" formControlName="burnCaneRate" mode="decimal" locale="en-IN"
                       [minFractionDigits]="2" [maxFractionDigits]="2" placeholder="Enter Burn Cane Rate"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['burnCaneRate'].touched && FormControls['burnCaneRate'].errors }">
@@ -204,7 +206,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label htmlFor="caneRate">Cane Rate(₹):<sup class="p-error">*</sup></label>
+                    <label htmlFor="caneRate" class="required">Cane Rate(₹):</label>
                     <p-inputNumber id="caneRate" formControlName="caneRate" placeholder="Enter Cane Rate" mode="decimal"
                       locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['caneRate'].touched && FormControls['caneRate'].errors }">
@@ -217,7 +219,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-4">
-                    <label htmlFor="capacity"> Capacity(Tonnes):<sup class="p-error">*</sup></label>
+                    <label htmlFor="capacity" class="required"> Capacity(Tonnes):</label>
                     <p-inputNumber id="capacity" formControlName="capacity" placeholder="Enter Capacity" mode="decimal"
                       locale="en-IN" [minFractionDigits]="2" [maxFractionDigits]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['capacity'].touched && FormControls['capacity'].errors }">
@@ -269,7 +271,7 @@
                                       <div class="field col-12 md:col-3 vertical-align-top  "
                                         style="display:inline-block;">
                                         <div class="p-field">
-                                          <label htmlFor="billPeram">Bill Parameter:<sup class="p-error">*</sup></label>
+                                          <label htmlFor="billPeram" class="required">Bill Parameter:</label>
                                           <p-dropdown [options]="billCategory.billParams" optionLabel="name"
                                             appendTo="body" formControlName="billParameterId"
                                             optionValue="billParameterId" placeholder="Select Bill Parameter"
@@ -287,7 +289,7 @@
                                       <div class="field col-12 md:col-3 vertical-align-top "
                                         style="display:inline-block;">
                                         <div class="p-field">
-                                          <label htmlFor="rate">Rate(₹):<sup class="p-error">*</sup></label>
+                                          <label htmlFor="rate" class="required">Rate(₹):</label>
                                           <input pInputText id="rate" formControlName="rate" numericOnly
                                             placeholder="Enter Rate"
                                             [ngClass]="{ 'is-invalid ng-dirty': formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'rate')?.errors }" />
@@ -304,7 +306,7 @@
                                       <div class="field col-12 md:col-3 vertical-align-top"
                                         style="display:inline-block;">
                                         <div class="p-field">
-                                          <label htmlFor="priority">Priority:<sup class="p-error">*</sup></label>
+                                          <label htmlFor="priority" class="required">Priority:</label>
                                           <input pInputText id="priority" formControlName="priority" type="text"
                                             numericOnly placeholder="Enter Priority"
                                             [ngClass]="{ 'is-invalid ng-dirty': formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'priority')?.touched && formArrayControls((billCategory.name?.toLowerCase())+'Rates',i, 'priority')?.errors }" />
@@ -336,8 +338,6 @@
                       </p-tabPanel>
                     </p-tabView>
                   </div>
-
-
                 </div>
               </p-fieldset>
             </form>
@@ -345,13 +345,14 @@
         </div>
       </div>
       <ng-template pTemplate="footer">
-        <div class="col-12">
-          <div class="col-4" style="float:right">
+        <div class="col-12 m-0 p-0">
+          <div class="col-4 m-0 p-0 mt-3" style="float:right">
             <button pButton pRipple type="submit" [label]="submitLabel" class="p-button-raised p-button-primary"
               [disabled]="fbseasons.invalid" (click)="onSubmit()"></button>
           </div>
         </div>
       </ng-template>
     </p-dialog>
+
   </div>
 </div>

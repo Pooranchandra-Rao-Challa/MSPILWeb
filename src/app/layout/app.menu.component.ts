@@ -1,4 +1,4 @@
-import { FloatLabelDemoComponent } from './../demo/components/uikit/floatlabel/floatlabeldemo.component';
+// import { FloatLabelDemoComponent } from './../demo/components/uikit/floatlabel/floatlabeldemo.component';
 import { JWTService } from 'src/app/_services/jwt.service';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';

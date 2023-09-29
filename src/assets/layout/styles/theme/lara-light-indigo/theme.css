@@ -4361,7 +4361,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .p-dialog .p-dialog-header {
   border-bottom: 0 none;
-  background: #ffffff;
+  background-color: var(--surface-ground);
   color: #343a40;
   padding: 1.5rem;
   border-top-right-radius: 6px;
@@ -4405,7 +4405,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .p-dialog .p-dialog-footer {
   border-top: 0 none;
-  background: #ffffff;
+  background-color: var(--surface-ground);
   color: #495057;
   padding: 0 1.5rem 1.5rem 1.5rem;
   text-align: right;

@@ -11,7 +11,7 @@
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-6">
-                    <label>Code:<sup class="p-error">*</sup></label>
+                    <label class="required">Code:</label>
                     <input pInputText type="text" formControlName="code" #code alphaNumeric placeholder="Enter Code"
                       [maxlength]="6"
                       [ngClass]="{ 'is-invalid  ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -34,7 +34,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Name:<sup class="p-error">*</sup></label>
+                    <label class="required">Name:</label>
                     <input pInputText type="text" formControlName="name" alphaNumeric #name alphaOnly
                       placeholder="Enter Name" [maxlength]="50"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -101,7 +101,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Address:<sup class="p-error">*</sup></label>
+                    <label class="required">Address:</label>
                     <textarea rows="5" cols="30" #address placeholder="Enter Address" pInputTextarea
                       formControlName="address" [maxlength]="maxLength.address" address
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
@@ -122,7 +122,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Listing Order:<sup class="p-error">*</sup></label>
+                    <label class="required">Listing Order:</label>
                     <input pInputText inputId="listingOrder" #listingOrder placeholder="Enter Listing Order"
                       formControlName="listingOrder" numericOnly [maxlength]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
@@ -152,7 +152,7 @@
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
-        <div class="col-6" style="float:right">
+        <div class="col-6 m-0 p-0 mt-3" style="float:right">
           <button pButton pRipple type="submit" [disabled]="fbdivisions.invalid" [label]="submitLabel"
             class="p-button-raised p-button-primary" (click)="onSubmit()"></button>
         </div>

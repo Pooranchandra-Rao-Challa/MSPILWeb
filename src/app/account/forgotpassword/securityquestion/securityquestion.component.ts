@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserQuestionDto } from 'src/app/_models/security';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { catchError, throwError } from 'rxjs';
 @Component({
   selector: 'app-securityquestion',
   templateUrl: './securityquestion.component.html',
@@ -13,6 +14,7 @@ import { MessageService } from 'primeng/api';
 export class SecurityQuestionComponent implements OnInit {
   userQuestions: UserQuestionDto[] = []
   userName?: string;
+  interval: any;
 
   constructor(private router: Router,
     private securityService: SecurityService,
@@ -36,12 +38,20 @@ export class SecurityQuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.userName = this.activatedRoute.snapshot.queryParams['username'];
-    this.securityService.UserSecurityQuestions(this.userName!).subscribe({
+    this.securityService.UserSecurityQuestions(this.userName!).pipe(
+      catchError((error) => {
+        this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Invalid User Name" });
+        this.interval = setInterval(() => {
+          this.navigateToPrev();
+        }, 2000);
+        return throwError(error); // Re-throw the error to propagate it further if needed
+      })
+    ).subscribe({
       next: (resp) => {
         this.userQuestions = resp as unknown as UserQuestionDto[];
         if (this.userQuestions.length < 1) {
-          this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "Invalid User Name!" });
-          this.navigateToPrev();
+          this.messageService.add({ severity: 'error', key: 'myToast', summary: 'Error', detail: "You have no security questions, So please contact to your admin." });
+          // this.navigateToPrev();
         }
       }
     })
