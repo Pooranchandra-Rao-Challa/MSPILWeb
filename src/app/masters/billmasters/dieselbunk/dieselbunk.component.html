@@ -80,7 +80,7 @@
                     alphaNumeric [maxlength]="6"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <div class="flex">
-                      <div class="align-left w-60" style="width:70%"> 
+                      <div class="align-left w-60" style="width:70%">
                   <span *ngIf="FormControls['code'].touched && FormControls['code'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['code'].errors?.['required']">
                       Please Enter Code.</div>
@@ -101,7 +101,7 @@
                     alphaOnly [maxlength]="maxLength.name"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
                     <div class="flex">
-                      <div class="align-left w-60" style="width:70%"> 
+                      <div class="align-left w-60" style="width:70%">
                   <span *ngIf="FormControls['name'].touched && FormControls['name'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['name'].errors?.['required']">
                       Please Enter Name.</div>
@@ -122,7 +122,7 @@
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }">
                   </textarea>
                   <div class="flex">
-                    <div class="align-left w-60" style="width:70%"> 
+                    <div class="align-left w-60" style="width:70%">
                   <span *ngIf="FormControls['address'].touched && FormControls['address'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['address'].errors?.['required']">
                       Please Enter Address.</div>
@@ -199,9 +199,9 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label>Rate(₹):<sup class="p-error">*</sup></label>
-                  <input pInputText id="rate" type="text" #code placeholder="Enter rate" formControlName="rate"
+                  <input pInputText id="rate" type="text" #code placeholder="Enter Rate" formControlName="rate"
                   appNumericInput [maxlength]="10"
-                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">                  
+                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
                     <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['rate'].errors?.['required']">
                       Please Enter Rate.

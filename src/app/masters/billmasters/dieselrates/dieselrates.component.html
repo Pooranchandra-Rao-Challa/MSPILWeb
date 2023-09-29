@@ -111,7 +111,7 @@
                 </div>
                 <div class="field col-12 md:col-6">
                   <label class="required">Rate(₹):</label>
-                  <input pInputText id="rate" type="text" #code placeholder="Enter rate" formControlName="rate"
+                  <input pInputText id="rate" type="text" #code placeholder="Enter Rate" formControlName="rate"
                   appNumericInput [maxlength]="10"
                          [ngClass]="{ 'is-invalid ng-dirty': FormControls['rate'].touched && FormControls['rate'].errors }">
                   <span *ngIf="FormControls['rate'].touched && FormControls['rate'].invalid">
