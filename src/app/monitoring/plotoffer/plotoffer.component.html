@@ -76,11 +76,15 @@
       </ng-template>
       <ng-template pTemplate="body" let-plotOffer>
         <tr>
-          <td *ngIf="permissions?.CanUpdatePlotOffer"><button pButton pRipple icon="pi pi-pencil"
+          <td *ngIf="permissions?.CanUpdatePlotOffer">
+            <div style="display: flex;">
+            <button pButton pRipple icon="pi pi-pencil"
               class="p-element p-ripple p-button-text p-button p-component" (click)="editPlotOffer(plotOffer, farmer)"
               *ngIf="!forapproval"></button>
-            <button pButton pRipple icon="pi pi-thumbs-up" class="p-element p-ripple p-button-text p-button p-component"
-              (click)="editApproval(plotOffer, farmer)" *ngIf="forapproval"></button>
+            <button pButton pRipple icon="pi pi-thumbs-up " class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editApproval(plotOffer, farmer,1)" *ngIf="forapproval"></button>
+              <button pButton pRipple icon="pi pi-thumbs-down " class="p-element p-ripple p-button-text p-button p-component"
+              (click)="editApproval(plotOffer, farmer,0)" *ngIf="forapproval"></button></div>
           </td>
           <td *ngFor="let col of plotHeaders">
             <span
@@ -386,14 +390,16 @@
                     {{ this.fbPlotOffer.controls["ryotName"].value }}
                   </p>
                 </div>
-                <div class="field col-12 md:col-6">
-                  <label>Remarks:</label>
-                  <input pInputText id="remarks" type="text" formControlName="remarks"
-                    [ngClass]="{ 'is-invalid ng-dirty': FormControls['remarks'].touched && FormControls['remarks'].errors }">
-                  <span *ngIf="FormControls['remarks'].touched && FormControls['remarks'].invalid">
-                    <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['remarks'].errors?.['required']">
-                      Remarks is required if you want to denied.</div>
-                  </span>
+                <div class="field col-12 md:col-6" >
+                  <div *ngIf="approvalDeny == 0">
+                    <label>Remarks:</label>
+                    <input pInputText id="remarks" type="text" formControlName="remarks"
+                      [ngClass]="{ 'is-invalid ng-dirty': FormControls['remarks'].touched && FormControls['remarks'].errors }">
+                    <span *ngIf="FormControls['remarks'].touched && FormControls['remarks'].invalid">
+                      <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['remarks'].errors?.['required']">
+                        Remarks is required if you want to denied.</div>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -403,9 +409,9 @@
     </ng-template>
     <ng-template pTemplate="footer">
       <div class="col-12" style="float:right">
-        <button pButton pRipple type="submit" label="Approval" class="p-button-raised p-button-primary"
+        <button pButton pRipple type="submit" label="Approve" class="p-button-raised p-button-primary" *ngIf="approvalDeny == 1"
           (click)="onApprovalSubmit('approve')" [disabled]="!permissions?.CanApproveOrDeny"></button>
-        <button pButton pRipple type="submit" label="Denied" class="p-button-raised p-button-primary"
+        <button pButton pRipple type="submit" label="Reject" class="p-button-raised p-button-primary" *ngIf="approvalDeny == 0"
           (click)="onApprovalSubmit('denied')" [disabled]="!permissions?.CanApproveOrDeny"></button>
       </div>
     </ng-template>
