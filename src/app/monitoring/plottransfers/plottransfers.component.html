@@ -44,7 +44,7 @@
                     <div class="field col-12 md:col-4">
                       <label class="required">Doc Date:</label>
                       <p-calendar formControlName="docDate" placeholder="Select Doc Date" [readonlyInput]="true"
-                        [showIcon]="true"
+                        [showIcon]="true" appendTo="body"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['docDate'].touched && FormControls['docDate'].errors }">
                       </p-calendar>
                       <span *ngIf="FormControls['docDate'].touched && FormControls['docDate'].invalid">

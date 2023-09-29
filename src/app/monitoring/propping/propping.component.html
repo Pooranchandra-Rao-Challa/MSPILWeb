@@ -60,7 +60,7 @@
                   <div class="grid mt-2">
                     <div class="field col-12 md:col-8">
                       <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
-                        placeholder="Select Propping Date" formControlName="proppingDate"
+                        placeholder="Select Propping Date" formControlName="proppingDate" appendTo="body"
                         [ngClass]="{ 'is-invalid ng-dirty': FormControls['proppingDate'].touched && FormControls['proppingDate'].errors }">
                       </p-calendar>
                       <span *ngIf="FormControls['proppingDate'].touched && FormControls['proppingDate'].invalid">

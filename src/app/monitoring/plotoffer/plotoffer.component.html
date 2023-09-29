@@ -138,7 +138,7 @@
                   </div>
                   <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                     <label class="required">Offer Date:</label>
-                    <p-calendar placeholder="Select Offer Date" [readonlyInput]="true" [showIcon]="true"
+                    <p-calendar placeholder="Select Offer Date" [readonlyInput]="true" [showIcon]="true" appendTo="body"
                       formControlName="offerDate" [defaultDate]="plantFrom" [minDate]="plantFrom" [maxDate]="plantTo"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['offerDate'].touched && FormControls['offerDate'].errors }">
                     </p-calendar>

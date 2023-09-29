@@ -250,7 +250,7 @@
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label class="required">Planting Date:</label>
-                  <p-calendar placeholder="Select Planting Date" [readonlyInput]="true" [showIcon]="true"
+                  <p-calendar placeholder="Select Planting Date" [readonlyInput]="true" [showIcon]="true" appendTo="body"
                     formControlName="plantingDate" [defaultDate]="plantFrom" [minDate]="plantFrom" [maxDate]="plantTo"
                     [ngClass]="{ 'is-invalid ng-dirty': FormControls['plantingDate'].touched && FormControls['plantingDate'].errors }">
                   </p-calendar>
@@ -290,7 +290,7 @@
                 </div>
                 <div class="field col-12 lg:col-4 md:col-6 sm:col-6">
                   <label>BIR Date:</label>
-                  <p-calendar placeholder="Select BIR Date" [readonlyInput]="true" [showIcon]="true"
+                  <p-calendar placeholder="Select BIR Date" [readonlyInput]="true" [showIcon]="true" appendTo="body"
                     formControlName="birdate">
                   </p-calendar>
                 </div>
