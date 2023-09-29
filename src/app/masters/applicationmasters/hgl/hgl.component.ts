@@ -328,7 +328,7 @@ export class HglComponent implements OnInit {
     }
   }
   save() {
-    this.fbHgl.value.panNo = this.fbHgl.value.panNo.toUpperCase();
+    this.fbHgl.value.panNo = this.fbHgl.value.panNo?.toUpperCase();
     this.fbHgl.value.pinCode = this.fbHgl.value.pinCode + '';
     if (this.fbHgl.valid) {
       this.saveHgl().subscribe((resp) => {
