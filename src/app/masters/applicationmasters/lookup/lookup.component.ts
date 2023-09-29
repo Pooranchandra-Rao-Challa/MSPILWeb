@@ -109,7 +109,7 @@ export class LookupComponent implements OnInit {
   formArrayControls(i: number, formControlName: string) {
     return this.falookupDetails().controls[i].get(formControlName);
   }
-  //  post lookup 
+  //  post lookup
   savelookup(): Observable<HttpEvent<LookUpHeaderDto>> {
     if (this.addFlag) return this.appMasterService.Createlookup(this.fblookup.value)
     else return this.appMasterService.Updatelookup(this.fblookup.value)
@@ -189,7 +189,6 @@ export class LookupComponent implements OnInit {
     });
   }
   editLookUp(lookup: LookupViewDto) {
-    debugger
     this.initlookupDetails(lookup.id);
     this.lookup.lookUpId = lookup.id;
     this.lookup.lookupDetailId = lookup.lookupDetailId;

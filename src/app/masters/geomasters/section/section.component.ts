@@ -120,15 +120,15 @@ export class SectionComponent implements OnInit {
       else return this.geoMasterService.UpdateSection(this.fbsections.value);
   }
   isUniqueSectionCode() {
-    const existingSectionCodes = this.sections.filter(section => 
-      section.sectionCode === this.fbsections.value.code && 
+    const existingSectionCodes = this.sections.filter(section =>
+      section.sectionCode === this.fbsections.value.code &&
       section.sectionId !== this.fbsections.value.sectionId
     )
-    return existingSectionCodes.length > 0; 
+    return existingSectionCodes.length > 0;
   }
   isUniqueSectionName() {
     const existingSectionNames = this.sections.filter(section =>
-      section.sectionName === this.fbsections.value.name && 
+      section.sectionName === this.fbsections.value.name &&
       section.sectionId !== this.fbsections.value.sectionId
     )
     return existingSectionNames.length > 0;
@@ -142,16 +142,16 @@ export class SectionComponent implements OnInit {
           );
         } else if (this.isUniqueSectionName()) {
           this.alertMessage.displayErrorMessage(
-            `Section Name :"${this.fbsections.value.name}" Already Exists.` 
+            `Section Name :"${this.fbsections.value.name}" Already Exists.`
           );
         } else {
           this.save();
         }
       } else {
-        this.save(); 
+        this.save();
       }
     } else {
-      this.fbsections.markAllAsTouched(); 
+      this.fbsections.markAllAsTouched();
     }
   }
   save() {

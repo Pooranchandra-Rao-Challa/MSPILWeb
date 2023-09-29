@@ -2,16 +2,16 @@
   <div class="card">
     <p-toast key="tst"></p-toast>
     <!-- dialog -->
-    <p-dialog header="State" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '40%', '640px': '80%'}"
-      [style]="{width: '40%'}" [modal]="true" (onHide)="onClose()">
+    <p-dialog header="State" [(visible)]="display" showEffect="fade" [breakpoints]="{'960px': '30%', '640px': '80%'}"
+      [style]="{width: '30%'}" [modal]="true" (onHide)="onClose()">
       <ng-template pTemplate="content">
         <div class="flex flex-column align-items-center justify-content-center">
           <form [formGroup]="fbstates" (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="grid">
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
-                  <div class=" field col-12 md:col-6 ">
-                    <label>Code:<sup class="p-error">*</sup></label>
+                  <div class=" field col-12 md:col-6 m-0 ">
+                    <label class="required">Code:</label>
                     <input pInputText type="text" formControlName="code" #code placeholder="Enter Code" alphaNumeric
                       maxlength="6"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors}">
@@ -33,8 +33,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="field col-12 md:col-6">
-                    <label> Name:<sup class="p-error">*</sup></label>
+                  <div class="field col-12 md:col-6 m-0">
+                    <label class="required">Name:</label>
                     <input pInputText id="address1" type="text" #name formControlName="name" alphaOnly
                       placeholder="Enter Name" maxlength="50"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -71,6 +71,7 @@
         </div>
       </ng-template>
     </p-dialog>
+
     <!-- toolbar -->
     <p-toolbar styleClass="p-mb-4">
       <ng-template pTemplate="left">

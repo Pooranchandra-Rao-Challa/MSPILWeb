@@ -19,15 +19,17 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
     this.primengConfig.ripple = true;
     this.themeNotifier.updateTheme().subscribe(themeName => {
       this.initTheme(themeName);
     });
     if (this.jWTService.IsLoggedIn) {
+      console.log('in if block');
       this.initTheme(this.jWTService.ThemeName);
     }
     else {
+      console.log('in else block');
+
       this.initTheme('lara-light-indigo');
     }
   }

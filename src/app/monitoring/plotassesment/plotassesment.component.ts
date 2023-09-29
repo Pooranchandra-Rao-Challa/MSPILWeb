@@ -306,6 +306,7 @@ export class PlotassesmentComponent implements OnInit {
   }
 
   savePlotAssessment(): Observable<HttpEvent<PlotAssessmentDto>> {
+    this.fbPlotAssessment.controls['measuredDate'].setValue(FORMAT_DATE(new Date(this.fbPlotAssessment.value.measuredDate)));
     var postValues = this.fbPlotAssessment.value;
     postValues.weedicides = postValues.weedicides.filter((weed: any) => weed.checked == true)
     postValues.pests = postValues.pests.filter((pest: any) => pest.identifiedDate != undefined || pest.controlDate != undefined)
@@ -370,7 +371,6 @@ export class PlotassesmentComponent implements OnInit {
     doc.save('plot_Assessments.pdf');
   }
   exportExcel() {
-    debugger
     import('xlsx').then((xlsx) => {
       const worksheet = xlsx.utils.json_to_sheet(this.exportColumns);
       const workbook = {

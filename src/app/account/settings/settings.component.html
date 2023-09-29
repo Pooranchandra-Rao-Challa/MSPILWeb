@@ -66,7 +66,7 @@
             <ng-template pTemplate="left">
             </ng-template>
             <ng-template pTemplate="right">
-              <button pButton pRipple label="Add New Question" icon="pi pi-plus" class="p-button-success p-mr-2"
+              <button pButton pRipple label="Add New Question" icon="pi pi-plus" class="p-button-primary p-mr-2"
                 (click)="addSecurityQuestion()"></button>
             </ng-template>
           </p-toolbar>
@@ -134,14 +134,14 @@
             </ng-template>
             <ng-template pTemplate="footer">
               <div class="col-4" style="float:right">
-                <button pButton pRipple type="submit" class="p-button-raised p-button-success"
+                <button pButton pRipple type="submit" class="p-button-raised p-button-primary"
                   (click)="saveSecurityQuestions()"
                   [disabled]="!security.answer || !security.question">{{qstnSubmitLabel}}</button>
               </div>
             </ng-template>
           </p-dialog>
           <button pButton pRipple label="Update Questions" [disabled]="userQuestions.length<2"
-            class="p-button-success p-mr-2 m-5 sQuestion" (click)="onSubmit()"></button>
+            class="p-button-primary p-mr-2 m-5 sQuestion" (click)="onSubmit()"></button>
         </div>
       </p-tabPanel>
 

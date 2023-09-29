@@ -11,7 +11,7 @@
               <div class="col-12">
                 <div class="p-fluid p-formgrid grid">
                   <div class="field col-12 md:col-6">
-                    <label htmlFor="age1">Division:<sup class="p-error">*</sup></label>
+                    <label htmlFor="age1" class="required">Division:</label>
                     <p-dropdown [options]="divisions" [filter]="true" filterBy="divisionName" [virtualScroll]="true"
                       [virtualScrollItemSize]="38" appendTo="body" optionLabel="divisionName"
                       formControlName="divisionId" optionValue="divisionId" (onChange)="initCircles($event.value)"
@@ -25,7 +25,7 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label htmlFor="circle">Circle:<sup class="p-error">*</sup></label>
+                    <label htmlFor="circle" class="required">Circle:</label>
                     <p-dropdown [options]="circles" [filter]="true" filterBy="name" [virtualScroll]="true"
                       [virtualScrollItemSize]="38" appendTo="body" optionLabel="name" formControlName="circleId"
                       optionValue="circleId" placeholder="Select Circle " emptyFilterMessage="No Results Found"
@@ -38,9 +38,9 @@
                     </span>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Code:<sup class="p-error">*</sup></label>
-                    <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code" autocomplete="off"
-                      alphaNumeric [readonly]="fbsections.value.tptId" [maxlength]="20"
+                    <label class="required">Code:</label>
+                    <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
+                      autocomplete="off" alphaNumeric [readonly]="fbsections.value.tptId" [maxlength]="20"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
                     <div class="flex">
                       <div class="align-left w-60" style="width:70%">
@@ -61,7 +61,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Name:<sup class="p-error">*</sup></label>
+                    <label class="required">Name:</label>
                     <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                       alphaOnly [maxlength]="maxLength.name"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -117,7 +117,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Address:<sup class="p-error">*</sup></label>
+                    <label class="required">Address:</label>
                     <textarea rows="5" cols="30" placeholder="Enter Address" #address pInputTextarea
                       formControlName="address" [maxlength]="maxLength.address" address
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
@@ -138,7 +138,7 @@
                     </div>
                   </div>
                   <div class="field col-12 md:col-6">
-                    <label>Listing Order:<sup class="p-error">*</sup></label>
+                    <label class="required">Listing Order:</label>
                     <input pInputText inputId="listingOrder" #listingOrder placeholder="Enter Listing Order"
                       formControlName="listingOrder" numericOnly [maxlength]="2"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['listingOrder'].touched && FormControls['listingOrder'].errors }">
@@ -156,8 +156,8 @@
                         <small>{{listingOrder.value.length}}/2</small>
                       </div>
                     </div>
-                    </div>
-                 
+                  </div>
+
                   <div class="field col-12 md:col-6">
                     <label>Target Area:</label>
                     <input pInputText inputId="targetArea" #targetArea placeholder="Enter Target Area"

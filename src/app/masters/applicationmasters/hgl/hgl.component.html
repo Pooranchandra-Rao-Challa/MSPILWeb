@@ -8,10 +8,11 @@
         <h4>HGLs</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2"
-          (click)="addHgl()" *ngIf="permissions.CanCreateHGL"></button>
+        <button pButton pRipple label="New HGL" icon="pi pi-plus" class="p-button-primary p-mr-2" (click)="addHgl()"
+          *ngIf="permissions.CanCreateHGL"></button>
       </ng-template>
     </p-toolbar>
+
     <!-- table -->
     <p-table #dt1 [value]="hgls" dataKey="id" [rows]="10" [rowHover]="true" [alwaysShowPaginator]="false"
       styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm" [paginator]="true"
@@ -84,7 +85,7 @@
               <p-fieldset legend="HGL Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Code:<sup class="p-error">*</sup></label>
+                    <label class="required">Code:</label>
                     <input pInputText id="code" type="text" #code placeholder="Enter Code" formControlName="code"
                       alphaNumeric [maxlength]="20"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['code'].touched && FormControls['code'].errors }">
@@ -107,7 +108,7 @@
                     </div>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Name:<sup class="p-error">*</sup></label>
+                    <label class="required">Name:</label>
                     <input pInputText id="name" #name type="text" placeholder="Enter Name" formControlName="name"
                       alphaOnly [maxlength]="maxLength.name"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['name'].touched && FormControls['name'].errors }">
@@ -128,7 +129,7 @@
                     </div>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Relationship Type:<sup class="p-error">*</sup></label>
+                    <label class="required">Relationship Type:</label>
                     <p-dropdown placeholder="Select Relationship Type" optionLabel="name" [options]="relationTypes"
                       optionValue="lookupDetailId" formControlName="relationTypeId"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationTypeId'].touched && FormControls['relationTypeId'].errors }">
@@ -140,7 +141,7 @@
                     </span>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Relationship Name:<sup class="p-error">*</sup></label>
+                    <label class="required">Relationship Name:</label>
                     <input pInputText id="relationName" #relationName type="text" placeholder="Enter Relationship Name"
                       formControlName="relationName" alphaOnly [maxlength]="maxLength.name"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['relationName'].touched && FormControls['relationName'].errors }">
@@ -164,7 +165,7 @@
                     </div>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Gender:<sup class="p-error">*</sup></label>
+                    <label class="required">Gender:</label>
                     <p-dropdown placeholder="Select Gender" [options]="genders" formControlName="gender"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['gender'].touched && FormControls['gender'].errors }">
                     </p-dropdown>
@@ -173,9 +174,8 @@
                         Please Select Gender.</div>
                     </span>
                   </div>
-
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>PinCode:<sup class="p-error">*</sup></label>
+                    <label class="required">PinCode:</label>
                     <input pInputText id="pinCode" #pinCode type="text" placeholder="Enter PinCode"
                       formControlName="pinCode" numericOnly [maxlength]="maxLength.pinCode"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['pinCode'].touched && FormControls['pinCode'].errors }">
@@ -219,7 +219,7 @@
                     </div>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Address:<sup class="p-error">*</sup></label>
+                    <label class="required">Address:</label>
                     <textarea rows="2" cols="30" placeholder="Enter Address" #address pInputTextarea
                       formControlName="address" [maxlength]="maxLength.address" address
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['address'].touched && FormControls['address'].errors }"></textarea>
@@ -240,7 +240,6 @@
                     </div>
                   </div>
                 </div>
-
               </p-fieldset>
               <p-fieldset legend="Personal Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
@@ -258,14 +257,14 @@
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
                     <label>PAN No:</label>
                     <input pInputText id="panNo" type="text" placeholder="Enter Pan No" formControlName="panNo"
-                      style="text-transform:uppercase" 
+                      style="text-transform:uppercase"
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['panNo'].touched && FormControls['panNo'].errors }">
                     <span *ngIf="FormControls['panNo'].touched && FormControls['panNo'].invalid">
                       <div class="ng-invalid ng-touched p-error" *ngIf="FormControls['panNo'].errors?.['pattern']">
                         Invalid Pan Number, Eg: XXXXX0000X</div>
                     </span>
                   </div>
-                  
+
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
                     <label class="required">Aadhaar No:</label>
                     <input pInputText id="aadhaarNo" #aadhaarNo placeholder=" Enter Aadhaar No"
@@ -364,7 +363,7 @@
               <p-fieldset legend="Bank Info" class="col-12" [toggleable]="true" [transitionOptions]="'500ms'">
                 <div class="grid p-fluid">
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Bank:<sup class="p-error">*</sup></label>
+                    <label class="required">Bank:</label>
                     <p-dropdown placeholder="Select Bank" optionLabel="name" [filter]="true" filterBy="name"
                       [virtualScroll]="true" [virtualScrollItemSize]="38" appendTo="body" [options]="banks"
                       optionValue="bankId" formControlName="bankId" (onChange)="getBranchByBankId($event.value)"
@@ -396,7 +395,7 @@
                     <p class="disabled_text">{{IFSC}}</p>
                   </div>
                   <div class="field col-12 lg:col-3 sm:col-6 md:col-4">
-                    <label>Account Number:<sup class="p-error">*</sup></label>
+                    <label class="required">Account Number:</label>
                     <input pInputText id="accountNo" #accountNo type="text" placeholder="Enter Account Number"
                       formControlName="accountNo" [maxlength]="maxLength.accountNo" numericOnly
                       [ngClass]="{ 'is-invalid ng-dirty': FormControls['accountNo'].touched && FormControls['accountNo'].errors }">
@@ -446,10 +445,10 @@
                       [rowsPerPageOptions]="[10,25,50]">
                       <ng-template pTemplate="header">
                         <tr>
-                          <th>Code <sup class="p-error">*</sup></th>
-                          <th>Name <sup class="p-error">*</sup></th>
-                          <th>Vehicle Type <sup class="p-error">*</sup></th>
-                          <th>No Of Persons <sup class="p-error">*</sup></th>
+                          <th>Code<sup class="p-error">*</sup></th>
+                          <th>Name<sup class="p-error">*</sup></th>
+                          <th>Vehicle Type<sup class="p-error">*</sup></th>
+                          <th>No Of Persons<sup class="p-error">*</sup></th>
                           <th *ngIf="fbHgl.controls['subHgls'].value.length > 1"></th>
                         </tr>
                       </ng-template>
@@ -530,10 +529,10 @@
                             </span>
                           </td>
                           <td class="vertical-align-top">
-                            <input pInputText id="rate" inputId="noOfPersons" placeholder="Enter No Of Persons"
-                              formControlName="noOfPersons" numericOnly [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
+                            <input pInputText id="rate" placeholder="Enter No Of Persons" formControlName="noOfPersons"
+                              numericOnly [ngClass]="{ 'is-invalid ng-dirty': formArrayControls(subHglIndex, 'noOfPersons')?.touched &&
                               formArrayControls(subHglIndex, 'noOfPersons')?.errors }">
-                           
+
                             <span
                               *ngIf="formArrayControls(subHglIndex, 'noOfPersons')?.touched && formArrayControls(subHglIndex, 'noOfPersons')?.invalid">
                               <div class="ng-invalid ng-touched p-error"

@@ -8,7 +8,7 @@
         <h4>Plot Yields</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plot Yield" icon="pi pi-plus" class="p-button-success p-mr-2"
+        <button pButton pRipple label="New Plot Yield" icon="pi pi-plus" class="p-button-primary p-mr-2"
           (click)="addPlotYield()" *ngIf="permissions?.CanCreatePlotYield"></button>
       </ng-template>
     </p-toolbar>
@@ -450,7 +450,7 @@
       <ng-template pTemplate="footer">
         <div class="col-12 p-0 m-0">
           <div class="col-6 m-0 p-0 mt-3" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-success"
+            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary"
               [disabled]="fbPlotYield.invalid" (click)="onSubmit()"></button>
           </div>
         </div>

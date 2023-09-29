@@ -55,6 +55,8 @@ export class ApiHttpService {
     return this.http.post<T>(URI_ENDPOINT(uri), data, options)
       .pipe(
         catchError(error => {
+          console.log(error);
+
           let errorMsg: string;
           if (error.error instanceof ErrorEvent) {
             errorMsg = `Error: ${error.error.message}`;
