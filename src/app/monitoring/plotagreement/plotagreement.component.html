@@ -8,7 +8,7 @@
         <h4>Plot Agreements</h4>
       </ng-template>
       <ng-template pTemplate="right">
-        <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-primary p-mr-2"
+        <button pButton pRipple label="New Plot Agreement" icon="pi pi-plus" class="p-button-success p-mr-2"
           (click)="addPlotAgreement()" *ngIf="permissions.CanCreatePlotAgreement"></button>
       </ng-template>
     </p-toolbar>
@@ -189,7 +189,7 @@
                       </div>
                       <div class="field col-12 md:col-6 lg:col-3">
                         <label class="required">Agreement Date:</label>
-                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999"
+                        <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" 
                           [defaultDate]="plotInfo.measuredDate!" [minDate]="plotInfo.measuredDate!"
                           [maxDate]="todayDate" formControlName="agreementDate"
                           placeholder="Please Select Agreement Date" appendTo="body"
@@ -493,7 +493,7 @@
                             </div>
                           </td>
                           <td>
-                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body"
+                            <p-calendar [readonlyInput]="true" [showIcon]="true" mask="99/99/9999" appendTo="body" 
                               placeholder="Please Select Identified Date" formControlName="identifiedDate">
                             </p-calendar>
                           </td>
@@ -516,9 +516,9 @@
         </p-tabView>
       </form>
       <ng-template pTemplate="footer">
-        <div class="col-12">
-          <div class="col-4" style="float:right">
-            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-primary"
+        <div class="col-12 m-0 p-0">
+          <div class="col-4 m-0 p-0 mt-3" style="float:right">
+            <button pButton pRipple type="submit" label="{{submitLabel}}" class="p-button-raised p-button-success"
               [disabled]="fbPlotAgreement.invalid" (click)="onSubmit()"></button>
           </div>
         </div>
