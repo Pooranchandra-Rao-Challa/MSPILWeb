@@ -86,9 +86,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-securityQuestion>
               <tr>
-                <td><button pButton pRipple icon="pi pi-pencil"
-                    class="p-element p-ripple p-button-text p-button p-component m-2"
-                    (click)="editSecurityQuestion(securityQuestion)"></button>
+                <td><button pButton pRipple icon="pi pi-pencil" id="edit-dialog"
+                  class="p-element p-ripple p-button-text p-button p-component m-2"
+                  (click)="editSecurityQuestion(securityQuestion)"></button>
                   <button pButton pRipple icon="pi pi-trash"
                     class="p-element p-ripple p-button-text p-button p-component m-2"
                     (click)="deleteSecurityQuestion(securityQuestion.question)"
@@ -112,8 +112,8 @@
               <!-- <from [formGroup]="fbSecureQue"> -->
               <div class="p-field mb-3 ">
                 <label class="required" for="SecurityQuestions">Question</label>
-                <p-dropdown name="SecurityQuestions" placeholder="Select Question" [options]="getSecureQuestions"
-                  optionValue="question" optionLabel="question" 
+                <p-dropdown name="SecurityQuestions" placeholder="Select Question" [options]="secureQuestions | async"
+                  optionValue="question" optionLabel="question" (onChange)="onChange($event)"
                   [(ngModel)]="security.question" appendTo="body" #drop="ngModel" class="pt-5">
                 </p-dropdown>
                 <span *ngIf="!security.question && (drop.dirty || drop.touched)">

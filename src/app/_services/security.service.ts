@@ -73,9 +73,4 @@ export class SecurityService extends ApiHttpService {
   public CreateSecurityQuestions(securityQuestions: UserQuestionDto[]) {
     return this.post<UserQuestionDto[]>(CREATE_SECURITY_QUESTIONS_URI, securityQuestions);
   }
-  public UpdateSecurityQuestions(securityQuestions: UserQuestionDto) {
-    debugger
-    
-    return this.post<UserQuestionDto>(UPDATE_SECURITY_QUESTIONS_URI, securityQuestions);
-  }
 }
