@@ -113,7 +113,7 @@
               <div class="p-field mb-3 ">
                 <label class="required" for="SecurityQuestions">Question</label>
                 <p-dropdown name="SecurityQuestions" placeholder="Select Question" [options]="getSecureQuestions"
-                  optionValue="question" optionLabel="question"
+                  optionValue="question" optionLabel="question" 
                   [(ngModel)]="security.question" appendTo="body" #drop="ngModel" class="pt-5">
                 </p-dropdown>
                 <span *ngIf="!security.question && (drop.dirty || drop.touched)">

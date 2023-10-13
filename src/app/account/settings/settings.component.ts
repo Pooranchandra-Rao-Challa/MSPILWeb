@@ -84,7 +84,8 @@ export class SettingsComponent implements OnInit {
   }
 
   addSecurityQuestion() {
-    this.security = {};
+    this.security = {
+      userId: this.jwtService.UserId,};
     this.submitted = false;
     this.qstnSubmitLabel = "Add";
     this.showDialog = true;
@@ -200,8 +201,9 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
-
+  
   onSubmit() {
+    debugger
     this.securityService.CreateSecurityQuestions(this.userQuestions).subscribe((resp) => {
       if (resp) {
         this.getUserQuestionsAndAnswers();

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { SecureQuestionDto } from 'src/app/_models/security';
+import { BehaviorSubject, observable, Observable } from 'rxjs';
+import { AlertMessage, ALERT_CODES } from 'src/app/_alerts/alertMessage';
+import { SecureQuestionDto, UserQuestionDto } from 'src/app/_models/security';
+import { JWTService } from 'src/app/_services/jwt.service';
 import { SecurityService } from 'src/app/_services/security.service';
-
 
 export interface IHeader {
   field: string;
@@ -20,7 +22,6 @@ export class SecurityDto {
   id?: number;
   SecurityQuestions?: string;
   Answer?: string;
-
 }
 
 @Component({
@@ -37,37 +38,23 @@ export class SecurityDto {
   ],
 })
 export class SecurityQueComponent implements OnInit {
-  getSecureQuestions:SecureQuestionDto[] = []
-  allSecureQuestions:SecureQuestionDto[] = []
-  securityquestions: SecurQuestion[];
-  selectedQuestion!: SecurQuestion;
+  getSecureQuestions: SecureQuestionDto[] = [];
+  secureQuestions: BehaviorSubject<any> = new BehaviorSubject([]);
   securityDto: SecurityDto[] = [];
-  security!: SecurityDto;
+  oldSecurity: SecurityDto = {};
+  security: SecurityDto = {};
   productDialog: boolean = false;
   submitted: boolean = true;
   qstnSubmitLabel: String = "Add";
 
-  constructor(
-    private messageService: MessageService,
-    private formbuilder: FormBuilder,
-    private securityService: SecurityService,
-    
+  constructor(private securityService: SecurityService,
+    private alertMessage: AlertMessage,
+    private jwtService: JWTService,
+    private router: Router,) { }
 
-  ) {
-    this.securityquestions = [
-      { code: 1, name: 'What city were you born in?' },
-      { code: 2, name: 'What is the name of your first pet?' },
-      { code: 3, name: 'What is the title and artist of your favorite song?' },
-      { code: 4, name: 'What is your astrological sign?' },
-      { code: 5, name: 'What is your date of birth?' }
-    ];
-    this.selectedQuestion = this.securityquestions[0];
+  ngOnInit(): void {
+    this.initGetSecureQuestions();
   }
-  headers: IHeader[] = [
-    { field: 'SecurityQuestions', header: 'SecurityQuestions', label: 'Security Questions' },
-    { field: 'Answer', header: 'Answer', label: 'Answer' },
-
-  ];
 
   openNew() {
     this.security = {};
@@ -75,40 +62,30 @@ export class SecurityQueComponent implements OnInit {
     this.qstnSubmitLabel = "Add";
     this.productDialog = true;
   }
+
   initGetSecureQuestions() {
     this.securityService.GetSecureQuestions().subscribe((resp) => {
       this.getSecureQuestions = resp as unknown as SecureQuestionDto[];
-      this.allSecureQuestions = [...this.getSecureQuestions];
+      this.secureQuestions.next(this.getSecureQuestions);
     });
-  }
-  ngOnInit(): void {
-    // this.fillData();
-    // this.getSecurequsForm();
-    this.initGetSecureQuestions();
-  }
-
-  fillData() {
-    for (var i of [1, 2]) {
-      this.securityDto.push(
-        {
-          id: 1,
-          SecurityQuestions: "Code",
-          Answer: "name",
-        }
-      )
-    }
-    console.log(this.securityDto);
   }
 
   editProduct(security: SecurityDto) {
-    this.security = { ...security };
+    Object.assign(this.security, security);
+    Object.assign(this.oldSecurity, security);
     this.qstnSubmitLabel = "Update";
     this.productDialog = true;
+    this.resetSecureQuestions(this.security);
   }
 
-  deleteProduct(question: String){
+  deleteProduct(question: String) {
     this.securityDto.splice(this.securityDto.findIndex(item => item.SecurityQuestions === question), 1);
-    this.securityDto = [...this.securityDto];
+    this.resetSecureQuestions();
+  }
+
+  resetSecureQuestions(security: SecurityDto = {}) {
+    let test = this.getSecureQuestions.filter((value => this.securityDto.findIndex(question => question.SecurityQuestions === value.question) == -1 || value.question === security.SecurityQuestions));
+    this.secureQuestions.next(test);
   }
 
   hideDialog() {
@@ -116,56 +93,56 @@ export class SecurityQueComponent implements OnInit {
     this.submitted = false;
   }
 
-
-
   onChange(event: any) {
-
-    // let myIndex = this.securityquestions.findIndex(fruit => fruit.name === event.value);
-    // this.securityquestions.splice(myIndex, 1);
     this.security.id = this.getSecureQuestions[this.getSecureQuestions.findIndex(item => item.question === event.value)].questionId;
-    this.getSecureQuestions.splice(this.getSecureQuestions.findIndex(item => item.question === event.value), 1);
-
-    console.log(this.getSecureQuestions);
   }
 
-  saveProduct() {
+  clearSelection() {
+    this.productDialog = false;
+    this.security = {};
+    this.oldSecurity = {};
+    this.resetSecureQuestions();
+  }
 
-
-    // this.deleteMsg(event);
-
+  saveQuestion() {
     this.submitted = true;
+    if (this.security.Answer?.trim() && this.security.id) {
+      let selectedIndex = this.securityDto.findIndex(value => value.SecurityQuestions == this.oldSecurity.SecurityQuestions);
+      if (selectedIndex == -1) {
+        this.securityDto.push(this.security);
+      } else {
+        this.securityDto[selectedIndex] = this.security;
+      }
+      this.clearSelection();
+    }
+    
+  }
 
-    if (this.security.Answer?.trim()) {
-      if (this.security.id) {
-        if(this.findIndexById(this.security.id) >= 0){
-          this.securityDto[this.findIndexById(this.security.id)] = this.security;
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+  onSubmit() {
+    debugger
+    const username = this.jwtService.GivenName;
+    const userId = this.jwtService.UserId;
+    const createUserQuestions: UserQuestionDto[] = this.securityDto.map(security => {
+      return {
+        question: security.SecurityQuestions,
+        answer: security.Answer,
+        username: username,
+        userId: userId,
+        questionId: security.id,
+      };
+    });
+    this.securityService
+      .CreateSecurityQuestions(createUserQuestions)
+      .subscribe((resp) => {
+        if (resp) {
+          this.alertMessage.displayAlertMessage(ALERT_CODES["SCUQ001"]);
+          this.securityDto = [];
+          this.router.navigate(['./dashboard']);
         }
         else {
-          // this.security.id = this.createId();
-          // this.security.image = 'security-placeholder.svg';
-          this.securityDto.push(this.security);
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+          this.alertMessage.displayErrorMessage(ALERT_CODES["SCUQ002"]);
         }
-      }
-
-
-      this.securityDto = [...this.securityDto];
-      this.productDialog = false;
-      this.security = {};
-    }
-  }
-
-  findIndexById(id: number): number {
-    let index = -1;
-    for (let i = 0; i < this.securityDto.length; i++) {
-      if (this.securityDto[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
+      })
   }
 
 }

@@ -22,13 +22,20 @@ import { AppComponent } from '../app.component';
     `]
 })
 export class LoginComponent {
-
   valCheck: string[] = ['remember'];
   loginForm: any;
   submitted = false;
   errorMsg: String = "";
   isError: boolean = false;
   themeDto: ThemeDto = {};
+
+  constructor(public layoutService: LayoutService,
+    private router: Router,
+    private messageService: MessageService,
+    private accountService: AccountService,
+    private jWTService: JWTService,
+    private appComponent: AppComponent) { }
+
   ngOnInit() {
     this.loginForm = new FormGroup({
       'UserName': new FormControl('', Validators.required),
@@ -42,15 +49,15 @@ export class LoginComponent {
       .subscribe(
         {
           next: (resp: LogInSuccessModel) => {
-            if (resp.isLoginSuccess && !resp.isFirstTimeLogin) {
+            if (resp.isLoginSuccess && resp.hasSecureQuestions) {
               this.messageService.add({ severity: 'success', key: 'myToast', summary: 'Success!', detail: 'Signing in...!' });
               setTimeout(() => {
                 this.router.navigate(['dashboard']);
                 this.appComponent.initTheme(this.jWTService.ThemeName);
               }, 1000);
             }
-            else if (resp.isLoginSuccess && resp.isFirstTimeLogin) {
-              // redirect the call to take secure questions form user.
+            else if (resp.isLoginSuccess&& !resp.hasSecureQuestions) {
+              this.router.navigate(['login/securityquestions'])
             } else {
               this.submitted = false;
             }
@@ -70,10 +77,4 @@ export class LoginComponent {
         });
   }
 
-  constructor(public layoutService: LayoutService,
-    private router: Router,
-    private messageService: MessageService,
-    private accountService: AccountService,
-    private jWTService: JWTService,
-    private appComponent: AppComponent) { }
 }

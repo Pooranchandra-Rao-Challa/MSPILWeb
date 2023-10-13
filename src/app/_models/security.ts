@@ -77,8 +77,8 @@ export class RolePermissionDto {
   assigned?: boolean = false;
 }
 export class SecureQuestionDto {
-  questionId?: number
-  question?: string
+  questionId?: number;
+  question?: string;
 }
 export class UserQuestionDto {
   userQuestionId?: number

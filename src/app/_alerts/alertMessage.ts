@@ -115,6 +115,11 @@ export class AlertMessage {
 
 export const ALERT_CODES: { [key: string]: string } = {
 
+  // Security questions
+  'SCUQ001': 'Security Questions Added Successfully',
+  'SCUQ002': 'Security Questions Added Failed',
+
+
   //users
   'SUSR001': 'Users Added Successfully',
   'SUSR002': 'Users Updated Successfully',
@@ -303,5 +308,6 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Security Questions
   'SSESQ001' : 'Security Questions Is Added Successfully',
   'SSESQ002' : 'Security Questions Is Updated Successfully',
+  'SSESQ003' : 'Security Questions Is Deleted Failed'
 
 }
