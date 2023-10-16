@@ -86,7 +86,8 @@ export class SettingsComponent implements OnInit {
 }
   addSecurityQuestion() {
     this.security = {
-      userId: this.jwtService.UserId,};
+      userId: this.jwtService.UserId,
+    };
     this.submitted = false;
     this.qstnSubmitLabel = "Add";
     this.showDialog = true;
@@ -134,25 +135,13 @@ export class SettingsComponent implements OnInit {
   changeTheme(themeName: string) {
     this.themeNotifier.notifyChangeTheme(themeName);
   }
-
-  // editSecurityQuestion(security: UserQuestionDto) {
-  //   this.filterSecureQuestions(this.security);
-  //   this.security = { ...security };
-  //   this.qstnSubmitLabel = "Update";
-  //   this.showDialog = true;
-  //   this.addFlag = false;
-  // }
   editSecurityQuestion(s: UserQuestionDto) {
     if (s) {
       if (!this.security) {
-          this.security = {};
-      }
-      if (!this.oldSecurity) {
-          this.oldSecurity = {};
-      }
+        this.security = {}; }
         Object.assign(this.security, s);
         Object.assign(this.oldSecurity, s);
-        this.qstnSubmitLabel = "Update Question";
+        this.qstnSubmitLabel = "Update";
         this.addFlag = false;
         this.showDialog = true;
         this.filterSecureQuestions(this.security);
