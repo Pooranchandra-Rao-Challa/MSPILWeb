@@ -34,14 +34,11 @@ export class ChangePasswordDto {
 })
 export class SettingsComponent implements OnInit {
   secureQuestions: BehaviorSubject<any> = new BehaviorSubject([]);
-  oldSecurity: UserQuestionDto = {}
+  oldSecurity: UserQuestionDto = {};
+  security: UserQuestionDto = {}; 
   themeItems!: ThemeDropdownItems[];
   getSecureQuestions: SecureQuestionDto[] = []
   allSecureQuestions: SecureQuestionDto[] = []
-  // selectedQuestion!: SecurQuestion;
-  // userQuestions: UserQuestionDto[] = [];
-  // changePassword: ChangePasswordDto = {}
-  security!: UserQuestionDto;
   showDialog: boolean = false;
   submitted: boolean = true;
   qstnSubmitLabel: String = "Add";
@@ -92,6 +89,7 @@ export class SettingsComponent implements OnInit {
     this.qstnSubmitLabel = "Add";
     this.showDialog = true;
     this.addFlag = true;
+    this.filterSecureQuestions();
   }
 
   initGetSecureQuestions() {
@@ -136,17 +134,14 @@ export class SettingsComponent implements OnInit {
     this.themeNotifier.notifyChangeTheme(themeName);
   }
   editSecurityQuestion(s: UserQuestionDto) {
-    if (s) {
-      if (!this.security) {
-        this.security = {}; }
         Object.assign(this.security, s);
         Object.assign(this.oldSecurity, s);
         this.qstnSubmitLabel = "Update";
         this.addFlag = false;
         this.showDialog = true;
         this.filterSecureQuestions(this.security);
-    }
   }
+  
   deleteSecurityQuestion(question: String) {
     this.userQuestions.splice(this.userQuestions.findIndex(item => item.question === question), 1);
     this.userQuestions = [...this.userQuestions];
