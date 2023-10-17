@@ -27,7 +27,7 @@ import { permitService } from './_services/permit.service';
 import { ThemeNotifier } from 'src/app/_helpers/theme.notifier.service';
 import { FormArrayValidationForDuplication } from 'src/app/_common/uniqeBranchValidators/unique-branch-validator';
 import { NotfoundComponent } from './account/notfound/notfound.component';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { NotfoundComponent } from './account/notfound/notfound.component';
     AppLayoutModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SugarAPIInterceptor, multi: true },

@@ -308,6 +308,7 @@ export const ALERT_CODES: { [key: string]: string } = {
   // Security Questions
   'SSESQ001' : 'Security Questions Is Added Successfully',
   'SSESQ002' : 'Security Questions Is Updated Successfully',
-  'SSESQ003' : 'Security Questions Is Deleted Failed'
-
+  'SSESQ003' : 'Security Questions Is Updated Failed',
+  'SSESQ004' : 'Security Questions Is Deleted Successfully',
+  'SSESQ005' : 'Security Questions Is Deleted Failed'
 }

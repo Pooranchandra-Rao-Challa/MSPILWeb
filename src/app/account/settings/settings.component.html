@@ -1,7 +1,7 @@
 <div class="col-12">
   <div class="card">
     <p-toast key="tst"></p-toast>
-
+    <p-confirmDialog [style]="{width: '30%'}"></p-confirmDialog>
     <p-tabView orientation="left" class="users-container">
       <p-tabPanel header="Change Password" class="line-height-3 m-0 col-12">
         <!-- <h3 class="m-5">Change Password </h3> -->
@@ -87,11 +87,11 @@
             <ng-template pTemplate="body" let-securityQuestion>
               <tr>
                 <td><button pButton pRipple icon="pi pi-pencil" id="edit-dialog"
-                  class="p-element p-ripple p-button-text p-button p-component m-2"
-                  (click)="editSecurityQuestion(securityQuestion)"></button>
+                    class="p-element p-ripple p-button-text p-button p-component m-2"
+                    (click)="editSecurityQuestion(securityQuestion)"></button>
                   <button pButton pRipple icon="pi pi-trash"
                     class="p-element p-ripple p-button-text p-button p-component m-2"
-                    (click)="deleteSecurityQuestion(securityQuestion.question)"
+                    (click)="deleteSecurityQuestion(securityQuestion.userQuestionId)"
                     *ngIf="userQuestions.length>2"></button>
                 </td>
                 <td>{{securityQuestion.question}}</td>
@@ -161,6 +161,5 @@
         </div>
       </p-tabPanel>
     </p-tabView>
-
   </div>
 </div>

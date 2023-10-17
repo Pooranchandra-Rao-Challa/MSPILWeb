@@ -12,8 +12,7 @@ import { RippleModule } from 'primeng/ripple';
 import { SettingsComponent } from 'src/app/account/settings/settings.component';
 import { SharedModule } from 'src/app/_shared/shared.module';
 import { SecurityQueComponent } from 'src/app/account/securityquestions/securityque.component';
-
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   imports: [
@@ -27,6 +26,7 @@ import { SecurityQueComponent } from 'src/app/account/securityquestions/security
     ReactiveFormsModule,
     RippleModule,
     SharedModule,
+    ConfirmDialogModule
   ],
   declarations: [LoginComponent, SettingsComponent, SecurityQueComponent],
   bootstrap: [LoginComponent]
